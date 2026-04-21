@@ -1,6 +1,5 @@
 """Smoke tests for the main window."""
 
-import pytest
 from pytestqt.qtbot import QtBot
 
 from pbrenamer.ui.main_window import MainWindow
@@ -22,4 +21,4 @@ def test_window_minimum_size(qtbot: QtBot) -> None:
 def test_rename_button_initially_disabled(qtbot: QtBot) -> None:
     window = MainWindow()
     qtbot.addWidget(window)
-    assert not window._btn_rename.isEnabled()
+    assert not window._ui.btnRename.isEnabled()

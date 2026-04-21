@@ -1,0 +1,27 @@
+name: pbrenamer
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.12
+  # GUI
+  - pyside6
+  # Tests
+  - pytest
+  - pytest-qt
+  - pytest-cov
+  # Docs
+  - sphinx
+  - sphinx-rtd-theme
+  - sphinx-autobuild
+  # Lint / hooks
+  - ruff
+  - pre-commit
+  # GitHub CLI
+  - gh
+  # Dev install (editable)
+  - pip
+  - pip:
+      - -e ".[dev]"

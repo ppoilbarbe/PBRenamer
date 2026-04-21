@@ -31,5 +31,5 @@ docs/_build/
 .DS_Store
 Thumbs.db
 
-# Qt
-*.ui.py        # generated from .ui files
+# Qt — generated from .ui files, never committed
+*_ui.py

@@ -8,8 +8,13 @@ G  := \033[32m
 Y  := \033[33m
 C  := \033[36m
 
+UI_FILES := $(shell find $(SRC) -name "*.ui")
+UI_PY    := $(UI_FILES:.ui=_ui.py)
+
 .DEFAULT_GOAL := help
-.PHONY: help venv install run test lint format docs docs-live designer clean
+.PHONY: all help venv venv-update install ui run test lint format docs docs-live designer clean
+
+all: ui ## Build all generated artifacts (UI → Python)
 
 help:
 	@printf "$(B)$(C)PBRenamer — Development Tasks$(R)\n\n"
@@ -18,26 +23,34 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS=":.*?## "}; {printf "  $(G)%-14s$(R) %s\n", $$1, $$2}'
 
-venv: ## Create conda env 'pbrenamer' with all dev dependencies
+venv: ## Create conda env 'pbrenamer' from environment.yml
 	@printf "$(C)Creating conda environment '$(CONDA_ENV)'...$(R)\n"
-	conda create -n $(CONDA_ENV) -y -c conda-forge \
-		python=3.12 \
-		pyside6 \
-		pytest pytest-qt pytest-cov \
-		sphinx sphinx-rtd-theme sphinx-autobuild \
-		ruff \
-		gh
-	conda run -n $(CONDA_ENV) pip install -e ".[dev]"
+	conda env create -f environment.yml
 	@printf "$(G)Done! Activate with:$(R) conda activate $(CONDA_ENV)\n"
 
-install: ## Install package in editable mode
-	pip install -e ".[dev]"
+venv-update: ## Update existing conda env from environment.yml
+	@printf "$(C)Updating conda environment '$(CONDA_ENV)'...$(R)\n"
+	conda env update -f environment.yml --prune
+	@printf "$(G)Done.$(R)\n"
 
-run: ## Launch PBRenamer
-	python -m pbrenamer
+ui: $(UI_PY) ## Compile all .ui files to Python via pyside6-uic
+
+%_ui.py: %.ui
+	@printf "$(C)uic:$(R) $< → $@\n"
+	conda run -n $(CONDA_ENV) --no-capture-output pyside6-uic $< -o $@
+
+install: ## Install package in editable mode and register git hooks
+	pip install -e ".[dev]"
+	pre-commit install
+
+run: ## Launch PBRenamer from the conda env
+	conda run -n $(CONDA_ENV) --no-capture-output python -m pbrenamer
 
 test: ## Run test suite
 	pytest
+
+hooks: ## Run all pre-commit hooks on all files
+	pre-commit run --all-files
 
 lint: ## Check code style
 	ruff check $(SRC)
