@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pbrenamer"
+version = "0.1.0"
+description = "A graphical batch file renaming utility"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Marcel Spock", email = "mrspock@cardolan.net" }]
+keywords = ["renamer", "batch", "files", "gui", "qt"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Utilities",
+    "Topic :: Desktop Environment :: File Managers",
+]
+requires-python = ">=3.12"
+dependencies = ["PySide6>=6.6.0"]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+    "pytest>=8",
+    "pytest-qt>=4",
+    "pytest-cov>=5",
+    "sphinx>=7",
+    "sphinx-rtd-theme>=2",
+    "sphinx-autobuild>=2024",
+]
+
+[project.scripts]
+pbrenamer = "pbrenamer.__main__:main"
+
+[project.urls]
+Homepage   = "https://github.com/ppoilbarbe/PBRenamer"
+Repository = "https://github.com/ppoilbarbe/PBRenamer"
+Issues     = "https://github.com/ppoilbarbe/PBRenamer/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pbrenamer"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = ["--cov=pbrenamer", "--cov-report=term-missing"]
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.ruff]
+line-length    = 100
+target-version = "py312"
+src            = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP"]
