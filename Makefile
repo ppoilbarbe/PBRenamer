@@ -23,9 +23,12 @@ UI_PY    := $(UI_FILES:.ui=_ui.py)
 PY_SOURCES := $(shell find $(SRC)/pbrenamer -name "*.py" \
                 ! -name "*_ui.py" ! -path "*/__pycache__/*")
 
+PO_FILES        := $(foreach lang,$(PO_LOCALES),$(LOCALE_DIR)/$(lang)/LC_MESSAGES/pbrenamer.po)
+TRANSLATE_STAMP := .translate.stamp
+
 .DEFAULT_GOAL := help
 .PHONY: all help venv venv-update install ui translate new-lang run test \
-        lint format docs docs-live designer dist clean \
+        lint format docs docs-live designer dist clean force-translate \
         bump-major bump-minor bump-patch bump-set
 
 all: translate ## Build all generated artifacts (UI → Python, strings → .mo)
@@ -58,7 +61,9 @@ ui: $(UI_PY) ## Compile all .ui files to Python via pyside6-uic
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
 
-translate: ui ## Extract translatable strings, update .po files and compile .mo
+translate: $(TRANSLATE_STAMP) ## Extract translatable strings, update .po files and compile .mo
+
+$(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
 	@printf "$(C)Extracting from Python sources...$(R)\n"
 	$(CONDA_RUN) xgettext --language=Python --keyword=_ \
 	    --from-code=UTF-8 --package-name=pbrenamer \
@@ -90,6 +95,11 @@ translate: ui ## Extract translatable strings, update .po files and compile .mo
 	    $(CONDA_RUN) msgfmt "$$po" -o "$$mo" && printf "  $(G)$$mo$(R)\n"; \
 	done
 	@printf "$(G)Done.$(R)\n"
+	@touch $@
+
+force-translate: ## Force-rebuild translations regardless of source changes
+	@rm -f $(TRANSLATE_STAMP)
+	@$(MAKE) translate
 
 new-lang: ## Scaffold a new translation (usage: make new-lang LOCALE=de)
 	@test -n "$(LOCALE)" || { \
@@ -175,4 +185,4 @@ clean: ## Remove all build/cache artifacts
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -name "*.pyc" -delete
 	find . -name "*.mo" -delete
-	rm -f $(POT_FILE)
+	rm -f $(POT_FILE) $(TRANSLATE_STAMP)
