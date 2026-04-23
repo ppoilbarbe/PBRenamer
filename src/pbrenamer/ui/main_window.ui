@@ -3,7 +3,7 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
-   <rect><x>0</x><y>0</y><width>900</width><height>600</height></rect>
+   <rect><x>0</x><y>0</y><width>1100</width><height>720</height></rect>
   </property>
   <property name="minimumSize">
    <size><width>900</width><height>600</height></size>
@@ -11,13 +11,32 @@
   <property name="windowTitle">
    <string>PBRenamer</string>
   </property>
+
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+
+    <!-- ── Toolbar ──────────────────────────────────────────────────── -->
     <item>
      <layout class="QHBoxLayout" name="toolbarLayout">
       <item>
        <widget class="QPushButton" name="btnOpen">
         <property name="text"><string>Open folder…</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnPreview">
+        <property name="text"><string>Preview</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnClearPreview">
+        <property name="text"><string>Clear</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnUndo">
+        <property name="enabled"><bool>false</bool></property>
+        <property name="text"><string>Undo</string></property>
        </widget>
       </item>
       <item>
@@ -36,15 +55,462 @@
       </item>
      </layout>
     </item>
+
+    <!-- ── Options bar ──────────────────────────────────────────────── -->
     <item>
-     <widget class="QLabel" name="lblPlaceholder">
-      <property name="text"><string>Select a folder to begin.</string></property>
-      <property name="alignment"><set>Qt::AlignCenter</set></property>
-     </widget>
+     <layout class="QHBoxLayout" name="optionsLayout">
+      <item>
+       <widget class="QLabel" name="lblShow">
+        <property name="text"><string>Show:</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cmbMode">
+        <item><property name="text"><string>Files only</string></property></item>
+        <item><property name="text"><string>Directories only</string></property></item>
+        <item><property name="text"><string>Files and directories</string></property></item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkRecursive">
+        <property name="text"><string>Recursive</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkKeepExtension">
+        <property name="text"><string>Keep extension</string></property>
+        <property name="checked"><bool>true</bool></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkAutoPreview">
+        <property name="text"><string>Auto-preview</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblFilter">
+        <property name="text"><string>Filter:</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edtFilter">
+        <property name="placeholderText"><string>*.txt</string></property>
+        <property name="maximumWidth"><number>160</number></property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hSpacer2">
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
+        <property name="sizeHint" stdset="0">
+         <size><width>20</width><height>20</height></size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
+
+    <!-- ── Main splitter (left tree | right panel) ─────────────────── -->
+    <item>
+     <widget class="QSplitter" name="splitterMain">
+      <property name="orientation"><enum>Qt::Horizontal</enum></property>
+
+      <!-- Left: directory tree -->
+      <widget class="QTreeView" name="treeDirectory">
+       <property name="minimumWidth"><number>180</number></property>
+       <property name="headerHidden"><bool>true</bool></property>
+      </widget>
+
+      <!-- Right: vertical splitter (file list | tabs) -->
+      <widget class="QSplitter" name="splitterRight">
+       <property name="orientation"><enum>Qt::Vertical</enum></property>
+
+       <!-- File list: Original | Preview -->
+       <widget class="QTreeWidget" name="tblFiles">
+        <property name="selectionMode"><enum>QAbstractItemView::ExtendedSelection</enum></property>
+        <property name="alternatingRowColors"><bool>true</bool></property>
+        <property name="rootIsDecorated"><bool>false</bool></property>
+        <property name="sortingEnabled"><bool>false</bool></property>
+        <column>
+         <property name="text"><string>Original</string></property>
+        </column>
+        <column>
+         <property name="text"><string>Preview</string></property>
+        </column>
+       </widget>
+
+       <!-- Tab widget -->
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex"><number>0</number></property>
+
+        <!-- Tab 0: Patterns -->
+        <widget class="QWidget" name="tabPatterns">
+         <attribute name="title"><string>Patterns</string></attribute>
+         <layout class="QVBoxLayout" name="layoutPatterns">
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QLabel">
+              <property name="text"><string>Search:</string></property>
+              <property name="minimumWidth"><number>60</number></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbPatternSearch">
+              <property name="editable"><bool>true</bool></property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>1</horstretch><verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QLabel">
+              <property name="text"><string>Replace:</string></property>
+              <property name="minimumWidth"><number>60</number></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbPatternDest">
+              <property name="editable"><bool>true</bool></property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>1</horstretch><verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QPushButton" name="btnSavePattern">
+              <property name="text"><string>Save pattern</string></property>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation"><enum>Qt::Horizontal</enum></property>
+              <property name="sizeHint" stdset="0">
+               <size><width>40</width><height>20</height></size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblPatternHelp">
+            <property name="text">
+             <string>{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} {2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} parent folder name</string>
+            </property>
+            <property name="wordWrap"><bool>true</bool></property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
+            <property name="sizeHint" stdset="0">
+             <size><width>20</width><height>5</height></size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+
+        <!-- Tab 1: Substitutions -->
+        <widget class="QWidget" name="tabSubstitutions">
+         <attribute name="title"><string>Substitutions</string></attribute>
+         <layout class="QVBoxLayout" name="layoutSubstitutions">
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QGroupBox" name="grpSpaces">
+              <property name="title"><string>Spaces</string></property>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QComboBox" name="cmbSpaces">
+                 <item><property name="text"><string>Spaces → underscores</string></property></item>
+                 <item><property name="text"><string>Underscores → spaces</string></property></item>
+                 <item><property name="text"><string>Spaces → dots</string></property></item>
+                 <item><property name="text"><string>Dots → spaces</string></property></item>
+                 <item><property name="text"><string>Spaces → dashes</string></property></item>
+                 <item><property name="text"><string>Dashes → spaces</string></property></item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnApplySpaces">
+                 <property name="text"><string>Apply</string></property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="grpCaps">
+              <property name="title"><string>Capitalization</string></property>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QComboBox" name="cmbCaps">
+                 <item><property name="text"><string>UPPERCASE</string></property></item>
+                 <item><property name="text"><string>lowercase</string></property></item>
+                 <item><property name="text"><string>Capitalize first letter</string></property></item>
+                 <item><property name="text"><string>Title Case</string></property></item>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnApplyCaps">
+                 <property name="text"><string>Apply</string></property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="grpReplace">
+            <property name="title"><string>Replace text</string></property>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>Find:</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edtReplaceOrig">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>1</horstretch><verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>→</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edtReplaceDest">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>1</horstretch><verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnApplyReplace">
+               <property name="text"><string>Apply</string></property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QPushButton" name="btnRemoveAccents">
+              <property name="text"><string>Remove accents</string></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRemoveDuplicates">
+              <property name="text"><string>Remove duplicate separators</string></property>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation"><enum>Qt::Horizontal</enum></property>
+              <property name="sizeHint" stdset="0">
+               <size><width>40</width><height>20</height></size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
+            <property name="sizeHint" stdset="0">
+             <size><width>20</width><height>5</height></size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+
+        <!-- Tab 2: Insert / Delete -->
+        <widget class="QWidget" name="tabInsertDelete">
+         <attribute name="title"><string>Insert / Delete</string></attribute>
+         <layout class="QVBoxLayout" name="layoutInsertDelete">
+          <item>
+           <widget class="QGroupBox" name="grpInsert">
+            <property name="title"><string>Insert</string></property>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>Text:</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="edtInsertText">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>1</horstretch><verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>at position:</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spnInsertPos">
+               <property name="minimum"><number>0</number></property>
+               <property name="maximum"><number>9999</number></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnInsert">
+               <property name="text"><string>Apply</string></property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="grpDelete">
+            <property name="title"><string>Delete</string></property>
+            <layout class="QHBoxLayout">
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>From position:</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spnDeleteFrom">
+               <property name="minimum"><number>0</number></property>
+               <property name="maximum"><number>9999</number></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel">
+               <property name="text"><string>to:</string></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spnDeleteTo">
+               <property name="minimum"><number>0</number></property>
+               <property name="maximum"><number>9999</number></property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnDelete">
+               <property name="text"><string>Apply</string></property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
+            <property name="sizeHint" stdset="0">
+             <size><width>20</width><height>5</height></size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+
+        <!-- Tab 3: Manual -->
+        <widget class="QWidget" name="tabManual">
+         <attribute name="title"><string>Manual</string></attribute>
+         <layout class="QVBoxLayout" name="layoutManual">
+          <item>
+           <layout class="QHBoxLayout">
+            <item>
+             <widget class="QLabel">
+              <property name="text"><string>New name for selected file:</string></property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="edtManualName">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>1</horstretch><verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnApplyManual">
+              <property name="text"><string>Apply</string></property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation"><enum>Qt::Vertical</enum></property>
+            <property name="sizeHint" stdset="0">
+             <size><width>20</width><height>5</height></size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+
+       </widget><!-- /tabWidget -->
+      </widget><!-- /splitterRight -->
+     </widget><!-- /splitterMain -->
+    </item>
+
    </layout>
-  </widget>
+  </widget><!-- /centralwidget -->
+
   <widget class="QStatusBar" name="statusbar"/>
+
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect><x>0</x><y>0</y><width>1100</width><height>30</height></rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title"><string>File</string></property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title"><string>Edit</string></property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title"><string>Help</string></property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuHelp"/>
+  </widget>
+
+  <action name="actionQuit">
+   <property name="text"><string>Quit</string></property>
+   <property name="shortcut"><string>Ctrl+Q</string></property>
+  </action>
+  <action name="actionSettings">
+   <property name="text"><string>Settings…</string></property>
+  </action>
+  <action name="actionAbout">
+   <property name="text"><string>About PBRenamer</string></property>
+  </action>
+
  </widget>
  <resources/>
  <connections/>

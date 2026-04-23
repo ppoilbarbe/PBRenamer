@@ -1,0 +1,284 @@
+# French translation for PBRenamer.
+# Copyright (C) 2024 Marcel Spock <mrspock@cardolan.net>
+# License: GPLv3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-23 17:32+0200\n"
+"PO-Revision-Date: 2026-04-21 00:00+0000\n"
+"Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/pbrenamer/ui/settings_dialog.py:22
+msgid "Settings"
+msgstr "Préférences"
+
+#: src/pbrenamer/ui/settings_dialog.py:26
+msgid "System default"
+msgstr "Langue du système"
+
+#: src/pbrenamer/ui/settings_dialog.py:43
+msgid "A restart is required for the language change to take effect."
+msgstr ""
+"Un redémarrage est nécessaire pour que le changement de langue prenne effet."
+
+#: src/pbrenamer/ui/settings_dialog.py:48
+msgid "Language:"
+msgstr "Langue :"
+
+#: src/pbrenamer/ui/main_window.py:117
+msgid "Select folder"
+msgstr "Choisir un dossier"
+
+#: src/pbrenamer/ui/main_window.py:151 /tmp/_pbrenamer_ui_strings.py:21
+msgid "Original"
+msgstr "Original"
+
+#: src/pbrenamer/ui/main_window.py:151 /tmp/_pbrenamer_ui_strings.py:7
+#: /tmp/_pbrenamer_ui_strings.py:20
+msgid "Preview"
+msgstr "Aperçu"
+
+#: src/pbrenamer/ui/main_window.py:162
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} élément(s)"
+
+#: src/pbrenamer/ui/main_window.py:395
+msgid "Rename errors"
+msgstr "Erreurs de renommage"
+
+#: src/pbrenamer/ui/main_window.py:429 /tmp/_pbrenamer_ui_strings.py:5
+msgid "About PBRenamer"
+msgstr "À propos de PBRenamer"
+
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:63
+msgid "language_name"
+msgstr "Français"
+
+#: /tmp/_pbrenamer_ui_strings.py:1
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:2
+msgid "Quit"
+msgstr "Quitter"
+
+#: /tmp/_pbrenamer_ui_strings.py:3
+msgid "Ctrl+Q"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:4
+msgid "Settings…"
+msgstr "Préférences…"
+
+#: /tmp/_pbrenamer_ui_strings.py:6
+msgid "Open folder…"
+msgstr "Ouvrir un dossier…"
+
+#: /tmp/_pbrenamer_ui_strings.py:8
+msgid "Clear"
+msgstr "Effacer"
+
+#: /tmp/_pbrenamer_ui_strings.py:9
+msgid "Undo"
+msgstr "Annuler"
+
+#: /tmp/_pbrenamer_ui_strings.py:10
+msgid "Rename"
+msgstr "Renommer"
+
+#: /tmp/_pbrenamer_ui_strings.py:11
+msgid "Show:"
+msgstr "Afficher :"
+
+#: /tmp/_pbrenamer_ui_strings.py:12
+msgid "Files only"
+msgstr "Fichiers uniquement"
+
+#: /tmp/_pbrenamer_ui_strings.py:13
+msgid "Directories only"
+msgstr "Dossiers uniquement"
+
+#: /tmp/_pbrenamer_ui_strings.py:14
+msgid "Files and directories"
+msgstr "Fichiers et dossiers"
+
+#: /tmp/_pbrenamer_ui_strings.py:15
+msgid "Recursive"
+msgstr "Récursif"
+
+#: /tmp/_pbrenamer_ui_strings.py:16
+msgid "Keep extension"
+msgstr "Garder l'extension"
+
+#: /tmp/_pbrenamer_ui_strings.py:17
+msgid "Auto-preview"
+msgstr "Aperçu automatique"
+
+#: /tmp/_pbrenamer_ui_strings.py:18
+msgid "Filter:"
+msgstr "Filtre :"
+
+#: /tmp/_pbrenamer_ui_strings.py:19
+msgid "*.txt"
+msgstr "*.txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:22
+msgid "Search:"
+msgstr "Recherche :"
+
+#: /tmp/_pbrenamer_ui_strings.py:23
+msgid "Replace:"
+msgstr "Remplacement :"
+
+#: /tmp/_pbrenamer_ui_strings.py:24
+msgid "Save pattern"
+msgstr "Sauvegarder le pattern"
+
+#: /tmp/_pbrenamer_ui_strings.py:25
+msgid ""
+"{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} "
+"{2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} "
+"parent folder name"
+msgstr ""
+"{#} chiffres · {L} lettres · {C} sans espace · {X} tout · {@} poubelle · {1} "
+"{2}… groupes capturés · {num2} compteur (zéros) · {date} aujourd'hui · {dir} "
+"nom du dossier parent"
+
+#: /tmp/_pbrenamer_ui_strings.py:26
+msgid "Patterns"
+msgstr "Patterns"
+
+#: /tmp/_pbrenamer_ui_strings.py:27
+msgid "Spaces"
+msgstr "Espaces"
+
+#: /tmp/_pbrenamer_ui_strings.py:28
+msgid "Spaces → underscores"
+msgstr "Espaces → tirets bas"
+
+#: /tmp/_pbrenamer_ui_strings.py:29
+msgid "Underscores → spaces"
+msgstr "Tirets bas → espaces"
+
+#: /tmp/_pbrenamer_ui_strings.py:30
+msgid "Spaces → dots"
+msgstr "Espaces → points"
+
+#: /tmp/_pbrenamer_ui_strings.py:31
+msgid "Dots → spaces"
+msgstr "Points → espaces"
+
+#: /tmp/_pbrenamer_ui_strings.py:32
+msgid "Spaces → dashes"
+msgstr "Espaces → tirets"
+
+#: /tmp/_pbrenamer_ui_strings.py:33
+msgid "Dashes → spaces"
+msgstr "Tirets → espaces"
+
+#: /tmp/_pbrenamer_ui_strings.py:34 /tmp/_pbrenamer_ui_strings.py:40
+#: /tmp/_pbrenamer_ui_strings.py:44 /tmp/_pbrenamer_ui_strings.py:51
+#: /tmp/_pbrenamer_ui_strings.py:55 /tmp/_pbrenamer_ui_strings.py:58
+msgid "Apply"
+msgstr "Appliquer"
+
+#: /tmp/_pbrenamer_ui_strings.py:35
+msgid "Capitalization"
+msgstr "Casse"
+
+#: /tmp/_pbrenamer_ui_strings.py:36
+msgid "UPPERCASE"
+msgstr "MAJUSCULES"
+
+#: /tmp/_pbrenamer_ui_strings.py:37
+msgid "lowercase"
+msgstr "minuscules"
+
+#: /tmp/_pbrenamer_ui_strings.py:38
+msgid "Capitalize first letter"
+msgstr "Première lettre en majuscule"
+
+#: /tmp/_pbrenamer_ui_strings.py:39
+msgid "Title Case"
+msgstr "Première lettre de chaque mot"
+
+#: /tmp/_pbrenamer_ui_strings.py:41
+msgid "Replace text"
+msgstr "Remplacer du texte"
+
+#: /tmp/_pbrenamer_ui_strings.py:42
+msgid "Find:"
+msgstr "Chercher :"
+
+#: /tmp/_pbrenamer_ui_strings.py:43
+msgid "→"
+msgstr "→"
+
+#: /tmp/_pbrenamer_ui_strings.py:45
+msgid "Remove accents"
+msgstr "Supprimer les accents"
+
+#: /tmp/_pbrenamer_ui_strings.py:46
+msgid "Remove duplicate separators"
+msgstr "Supprimer les séparateurs en double"
+
+#: /tmp/_pbrenamer_ui_strings.py:47
+msgid "Substitutions"
+msgstr "Substitutions"
+
+#: /tmp/_pbrenamer_ui_strings.py:48
+msgid "Insert"
+msgstr "Insérer"
+
+#: /tmp/_pbrenamer_ui_strings.py:49
+msgid "Text:"
+msgstr "Texte :"
+
+#: /tmp/_pbrenamer_ui_strings.py:50
+msgid "at position:"
+msgstr "à la position :"
+
+#: /tmp/_pbrenamer_ui_strings.py:52
+msgid "Delete"
+msgstr "Supprimer"
+
+#: /tmp/_pbrenamer_ui_strings.py:53
+msgid "From position:"
+msgstr "De la position :"
+
+#: /tmp/_pbrenamer_ui_strings.py:54
+msgid "to:"
+msgstr "à :"
+
+#: /tmp/_pbrenamer_ui_strings.py:56
+msgid "Insert / Delete"
+msgstr "Insérer / Supprimer"
+
+#: /tmp/_pbrenamer_ui_strings.py:57
+msgid "New name for selected file:"
+msgstr "Nouveau nom pour le fichier sélectionné :"
+
+#: /tmp/_pbrenamer_ui_strings.py:59
+msgid "Manual"
+msgstr "Manuel"
+
+#: /tmp/_pbrenamer_ui_strings.py:60
+msgid "File"
+msgstr "Fichier"
+
+#: /tmp/_pbrenamer_ui_strings.py:61
+msgid "Edit"
+msgstr "Édition"
+
+#: /tmp/_pbrenamer_ui_strings.py:62
+msgid "Help"
+msgstr "Aide"

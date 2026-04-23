@@ -2,7 +2,7 @@ name: pbrenamer
 
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 
 dependencies:
   - python=3.12
@@ -21,6 +21,10 @@ dependencies:
   - pre-commit
   # GitHub CLI
   - gh
+  # i18n tools (xgettext, msginit, msgmerge, msgfmt)
+  - gettext
+  # Packaging
+  - pyinstaller
   # Dev install (editable)
   - pip
   - pip:

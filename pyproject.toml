@@ -72,6 +72,11 @@ extend-select = [
     "BLE", # flake8-blind-except — forbid bare `except Exception` without re-raise
 ]
 
+[tool.ruff.lint.per-file-ignores]
+# _() is installed into builtins by gettext at runtime — not a real F821
+"src/pbrenamer/ui/main_window.py" = ["F821"]
+"src/pbrenamer/ui/settings_dialog.py" = ["F821"]
+
 [tool.ruff.format]
 # Black-compatible defaults (double quotes, trailing commas, magic trailing comma)
 quote-style               = "double"

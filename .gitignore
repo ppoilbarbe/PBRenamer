@@ -33,3 +33,6 @@ Thumbs.db
 
 # Qt — generated from .ui files, never committed
 *_ui.py
+
+# Claude Code
+.claude/
