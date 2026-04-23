@@ -15,7 +15,7 @@ ROOT = Path(__file__).parent.parent
 INIT_PY = ROOT / "src" / "pbrenamer" / "__init__.py"
 PYPROJECT = ROOT / "pyproject.toml"
 
-VERSION_RE = re.compile(r'^(\d+)\.(\d+)\.(\d+)$')
+VERSION_RE = re.compile(r"^(\d+)\.(\d+)\.(\d+)$")
 
 
 def parse_version(ver: str) -> tuple[int, int, int]:

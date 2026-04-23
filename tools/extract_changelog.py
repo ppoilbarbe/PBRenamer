@@ -29,7 +29,9 @@ def extract(content: str, version: str) -> str:
 
 
 def main() -> None:
-    tag = os.environ.get("GITHUB_REF_NAME") or (sys.argv[1] if len(sys.argv) > 1 else "")
+    tag = os.environ.get("GITHUB_REF_NAME") or (
+        sys.argv[1] if len(sys.argv) > 1 else ""
+    )
     if not tag:
         print("error: provide a tag via GITHUB_REF_NAME or argv[1]", file=sys.stderr)
         sys.exit(1)
