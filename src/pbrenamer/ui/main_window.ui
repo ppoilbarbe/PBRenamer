@@ -13,48 +13,7 @@
   </property>
 
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
-
-    <!-- ── Toolbar ──────────────────────────────────────────────────── -->
-    <item>
-     <layout class="QHBoxLayout" name="toolbarLayout">
-      <item>
-       <widget class="QPushButton" name="btnOpen">
-        <property name="text"><string>Open folder…</string></property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnPreview">
-        <property name="text"><string>Preview</string></property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnClearPreview">
-        <property name="text"><string>Clear</string></property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnUndo">
-        <property name="enabled"><bool>false</bool></property>
-        <property name="text"><string>Undo</string></property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="hSpacer">
-        <property name="orientation"><enum>Qt::Horizontal</enum></property>
-        <property name="sizeHint" stdset="0">
-         <size><width>40</width><height>20</height></size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnRename">
-        <property name="enabled"><bool>false</bool></property>
-        <property name="text"><string>Rename</string></property>
-       </widget>
-      </item>
-     </layout>
-    </item>
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
 
     <!-- ── Options bar ──────────────────────────────────────────────── -->
     <item>
@@ -66,6 +25,8 @@
       </item>
       <item>
        <widget class="QComboBox" name="cmbMode">
+        <property name="toolTip"><string>Choose which entries to list</string></property>
+        <property name="statusTip"><string>List files only, directories only, or both</string></property>
         <item><property name="text"><string>Files only</string></property></item>
         <item><property name="text"><string>Directories only</string></property></item>
         <item><property name="text"><string>Files and directories</string></property></item>
@@ -74,17 +35,23 @@
       <item>
        <widget class="QCheckBox" name="chkRecursive">
         <property name="text"><string>Recursive</string></property>
+        <property name="toolTip"><string>Include all subdirectories</string></property>
+        <property name="statusTip"><string>When checked, files from all subdirectories are listed</string></property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="chkKeepExtension">
         <property name="text"><string>Keep extension</string></property>
         <property name="checked"><bool>true</bool></property>
+        <property name="toolTip"><string>Preserve the file extension</string></property>
+        <property name="statusTip"><string>Apply transformations to the file stem only, leaving the extension unchanged</string></property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="chkAutoPreview">
         <property name="text"><string>Auto-preview</string></property>
+        <property name="toolTip"><string>Refresh the preview automatically</string></property>
+        <property name="statusTip"><string>Recompute the preview each time the pattern or options change</string></property>
        </widget>
       </item>
       <item>
@@ -96,6 +63,8 @@
        <widget class="QLineEdit" name="edtFilter">
         <property name="placeholderText"><string>*.txt</string></property>
         <property name="maximumWidth"><number>160</number></property>
+        <property name="toolTip"><string>Glob pattern to filter the file list</string></property>
+        <property name="statusTip"><string>Only files matching this glob pattern are listed (e.g. *.txt, image_*)</string></property>
        </widget>
       </item>
       <item>
@@ -118,9 +87,11 @@
       <widget class="QTreeView" name="treeDirectory">
        <property name="minimumWidth"><number>180</number></property>
        <property name="headerHidden"><bool>true</bool></property>
+       <property name="toolTip"><string>Browse the filesystem</string></property>
+       <property name="statusTip"><string>Select a directory to list its contents in the panel on the right</string></property>
       </widget>
 
-      <!-- Right: vertical splitter (file list | tabs) -->
+      <!-- Right: vertical splitter (file list | bottom panel) -->
       <widget class="QSplitter" name="splitterRight">
        <property name="orientation"><enum>Qt::Vertical</enum></property>
 
@@ -130,6 +101,8 @@
         <property name="alternatingRowColors"><bool>true</bool></property>
         <property name="rootIsDecorated"><bool>false</bool></property>
         <property name="sortingEnabled"><bool>false</bool></property>
+        <property name="toolTip"><string>Files to be renamed</string></property>
+        <property name="statusTip"><string>Select rows to restrict operations to those files; leave unselected to apply to all</string></property>
         <column>
          <property name="text"><string>Original</string></property>
         </column>
@@ -138,338 +111,436 @@
         </column>
        </widget>
 
-       <!-- Tab widget -->
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="currentIndex"><number>0</number></property>
+       <!-- Bottom panel: tab widget + action buttons -->
+       <widget class="QWidget" name="bottomPanel">
+        <layout class="QHBoxLayout" name="bottomLayout">
+         <property name="leftMargin"><number>0</number></property>
+         <property name="topMargin"><number>0</number></property>
+         <property name="rightMargin"><number>0</number></property>
+         <property name="bottomMargin"><number>0</number></property>
+         <item>
 
-        <!-- Tab 0: Patterns -->
-        <widget class="QWidget" name="tabPatterns">
-         <attribute name="title"><string>Patterns</string></attribute>
-         <layout class="QVBoxLayout" name="layoutPatterns">
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QLabel">
-              <property name="text"><string>Search:</string></property>
-              <property name="minimumWidth"><number>60</number></property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cmbPatternSearch">
-              <property name="editable"><bool>true</bool></property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>1</horstretch><verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QLabel">
-              <property name="text"><string>Replace:</string></property>
-              <property name="minimumWidth"><number>60</number></property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cmbPatternDest">
-              <property name="editable"><bool>true</bool></property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>1</horstretch><verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QPushButton" name="btnSavePattern">
-              <property name="text"><string>Save pattern</string></property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation"><enum>Qt::Horizontal</enum></property>
-              <property name="sizeHint" stdset="0">
-               <size><width>40</width><height>20</height></size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblPatternHelp">
-            <property name="text">
-             <string>{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} {2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} parent folder name</string>
-            </property>
-            <property name="wordWrap"><bool>true</bool></property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation"><enum>Qt::Vertical</enum></property>
-            <property name="sizeHint" stdset="0">
-             <size><width>20</width><height>5</height></size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
+          <!-- Tab widget -->
+          <widget class="QTabWidget" name="tabWidget">
+           <property name="currentIndex"><number>0</number></property>
 
-        <!-- Tab 1: Substitutions -->
-        <widget class="QWidget" name="tabSubstitutions">
-         <attribute name="title"><string>Substitutions</string></attribute>
-         <layout class="QVBoxLayout" name="layoutSubstitutions">
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QGroupBox" name="grpSpaces">
-              <property name="title"><string>Spaces</string></property>
+           <!-- Tab 0: Patterns -->
+           <widget class="QWidget" name="tabPatterns">
+            <attribute name="title"><string>Patterns</string></attribute>
+            <layout class="QVBoxLayout" name="layoutPatterns">
+             <item>
               <layout class="QHBoxLayout">
                <item>
-                <widget class="QComboBox" name="cmbSpaces">
-                 <item><property name="text"><string>Spaces → underscores</string></property></item>
-                 <item><property name="text"><string>Underscores → spaces</string></property></item>
-                 <item><property name="text"><string>Spaces → dots</string></property></item>
-                 <item><property name="text"><string>Dots → spaces</string></property></item>
-                 <item><property name="text"><string>Spaces → dashes</string></property></item>
-                 <item><property name="text"><string>Dashes → spaces</string></property></item>
+                <widget class="QLabel">
+                 <property name="text"><string>Search:</string></property>
+                 <property name="minimumWidth"><number>60</number></property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="btnApplySpaces">
-                 <property name="text"><string>Apply</string></property>
+                <widget class="QComboBox" name="cmbPatternSearch">
+                 <property name="editable"><bool>true</bool></property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>1</horstretch><verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip"><string>Search pattern</string></property>
+                 <property name="statusTip"><string>Pattern to match against file names. Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anything</string></property>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="grpCaps">
-              <property name="title"><string>Capitalization</string></property>
+             </item>
+             <item>
               <layout class="QHBoxLayout">
                <item>
-                <widget class="QComboBox" name="cmbCaps">
-                 <item><property name="text"><string>UPPERCASE</string></property></item>
-                 <item><property name="text"><string>lowercase</string></property></item>
-                 <item><property name="text"><string>Capitalize first letter</string></property></item>
-                 <item><property name="text"><string>Title Case</string></property></item>
+                <widget class="QLabel">
+                 <property name="text"><string>Replace:</string></property>
+                 <property name="minimumWidth"><number>60</number></property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="btnApplyCaps">
-                 <property name="text"><string>Apply</string></property>
+                <widget class="QComboBox" name="cmbPatternDest">
+                 <property name="editable"><bool>true</bool></property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>1</horstretch><verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip"><string>Replacement pattern</string></property>
+                 <property name="statusTip"><string>Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, {date} for today's date, {dir} for the parent folder name</string></property>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="grpReplace">
-            <property name="title"><string>Replace text</string></property>
-            <layout class="QHBoxLayout">
-             <item>
-              <widget class="QLabel">
-               <property name="text"><string>Find:</string></property>
-              </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="edtReplaceOrig">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>1</horstretch><verstretch>0</verstretch>
-                </sizepolicy>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QPushButton" name="btnSavePattern">
+                 <property name="text"><string>Save pattern</string></property>
+                 <property name="toolTip"><string>Save this pattern pair to the history</string></property>
+                 <property name="statusTip"><string>Add the current search and replace patterns to the drop-down history for reuse</string></property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation"><enum>Qt::Horizontal</enum></property>
+                 <property name="sizeHint" stdset="0">
+                  <size><width>40</width><height>20</height></size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblPatternHelp">
+               <property name="text">
+                <string>{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} {2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} parent folder name</string>
                </property>
+               <property name="wordWrap"><bool>true</bool></property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel">
-               <property name="text"><string>→</string></property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="edtReplaceDest">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>1</horstretch><verstretch>0</verstretch>
-                </sizepolicy>
+              <spacer>
+               <property name="orientation"><enum>Qt::Vertical</enum></property>
+               <property name="sizeHint" stdset="0">
+                <size><width>20</width><height>5</height></size>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnApplyReplace">
-               <property name="text"><string>Apply</string></property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QPushButton" name="btnRemoveAccents">
-              <property name="text"><string>Remove accents</string></property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnRemoveDuplicates">
-              <property name="text"><string>Remove duplicate separators</string></property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation"><enum>Qt::Horizontal</enum></property>
-              <property name="sizeHint" stdset="0">
-               <size><width>40</width><height>20</height></size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation"><enum>Qt::Vertical</enum></property>
-            <property name="sizeHint" stdset="0">
-             <size><width>20</width><height>5</height></size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
 
-        <!-- Tab 2: Insert / Delete -->
-        <widget class="QWidget" name="tabInsertDelete">
-         <attribute name="title"><string>Insert / Delete</string></attribute>
-         <layout class="QVBoxLayout" name="layoutInsertDelete">
-          <item>
-           <widget class="QGroupBox" name="grpInsert">
-            <property name="title"><string>Insert</string></property>
-            <layout class="QHBoxLayout">
+           <!-- Tab 1: Substitutions -->
+           <widget class="QWidget" name="tabSubstitutions">
+            <attribute name="title"><string>Substitutions</string></attribute>
+            <layout class="QVBoxLayout" name="layoutSubstitutions">
              <item>
-              <widget class="QLabel">
-               <property name="text"><string>Text:</string></property>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QGroupBox" name="grpSpaces">
+                 <property name="title"><string>Spaces</string></property>
+                 <layout class="QHBoxLayout">
+                  <item>
+                   <widget class="QComboBox" name="cmbSpaces">
+                    <property name="toolTip"><string>Separator substitution mode</string></property>
+                    <property name="statusTip"><string>Choose which separator characters to convert</string></property>
+                    <item><property name="text"><string>Spaces → underscores</string></property></item>
+                    <item><property name="text"><string>Underscores → spaces</string></property></item>
+                    <item><property name="text"><string>Spaces → dots</string></property></item>
+                    <item><property name="text"><string>Dots → spaces</string></property></item>
+                    <item><property name="text"><string>Spaces → dashes</string></property></item>
+                    <item><property name="text"><string>Dashes → spaces</string></property></item>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnApplySpaces">
+                    <property name="text"><string>Apply</string></property>
+                    <property name="toolTip"><string>Apply separator substitution</string></property>
+                    <property name="statusTip"><string>Apply the selected separator substitution to the file list preview</string></property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="grpCaps">
+                 <property name="title"><string>Capitalization</string></property>
+                 <layout class="QHBoxLayout">
+                  <item>
+                   <widget class="QComboBox" name="cmbCaps">
+                    <property name="toolTip"><string>Capitalization mode</string></property>
+                    <property name="statusTip"><string>Choose how to change the case of file names</string></property>
+                    <item><property name="text"><string>UPPERCASE</string></property></item>
+                    <item><property name="text"><string>lowercase</string></property></item>
+                    <item><property name="text"><string>Capitalize first letter</string></property></item>
+                    <item><property name="text"><string>Title Case</string></property></item>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnApplyCaps">
+                    <property name="text"><string>Apply</string></property>
+                    <property name="toolTip"><string>Apply capitalization</string></property>
+                    <property name="statusTip"><string>Apply the selected capitalization mode to the file list preview</string></property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="grpReplace">
+               <property name="title"><string>Replace text</string></property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>Find:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="edtReplaceOrig">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>1</horstretch><verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="toolTip"><string>Text to search for</string></property>
+                  <property name="statusTip"><string>Literal string to find in each file name</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>→</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="edtReplaceDest">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>1</horstretch><verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="toolTip"><string>Replacement text</string></property>
+                  <property name="statusTip"><string>String to substitute in place of every occurrence found</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnApplyReplace">
+                  <property name="text"><string>Apply</string></property>
+                  <property name="toolTip"><string>Apply text replacement</string></property>
+                  <property name="statusTip"><string>Replace all occurrences of the search text in the file list preview</string></property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="edtInsertText">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>1</horstretch><verstretch>0</verstretch>
-                </sizepolicy>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QPushButton" name="btnRemoveAccents">
+                 <property name="text"><string>Remove accents</string></property>
+                 <property name="toolTip"><string>Strip diacritical marks</string></property>
+                 <property name="statusTip"><string>Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnRemoveDuplicates">
+                 <property name="text"><string>Remove duplicate separators</string></property>
+                 <property name="toolTip"><string>Collapse consecutive separators</string></property>
+                 <property name="statusTip"><string>Collapse runs of identical separator characters (spaces, dots, dashes, underscores) into one</string></property>
+                </widget>
+               </item>
+               <item>
+                <spacer>
+                 <property name="orientation"><enum>Qt::Horizontal</enum></property>
+                 <property name="sizeHint" stdset="0">
+                  <size><width>40</width><height>20</height></size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation"><enum>Qt::Vertical</enum></property>
+               <property name="sizeHint" stdset="0">
+                <size><width>20</width><height>5</height></size>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel">
-               <property name="text"><string>at position:</string></property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="spnInsertPos">
-               <property name="minimum"><number>0</number></property>
-               <property name="maximum"><number>9999</number></property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnInsert">
-               <property name="text"><string>Apply</string></property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="grpDelete">
-            <property name="title"><string>Delete</string></property>
-            <layout class="QHBoxLayout">
+
+           <!-- Tab 2: Insert / Delete -->
+           <widget class="QWidget" name="tabInsertDelete">
+            <attribute name="title"><string>Insert / Delete</string></attribute>
+            <layout class="QVBoxLayout" name="layoutInsertDelete">
              <item>
-              <widget class="QLabel">
-               <property name="text"><string>From position:</string></property>
+              <widget class="QGroupBox" name="grpInsert">
+               <property name="title"><string>Insert</string></property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>Text:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="edtInsertText">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>1</horstretch><verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="toolTip"><string>Text to insert</string></property>
+                  <property name="statusTip"><string>Characters to insert into each file name at the specified position</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>at position:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spnInsertPos">
+                  <property name="minimum"><number>0</number></property>
+                  <property name="maximum"><number>9999</number></property>
+                  <property name="toolTip"><string>Character position (0 = start)</string></property>
+                  <property name="statusTip"><string>Zero-based character index at which to insert the text; use a high value to append</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnInsert">
+                  <property name="text"><string>Apply</string></property>
+                  <property name="toolTip"><string>Apply insertion</string></property>
+                  <property name="statusTip"><string>Insert the given text at the specified position in the file list preview</string></property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="spnDeleteFrom">
-               <property name="minimum"><number>0</number></property>
-               <property name="maximum"><number>9999</number></property>
+              <widget class="QGroupBox" name="grpDelete">
+               <property name="title"><string>Delete</string></property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>From position:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spnDeleteFrom">
+                  <property name="minimum"><number>0</number></property>
+                  <property name="maximum"><number>9999</number></property>
+                  <property name="toolTip"><string>Start of the range to delete (0 = first character)</string></property>
+                  <property name="statusTip"><string>Index of the first character to delete (zero-based, inclusive)</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>to:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="spnDeleteTo">
+                  <property name="minimum"><number>0</number></property>
+                  <property name="maximum"><number>9999</number></property>
+                  <property name="toolTip"><string>End of the range to delete (inclusive)</string></property>
+                  <property name="statusTip"><string>Index of the last character to delete (zero-based, inclusive)</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnDelete">
+                  <property name="text"><string>Apply</string></property>
+                  <property name="toolTip"><string>Apply deletion</string></property>
+                  <property name="statusTip"><string>Delete the specified character range from each name in the file list preview</string></property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
-              <widget class="QLabel">
-               <property name="text"><string>to:</string></property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="spnDeleteTo">
-               <property name="minimum"><number>0</number></property>
-               <property name="maximum"><number>9999</number></property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnDelete">
-               <property name="text"><string>Apply</string></property>
-              </widget>
+              <spacer>
+               <property name="orientation"><enum>Qt::Vertical</enum></property>
+               <property name="sizeHint" stdset="0">
+                <size><width>20</width><height>5</height></size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation"><enum>Qt::Vertical</enum></property>
-            <property name="sizeHint" stdset="0">
-             <size><width>20</width><height>5</height></size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
 
-        <!-- Tab 3: Manual -->
-        <widget class="QWidget" name="tabManual">
-         <attribute name="title"><string>Manual</string></attribute>
-         <layout class="QVBoxLayout" name="layoutManual">
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QLabel">
-              <property name="text"><string>New name for selected file:</string></property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="edtManualName">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>1</horstretch><verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnApplyManual">
-              <property name="text"><string>Apply</string></property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation"><enum>Qt::Vertical</enum></property>
-            <property name="sizeHint" stdset="0">
-             <size><width>20</width><height>5</height></size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
+           <!-- Tab 3: Manual -->
+           <widget class="QWidget" name="tabManual">
+            <attribute name="title"><string>Manual</string></attribute>
+            <layout class="QVBoxLayout" name="layoutManual">
+             <item>
+              <layout class="QHBoxLayout">
+               <item>
+                <widget class="QLabel">
+                 <property name="text"><string>New name for selected file:</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edtManualName">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>1</horstretch><verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="toolTip"><string>New name for the selected file</string></property>
+                 <property name="statusTip"><string>Type the new name for the currently selected file, then click Apply</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btnApplyManual">
+                 <property name="text"><string>Apply</string></property>
+                 <property name="toolTip"><string>Set the preview name for the selected file</string></property>
+                 <property name="statusTip"><string>Apply the typed name as the preview for the currently selected file</string></property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation"><enum>Qt::Vertical</enum></property>
+               <property name="sizeHint" stdset="0">
+                <size><width>20</width><height>5</height></size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
 
-       </widget><!-- /tabWidget -->
+          </widget><!-- /tabWidget -->
+         </item>
+
+         <!-- Action buttons (vertical bar on the right of the tabs) -->
+         <item>
+          <layout class="QVBoxLayout" name="actionButtonsLayout">
+           <item>
+            <widget class="QPushButton" name="btnPreview">
+             <property name="text"><string>Preview</string></property>
+             <property name="toolTip"><string>Compute rename preview</string></property>
+             <property name="statusTip"><string>Apply the current pattern to all listed files and show the result in the Preview column</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnClearPreview">
+             <property name="text"><string>Clear</string></property>
+             <property name="toolTip"><string>Clear the preview</string></property>
+             <property name="statusTip"><string>Remove all preview values from the Preview column</string></property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="vSpacerActions">
+             <property name="orientation"><enum>Qt::Vertical</enum></property>
+             <property name="sizeHint" stdset="0">
+              <size><width>20</width><height>40</height></size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnUndo">
+             <property name="enabled"><bool>false</bool></property>
+             <property name="text"><string>Undo</string></property>
+             <property name="toolTip"><string>Undo last rename batch</string></property>
+             <property name="statusTip"><string>Reverse the last batch of renames performed on disk</string></property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnRename">
+             <property name="enabled"><bool>false</bool></property>
+             <property name="text"><string>Rename</string></property>
+             <property name="toolTip"><string>Apply renames on disk</string></property>
+             <property name="statusTip"><string>Permanently rename all files shown in the Preview column (only enabled when there are no conflicts)</string></property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+
+        </layout>
+       </widget><!-- /bottomPanel -->
+
       </widget><!-- /splitterRight -->
      </widget><!-- /splitterMain -->
     </item>
@@ -485,6 +556,8 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title"><string>File</string></property>
+    <addaction name="actionOpenFolder"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -500,15 +573,27 @@
    <addaction name="menuHelp"/>
   </widget>
 
+  <action name="actionOpenFolder">
+   <property name="text"><string>Open folder…</string></property>
+   <property name="shortcut"><string>Ctrl+O</string></property>
+   <property name="toolTip"><string>Open a folder</string></property>
+   <property name="statusTip"><string>Open a directory chooser and navigate the tree to the selected folder</string></property>
+  </action>
   <action name="actionQuit">
    <property name="text"><string>Quit</string></property>
    <property name="shortcut"><string>Ctrl+Q</string></property>
+   <property name="toolTip"><string>Quit PBRenamer</string></property>
+   <property name="statusTip"><string>Exit the application</string></property>
   </action>
   <action name="actionSettings">
    <property name="text"><string>Settings…</string></property>
+   <property name="toolTip"><string>Open settings</string></property>
+   <property name="statusTip"><string>Configure language and other preferences</string></property>
   </action>
   <action name="actionAbout">
    <property name="text"><string>About PBRenamer</string></property>
+   <property name="toolTip"><string>About this application</string></property>
+   <property name="statusTip"><string>Show version and license information</string></property>
   </action>
 
  </widget>

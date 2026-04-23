@@ -33,7 +33,7 @@ _CONFLICT_COLOR = QColor("#cc0000")
 class MainWindow(QMainWindow):
     """Top-level window for PBRenamer."""
 
-    def __init__(self) -> None:
+    def __init__(self, start_dir: str | None = None) -> None:
         super().__init__()
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
@@ -47,6 +47,7 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
+        self._navigate_to(start_dir or os.getcwd())
 
     # ── Initial setup ─────────────────────────────────────────────────────────
 
@@ -58,9 +59,14 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.setRootIndex(root_idx)
         for col in range(1, self._fs_model.columnCount()):
             self._ui.treeDirectory.hideColumn(col)
-        home_idx = self._fs_model.index(QDir.homePath())
-        self._ui.treeDirectory.scrollTo(home_idx)
-        self._ui.treeDirectory.expand(home_idx)
+
+    def _navigate_to(self, path: str) -> None:
+        if not os.path.isdir(path):
+            return
+        idx = self._fs_model.index(path)
+        self._ui.treeDirectory.setCurrentIndex(idx)
+        self._ui.treeDirectory.scrollTo(idx)
+        self._ui.treeDirectory.expand(idx)
 
     def _populate_pattern_combos(self) -> None:
         self._ui.cmbPatternSearch.clear()
@@ -71,7 +77,7 @@ class MainWindow(QMainWindow):
             self._ui.cmbPatternDest.addItem(p)
 
     def _connect_signals(self) -> None:
-        self._ui.btnOpen.clicked.connect(self._on_open)
+        self._ui.actionOpenFolder.triggered.connect(self._on_open)
         self._ui.btnPreview.clicked.connect(self._on_preview)
         self._ui.btnClearPreview.clicked.connect(self._on_clear_preview)
         self._ui.btnUndo.clicked.connect(self._on_undo)
@@ -150,7 +156,8 @@ class MainWindow(QMainWindow):
         self._ui.tblFiles.clear()
         self._ui.tblFiles.setHeaderLabels([_("Original"), _("Preview")])
         for name, path in entries:
-            item = QTreeWidgetItem([name, ""])
+            display = os.path.relpath(path, self._current_dir) if recursive else name
+            item = QTreeWidgetItem([display, ""])
             item.setData(0, Qt.ItemDataRole.UserRole, path)
             if os.path.isdir(path):
                 item.setForeground(0, _DIR_COLOR)
@@ -191,8 +198,8 @@ class MainWindow(QMainWindow):
         items = self._active_items()
 
         for counter, item in enumerate(items, start=1):
-            name = item.text(0)
             path = item.data(0, Qt.ItemDataRole.UserRole)
+            name = os.path.basename(path)
 
             if keep_ext:
                 stem, stem_path, ext = filetools.cut_extension(name, path)
@@ -259,7 +266,7 @@ class MainWindow(QMainWindow):
         for idx, (preview, path, item) in enumerate(previews):
             if idx in conflict_indices:
                 item.setForeground(1, _CONFLICT_COLOR)
-            elif preview != item.text(0):
+            elif preview != os.path.basename(path):
                 item.setForeground(1, _PREVIEW_COLOR)
                 any_changed = True
             else:
@@ -280,8 +287,8 @@ class MainWindow(QMainWindow):
         keep_ext = self._ui.chkKeepExtension.isChecked()
 
         for item in self._active_items():
-            name = item.text(0)
             path = item.data(0, Qt.ItemDataRole.UserRole)
+            name = os.path.basename(path)
 
             if keep_ext:
                 stem, stem_path, ext = filetools.cut_extension(name, path)

@@ -1,6 +1,7 @@
 """Entry point — run as `python -m pbrenamer` or `pbrenamer`."""
 
 import argparse
+import os
 import sys
 
 
@@ -17,6 +18,13 @@ def _build_parser() -> argparse.ArgumentParser:
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
+    )
+    parser.add_argument(
+        "directory",
+        nargs="?",
+        default=None,
+        metavar="DIR",
+        help="Starting directory (default: current working directory)",
     )
     return parser
 
@@ -43,7 +51,8 @@ def main() -> None:
 
     from pbrenamer.ui.main_window import MainWindow
 
-    window = MainWindow()
+    start_dir = os.path.abspath(_ns.directory) if _ns.directory else os.getcwd()
+    window = MainWindow(start_dir=start_dir)
     window.show()
     sys.exit(app.exec())
 

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PBRenamer 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 17:32+0200\n"
-"PO-Revision-Date: 2026-04-21 00:00+0000\n"
+"POT-Creation-Date: 2026-04-23 19:32+0200\n"
+"PO-Revision-Date: 2026-04-23 00:00+0000\n"
 "Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -32,33 +32,33 @@ msgstr "A restart is required for the language change to take effect."
 msgid "Language:"
 msgstr "Language:"
 
-#: src/pbrenamer/ui/main_window.py:117
+#: src/pbrenamer/ui/main_window.py:123
 msgid "Select folder"
 msgstr "Select folder"
 
-#: src/pbrenamer/ui/main_window.py:151 /tmp/_pbrenamer_ui_strings.py:21
+#: src/pbrenamer/ui/main_window.py:157 /tmp/_pbrenamer_ui_strings.py:38
 msgid "Original"
 msgstr "Original"
 
-#: src/pbrenamer/ui/main_window.py:151 /tmp/_pbrenamer_ui_strings.py:7
-#: /tmp/_pbrenamer_ui_strings.py:20
+#: src/pbrenamer/ui/main_window.py:157 /tmp/_pbrenamer_ui_strings.py:37
+#: /tmp/_pbrenamer_ui_strings.py:119
 msgid "Preview"
 msgstr "Preview"
 
-#: src/pbrenamer/ui/main_window.py:162
+#: src/pbrenamer/ui/main_window.py:169
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} item(s)"
 
-#: src/pbrenamer/ui/main_window.py:395
+#: src/pbrenamer/ui/main_window.py:402
 msgid "Rename errors"
 msgstr "Rename errors"
 
-#: src/pbrenamer/ui/main_window.py:429 /tmp/_pbrenamer_ui_strings.py:5
+#: src/pbrenamer/ui/main_window.py:436 /tmp/_pbrenamer_ui_strings.py:13
 msgid "About PBRenamer"
 msgstr "About PBRenamer"
 
-#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:63
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:134
 msgid "language_name"
 msgstr "English"
 
@@ -67,82 +67,205 @@ msgid "PBRenamer"
 msgstr "PBRenamer"
 
 #: /tmp/_pbrenamer_ui_strings.py:2
-msgid "Quit"
-msgstr "Quit"
-
-#: /tmp/_pbrenamer_ui_strings.py:3
-msgid "Ctrl+Q"
-msgstr ""
-
-#: /tmp/_pbrenamer_ui_strings.py:4
-msgid "Settings…"
-msgstr "Settings…"
-
-#: /tmp/_pbrenamer_ui_strings.py:6
 msgid "Open folder…"
 msgstr "Open folder…"
 
+#: /tmp/_pbrenamer_ui_strings.py:3
+msgid "Ctrl+O"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:4
+msgid "Open a folder"
+msgstr "Open a folder"
+
+#: /tmp/_pbrenamer_ui_strings.py:5
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr "Open a directory chooser and navigate the tree to the selected folder"
+
+#: /tmp/_pbrenamer_ui_strings.py:6
+msgid "Quit"
+msgstr "Quit"
+
+#: /tmp/_pbrenamer_ui_strings.py:7
+msgid "Ctrl+Q"
+msgstr ""
+
 #: /tmp/_pbrenamer_ui_strings.py:8
-msgid "Clear"
-msgstr "Clear"
+msgid "Quit PBRenamer"
+msgstr "Quit PBRenamer"
 
 #: /tmp/_pbrenamer_ui_strings.py:9
-msgid "Undo"
-msgstr "Undo"
+msgid "Exit the application"
+msgstr "Exit the application"
 
 #: /tmp/_pbrenamer_ui_strings.py:10
-msgid "Rename"
-msgstr "Rename"
+msgid "Settings…"
+msgstr "Settings…"
 
 #: /tmp/_pbrenamer_ui_strings.py:11
+msgid "Open settings"
+msgstr "Open settings"
+
+#: /tmp/_pbrenamer_ui_strings.py:12
+msgid "Configure language and other preferences"
+msgstr "Configure language and other preferences"
+
+#: /tmp/_pbrenamer_ui_strings.py:14
+msgid "About this application"
+msgstr "About this application"
+
+#: /tmp/_pbrenamer_ui_strings.py:15
+msgid "Show version and license information"
+msgstr "Show version and license information"
+
+#: /tmp/_pbrenamer_ui_strings.py:16
 msgid "Show:"
 msgstr "Show:"
 
-#: /tmp/_pbrenamer_ui_strings.py:12
+#: /tmp/_pbrenamer_ui_strings.py:17
 msgid "Files only"
 msgstr "Files only"
 
-#: /tmp/_pbrenamer_ui_strings.py:13
+#: /tmp/_pbrenamer_ui_strings.py:18
 msgid "Directories only"
 msgstr "Directories only"
 
-#: /tmp/_pbrenamer_ui_strings.py:14
+#: /tmp/_pbrenamer_ui_strings.py:19
 msgid "Files and directories"
 msgstr "Files and directories"
 
-#: /tmp/_pbrenamer_ui_strings.py:15
+#: /tmp/_pbrenamer_ui_strings.py:20
+msgid "Choose which entries to list"
+msgstr "Choose which entries to list"
+
+#: /tmp/_pbrenamer_ui_strings.py:21
+msgid "List files only, directories only, or both"
+msgstr "List files only, directories only, or both"
+
+#: /tmp/_pbrenamer_ui_strings.py:22
 msgid "Recursive"
 msgstr "Recursive"
 
-#: /tmp/_pbrenamer_ui_strings.py:16
+#: /tmp/_pbrenamer_ui_strings.py:23
+msgid "Include all subdirectories"
+msgstr "Include all subdirectories"
+
+#: /tmp/_pbrenamer_ui_strings.py:24
+msgid "When checked, files from all subdirectories are listed"
+msgstr "When checked, files from all subdirectories are listed"
+
+#: /tmp/_pbrenamer_ui_strings.py:25
 msgid "Keep extension"
 msgstr "Keep extension"
 
-#: /tmp/_pbrenamer_ui_strings.py:17
+#: /tmp/_pbrenamer_ui_strings.py:26
+msgid "Preserve the file extension"
+msgstr "Preserve the file extension"
+
+#: /tmp/_pbrenamer_ui_strings.py:27
+msgid ""
+"Apply transformations to the file stem only, leaving the extension unchanged"
+msgstr ""
+"Apply transformations to the file stem only, leaving the extension unchanged"
+
+#: /tmp/_pbrenamer_ui_strings.py:28
 msgid "Auto-preview"
 msgstr "Auto-preview"
 
-#: /tmp/_pbrenamer_ui_strings.py:18
+#: /tmp/_pbrenamer_ui_strings.py:29
+msgid "Refresh the preview automatically"
+msgstr "Refresh the preview automatically"
+
+#: /tmp/_pbrenamer_ui_strings.py:30
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Recompute the preview each time the pattern or options change"
+
+#: /tmp/_pbrenamer_ui_strings.py:31
 msgid "Filter:"
 msgstr "Filter:"
 
-#: /tmp/_pbrenamer_ui_strings.py:19
+#: /tmp/_pbrenamer_ui_strings.py:32
 msgid "*.txt"
 msgstr "*.txt"
 
-#: /tmp/_pbrenamer_ui_strings.py:22
+#: /tmp/_pbrenamer_ui_strings.py:33
+msgid "Glob pattern to filter the file list"
+msgstr "Glob pattern to filter the file list"
+
+#: /tmp/_pbrenamer_ui_strings.py:34
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+
+#: /tmp/_pbrenamer_ui_strings.py:35
+msgid "Browse the filesystem"
+msgstr "Browse the filesystem"
+
+#: /tmp/_pbrenamer_ui_strings.py:36
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "Select a directory to list its contents in the panel on the right"
+
+#: /tmp/_pbrenamer_ui_strings.py:39
+msgid "Files to be renamed"
+msgstr "Files to be renamed"
+
+#: /tmp/_pbrenamer_ui_strings.py:40
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to apply "
+"to all"
+msgstr ""
+"Select rows to restrict operations to those files; leave unselected to apply "
+"to all"
+
+#: /tmp/_pbrenamer_ui_strings.py:41
 msgid "Search:"
 msgstr "Search:"
 
-#: /tmp/_pbrenamer_ui_strings.py:23
+#: /tmp/_pbrenamer_ui_strings.py:42
+msgid "Search pattern"
+msgstr "Search pattern"
+
+#: /tmp/_pbrenamer_ui_strings.py:43
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} letters, "
+"{C} non-space, {X} anything"
+msgstr ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} letters, "
+"{C} non-space, {X} anything"
+
+#: /tmp/_pbrenamer_ui_strings.py:44
 msgid "Replace:"
 msgstr "Replace:"
 
-#: /tmp/_pbrenamer_ui_strings.py:24
+#: /tmp/_pbrenamer_ui_strings.py:45
+msgid "Replacement pattern"
+msgstr "Replacement pattern"
+
+#: /tmp/_pbrenamer_ui_strings.py:46
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, "
+"{date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, "
+"{date} for today's date, {dir} for the parent folder name"
+
+#: /tmp/_pbrenamer_ui_strings.py:47
 msgid "Save pattern"
 msgstr "Save pattern"
 
-#: /tmp/_pbrenamer_ui_strings.py:25
+#: /tmp/_pbrenamer_ui_strings.py:48
+msgid "Save this pattern pair to the history"
+msgstr "Save this pattern pair to the history"
+
+#: /tmp/_pbrenamer_ui_strings.py:49
+msgid ""
+"Add the current search and replace patterns to the drop-down history for "
+"reuse"
+msgstr ""
+"Add the current search and replace patterns to the drop-down history for "
+"reuse"
+
+#: /tmp/_pbrenamer_ui_strings.py:50
 msgid ""
 "{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} "
 "{2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} "
@@ -152,132 +275,332 @@ msgstr ""
 "{2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} "
 "parent folder name"
 
-#: /tmp/_pbrenamer_ui_strings.py:26
+#: /tmp/_pbrenamer_ui_strings.py:51
 msgid "Patterns"
 msgstr "Patterns"
 
-#: /tmp/_pbrenamer_ui_strings.py:27
+#: /tmp/_pbrenamer_ui_strings.py:52
 msgid "Spaces"
 msgstr "Spaces"
 
-#: /tmp/_pbrenamer_ui_strings.py:28
+#: /tmp/_pbrenamer_ui_strings.py:53
 msgid "Spaces → underscores"
 msgstr "Spaces → underscores"
 
-#: /tmp/_pbrenamer_ui_strings.py:29
+#: /tmp/_pbrenamer_ui_strings.py:54
 msgid "Underscores → spaces"
 msgstr "Underscores → spaces"
 
-#: /tmp/_pbrenamer_ui_strings.py:30
+#: /tmp/_pbrenamer_ui_strings.py:55
 msgid "Spaces → dots"
 msgstr "Spaces → dots"
 
-#: /tmp/_pbrenamer_ui_strings.py:31
+#: /tmp/_pbrenamer_ui_strings.py:56
 msgid "Dots → spaces"
 msgstr "Dots → spaces"
 
-#: /tmp/_pbrenamer_ui_strings.py:32
+#: /tmp/_pbrenamer_ui_strings.py:57
 msgid "Spaces → dashes"
 msgstr "Spaces → dashes"
 
-#: /tmp/_pbrenamer_ui_strings.py:33
+#: /tmp/_pbrenamer_ui_strings.py:58
 msgid "Dashes → spaces"
 msgstr "Dashes → spaces"
 
-#: /tmp/_pbrenamer_ui_strings.py:34 /tmp/_pbrenamer_ui_strings.py:40
-#: /tmp/_pbrenamer_ui_strings.py:44 /tmp/_pbrenamer_ui_strings.py:51
-#: /tmp/_pbrenamer_ui_strings.py:55 /tmp/_pbrenamer_ui_strings.py:58
+#: /tmp/_pbrenamer_ui_strings.py:59
+msgid "Separator substitution mode"
+msgstr "Separator substitution mode"
+
+#: /tmp/_pbrenamer_ui_strings.py:60
+msgid "Choose which separator characters to convert"
+msgstr "Choose which separator characters to convert"
+
+#: /tmp/_pbrenamer_ui_strings.py:61 /tmp/_pbrenamer_ui_strings.py:71
+#: /tmp/_pbrenamer_ui_strings.py:81 /tmp/_pbrenamer_ui_strings.py:98
+#: /tmp/_pbrenamer_ui_strings.py:108 /tmp/_pbrenamer_ui_strings.py:115
 msgid "Apply"
 msgstr "Apply"
 
-#: /tmp/_pbrenamer_ui_strings.py:35
+#: /tmp/_pbrenamer_ui_strings.py:62
+msgid "Apply separator substitution"
+msgstr "Apply separator substitution"
+
+#: /tmp/_pbrenamer_ui_strings.py:63
+msgid "Apply the selected separator substitution to the file list preview"
+msgstr "Apply the selected separator substitution to the file list preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:64
 msgid "Capitalization"
 msgstr "Capitalization"
 
-#: /tmp/_pbrenamer_ui_strings.py:36
+#: /tmp/_pbrenamer_ui_strings.py:65
 msgid "UPPERCASE"
 msgstr "UPPERCASE"
 
-#: /tmp/_pbrenamer_ui_strings.py:37
+#: /tmp/_pbrenamer_ui_strings.py:66
 msgid "lowercase"
 msgstr "lowercase"
 
-#: /tmp/_pbrenamer_ui_strings.py:38
+#: /tmp/_pbrenamer_ui_strings.py:67
 msgid "Capitalize first letter"
 msgstr "Capitalize first letter"
 
-#: /tmp/_pbrenamer_ui_strings.py:39
+#: /tmp/_pbrenamer_ui_strings.py:68
 msgid "Title Case"
 msgstr "Title Case"
 
-#: /tmp/_pbrenamer_ui_strings.py:41
+#: /tmp/_pbrenamer_ui_strings.py:69
+msgid "Capitalization mode"
+msgstr "Capitalization mode"
+
+#: /tmp/_pbrenamer_ui_strings.py:70
+msgid "Choose how to change the case of file names"
+msgstr "Choose how to change the case of file names"
+
+#: /tmp/_pbrenamer_ui_strings.py:72
+msgid "Apply capitalization"
+msgstr "Apply capitalization"
+
+#: /tmp/_pbrenamer_ui_strings.py:73
+msgid "Apply the selected capitalization mode to the file list preview"
+msgstr "Apply the selected capitalization mode to the file list preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:74
 msgid "Replace text"
 msgstr "Replace text"
 
-#: /tmp/_pbrenamer_ui_strings.py:42
+#: /tmp/_pbrenamer_ui_strings.py:75
 msgid "Find:"
 msgstr "Find:"
 
-#: /tmp/_pbrenamer_ui_strings.py:43
+#: /tmp/_pbrenamer_ui_strings.py:76
+msgid "Text to search for"
+msgstr "Text to search for"
+
+#: /tmp/_pbrenamer_ui_strings.py:77
+msgid "Literal string to find in each file name"
+msgstr "Literal string to find in each file name"
+
+#: /tmp/_pbrenamer_ui_strings.py:78
 msgid "→"
 msgstr "→"
 
-#: /tmp/_pbrenamer_ui_strings.py:45
+#: /tmp/_pbrenamer_ui_strings.py:79
+msgid "Replacement text"
+msgstr "Replacement text"
+
+#: /tmp/_pbrenamer_ui_strings.py:80
+msgid "String to substitute in place of every occurrence found"
+msgstr "String to substitute in place of every occurrence found"
+
+#: /tmp/_pbrenamer_ui_strings.py:82
+msgid "Apply text replacement"
+msgstr "Apply text replacement"
+
+#: /tmp/_pbrenamer_ui_strings.py:83
+msgid "Replace all occurrences of the search text in the file list preview"
+msgstr "Replace all occurrences of the search text in the file list preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:84
 msgid "Remove accents"
 msgstr "Remove accents"
 
-#: /tmp/_pbrenamer_ui_strings.py:46
+#: /tmp/_pbrenamer_ui_strings.py:85
+msgid "Strip diacritical marks"
+msgstr "Strip diacritical marks"
+
+#: /tmp/_pbrenamer_ui_strings.py:86
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+
+#: /tmp/_pbrenamer_ui_strings.py:87
 msgid "Remove duplicate separators"
 msgstr "Remove duplicate separators"
 
-#: /tmp/_pbrenamer_ui_strings.py:47
+#: /tmp/_pbrenamer_ui_strings.py:88
+msgid "Collapse consecutive separators"
+msgstr "Collapse consecutive separators"
+
+#: /tmp/_pbrenamer_ui_strings.py:89
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+
+#: /tmp/_pbrenamer_ui_strings.py:90
 msgid "Substitutions"
 msgstr "Substitutions"
 
-#: /tmp/_pbrenamer_ui_strings.py:48
+#: /tmp/_pbrenamer_ui_strings.py:91
 msgid "Insert"
 msgstr "Insert"
 
-#: /tmp/_pbrenamer_ui_strings.py:49
+#: /tmp/_pbrenamer_ui_strings.py:92
 msgid "Text:"
 msgstr "Text:"
 
-#: /tmp/_pbrenamer_ui_strings.py:50
+#: /tmp/_pbrenamer_ui_strings.py:93
+msgid "Text to insert"
+msgstr "Text to insert"
+
+#: /tmp/_pbrenamer_ui_strings.py:94
+msgid "Characters to insert into each file name at the specified position"
+msgstr "Characters to insert into each file name at the specified position"
+
+#: /tmp/_pbrenamer_ui_strings.py:95
 msgid "at position:"
 msgstr "at position:"
 
-#: /tmp/_pbrenamer_ui_strings.py:52
+#: /tmp/_pbrenamer_ui_strings.py:96
+msgid "Character position (0 = start)"
+msgstr "Character position (0 = start)"
+
+#: /tmp/_pbrenamer_ui_strings.py:97
+msgid ""
+"Zero-based character index at which to insert the text; use a high value to "
+"append"
+msgstr ""
+"Zero-based character index at which to insert the text; use a high value to "
+"append"
+
+#: /tmp/_pbrenamer_ui_strings.py:99
+msgid "Apply insertion"
+msgstr "Apply insertion"
+
+#: /tmp/_pbrenamer_ui_strings.py:100
+msgid ""
+"Insert the given text at the specified position in the file list preview"
+msgstr ""
+"Insert the given text at the specified position in the file list preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:101
 msgid "Delete"
 msgstr "Delete"
 
-#: /tmp/_pbrenamer_ui_strings.py:53
+#: /tmp/_pbrenamer_ui_strings.py:102
 msgid "From position:"
 msgstr "From position:"
 
-#: /tmp/_pbrenamer_ui_strings.py:54
+#: /tmp/_pbrenamer_ui_strings.py:103
+msgid "Start of the range to delete (0 = first character)"
+msgstr "Start of the range to delete (0 = first character)"
+
+#: /tmp/_pbrenamer_ui_strings.py:104
+msgid "Index of the first character to delete (zero-based, inclusive)"
+msgstr "Index of the first character to delete (zero-based, inclusive)"
+
+#: /tmp/_pbrenamer_ui_strings.py:105
 msgid "to:"
 msgstr "to:"
 
-#: /tmp/_pbrenamer_ui_strings.py:56
+#: /tmp/_pbrenamer_ui_strings.py:106
+msgid "End of the range to delete (inclusive)"
+msgstr "End of the range to delete (inclusive)"
+
+#: /tmp/_pbrenamer_ui_strings.py:107
+msgid "Index of the last character to delete (zero-based, inclusive)"
+msgstr "Index of the last character to delete (zero-based, inclusive)"
+
+#: /tmp/_pbrenamer_ui_strings.py:109
+msgid "Apply deletion"
+msgstr "Apply deletion"
+
+#: /tmp/_pbrenamer_ui_strings.py:110
+msgid ""
+"Delete the specified character range from each name in the file list preview"
+msgstr ""
+"Delete the specified character range from each name in the file list preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:111
 msgid "Insert / Delete"
 msgstr "Insert / Delete"
 
-#: /tmp/_pbrenamer_ui_strings.py:57
+#: /tmp/_pbrenamer_ui_strings.py:112
 msgid "New name for selected file:"
 msgstr "New name for selected file:"
 
-#: /tmp/_pbrenamer_ui_strings.py:59
+#: /tmp/_pbrenamer_ui_strings.py:113
+msgid "New name for the selected file"
+msgstr "New name for the selected file"
+
+#: /tmp/_pbrenamer_ui_strings.py:114
+msgid "Type the new name for the currently selected file, then click Apply"
+msgstr "Type the new name for the currently selected file, then click Apply"
+
+#: /tmp/_pbrenamer_ui_strings.py:116
+msgid "Set the preview name for the selected file"
+msgstr "Set the preview name for the selected file"
+
+#: /tmp/_pbrenamer_ui_strings.py:117
+msgid "Apply the typed name as the preview for the currently selected file"
+msgstr "Apply the typed name as the preview for the currently selected file"
+
+#: /tmp/_pbrenamer_ui_strings.py:118
 msgid "Manual"
 msgstr "Manual"
 
-#: /tmp/_pbrenamer_ui_strings.py:60
+#: /tmp/_pbrenamer_ui_strings.py:120
+msgid "Compute rename preview"
+msgstr "Compute rename preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:121
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+
+#: /tmp/_pbrenamer_ui_strings.py:122
+msgid "Clear"
+msgstr "Clear"
+
+#: /tmp/_pbrenamer_ui_strings.py:123
+msgid "Clear the preview"
+msgstr "Clear the preview"
+
+#: /tmp/_pbrenamer_ui_strings.py:124
+msgid "Remove all preview values from the Preview column"
+msgstr "Remove all preview values from the Preview column"
+
+#: /tmp/_pbrenamer_ui_strings.py:125
+msgid "Undo"
+msgstr "Undo"
+
+#: /tmp/_pbrenamer_ui_strings.py:126
+msgid "Undo last rename batch"
+msgstr "Undo last rename batch"
+
+#: /tmp/_pbrenamer_ui_strings.py:127
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Reverse the last batch of renames performed on disk"
+
+#: /tmp/_pbrenamer_ui_strings.py:128
+msgid "Rename"
+msgstr "Rename"
+
+#: /tmp/_pbrenamer_ui_strings.py:129
+msgid "Apply renames on disk"
+msgstr "Apply renames on disk"
+
+#: /tmp/_pbrenamer_ui_strings.py:130
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled when "
+"there are no conflicts)"
+msgstr ""
+"Permanently rename all files shown in the Preview column (only enabled when "
+"there are no conflicts)"
+
+#: /tmp/_pbrenamer_ui_strings.py:131
 msgid "File"
 msgstr "File"
 
-#: /tmp/_pbrenamer_ui_strings.py:61
+#: /tmp/_pbrenamer_ui_strings.py:132
 msgid "Edit"
 msgstr "Edit"
 
-#: /tmp/_pbrenamer_ui_strings.py:62
+#: /tmp/_pbrenamer_ui_strings.py:133
 msgid "Help"
 msgstr "Help"
