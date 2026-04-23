@@ -36,6 +36,8 @@ jobs:
 
       - name: Run test suite
         shell: bash -el {0}
+        env:
+          QT_QPA_PLATFORM: offscreen
         run: make test NOCONDA=1
 
   # ── Pre-commit hooks ─────────────────────────────────────────────────────────
