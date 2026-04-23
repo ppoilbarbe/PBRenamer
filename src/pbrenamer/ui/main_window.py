@@ -170,7 +170,7 @@ class MainWindow(QMainWindow):
     # ── Preview (pattern tab only) ────────────────────────────────────────────
 
     def _active_items(self) -> list[QTreeWidgetItem]:
-        """Return selected top-level items, or all top-level items if nothing is selected."""
+        """Return selected top-level items, or all if nothing is selected."""
         selected = self._ui.tblFiles.selectedItems()
         if selected:
             return selected
@@ -276,7 +276,7 @@ class MainWindow(QMainWindow):
     # ── Generic transformation applier ───────────────────────────────────────
 
     def _apply_to_all(self, transform: Callable[[str, str], str | None]) -> None:
-        """Apply *transform(stem, stem_path) → newname* to selected rows (or all if none selected)."""
+        """Apply *transform(stem, stem_path) → newname* to selected rows (or all)."""
         keep_ext = self._ui.chkKeepExtension.isChecked()
 
         for item in self._active_items():

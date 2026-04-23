@@ -12,7 +12,6 @@ import os
 import sys
 from pathlib import Path
 
-
 # ---------------------------------------------------------------------------
 # Base interface
 # ---------------------------------------------------------------------------
@@ -137,7 +136,7 @@ class XdgDirs(_BaseDirs):
 # ---------------------------------------------------------------------------
 
 
-def AppDirs(app_name: str) -> _BaseDirs:
+def AppDirs(app_name: str) -> _BaseDirs:  # noqa: N802
     """Return the platform-appropriate application directory object."""
     if sys.platform == "win32":
         return _WindowsDirs(app_name)
