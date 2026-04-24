@@ -31,8 +31,9 @@ jobs:
       - name: Compile Qt UI files
         shell: bash -el {0}
         run: |
-          pyside6-uic src/pbrenamer/ui/main_window.ui \
-            -o src/pbrenamer/ui/main_window_ui.py
+          for ui in src/pbrenamer/ui/*.ui; do
+            pyside6-uic "$ui" -o "${ui%.ui}_ui.py"
+          done
 
       - name: Run test suite
         shell: bash -el {0}
@@ -91,8 +92,9 @@ jobs:
         # pyside6-uic is available in the activated conda environment.
         shell: bash -el {0}
         run: |
-          pyside6-uic src/pbrenamer/ui/main_window.ui \
-            -o src/pbrenamer/ui/main_window_ui.py
+          for ui in src/pbrenamer/ui/*.ui; do
+            pyside6-uic "$ui" -o "${ui%.ui}_ui.py"
+          done
 
       - name: Build with PyInstaller
         # .mo files are committed; *_ui.py was just generated above.
