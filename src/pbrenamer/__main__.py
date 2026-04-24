@@ -34,14 +34,17 @@ def main() -> None:
     # untouched so they can be forwarded to QApplication.
     _ns, qt_argv = _build_parser().parse_known_args()
 
+    from PySide6.QtGui import QIcon
     from PySide6.QtWidgets import QApplication
 
     from pbrenamer import __version__
+    from pbrenamer.resources import path as _resource
 
     app = QApplication([sys.argv[0]] + qt_argv)
     app.setApplicationName("PBRenamer")
     app.setApplicationVersion(__version__)
     app.setOrganizationName("ppoilbarbe")
+    app.setWindowIcon(QIcon(_resource("pbrenamer.svg")))
 
     # i18n must be set up before any window is created so that
     # retranslateUi() picks up the correct translator.

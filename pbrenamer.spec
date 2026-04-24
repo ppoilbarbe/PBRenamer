@@ -60,6 +60,9 @@ _datas = [
     for mo in sorted(_locale_root.glob("*/LC_MESSAGES/pbrenamer.mo"))
 ]
 
+# Bundled resources (icons, …).
+_datas += [("src/pbrenamer/resources", "pbrenamer/resources")]
+
 # ---------------------------------------------------------------------------
 # Analysis
 # ---------------------------------------------------------------------------

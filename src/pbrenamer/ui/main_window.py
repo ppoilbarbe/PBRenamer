@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 from collections import defaultdict
 from collections.abc import Callable
 
@@ -28,6 +29,7 @@ _PREVIEW_COLOR = QColor("#0066cc")
 _UNCHANGED_COLOR = QColor("#888888")
 _DIR_COLOR = QColor("#aa6600")
 _CONFLICT_COLOR = QColor("#cc0000")
+_INVALID_REGEX_STYLE = "QLineEdit { background-color: #ffaaaa; }"
 
 
 class MainWindow(QMainWindow):
@@ -89,7 +91,6 @@ class MainWindow(QMainWindow):
         # Substitution tab
         self._ui.btnApplySpaces.clicked.connect(self._on_apply_spaces)
         self._ui.btnApplyCaps.clicked.connect(self._on_apply_caps)
-        self._ui.btnApplyReplace.clicked.connect(self._on_apply_replace)
         self._ui.btnRemoveAccents.clicked.connect(self._on_remove_accents)
         self._ui.btnRemoveDuplicates.clicked.connect(self._on_remove_duplicates)
 
@@ -102,6 +103,13 @@ class MainWindow(QMainWindow):
 
         # Pattern presets
         self._ui.btnSavePattern.clicked.connect(self._on_save_pattern)
+
+        # Search mode (Pattern / Regex / Plain text)
+        for rad in (self._ui.radPattern, self._ui.radRegex, self._ui.radPlainText):
+            rad.toggled.connect(lambda _: self._on_mode_changed())
+        self._ui.cmbPatternSearch.currentTextChanged.connect(
+            lambda _: self._validate_search_input()
+        )
 
         # Options that trigger a file list reload
         self._ui.cmbMode.currentIndexChanged.connect(self._reload_files)
@@ -184,6 +192,57 @@ class MainWindow(QMainWindow):
         root = self._ui.tblFiles.invisibleRootItem()
         return [root.child(i) for i in range(root.childCount())]
 
+    def _validate_search_input(self) -> bool:
+        """Validate the search combo when in regex mode; colour it red if invalid.
+
+        Returns True if the input is valid for the active mode.
+        """
+        if not self._ui.radRegex.isChecked():
+            self._ui.cmbPatternSearch.lineEdit().setStyleSheet("")
+            return True
+        pattern = self._ui.cmbPatternSearch.currentText()
+        line_edit = self._ui.cmbPatternSearch.lineEdit()
+        if not pattern:
+            line_edit.setStyleSheet("")
+            return True
+        try:
+            re.compile(pattern)
+            line_edit.setStyleSheet("")
+            return True
+        except re.error:
+            line_edit.setStyleSheet(_INVALID_REGEX_STYLE)
+            return False
+
+    def _update_pattern_help(self) -> None:
+        if self._ui.radRegex.isChecked():
+            self._ui.lblPatternHelp.setText(
+                _(
+                    "Python regular expression · \\1 \\2… or \\g<name> for "
+                    "backreferences in the replacement"
+                )
+            )
+        elif self._ui.radPlainText.isChecked():
+            self._ui.lblPatternHelp.setText(
+                _(
+                    "Literal search · the search field is matched as-is"
+                    " against each file name"
+                )
+            )
+        else:
+            self._ui.lblPatternHelp.setText(
+                _(
+                    "{#} numbers · {L} letters · {C} non-space · {X} anything · "
+                    "{@} trash · {1} {2}… capture groups · {num2} counter "
+                    "(zero-padded) · {date} today · {dir} parent folder name"
+                )
+            )
+
+    def _on_mode_changed(self) -> None:
+        self._update_pattern_help()
+        self._validate_search_input()
+        if self._ui.chkAutoPreview.isChecked():
+            self._on_preview()
+
     def _on_preview(self) -> None:
         if self._ui.tabWidget.currentIndex() != 0:
             return
@@ -192,6 +251,11 @@ class MainWindow(QMainWindow):
         search = self._ui.cmbPatternSearch.currentText()
         replace = self._ui.cmbPatternDest.currentText()
         if not search:
+            return
+
+        use_regex = self._ui.radRegex.isChecked()
+        use_plain = self._ui.radPlainText.isChecked()
+        if use_regex and not self._validate_search_input():
             return
 
         keep_ext = self._ui.chkKeepExtension.isChecked()
@@ -206,9 +270,18 @@ class MainWindow(QMainWindow):
             else:
                 stem, stem_path, ext = name, path, ""
 
-            newname, _ = filetools.rename_using_patterns(
-                stem, stem_path, search, replace, counter
-            )
+            if use_regex:
+                newname, _ = filetools.rename_using_regex(
+                    stem, stem_path, search, replace
+                )
+            elif use_plain:
+                newname, _ = filetools.rename_using_plain_text(
+                    stem, stem_path, search, replace
+                )
+            else:
+                newname, _ = filetools.rename_using_patterns(
+                    stem, stem_path, search, replace, counter
+                )
 
             if newname is not None:
                 if keep_ext:
@@ -316,11 +389,6 @@ class MainWindow(QMainWindow):
     def _on_apply_caps(self) -> None:
         mode = self._ui.cmbCaps.currentIndex()
         self._apply_to_all(lambda n, p: filetools.replace_capitalization(n, p, mode)[0])
-
-    def _on_apply_replace(self) -> None:
-        orig = self._ui.edtReplaceOrig.text()
-        dest = self._ui.edtReplaceDest.text()
-        self._apply_to_all(lambda n, p: filetools.replace_with(n, p, orig, dest)[0])
 
     def _on_remove_accents(self) -> None:
         self._apply_to_all(lambda n, p: filetools.replace_accents(n, p)[0])
@@ -431,11 +499,17 @@ class MainWindow(QMainWindow):
         SettingsDialog(self).exec()
 
     def _on_about(self) -> None:
+        from pbrenamer import __version__
+
         QMessageBox.about(
             self,
             _("About PBRenamer"),
-            "<b>PBRenamer</b> 0.1.0<br>"
-            "A graphical batch file renaming utility.<br><br>"
-            "© 2024 Marcel Spock &lt;mrspock@cardolan.net&gt;<br>"
-            "License: GPLv3",
+            "<b>PBRenamer</b> {version}<br>"
+            "{description}<br><br>"
+            "© 2026 Marcel Spock &lt;mrspock@cardolan.net&gt;<br>"
+            "{license}".format(
+                version=__version__,
+                description=_("A graphical batch file renaming utility."),
+                license=_("License: GPLv3"),
+            ),
         )

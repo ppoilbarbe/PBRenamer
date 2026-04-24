@@ -95,3 +95,11 @@ terms of the **GNU General Public License v3** as published by the Free Software
 Foundation. See the [LICENSE](LICENSE) file for details.
 
 Copyright © 2026 PBMou — Marcel Spock <mrspock@cardolan.net>
+
+## Acknowledgements
+
+PBRenamer is heavily inspired by
+[pyRenamer](https://github.com/TheTimeTombs/pyRenamer), an earlier graphical
+batch file renamer for Linux. Many thanks to its authors,
+Adolfo González Blázquez <code@infinicode.org> and
+Thomas Freeman <tfree87@users.noreply.github.com>, for their great work.

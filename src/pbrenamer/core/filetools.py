@@ -100,11 +100,6 @@ def replace_capitalization(name: str, path: str, mode: int) -> tuple[str, str]:
     return newname, _new_path(newname, path)
 
 
-def replace_with(name: str, path: str, orig: str, new: str) -> tuple[str, str]:
-    newname = name.replace(orig, new)
-    return newname, _new_path(newname, path)
-
-
 def replace_accents(name: str, path: str) -> tuple[str, str]:
     """Strip diacritics via NFD normalisation (á→a, ü→u, etc.)."""
     newname = "".join(
@@ -247,6 +242,42 @@ def rename_using_patterns(
             rnd = str(random.randint(0, 100))
         newname = _RAND_RE.sub(rnd, newname)
 
+    return newname, _new_path(newname, path)
+
+
+def rename_using_plain_text(
+    name: str,
+    path: str,
+    search: str,
+    replacement: str,
+) -> tuple[str | None, str | None]:
+    """Literal string search/replace.
+
+    Returns (None, None) if *search* does not appear in *name*.
+    """
+    if search not in name:
+        return None, None
+    newname = name.replace(search, replacement)
+    return newname, _new_path(newname, path)
+
+
+def rename_using_regex(
+    name: str,
+    path: str,
+    pattern: str,
+    replacement: str,
+) -> tuple[str | None, str | None]:
+    """Apply a Python regex search/replace pair.
+
+    Returns (newname, newpath), or (None, None) on no match or invalid pattern.
+    The replacement follows standard re.sub() syntax (\\1, \\2, \\g<name>…).
+    """
+    try:
+        if not re.search(pattern, name):
+            return None, None
+        newname = re.sub(pattern, replacement, name)
+    except re.error:
+        return None, None
     return newname, _new_path(newname, path)
 
 
