@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.2.0] - 2026-04-24
+
+### Added
+
+- Non-modal help dialogs for search and replace patterns, with geometry
+  persistence (position and size saved across sessions)
+- Help dialog content fully translated (English and French); field-name tokens
+  left in code syntax, all descriptions and headers localised
+- Log-level preference in the Settings dialog (DEBUG / INFO / WARNING / ERROR /
+  CRITICAL, default INFO); applied at startup and immediately on change
+- CLI flags `--debug` / `-d`, `--verbose` / `-v`, `--quiet` / `-q` to override
+  the saved log-level preference at launch
+- Debug traces throughout the codebase via Python `logging` (file listing,
+  per-file preview, rename operations, metadata reads, template parsing)
+- `.ui` files for the About, Settings and History dialogs; all dialogs now
+  follow the Designer → `pyside6-uic` workflow
+- `WindowState.save_geometry` / `load_geometry` for named secondary-window
+  geometry slots
+
+### Fixed
+
+- CI "Compile Qt UI files" step now compiles all `*.ui` files instead of only
+  `main_window.ui`, fixing `ModuleNotFoundError` for the new dialog modules
+
 ## [0.1.0] - 2026-04-23
 
 ### Added
@@ -31,4 +55,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
 
+[0.2.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.1.0
