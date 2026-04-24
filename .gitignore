@@ -37,5 +37,8 @@ Thumbs.db
 # Make stamp files
 .translate.stamp
 
+# i18n — generated template, rebuilt on demand by make translate
+*.pot
+
 # Claude Code
 .claude/

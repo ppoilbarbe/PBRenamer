@@ -148,6 +148,20 @@
                  <property name="statusTip"><string>Pattern to match against file names. Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anything</string></property>
                 </widget>
                </item>
+               <item>
+                <widget class="QToolButton" name="btnSearchAdd">
+                 <property name="autoRaise"><bool>true</bool></property>
+                 <property name="toolTip"><string>Save to history</string></property>
+                 <property name="statusTip"><string>Add the current search pattern and mode to the drop-down history</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="btnSearchHelp">
+                 <property name="autoRaise"><bool>true</bool></property>
+                 <property name="toolTip"><string>Search pattern help</string></property>
+                 <property name="statusTip"><string>Show help about search patterns (Pattern tokens, Regular expressions, Plain text)</string></property>
+                </widget>
+               </item>
               </layout>
              </item>
              <item>
@@ -204,34 +218,21 @@
                  <property name="statusTip"><string>Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, {date} for today's date, {dir} for the parent folder name</string></property>
                 </widget>
                </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout">
                <item>
-                <widget class="QPushButton" name="btnSavePattern">
-                 <property name="text"><string>Save pattern</string></property>
-                 <property name="toolTip"><string>Save this pattern pair to the history</string></property>
-                 <property name="statusTip"><string>Add the current search and replace patterns to the drop-down history for reuse</string></property>
+                <widget class="QToolButton" name="btnReplaceAdd">
+                 <property name="autoRaise"><bool>true</bool></property>
+                 <property name="toolTip"><string>Save to history</string></property>
+                 <property name="statusTip"><string>Add the current replacement pattern to the drop-down history</string></property>
                 </widget>
                </item>
                <item>
-                <spacer>
-                 <property name="orientation"><enum>Qt::Horizontal</enum></property>
-                 <property name="sizeHint" stdset="0">
-                  <size><width>40</width><height>20</height></size>
-                 </property>
-                </spacer>
+                <widget class="QToolButton" name="btnReplaceHelp">
+                 <property name="autoRaise"><bool>true</bool></property>
+                 <property name="toolTip"><string>Replacement pattern help</string></property>
+                 <property name="statusTip"><string>Show help about replacement patterns (capture groups, counter, date, directory tokens)</string></property>
+                </widget>
                </item>
               </layout>
-             </item>
-             <item>
-              <widget class="QLabel" name="lblPatternHelp">
-               <property name="text">
-                <string>{#} numbers · {L} letters · {C} non-space · {X} anything · {@} trash · {1} {2}… capture groups · {num2} counter (zero-padded) · {date} today · {dir} parent folder name</string>
-               </property>
-               <property name="wordWrap"><bool>true</bool></property>
-              </widget>
              </item>
              <item>
               <spacer>
@@ -241,6 +242,52 @@
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QGroupBox" name="grpPostProcess">
+               <property name="title"><string>Post-processing</string></property>
+               <property name="minimumHeight"><number>60</number></property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QCheckBox" name="chkRemoveAccents">
+                  <property name="text"><string>Remove accents</string></property>
+                  <property name="toolTip"><string>Strip diacritical marks</string></property>
+                  <property name="statusTip"><string>Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="chkRemoveDuplicates">
+                  <property name="text"><string>Remove duplicate separators</string></property>
+                  <property name="toolTip"><string>Collapse consecutive separators</string></property>
+                  <property name="statusTip"><string>Collapse runs of identical separator characters (spaces, dots, dashes, underscores) into one</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel">
+                  <property name="text"><string>Case:</string></property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="cmbCaps">
+                  <property name="toolTip"><string>Capitalization mode</string></property>
+                  <property name="statusTip"><string>Choose how to change the case of file names after applying the pattern</string></property>
+                  <item><property name="text"><string>No change</string></property></item>
+                  <item><property name="text"><string>UPPERCASE</string></property></item>
+                  <item><property name="text"><string>lowercase</string></property></item>
+                  <item><property name="text"><string>Capitalize first letter</string></property></item>
+                  <item><property name="text"><string>Title Case</string></property></item>
+                 </widget>
+                </item>
+                <item>
+                 <spacer>
+                  <property name="orientation"><enum>Qt::Horizontal</enum></property>
+                  <property name="sizeHint" stdset="0">
+                   <size><width>40</width><height>20</height></size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
             </layout>
            </widget>
 
@@ -249,84 +296,30 @@
             <attribute name="title"><string>Substitutions</string></attribute>
             <layout class="QVBoxLayout" name="layoutSubstitutions">
              <item>
-              <layout class="QHBoxLayout">
-               <item>
-                <widget class="QGroupBox" name="grpSpaces">
-                 <property name="title"><string>Spaces</string></property>
-                 <layout class="QHBoxLayout">
-                  <item>
-                   <widget class="QComboBox" name="cmbSpaces">
-                    <property name="toolTip"><string>Separator substitution mode</string></property>
-                    <property name="statusTip"><string>Choose which separator characters to convert</string></property>
-                    <item><property name="text"><string>Spaces → underscores</string></property></item>
-                    <item><property name="text"><string>Underscores → spaces</string></property></item>
-                    <item><property name="text"><string>Spaces → dots</string></property></item>
-                    <item><property name="text"><string>Dots → spaces</string></property></item>
-                    <item><property name="text"><string>Spaces → dashes</string></property></item>
-                    <item><property name="text"><string>Dashes → spaces</string></property></item>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="btnApplySpaces">
-                    <property name="text"><string>Apply</string></property>
-                    <property name="toolTip"><string>Apply separator substitution</string></property>
-                    <property name="statusTip"><string>Apply the selected separator substitution to the file list preview</string></property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item>
-                <widget class="QGroupBox" name="grpCaps">
-                 <property name="title"><string>Capitalization</string></property>
-                 <layout class="QHBoxLayout">
-                  <item>
-                   <widget class="QComboBox" name="cmbCaps">
-                    <property name="toolTip"><string>Capitalization mode</string></property>
-                    <property name="statusTip"><string>Choose how to change the case of file names</string></property>
-                    <item><property name="text"><string>UPPERCASE</string></property></item>
-                    <item><property name="text"><string>lowercase</string></property></item>
-                    <item><property name="text"><string>Capitalize first letter</string></property></item>
-                    <item><property name="text"><string>Title Case</string></property></item>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="btnApplyCaps">
-                    <property name="text"><string>Apply</string></property>
-                    <property name="toolTip"><string>Apply capitalization</string></property>
-                    <property name="statusTip"><string>Apply the selected capitalization mode to the file list preview</string></property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout">
-               <item>
-                <widget class="QPushButton" name="btnRemoveAccents">
-                 <property name="text"><string>Remove accents</string></property>
-                 <property name="toolTip"><string>Strip diacritical marks</string></property>
-                 <property name="statusTip"><string>Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnRemoveDuplicates">
-                 <property name="text"><string>Remove duplicate separators</string></property>
-                 <property name="toolTip"><string>Collapse consecutive separators</string></property>
-                 <property name="statusTip"><string>Collapse runs of identical separator characters (spaces, dots, dashes, underscores) into one</string></property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation"><enum>Qt::Horizontal</enum></property>
-                 <property name="sizeHint" stdset="0">
-                  <size><width>40</width><height>20</height></size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              <widget class="QGroupBox" name="grpSpaces">
+               <property name="title"><string>Spaces</string></property>
+               <layout class="QHBoxLayout">
+                <item>
+                 <widget class="QComboBox" name="cmbSpaces">
+                  <property name="toolTip"><string>Separator substitution mode</string></property>
+                  <property name="statusTip"><string>Choose which separator characters to convert</string></property>
+                  <item><property name="text"><string>Spaces → underscores</string></property></item>
+                  <item><property name="text"><string>Underscores → spaces</string></property></item>
+                  <item><property name="text"><string>Spaces → dots</string></property></item>
+                  <item><property name="text"><string>Dots → spaces</string></property></item>
+                  <item><property name="text"><string>Spaces → dashes</string></property></item>
+                  <item><property name="text"><string>Dashes → spaces</string></property></item>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnApplySpaces">
+                  <property name="text"><string>Apply</string></property>
+                  <property name="toolTip"><string>Apply separator substitution</string></property>
+                  <property name="statusTip"><string>Apply the selected separator substitution to the file list preview</string></property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
              </item>
              <item>
               <spacer>

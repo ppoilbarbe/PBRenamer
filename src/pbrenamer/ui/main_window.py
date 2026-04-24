@@ -15,6 +15,7 @@ from PySide6.QtWidgets import (
     QFileSystemModel,
     QMainWindow,
     QMessageBox,
+    QStyledItemDelegate,
     QTreeWidgetItem,
 )
 
@@ -22,8 +23,42 @@ from pbrenamer.core import filetools
 from pbrenamer.core.undo import UndoManager
 from pbrenamer.platform.fs import conflict_key, same_file_path
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
+from pbrenamer.ui.pattern_help import (
+    REPLACE_HTML,
+    SEARCH_HTML,
+    PatternHelpDialog,
+    make_add_icon,
+    make_help_icon,
+)
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
+
+
+class _SearchModeDelegate(QStyledItemDelegate):
+    """Appends a dimmed mode label on the right of each search history item."""
+
+    _LABELS = {"pattern": "pat", "regex": "RE", "plain": "txt"}
+
+    def paint(self, painter, option, index):
+        super().paint(painter, option, index)
+        mode = index.data(Qt.ItemDataRole.UserRole)
+        label = self._LABELS.get(mode, "")
+        if not label:
+            return
+        painter.save()
+        color = option.palette.color(option.palette.ColorRole.Text)
+        color.setAlphaF(0.5)
+        painter.setPen(color)
+        font = painter.font()
+        font.setItalic(True)
+        painter.setFont(font)
+        painter.drawText(
+            option.rect.adjusted(0, 0, -6, 0),
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter,
+            label,
+        )
+        painter.restore()
+
 
 _PREVIEW_COLOR = QColor("#0066cc")
 _UNCHANGED_COLOR = QColor("#888888")
@@ -43,9 +78,12 @@ class MainWindow(QMainWindow):
         self._current_dir: str | None = None
         self._undo = UndoManager()
         self._presets = PatternPresets()
+        self._search_help: PatternHelpDialog | None = None
+        self._replace_help: PatternHelpDialog | None = None
 
         self._setup_directory_tree()
         self._populate_pattern_combos()
+        self._setup_help_buttons()
         self._connect_signals()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
@@ -70,13 +108,25 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.scrollTo(idx)
         self._ui.treeDirectory.expand(idx)
 
+    def _setup_help_buttons(self) -> None:
+        help_icon = make_help_icon()
+        self._ui.btnSearchHelp.setIcon(help_icon)
+        self._ui.btnReplaceHelp.setIcon(help_icon)
+        add_icon = make_add_icon()
+        self._ui.btnSearchAdd.setIcon(add_icon)
+        self._ui.btnReplaceAdd.setIcon(add_icon)
+        self._ui.cmbPatternSearch.view().setItemDelegate(
+            _SearchModeDelegate(self._ui.cmbPatternSearch)
+        )
+
     def _populate_pattern_combos(self) -> None:
         self._ui.cmbPatternSearch.clear()
+        for mode, pattern in self._presets.get_search():
+            self._ui.cmbPatternSearch.addItem(pattern, mode)
         self._ui.cmbPatternDest.clear()
-        for p in self._presets.get("search"):
-            self._ui.cmbPatternSearch.addItem(p)
-        for p in self._presets.get("replace"):
-            self._ui.cmbPatternDest.addItem(p)
+        for pattern in self._presets.get_replace():
+            self._ui.cmbPatternDest.addItem(pattern)
+        self._update_add_buttons()
 
     def _connect_signals(self) -> None:
         self._ui.actionOpenFolder.triggered.connect(self._on_open)
@@ -90,9 +140,11 @@ class MainWindow(QMainWindow):
 
         # Substitution tab
         self._ui.btnApplySpaces.clicked.connect(self._on_apply_spaces)
-        self._ui.btnApplyCaps.clicked.connect(self._on_apply_caps)
-        self._ui.btnRemoveAccents.clicked.connect(self._on_remove_accents)
-        self._ui.btnRemoveDuplicates.clicked.connect(self._on_remove_duplicates)
+
+        # Patterns tab — post-processing
+        self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
+        self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
+        self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
 
         # Insert/Delete tab
         self._ui.btnInsert.clicked.connect(self._on_insert)
@@ -101,14 +153,22 @@ class MainWindow(QMainWindow):
         # Manual tab
         self._ui.btnApplyManual.clicked.connect(self._on_apply_manual)
 
-        # Pattern presets
-        self._ui.btnSavePattern.clicked.connect(self._on_save_pattern)
+        # Pattern add/help buttons
+        self._ui.btnSearchAdd.clicked.connect(self._on_add_search)
+        self._ui.btnReplaceAdd.clicked.connect(self._on_add_replace)
+        self._ui.btnSearchHelp.clicked.connect(self._on_search_help)
+        self._ui.btnReplaceHelp.clicked.connect(self._on_replace_help)
 
         # Search mode (Pattern / Regex / Plain text)
         for rad in (self._ui.radPattern, self._ui.radRegex, self._ui.radPlainText):
             rad.toggled.connect(lambda _: self._on_mode_changed())
+        self._ui.cmbPatternSearch.activated.connect(self._on_search_preset_selected)
+        self._ui.cmbPatternDest.activated.connect(self._on_replace_preset_selected)
         self._ui.cmbPatternSearch.currentTextChanged.connect(
-            lambda _: self._validate_search_input()
+            lambda _: self._on_search_text_changed()
+        )
+        self._ui.cmbPatternDest.currentTextChanged.connect(
+            lambda _: self._update_replace_add_button()
         )
 
         # Options that trigger a file list reload
@@ -213,35 +273,49 @@ class MainWindow(QMainWindow):
             line_edit.setStyleSheet(_INVALID_REGEX_STYLE)
             return False
 
-    def _update_pattern_help(self) -> None:
-        if self._ui.radRegex.isChecked():
-            self._ui.lblPatternHelp.setText(
-                _(
-                    "Python regular expression · \\1 \\2… or \\g<name> for "
-                    "backreferences in the replacement"
-                )
-            )
-        elif self._ui.radPlainText.isChecked():
-            self._ui.lblPatternHelp.setText(
-                _(
-                    "Literal search · the search field is matched as-is"
-                    " against each file name"
-                )
-            )
-        else:
-            self._ui.lblPatternHelp.setText(
-                _(
-                    "{#} numbers · {L} letters · {C} non-space · {X} anything · "
-                    "{@} trash · {1} {2}… capture groups · {num2} counter "
-                    "(zero-padded) · {date} today · {dir} parent folder name"
-                )
-            )
+    def _on_search_text_changed(self) -> None:
+        self._validate_search_input()
+        self._update_search_add_button()
 
     def _on_mode_changed(self) -> None:
-        self._update_pattern_help()
         self._validate_search_input()
+        self._update_search_add_button()
         if self._ui.chkAutoPreview.isChecked():
             self._on_preview()
+
+    def _update_add_buttons(self) -> None:
+        self._update_search_add_button()
+        self._update_replace_add_button()
+
+    def _update_search_add_button(self) -> None:
+        pattern = self._ui.cmbPatternSearch.currentText().strip()
+        if not pattern:
+            self._ui.btnSearchAdd.setEnabled(False)
+            return
+        if self._ui.radRegex.isChecked():
+            try:
+                re.compile(pattern)
+            except re.error:
+                self._ui.btnSearchAdd.setEnabled(False)
+                return
+        mode = self._current_search_mode()
+        already = any(
+            self._ui.cmbPatternSearch.itemText(i) == pattern
+            and self._ui.cmbPatternSearch.itemData(i) == mode
+            for i in range(self._ui.cmbPatternSearch.count())
+        )
+        self._ui.btnSearchAdd.setEnabled(not already)
+
+    def _update_replace_add_button(self) -> None:
+        pattern = self._ui.cmbPatternDest.currentText().strip()
+        if not pattern:
+            self._ui.btnReplaceAdd.setEnabled(False)
+            return
+        already = any(
+            self._ui.cmbPatternDest.itemText(i) == pattern
+            for i in range(self._ui.cmbPatternDest.count())
+        )
+        self._ui.btnReplaceAdd.setEnabled(not already)
 
     def _on_preview(self) -> None:
         if self._ui.tabWidget.currentIndex() != 0:
@@ -284,6 +358,15 @@ class MainWindow(QMainWindow):
                 )
 
             if newname is not None:
+                if self._ui.chkRemoveAccents.isChecked():
+                    newname, _ = filetools.replace_accents(newname, stem_path)
+                if self._ui.chkRemoveDuplicates.isChecked():
+                    newname, _ = filetools.replace_duplicated(newname, stem_path)
+                caps_idx = self._ui.cmbCaps.currentIndex()
+                if caps_idx > 0:
+                    newname, _ = filetools.replace_capitalization(
+                        newname, stem_path, caps_idx - 1
+                    )
                 if keep_ext:
                     newname, _ = filetools.add_extension(newname, stem_path, ext)
                 item.setText(1, newname)
@@ -386,16 +469,6 @@ class MainWindow(QMainWindow):
         mode = self._ui.cmbSpaces.currentIndex()
         self._apply_to_all(lambda n, p: filetools.replace_spaces(n, p, mode)[0])
 
-    def _on_apply_caps(self) -> None:
-        mode = self._ui.cmbCaps.currentIndex()
-        self._apply_to_all(lambda n, p: filetools.replace_capitalization(n, p, mode)[0])
-
-    def _on_remove_accents(self) -> None:
-        self._apply_to_all(lambda n, p: filetools.replace_accents(n, p)[0])
-
-    def _on_remove_duplicates(self) -> None:
-        self._apply_to_all(lambda n, p: filetools.replace_duplicated(n, p)[0])
-
     # ── Insert / Delete tab handlers ──────────────────────────────────────────
 
     def _on_insert(self) -> None:
@@ -424,16 +497,86 @@ class MainWindow(QMainWindow):
             item.setForeground(1, _PREVIEW_COLOR)
             self._refresh_conflicts()
 
-    # ── Pattern presets ───────────────────────────────────────────────────────
+    # ── Pattern help dialogs ──────────────────────────────────────────────────
 
-    def _on_save_pattern(self) -> None:
-        search = self._ui.cmbPatternSearch.currentText()
-        replace = self._ui.cmbPatternDest.currentText()
-        if search:
-            self._presets.add("search", search)
-        if replace:
-            self._presets.add("replace", replace)
+    def _on_search_help(self) -> None:
+        if self._search_help is None:
+            self._search_help = PatternHelpDialog(SEARCH_HTML, _("Search — Help"), self)
+        if self._search_help.isVisible():
+            self._search_help.raise_()
+            self._search_help.activateWindow()
+        else:
+            self._search_help.show()
+
+    def _on_replace_help(self) -> None:
+        if self._replace_help is None:
+            self._replace_help = PatternHelpDialog(
+                REPLACE_HTML, _("Replace — Help"), self
+            )
+        if self._replace_help.isVisible():
+            self._replace_help.raise_()
+            self._replace_help.activateWindow()
+        else:
+            self._replace_help.show()
+
+    # ── Patterns tab — post-processing ───────────────────────────────────────
+
+    def _on_post_process_changed(self) -> None:
+        if self._ui.chkAutoPreview.isChecked():
+            self._on_preview()
+
+    # ── Pattern history ───────────────────────────────────────────────────────
+
+    def _current_search_mode(self) -> str:
+        if self._ui.radRegex.isChecked():
+            return "regex"
+        if self._ui.radPlainText.isChecked():
+            return "plain"
+        return "pattern"
+
+    def _on_add_search(self) -> None:
+        pattern = self._ui.cmbPatternSearch.currentText().strip()
+        if not pattern:
+            return
+        mode = self._current_search_mode()
+        self._presets.add_search(mode, pattern)
         self._populate_pattern_combos()
+        self._ui.cmbPatternSearch.setCurrentIndex(0)
+
+    def _on_add_replace(self) -> None:
+        pattern = self._ui.cmbPatternDest.currentText().strip()
+        if not pattern:
+            return
+        self._presets.add_replace(pattern)
+        self._populate_pattern_combos()
+        self._ui.cmbPatternDest.setCurrentIndex(0)
+
+    def _on_search_preset_selected(self, index: int) -> None:
+        if index < 0:
+            return
+        mode = self._ui.cmbPatternSearch.itemData(index)
+        pattern = self._ui.cmbPatternSearch.itemText(index)
+        if mode == "regex":
+            self._ui.radRegex.setChecked(True)
+        elif mode == "plain":
+            self._ui.radPlainText.setChecked(True)
+        elif mode == "pattern":
+            self._ui.radPattern.setChecked(True)
+        else:
+            return  # unknown mode — do not promote
+        self._presets.add_search(mode, pattern)
+        self._populate_pattern_combos()
+        self._ui.cmbPatternSearch.setCurrentIndex(0)
+
+    def _on_replace_preset_selected(self, index: int) -> None:
+        if index < 0:
+            return
+        pattern = self._ui.cmbPatternDest.itemText(index)
+        if not pattern:
+            return
+        self._presets.add_replace(pattern)
+        self._populate_pattern_combos()
+        self._ui.cmbPatternDest.setCurrentIndex(0)
 
     # ── Rename / Undo ─────────────────────────────────────────────────────────
 

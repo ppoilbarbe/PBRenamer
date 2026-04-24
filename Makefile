@@ -184,5 +184,5 @@ clean: ## Remove all build/cache artifacts
 	rm -rf build dist *.egg-info .pytest_cache .coverage htmlcov $(DOCS)/_build
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -name "*.pyc" -delete
-	find . -name "*.mo" -delete
+	find . -name "*_ui.py" -delete
 	rm -f $(POT_FILE) $(TRANSLATE_STAMP)
