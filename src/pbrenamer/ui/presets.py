@@ -1,13 +1,13 @@
-"""Pattern presets — file-based persistence in the platform config directory.
+"""Pattern presets — JSON persistence in the platform config directory.
 
-Search entries are stored as ``mode<TAB>pattern`` (one per line).
-Replace entries are stored as plain text (one per line).
+search.json  : list of {"mode": str, "pattern": str} objects, most recent first.
+replace.json : list of strings, most recent first.
 History is LRU: the most recently used entry is at the top.
-When writing, only valid entries are kept; unreadable lines are dropped.
 """
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from pbrenamer.platform import AppDirs
@@ -20,6 +20,13 @@ _SEARCH_DEFAULTS: list[tuple[str, str]] = [("pattern", "{X}")]
 _REPLACE_DEFAULTS: list[str] = ["{1}"]
 
 
+def _read_json(path: Path) -> object:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
 class PatternPresets:
     def __init__(self, config_dir: Path = _CONFIG_DIR) -> None:
         self._dir = config_dir
@@ -28,48 +35,47 @@ class PatternPresets:
     # ── Private helpers ───────────────────────────────────────────────────────
 
     def _read_search_raw(self) -> list[tuple[str, str]]:
-        p = self._dir / "search"
-        if not p.exists():
+        data = _read_json(self._dir / "search.json")
+        if not isinstance(data, list):
             return []
-        result: list[tuple[str, str]] = []
-        for raw in p.read_text(encoding="utf-8").splitlines():
-            parts = raw.split("\t", 1)
-            if len(parts) == 2 and parts[0] in _SEARCH_MODES and parts[1]:
-                result.append((parts[0], parts[1]))
+        result = []
+        for item in data:
+            if (
+                isinstance(item, dict)
+                and isinstance(item.get("mode"), str)
+                and item["mode"] in _SEARCH_MODES
+                and isinstance(item.get("pattern"), str)
+                and item["pattern"]
+            ):
+                result.append((item["mode"], item["pattern"]))
         return result
 
     def _write_search(self, entries: list[tuple[str, str]]) -> None:
-        with (self._dir / "search").open("w", encoding="utf-8") as fh:
-            for mode, pattern in entries:
-                fh.write(f"{mode}\t{pattern}\n")
+        data = [{"mode": m, "pattern": p} for m, p in entries]
+        (self._dir / "search.json").write_text(
+            json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     def _read_replace_raw(self) -> list[str]:
-        p = self._dir / "replace"
-        if not p.exists():
+        data = _read_json(self._dir / "replace.json")
+        if not isinstance(data, list):
             return []
-        lines = p.read_text(encoding="utf-8").splitlines()
-        return [ln for ln in (ln.strip() for ln in lines) if ln]
+        return [e for e in data if isinstance(e, str) and e]
 
     def _write_replace(self, entries: list[str]) -> None:
-        with (self._dir / "replace").open("w", encoding="utf-8") as fh:
-            for pattern in entries:
-                fh.write(pattern + "\n")
+        (self._dir / "replace.json").write_text(
+            json.dumps(entries, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     # ── Search ────────────────────────────────────────────────────────────────
 
     def get_search(self) -> list[tuple[str, str]]:
-        """Return saved search entries as (mode, pattern) pairs, most recent first.
-
-        Falls back to defaults when the file is absent or yields no valid entry.
-        """
+        """Return saved search entries as (mode, pattern) pairs, most recent first."""
         result = self._read_search_raw()
         return result if result else list(_SEARCH_DEFAULTS)
 
     def add_search(self, mode: str, pattern: str) -> None:
-        """Promote an existing entry or prepend a new one (LRU), then rewrite the file.
-
-        Unreadable lines in the previous file are silently dropped on rewrite.
-        """
+        """Promote an existing entry or prepend a new one (LRU), then save."""
         if mode not in _SEARCH_MODES or not pattern:
             return
         entries = self._read_search_raw()
@@ -77,24 +83,26 @@ class PatternPresets:
         entries.insert(0, (mode, pattern))
         self._write_search(entries)
 
+    def set_search(self, entries: list[tuple[str, str]]) -> None:
+        """Overwrite the entire search history with *entries*."""
+        self._write_search([(m, p) for m, p in entries if m in _SEARCH_MODES and p])
+
     # ── Replace ───────────────────────────────────────────────────────────────
 
     def get_replace(self) -> list[str]:
-        """Return saved replacement patterns, most recent first.
-
-        Falls back to defaults when the file is absent or yields no valid entry.
-        """
+        """Return saved replacement patterns, most recent first."""
         result = self._read_replace_raw()
         return result if result else list(_REPLACE_DEFAULTS)
 
     def add_replace(self, pattern: str) -> None:
-        """Promote an existing entry or prepend a new one (LRU), then rewrite the file.
-
-        Unreadable lines in the previous file are silently dropped on rewrite.
-        """
+        """Promote an existing entry or prepend a new one (LRU), then save."""
         if not pattern:
             return
         entries = self._read_replace_raw()
         entries = [e for e in entries if e != pattern]
         entries.insert(0, pattern)
         self._write_replace(entries)
+
+    def set_replace(self, entries: list[str]) -> None:
+        """Overwrite the entire replace history with *entries*."""
+        self._write_replace([e for e in entries if e])

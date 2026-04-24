@@ -73,7 +73,7 @@ $(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
 	    $(PY_SOURCES)
 	@printf "$(C)Extracting from generated UI code...$(R)\n"
 	$(CONDA_RUN) python tools/extract_ui_strings.py \
-	    $(SRC)/pbrenamer/ui/main_window_ui.py > /tmp/_pbrenamer_ui_strings.py
+	    $(UI_PY) > /tmp/_pbrenamer_ui_strings.py
 	@echo '_("language_name")' >> /tmp/_pbrenamer_ui_strings.py
 	$(CONDA_RUN) xgettext --language=Python --keyword=_ \
 	    --from-code=UTF-8 --join-existing \

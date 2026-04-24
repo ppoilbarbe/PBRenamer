@@ -41,4 +41,4 @@ Thumbs.db
 *.pot
 
 # Claude Code
-.claude/
+.claude/settings.local.json

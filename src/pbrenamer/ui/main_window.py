@@ -5,7 +5,6 @@ from __future__ import annotations
 import os
 import re
 from collections import defaultdict
-from collections.abc import Callable
 
 from PySide6.QtCore import QDir, Qt
 from PySide6.QtGui import QColor
@@ -22,6 +21,7 @@ from PySide6.QtWidgets import (
 from pbrenamer.core import filetools
 from pbrenamer.core.undo import UndoManager
 from pbrenamer.platform.fs import conflict_key, same_file_path
+from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
 from pbrenamer.ui.pattern_help import (
     REPLACE_HTML,
@@ -32,6 +32,8 @@ from pbrenamer.ui.pattern_help import (
 )
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
+from pbrenamer.ui.widgets import WhitespaceLineEdit
+from pbrenamer.ui.window_state import WindowState
 
 
 class _SearchModeDelegate(QStyledItemDelegate):
@@ -78,6 +80,7 @@ class MainWindow(QMainWindow):
         self._current_dir: str | None = None
         self._undo = UndoManager()
         self._presets = PatternPresets()
+        self._window_state = WindowState()
         self._search_help: PatternHelpDialog | None = None
         self._replace_help: PatternHelpDialog | None = None
 
@@ -87,6 +90,7 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
+        self._restore_window_state()
         self._navigate_to(start_dir or os.getcwd())
 
     # ── Initial setup ─────────────────────────────────────────────────────────
@@ -118,6 +122,8 @@ class MainWindow(QMainWindow):
         self._ui.cmbPatternSearch.view().setItemDelegate(
             _SearchModeDelegate(self._ui.cmbPatternSearch)
         )
+        self._ui.cmbPatternSearch.setLineEdit(WhitespaceLineEdit())
+        self._ui.cmbPatternDest.setLineEdit(WhitespaceLineEdit())
 
     def _populate_pattern_combos(self) -> None:
         self._ui.cmbPatternSearch.clear()
@@ -138,20 +144,13 @@ class MainWindow(QMainWindow):
         sel_model = self._ui.treeDirectory.selectionModel()
         sel_model.selectionChanged.connect(lambda *_: self._on_directory_selected())
 
-        # Substitution tab
-        self._ui.btnApplySpaces.clicked.connect(self._on_apply_spaces)
+        # Patterns tab — separator shortcuts
+        self._ui.cmbSpaces.activated.connect(self._on_spaces_shortcut)
 
         # Patterns tab — post-processing
         self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
         self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
         self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
-
-        # Insert/Delete tab
-        self._ui.btnInsert.clicked.connect(self._on_insert)
-        self._ui.btnDelete.clicked.connect(self._on_delete)
-
-        # Manual tab
-        self._ui.btnApplyManual.clicked.connect(self._on_apply_manual)
 
         # Pattern add/help buttons
         self._ui.btnSearchAdd.clicked.connect(self._on_add_search)
@@ -178,10 +177,10 @@ class MainWindow(QMainWindow):
 
         # Auto-preview
         self._ui.chkAutoPreview.toggled.connect(self._on_auto_preview_toggled)
-        self._ui.tabWidget.currentChanged.connect(self._on_tab_changed)
 
         # Menu bar
         self._ui.actionQuit.triggered.connect(self._on_quit)
+        self._ui.actionHistory.triggered.connect(self._on_history)
         self._ui.actionSettings.triggered.connect(self._on_settings)
         self._ui.actionAbout.triggered.connect(self._on_about)
 
@@ -238,8 +237,7 @@ class MainWindow(QMainWindow):
         )
         self._ui.btnRename.setEnabled(False)
 
-        auto = self._ui.chkAutoPreview.isChecked()
-        if auto and self._ui.tabWidget.currentIndex() == 0:
+        if self._ui.chkAutoPreview.isChecked():
             self._on_preview()
 
     # ── Preview (pattern tab only) ────────────────────────────────────────────
@@ -288,7 +286,7 @@ class MainWindow(QMainWindow):
         self._update_replace_add_button()
 
     def _update_search_add_button(self) -> None:
-        pattern = self._ui.cmbPatternSearch.currentText().strip()
+        pattern = self._ui.cmbPatternSearch.currentText()
         if not pattern:
             self._ui.btnSearchAdd.setEnabled(False)
             return
@@ -307,7 +305,7 @@ class MainWindow(QMainWindow):
         self._ui.btnSearchAdd.setEnabled(not already)
 
     def _update_replace_add_button(self) -> None:
-        pattern = self._ui.cmbPatternDest.currentText().strip()
+        pattern = self._ui.cmbPatternDest.currentText()
         if not pattern:
             self._ui.btnReplaceAdd.setEnabled(False)
             return
@@ -318,8 +316,6 @@ class MainWindow(QMainWindow):
         self._ui.btnReplaceAdd.setEnabled(not already)
 
     def _on_preview(self) -> None:
-        if self._ui.tabWidget.currentIndex() != 0:
-            return
         if not self._current_dir:
             return
         search = self._ui.cmbPatternSearch.currentText()
@@ -436,66 +432,26 @@ class MainWindow(QMainWindow):
             root.child(i).setText(1, "")
         self._ui.btnRename.setEnabled(False)
 
-    # ── Generic transformation applier ───────────────────────────────────────
+    # ── Patterns tab — separator shortcuts ───────────────────────────────────
 
-    def _apply_to_all(self, transform: Callable[[str, str], str | None]) -> None:
-        """Apply *transform(stem, stem_path) → newname* to selected rows (or all)."""
-        keep_ext = self._ui.chkKeepExtension.isChecked()
+    # (search regex, replacement) indexed to match cmbSpaces items 1..6
+    _SPACES_SHORTCUTS: tuple[tuple[str, str], ...] = (
+        (" ", "_"),
+        ("_", " "),
+        (" ", "."),
+        (r"\.", " "),
+        (" ", "-"),
+        ("-", " "),
+    )
 
-        for item in self._active_items():
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            name = os.path.basename(path)
-
-            if keep_ext:
-                stem, stem_path, ext = filetools.cut_extension(name, path)
-            else:
-                stem, stem_path, ext = name, path, ""
-
-            newname = transform(stem, stem_path)
-            if newname is None:
-                continue
-
-            if keep_ext:
-                newname, _ = filetools.add_extension(newname, stem_path, ext)
-
-            item.setText(1, newname)
-
-        self._ui.tblFiles.resizeColumnToContents(1)
-        self._refresh_conflicts()
-
-    # ── Substitution tab handlers ─────────────────────────────────────────────
-
-    def _on_apply_spaces(self) -> None:
-        mode = self._ui.cmbSpaces.currentIndex()
-        self._apply_to_all(lambda n, p: filetools.replace_spaces(n, p, mode)[0])
-
-    # ── Insert / Delete tab handlers ──────────────────────────────────────────
-
-    def _on_insert(self) -> None:
-        text = self._ui.edtInsertText.text()
-        pos = self._ui.spnInsertPos.value()
-        self._apply_to_all(lambda n, p: filetools.insert_at(n, p, text, pos)[0])
-
-    def _on_delete(self) -> None:
-        frm = self._ui.spnDeleteFrom.value()
-        to = self._ui.spnDeleteTo.value()
-        self._apply_to_all(lambda n, p: filetools.delete_from(n, p, frm, to)[0])
-
-    # ── Manual tab handler ────────────────────────────────────────────────────
-
-    def _on_apply_manual(self) -> None:
-        selected = self._ui.tblFiles.selectedItems()
-        if not selected:
+    def _on_spaces_shortcut(self, index: int) -> None:
+        if index <= 0:
             return
-        # Get the top-level item (column 0 of the selected row)
-        item = selected[0]
-        while item.parent():
-            item = item.parent()
-        text = self._ui.edtManualName.text().strip()
-        if text:
-            item.setText(1, text)
-            item.setForeground(1, _PREVIEW_COLOR)
-            self._refresh_conflicts()
+        search, replace = self._SPACES_SHORTCUTS[index - 1]
+        self._ui.radRegex.setChecked(True)
+        self._ui.cmbPatternSearch.setCurrentText(search)
+        self._ui.cmbPatternDest.setCurrentText(replace)
+        self._ui.cmbSpaces.setCurrentIndex(0)
 
     # ── Pattern help dialogs ──────────────────────────────────────────────────
 
@@ -535,7 +491,7 @@ class MainWindow(QMainWindow):
         return "pattern"
 
     def _on_add_search(self) -> None:
-        pattern = self._ui.cmbPatternSearch.currentText().strip()
+        pattern = self._ui.cmbPatternSearch.currentText()
         if not pattern:
             return
         mode = self._current_search_mode()
@@ -544,7 +500,7 @@ class MainWindow(QMainWindow):
         self._ui.cmbPatternSearch.setCurrentIndex(0)
 
     def _on_add_replace(self) -> None:
-        pattern = self._ui.cmbPatternDest.currentText().strip()
+        pattern = self._ui.cmbPatternDest.currentText()
         if not pattern:
             return
         self._presets.add_replace(pattern)
@@ -623,20 +579,39 @@ class MainWindow(QMainWindow):
         self._ui.btnUndo.setEnabled(self._undo.can_undo())
         self._reload_files()
 
+    # ── Window state (geometry + splitters) ──────────────────────────────────
+
+    def _restore_window_state(self) -> None:
+        geo, sm, sr = self._window_state.load()
+        if geo:
+            self.restoreGeometry(geo)
+        if sm:
+            self._ui.splitterMain.restoreState(sm)
+        if sr:
+            self._ui.splitterRight.restoreState(sr)
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._window_state.save(
+            self.saveGeometry(),
+            self._ui.splitterMain.saveState(),
+            self._ui.splitterRight.saveState(),
+        )
+        super().closeEvent(event)
+
     # ── Auto-preview / tab change ─────────────────────────────────────────────
 
     def _on_auto_preview_toggled(self, checked: bool) -> None:
         if checked:
             self._on_preview()
 
-    def _on_tab_changed(self, _idx: int) -> None:
-        if self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
-
     # ── Menu handlers ─────────────────────────────────────────────────────────
 
     def _on_quit(self) -> None:
         QApplication.quit()
+
+    def _on_history(self) -> None:
+        HistoryDialog(self._presets, self).exec()
+        self._populate_pattern_combos()
 
     def _on_settings(self) -> None:
         SettingsDialog(self).exec()

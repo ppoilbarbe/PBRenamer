@@ -111,7 +111,7 @@
         </column>
        </widget>
 
-       <!-- Bottom panel: tab widget + action buttons -->
+       <!-- Bottom panel: rename controls + action buttons -->
        <widget class="QWidget" name="bottomPanel">
         <layout class="QHBoxLayout" name="bottomLayout">
          <property name="leftMargin"><number>0</number></property>
@@ -120,72 +120,189 @@
          <property name="bottomMargin"><number>0</number></property>
          <item>
 
-          <!-- Tab widget -->
-          <widget class="QTabWidget" name="tabWidget">
-           <property name="currentIndex"><number>0</number></property>
-
-           <!-- Tab 0: Patterns -->
-           <widget class="QWidget" name="tabPatterns">
-            <attribute name="title"><string>Patterns</string></attribute>
-            <layout class="QVBoxLayout" name="layoutPatterns">
-             <item>
+          <!-- Rename controls frame -->
+          <widget class="QFrame" name="renameFrame">
+           <property name="frameShape"><enum>QFrame::StyledPanel</enum></property>
+           <property name="frameShadow"><enum>QFrame::Raised</enum></property>
+           <layout class="QVBoxLayout" name="layoutPatterns">
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QLabel">
+                <property name="text"><string>Search:</string></property>
+                <property name="minimumWidth"><number>60</number></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbPatternSearch">
+                <property name="editable"><bool>true</bool></property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>1</horstretch><verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip"><string>Search pattern</string></property>
+                <property name="statusTip"><string>Pattern to match against file names. Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anything</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="btnSearchAdd">
+                <property name="autoRaise"><bool>true</bool></property>
+                <property name="toolTip"><string>Save to history</string></property>
+                <property name="statusTip"><string>Add the current search pattern and mode to the drop-down history</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="btnSearchHelp">
+                <property name="autoRaise"><bool>true</bool></property>
+                <property name="toolTip"><string>Search pattern help</string></property>
+                <property name="statusTip"><string>Show help about search patterns (Pattern tokens, Regular expressions, Plain text)</string></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QRadioButton" name="radPattern">
+                <property name="text"><string>Pattern</string></property>
+                <property name="checked"><bool>true</bool></property>
+                <property name="toolTip"><string>Search using pattern tokens</string></property>
+                <property name="statusTip"><string>Match file names using pattern tokens ({#}, {L}, {X}…)</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radRegex">
+                <property name="text"><string>Regular expression</string></property>
+                <property name="toolTip"><string>Search using a Python regular expression</string></property>
+                <property name="statusTip"><string>Match file names using a Python regular expression; use \1 \2… for backreferences in the replacement</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radPlainText">
+                <property name="text"><string>Plain text</string></property>
+                <property name="toolTip"><string>Search for a literal string</string></property>
+                <property name="statusTip"><string>Match file names by looking for the search text as a literal string</string></property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation"><enum>Qt::Horizontal</enum></property>
+                <property name="sizeHint" stdset="0">
+                 <size><width>40</width><height>20</height></size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QLabel">
+                <property name="text"><string>Replace:</string></property>
+                <property name="minimumWidth"><number>60</number></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbPatternDest">
+                <property name="editable"><bool>true</bool></property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>1</horstretch><verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip"><string>Replacement pattern</string></property>
+                <property name="statusTip"><string>Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, {date} for today's date, {dir} for the parent folder name</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="btnReplaceAdd">
+                <property name="autoRaise"><bool>true</bool></property>
+                <property name="toolTip"><string>Save to history</string></property>
+                <property name="statusTip"><string>Add the current replacement pattern to the drop-down history</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="btnReplaceHelp">
+                <property name="autoRaise"><bool>true</bool></property>
+                <property name="toolTip"><string>Replacement pattern help</string></property>
+                <property name="statusTip"><string>Show help about replacement patterns (capture groups, counter, date, directory tokens)</string></property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout">
+              <item>
+               <widget class="QLabel">
+                <property name="text"><string>Separator:</string></property>
+                <property name="minimumWidth"><number>60</number></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbSpaces">
+                <property name="toolTip"><string>Separator shortcut</string></property>
+                <property name="statusTip"><string>Select a separator conversion to fill in the search and replacement fields in regex mode</string></property>
+                <item><property name="text"><string>— Separator shortcuts —</string></property></item>
+                <item><property name="text"><string>Spaces → underscores</string></property></item>
+                <item><property name="text"><string>Underscores → spaces</string></property></item>
+                <item><property name="text"><string>Spaces → dots</string></property></item>
+                <item><property name="text"><string>Dots → spaces</string></property></item>
+                <item><property name="text"><string>Spaces → dashes</string></property></item>
+                <item><property name="text"><string>Dashes → spaces</string></property></item>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation"><enum>Qt::Horizontal</enum></property>
+                <property name="sizeHint" stdset="0">
+                 <size><width>40</width><height>20</height></size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation"><enum>Qt::Vertical</enum></property>
+              <property name="sizeHint" stdset="0">
+               <size><width>20</width><height>5</height></size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="grpPostProcess">
+              <property name="title"><string>Post-processing</string></property>
+              <property name="minimumHeight"><number>60</number></property>
               <layout class="QHBoxLayout">
+               <item>
+                <widget class="QCheckBox" name="chkRemoveAccents">
+                 <property name="text"><string>Remove accents</string></property>
+                 <property name="toolTip"><string>Strip diacritical marks</string></property>
+                 <property name="statusTip"><string>Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="chkRemoveDuplicates">
+                 <property name="text"><string>Remove duplicate separators</string></property>
+                 <property name="toolTip"><string>Collapse consecutive separators</string></property>
+                 <property name="statusTip"><string>Collapse runs of identical separator characters (spaces, dots, dashes, underscores) into one</string></property>
+                </widget>
+               </item>
                <item>
                 <widget class="QLabel">
-                 <property name="text"><string>Search:</string></property>
-                 <property name="minimumWidth"><number>60</number></property>
+                 <property name="text"><string>Case:</string></property>
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="cmbPatternSearch">
-                 <property name="editable"><bool>true</bool></property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>1</horstretch><verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip"><string>Search pattern</string></property>
-                 <property name="statusTip"><string>Pattern to match against file names. Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anything</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="btnSearchAdd">
-                 <property name="autoRaise"><bool>true</bool></property>
-                 <property name="toolTip"><string>Save to history</string></property>
-                 <property name="statusTip"><string>Add the current search pattern and mode to the drop-down history</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="btnSearchHelp">
-                 <property name="autoRaise"><bool>true</bool></property>
-                 <property name="toolTip"><string>Search pattern help</string></property>
-                 <property name="statusTip"><string>Show help about search patterns (Pattern tokens, Regular expressions, Plain text)</string></property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout">
-               <item>
-                <widget class="QRadioButton" name="radPattern">
-                 <property name="text"><string>Pattern</string></property>
-                 <property name="checked"><bool>true</bool></property>
-                 <property name="toolTip"><string>Search using pattern tokens</string></property>
-                 <property name="statusTip"><string>Match file names using pattern tokens ({#}, {L}, {X}…)</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radRegex">
-                 <property name="text"><string>Regular expression</string></property>
-                 <property name="toolTip"><string>Search using a Python regular expression</string></property>
-                 <property name="statusTip"><string>Match file names using a Python regular expression; use \1 \2… for backreferences in the replacement</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QRadioButton" name="radPlainText">
-                 <property name="text"><string>Plain text</string></property>
-                 <property name="toolTip"><string>Search for a literal string</string></property>
-                 <property name="statusTip"><string>Match file names by looking for the search text as a literal string</string></property>
+                <widget class="QComboBox" name="cmbCaps">
+                 <property name="toolTip"><string>Capitalization mode</string></property>
+                 <property name="statusTip"><string>Choose how to change the case of file names after applying the pattern</string></property>
+                 <item><property name="text"><string>No change</string></property></item>
+                 <item><property name="text"><string>UPPERCASE</string></property></item>
+                 <item><property name="text"><string>lowercase</string></property></item>
+                 <item><property name="text"><string>Capitalize first letter</string></property></item>
+                 <item><property name="text"><string>Title Case</string></property></item>
                 </widget>
                </item>
                <item>
@@ -197,285 +314,13 @@
                 </spacer>
                </item>
               </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout">
-               <item>
-                <widget class="QLabel">
-                 <property name="text"><string>Replace:</string></property>
-                 <property name="minimumWidth"><number>60</number></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="cmbPatternDest">
-                 <property name="editable"><bool>true</bool></property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>1</horstretch><verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip"><string>Replacement pattern</string></property>
-                 <property name="statusTip"><string>Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, {date} for today's date, {dir} for the parent folder name</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="btnReplaceAdd">
-                 <property name="autoRaise"><bool>true</bool></property>
-                 <property name="toolTip"><string>Save to history</string></property>
-                 <property name="statusTip"><string>Add the current replacement pattern to the drop-down history</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="btnReplaceHelp">
-                 <property name="autoRaise"><bool>true</bool></property>
-                 <property name="toolTip"><string>Replacement pattern help</string></property>
-                 <property name="statusTip"><string>Show help about replacement patterns (capture groups, counter, date, directory tokens)</string></property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation"><enum>Qt::Vertical</enum></property>
-               <property name="sizeHint" stdset="0">
-                <size><width>20</width><height>5</height></size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="grpPostProcess">
-               <property name="title"><string>Post-processing</string></property>
-               <property name="minimumHeight"><number>60</number></property>
-               <layout class="QHBoxLayout">
-                <item>
-                 <widget class="QCheckBox" name="chkRemoveAccents">
-                  <property name="text"><string>Remove accents</string></property>
-                  <property name="toolTip"><string>Strip diacritical marks</string></property>
-                  <property name="statusTip"><string>Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="chkRemoveDuplicates">
-                  <property name="text"><string>Remove duplicate separators</string></property>
-                  <property name="toolTip"><string>Collapse consecutive separators</string></property>
-                  <property name="statusTip"><string>Collapse runs of identical separator characters (spaces, dots, dashes, underscores) into one</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel">
-                  <property name="text"><string>Case:</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="cmbCaps">
-                  <property name="toolTip"><string>Capitalization mode</string></property>
-                  <property name="statusTip"><string>Choose how to change the case of file names after applying the pattern</string></property>
-                  <item><property name="text"><string>No change</string></property></item>
-                  <item><property name="text"><string>UPPERCASE</string></property></item>
-                  <item><property name="text"><string>lowercase</string></property></item>
-                  <item><property name="text"><string>Capitalize first letter</string></property></item>
-                  <item><property name="text"><string>Title Case</string></property></item>
-                 </widget>
-                </item>
-                <item>
-                 <spacer>
-                  <property name="orientation"><enum>Qt::Horizontal</enum></property>
-                  <property name="sizeHint" stdset="0">
-                   <size><width>40</width><height>20</height></size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-
-           <!-- Tab 1: Substitutions -->
-           <widget class="QWidget" name="tabSubstitutions">
-            <attribute name="title"><string>Substitutions</string></attribute>
-            <layout class="QVBoxLayout" name="layoutSubstitutions">
-             <item>
-              <widget class="QGroupBox" name="grpSpaces">
-               <property name="title"><string>Spaces</string></property>
-               <layout class="QHBoxLayout">
-                <item>
-                 <widget class="QComboBox" name="cmbSpaces">
-                  <property name="toolTip"><string>Separator substitution mode</string></property>
-                  <property name="statusTip"><string>Choose which separator characters to convert</string></property>
-                  <item><property name="text"><string>Spaces → underscores</string></property></item>
-                  <item><property name="text"><string>Underscores → spaces</string></property></item>
-                  <item><property name="text"><string>Spaces → dots</string></property></item>
-                  <item><property name="text"><string>Dots → spaces</string></property></item>
-                  <item><property name="text"><string>Spaces → dashes</string></property></item>
-                  <item><property name="text"><string>Dashes → spaces</string></property></item>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnApplySpaces">
-                  <property name="text"><string>Apply</string></property>
-                  <property name="toolTip"><string>Apply separator substitution</string></property>
-                  <property name="statusTip"><string>Apply the selected separator substitution to the file list preview</string></property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation"><enum>Qt::Vertical</enum></property>
-               <property name="sizeHint" stdset="0">
-                <size><width>20</width><height>5</height></size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-
-           <!-- Tab 2: Insert / Delete -->
-           <widget class="QWidget" name="tabInsertDelete">
-            <attribute name="title"><string>Insert / Delete</string></attribute>
-            <layout class="QVBoxLayout" name="layoutInsertDelete">
-             <item>
-              <widget class="QGroupBox" name="grpInsert">
-               <property name="title"><string>Insert</string></property>
-               <layout class="QHBoxLayout">
-                <item>
-                 <widget class="QLabel">
-                  <property name="text"><string>Text:</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="edtInsertText">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>1</horstretch><verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="toolTip"><string>Text to insert</string></property>
-                  <property name="statusTip"><string>Characters to insert into each file name at the specified position</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel">
-                  <property name="text"><string>at position:</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spnInsertPos">
-                  <property name="minimum"><number>0</number></property>
-                  <property name="maximum"><number>9999</number></property>
-                  <property name="toolTip"><string>Character position (0 = start)</string></property>
-                  <property name="statusTip"><string>Zero-based character index at which to insert the text; use a high value to append</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnInsert">
-                  <property name="text"><string>Apply</string></property>
-                  <property name="toolTip"><string>Apply insertion</string></property>
-                  <property name="statusTip"><string>Insert the given text at the specified position in the file list preview</string></property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="grpDelete">
-               <property name="title"><string>Delete</string></property>
-               <layout class="QHBoxLayout">
-                <item>
-                 <widget class="QLabel">
-                  <property name="text"><string>From position:</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spnDeleteFrom">
-                  <property name="minimum"><number>0</number></property>
-                  <property name="maximum"><number>9999</number></property>
-                  <property name="toolTip"><string>Start of the range to delete (0 = first character)</string></property>
-                  <property name="statusTip"><string>Index of the first character to delete (zero-based, inclusive)</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel">
-                  <property name="text"><string>to:</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spnDeleteTo">
-                  <property name="minimum"><number>0</number></property>
-                  <property name="maximum"><number>9999</number></property>
-                  <property name="toolTip"><string>End of the range to delete (inclusive)</string></property>
-                  <property name="statusTip"><string>Index of the last character to delete (zero-based, inclusive)</string></property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btnDelete">
-                  <property name="text"><string>Apply</string></property>
-                  <property name="toolTip"><string>Apply deletion</string></property>
-                  <property name="statusTip"><string>Delete the specified character range from each name in the file list preview</string></property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation"><enum>Qt::Vertical</enum></property>
-               <property name="sizeHint" stdset="0">
-                <size><width>20</width><height>5</height></size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-
-           <!-- Tab 3: Manual -->
-           <widget class="QWidget" name="tabManual">
-            <attribute name="title"><string>Manual</string></attribute>
-            <layout class="QVBoxLayout" name="layoutManual">
-             <item>
-              <layout class="QHBoxLayout">
-               <item>
-                <widget class="QLabel">
-                 <property name="text"><string>New name for selected file:</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="edtManualName">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>1</horstretch><verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip"><string>New name for the selected file</string></property>
-                 <property name="statusTip"><string>Type the new name for the currently selected file, then click Apply</string></property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="btnApplyManual">
-                 <property name="text"><string>Apply</string></property>
-                 <property name="toolTip"><string>Set the preview name for the selected file</string></property>
-                 <property name="statusTip"><string>Apply the typed name as the preview for the currently selected file</string></property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation"><enum>Qt::Vertical</enum></property>
-               <property name="sizeHint" stdset="0">
-                <size><width>20</width><height>5</height></size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-
-          </widget><!-- /tabWidget -->
+             </widget>
+            </item>
+           </layout>
+          </widget><!-- /renameFrame -->
          </item>
 
-         <!-- Action buttons (vertical bar on the right of the tabs) -->
+         <!-- Action buttons (vertical bar on the right) -->
          <item>
           <layout class="QVBoxLayout" name="actionButtonsLayout">
            <item>
@@ -543,6 +388,8 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title"><string>Edit</string></property>
+    <addaction name="actionHistory"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -565,6 +412,11 @@
    <property name="shortcut"><string>Ctrl+Q</string></property>
    <property name="toolTip"><string>Quit PBRenamer</string></property>
    <property name="statusTip"><string>Exit the application</string></property>
+  </action>
+  <action name="actionHistory">
+   <property name="text"><string>History…</string></property>
+   <property name="toolTip"><string>Manage pattern history</string></property>
+   <property name="statusTip"><string>Add or remove entries from the search and replacement pattern history</string></property>
   </action>
   <action name="actionSettings">
    <property name="text"><string>Settings…</string></property>
