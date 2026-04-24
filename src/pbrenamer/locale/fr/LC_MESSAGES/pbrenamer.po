@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PBRenamer 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 17:58+0200\n"
+"POT-Creation-Date: 2026-04-24 18:28+0200\n"
 "PO-Revision-Date: 2026-04-23 00:00+0000\n"
 "Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -20,40 +20,415 @@ msgstr ""
 msgid "System default"
 msgstr "Langue du système"
 
-#: src/pbrenamer/ui/main_window.py:193
+#: src/pbrenamer/ui/main_window.py:196
 msgid "Select folder"
 msgstr "Choisir un dossier"
 
-#: src/pbrenamer/ui/main_window.py:227 /tmp/_pbrenamer_ui_strings.py:41
+#: src/pbrenamer/ui/main_window.py:239 /tmp/_pbrenamer_ui_strings.py:41
 msgid "Original"
 msgstr "Original"
 
-#: src/pbrenamer/ui/main_window.py:227 /tmp/_pbrenamer_ui_strings.py:40
+#: src/pbrenamer/ui/main_window.py:239 /tmp/_pbrenamer_ui_strings.py:40
 #: /tmp/_pbrenamer_ui_strings.py:92
 msgid "Preview"
 msgstr "Aperçu"
 
-#: src/pbrenamer/ui/main_window.py:239
+#: src/pbrenamer/ui/main_window.py:252
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} élément(s)"
 
-#: src/pbrenamer/ui/main_window.py:483
+#: src/pbrenamer/ui/main_window.py:517
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} non disponible"
 
-#: src/pbrenamer/ui/main_window.py:582
+#: src/pbrenamer/ui/main_window.py:618
 msgid "Search — Help"
 msgstr "Recherche — Aide"
 
-#: src/pbrenamer/ui/main_window.py:592
+#: src/pbrenamer/ui/main_window.py:633
 msgid "Replace — Help"
 msgstr "Remplacement — Aide"
 
-#: src/pbrenamer/ui/main_window.py:691
+#: src/pbrenamer/ui/main_window.py:737
 msgid "Rename errors"
 msgstr "Erreurs de renommage"
+
+#: src/pbrenamer/ui/pattern_help.py:76
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>… "
+"are <em>captured</em> and available for reuse in the replacement field."
+msgstr ""
+"Les jetons agissent comme des jokers typés. Les segments entre <b>{1}</b>, "
+"<b>{2}</b>… sont <em>capturés</em> et réutilisables dans le champ de remplacement."
+
+#: src/pbrenamer/ui/pattern_help.py:81
+msgid "One or more digits (0–9)"
+msgstr "Un ou plusieurs chiffres (0–9)"
+
+#: src/pbrenamer/ui/pattern_help.py:82
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Une ou plusieurs lettres (a–z, A–Z et lettres Unicode)"
+
+#: src/pbrenamer/ui/pattern_help.py:83
+msgid "One or more non-whitespace characters"
+msgstr "Un ou plusieurs caractères non-blancs"
+
+#: src/pbrenamer/ui/pattern_help.py:84
+msgid "Any sequence of characters, including empty"
+msgstr "Toute séquence de caractères, y compris vide"
+
+#: src/pbrenamer/ui/pattern_help.py:85
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Poubelle — correspond à un segment et le rejette (non capturé)"
+
+#: src/pbrenamer/ui/pattern_help.py:89
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Groupe capturant — le texte correspondant est lié à {1}, {2}… dans le remplacement"
+
+#: src/pbrenamer/ui/pattern_help.py:97 src/pbrenamer/ui/pattern_help.py:137
+#: src/pbrenamer/ui/pattern_help.py:153
+msgid "Example"
+msgstr "Exemple"
+
+#: src/pbrenamer/ui/pattern_help.py:99 src/pbrenamer/ui/pattern_help.py:139
+#: src/pbrenamer/ui/pattern_help.py:155 /tmp/_pbrenamer_ui_strings.py:44
+msgid "Search:"
+msgstr "Recherche :"
+
+#: src/pbrenamer/ui/pattern_help.py:101 src/pbrenamer/ui/pattern_help.py:141
+#: src/pbrenamer/ui/pattern_help.py:157 /tmp/_pbrenamer_ui_strings.py:60
+msgid "Replace:"
+msgstr "Remplacement :"
+
+#: src/pbrenamer/ui/pattern_help.py:108
+msgid ""
+"Full Python <code>re</code>-module syntax. The match is applied to the file "
+"stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr ""
+"Syntaxe complète du module Python <code>re</code>. La correspondance porte sur "
+"le radical du fichier (ou le nom entier si <em>Garder l'extension</em> est décoché)."
+
+#: src/pbrenamer/ui/pattern_help.py:113
+msgid "Any single character"
+msgstr "N'importe quel caractère"
+
+#: src/pbrenamer/ui/pattern_help.py:115
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Toute séquence (gourmand), variante non vide"
+
+#: src/pbrenamer/ui/pattern_help.py:117
+msgid "One or more digits"
+msgstr "Un ou plusieurs chiffres"
+
+#: src/pbrenamer/ui/pattern_help.py:118
+msgid "Word characters (letters, digits, _)"
+msgstr "Caractères de mot (lettres, chiffres, _)"
+
+#: src/pbrenamer/ui/pattern_help.py:122
+msgid ""
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in replacement"
+msgstr ""
+"Groupe capturant numéroté → <code>\\1</code>, <code>\\2</code>… dans le remplacement"
+
+#: src/pbrenamer/ui/pattern_help.py:129
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Groupe capturant nommé → <code>\\g&lt;name&gt;</code> dans le remplacement"
+
+#: src/pbrenamer/ui/pattern_help.py:131
+msgid "Case-insensitive flag"
+msgstr "Indicateur insensible à la casse"
+
+#: src/pbrenamer/ui/pattern_help.py:132
+msgid "Start / end of the name"
+msgstr "Début / fin du nom"
+
+#: src/pbrenamer/ui/pattern_help.py:148
+msgid ""
+"The search field is matched as a literal string — no wildcards, no special "
+"characters. Every occurrence of the exact text in the file name is replaced."
+msgstr ""
+"Le champ de recherche est comparé en tant que chaîne littérale — pas de jokers, "
+"pas de caractères spéciaux. Toutes les occurrences du texte exact dans le nom de "
+"fichier sont remplacées."
+
+#: src/pbrenamer/ui/pattern_help.py:164
+msgid "Search patterns"
+msgstr "Motifs de recherche"
+
+#: src/pbrenamer/ui/pattern_help.py:165
+msgid "Pattern mode"
+msgstr "Mode motif"
+
+#: src/pbrenamer/ui/pattern_help.py:170 /tmp/_pbrenamer_ui_strings.py:116
+msgid "Regular expression mode"
+msgstr "Mode expression rationnelle"
+
+#: src/pbrenamer/ui/pattern_help.py:175 /tmp/_pbrenamer_ui_strings.py:118
+msgid "Plain text mode"
+msgstr "Mode texte brut"
+
+#: src/pbrenamer/ui/pattern_help.py:186
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields are "
+"written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"La chaîne de remplacement est identique quel que soit le mode de recherche. Les "
+"champs s'écrivent <code>{name}</code> et peuvent inclure des options de formatage :"
+
+#: src/pbrenamer/ui/pattern_help.py:191
+msgid "plain value"
+msgstr "valeur brute"
+
+#: src/pbrenamer/ui/pattern_help.py:192
+msgid "with format"
+msgstr "avec format"
+
+#: src/pbrenamer/ui/pattern_help.py:193
+msgid "with format and fallback"
+msgstr "avec format et valeur de repli"
+
+#: src/pbrenamer/ui/pattern_help.py:194
+msgid "left-align  (digit fmt = min width)"
+msgstr "aligner à gauche  (fmt chiffre = largeur min)"
+
+#: src/pbrenamer/ui/pattern_help.py:195
+msgid "right-align"
+msgstr "aligner à droite"
+
+#: src/pbrenamer/ui/pattern_help.py:196
+msgid "zero-pad right (numbers)"
+msgstr "compléter par des zéros à droite (nombres)"
+
+#: src/pbrenamer/ui/pattern_help.py:197
+msgid "literal '{' character"
+msgstr "caractère '{' littéral"
+
+#: src/pbrenamer/ui/pattern_help.py:201
+msgid ""
+"<b>fmt</b> is a minimum width (digit) for text/numbers, or a <code>strftime</"
+"code> format for dates/datetimes.<br><b>default</b>: used when the field is "
+"absent; omitting it makes absence an error (file shown in red in the "
+"preview)."
+msgstr ""
+"<b>fmt</b> est une largeur minimale (chiffre) pour les textes/nombres, ou un "
+"format <code>strftime</code> pour les dates/heures.<br><b>default</b> : utilisé "
+"quand le champ est absent ; l'omettre rend l'absence erreur (fichier affiché en "
+"rouge dans l'aperçu)."
+
+#: src/pbrenamer/ui/pattern_help.py:208
+msgid "all modes"
+msgstr "tous modes"
+
+#: src/pbrenamer/ui/pattern_help.py:209
+msgid "pattern, regex"
+msgstr "motif, regex"
+
+#: src/pbrenamer/ui/pattern_help.py:210
+msgid "regex only"
+msgstr "regex uniquement"
+
+#: src/pbrenamer/ui/pattern_help.py:211
+msgid "Field"
+msgstr "Champ"
+
+#: src/pbrenamer/ui/pattern_help.py:212
+msgid "Available in"
+msgstr "Disponible en"
+
+#: src/pbrenamer/ui/pattern_help.py:213
+msgid "Description"
+msgstr "Description"
+
+#: src/pbrenamer/ui/pattern_help.py:224
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Texte intégral correspondant (ou littéral de recherche en mode texte brut)"
+
+#: src/pbrenamer/ui/pattern_help.py:230
+msgid "Numbered capture groups (1-based)"
+msgstr "Groupes capturants numérotés (à partir de 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:235
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Groupe nommé <code>(?P&lt;name&gt;…)</code> issu de la regex de recherche"
+
+#: src/pbrenamer/ui/pattern_help.py:242
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; <em>default</em> "
+"sets the start value (e.g. <code>{num:02:10}</code> starts at 10, zero-"
+"padded to 2 digits)"
+msgstr ""
+"Compteur auto-incrémenté — fmt par défaut est une largeur min ; <em>default</em> "
+"fixe la valeur de départ (ex. <code>{num:02:10}</code> démarre à 10, complété à "
+"2 chiffres)"
+
+#: src/pbrenamer/ui/pattern_help.py:251
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists on "
+"disk or has been assigned to another file in the same batch — guarantees no "
+"conflicts"
+msgstr ""
+"Comme <code>{num}</code> mais saute les valeurs dont le nom cible existe déjà "
+"sur disque ou a été attribué à un autre fichier du lot — garantit l'absence de "
+"conflits"
+
+#: src/pbrenamer/ui/pattern_help.py:260
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Date du jour — format par défaut <code>%Y-%m-%d</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:266
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date et heure courantes — format par défaut <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:271
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date/heure de modification du fichier — format par défaut <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:274
+msgid "Name of the immediate parent folder"
+msgstr "Nom du dossier parent immédiat"
+
+#: src/pbrenamer/ui/pattern_help.py:278
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "Champ de métadonnées EXIF ou IPTC (images uniquement — voir liste ci-dessous)"
+
+#: src/pbrenamer/ui/pattern_help.py:285
+msgid ""
+"Field names are case-insensitive. A <b>default</b> is strongly recommended "
+"for metadata fields — they may be absent from non-image files or images "
+"without metadata."
+msgstr ""
+"Les noms de champs sont insensibles à la casse. Une valeur <b>default</b> est "
+"fortement recommandée pour les champs de métadonnées — ils peuvent être absents "
+"des fichiers non-image ou des images sans métadonnées."
+
+#: src/pbrenamer/ui/pattern_help.py:289
+msgid "Type"
+msgstr "Type"
+
+#: src/pbrenamer/ui/pattern_help.py:296
+msgid "Date/time the photo was taken"
+msgstr "Date/heure de prise de vue"
+
+#: src/pbrenamer/ui/pattern_help.py:297
+msgid "Date/time the image was digitised"
+msgstr "Date/heure de numérisation"
+
+#: src/pbrenamer/ui/pattern_help.py:298
+msgid "Camera manufacturer"
+msgstr "Fabricant de l'appareil"
+
+#: src/pbrenamer/ui/pattern_help.py:299
+msgid "Camera model"
+msgstr "Modèle de l'appareil"
+
+#: src/pbrenamer/ui/pattern_help.py:300
+msgid "Lens model"
+msgstr "Modèle d'objectif"
+
+#: src/pbrenamer/ui/pattern_help.py:301
+msgid "ISO speed"
+msgstr "Sensibilité ISO"
+
+#: src/pbrenamer/ui/pattern_help.py:302
+msgid "Aperture (e.g. 2.8)"
+msgstr "Ouverture (ex. 2,8)"
+
+#: src/pbrenamer/ui/pattern_help.py:303
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Vitesse d'obturation (ex. 1/125)"
+
+#: src/pbrenamer/ui/pattern_help.py:304
+msgid "Focal length in mm"
+msgstr "Focale en mm"
+
+#: src/pbrenamer/ui/pattern_help.py:305
+msgid "IPTC title / object name"
+msgstr "Titre IPTC / nom d'objet"
+
+#: src/pbrenamer/ui/pattern_help.py:306
+msgid "IPTC photographer / creator"
+msgstr "Photographe IPTC / créateur"
+
+#: src/pbrenamer/ui/pattern_help.py:307
+msgid "IPTC city"
+msgstr "Ville IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:308
+msgid "IPTC country"
+msgstr "Pays IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:309
+msgid "IPTC creation date"
+msgstr "Date de création IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:310
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Mots-clés IPTC (séparés par des points-virgules)"
+
+#: src/pbrenamer/ui/pattern_help.py:318
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Groupe capturant 1 suivi d'un compteur 4 chiffres complété par zéros (démarre à 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:323
+msgid "Same, but counter starts at 10"
+msgstr "Idem, mais le compteur démarre à 10"
+
+#: src/pbrenamer/ui/pattern_help.py:327
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
+"already exists"
+msgstr ""
+"Compteur 3 chiffres sans conflit : saute les valeurs où <code>backup_NNN</code> "
+"existe déjà"
+
+#: src/pbrenamer/ui/pattern_help.py:332
+msgid "Today's date prepended to the matched text"
+msgstr "Date du jour préfixée au texte correspondant"
+
+#: src/pbrenamer/ui/pattern_help.py:335
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Date/heure de prise de vue compact ; \"inconnu\" si EXIF absent"
+
+#: src/pbrenamer/ui/pattern_help.py:340
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Heure+minute de numérisation ; \"0000\" si absent"
+
+#: src/pbrenamer/ui/pattern_help.py:344
+msgid "Camera make and model (empty string if absent)"
+msgstr "Marque et modèle d'appareil (chaîne vide si absent)"
+
+#: src/pbrenamer/ui/pattern_help.py:347
+msgid "Named regex groups (regex mode only)"
+msgstr "Groupes regex nommés (mode regex uniquement)"
+
+#: src/pbrenamer/ui/pattern_help.py:350
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Dossier parent, date de modification du fichier, compteur 3 chiffres"
+
+#: src/pbrenamer/ui/pattern_help.py:357
+msgid "Replacement fields"
+msgstr "Champs de remplacement"
+
+#: src/pbrenamer/ui/pattern_help.py:362
+msgid "Available fields"
+msgstr "Champs disponibles"
+
+#: src/pbrenamer/ui/pattern_help.py:368
+msgid "Metadata fields for <code>{ex:…}</code>"
+msgstr "Champs de métadonnées pour <code>{ex:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:375
+msgid "Examples"
+msgstr "Exemples"
 
 #: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:152
 msgid "language_name"
@@ -237,10 +612,6 @@ msgstr ""
 "Sélectionner des lignes pour restreindre les opérations à ces fichiers ; ne "
 "rien sélectionner pour tout appliquer"
 
-#: /tmp/_pbrenamer_ui_strings.py:44
-msgid "Search:"
-msgstr "Recherche :"
-
 #: /tmp/_pbrenamer_ui_strings.py:45
 msgid "Search pattern"
 msgstr "Pattern de recherche"
@@ -316,10 +687,6 @@ msgstr ""
 "Faire correspondre les noms de fichiers par recherche littérale du texte "
 "saisi"
 
-#: /tmp/_pbrenamer_ui_strings.py:60
-msgid "Replace:"
-msgstr "Remplacement :"
-
 #: /tmp/_pbrenamer_ui_strings.py:61
 msgid "Replacement pattern"
 msgstr "Pattern de remplacement"
@@ -390,6 +757,8 @@ msgid ""
 "Select a separator conversion to fill in the search and replacement fields "
 "in regex mode"
 msgstr ""
+"Sélectionner une conversion de séparateur pour remplir les champs de "
+"recherche et de remplacement en mode regex"
 
 #: /tmp/_pbrenamer_ui_strings.py:77
 msgid "Post-processing"
@@ -556,17 +925,9 @@ msgstr "Mode jetons de pattern"
 msgid "RE"
 msgstr "RE"
 
-#: /tmp/_pbrenamer_ui_strings.py:116
-msgid "Regular expression mode"
-msgstr "Mode expression rationnelle"
-
 #: /tmp/_pbrenamer_ui_strings.py:117
 msgid "txt"
 msgstr "txt"
-
-#: /tmp/_pbrenamer_ui_strings.py:118
-msgid "Plain text mode"
-msgstr "Mode texte brut"
 
 #: /tmp/_pbrenamer_ui_strings.py:119 /tmp/_pbrenamer_ui_strings.py:132
 msgid "Add"

@@ -76,6 +76,7 @@ extend-select = [
 # _() is installed into builtins by gettext at runtime — not a real F821
 "src/pbrenamer/ui/main_window.py"     = ["F821"]
 "src/pbrenamer/ui/settings_dialog.py" = ["F821"]
+"src/pbrenamer/ui/pattern_help.py"    = ["F821"]
 
 [tool.ruff.format]
 # Black-compatible defaults (double quotes, trailing commas, magic trailing comma)

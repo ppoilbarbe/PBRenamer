@@ -6,299 +6,378 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QTextBrowser, QVBoxLayout
 
-# ── HTML content ──────────────────────────────────────────────────────────────
+# ── HTML builders ─────────────────────────────────────────────────────────────
+#
+# Each function is called at dialog-creation time (after i18n.setup()), so
+# _() is guaranteed to be installed and the locale is already active.
 
-_SEARCH_HTML = """\
-<html><body style="font-family: sans-serif; font-size: 10pt; margin: 8px;">
+_HEAD = '<html><body style="font-family: sans-serif; font-size: 10pt; margin: 8px;">\n'
+_FOOT = "</body></html>\n"
+_BG1 = "background:#f0f4ff;"
+_BG2 = "background:#e8eeff;"
+_TABLE = (
+    '<table border="0" cellspacing="0" cellpadding="4"'
+    ' style="border-collapse: collapse;">\n'
+)
+_TABLE_W = (
+    '<table border="0" cellspacing="0" cellpadding="4"'
+    ' style="border-collapse: collapse; width:100%;">\n'
+)
 
-<h2 style="color: #1565C0;">Search patterns</h2>
 
-<h3>Pattern mode</h3>
-<p>Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>…
-are <em>captured</em> and available for reuse in the replacement field.</p>
+def _h2(text: str) -> str:
+    return f'<h2 style="color: #1565C0;">{text}</h2>\n'
 
-<table border="0" cellspacing="0" cellpadding="4"
-       style="border-collapse: collapse;">
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{#}</b></code></td>
-    <td>One or more digits (0–9)</td>
-  </tr>
-  <tr>
-    <td><code><b>{L}</b></code></td>
-    <td>One or more letters (a–z, A–Z and Unicode letters)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{C}</b></code></td>
-    <td>One or more non-whitespace characters</td>
-  </tr>
-  <tr>
-    <td><code><b>{X}</b></code></td>
-    <td>Any sequence of characters, including empty</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{@}</b></code></td>
-    <td>Trash — matches and discards a segment (not captured)</td>
-  </tr>
-  <tr>
-    <td><code><b>{1}</b>, <b>{2}</b>…</code></td>
-    <td>Capture group — the matched text is bound to {1}, {2}… in the replacement</td>
-  </tr>
-</table>
 
-<p><b>Example</b><br>
-Search: <code>{1}_{@}_{2}</code>&nbsp;&nbsp;
-Replace: <code>{2}_{1}</code><br>
-<i>photo_trash_holiday</i> → <i>holiday_photo</i></p>
+def _h3(text: str) -> str:
+    return f"<h3>{text}</h3>\n"
 
-<hr/>
-<h3>Regular expression mode</h3>
-<p>Full Python <code>re</code>-module syntax. The match is applied to the file
-stem (or full name if <em>Keep extension</em> is unchecked).</p>
-<table border="0" cellspacing="0" cellpadding="4"
-       style="border-collapse: collapse;">
-  <tr style="background:#f0f4ff;">
-    <td><code>.</code></td><td>Any single character</td>
-  </tr>
-  <tr>
-    <td><code>.*</code>&nbsp;/&nbsp;<code>.+</code></td>
-    <td>Any sequence (greedy), non-empty variant</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>\\d+</code></td><td>One or more digits</td>
-  </tr>
-  <tr>
-    <td><code>\\w+</code></td><td>Word characters (letters, digits, _)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>(…)</code></td>
-    <td>Numbered capture group → <code>\\1</code>, <code>\\2</code>… in replacement</td>
-  </tr>
-  <tr>
-    <td><code>(?P&lt;name&gt;…)</code></td>
-    <td>Named capture group → <code>\\g&lt;name&gt;</code> in replacement</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>(?i)</code></td><td>Case-insensitive flag</td>
-  </tr>
-  <tr>
-    <td><code>^</code>&nbsp;/&nbsp;<code>$</code></td>
-    <td>Start / end of the name</td>
-  </tr>
-</table>
 
-<p><b>Example</b><br>
-Search: <code>(\\d{4})-(\\d{2})-(\\d{2})</code>&nbsp;&nbsp;
-Replace: <code>\\3/\\2/\\1</code><br>
-<i>2024-06-15</i> → <i>15/06/2024</i></p>
+def _p(text: str) -> str:
+    return f"<p>{text}</p>\n"
 
-<hr/>
-<h3>Plain text mode</h3>
-<p>The search field is matched as a literal string — no wildcards, no special
-characters. Every occurrence of the exact text in the file name is replaced.</p>
 
-<p><b>Example</b><br>
-Search: <code>IMG_</code>&nbsp;&nbsp;Replace: <code>photo_</code><br>
-<i>IMG_0042</i> → <i>photo_0042</i></p>
+def _row2(code: str, desc: str, bg: str = "") -> str:
+    sty = f' style="{bg}"' if bg else ""
+    return (
+        f"  <tr{sty}>\n"
+        f"    <td><code><b>{code}</b></code></td>\n"
+        f"    <td>{desc}</td>\n"
+        f"  </tr>\n"
+    )
 
-</body></html>
-"""
 
-_REPLACE_HTML = """\
-<html><body style="font-family: sans-serif; font-size: 10pt; margin: 8px;">
+def _row2_plain(col1: str, desc: str, bg: str = "") -> str:
+    """Two-column row, first column not in <code><b>."""
+    sty = f' style="{bg}"' if bg else ""
+    return (
+        f"  <tr{sty}>\n"
+        f"    <td><code>{col1}</code></td>\n"
+        f"    <td>{desc}</td>\n"
+        f"  </tr>\n"
+    )
 
-<h2 style="color: #1565C0;">Replacement fields</h2>
 
-<p>The replacement string is the same regardless of the search mode.
-Fields are written <code>{name}</code> and may include formatting options:</p>
+def _row3(col1: str, col2: str, desc: str, bg: str = "") -> str:
+    sty = f' style="{bg}"' if bg else ""
+    return (
+        f"  <tr{sty}>\n"
+        f"    <td><code>{col1}</code></td>"
+        f"<td>{col2}</td>"
+        f"<td>{desc}</td>\n"
+        f"  </tr>\n"
+    )
 
-<pre style="background:#f5f5f5; padding:6px; border-radius:4px;">
-{name}                 plain value
-{name:fmt}             with format
-{name:fmt:default}     with format and fallback
-{name:&lt;fmt}            left-align  (digit fmt = min width)
-{name:&gt;fmt}            right-align
-{name:0fmt}            zero-pad right (numbers)
-{{                     literal '{' character
-</pre>
 
-<p><b>fmt</b> is a minimum width (digit) for text/numbers,
-or a <code>strftime</code> format for dates/datetimes.<br>
-<b>default</b>: used when the field is absent; omitting it makes absence
-an error (file shown in orange in the preview).</p>
+def search_html() -> str:
+    """Build and return the translated search-mode help HTML."""
+    # ── Pattern mode ──────────────────────────────────────────────────────────
+    pat_intro = _(
+        "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>… "
+        "are <em>captured</em> and available for reuse in the replacement field."
+    )
+    pat_table = (
+        _TABLE
+        + _row2("{#}", _("One or more digits (0–9)"), _BG1)
+        + _row2("{L}", _("One or more letters (a–z, A–Z and Unicode letters)"))
+        + _row2("{C}", _("One or more non-whitespace characters"), _BG1)
+        + _row2("{X}", _("Any sequence of characters, including empty"))
+        + _row2("{@}", _("Trash — matches and discards a segment (not captured)"), _BG1)
+        + _row2(
+            "{1}</b>, <b>{2}</b>…",
+            _(
+                "Capture group — the matched text is bound to"
+                " {1}, {2}… in the replacement"
+            ),
+        )
+        + "</table>\n"
+    )
+    pat_example = _p(
+        "<b>"
+        + _("Example")
+        + "</b><br>\n"
+        + _("Search:")
+        + " <code>{1}_{@}_{2}</code>&nbsp;&nbsp;\n"
+        + _("Replace:")
+        + " <code>{2}_{1}</code><br>\n"
+        + "<i>photo_trash_holiday</i> → <i>holiday_photo</i>"
+    )
 
-<hr/>
-<h3>Available fields</h3>
+    # ── Regex mode ────────────────────────────────────────────────────────────
+    re_intro = _(
+        "Full Python <code>re</code>-module syntax. The match is applied to the file "
+        "stem (or full name if <em>Keep extension</em> is unchecked)."
+    )
+    re_table = (
+        _TABLE
+        + _row2_plain(".", _("Any single character"), _BG1)
+        + _row2_plain(
+            ".*&nbsp;/&nbsp;.+", _("Any sequence (greedy), non-empty variant")
+        )
+        + _row2_plain("\\d+", _("One or more digits"), _BG1)
+        + _row2_plain("\\w+", _("Word characters (letters, digits, _)"))
+        + _row2_plain(
+            "(…)",
+            _(
+                "Numbered capture group → <code>\\1</code>, <code>\\2</code>…"
+                " in replacement"
+            ),
+            _BG1,
+        )
+        + _row2_plain(
+            "(?P&lt;name&gt;…)",
+            _("Named capture group → <code>\\g&lt;name&gt;</code> in replacement"),
+        )
+        + _row2_plain("(?i)", _("Case-insensitive flag"), _BG1)
+        + _row2_plain("^&nbsp;/&nbsp;$", _("Start / end of the name"))
+        + "</table>\n"
+    )
+    re_example = _p(
+        "<b>"
+        + _("Example")
+        + "</b><br>\n"
+        + _("Search:")
+        + " <code>(\\d{4})-(\\d{2})-(\\d{2})</code>&nbsp;&nbsp;\n"
+        + _("Replace:")
+        + " <code>\\3/\\2/\\1</code><br>\n"
+        + "<i>2024-06-15</i> → <i>15/06/2024</i>"
+    )
 
-<table border="0" cellspacing="0" cellpadding="4"
-       style="border-collapse: collapse; width:100%;">
-  <tr style="background:#e8eeff;"><th align="left">Field</th>
-      <th align="left">Available in</th><th align="left">Description</th></tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{0}</b></code></td>
-    <td>all modes</td>
-    <td>Full matched text (or search literal in plain-text mode)</td>
-  </tr>
-  <tr>
-    <td><code><b>{1}</b>, <b>{2}</b>…</code></td>
-    <td>pattern, regex</td>
-    <td>Numbered capture groups (1-based)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{re:name}</b></code></td>
-    <td>regex only</td>
-    <td>Named group <code>(?P&lt;name&gt;…)</code> from the search regex</td>
-  </tr>
-  <tr>
-    <td><code><b>{num}</b></code></td>
-    <td>all modes</td>
-    <td>Auto-incrementing counter — default fmt is a minimum width;
-        <em>default</em> sets the start value (e.g. <code>{num:02:10}</code>
-        starts at 10, zero-padded to 2 digits)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{newnum}</b></code></td>
-    <td>all modes</td>
-    <td>Like <code>{num}</code> but skips values whose target name already
-        exists on disk or has been assigned to another file in the same batch
-        — guarantees no conflicts</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{date}</b></code></td>
-    <td>all modes</td>
-    <td>Today's date — default fmt <code>%Y-%m-%d</code></td>
-  </tr>
-  <tr>
-    <td><code><b>{datetime}</b></code></td>
-    <td>all modes</td>
-    <td>Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code></td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{mdatetime}</b></code></td>
-    <td>all modes</td>
-    <td>File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code></td>
-  </tr>
-  <tr>
-    <td><code><b>{dir}</b></code></td>
-    <td>all modes</td>
-    <td>Name of the immediate parent folder</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code><b>{ex:Field}</b></code></td>
-    <td>all modes</td>
-    <td>EXIF or IPTC metadata field (images only — see list below)</td>
-  </tr>
-</table>
+    # ── Plain text mode ───────────────────────────────────────────────────────
+    plain_intro = _(
+        "The search field is matched as a literal string — no wildcards, no special "
+        "characters. Every occurrence of the exact text in the file name is replaced."
+    )
+    plain_example = _p(
+        "<b>"
+        + _("Example")
+        + "</b><br>\n"
+        + _("Search:")
+        + " <code>IMG_</code>&nbsp;&nbsp;"
+        + _("Replace:")
+        + " <code>photo_</code><br>\n"
+        + "<i>IMG_0042</i> → <i>photo_0042</i>"
+    )
 
-<hr/>
-<h3>Metadata fields for <code>{ex:…}</code></h3>
+    return (
+        _HEAD
+        + _h2(_("Search patterns"))
+        + _h3(_("Pattern mode"))
+        + _p(pat_intro)
+        + pat_table
+        + pat_example
+        + "<hr/>\n"
+        + _h3(_("Regular expression mode"))
+        + _p(re_intro)
+        + re_table
+        + re_example
+        + "<hr/>\n"
+        + _h3(_("Plain text mode"))
+        + _p(plain_intro)
+        + plain_example
+        + _FOOT
+    )
 
-<p>Field names are case-insensitive.
-A <b>default</b> is strongly recommended for metadata fields — they may be
-absent from non-image files or images without metadata.</p>
 
-<table border="0" cellspacing="0" cellpadding="4"
-       style="border-collapse: collapse; width:100%;">
-  <tr style="background:#e8eeff;"><th align="left">Field</th>
-      <th align="left">Type</th><th align="left">Description</th></tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>DateTimeOriginal</code></td><td>datetime</td>
-    <td>Date/time the photo was taken</td>
-  </tr>
-  <tr>
-    <td><code>DateTimeDigitized</code></td><td>datetime</td>
-    <td>Date/time the image was digitised</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>Make</code></td><td>text</td><td>Camera manufacturer</td>
-  </tr>
-  <tr>
-    <td><code>Model</code></td><td>text</td><td>Camera model</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>LensModel</code></td><td>text</td><td>Lens model</td>
-  </tr>
-  <tr>
-    <td><code>ISOSpeedRatings</code></td><td>integer</td><td>ISO speed</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>FNumber</code></td><td>text</td><td>Aperture (e.g. 2.8)</td>
-  </tr>
-  <tr>
-    <td><code>ExposureTime</code></td><td>text</td><td>Shutter speed (e.g. 1/125)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>FocalLength</code></td><td>text</td><td>Focal length in mm</td>
-  </tr>
-  <tr>
-    <td><code>ObjectName</code></td><td>text</td><td>IPTC title / object name</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>By-line</code></td><td>text</td><td>IPTC photographer / creator</td>
-  </tr>
-  <tr>
-    <td><code>City</code></td><td>text</td><td>IPTC city</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>Country</code></td><td>text</td><td>IPTC country</td>
-  </tr>
-  <tr>
-    <td><code>DateCreated</code></td><td>date</td><td>IPTC creation date</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>Keywords</code></td><td>text</td>
-    <td>IPTC keywords (semicolon-separated)</td>
-  </tr>
-</table>
+def replace_html() -> str:
+    """Build and return the translated replacement-field help HTML."""
+    # ── Intro ─────────────────────────────────────────────────────────────────
+    intro = _(
+        "The replacement string is the same regardless of the search mode. "
+        "Fields are written <code>{name}</code> and may include formatting options:"
+    )
+    fmt_pre = (
+        '<pre style="background:#f5f5f5; padding:6px; border-radius:4px;">\n'
+        "{name}                 " + _("plain value") + "\n"
+        "{name:fmt}             " + _("with format") + "\n"
+        "{name:fmt:default}     " + _("with format and fallback") + "\n"
+        "{name:&lt;fmt}            " + _("left-align  (digit fmt = min width)") + "\n"
+        "{name:&gt;fmt}            " + _("right-align") + "\n"
+        "{name:0fmt}            " + _("zero-pad right (numbers)") + "\n"
+        "{{                     " + _("literal '{' character") + "\n"
+        "</pre>\n"
+    )
+    fmt_note = _(
+        "<b>fmt</b> is a minimum width (digit) for text/numbers, "
+        "or a <code>strftime</code> format for dates/datetimes.<br>"
+        "<b>default</b>: used when the field is absent; omitting it makes absence "
+        "an error (file shown in red in the preview)."
+    )
 
-<hr/>
-<h3>Examples</h3>
+    # ── Available fields table ────────────────────────────────────────────────
+    all_m = _("all modes")
+    pat_re = _("pattern, regex")
+    re_only = _("regex only")
+    th_field = _("Field")
+    th_avail = _("Available in")
+    th_desc = _("Description")
 
-<table border="0" cellspacing="0" cellpadding="4"
-       style="border-collapse: collapse; width:100%;">
-  <tr style="background:#f0f4ff;">
-    <td><code>{1}_{num:04}</code></td>
-    <td>Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)</td>
-  </tr>
-  <tr>
-    <td><code>{1}_{num:04:10}</code></td>
-    <td>Same, but counter starts at 10</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>backup_{newnum:03}</code></td>
-    <td>Conflict-free 3-digit counter: skips values where
-        <code>backup_NNN</code> already exists</td>
-  </tr>
-  <tr>
-    <td><code>{date}-{0}</code></td>
-    <td>Today's date prepended to the matched text</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>{ex:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}</code></td>
-    <td>Shooting date/time compact; "unknown" if EXIF absent</td>
-  </tr>
-  <tr>
-    <td><code>{ex:DateTimeDigitized:%H%M:0000}</code></td>
-    <td>Hour+minute of digitisation; "0000" if absent</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>{ex:Make::} {ex:Model::}</code></td>
-    <td>Camera make and model (empty string if absent)</td>
-  </tr>
-  <tr>
-    <td><code>{re:year}_{re:title}</code></td>
-    <td>Named regex groups (regex mode only)</td>
-  </tr>
-  <tr style="background:#f0f4ff;">
-    <td><code>{dir}_{mdatetime:%Y%m%d}_{num:03}</code></td>
-    <td>Parent folder, file modification date, 3-digit counter</td>
-  </tr>
-</table>
+    fields_hdr = (
+        f'  <tr style="{_BG2}"><th align="left">{th_field}</th>'
+        f'<th align="left">{th_avail}</th>'
+        f'<th align="left">{th_desc}</th></tr>\n'
+    )
+    fields_rows = (
+        _row3(
+            "{0}",
+            all_m,
+            _("Full matched text (or search literal in plain-text mode)"),
+            _BG1,
+        )
+        + _row3(
+            "{1}</code>, <code><b>{2}</b>…",
+            pat_re,
+            _("Numbered capture groups (1-based)"),
+        )
+        + _row3(
+            "{re:name}",
+            re_only,
+            _("Named group <code>(?P&lt;name&gt;…)</code> from the search regex"),
+            _BG1,
+        )
+        + _row3(
+            "{num}",
+            all_m,
+            _(
+                "Auto-incrementing counter — default fmt is a minimum width; "
+                "<em>default</em> sets the start value "
+                "(e.g. <code>{num:02:10}</code> starts at 10, zero-padded to 2 digits)"
+            ),
+        )
+        + _row3(
+            "{newnum}",
+            all_m,
+            _(
+                "Like <code>{num}</code> but skips values whose target name already "
+                "exists on disk or has been assigned to another file in the same batch "
+                "— guarantees no conflicts"
+            ),
+            _BG1,
+        )
+        + _row3(
+            "{date}",
+            all_m,
+            _("Today's date — default fmt <code>%Y-%m-%d</code>"),
+            _BG1,
+        )
+        + _row3(
+            "{datetime}",
+            all_m,
+            _("Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"),
+        )
+        + _row3(
+            "{mdatetime}",
+            all_m,
+            _("File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"),
+            _BG1,
+        )
+        + _row3("{dir}", all_m, _("Name of the immediate parent folder"))
+        + _row3(
+            "{ex:Field}",
+            all_m,
+            _("EXIF or IPTC metadata field (images only — see list below)"),
+            _BG1,
+        )
+    )
 
-</body></html>
-"""
+    # ── EXIF/IPTC metadata table ───────────────────────────────────────────────
+    meta_intro = _(
+        "Field names are case-insensitive. "
+        "A <b>default</b> is strongly recommended for metadata fields — they may be "
+        "absent from non-image files or images without metadata."
+    )
+    th_type = _("Type")
+    meta_hdr = (
+        f'  <tr style="{_BG2}"><th align="left">{th_field}</th>'
+        f'<th align="left">{th_type}</th>'
+        f'<th align="left">{th_desc}</th></tr>\n'
+    )
+    meta_rows = (
+        _row3("DateTimeOriginal", "datetime", _("Date/time the photo was taken"), _BG1)
+        + _row3("DateTimeDigitized", "datetime", _("Date/time the image was digitised"))
+        + _row3("Make", "text", _("Camera manufacturer"), _BG1)
+        + _row3("Model", "text", _("Camera model"))
+        + _row3("LensModel", "text", _("Lens model"), _BG1)
+        + _row3("ISOSpeedRatings", "integer", _("ISO speed"))
+        + _row3("FNumber", "text", _("Aperture (e.g. 2.8)"), _BG1)
+        + _row3("ExposureTime", "text", _("Shutter speed (e.g. 1/125)"))
+        + _row3("FocalLength", "text", _("Focal length in mm"), _BG1)
+        + _row3("ObjectName", "text", _("IPTC title / object name"))
+        + _row3("By-line", "text", _("IPTC photographer / creator"), _BG1)
+        + _row3("City", "text", _("IPTC city"))
+        + _row3("Country", "text", _("IPTC country"), _BG1)
+        + _row3("DateCreated", "date", _("IPTC creation date"))
+        + _row3("Keywords", "text", _("IPTC keywords (semicolon-separated)"), _BG1)
+    )
 
-SEARCH_HTML: str = _SEARCH_HTML
-REPLACE_HTML: str = _REPLACE_HTML
+    # ── Examples table ────────────────────────────────────────────────────────
+    ex_rows = (
+        _row2(
+            "{1}_{num:04}",
+            _(
+                "Capture group 1 followed by a 4-digit zero-padded"
+                " counter (starts at 1)"
+            ),
+            _BG1,
+        )
+        + _row2("{1}_{num:04:10}", _("Same, but counter starts at 10"))
+        + _row2(
+            "backup_{newnum:03}",
+            _(
+                "Conflict-free 3-digit counter: skips values where"
+                " <code>backup_NNN</code> already exists"
+            ),
+            _BG1,
+        )
+        + _row2("{date}-{0}", _("Today's date prepended to the matched text"))
+        + _row2(
+            "{ex:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}",
+            _('Shooting date/time compact; "unknown" if EXIF absent'),
+            _BG1,
+        )
+        + _row2(
+            "{ex:DateTimeDigitized:%H%M:0000}",
+            _('Hour+minute of digitisation; "0000" if absent'),
+        )
+        + _row2(
+            "{ex:Make::} {ex:Model::}",
+            _("Camera make and model (empty string if absent)"),
+            _BG1,
+        )
+        + _row2("{re:year}_{re:title}", _("Named regex groups (regex mode only)"))
+        + _row2(
+            "{dir}_{mdatetime:%Y%m%d}_{num:03}",
+            _("Parent folder, file modification date, 3-digit counter"),
+            _BG1,
+        )
+    )
+
+    return (
+        _HEAD
+        + _h2(_("Replacement fields"))
+        + _p(intro)
+        + fmt_pre
+        + _p(fmt_note)
+        + "<hr/>\n"
+        + _h3(_("Available fields"))
+        + _TABLE_W
+        + fields_hdr
+        + fields_rows
+        + "</table>\n"
+        + "<hr/>\n"
+        + _h3(_("Metadata fields for <code>{ex:…}</code>"))
+        + _p(meta_intro)
+        + _TABLE_W
+        + meta_hdr
+        + meta_rows
+        + "</table>\n"
+        + "<hr/>\n"
+        + _h3(_("Examples"))
+        + _TABLE_W
+        + ex_rows
+        + "</table>\n"
+        + _FOOT
+    )
 
 
 # ── Icon ──────────────────────────────────────────────────────────────────────
@@ -349,11 +428,20 @@ def make_help_icon(size: int = 18) -> QIcon:
 class PatternHelpDialog(QDialog):
     """Non-modal help window; use show() not exec()."""
 
-    def __init__(self, html: str, title: str, parent=None) -> None:
+    def __init__(
+        self,
+        html: str,
+        title: str,
+        state_key: str,
+        window_state,
+        parent=None,
+    ) -> None:
         super().__init__(parent, Qt.WindowType.Window)
         self.setWindowTitle(title)
-        self.resize(560, 500)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
+
+        self._state_key = state_key
+        self._window_state = window_state
 
         browser = QTextBrowser()
         browser.setOpenExternalLinks(False)
@@ -365,3 +453,13 @@ class PatternHelpDialog(QDialog):
         layout = QVBoxLayout(self)
         layout.addWidget(browser)
         layout.addWidget(buttons)
+
+        geo = window_state.load_geometry(state_key)
+        if geo:
+            self.restoreGeometry(geo)
+        else:
+            self.resize(560, 500)
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._window_state.save_geometry(self._state_key, self.saveGeometry())
+        super().closeEvent(event)

@@ -27,11 +27,11 @@ from pbrenamer.ui.about_dialog import AboutDialog
 from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
 from pbrenamer.ui.pattern_help import (
-    REPLACE_HTML,
-    SEARCH_HTML,
     PatternHelpDialog,
     make_add_icon,
     make_help_icon,
+    replace_html,
+    search_html,
 )
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
@@ -613,7 +613,13 @@ class MainWindow(QMainWindow):
 
     def _on_search_help(self) -> None:
         if self._search_help is None:
-            self._search_help = PatternHelpDialog(SEARCH_HTML, _("Search — Help"), self)
+            self._search_help = PatternHelpDialog(
+                search_html(),
+                _("Search — Help"),
+                "help_search",
+                self._window_state,
+                self,
+            )
         if self._search_help.isVisible():
             self._search_help.raise_()
             self._search_help.activateWindow()
@@ -623,7 +629,11 @@ class MainWindow(QMainWindow):
     def _on_replace_help(self) -> None:
         if self._replace_help is None:
             self._replace_help = PatternHelpDialog(
-                REPLACE_HTML, _("Replace — Help"), self
+                replace_html(),
+                _("Replace — Help"),
+                "help_replace",
+                self._window_state,
+                self,
             )
         if self._replace_help.isVisible():
             self._replace_help.raise_()
