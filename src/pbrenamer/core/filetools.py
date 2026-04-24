@@ -2,11 +2,9 @@
 
 import glob as _glob
 import os
-import random
 import re
-import time
 import unicodedata
-from datetime import datetime  # noqa: I001
+from datetime import datetime
 
 # ---------------------------------------------------------------------------
 # Directory / file listing
@@ -128,17 +126,8 @@ _PATTERN_TOKENS: dict[str, str] = {
     "{L}": "([a-zA-Z]*)",
     "{C}": r"([\S]*)",
     "{X}": r"([\S\s]*)",
-    "{@}": "(.*)",
+    "{@}": "(?:.*)",  # non-capturing: does not consume a group number
 }
-
-_NUM_RE = re.compile(r"\{(num)([0-9]*)\}|\{(num)([0-9]*)(\+)([0-9]*)\}")
-
-_RAND_RE = re.compile(
-    r"\{(rand)([0-9]*)\}"
-    r"|\{(rand)([0-9]*)(\-)([0-9]*)\}"
-    r"|\{(rand)([0-9]*)(\,)([0-9]*)\}"
-    r"|\{(rand)([0-9]*)(\-)([0-9]*)(\,)([0-9]*)\}"
-)
 
 
 def _build_regex(pattern: str) -> str:
@@ -150,6 +139,37 @@ def _build_regex(pattern: str) -> str:
     return pattern
 
 
+def _apply_replacement(
+    replacement_template: str,
+    *,
+    full_match: str,
+    groups: list[str],
+    named_groups: dict[str, str],
+    path: str,
+    counter: int,
+    now: datetime,
+    newnum: int | None = None,
+) -> str | None:
+    """Parse and apply *replacement_template*. Returns None on syntax error."""
+    from pbrenamer.core import replacement  # local import to avoid circular deps
+
+    try:
+        tokens = replacement.parse(replacement_template)
+        return replacement.substitute(
+            tokens,
+            full_match=full_match,
+            groups=groups,
+            named_groups=named_groups,
+            path=path,
+            counter=counter,
+            now=now,
+            newnum=newnum,
+        )
+    except replacement.ReplacementSyntaxError:
+        return None
+    # FieldResolutionError propagates intentionally to the caller
+
+
 def rename_using_patterns(
     name: str,
     path: str,
@@ -157,91 +177,34 @@ def rename_using_patterns(
     pattern_end: str,
     count: int,
     ext: str = "",
+    *,
+    newnum: int | None = None,
 ) -> tuple[str | None, str | None]:
     """Apply a search/replacement pattern pair.
 
-    Returns (newname, newpath), or (None, None) on failure.
+    Returns (newname, newpath), or (None, None) on no match or syntax error.
+    Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
     regex = _build_regex(pattern_ini)
-    newname = pattern_end
-
     try:
         m = re.search(regex, name)
         if m is None:
             return None, None
-        for i, group in enumerate(m.groups()):
-            newname = newname.replace("{" + str(i + 1) + "}", group)
     except re.error:
         return None, None
 
-    # {num} / {num2} / {num2+5} counter substitution
-    count_str = str(count)
-    m_num = _NUM_RE.search(newname)
-    if m_num:
-        g = m_num.groups()
-        if g[0] == "num":
-            if g[1]:
-                count_str = count_str.zfill(int(g[1]))
-        elif g[2] == "num" and g[4] == "+":
-            if g[5]:
-                count_str = str(int(count_str) + int(g[5]))
-            if g[3]:
-                count_str = count_str.zfill(int(g[3]))
-        newname = _NUM_RE.sub(count_str, newname)
-
-    # {dir} — parent folder name
-    newname = newname.replace("{dir}", os.path.basename(os.path.dirname(path)))
-
-    # Current-date tokens
-    now = time.localtime()
-    for token, fmt in {
-        "{date}": "%Y%m%d",
-        "{datedelim}": "%Y-%m-%d",
-        "{year}": "%Y",
-        "{month}": "%m",
-        "{monthname}": "%B",
-        "{monthsimp}": "%b",
-        "{day}": "%d",
-        "{dayname}": "%A",
-        "{daysimp}": "%a",
-    }.items():
-        newname = newname.replace(token, time.strftime(fmt, now))
-
-    # File-stat date tokens
-    full_path = _new_path(f"{name}.{ext}" if ext else name, path)
-    createdate, modifydate = _get_filestat(full_path)
-    for prefix, stat in (("create", createdate), ("modify", modifydate)):
-        for suffix, fmt in {
-            "date": "%Y%m%d",
-            "datedelim": "%Y-%m-%d",
-            "year": "%Y",
-            "month": "%m",
-            "monthname": "%B",
-            "monthsimp": "%b",
-            "day": "%d",
-            "dayname": "%A",
-            "daysimp": "%a",
-        }.items():
-            token = "{" + prefix + suffix + "}"
-            newname = newname.replace(token, time.strftime(fmt, stat) if stat else "")
-
-    # {rand} / {rand500} / {rand10-20} / {rand20,5} random number substitution
-    m_rand = _RAND_RE.search(newname)
-    if m_rand:
-        g = m_rand.groups()  # 16 groups across 4 alternatives
-        rnd: str
-        if g[0] == "rand":
-            rnd = str(random.randint(0, int(g[1]) if g[1] else 100))
-        elif g[2] == "rand" and g[4] == "-":
-            rnd = str(random.randint(int(g[3]), int(g[5])))
-        elif g[6] == "rand" and g[8] == ",":
-            rnd = str(random.randint(0, int(g[7]) if g[7] else 100)).zfill(int(g[9]))
-        elif g[10] == "rand" and g[12] == "-" and g[14] == ",":
-            rnd = str(random.randint(int(g[11]), int(g[13]))).zfill(int(g[15]))
-        else:
-            rnd = str(random.randint(0, 100))
-        newname = _RAND_RE.sub(rnd, newname)
-
+    newname = _apply_replacement(
+        pattern_end,
+        full_match=m.group(0),
+        groups=list(m.groups()),
+        named_groups={},
+        path=path,
+        counter=count,
+        now=datetime.now(),
+        newnum=newnum,
+    )
+    if newname is None:
+        return None, None
     return newname, _new_path(newname, path)
 
 
@@ -249,47 +212,85 @@ def rename_using_plain_text(
     name: str,
     path: str,
     search: str,
-    replacement: str,
+    replacement_template: str,
+    *,
+    newnum: int | None = None,
 ) -> tuple[str | None, str | None]:
-    """Literal string search/replace.
+    """Literal string search; unified replacement syntax.
 
     Returns (None, None) if *search* does not appear in *name*.
+    Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
     if search not in name:
         return None, None
-    newname = name.replace(search, replacement)
-    return newname, _new_path(newname, path)
+
+    newname = _apply_replacement(
+        replacement_template,
+        full_match=search,
+        groups=[],
+        named_groups={},
+        path=path,
+        counter=1,
+        now=datetime.now(),
+        newnum=newnum,
+    )
+    if newname is None:
+        return None, None
+    return name.replace(search, newname), _new_path(name.replace(search, newname), path)
 
 
 def rename_using_regex(
     name: str,
     path: str,
     pattern: str,
-    replacement: str,
+    replacement_template: str,
+    *,
+    newnum: int | None = None,
 ) -> tuple[str | None, str | None]:
-    """Apply a Python regex search/replace pair.
+    """Apply a Python regex search with unified replacement syntax.
 
     Returns (newname, newpath), or (None, None) on no match or invalid pattern.
-    The replacement follows standard re.sub() syntax (\\1, \\2, \\g<name>…).
+    Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
+    from pbrenamer.core import replacement as _repl
+
     try:
         if not re.search(pattern, name):
             return None, None
-        newname = re.sub(pattern, replacement, name)
+        tokens = _repl.parse(replacement_template)
+    except (re.error, _repl.ReplacementSyntaxError):
+        return None, None
+
+    now = datetime.now()
+    field_error: _repl.FieldResolutionError | None = None
+
+    def _cb(m: re.Match) -> str:
+        nonlocal field_error
+        if field_error:
+            return m.group(0)
+        try:
+            return _repl.substitute(
+                tokens,
+                full_match=m.group(0),
+                groups=list(m.groups()),
+                named_groups=m.groupdict(),
+                path=path,
+                counter=1,
+                now=now,
+                newnum=newnum,
+            )
+        except _repl.FieldResolutionError as exc:
+            field_error = exc
+            return m.group(0)
+
+    try:
+        newname = re.sub(pattern, _cb, name)
     except re.error:
         return None, None
+
+    if field_error:
+        raise field_error
     return newname, _new_path(newname, path)
-
-
-def _get_filestat(path: str) -> tuple[time.struct_time | None, time.struct_time | None]:
-    try:
-        st = os.stat(path)
-        return (
-            datetime.fromtimestamp(st.st_ctime).timetuple(),
-            datetime.fromtimestamp(st.st_mtime).timetuple(),
-        )
-    except OSError:
-        return None, None
 
 
 # ---------------------------------------------------------------------------

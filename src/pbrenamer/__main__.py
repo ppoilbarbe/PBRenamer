@@ -48,9 +48,10 @@ def main() -> None:
 
     # i18n must be set up before any window is created so that
     # retranslateUi() picks up the correct translator.
-    from pbrenamer import i18n
+    from pbrenamer import i18n, settings
 
     i18n.setup(app)
+    settings.apply_log_level()
 
     from pbrenamer.ui.main_window import MainWindow
 

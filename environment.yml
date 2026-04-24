@@ -23,6 +23,8 @@ dependencies:
   - gh
   # i18n tools (xgettext, msginit, msgmerge, msgfmt)
   - gettext
+  # Metadata (EXIF/IPTC)
+  - pillow
   # Packaging
   - pyinstaller
   # Dev install (editable)

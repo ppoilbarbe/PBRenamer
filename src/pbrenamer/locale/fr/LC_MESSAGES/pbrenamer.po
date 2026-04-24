@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PBRenamer 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 14:19+0200\n"
+"POT-Creation-Date: 2026-04-24 17:58+0200\n"
 "PO-Revision-Date: 2026-04-23 00:00+0000\n"
 "Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -16,66 +16,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/pbrenamer/ui/settings_dialog.py:22
-msgid "Settings"
-msgstr "Préférences"
-
-#: src/pbrenamer/ui/settings_dialog.py:26
+#: src/pbrenamer/ui/settings_dialog.py:19
 msgid "System default"
 msgstr "Langue du système"
 
-#: src/pbrenamer/ui/settings_dialog.py:43
-msgid "A restart is required for the language change to take effect."
-msgstr ""
-"Un redémarrage est nécessaire pour que le changement de langue prenne effet."
-
-#: src/pbrenamer/ui/settings_dialog.py:48
-msgid "Language:"
-msgstr "Langue :"
-
-#: src/pbrenamer/ui/main_window.py:190
+#: src/pbrenamer/ui/main_window.py:193
 msgid "Select folder"
 msgstr "Choisir un dossier"
 
-#: src/pbrenamer/ui/main_window.py:224 /tmp/_pbrenamer_ui_strings.py:41
+#: src/pbrenamer/ui/main_window.py:227 /tmp/_pbrenamer_ui_strings.py:41
 msgid "Original"
 msgstr "Original"
 
-#: src/pbrenamer/ui/main_window.py:224 /tmp/_pbrenamer_ui_strings.py:40
+#: src/pbrenamer/ui/main_window.py:227 /tmp/_pbrenamer_ui_strings.py:40
 #: /tmp/_pbrenamer_ui_strings.py:92
 msgid "Preview"
 msgstr "Aperçu"
 
-#: src/pbrenamer/ui/main_window.py:236
+#: src/pbrenamer/ui/main_window.py:239
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} élément(s)"
 
-#: src/pbrenamer/ui/main_window.py:460
+#: src/pbrenamer/ui/main_window.py:483
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} non disponible"
+
+#: src/pbrenamer/ui/main_window.py:582
 msgid "Search — Help"
 msgstr "Recherche — Aide"
 
-#: src/pbrenamer/ui/main_window.py:470
+#: src/pbrenamer/ui/main_window.py:592
 msgid "Replace — Help"
 msgstr "Remplacement — Aide"
 
-#: src/pbrenamer/ui/main_window.py:569
+#: src/pbrenamer/ui/main_window.py:691
 msgid "Rename errors"
 msgstr "Erreurs de renommage"
 
-#: src/pbrenamer/ui/main_window.py:624 /tmp/_pbrenamer_ui_strings.py:16
-msgid "About PBRenamer"
-msgstr "À propos de PBRenamer"
-
-#: src/pbrenamer/ui/main_window.py:630
-msgid "A graphical batch file renaming utility."
-msgstr "Utilitaire graphique de renommage de fichiers en lot."
-
-#: src/pbrenamer/ui/main_window.py:631
-msgid "License: GPLv3"
-msgstr "Licence : GPLv3"
-
-#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:140
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:152
 msgid "language_name"
 msgstr "Français"
 
@@ -119,15 +99,17 @@ msgstr "Fermer l'application"
 
 #: /tmp/_pbrenamer_ui_strings.py:10
 msgid "History…"
-msgstr ""
+msgstr "Historique…"
 
 #: /tmp/_pbrenamer_ui_strings.py:11
 msgid "Manage pattern history"
-msgstr ""
+msgstr "Gérer l'historique des patterns"
 
 #: /tmp/_pbrenamer_ui_strings.py:12
 msgid "Add or remove entries from the search and replacement pattern history"
 msgstr ""
+"Ajouter ou supprimer des entrées de l'historique des patterns de recherche "
+"et de remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:13
 msgid "Settings…"
@@ -140,6 +122,10 @@ msgstr "Ouvrir les préférences"
 #: /tmp/_pbrenamer_ui_strings.py:15
 msgid "Configure language and other preferences"
 msgstr "Configurer la langue et les autres préférences"
+
+#: /tmp/_pbrenamer_ui_strings.py:16 /tmp/_pbrenamer_ui_strings.py:146
+msgid "About PBRenamer"
+msgstr "À propos de PBRenamer"
 
 #: /tmp/_pbrenamer_ui_strings.py:17
 msgid "About this application"
@@ -365,11 +351,11 @@ msgstr ""
 
 #: /tmp/_pbrenamer_ui_strings.py:67
 msgid "Separator:"
-msgstr ""
+msgstr "Séparateur :"
 
 #: /tmp/_pbrenamer_ui_strings.py:68
 msgid "— Separator shortcuts —"
-msgstr ""
+msgstr "— Raccourcis de séparateurs —"
 
 #: /tmp/_pbrenamer_ui_strings.py:69
 msgid "Spaces → underscores"
@@ -397,7 +383,7 @@ msgstr "Tirets → espaces"
 
 #: /tmp/_pbrenamer_ui_strings.py:75
 msgid "Separator shortcut"
-msgstr ""
+msgstr "Raccourci de séparateur"
 
 #: /tmp/_pbrenamer_ui_strings.py:76
 msgid ""
@@ -536,111 +522,156 @@ msgstr "Aide"
 
 #: /tmp/_pbrenamer_ui_strings.py:107
 msgid "History"
-msgstr ""
+msgstr "Historique"
 
 #: /tmp/_pbrenamer_ui_strings.py:108
 msgid "Search"
-msgstr ""
+msgstr "Recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:109
 msgid "Search pattern history"
-msgstr ""
+msgstr "Historique des patterns de recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:110 /tmp/_pbrenamer_ui_strings.py:129
 msgid "Select one or more entries to remove them"
-msgstr ""
+msgstr "Sélectionner une ou plusieurs entrées pour les supprimer"
 
 #: /tmp/_pbrenamer_ui_strings.py:111 /tmp/_pbrenamer_ui_strings.py:130
 msgid "Pattern…"
-msgstr ""
+msgstr "Pattern…"
 
 #: /tmp/_pbrenamer_ui_strings.py:112
 msgid "New search pattern to add"
-msgstr ""
+msgstr "Nouveau pattern de recherche à ajouter"
 
 #: /tmp/_pbrenamer_ui_strings.py:113
 msgid "pat"
-msgstr ""
+msgstr "pat"
 
 #: /tmp/_pbrenamer_ui_strings.py:114
 msgid "Pattern token mode"
-msgstr ""
+msgstr "Mode jetons de pattern"
 
 #: /tmp/_pbrenamer_ui_strings.py:115
 msgid "RE"
-msgstr ""
+msgstr "RE"
 
 #: /tmp/_pbrenamer_ui_strings.py:116
 msgid "Regular expression mode"
-msgstr ""
+msgstr "Mode expression rationnelle"
 
 #: /tmp/_pbrenamer_ui_strings.py:117
 msgid "txt"
-msgstr ""
+msgstr "txt"
 
 #: /tmp/_pbrenamer_ui_strings.py:118
 msgid "Plain text mode"
-msgstr ""
+msgstr "Mode texte brut"
 
 #: /tmp/_pbrenamer_ui_strings.py:119 /tmp/_pbrenamer_ui_strings.py:132
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: /tmp/_pbrenamer_ui_strings.py:120
 msgid "Add this pattern to the search history"
-msgstr ""
+msgstr "Ajouter ce pattern à l'historique de recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:121 /tmp/_pbrenamer_ui_strings.py:134
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: /tmp/_pbrenamer_ui_strings.py:122 /tmp/_pbrenamer_ui_strings.py:135
 msgid "Remove selected entries"
-msgstr ""
+msgstr "Supprimer les entrées sélectionnées"
 
 #: /tmp/_pbrenamer_ui_strings.py:123
 msgid "Delete the selected search history entries"
-msgstr ""
+msgstr "Supprimer les entrées sélectionnées de l'historique de recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:124 /tmp/_pbrenamer_ui_strings.py:137
 msgid "Clear all"
-msgstr ""
+msgstr "Tout effacer"
 
 #: /tmp/_pbrenamer_ui_strings.py:125
 msgid "Remove all search history entries"
-msgstr ""
+msgstr "Supprimer toutes les entrées de l'historique de recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:126
 msgid "Delete the entire search pattern history"
-msgstr ""
+msgstr "Supprimer tout l'historique des patterns de recherche"
 
 #: /tmp/_pbrenamer_ui_strings.py:127
 msgid "Replace"
-msgstr ""
+msgstr "Remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:128
 msgid "Replacement pattern history"
-msgstr ""
+msgstr "Historique des patterns de remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:131
 msgid "New replacement pattern to add"
-msgstr ""
+msgstr "Nouveau pattern de remplacement à ajouter"
 
 #: /tmp/_pbrenamer_ui_strings.py:133
 msgid "Add this pattern to the replacement history"
-msgstr ""
+msgstr "Ajouter ce pattern à l'historique de remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:136
 msgid "Delete the selected replacement history entries"
-msgstr ""
+msgstr "Supprimer les entrées sélectionnées de l'historique de remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:138
 msgid "Remove all replacement history entries"
-msgstr ""
+msgstr "Supprimer toutes les entrées de l'historique de remplacement"
 
 #: /tmp/_pbrenamer_ui_strings.py:139
 msgid "Delete the entire replacement pattern history"
+msgstr "Supprimer tout l'historique des patterns de remplacement"
+
+#: /tmp/_pbrenamer_ui_strings.py:140
+msgid "Settings"
+msgstr "Préférences"
+
+#: /tmp/_pbrenamer_ui_strings.py:141
+msgid "Language:"
+msgstr "Langue :"
+
+#: /tmp/_pbrenamer_ui_strings.py:142
+msgid "Select the interface language"
+msgstr "Sélectionner la langue de l'interface"
+
+#: /tmp/_pbrenamer_ui_strings.py:143
+msgid "Log level:"
+msgstr "Niveau de log :"
+
+#: /tmp/_pbrenamer_ui_strings.py:144
+msgid "Set the application logging verbosity"
+msgstr "Définir le niveau de verbosité des journaux"
+
+#: /tmp/_pbrenamer_ui_strings.py:145
+msgid "A restart is required for the language change to take effect."
 msgstr ""
+"Un redémarrage est nécessaire pour que le changement de langue prenne effet."
+
+#: /tmp/_pbrenamer_ui_strings.py:147
+msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:148
+msgid "Application version"
+msgstr "Version de l'application"
+
+#: /tmp/_pbrenamer_ui_strings.py:149
+msgid "A graphical batch file renaming utility."
+msgstr "Utilitaire graphique de renommage de fichiers en lot."
+
+#: /tmp/_pbrenamer_ui_strings.py:150
+msgid "© 2026 Marcel Spock <mrspock@cardolan.net>"
+msgstr "© 2026 Marcel Spock <mrspock@cardolan.net>"
+
+#: /tmp/_pbrenamer_ui_strings.py:151
+msgid "License: GPLv3"
+msgstr "Licence : GPLv3"
 
 #~ msgid "Patterns"
 #~ msgstr "Patterns"

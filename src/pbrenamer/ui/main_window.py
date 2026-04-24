@@ -19,8 +19,10 @@ from PySide6.QtWidgets import (
 )
 
 from pbrenamer.core import filetools
+from pbrenamer.core import replacement as _repl
 from pbrenamer.core.undo import UndoManager
 from pbrenamer.platform.fs import conflict_key, same_file_path
+from pbrenamer.ui.about_dialog import AboutDialog
 from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
 from pbrenamer.ui.pattern_help import (
@@ -66,7 +68,8 @@ _PREVIEW_COLOR = QColor("#0066cc")
 _UNCHANGED_COLOR = QColor("#888888")
 _DIR_COLOR = QColor("#aa6600")
 _CONFLICT_COLOR = QColor("#cc0000")
-_INVALID_REGEX_STYLE = "QLineEdit { background-color: #ffaaaa; }"
+_ERROR_COLOR = QColor("#cc0000")
+_INVALID_STYLE = "QLineEdit { background-color: #ffaaaa; }"
 
 
 class MainWindow(QMainWindow):
@@ -167,7 +170,7 @@ class MainWindow(QMainWindow):
             lambda _: self._on_search_text_changed()
         )
         self._ui.cmbPatternDest.currentTextChanged.connect(
-            lambda _: self._update_replace_add_button()
+            lambda _: self._on_replace_text_changed()
         )
 
         # Options that trigger a file list reload
@@ -251,7 +254,7 @@ class MainWindow(QMainWindow):
         return [root.child(i) for i in range(root.childCount())]
 
     def _validate_search_input(self) -> bool:
-        """Validate the search combo when in regex mode; colour it red if invalid.
+        """Validate the search field when in regex mode; colour it red if invalid.
 
         Returns True if the input is valid for the active mode.
         """
@@ -268,15 +271,42 @@ class MainWindow(QMainWindow):
             line_edit.setStyleSheet("")
             return True
         except re.error:
-            line_edit.setStyleSheet(_INVALID_REGEX_STYLE)
+            line_edit.setStyleSheet(_INVALID_STYLE)
             return False
+
+    def _validate_replace_input(self) -> bool:
+        """Validate the replacement field syntax and mode compatibility.
+
+        Returns True if valid.
+        """
+        template = self._ui.cmbPatternDest.currentText()
+        line_edit = self._ui.cmbPatternDest.lineEdit()
+        if not template:
+            line_edit.setStyleSheet("")
+            return True
+        try:
+            tokens = _repl.parse(template)
+        except _repl.ReplacementSyntaxError:
+            line_edit.setStyleSheet(_INVALID_STYLE)
+            return False
+        errors = _repl.validate(tokens, self._current_search_mode())
+        if errors:
+            line_edit.setStyleSheet(_INVALID_STYLE)
+            return False
+        line_edit.setStyleSheet("")
+        return True
 
     def _on_search_text_changed(self) -> None:
         self._validate_search_input()
         self._update_search_add_button()
 
+    def _on_replace_text_changed(self) -> None:
+        self._validate_replace_input()
+        self._update_replace_add_button()
+
     def _on_mode_changed(self) -> None:
         self._validate_search_input()
+        self._validate_replace_input()
         self._update_search_add_button()
         if self._ui.chkAutoPreview.isChecked():
             self._on_preview()
@@ -306,7 +336,7 @@ class MainWindow(QMainWindow):
 
     def _update_replace_add_button(self) -> None:
         pattern = self._ui.cmbPatternDest.currentText()
-        if not pattern:
+        if not pattern or not self._validate_replace_input():
             self._ui.btnReplaceAdd.setEnabled(False)
             return
         already = any(
@@ -314,6 +344,63 @@ class MainWindow(QMainWindow):
             for i in range(self._ui.cmbPatternDest.count())
         )
         self._ui.btnReplaceAdd.setEnabled(not already)
+
+    def _do_rename(
+        self,
+        use_regex: bool,
+        use_plain: bool,
+        stem: str,
+        orig_path: str,
+        search: str,
+        replace: str,
+        counter: int,
+        *,
+        newnum: int | None = None,
+    ) -> tuple[str | None, str | None]:
+        """Dispatch to the appropriate filetools rename function.
+
+        *orig_path* must be the actual file path (with extension) so that
+        metadata fields such as {mdatetime} and {ex:…} can stat the file.
+        """
+        if use_regex:
+            return filetools.rename_using_regex(
+                stem, orig_path, search, replace, newnum=newnum
+            )
+        if use_plain:
+            return filetools.rename_using_plain_text(
+                stem, orig_path, search, replace, newnum=newnum
+            )
+        return filetools.rename_using_patterns(
+            stem, orig_path, search, replace, counter, newnum=newnum
+        )
+
+    def _apply_postproc(self, name: str, path: str) -> str:
+        """Apply active post-processing options (accents, duplicates, caps)."""
+        if self._ui.chkRemoveAccents.isChecked():
+            name, _op = filetools.replace_accents(name, path)
+        if self._ui.chkRemoveDuplicates.isChecked():
+            name, _op = filetools.replace_duplicated(name, path)
+        caps_idx = self._ui.cmbCaps.currentIndex()
+        if caps_idx > 0:
+            name, _op = filetools.replace_capitalization(name, path, caps_idx - 1)
+        return name
+
+    def _make_newnum_state(self, replace: str) -> _repl.NewNumState | None:
+        """Return a NewNumState if *replace* contains {newnum}, else None."""
+        try:
+            segments = _repl.parse(replace)
+        except _repl.ReplacementSyntaxError:
+            return None
+        for seg in segments:
+            if isinstance(seg, _repl.FieldSegment) and seg.name == "newnum":
+                start = 1
+                if seg.default is not None:
+                    try:
+                        start = int(seg.default)
+                    except ValueError:
+                        pass
+                return _repl.NewNumState(start)
+        return None
 
     def _on_preview(self) -> None:
         if not self._current_dir:
@@ -327,9 +414,12 @@ class MainWindow(QMainWindow):
         use_plain = self._ui.radPlainText.isChecked()
         if use_regex and not self._validate_search_input():
             return
+        if not self._validate_replace_input():
+            return
 
         keep_ext = self._ui.chkKeepExtension.isChecked()
         items = self._active_items()
+        newnum_state = self._make_newnum_state(replace)
 
         for counter, item in enumerate(items, start=1):
             path = item.data(0, Qt.ItemDataRole.UserRole)
@@ -340,34 +430,73 @@ class MainWindow(QMainWindow):
             else:
                 stem, stem_path, ext = name, path, ""
 
-            if use_regex:
-                newname, _ = filetools.rename_using_regex(
-                    stem, stem_path, search, replace
-                )
-            elif use_plain:
-                newname, _ = filetools.rename_using_plain_text(
-                    stem, stem_path, search, replace
-                )
+            field_error = False
+            field_error_name = ""
+            newname = None
+
+            if newnum_state is not None:
+                dir_path = os.path.dirname(path)
+                k = newnum_state.current
+                while True:
+                    try:
+                        raw, _op = self._do_rename(
+                            use_regex,
+                            use_plain,
+                            stem,
+                            path,
+                            search,
+                            replace,
+                            counter,
+                            newnum=k,
+                        )
+                    except _repl.FieldResolutionError as err:
+                        field_error = True
+                        field_error_name = err.field
+                        break
+                    if raw is None:
+                        break
+                    processed = self._apply_postproc(raw, stem_path)
+                    candidate = filetools.add_extension(processed, stem_path, ext)[0]
+                    cand_path = os.path.join(dir_path, candidate)
+                    if candidate not in newnum_state.reserved and (
+                        not os.path.exists(cand_path)
+                        or same_file_path(cand_path, path, dir_path)
+                    ):
+                        newnum_state.reserved.add(candidate)
+                        newnum_state.current = k + 1
+                        newname = candidate
+                        break
+                    k += 1
             else:
-                newname, _ = filetools.rename_using_patterns(
-                    stem, stem_path, search, replace, counter
-                )
+                try:
+                    raw, _op = self._do_rename(
+                        use_regex,
+                        use_plain,
+                        stem,
+                        path,
+                        search,
+                        replace,
+                        counter,
+                    )
+                except _repl.FieldResolutionError as err:
+                    field_error = True
+                    field_error_name = err.field
+                    raw = None
+                if raw is not None:
+                    processed = self._apply_postproc(raw, stem_path)
+                    newname = filetools.add_extension(processed, stem_path, ext)[0]
 
             if newname is not None:
-                if self._ui.chkRemoveAccents.isChecked():
-                    newname, _ = filetools.replace_accents(newname, stem_path)
-                if self._ui.chkRemoveDuplicates.isChecked():
-                    newname, _ = filetools.replace_duplicated(newname, stem_path)
-                caps_idx = self._ui.cmbCaps.currentIndex()
-                if caps_idx > 0:
-                    newname, _ = filetools.replace_capitalization(
-                        newname, stem_path, caps_idx - 1
-                    )
-                if keep_ext:
-                    newname, _ = filetools.add_extension(newname, stem_path, ext)
                 item.setText(1, newname)
+                item.setData(1, Qt.ItemDataRole.UserRole, False)
+            elif field_error:
+                item.setText(
+                    1, _("⚠ {field} unavailable").format(field=field_error_name)
+                )
+                item.setData(1, Qt.ItemDataRole.UserRole, True)
             else:
                 item.setText(1, "")
+                item.setData(1, Qt.ItemDataRole.UserRole, False)
 
         self._ui.tblFiles.resizeColumnToContents(1)
         self._refresh_conflicts()
@@ -377,24 +506,29 @@ class MainWindow(QMainWindow):
         root = self._ui.tblFiles.invisibleRootItem()
         n = root.childCount()
 
-        previews: list[tuple[str, str, QTreeWidgetItem]] = []
+        previews: list[tuple[str, str, QTreeWidgetItem, bool]] = []
+        has_field_error = False
         for i in range(n):
             item = root.child(i)
             preview = item.text(1)
             if not preview:
                 continue
             path = item.data(0, Qt.ItemDataRole.UserRole)
-            previews.append((preview, path, item))
+            is_error = bool(item.data(1, Qt.ItemDataRole.UserRole))
+            if is_error:
+                has_field_error = True
+                item.setForeground(1, _ERROR_COLOR)
+            previews.append((preview, path, item, is_error))
 
-        if not previews:
+        if not previews or all(e for *_, e in previews):
             self._ui.btnRename.setEnabled(False)
             return
 
-        # Detect duplicate targets (two entries → same destination path).
-        # Use a case-normalised key so that on case-insensitive filesystems
-        # "File.txt" and "file.txt" are treated as the same destination.
+        # Detect duplicate targets among non-error entries.
+        valid = [(p, path, item, e) for p, path, item, e in previews if not e]
+
         target_map: dict[str, list[int]] = defaultdict(list)
-        for idx, (preview, path, _) in enumerate(previews):
+        for idx, (preview, path, _, _) in enumerate(valid):
             parent = os.path.dirname(path)
             target = os.path.join(parent, preview)
             target_map[conflict_key(target, parent)].append(idx)
@@ -404,10 +538,7 @@ class MainWindow(QMainWindow):
             if len(indices) > 1:
                 conflict_indices.update(indices)
 
-        # Detect targets that already exist on disk.
-        # On case-insensitive filesystems a pure case-change ("File.txt" →
-        # "file.txt") is a valid rename, not a conflict.
-        for idx, (preview, path, _) in enumerate(previews):
+        for idx, (preview, path, _, _) in enumerate(valid):
             parent = os.path.dirname(path)
             target = os.path.join(parent, preview)
             if not same_file_path(target, path, parent) and os.path.exists(target):
@@ -415,7 +546,7 @@ class MainWindow(QMainWindow):
 
         has_conflict = bool(conflict_indices)
         any_changed = False
-        for idx, (preview, path, item) in enumerate(previews):
+        for idx, (preview, path, item, _) in enumerate(valid):
             if idx in conflict_indices:
                 item.setForeground(1, _CONFLICT_COLOR)
             elif preview != os.path.basename(path):
@@ -424,7 +555,9 @@ class MainWindow(QMainWindow):
             else:
                 item.setForeground(1, _UNCHANGED_COLOR)
 
-        self._ui.btnRename.setEnabled(any_changed and not has_conflict)
+        self._ui.btnRename.setEnabled(
+            any_changed and not has_conflict and not has_field_error
+        )
 
     def _on_clear_preview(self) -> None:
         root = self._ui.tblFiles.invisibleRootItem()
@@ -617,17 +750,4 @@ class MainWindow(QMainWindow):
         SettingsDialog(self).exec()
 
     def _on_about(self) -> None:
-        from pbrenamer import __version__
-
-        QMessageBox.about(
-            self,
-            _("About PBRenamer"),
-            "<b>PBRenamer</b> {version}<br>"
-            "{description}<br><br>"
-            "© 2026 Marcel Spock &lt;mrspock@cardolan.net&gt;<br>"
-            "{license}".format(
-                version=__version__,
-                description=_("A graphical batch file renaming utility."),
-                license=_("License: GPLv3"),
-            ),
-        )
+        AboutDialog(self).exec()

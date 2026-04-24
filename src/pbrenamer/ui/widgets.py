@@ -43,7 +43,8 @@ class WhitespaceLineEdit(QLineEdit):
         # cursorRect().x() = base + int(cursorToX(p)) where int() truncates.
         # Subtracting the float cursorToX(p) gives base - frac, shifting left.
         # Subtracting its floor instead recovers base exactly.
-        cursor_to_x = tline.cursorToX(self.cursorPosition())
+        # cursorToX returns (float, int) in PySide6 — unpack the x value only.
+        cursor_to_x, _ = tline.cursorToX(self.cursorPosition())
         text_origin_x = self.cursorRect().x() - math.floor(cursor_to_x)
         fm = self.fontMetrics()
 
@@ -59,8 +60,8 @@ class WhitespaceLineEdit(QLineEdit):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         for i, ch in ws:
-            x0 = text_origin_x + tline.cursorToX(i)
-            x1 = text_origin_x + tline.cursorToX(i + 1)
+            x0 = text_origin_x + tline.cursorToX(i)[0]
+            x1 = text_origin_x + tline.cursorToX(i + 1)[0]
             if x1 < contents.left() or x0 > contents.right():
                 continue
             center_x = (x0 + x1) / 2.0
