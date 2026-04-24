@@ -1,10 +1,13 @@
 """File renaming and transformation functions."""
 
 import glob as _glob
+import logging
 import os
 import re
 import unicodedata
 from datetime import datetime
+
+_log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Directory / file listing
@@ -22,6 +25,7 @@ def get_file_listing(
 
     mode: 0 = files only, 1 = dirs only, 2 = both
     """
+    _log.debug("Listing %s (mode=%d, pattern=%r)", directory, mode, pattern)
     if pattern:
         glob_pat = _escape_glob(directory.rstrip("/") + "/" + pattern)
         paths = sorted(_glob.glob(glob_pat), key=lambda p: os.path.basename(p).lower())
@@ -37,6 +41,7 @@ def get_file_listing(
         if mode == 0 and is_dir:
             continue
         result.append((os.path.basename(full), full))
+    _log.debug("Listed %d entries in %s", len(result), directory)
     return result
 
 
@@ -342,9 +347,13 @@ def rename_file(original: str, new: str) -> tuple[bool, str | None]:
     if original == new:
         return True, None
     if os.path.exists(new):
-        return False, f"[Errno 17] {os.strerror(17)}: {new!r} already exists"
+        err = f"[Errno 17] {os.strerror(17)}: {new!r} already exists"
+        _log.warning("Rename skipped (target exists): %s → %s", original, new)
+        return False, err
+    _log.debug("Renaming: %r → %r", original, new)
     try:
         os.renames(original, new)
         return True, None
     except OSError as exc:
+        _log.warning("Rename failed: %s → %s: %s", original, new, exc)
         return False, str(exc)

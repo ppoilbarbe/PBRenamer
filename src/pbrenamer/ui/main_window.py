@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import re
 from collections import defaultdict
@@ -36,6 +37,8 @@ from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.widgets import WhitespaceLineEdit
 from pbrenamer.ui.window_state import WindowState
+
+_log = logging.getLogger(__name__)
 
 
 class _SearchModeDelegate(QStyledItemDelegate):
@@ -206,6 +209,7 @@ class MainWindow(QMainWindow):
         path = self._fs_model.filePath(indexes[0])
         if not os.path.isdir(path):
             return
+        _log.info("Directory selected: %s", path)
         self._current_dir = path
         self._reload_files()
 
@@ -215,6 +219,14 @@ class MainWindow(QMainWindow):
         mode = self._ui.cmbMode.currentIndex()
         recursive = self._ui.chkRecursive.isChecked()
         pattern = self._ui.edtFilter.text().strip() or None
+
+        _log.debug(
+            "Reloading files: dir=%s mode=%d recursive=%s pattern=%r",
+            self._current_dir,
+            mode,
+            recursive,
+            pattern,
+        )
 
         if recursive:
             entries = filetools.get_file_listing_recursive(
@@ -235,6 +247,7 @@ class MainWindow(QMainWindow):
         self._ui.tblFiles.resizeColumnToContents(0)
 
         count = self._ui.tblFiles.topLevelItemCount()
+        _log.debug("Loaded %d item(s) from %s", count, self._current_dir)
         self.statusBar().showMessage(
             _("{path} — {n} item(s)").format(path=self._current_dir, n=count)
         )
@@ -417,8 +430,16 @@ class MainWindow(QMainWindow):
         if not self._validate_replace_input():
             return
 
+        mode_label = "regex" if use_regex else ("plain" if use_plain else "pattern")
         keep_ext = self._ui.chkKeepExtension.isChecked()
         items = self._active_items()
+        _log.info(
+            "Preview: %d item(s), mode=%s, search=%r, replace=%r",
+            len(items),
+            mode_label,
+            search,
+            replace,
+        )
         newnum_state = self._make_newnum_state(replace)
 
         for counter, item in enumerate(items, start=1):
@@ -487,9 +508,11 @@ class MainWindow(QMainWindow):
                     newname = filetools.add_extension(processed, stem_path, ext)[0]
 
             if newname is not None:
+                _log.debug("Preview: %r → %r", name, newname)
                 item.setText(1, newname)
                 item.setData(1, Qt.ItemDataRole.UserRole, False)
             elif field_error:
+                _log.debug("Preview: %r — field %r unavailable", name, field_error_name)
                 item.setText(
                     1, _("⚠ {field} unavailable").format(field=field_error_name)
                 )
@@ -683,6 +706,7 @@ class MainWindow(QMainWindow):
         if not renames:
             return
 
+        _log.info("Renaming %d file(s)", len(renames))
         errors: list[str] = []
         done: list[tuple[str, str]] = []
         for original, new in renames:
@@ -692,6 +716,7 @@ class MainWindow(QMainWindow):
             else:
                 errors.append(f"{os.path.basename(original)}: {err}")
 
+        _log.info("Renamed %d file(s), %d error(s)", len(done), len(errors))
         if done:
             self._undo.add_batch(done)
             self._ui.btnUndo.setEnabled(True)
@@ -708,6 +733,7 @@ class MainWindow(QMainWindow):
         self._reload_files()
 
     def _on_undo(self) -> None:
+        _log.info("Undoing last rename batch")
         self._undo.undo()
         self._ui.btnUndo.setEnabled(self._undo.can_undo())
         self._reload_files()

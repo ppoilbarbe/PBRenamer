@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import datetime
+import logging
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any
+
+_log = logging.getLogger(__name__)
 
 try:
     from PIL import Image, IptcImagePlugin
@@ -14,6 +17,7 @@ try:
     _PILLOW = True
 except ImportError:
     _PILLOW = False
+    _log.debug("Pillow not available — {ex:…} metadata fields will always be empty")
 
 
 class FieldType(Enum):
@@ -114,45 +118,61 @@ def _decode_bytes(raw: Any) -> str:
 def _read_exif(path: str, key: str) -> Any | None:
     tag_id = _EXIF_TAG_IDS.get(key)
     if tag_id is None:
+        _log.debug("Unknown EXIF key %r — skipping %s", key, path)
         return None
+    _log.debug("Reading EXIF %r (tag %d) from %s", key, tag_id, path)
     try:
         with Image.open(path) as img:
             exif = img.getexif()
         raw = exif.get(tag_id)
-    except Exception:  # noqa: BLE001
+    except Exception as exc:  # noqa: BLE001
+        _log.debug("EXIF open failed for %s: %s", path, exc)
         return None
     if raw is None:
+        _log.debug("EXIF tag %r absent in %s", key, path)
         return None
 
     info = FIELD_REGISTRY.get(key)
     field_type = info.type if info else FieldType.STRING
 
     if field_type == FieldType.DATETIME:
-        return _parse_exif_datetime(raw)
+        result = _parse_exif_datetime(raw)
+        _log.debug("EXIF %r → %r (datetime)", key, result)
+        return result
     if field_type == FieldType.INTEGER:
         try:
-            return int(raw)
+            result = int(raw)
         except (TypeError, ValueError):
-            return str(raw)
+            result = str(raw)
+        _log.debug("EXIF %r → %r (int)", key, result)
+        return result
     if field_type == FieldType.RATIONAL:
-        return _rational_to_str(raw)
-    return str(raw)
+        result = _rational_to_str(raw)
+        _log.debug("EXIF %r → %r (rational)", key, result)
+        return result
+    result = str(raw)
+    _log.debug("EXIF %r → %r (str)", key, result)
+    return result
 
 
 def _read_iptc(path: str, key: str) -> Any | None:
     dataset = next((ds for ds, name in _IPTC_DATASETS.items() if name == key), None)
     if dataset is None:
         return None
+    _log.debug("Reading IPTC %r (dataset %s) from %s", key, dataset, path)
     try:
         with Image.open(path) as img:
             iptc = IptcImagePlugin.getiptcinfo(img)
-    except Exception:  # noqa: BLE001
+    except Exception as exc:  # noqa: BLE001
+        _log.debug("IPTC open failed for %s: %s", path, exc)
         return None
     if not iptc:
+        _log.debug("No IPTC data in %s", path)
         return None
 
     raw = iptc.get(dataset)
     if raw is None:
+        _log.debug("IPTC dataset %s absent in %s", dataset, path)
         return None
 
     if isinstance(raw, list):
@@ -163,9 +183,12 @@ def _read_iptc(path: str, key: str) -> Any | None:
     info = FIELD_REGISTRY.get(key)
     if info and info.type == FieldType.DATE and len(text) >= 8:
         try:
-            return datetime.date(int(text[:4]), int(text[4:6]), int(text[6:8]))
+            result: Any = datetime.date(int(text[:4]), int(text[4:6]), int(text[6:8]))
+            _log.debug("IPTC %r → %r (date)", key, result)
+            return result
         except ValueError:
             pass
+    _log.debug("IPTC %r → %r", key, text)
     return text
 
 

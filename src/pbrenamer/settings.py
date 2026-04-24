@@ -8,6 +8,8 @@ from PySide6.QtCore import QSettings
 
 from pbrenamer.platform import AppDirs
 
+_log = logging.getLogger(__name__)
+
 _DOMAIN = "pbrenamer"
 _dirs = AppDirs(_DOMAIN)
 _LOG_LEVEL_KEY = "log/level"
@@ -35,7 +37,13 @@ def set_log_level(level: str) -> None:
 
 
 def apply_log_level(level: str | None = None) -> None:
-    """Set the root logger level to *level* (or the saved level if None)."""
-    if level is None:
+    """Set the root logger level to *level* (or the saved level if None).
+
+    Passing a level not in LEVELS is silently ignored and the saved preference
+    is used instead.
+    """
+    if level not in LEVELS:
         level = get_log_level()
-    logging.getLogger().setLevel(getattr(logging, level, logging.INFO))
+    numeric = getattr(logging, level, logging.INFO)
+    logging.getLogger().setLevel(numeric)
+    _log.debug("Log level set to %s", level)

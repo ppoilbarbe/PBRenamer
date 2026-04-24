@@ -14,11 +14,14 @@ Syntax: {field}, {field:fmt}, {field:alignfmt:default}
 from __future__ import annotations
 
 import datetime
+import logging
 import os
 import re
 from dataclasses import dataclass
 
 from pbrenamer.core import meta
+
+_log = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
 # Data structures
@@ -151,6 +154,7 @@ def parse(template: str) -> list[Segment]:
 
     Raises ReplacementSyntaxError if the syntax is invalid.
     """
+    _log.debug("Parsing replacement template: %r", template)
     segments: list[Segment] = []
     pos = 0
     for m in _TOKEN_RE.finditer(template):
@@ -167,6 +171,7 @@ def parse(template: str) -> list[Segment]:
         raise ReplacementSyntaxError("Unmatched '{' in replacement pattern")
     if tail:
         segments.append(LiteralSegment(tail))
+    _log.debug("Parsed %d segment(s) from %r", len(segments), template)
     return segments
 
 
