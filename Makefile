@@ -27,7 +27,7 @@ PO_FILES        := $(foreach lang,$(PO_LOCALES),$(LOCALE_DIR)/$(lang)/LC_MESSAGE
 TRANSLATE_STAMP := .translate.stamp
 
 .DEFAULT_GOAL := help
-.PHONY: all help venv venv-update install ui translate new-lang run test \
+.PHONY: all help venv venv-update install ui translate new-lang run test coverage \
         lint format docs docs-live designer dist clean force-translate \
         bump-major bump-minor bump-patch bump-set
 
@@ -128,6 +128,10 @@ run: ## Launch PBRenamer from the conda env
 
 test: ## Run test suite
 	$(CONDA_RUN) pytest
+
+coverage: ## Run test suite and open HTML coverage report
+	$(CONDA_RUN) pytest --cov-report=term-missing --cov-report=html
+	@printf "$(G)Report:$(R) $(Y)htmlcov/index.html$(R)\n"
 
 hooks: ## Run all pre-commit hooks on all files
 	$(CONDA_RUN) pre-commit run --all-files

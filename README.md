@@ -16,7 +16,9 @@ counters, date stamps, and metadata — all previewed live before any change is 
   - Text substitution (find & replace, spaces ↔ underscores / dots / dashes, case)
   - Insert or delete characters at a given position
   - Manual rename for individual files
-  - Counter (`{num}`, `{num3}`, `{num2+10}`), date (`{date}`, `{year}`…), parent-folder name (`{dir}`)
+  - Counter (`{num}`, `{num:03}` zero-padded, `{num::10}` start offset), conflict-free auto-number (`{newnum}`)
+  - Dates (`{date}`, `{datetime}`, `{mdatetime}` file-modification time), parent-folder name (`{dir}`)
+  - Image metadata (`{ex:Make}`, `{ex:Model}`, `{ex:DateTimeOriginal}`… — EXIF/IPTC via Pillow)
 - **Directory colouring** — directories are shown in a distinct colour in the file list
 - **Keep extension** option — transformations apply to the stem only
 - **Recursive** directory traversal
@@ -64,8 +66,11 @@ pip install .
 
 ## Usage
 
+### GUI mode
+
 ```bash
-pbrenamer            # launch the GUI (installed entry-point)
+pbrenamer            # launch the GUI (current directory)
+pbrenamer /path/dir  # launch the GUI starting in a given directory
 python -m pbrenamer  # launch from source
 
 pbrenamer --help     # show command-line help and exit
@@ -74,6 +79,49 @@ pbrenamer --version  # print version and exit
 
 Qt platform options (`--style`, `--platform`, `--display`, …) are forwarded
 to Qt and can be combined with the above flags.
+
+### Headless (command-line) mode
+
+Providing `--search` disables the GUI and renames files directly from the
+terminal. All options that exist in the main window are available:
+
+```
+pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
+```
+
+| Option | Default | Description |
+|---|---|---|
+| `-s`, `--search TEXT` | _(required)_ | Search pattern — activates headless mode |
+| `-r`, `--replace TEXT` | `""` | Replacement string |
+| `--mode {pattern,regex,plain}` | `pattern` | Search mode |
+| `--list {files,dirs,all}` | `files` | Entry types to process |
+| `--recurse` / `--no-recurse` | `--no-recurse` | Recurse into sub-directories |
+| `--keep-ext` / `--no-keep-ext` | `--keep-ext` | Preserve the file extension |
+| `--filter GLOB` | _(none)_ | Restrict listing to matching entries |
+| `--accent` / `--no-accent` | `--no-accent` | Strip diacritics from result names |
+| `--dup` / `--no-dup` | `--no-dup` | Collapse consecutive duplicate separators |
+| `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
+| `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
+
+**Examples**
+
+```bash
+# Replace underscores with hyphens, preview first
+pbrenamer ~/Photos --search "_" --replace "-" --mode plain --confirm
+
+# Number all JPEG files: photo_001.jpg, photo_002.jpg, …
+pbrenamer ~/Photos --search "{L}" --replace "photo_{num:03}" --filter "*.jpg"
+
+# Strip diacritics and upper-case everything, recursively
+pbrenamer ~/docs --search "{X}" --replace "{1}" --recurse --accent --case upper
+
+# Rename using a regex capture group
+pbrenamer . --search "img(\d+)" --replace "photo_{1}" --mode regex
+```
+
+Conflicting renames (two files mapping to the same target, or target already
+exists) are detected and skipped automatically; `--confirm` shows them flagged
+as `[CONFLICT]` before you confirm.
 
 ## Documentation
 

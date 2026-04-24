@@ -24,11 +24,13 @@ For user-facing information see [README.md](README.md).
 PBRenamer/
 ├── src/pbrenamer/
 │   ├── __init__.py              version / author metadata
-│   ├── __main__.py              CLI entry point (--help, --version → GUI)
+│   ├── __main__.py              CLI entry point — GUI mode or headless rename (--search)
 │   ├── i18n.py                  gettext bootstrap; language from platform.dirs
 │   ├── xdg.py                   compat re-export → platform.dirs (do not use directly)
 │   ├── core/
 │   │   ├── filetools.py         file listing, text transforms, rename engine
+│   │   ├── meta.py              EXIF/IPTC metadata reading via Pillow
+│   │   ├── replacement.py       replacement-string parser, validator, substitutor
 │   │   └── undo.py              batch undo stack
 │   ├── platform/                all OS-specific abstractions
 │   │   ├── dirs.py              AppDirs(): XDG / macOS Library / Windows AppData
@@ -41,7 +43,12 @@ PBRenamer/
 │       ├── presets.py           pattern preset persistence
 │       └── settings_dialog.py   language settings dialog
 ├── tests/
-│   └── test_main_window.py
+│   ├── test_filetools.py        listing, transforms, rename engine, disk I/O, newnum workflow
+│   ├── test_headless.py         CLI parser, headless plan/postproc/conflict/run
+│   ├── test_main_window.py      main window smoke tests
+│   ├── test_platform_fs.py      case-sensitivity probe, path comparison, conflict keys
+│   ├── test_replacement.py      replacement parser, validator, formatter, substitutor
+│   └── test_undo.py             undo stack
 ├── docs/                        Sphinx documentation source
 ├── tools/
 │   ├── extract_ui_strings.py    extracts strings from *_ui.py for xgettext
@@ -95,6 +102,7 @@ unaffected by `NOCONDA`.
 |---------------------------|------------------------------------------|
 | Run the application       | `make run`                               |
 | Run tests                 | `make test`                              |
+| HTML coverage report      | `make coverage`                          |
 | Lint & style check        | `make lint`                              |
 | Auto-format               | `make format`                            |
 | Run all pre-commit hooks  | `make hooks`                             |
@@ -238,12 +246,23 @@ regenerated on demand and is excluded by `.gitignore`.
 ## Testing
 
 ```bash
-make test               # full suite with coverage report
-pytest -k test_foo      # run a single test
-pytest --no-cov         # skip coverage
+make test               # full suite — terminal coverage report
+make coverage           # full suite + HTML report in htmlcov/index.html
+pytest -k test_foo      # run a single test by name
+pytest --no-cov         # skip coverage instrumentation
 ```
 
-Tests live in `tests/` and mirror the source structure.
+Tests live in `tests/` and are organised by module:
+
+| Test file              | What it covers |
+|------------------------|----------------|
+| `test_filetools.py`    | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow |
+| `test_headless.py`     | CLI argument parser (defaults, flags, rejection of invalid values), `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
+| `test_replacement.py`  | Replacement-string parser (fields, defaults, align), validator, all built-in fields (`{num}`, `{date}`, `{datetime}`, `{dir}`, `{mdatetime}`, `{ex:…}`, `{re:…}`), formatting and error paths |
+| `test_platform_fs.py`  | `is_case_sensitive` probe, `same_file_path` and `conflict_key` on both case-sensitive and case-insensitive filesystems |
+| `test_undo.py`         | `UndoManager` — `add_batch`, `undo` (single and multi-file batches, LIFO order), `can_undo`, `clear` |
+| `test_main_window.py`  | Main window smoke tests (title, minimum size, initial button state) |
+
 Use `qtbot` from `pytest-qt` for all widget interactions.
 Never instantiate `QApplication` manually — `pytest-qt` manages it.
 
