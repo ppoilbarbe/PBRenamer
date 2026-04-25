@@ -43,6 +43,10 @@ FIELD_REGISTRY: dict[str, FieldInfo] = {
         "Date/time the image was digitised", FieldType.DATETIME
     ),
     "datetime": FieldInfo("File last-modified date/time (EXIF)", FieldType.DATETIME),
+    # EXIF — image-level text
+    "imagedescription": FieldInfo("Image description / title", FieldType.STRING),
+    "artist": FieldInfo("Photographer / creator (EXIF)", FieldType.STRING),
+    "copyright": FieldInfo("Copyright notice", FieldType.STRING),
     # EXIF — camera
     "make": FieldInfo("Camera manufacturer", FieldType.STRING),
     "model": FieldInfo("Camera model", FieldType.STRING),
@@ -115,6 +119,24 @@ def _decode_bytes(raw: Any) -> str:
     return str(raw)
 
 
+def _fix_str_encoding(s: str) -> str:
+    """Recover UTF-8 strings mis-decoded as latin-1 by Pillow.
+
+    EXIF tags are declared ASCII but many tools write UTF-8 bytes.
+    Pillow decodes them as latin-1, producing mojibake for non-ASCII
+    characters.  Re-encoding as latin-1 and decoding as UTF-8 restores
+    the original text; if the bytes are not valid UTF-8 we keep the
+    latin-1 string as-is.
+    """
+    try:
+        return s.encode("latin-1").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return s
+
+
+_EXIF_IFD_POINTERS = (0x8769, 0x8825)  # ExifIFD, GPS IFD
+
+
 def _read_exif(path: str, key: str) -> Any | None:
     tag_id = _EXIF_TAG_IDS.get(key)
     if tag_id is None:
@@ -125,6 +147,11 @@ def _read_exif(path: str, key: str) -> Any | None:
         with Image.open(path) as img:
             exif = img.getexif()
         raw = exif.get(tag_id)
+        if raw is None:
+            for ptr in _EXIF_IFD_POINTERS:
+                raw = exif.get_ifd(ptr).get(tag_id)
+                if raw is not None:
+                    break
     except Exception as exc:  # noqa: BLE001
         _log.debug("EXIF open failed for %s: %s", path, exc)
         return None
@@ -150,7 +177,7 @@ def _read_exif(path: str, key: str) -> Any | None:
         result = _rational_to_str(raw)
         _log.debug("EXIF %r → %r (rational)", key, result)
         return result
-    result = str(raw)
+    result = _fix_str_encoding(str(raw))
     _log.debug("EXIF %r → %r (str)", key, result)
     return result
 

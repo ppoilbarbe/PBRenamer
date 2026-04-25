@@ -271,12 +271,19 @@ def replace_html() -> str:
             _("File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"),
             _BG1,
         )
-        + _row3("{dir}", all_m, _("Name of the immediate parent folder"))
+        + _row3(
+            "{cdatetime}",
+            all_m,
+            _(
+                "File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+                " (inode change time on Linux)"
+            ),
+        )
+        + _row3("{dir}", all_m, _("Name of the immediate parent folder"), _BG1)
         + _row3(
             "{ex:Field}",
             all_m,
             _("EXIF or IPTC metadata field (images only — see list below)"),
-            _BG1,
         )
     )
 
@@ -295,13 +302,22 @@ def replace_html() -> str:
     meta_rows = (
         _row3("DateTimeOriginal", "datetime", _("Date/time the photo was taken"), _BG1)
         + _row3("DateTimeDigitized", "datetime", _("Date/time the image was digitised"))
-        + _row3("Make", "text", _("Camera manufacturer"), _BG1)
-        + _row3("Model", "text", _("Camera model"))
-        + _row3("LensModel", "text", _("Lens model"), _BG1)
-        + _row3("ISOSpeedRatings", "integer", _("ISO speed"))
-        + _row3("FNumber", "text", _("Aperture (e.g. 2.8)"), _BG1)
-        + _row3("ExposureTime", "text", _("Shutter speed (e.g. 1/125)"))
-        + _row3("FocalLength", "text", _("Focal length in mm"), _BG1)
+        + _row3(
+            "DateTime",
+            "datetime",
+            _("Date/time the file was last changed (EXIF)"),
+            _BG1,
+        )
+        + _row3("Make", "text", _("Camera manufacturer"))
+        + _row3("Model", "text", _("Camera model"), _BG1)
+        + _row3("LensModel", "text", _("Lens model"))
+        + _row3("ISOSpeedRatings", "integer", _("ISO speed"), _BG1)
+        + _row3("FNumber", "text", _("Aperture (e.g. 2.8)"))
+        + _row3("ExposureTime", "text", _("Shutter speed (e.g. 1/125)"), _BG1)
+        + _row3("FocalLength", "text", _("Focal length in mm"))
+        + _row3("ImageDescription", "text", _("Image description / title"), _BG1)
+        + _row3("Artist", "text", _("Photographer / creator (EXIF)"))
+        + _row3("Copyright", "text", _("Copyright notice"), _BG1)
         + _row3("ObjectName", "text", _("IPTC title / object name"))
         + _row3("By-line", "text", _("IPTC photographer / creator"), _BG1)
         + _row3("City", "text", _("IPTC city"))

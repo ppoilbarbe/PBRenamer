@@ -238,6 +238,20 @@ class TestSubstituteFields:
         with pytest.raises(FieldResolutionError):
             _sub("{mdatetime}", path="/no/such/file.txt")
 
+    def test_cdatetime_field_real_file(self, tmp_path):
+        f = tmp_path / "sample.txt"
+        f.touch()
+        result = _sub("{cdatetime}", path=str(f))
+        assert len(result) > 0
+
+    def test_cdatetime_missing_file_uses_default(self):
+        result = _sub("{cdatetime::unknown}", path="/no/such/file.txt")
+        assert result == "unknown"
+
+    def test_cdatetime_missing_file_no_default_raises(self):
+        with pytest.raises(FieldResolutionError):
+            _sub("{cdatetime}", path="/no/such/file.txt")
+
     def test_ex_field_missing_uses_default(self, tmp_path):
         f = tmp_path / "plain.txt"
         f.touch()

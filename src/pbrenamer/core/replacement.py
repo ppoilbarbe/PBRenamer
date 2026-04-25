@@ -32,7 +32,7 @@ SEARCH_REGEX = "regex"
 SEARCH_PLAIN = "plain"
 
 _SIMPLE_FIELDS = frozenset(
-    {"0", "num", "newnum", "date", "datetime", "mdatetime", "dir"}
+    {"0", "num", "newnum", "date", "datetime", "mdatetime", "cdatetime", "dir"}
 )
 _GROUP_RE = re.compile(r"^[1-9][0-9]*$")
 _TOKEN_RE = re.compile(r"\{\{|\{([^{}]*)\}")
@@ -332,6 +332,16 @@ def _resolve(
     if name == "mdatetime":
         try:
             return datetime.datetime.fromtimestamp(os.stat(path).st_mtime)
+        except OSError:
+            return None
+
+    if name == "cdatetime":
+        try:
+            st = os.stat(path)
+            # st_birthtime on macOS; st_ctime on Windows (creation) and Linux (fallback)
+            return datetime.datetime.fromtimestamp(
+                getattr(st, "st_birthtime", st.st_ctime)
+            )
         except OSError:
             return None
 
