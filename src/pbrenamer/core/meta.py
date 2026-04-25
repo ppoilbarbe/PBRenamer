@@ -17,7 +17,7 @@ try:
     _PILLOW = True
 except ImportError:
     _PILLOW = False
-    _log.debug("Pillow not available — {ex:…} metadata fields will always be empty")
+    _log.debug("Pillow not available — {im:…} metadata fields will always be empty")
 
 
 class FieldType(Enum):

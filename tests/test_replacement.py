@@ -81,18 +81,37 @@ class TestParse:
             parse("prefix { no close")
 
     def test_ex_field_valid(self):
-        segs = parse("{ex:Make}")
-        assert any(isinstance(s, FieldSegment) and s.name == "ex:Make" for s in segs)
+        segs = parse("{im:Make}")
+        assert any(isinstance(s, FieldSegment) and s.name == "im:Make" for s in segs)
+
+    def test_mu_field_valid(self):
+        segs = parse("{au:title}")
+        assert any(isinstance(s, FieldSegment) and s.name == "au:title" for s in segs)
+
+    def test_mu_field_with_options(self):
+        segs = parse("{au:title::untitled}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.name == "au:title"
+        assert field.default == "untitled"
+
+    def test_mu_field_with_fmt(self):
+        # "02:00" → align="0", fmt="2", default="00"
+        segs = parse("{au:tracknumber:02:00}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.name == "au:tracknumber"
+        assert field.align == "0"
+        assert field.fmt == "2"
+        assert field.default == "00"
 
     def test_re_field_valid(self):
         segs = parse("{re:year}")
         assert any(isinstance(s, FieldSegment) and s.name == "re:year" for s in segs)
 
     def test_ex_field_with_options(self):
-        # {ex:Make::default} — empty fmt, then default after second colon
-        segs = parse("{ex:Make::unknown}")
+        # {im:Make::default} — empty fmt, then default after second colon
+        segs = parse("{im:Make::unknown}")
         field = next(s for s in segs if isinstance(s, FieldSegment))
-        assert field.name == "ex:Make"
+        assert field.name == "im:Make"
         assert field.default == "unknown"
 
     def test_field_with_default(self):
@@ -255,14 +274,26 @@ class TestSubstituteFields:
     def test_ex_field_missing_uses_default(self, tmp_path):
         f = tmp_path / "plain.txt"
         f.touch()
-        result = _sub("{ex:Make::n/a}", path=str(f))
+        result = _sub("{im:Make::n/a}", path=str(f))
         assert result == "n/a"
 
     def test_ex_field_missing_no_default_raises(self, tmp_path):
         f = tmp_path / "plain.txt"
         f.touch()
         with pytest.raises(FieldResolutionError):
-            _sub("{ex:Make}", path=str(f))
+            _sub("{im:Make}", path=str(f))
+
+    def test_mu_field_missing_uses_default(self, tmp_path):
+        f = tmp_path / "plain.txt"
+        f.touch()
+        result = _sub("{au:title::untitled}", path=str(f))
+        assert result == "untitled"
+
+    def test_mu_field_missing_no_default_raises(self, tmp_path):
+        f = tmp_path / "plain.txt"
+        f.touch()
+        with pytest.raises(FieldResolutionError):
+            _sub("{au:title}", path=str(f))
 
     def test_literal_brace_in_result(self):
         # {{ → literal '{'; lone '}' is not special → "{{num}" produces "{num}"

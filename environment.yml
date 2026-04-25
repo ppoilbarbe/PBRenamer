@@ -25,6 +25,8 @@ dependencies:
   - gettext
   # Metadata (EXIF/IPTC)
   - pillow
+  # Metadata (audio tags)
+  - mutagen
   # Packaging
   - pyinstaller
   # Dev install (editable)

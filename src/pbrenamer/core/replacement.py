@@ -2,7 +2,7 @@
 
 Syntax: {field}, {field:fmt}, {field:alignfmt:default}
 
-  field   — see _SIMPLE_FIELDS and the ex:/re: prefixes below
+  field   — see _SIMPLE_FIELDS and the im:/au:/re: prefixes below
   align   — optional first character: < (left), > (right), 0 (zero-pad right)
   fmt     — digit string (minimum width) for integers/strings;
             strftime format for date/datetime fields
@@ -19,7 +19,7 @@ import os
 import re
 from dataclasses import dataclass
 
-from pbrenamer.core import meta
+from pbrenamer.core import audio_meta, meta
 
 _log = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ class LiteralSegment:
 
 @dataclass
 class FieldSegment:
-    name: str  # e.g. "0", "1", "num", "date", "ex:Make", "re:year"
+    name: str  # e.g. "0", "1", "num", "date", "im:Make", "re:year"
     align: str  # "<", ">", "0", or ""
     fmt: str  # width digits or strftime string, or ""
     default: str | None  # None = no default → error when field absent
@@ -100,7 +100,9 @@ def _is_valid_name(name: str) -> bool:
     if _GROUP_RE.match(name):
         return True
     low = name.lower()
-    if low.startswith("ex:"):
+    if low.startswith("im:"):
+        return len(name) > 3
+    if low.startswith("au:"):
         return len(name) > 3
     if low.startswith("re:"):
         return len(name) > 3
@@ -110,8 +112,8 @@ def _is_valid_name(name: str) -> bool:
 def _split_name_options(content: str) -> tuple[str, str]:
     """Return (field_name, options_string) from the raw content of {…}."""
     low = content.lower()
-    if low.startswith("ex:") or low.startswith("re:"):
-        # Format: "ex:FieldName[:options]" — the colon after FieldName is the separator
+    if low.startswith("im:") or low.startswith("au:") or low.startswith("re:"):
+        # Format: "im:FieldName[:options]" — the colon after FieldName is the separator
         rest = content[3:]
         idx = rest.find(":")
         if idx == -1:
@@ -249,7 +251,7 @@ def substitute(
     in plain-text mode).
     *groups* are {1}, {2}…: numbered capture groups (1-based indexing).
     *named_groups* are {re:name}: named regex groups.
-    *path* is the full file path (used for dir, mdatetime, ex: fields).
+    *path* is the full file path (used for dir, mdatetime, im: and au: fields).
 
     Raises FieldResolutionError if a field is absent and has no default.
     """
@@ -349,7 +351,10 @@ def _resolve(
         parent = os.path.dirname(path)
         return os.path.basename(parent) if parent else None
 
-    if low.startswith("ex:"):
+    if low.startswith("im:"):
         return meta.read_field(path, name[3:])
+
+    if low.startswith("au:"):
+        return audio_meta.read_field(path, name[3:])
 
     return None

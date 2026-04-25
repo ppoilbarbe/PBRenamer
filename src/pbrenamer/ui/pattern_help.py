@@ -281,9 +281,15 @@ def replace_html() -> str:
         )
         + _row3("{dir}", all_m, _("Name of the immediate parent folder"), _BG1)
         + _row3(
-            "{ex:Field}",
+            "{im:Field}",
             all_m,
             _("EXIF or IPTC metadata field (images only — see list below)"),
+        )
+        + _row3(
+            "{au:Field}",
+            all_m,
+            _("Audio metadata field (mp3, ogg, flac… — see list below)"),
+            _BG1,
         )
     )
 
@@ -326,6 +332,41 @@ def replace_html() -> str:
         + _row3("Keywords", "text", _("IPTC keywords (semicolon-separated)"), _BG1)
     )
 
+    # ── Audio metadata table ───────────────────────────────────────────────────
+    audio_intro = _(
+        "Field names are case-insensitive. "
+        "Supported formats: mp3, ogg, flac, opus, aac/m4a and others"
+        " supported by mutagen. "
+        "A <b>default</b> is strongly recommended — tags may be absent or the file "
+        "may not be a supported audio format."
+    )
+    audio_rows = (
+        _row3("title", "text", _("Track title"), _BG1)
+        + _row3("artist", "text", _("Track artist"))
+        + _row3("albumartist", "text", _("Album artist"), _BG1)
+        + _row3("album", "text", _("Album name"))
+        + _row3(
+            "tracknumber", "integer", _("Track number (strips /total if present)"), _BG1
+        )
+        + _row3("discnumber", "integer", _("Disc number (strips /total if present)"))
+        + _row3(
+            "date",
+            "date/text",
+            _(
+                "Release date — datetime.date when full date available"
+                " (strftime formatting); plain text otherwise"
+            ),
+            _BG1,
+        )
+        + _row3("year", "integer", _("Release year (extracted from date tag)"))
+        + _row3("genre", "text", _("Genre"), _BG1)
+        + _row3("comment", "text", _("Comment"))
+        + _row3("composer", "text", _("Composer"), _BG1)
+        + _row3("bpm", "integer", _("Beats per minute"))
+        + _row3("duration", "integer", _("Duration in seconds"), _BG1)
+        + _row3("bitrate", "integer", _("Bitrate in kbps"))
+    )
+
     # ── Examples table ────────────────────────────────────────────────────────
     ex_rows = (
         _row2(
@@ -347,17 +388,26 @@ def replace_html() -> str:
         )
         + _row2("{date}-{0}", _("Today's date prepended to the matched text"))
         + _row2(
-            "{ex:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}",
+            "{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}",
             _('Shooting date/time compact; "unknown" if EXIF absent'),
             _BG1,
         )
         + _row2(
-            "{ex:DateTimeDigitized:%H%M:0000}",
+            "{im:DateTimeDigitized:%H%M:0000}",
             _('Hour+minute of digitisation; "0000" if absent'),
         )
         + _row2(
-            "{ex:Make::} {ex:Model::}",
+            "{im:Make::} {im:Model::}",
             _("Camera make and model (empty string if absent)"),
+            _BG1,
+        )
+        + _row2(
+            "{au:artist::unknown}_{au:title::untitled}",
+            _('Audio artist and title; "unknown"/"untitled" if absent'),
+        )
+        + _row2(
+            "{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}",
+            _("Audio release date, zero-padded track number, title"),
             _BG1,
         )
         + _row2("{re:year}_{re:title}", _("Named regex groups (regex mode only)"))
@@ -381,11 +431,18 @@ def replace_html() -> str:
         + fields_rows
         + "</table>\n"
         + "<hr/>\n"
-        + _h3(_("Metadata fields for <code>{ex:…}</code>"))
+        + _h3(_("Metadata fields for <code>{im:…}</code>"))
         + _p(meta_intro)
         + _TABLE_W
         + meta_hdr
         + meta_rows
+        + "</table>\n"
+        + "<hr/>\n"
+        + _h3(_("Audio metadata fields for <code>{au:…}</code>"))
+        + _p(audio_intro)
+        + _TABLE_W
+        + meta_hdr
+        + audio_rows
         + "</table>\n"
         + "<hr/>\n"
         + _h3(_("Examples"))

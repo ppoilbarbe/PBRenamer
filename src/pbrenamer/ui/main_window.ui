@@ -232,37 +232,6 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout">
-              <item>
-               <widget class="QLabel">
-                <property name="text"><string>Separator:</string></property>
-                <property name="minimumWidth"><number>60</number></property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="cmbSpaces">
-                <property name="toolTip"><string>Separator shortcut</string></property>
-                <property name="statusTip"><string>Select a separator conversion to fill in the search and replacement fields in regex mode</string></property>
-                <item><property name="text"><string>— Separator shortcuts —</string></property></item>
-                <item><property name="text"><string>Spaces → underscores</string></property></item>
-                <item><property name="text"><string>Underscores → spaces</string></property></item>
-                <item><property name="text"><string>Spaces → dots</string></property></item>
-                <item><property name="text"><string>Dots → spaces</string></property></item>
-                <item><property name="text"><string>Spaces → dashes</string></property></item>
-                <item><property name="text"><string>Dashes → spaces</string></property></item>
-               </widget>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation"><enum>Qt::Horizontal</enum></property>
-                <property name="sizeHint" stdset="0">
-                 <size><width>40</width><height>20</height></size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item>
              <spacer>
               <property name="orientation"><enum>Qt::Vertical</enum></property>
               <property name="sizeHint" stdset="0">
@@ -275,6 +244,24 @@
               <property name="title"><string>Post-processing</string></property>
               <property name="minimumHeight"><number>60</number></property>
               <layout class="QHBoxLayout">
+               <item>
+                <widget class="QLabel">
+                 <property name="text"><string>Separator:</string></property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cmbSpaces">
+                 <property name="toolTip"><string>Separator conversion</string></property>
+                 <property name="statusTip"><string>Apply a separator conversion to each renamed file name after applying the pattern</string></property>
+                 <item><property name="text"><string>No change</string></property></item>
+                 <item><property name="text"><string>Spaces → underscores</string></property></item>
+                 <item><property name="text"><string>Underscores → spaces</string></property></item>
+                 <item><property name="text"><string>Spaces → dots</string></property></item>
+                 <item><property name="text"><string>Dots → spaces</string></property></item>
+                 <item><property name="text"><string>Spaces → dashes</string></property></item>
+                 <item><property name="text"><string>Dashes → spaces</string></property></item>
+                </widget>
+               </item>
                <item>
                 <widget class="QCheckBox" name="chkRemoveAccents">
                  <property name="text"><string>Remove accents</string></property>

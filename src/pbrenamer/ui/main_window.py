@@ -150,10 +150,8 @@ class MainWindow(QMainWindow):
         sel_model = self._ui.treeDirectory.selectionModel()
         sel_model.selectionChanged.connect(lambda *_: self._on_directory_selected())
 
-        # Patterns tab — separator shortcuts
-        self._ui.cmbSpaces.activated.connect(self._on_spaces_shortcut)
-
         # Patterns tab — post-processing
+        self._ui.cmbSpaces.currentIndexChanged.connect(self._on_post_process_changed)
         self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
         self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
         self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
@@ -373,7 +371,7 @@ class MainWindow(QMainWindow):
         """Dispatch to the appropriate filetools rename function.
 
         *orig_path* must be the actual file path (with extension) so that
-        metadata fields such as {mdatetime} and {ex:…} can stat the file.
+        metadata fields such as {mdatetime} and {im:…}/{au:…} can stat the file.
         """
         if use_regex:
             return filetools.rename_using_regex(
@@ -388,7 +386,10 @@ class MainWindow(QMainWindow):
         )
 
     def _apply_postproc(self, name: str, path: str) -> str:
-        """Apply active post-processing options (accents, duplicates, caps)."""
+        """Apply active post-processing options."""
+        sep_idx = self._ui.cmbSpaces.currentIndex()
+        if sep_idx > 0:
+            name, _op = filetools.replace_spaces(name, path, sep_idx - 1)
         if self._ui.chkRemoveAccents.isChecked():
             name, _op = filetools.replace_accents(name, path)
         if self._ui.chkRemoveDuplicates.isChecked():
@@ -441,6 +442,10 @@ class MainWindow(QMainWindow):
             replace,
         )
         newnum_state = self._make_newnum_state(replace)
+
+        root = self._ui.tblFiles.invisibleRootItem()
+        for i in range(root.childCount()):
+            root.child(i).setText(1, "")
 
         for counter, item in enumerate(items, start=1):
             path = item.data(0, Qt.ItemDataRole.UserRole)
@@ -587,27 +592,6 @@ class MainWindow(QMainWindow):
         for i in range(root.childCount()):
             root.child(i).setText(1, "")
         self._ui.btnRename.setEnabled(False)
-
-    # ── Patterns tab — separator shortcuts ───────────────────────────────────
-
-    # (search regex, replacement) indexed to match cmbSpaces items 1..6
-    _SPACES_SHORTCUTS: tuple[tuple[str, str], ...] = (
-        (" ", "_"),
-        ("_", " "),
-        (" ", "."),
-        (r"\.", " "),
-        (" ", "-"),
-        ("-", " "),
-    )
-
-    def _on_spaces_shortcut(self, index: int) -> None:
-        if index <= 0:
-            return
-        search, replace = self._SPACES_SHORTCUTS[index - 1]
-        self._ui.radRegex.setChecked(True)
-        self._ui.cmbPatternSearch.setCurrentText(search)
-        self._ui.cmbPatternDest.setCurrentText(replace)
-        self._ui.cmbSpaces.setCurrentIndex(0)
 
     # ── Pattern help dialogs ──────────────────────────────────────────────────
 
