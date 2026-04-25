@@ -38,6 +38,20 @@ autodoc_member_order = "bysource"
 autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 
+# *_ui.py are gitignored generated artefacts compiled by pyside6-uic.
+# Pre-build in .readthedocs.yaml regenerates them; mock only when absent
+# (e.g. if the pre_build step failed) so the docs still build.
+_UI_DIR = Path(__file__).parent.parent / "src" / "pbrenamer" / "ui"
+_GENERATED_UI = [
+    "pbrenamer.ui.main_window_ui",
+    "pbrenamer.ui.about_dialog_ui",
+    "pbrenamer.ui.history_dialog_ui",
+    "pbrenamer.ui.settings_dialog_ui",
+]
+autodoc_mock_imports = [
+    mod for mod in _GENERATED_UI if not (_UI_DIR / f"{mod.split('.')[-1]}.py").exists()
+]
+
 napoleon_google_docstring = False
 napoleon_numpy_docstring = False
 

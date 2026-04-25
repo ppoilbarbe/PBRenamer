@@ -14,8 +14,6 @@ counters, date stamps, and metadata — all previewed live before any change is 
 - **Flexible renaming rules**
   - Pattern-based search / replace (`{#}`, `{L}`, `{X}`, `{@}`, capture groups…)
   - Text substitution (find & replace, spaces ↔ underscores / dots / dashes, case)
-  - Insert or delete characters at a given position
-  - Manual rename for individual files
   - Counter (`{num}`, `{num:03}` zero-padded, `{num::10}` start offset), conflict-free auto-number (`{newnum}`)
   - Dates (`{date}`, `{datetime}`, `{mdatetime}` file-modification time), parent-folder name (`{dir}`)
   - Image metadata (`{im:Make}`, `{im:Model}`, `{im:DateTimeOriginal}`… — EXIF/IPTC via Pillow)
@@ -133,7 +131,7 @@ as `[CONFLICT]` before you confirm.
 ## Documentation
 
 Full documentation is available at
-[pbrenamer.readthedocs.io](https://pbrenamer.readthedocs.io) _(coming soon)_.
+[pbrenamer.readthedocs.io](https://pbrenamer.readthedocs.io).
 
 ## Contributing
 

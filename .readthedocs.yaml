@@ -1,15 +1,25 @@
+# Read the Docs configuration
+# https://docs.readthedocs.io/en/stable/config-file/v2.html
 version: 2
 
 build:
-  os: ubuntu-24.04
+  os: ubuntu-22.04
   tools:
     python: "3.12"
-
-sphinx:
-  configuration: docs/conf.py
+  jobs:
+    # *_ui.py files are gitignored generated artefacts; regenerate them so
+    # that autodoc can import the UI modules without ImportError.
+    pre_build:
+      - for ui in src/pbrenamer/ui/*.ui; do pyside6-uic "$ui" -o "${ui%.ui}_ui.py"; done
 
 python:
   install:
-    - requirements: docs/requirements.txt
     - method: pip
       path: .
+      extra_requirements:
+        - dev
+
+sphinx:
+  configuration: docs/conf.py
+  builder: html
+  fail_on_warning: false

@@ -66,6 +66,33 @@ jobs:
         shell: bash -el {0}
         run: make hooks NOCONDA=1
 
+  # ── Documentation ───────────────────────────────────────────────────────────
+  docs:
+    name: Build docs
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up conda environment
+        uses: conda-incubator/setup-miniconda@v4
+        with:
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: pbrenamer
+          conda-remove-defaults: 'true'
+
+      - name: Build HTML documentation
+        shell: bash -el {0}
+        run: make docs NOCONDA=1
+
+      - name: Upload documentation artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: docs-html
+          path: docs/_build/html/
+          if-no-files-found: error
+
   # ── Build executables ────────────────────────────────────────────────────────
   build:
     name: Build / ${{ matrix.os }}

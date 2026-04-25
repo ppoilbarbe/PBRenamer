@@ -10,7 +10,7 @@ Publisher: PBMou | Author: Marcel Spock <mrspock@cardolan.net> | License: GPLv3
 - Tests: pytest + pytest-qt (`qtbot`; never instantiate `QApplication` manually)
 - Docs: Sphinx + sphinx-rtd-theme (ReadTheDocs)
 - Lint: ruff (line-length 88, target py312)
-- Env: conda `pbrenamer`, **conda-forge only** (`nodefaults`) — `make venv`
+- Env: conda `pbrenamer`, **conda-forge only** — `make venv`
 - Packaging: PyInstaller (`pbrenamer.spec`) — `make dist`
 - CI/CD: `.github/workflows/ci.yml` — test → hooks → build (3 OS) → release on semver tag
 
@@ -69,7 +69,7 @@ New language: `make new-lang LOCALE=de`, translate all `msgstr`, then `make tran
 
 ## System constraints
 - Platform: linux-64
-- conda: 26.1.1 — channel **conda-forge only** (`nodefaults`; never use `defaults`)
+- conda: 26.1.1 — channel **conda-forge only** (never use `defaults`)
 - Python: 3.12.13
 - PySide6: 6.11.0
 - pytest: 9.0.3 | pytest-qt: 4.5.0 | pytest-cov: 7.1.0
