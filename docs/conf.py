@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 project = "PBRenamer"
 author = "Marcel Spock"
 copyright = "2026, PBMou"
-release = "0.3.0"
+release = "0.3.1"
 version = "0.3"
 
 extensions = [

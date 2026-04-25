@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.3.1] - 2026-04-25
+
+### Fixed
+
+- README: remove insert/delete at position and manual rename from feature
+  list (functions exist in `filetools.py` but are not wired to the GUI)
+
 ## [0.3.0] - 2026-04-25
 
 ### Added
@@ -65,6 +72,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
 
+[0.3.1]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.1
 [0.3.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.1.0
