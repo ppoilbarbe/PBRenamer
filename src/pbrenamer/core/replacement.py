@@ -1,14 +1,27 @@
 """Unified replacement-string parser, validator, and substitutor.
 
-Syntax: {field}, {field:fmt}, {field:alignfmt:default}
+Syntax::
 
-  field   — see _SIMPLE_FIELDS and the im:/au:/vi:/re: prefixes below
-  align   — optional first character: < (left), > (right), 0 (zero-pad right)
-  fmt     — digit string (minimum width) for integers/strings;
-            strftime format for date/datetime fields
-  default — literal fallback when the field is absent; omit to make absence
-            an error (file shown in red in the preview)
-  {{      — literal '{' character
+    {field}
+    {field:fmt}
+    {field:alignfmt:default}
+
+``field``
+    See ``_SIMPLE_FIELDS`` and the ``im:/au:/vi:/re:`` prefixes.
+
+``align``
+    Optional first character: ``<`` (left), ``>`` (right), ``0`` (zero-pad right).
+
+``fmt``
+    Digit string (minimum width) for integers/strings;
+    ``strftime`` format for date/datetime fields.
+
+``default``
+    Literal fallback when the field is absent; omit to make absence
+    an error (file shown in red in the preview).
+
+``{{``
+    Literal ``{`` character.
 """
 
 from __future__ import annotations

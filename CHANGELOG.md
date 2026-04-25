@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.3.0] - 2026-04-25
+
+### Added
+
+- Complete Sphinx documentation: user guide (GUI usage, all search modes,
+  replacement fields reference, headless CLI reference) and API reference
+  (autodoc for all modules)
+- `docs/conf.py` generates `changelog.rst` from `CHANGELOG.md` at build time;
+  the generated file is gitignored
+
 ## [0.2.0] - 2026-04-24
 
 ### Added
@@ -55,5 +65,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
 
+[0.3.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.2.0
 [0.1.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.1.0
