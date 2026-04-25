@@ -1,6 +1,7 @@
-"""Tests for the headless CLI mode (--search activates no-GUI renaming)."""
+"""Tests for the headless CLI mode (--search / --saved activates no-GUI renaming)."""
 
 import argparse
+import sys
 
 import pytest
 
@@ -10,6 +11,7 @@ from pbrenamer.__main__ import (
     _detect_conflicts,
     _headless_run,
     _plan,
+    _resolve_ns,
 )
 
 # ---------------------------------------------------------------------------
@@ -18,7 +20,7 @@ from pbrenamer.__main__ import (
 
 
 def _ns(**kwargs) -> argparse.Namespace:
-    """Build a Namespace with headless defaults, overridable via kwargs."""
+    """Build a Namespace with resolved headless defaults, overridable via kwargs."""
     defaults = dict(
         search="",
         replace="",
@@ -27,12 +29,14 @@ def _ns(**kwargs) -> argparse.Namespace:
         recurse=False,
         keep_ext=True,
         filter_glob=None,
+        sep="none",
         accent=False,
         dup=False,
         case="none",
         confirm=False,
         directory=None,
         log_level=None,
+        saved=None,
     )
     defaults.update(kwargs)
     return argparse.Namespace(**defaults)
@@ -62,17 +66,25 @@ class TestParser:
         ns, _ = _build_parser().parse_known_args(["-s", "foo"])
         assert ns.search == "foo"
 
+    def test_saved_default_is_none(self):
+        ns, _ = _build_parser().parse_known_args([])
+        assert ns.saved is None
+
+    def test_saved_flag(self):
+        ns, _ = _build_parser().parse_known_args(["--saved", "mypreset"])
+        assert ns.saved == "mypreset"
+
     def test_replace_short_flag(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x", "-r", "y"])
         assert ns.replace == "y"
 
-    def test_replace_default_empty_string(self):
+    def test_replace_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
-        assert ns.replace == ""
+        assert ns.replace is None
 
-    def test_mode_default_pattern(self):
+    def test_mode_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
-        assert ns.mode == "pattern"
+        assert ns.mode is None
 
     def test_mode_regex(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--mode", "regex"])
@@ -102,8 +114,12 @@ class TestParser:
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--no-recurse"])
         assert ns.recurse is False
 
-    def test_keep_ext_default_true(self):
+    def test_keep_ext_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        assert ns.keep_ext is None
+
+    def test_keep_ext_flag(self):
+        ns, _ = _build_parser().parse_known_args(["-s", "x", "--keep-ext"])
         assert ns.keep_ext is True
 
     def test_no_keep_ext_flag(self):
@@ -118,27 +134,51 @@ class TestParser:
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--filter", "*.jpg"])
         assert ns.filter_glob == "*.jpg"
 
-    def test_accent_default_false(self):
+    def test_accent_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
-        assert ns.accent is False
+        assert ns.accent is None
 
     def test_accent_flag(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--accent"])
         assert ns.accent is True
 
-    def test_dup_default_false(self):
+    def test_dup_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
-        assert ns.dup is False
+        assert ns.dup is None
 
     def test_dup_flag(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--dup"])
         assert ns.dup is True
 
-    def test_case_default_none(self):
+    def test_sep_raw_default_is_none(self):
         ns, _ = _build_parser().parse_known_args(["-s", "x"])
-        assert ns.case == "none"
+        assert ns.sep is None
 
-    @pytest.mark.parametrize("value", ["upper", "lower", "capitalize", "title"])
+    @pytest.mark.parametrize(
+        "value",
+        [
+            "none",
+            "space-underscore",
+            "underscore-space",
+            "space-dot",
+            "dot-space",
+            "space-dash",
+            "dash-space",
+        ],
+    )
+    def test_sep_values(self, value):
+        ns, _ = _build_parser().parse_known_args(["-s", "x", "--sep", value])
+        assert ns.sep == value
+
+    def test_sep_invalid_rejected(self):
+        with pytest.raises(SystemExit):
+            _build_parser().parse_args(["-s", "x", "--sep", "camel"])
+
+    def test_case_raw_default_is_none(self):
+        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        assert ns.case is None
+
+    @pytest.mark.parametrize("value", ["none", "upper", "lower", "capitalize", "title"])
     def test_case_values(self, value):
         ns, _ = _build_parser().parse_known_args(["-s", "x", "--case", value])
         assert ns.case == value
@@ -217,6 +257,171 @@ class TestApplyPostproc:
             "café--lait", self._path("x"), accent=True, dup=True, case="capitalize"
         )
         assert result == "Cafe-lait"
+
+    def test_sep_space_to_underscore(self):
+        result = _apply_postproc(
+            "hello world",
+            self._path("x"),
+            sep="space-underscore",
+            accent=False,
+            dup=False,
+            case="none",
+        )
+        assert result == "hello_world"
+
+    def test_sep_space_to_dash(self):
+        result = _apply_postproc(
+            "hello world",
+            self._path("x"),
+            sep="space-dash",
+            accent=False,
+            dup=False,
+            case="none",
+        )
+        assert result == "hello-world"
+
+    def test_sep_none_unchanged(self):
+        result = _apply_postproc(
+            "hello world",
+            self._path("x"),
+            sep="none",
+            accent=False,
+            dup=False,
+            case="none",
+        )
+        assert result == "hello world"
+
+
+# ---------------------------------------------------------------------------
+# _resolve_ns
+# ---------------------------------------------------------------------------
+
+
+class TestResolveNs:
+    def _raw_ns(self, **kwargs) -> argparse.Namespace:
+        """Namespace with None for unset save-overridable fields."""
+        defaults = dict(
+            search=None,
+            saved=None,
+            replace=None,
+            mode=None,
+            list="files",
+            recurse=False,
+            keep_ext=None,
+            filter_glob=None,
+            sep=None,
+            accent=None,
+            dup=None,
+            case=None,
+            confirm=False,
+            directory=None,
+            log_level=None,
+        )
+        defaults.update(kwargs)
+        return argparse.Namespace(**defaults)
+
+    def test_search_sets_hardcoded_defaults(self):
+        ns = self._raw_ns(search="foo")
+        _resolve_ns(ns)
+        assert ns.replace == ""
+        assert ns.mode == "pattern"
+        assert ns.sep == "none"
+        assert ns.accent is False
+        assert ns.dup is False
+        assert ns.case == "none"
+        assert ns.keep_ext is True
+
+    def test_explicit_cli_flags_preserved(self):
+        ns = self._raw_ns(
+            search="foo", replace="bar", mode="regex", keep_ext=False, accent=True
+        )
+        _resolve_ns(ns)
+        assert ns.replace == "bar"
+        assert ns.mode == "regex"
+        assert ns.keep_ext is False
+        assert ns.accent is True
+
+    def test_no_search_no_saved_exits(self):
+        ns = self._raw_ns()
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+
+    def _make_presets(self, tmp_path, saves: dict):
+        from pbrenamer.ui.presets import PatternPresets
+
+        p = PatternPresets(tmp_path / "patterns")
+        for name, cfg in saves.items():
+            p.set_save(name, cfg)
+        return p
+
+    def test_saved_not_found_exits(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        empty = self._make_presets(tmp_path, {})
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: empty)
+        ns = self._raw_ns(saved="ghost")
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+
+    def test_saved_loads_config(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        p = self._make_presets(
+            tmp_path,
+            {
+                "mypreset": {
+                    "search_pattern": "{X}",
+                    "search_mode": "pattern",
+                    "replace_pattern": "{1}",
+                    "separator": 1,  # space-underscore
+                    "remove_accents": True,
+                    "remove_duplicates": False,
+                    "case": 2,  # lowercase
+                    "keep_extension": False,
+                }
+            },
+        )
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: p)
+        ns = self._raw_ns(saved="mypreset")
+        _resolve_ns(ns)
+        assert ns.search == "{X}"
+        assert ns.mode == "pattern"
+        assert ns.replace == "{1}"
+        assert ns.sep == "space-underscore"
+        assert ns.accent is True
+        assert ns.dup is False
+        assert ns.case == "lower"
+        assert ns.keep_ext is False
+
+    def test_cli_overrides_saved_field(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        p = self._make_presets(
+            tmp_path,
+            {
+                "p": {
+                    "search_pattern": "original",
+                    "replace_pattern": "from_save",
+                    "case": 1,
+                }
+            },
+        )
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: p)
+        # --replace overrides the save's replace_pattern; --case overrides case
+        ns = self._raw_ns(saved="p", replace="from_cli", case="upper")
+        _resolve_ns(ns)
+        assert ns.search == "original"
+        assert ns.replace == "from_cli"
+        assert ns.case == "upper"
+
+    def test_saved_search_can_be_overridden_by_search_flag(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        p = self._make_presets(tmp_path, {"p": {"search_pattern": "from_save"}})
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: p)
+        ns = self._raw_ns(saved="p", search="from_cli")
+        _resolve_ns(ns)
+        assert ns.search == "from_cli"
 
 
 # ---------------------------------------------------------------------------
@@ -526,3 +731,55 @@ class TestHeadlessRun:
         ns = _ns(search="old", replace="new", mode="plain", directory=None)
         _headless_run(ns)
         assert (tmp_path / "new_name.txt").exists()
+
+
+# ---------------------------------------------------------------------------
+# --help-search / --help-replace
+# ---------------------------------------------------------------------------
+
+
+class TestHelpExport:
+    def test_help_search_default_is_false(self):
+        ns, _ = _build_parser().parse_known_args([])
+        assert ns.help_search is False
+
+    def test_help_replace_default_is_false(self):
+        ns, _ = _build_parser().parse_known_args([])
+        assert ns.help_replace is False
+
+    def test_help_search_flag(self):
+        ns, _ = _build_parser().parse_known_args(["--help-search"])
+        assert ns.help_search is True
+
+    def test_help_replace_flag(self):
+        ns, _ = _build_parser().parse_known_args(["--help-replace"])
+        assert ns.help_replace is True
+
+    def test_help_search_outputs_html(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--help-search"])
+        from pbrenamer.__main__ import main
+
+        main()
+        out = capsys.readouterr().out
+        assert "<html>" in out
+        assert "Search patterns" in out
+
+    def test_help_replace_outputs_html(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--help-replace"])
+        from pbrenamer.__main__ import main
+
+        main()
+        out = capsys.readouterr().out
+        assert "<html>" in out
+        assert "Replacement fields" in out
+
+    def test_both_flags_output_both(self, capsys, monkeypatch):
+        monkeypatch.setattr(
+            sys, "argv", ["pbrenamer", "--help-search", "--help-replace"]
+        )
+        from pbrenamer.__main__ import main
+
+        main()
+        out = capsys.readouterr().out
+        assert "Search patterns" in out
+        assert "Replacement fields" in out

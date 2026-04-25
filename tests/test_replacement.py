@@ -103,6 +103,16 @@ class TestParse:
         assert field.fmt == "2"
         assert field.default == "00"
 
+    def test_vi_field_valid(self):
+        segs = parse("{vi:width}")
+        assert any(isinstance(s, FieldSegment) and s.name == "vi:width" for s in segs)
+
+    def test_vi_field_with_options(self):
+        segs = parse("{vi:videocodec::unknown}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.name == "vi:videocodec"
+        assert field.default == "unknown"
+
     def test_re_field_valid(self):
         segs = parse("{re:year}")
         assert any(isinstance(s, FieldSegment) and s.name == "re:year" for s in segs)
@@ -294,6 +304,18 @@ class TestSubstituteFields:
         f.touch()
         with pytest.raises(FieldResolutionError):
             _sub("{au:title}", path=str(f))
+
+    def test_vi_field_missing_uses_default(self, tmp_path):
+        f = tmp_path / "plain.txt"
+        f.touch()
+        result = _sub("{vi:width::0}", path=str(f))
+        assert result == "0"
+
+    def test_vi_field_missing_no_default_raises(self, tmp_path):
+        f = tmp_path / "plain.txt"
+        f.touch()
+        with pytest.raises(FieldResolutionError):
+            _sub("{vi:width}", path=str(f))
 
     def test_literal_brace_in_result(self):
         # {{ → literal '{'; lone '}' is not special → "{{num}" produces "{num}"

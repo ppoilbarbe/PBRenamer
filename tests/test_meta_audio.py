@@ -3,10 +3,19 @@
 from __future__ import annotations
 
 import datetime
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from pbrenamer.core import audio_meta  # noqa: F401 (used in patch.object)
-from pbrenamer.core.audio_meta import FieldType, read_field
+from pbrenamer.core.audio_meta import read_field
+from pbrenamer.core.meta_common import FieldType
+
+# Real OGG with known tags (Georges Brassens — La Cane de Jeanne, 1991).
+# Fields present: title, artist, album, albumartist, tracknumber, discnumber,
+#                 date, genre, duration, bitrate.
+SAMPLE_AUDIO = Path(__file__).parent / "data" / "sample_audio.ogg"
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -247,3 +256,51 @@ class TestReadInfoFields:
         f.touch()
         with patch("mutagen.File", side_effect=Exception("corrupt")):
             assert read_field(str(f), "duration") is None
+
+
+# ---------------------------------------------------------------------------
+# Integration tests (real OGG file)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.skipif(not SAMPLE_AUDIO.exists(), reason="sample_audio.ogg not found")
+class TestRealFile:
+    path = str(SAMPLE_AUDIO)
+
+    def test_title(self):
+        assert read_field(self.path, "title") == "La Cane de Jeanne"
+
+    def test_artist(self):
+        assert read_field(self.path, "artist") == "Georges Brassens"
+
+    def test_album(self):
+        assert read_field(self.path, "album") == (
+            "Intégrale 1991, Volume 01: La Mauvaise Réputation"
+        )
+
+    def test_albumartist(self):
+        assert read_field(self.path, "albumartist") == "Georges Brassens"
+
+    def test_tracknumber(self):
+        assert read_field(self.path, "tracknumber") == 12
+
+    def test_discnumber(self):
+        assert read_field(self.path, "discnumber") == 1
+
+    def test_date_year_only(self):
+        assert read_field(self.path, "date") == "1991"
+
+    def test_year(self):
+        assert read_field(self.path, "year") == 1991
+
+    def test_genre(self):
+        assert read_field(self.path, "genre") == "Chanson"
+
+    def test_duration(self):
+        assert read_field(self.path, "duration") == 3
+
+    def test_bitrate(self):
+        assert read_field(self.path, "bitrate") == 160
+
+    def test_case_insensitive(self):
+        assert read_field(self.path, "TITLE") == read_field(self.path, "title")

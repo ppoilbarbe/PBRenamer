@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import datetime
 import logging
-from dataclasses import dataclass
-from enum import Enum
 from typing import Any
+
+from pbrenamer.core.meta_common import FieldInfo, FieldType
 
 _log = logging.getLogger(__name__)
 
@@ -17,18 +17,6 @@ try:
 except ImportError:
     _MUTAGEN = False
     _log.debug("mutagen not available — {au:…} metadata fields will always be empty")
-
-
-class FieldType(Enum):
-    DATE = "date"
-    STRING = "string"
-    INTEGER = "integer"
-
-
-@dataclass(frozen=True)
-class FieldInfo:
-    description: str
-    type: FieldType
 
 
 FIELD_REGISTRY: dict[str, FieldInfo] = {

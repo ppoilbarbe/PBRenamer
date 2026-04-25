@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import datetime
 import logging
-from dataclasses import dataclass
-from enum import Enum
 from typing import Any
+
+from pbrenamer.core.meta_common import FieldInfo, FieldType
 
 _log = logging.getLogger(__name__)
 
@@ -18,20 +18,6 @@ try:
 except ImportError:
     _PILLOW = False
     _log.debug("Pillow not available — {im:…} metadata fields will always be empty")
-
-
-class FieldType(Enum):
-    DATETIME = "datetime"
-    DATE = "date"
-    STRING = "string"
-    INTEGER = "integer"
-    RATIONAL = "rational"
-
-
-@dataclass(frozen=True)
-class FieldInfo:
-    description: str
-    type: FieldType
 
 
 # Normalised (lowercase) name → FieldInfo for all known useful fields.

@@ -39,6 +39,7 @@ from pbrenamer.ui.widgets import WhitespaceLineEdit
 from pbrenamer.ui.window_state import WindowState
 
 _log = logging.getLogger(__name__)
+_SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
 
 class _SearchModeDelegate(QStyledItemDelegate):
@@ -92,6 +93,7 @@ class MainWindow(QMainWindow):
 
         self._setup_directory_tree()
         self._populate_pattern_combos()
+        self._populate_named_saves()
         self._setup_help_buttons()
         self._connect_signals()
         self._ui.splitterMain.setSizes([220, 880])
@@ -161,6 +163,12 @@ class MainWindow(QMainWindow):
         self._ui.btnReplaceAdd.clicked.connect(self._on_add_replace)
         self._ui.btnSearchHelp.clicked.connect(self._on_search_help)
         self._ui.btnReplaceHelp.clicked.connect(self._on_replace_help)
+
+        # Named saves
+        self._ui.cmbNamedSaves.currentTextChanged.connect(self._on_save_name_changed)
+        self._ui.cmbNamedSaves.activated.connect(self._on_named_save_selected)
+        self._ui.btnSaveSave.clicked.connect(self._on_save_save)
+        self._ui.btnSaveDelete.clicked.connect(self._on_save_delete)
 
         # Search mode (Pattern / Regex / Plain text)
         for rad in (self._ui.radPattern, self._ui.radRegex, self._ui.radPlainText):
@@ -683,6 +691,88 @@ class MainWindow(QMainWindow):
         self._presets.add_replace(pattern)
         self._populate_pattern_combos()
         self._ui.cmbPatternDest.setCurrentIndex(0)
+
+    # ── Named saves ──────────────────────────────────────────────────────────
+
+    def _populate_named_saves(self) -> None:
+        combo = self._ui.cmbNamedSaves
+        current_text = combo.currentText()
+        combo.blockSignals(True)
+        combo.clear()
+        for name in sorted(self._presets.get_saves()):
+            combo.addItem(name)
+        combo.setCurrentText(current_text)
+        combo.blockSignals(False)
+        self._update_save_buttons()
+
+    def _update_save_buttons(self) -> None:
+        name = self._ui.cmbNamedSaves.currentText()
+        valid_name = bool(name and _SAVE_NAME_RE.match(name))
+        self._ui.btnSaveSave.setEnabled(valid_name)
+        self._ui.btnSaveDelete.setEnabled(name in self._presets.get_saves())
+
+    def _on_save_name_changed(self) -> None:
+        self._update_save_buttons()
+
+    def _on_named_save_selected(self, index: int) -> None:
+        if index < 0:
+            return
+        name = self._ui.cmbNamedSaves.itemText(index)
+        cfg = self._presets.get_saves().get(name)
+        if cfg is None:
+            return
+        self._apply_save_config(cfg)
+
+    def _collect_save_config(self) -> dict:
+        return {
+            "search_pattern": self._ui.cmbPatternSearch.currentText(),
+            "search_mode": self._current_search_mode(),
+            "replace_pattern": self._ui.cmbPatternDest.currentText(),
+            "separator": self._ui.cmbSpaces.currentIndex(),
+            "remove_accents": self._ui.chkRemoveAccents.isChecked(),
+            "remove_duplicates": self._ui.chkRemoveDuplicates.isChecked(),
+            "case": self._ui.cmbCaps.currentIndex(),
+            "keep_extension": self._ui.chkKeepExtension.isChecked(),
+        }
+
+    def _apply_save_config(self, cfg: dict) -> None:
+        if "search_pattern" in cfg:
+            self._ui.cmbPatternSearch.setCurrentText(cfg["search_pattern"])
+        mode = cfg.get("search_mode", "")
+        if mode == "regex":
+            self._ui.radRegex.setChecked(True)
+        elif mode == "plain":
+            self._ui.radPlainText.setChecked(True)
+        elif mode == "pattern":
+            self._ui.radPattern.setChecked(True)
+        if "replace_pattern" in cfg:
+            self._ui.cmbPatternDest.setCurrentText(cfg["replace_pattern"])
+        if "separator" in cfg:
+            self._ui.cmbSpaces.setCurrentIndex(int(cfg["separator"]))
+        if "remove_accents" in cfg:
+            self._ui.chkRemoveAccents.setChecked(bool(cfg["remove_accents"]))
+        if "remove_duplicates" in cfg:
+            self._ui.chkRemoveDuplicates.setChecked(bool(cfg["remove_duplicates"]))
+        if "case" in cfg:
+            self._ui.cmbCaps.setCurrentIndex(int(cfg["case"]))
+        if "keep_extension" in cfg:
+            self._ui.chkKeepExtension.setChecked(bool(cfg["keep_extension"]))
+
+    def _on_save_save(self) -> None:
+        name = self._ui.cmbNamedSaves.currentText()
+        if not _SAVE_NAME_RE.match(name):
+            return
+        self._presets.set_save(name, self._collect_save_config())
+        self._populate_named_saves()
+        self._ui.cmbNamedSaves.setCurrentText(name)
+
+    def _on_save_delete(self) -> None:
+        name = self._ui.cmbNamedSaves.currentText()
+        if name not in self._presets.get_saves():
+            return
+        self._presets.delete_save(name)
+        self._populate_named_saves()
+        self._ui.cmbNamedSaves.setCurrentText("")
 
     # ── Rename / Undo ─────────────────────────────────────────────────────────
 

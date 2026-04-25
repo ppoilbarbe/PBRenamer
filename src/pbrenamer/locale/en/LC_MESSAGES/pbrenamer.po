@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PBRenamer 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-25 13:50+0200\n"
+"POT-Creation-Date: 2026-04-25 14:52+0200\n"
 "PO-Revision-Date: 2026-04-23 00:00+0000\n"
 "Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
 "Language-Team: English\n"
@@ -275,7 +275,11 @@ msgstr "EXIF or IPTC metadata field (images only — see list below)"
 msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
 msgstr "Audio metadata field (mp3, ogg, flac… — see list below)"
 
-#: src/pbrenamer/ui/pattern_help.py:298
+#: src/pbrenamer/ui/pattern_help.py:297
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Video metadata field (mp4, mkv, avi… — see list below)"
+
+#: src/pbrenamer/ui/pattern_help.py:303
 msgid ""
 "Field names are case-insensitive. A <b>default</b> is strongly recommended "
 "for metadata fields — they may be absent from non-image files or images "
@@ -285,87 +289,87 @@ msgstr ""
 "for metadata fields — they may be absent from non-image files or images "
 "without metadata."
 
-#: src/pbrenamer/ui/pattern_help.py:302
+#: src/pbrenamer/ui/pattern_help.py:307
 msgid "Type"
 msgstr "Type"
 
-#: src/pbrenamer/ui/pattern_help.py:309
+#: src/pbrenamer/ui/pattern_help.py:314
 msgid "Date/time the photo was taken"
 msgstr "Date/time the photo was taken"
 
-#: src/pbrenamer/ui/pattern_help.py:310
+#: src/pbrenamer/ui/pattern_help.py:315
 msgid "Date/time the image was digitised"
 msgstr "Date/time the image was digitised"
 
-#: src/pbrenamer/ui/pattern_help.py:314
+#: src/pbrenamer/ui/pattern_help.py:319
 msgid "Date/time the file was last changed (EXIF)"
 msgstr "Date/time the file was last changed (EXIF)"
 
-#: src/pbrenamer/ui/pattern_help.py:317
+#: src/pbrenamer/ui/pattern_help.py:322
 msgid "Camera manufacturer"
 msgstr "Camera manufacturer"
 
-#: src/pbrenamer/ui/pattern_help.py:318
+#: src/pbrenamer/ui/pattern_help.py:323
 msgid "Camera model"
 msgstr "Camera model"
 
-#: src/pbrenamer/ui/pattern_help.py:319
+#: src/pbrenamer/ui/pattern_help.py:324
 msgid "Lens model"
 msgstr "Lens model"
 
-#: src/pbrenamer/ui/pattern_help.py:320
+#: src/pbrenamer/ui/pattern_help.py:325
 msgid "ISO speed"
 msgstr "ISO speed"
 
-#: src/pbrenamer/ui/pattern_help.py:321
+#: src/pbrenamer/ui/pattern_help.py:326
 msgid "Aperture (e.g. 2.8)"
 msgstr "Aperture (e.g. 2.8)"
 
-#: src/pbrenamer/ui/pattern_help.py:322
+#: src/pbrenamer/ui/pattern_help.py:327
 msgid "Shutter speed (e.g. 1/125)"
 msgstr "Shutter speed (e.g. 1/125)"
 
-#: src/pbrenamer/ui/pattern_help.py:323
+#: src/pbrenamer/ui/pattern_help.py:328
 msgid "Focal length in mm"
 msgstr "Focal length in mm"
 
-#: src/pbrenamer/ui/pattern_help.py:324
+#: src/pbrenamer/ui/pattern_help.py:329
 msgid "Image description / title"
 msgstr "Image description / title"
 
-#: src/pbrenamer/ui/pattern_help.py:325
+#: src/pbrenamer/ui/pattern_help.py:330
 msgid "Photographer / creator (EXIF)"
 msgstr "Photographer / creator (EXIF)"
 
-#: src/pbrenamer/ui/pattern_help.py:326
+#: src/pbrenamer/ui/pattern_help.py:331
 msgid "Copyright notice"
 msgstr "Copyright notice"
 
-#: src/pbrenamer/ui/pattern_help.py:327
+#: src/pbrenamer/ui/pattern_help.py:332
 msgid "IPTC title / object name"
 msgstr "IPTC title / object name"
 
-#: src/pbrenamer/ui/pattern_help.py:328
+#: src/pbrenamer/ui/pattern_help.py:333
 msgid "IPTC photographer / creator"
 msgstr "IPTC photographer / creator"
 
-#: src/pbrenamer/ui/pattern_help.py:329
+#: src/pbrenamer/ui/pattern_help.py:334
 msgid "IPTC city"
 msgstr "IPTC city"
 
-#: src/pbrenamer/ui/pattern_help.py:330
+#: src/pbrenamer/ui/pattern_help.py:335
 msgid "IPTC country"
 msgstr "IPTC country"
 
-#: src/pbrenamer/ui/pattern_help.py:331
+#: src/pbrenamer/ui/pattern_help.py:336
 msgid "IPTC creation date"
 msgstr "IPTC creation date"
 
-#: src/pbrenamer/ui/pattern_help.py:332
+#: src/pbrenamer/ui/pattern_help.py:337
 msgid "IPTC keywords (semicolon-separated)"
 msgstr "IPTC keywords (semicolon-separated)"
 
-#: src/pbrenamer/ui/pattern_help.py:337
+#: src/pbrenamer/ui/pattern_help.py:342
 msgid ""
 "Field names are case-insensitive. Supported formats: mp3, ogg, flac, opus, "
 "aac/m4a and others supported by mutagen. A <b>default</b> is strongly "
@@ -377,31 +381,31 @@ msgstr ""
 "recommended — tags may be absent or the file may not be a supported audio "
 "format."
 
-#: src/pbrenamer/ui/pattern_help.py:344
+#: src/pbrenamer/ui/pattern_help.py:349
 msgid "Track title"
 msgstr "Track title"
 
-#: src/pbrenamer/ui/pattern_help.py:345
+#: src/pbrenamer/ui/pattern_help.py:350
 msgid "Track artist"
 msgstr "Track artist"
 
-#: src/pbrenamer/ui/pattern_help.py:346
+#: src/pbrenamer/ui/pattern_help.py:351
 msgid "Album artist"
 msgstr "Album artist"
 
-#: src/pbrenamer/ui/pattern_help.py:347
+#: src/pbrenamer/ui/pattern_help.py:352
 msgid "Album name"
 msgstr "Album name"
 
-#: src/pbrenamer/ui/pattern_help.py:349
+#: src/pbrenamer/ui/pattern_help.py:354
 msgid "Track number (strips /total if present)"
 msgstr "Track number (strips /total if present)"
 
-#: src/pbrenamer/ui/pattern_help.py:351
+#: src/pbrenamer/ui/pattern_help.py:356
 msgid "Disc number (strips /total if present)"
 msgstr "Disc number (strips /total if present)"
 
-#: src/pbrenamer/ui/pattern_help.py:356
+#: src/pbrenamer/ui/pattern_help.py:361
 msgid ""
 "Release date — datetime.date when full date available (strftime formatting); "
 "plain text otherwise"
@@ -409,44 +413,92 @@ msgstr ""
 "Release date — datetime.date when full date available (strftime formatting); "
 "plain text otherwise"
 
-#: src/pbrenamer/ui/pattern_help.py:361
+#: src/pbrenamer/ui/pattern_help.py:366
 msgid "Release year (extracted from date tag)"
 msgstr "Release year (extracted from date tag)"
 
-#: src/pbrenamer/ui/pattern_help.py:362
+#: src/pbrenamer/ui/pattern_help.py:367
 msgid "Genre"
 msgstr "Genre"
 
-#: src/pbrenamer/ui/pattern_help.py:363
+#: src/pbrenamer/ui/pattern_help.py:368
 msgid "Comment"
 msgstr "Comment"
 
-#: src/pbrenamer/ui/pattern_help.py:364
+#: src/pbrenamer/ui/pattern_help.py:369
 msgid "Composer"
 msgstr "Composer"
 
-#: src/pbrenamer/ui/pattern_help.py:365
+#: src/pbrenamer/ui/pattern_help.py:370
 msgid "Beats per minute"
 msgstr "Beats per minute"
 
-#: src/pbrenamer/ui/pattern_help.py:366
+#: src/pbrenamer/ui/pattern_help.py:371 src/pbrenamer/ui/pattern_help.py:386
 msgid "Duration in seconds"
 msgstr "Duration in seconds"
 
-#: src/pbrenamer/ui/pattern_help.py:367
+#: src/pbrenamer/ui/pattern_help.py:372
 msgid "Bitrate in kbps"
 msgstr "Bitrate in kbps"
 
-#: src/pbrenamer/ui/pattern_help.py:375
+#: src/pbrenamer/ui/pattern_help.py:377
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is "
+"strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+msgstr ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is "
+"strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+
+#: src/pbrenamer/ui/pattern_help.py:384
+msgid "Video width in pixels"
+msgstr "Video width in pixels"
+
+#: src/pbrenamer/ui/pattern_help.py:385
+msgid "Video height in pixels"
+msgstr "Video height in pixels"
+
+#: src/pbrenamer/ui/pattern_help.py:387
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Frame rate (e.g. 29.970)"
+
+#: src/pbrenamer/ui/pattern_help.py:388
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Video codec name (e.g. AVC, HEVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:389
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Audio codec name (e.g. AAC, AC-3)"
+
+#: src/pbrenamer/ui/pattern_help.py:390
+msgid "Number of audio channels"
+msgstr "Number of audio channels"
+
+#: src/pbrenamer/ui/pattern_help.py:391
+msgid "Overall bitrate in kbps"
+msgstr "Overall bitrate in kbps"
+
+#: src/pbrenamer/ui/pattern_help.py:392
+msgid "Title tag"
+msgstr "Title tag"
+
+#: src/pbrenamer/ui/pattern_help.py:393
+msgid "Encoded date/time"
+msgstr "Encoded date/time"
+
+#: src/pbrenamer/ui/pattern_help.py:401
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr ""
 "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 
-#: src/pbrenamer/ui/pattern_help.py:380
+#: src/pbrenamer/ui/pattern_help.py:406
 msgid "Same, but counter starts at 10"
 msgstr "Same, but counter starts at 10"
 
-#: src/pbrenamer/ui/pattern_help.py:384
+#: src/pbrenamer/ui/pattern_help.py:410
 msgid ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
 "already exists"
@@ -454,94 +506,106 @@ msgstr ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
 "already exists"
 
-#: src/pbrenamer/ui/pattern_help.py:389
+#: src/pbrenamer/ui/pattern_help.py:415
 msgid "Today's date prepended to the matched text"
 msgstr "Today's date prepended to the matched text"
 
-#: src/pbrenamer/ui/pattern_help.py:392
+#: src/pbrenamer/ui/pattern_help.py:418
 msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
 msgstr "Shooting date/time compact; \"unknown\" if EXIF absent"
 
-#: src/pbrenamer/ui/pattern_help.py:397
+#: src/pbrenamer/ui/pattern_help.py:423
 msgid "Hour+minute of digitisation; \"0000\" if absent"
 msgstr "Hour+minute of digitisation; \"0000\" if absent"
 
-#: src/pbrenamer/ui/pattern_help.py:401
+#: src/pbrenamer/ui/pattern_help.py:427
 msgid "Camera make and model (empty string if absent)"
 msgstr "Camera make and model (empty string if absent)"
 
-#: src/pbrenamer/ui/pattern_help.py:406
+#: src/pbrenamer/ui/pattern_help.py:432
 msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
 msgstr "Audio artist and title; \"unknown\"/\"untitled\" if absent"
 
-#: src/pbrenamer/ui/pattern_help.py:410
+#: src/pbrenamer/ui/pattern_help.py:436
 msgid "Audio release date, zero-padded track number, title"
 msgstr "Audio release date, zero-padded track number, title"
 
-#: src/pbrenamer/ui/pattern_help.py:413
+#: src/pbrenamer/ui/pattern_help.py:441
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Video resolution and codec (e.g. 1920x1080_AVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:445
+msgid "Video encoded date and duration in seconds"
+msgstr "Video encoded date and duration in seconds"
+
+#: src/pbrenamer/ui/pattern_help.py:448
 msgid "Named regex groups (regex mode only)"
 msgstr "Named regex groups (regex mode only)"
 
-#: src/pbrenamer/ui/pattern_help.py:416
+#: src/pbrenamer/ui/pattern_help.py:451
 msgid "Parent folder, file modification date, 3-digit counter"
 msgstr "Parent folder, file modification date, 3-digit counter"
 
-#: src/pbrenamer/ui/pattern_help.py:423
+#: src/pbrenamer/ui/pattern_help.py:458
 msgid "Replacement fields"
 msgstr "Replacement fields"
 
-#: src/pbrenamer/ui/pattern_help.py:428
+#: src/pbrenamer/ui/pattern_help.py:463
 msgid "Available fields"
 msgstr "Available fields"
 
-#: src/pbrenamer/ui/pattern_help.py:434
+#: src/pbrenamer/ui/pattern_help.py:469
 msgid "Metadata fields for <code>{im:…}</code>"
 msgstr "Metadata fields for <code>{im:…}</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:441
+#: src/pbrenamer/ui/pattern_help.py:476
 msgid "Audio metadata fields for <code>{au:…}</code>"
 msgstr "Audio metadata fields for <code>{au:…}</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:448
+#: src/pbrenamer/ui/pattern_help.py:483
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Video metadata fields for <code>{vi:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:490
 msgid "Examples"
 msgstr "Examples"
 
-#: src/pbrenamer/ui/main_window.py:194
+#: src/pbrenamer/ui/main_window.py:202
 msgid "Select folder"
 msgstr "Select folder"
 
-#: src/pbrenamer/ui/main_window.py:237 /tmp/_pbrenamer_ui_strings.py:86
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:86
 msgid "Original"
 msgstr "Original"
 
-#: src/pbrenamer/ui/main_window.py:237 /tmp/_pbrenamer_ui_strings.py:85
-#: /tmp/_pbrenamer_ui_strings.py:137
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:85
+#: /tmp/_pbrenamer_ui_strings.py:146
 msgid "Preview"
 msgstr "Preview"
 
-#: src/pbrenamer/ui/main_window.py:250
+#: src/pbrenamer/ui/main_window.py:258
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} item(s)"
 
-#: src/pbrenamer/ui/main_window.py:522
+#: src/pbrenamer/ui/main_window.py:530
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} unavailable"
 
-#: src/pbrenamer/ui/main_window.py:602
+#: src/pbrenamer/ui/main_window.py:610
 msgid "Search — Help"
 msgstr "Search — Help"
 
-#: src/pbrenamer/ui/main_window.py:617
+#: src/pbrenamer/ui/main_window.py:625
 msgid "Replace — Help"
 msgstr "Replace — Help"
 
-#: src/pbrenamer/ui/main_window.py:721
+#: src/pbrenamer/ui/main_window.py:811
 msgid "Rename errors"
 msgstr "Rename errors"
 
-#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:152
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:161
 msgid "language_name"
 msgstr "English"
 
@@ -1076,11 +1140,55 @@ msgstr "Capitalization mode"
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "Choose how to change the case of file names after applying the pattern"
 
+#: /tmp/_pbrenamer_ui_strings.py:137
+msgid "Save:"
+msgstr "Save:"
+
 #: /tmp/_pbrenamer_ui_strings.py:138
+msgid "Named save"
+msgstr "Named save"
+
+#: /tmp/_pbrenamer_ui_strings.py:139
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace "
+"parameters"
+msgstr ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace "
+"parameters"
+
+#: /tmp/_pbrenamer_ui_strings.py:140
+msgid "Save"
+msgstr "Save"
+
+#: /tmp/_pbrenamer_ui_strings.py:141
+msgid "Save current settings under this name"
+msgstr "Save current settings under this name"
+
+#: /tmp/_pbrenamer_ui_strings.py:142
+msgid ""
+"Save all search, replace and post-processing settings under the current name "
+"(overwrites any existing save with the same name)"
+msgstr ""
+"Save all search, replace and post-processing settings under the current name "
+"(overwrites any existing save with the same name)"
+
+#: /tmp/_pbrenamer_ui_strings.py:143
+msgid "Delete"
+msgstr "Delete"
+
+#: /tmp/_pbrenamer_ui_strings.py:144
+msgid "Delete this named save"
+msgstr "Delete this named save"
+
+#: /tmp/_pbrenamer_ui_strings.py:145
+msgid "Permanently delete the named save matching the current name"
+msgstr "Permanently delete the named save matching the current name"
+
+#: /tmp/_pbrenamer_ui_strings.py:147
 msgid "Compute rename preview"
 msgstr "Compute rename preview"
 
-#: /tmp/_pbrenamer_ui_strings.py:139
+#: /tmp/_pbrenamer_ui_strings.py:148
 msgid ""
 "Apply the current pattern to all listed files and show the result in the "
 "Preview column"
@@ -1089,39 +1197,39 @@ msgstr ""
 "Preview columnApply the current pattern to all listed files and show the "
 "result in the Preview column"
 
-#: /tmp/_pbrenamer_ui_strings.py:140
+#: /tmp/_pbrenamer_ui_strings.py:149
 msgid "Clear"
 msgstr "Clear"
 
-#: /tmp/_pbrenamer_ui_strings.py:141
+#: /tmp/_pbrenamer_ui_strings.py:150
 msgid "Clear the preview"
 msgstr "Clear the preview"
 
-#: /tmp/_pbrenamer_ui_strings.py:142
+#: /tmp/_pbrenamer_ui_strings.py:151
 msgid "Remove all preview values from the Preview column"
 msgstr "Remove all preview values from the Preview column"
 
-#: /tmp/_pbrenamer_ui_strings.py:143
+#: /tmp/_pbrenamer_ui_strings.py:152
 msgid "Undo"
 msgstr "Undo"
 
-#: /tmp/_pbrenamer_ui_strings.py:144
+#: /tmp/_pbrenamer_ui_strings.py:153
 msgid "Undo last rename batch"
 msgstr "Undo last rename batch"
 
-#: /tmp/_pbrenamer_ui_strings.py:145
+#: /tmp/_pbrenamer_ui_strings.py:154
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Reverse the last batch of renames performed on disk"
 
-#: /tmp/_pbrenamer_ui_strings.py:146
+#: /tmp/_pbrenamer_ui_strings.py:155
 msgid "Rename"
 msgstr "Rename"
 
-#: /tmp/_pbrenamer_ui_strings.py:147
+#: /tmp/_pbrenamer_ui_strings.py:156
 msgid "Apply renames on disk"
 msgstr "Apply renames on disk"
 
-#: /tmp/_pbrenamer_ui_strings.py:148
+#: /tmp/_pbrenamer_ui_strings.py:157
 msgid ""
 "Permanently rename all files shown in the Preview column (only enabled when "
 "there are no conflicts)"
@@ -1130,15 +1238,15 @@ msgstr ""
 "there are no conflicts)Permanently rename all files shown in the Preview "
 "column (only enabled when there are no conflicts)"
 
-#: /tmp/_pbrenamer_ui_strings.py:149
+#: /tmp/_pbrenamer_ui_strings.py:158
 msgid "File"
 msgstr "File"
 
-#: /tmp/_pbrenamer_ui_strings.py:150
+#: /tmp/_pbrenamer_ui_strings.py:159
 msgid "Edit"
 msgstr "Edit"
 
-#: /tmp/_pbrenamer_ui_strings.py:151
+#: /tmp/_pbrenamer_ui_strings.py:160
 msgid "Help"
 msgstr "Help"
 
@@ -1211,9 +1319,6 @@ msgstr "Help"
 #~ "Insert the given text at the specified position in the file list preview"
 #~ msgstr ""
 #~ "Insert the given text at the specified position in the file list preview"
-
-#~ msgid "Delete"
-#~ msgstr "Delete"
 
 #~ msgid "From position:"
 #~ msgstr "From position:"

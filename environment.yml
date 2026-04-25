@@ -27,6 +27,8 @@ dependencies:
   - pillow
   # Metadata (audio tags)
   - mutagen
+  # Metadata (video)
+  - pymediainfo
   # Packaging
   - pyinstaller
   # Dev install (editable)

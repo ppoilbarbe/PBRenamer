@@ -291,6 +291,11 @@ def replace_html() -> str:
             _("Audio metadata field (mp3, ogg, flac… — see list below)"),
             _BG1,
         )
+        + _row3(
+            "{vi:Field}",
+            all_m,
+            _("Video metadata field (mp4, mkv, avi… — see list below)"),
+        )
     )
 
     # ── EXIF/IPTC metadata table ───────────────────────────────────────────────
@@ -367,6 +372,27 @@ def replace_html() -> str:
         + _row3("bitrate", "integer", _("Bitrate in kbps"))
     )
 
+    # ── Video metadata table ───────────────────────────────────────────────────
+    video_intro = _(
+        "Field names are case-insensitive. "
+        "Supported formats: mp4, mkv, avi, mov, webm and others"
+        " supported by MediaInfo (pymediainfo). "
+        "A <b>default</b> is strongly recommended — fields may be absent or the file "
+        "may not be a supported video format."
+    )
+    video_rows = (
+        _row3("width", "integer", _("Video width in pixels"), _BG1)
+        + _row3("height", "integer", _("Video height in pixels"))
+        + _row3("duration", "integer", _("Duration in seconds"), _BG1)
+        + _row3("framerate", "text", _("Frame rate (e.g. 29.970)"))
+        + _row3("videocodec", "text", _("Video codec name (e.g. AVC, HEVC)"), _BG1)
+        + _row3("audiocodec", "text", _("Audio codec name (e.g. AAC, AC-3)"))
+        + _row3("audiochannels", "integer", _("Number of audio channels"), _BG1)
+        + _row3("bitrate", "integer", _("Overall bitrate in kbps"))
+        + _row3("title", "text", _("Title tag"), _BG1)
+        + _row3("encodeddate", "datetime", _("Encoded date/time"))
+    )
+
     # ── Examples table ────────────────────────────────────────────────────────
     ex_rows = (
         _row2(
@@ -410,6 +436,15 @@ def replace_html() -> str:
             _("Audio release date, zero-padded track number, title"),
             _BG1,
         )
+        + _row2(
+            "{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}",
+            _("Video resolution and codec (e.g. 1920x1080_AVC)"),
+        )
+        + _row2(
+            "{vi:encodeddate:%Y%m%d:00000000}_{vi:duration:04:0000}s",
+            _("Video encoded date and duration in seconds"),
+            _BG1,
+        )
         + _row2("{re:year}_{re:title}", _("Named regex groups (regex mode only)"))
         + _row2(
             "{dir}_{mdatetime:%Y%m%d}_{num:03}",
@@ -443,6 +478,13 @@ def replace_html() -> str:
         + _TABLE_W
         + meta_hdr
         + audio_rows
+        + "</table>\n"
+        + "<hr/>\n"
+        + _h3(_("Video metadata fields for <code>{vi:…}</code>"))
+        + _p(video_intro)
+        + _TABLE_W
+        + meta_hdr
+        + video_rows
         + "</table>\n"
         + "<hr/>\n"
         + _h3(_("Examples"))

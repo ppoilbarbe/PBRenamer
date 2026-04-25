@@ -18,7 +18,9 @@ counters, date stamps, and metadata — all previewed live before any change is 
   - Manual rename for individual files
   - Counter (`{num}`, `{num:03}` zero-padded, `{num::10}` start offset), conflict-free auto-number (`{newnum}`)
   - Dates (`{date}`, `{datetime}`, `{mdatetime}` file-modification time), parent-folder name (`{dir}`)
-  - Image metadata (`{ex:Make}`, `{ex:Model}`, `{ex:DateTimeOriginal}`… — EXIF/IPTC via Pillow)
+  - Image metadata (`{im:Make}`, `{im:Model}`, `{im:DateTimeOriginal}`… — EXIF/IPTC via Pillow)
+  - Audio metadata (`{au:Title}`, `{au:Artist}`, `{au:Album}`, `{au:Year}`… — via mutagen)
+  - Video metadata (`{vi:Title}`, `{vi:Duration}`, `{vi:Width}`, `{vi:Height}`, `{vi:VideoCodec}`… — via pymediainfo)
 - **Directory colouring** — directories are shown in a distinct colour in the file list
 - **Keep extension** option — transformations apply to the stem only
 - **Recursive** directory traversal
@@ -91,7 +93,8 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 
 | Option | Default | Description |
 |---|---|---|
-| `-s`, `--search TEXT` | _(required)_ | Search pattern — activates headless mode |
+| `-s`, `--search TEXT` | _(required¹)_ | Search pattern — activates headless mode |
+| `--saved NAME` | _(required¹)_ | Load a named preset — activates headless mode; CLI options override preset values |
 | `-r`, `--replace TEXT` | `""` | Replacement string |
 | `--mode {pattern,regex,plain}` | `pattern` | Search mode |
 | `--list {files,dirs,all}` | `files` | Entry types to process |
@@ -100,8 +103,12 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 | `--filter GLOB` | _(none)_ | Restrict listing to matching entries |
 | `--accent` / `--no-accent` | `--no-accent` | Strip diacritics from result names |
 | `--dup` / `--no-dup` | `--no-dup` | Collapse consecutive duplicate separators |
+| `--sep {none,space-underscore,…}` | `none` | Separator conversion applied after rename |
 | `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
 | `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
+| `--debug` / `--verbose` / `--quiet` | _(saved pref)_ | Override the saved log-level preference |
+
+¹ Exactly one of `--search` or `--saved` is required.
 
 **Examples**
 

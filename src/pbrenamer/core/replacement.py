@@ -2,7 +2,7 @@
 
 Syntax: {field}, {field:fmt}, {field:alignfmt:default}
 
-  field   — see _SIMPLE_FIELDS and the im:/au:/re: prefixes below
+  field   — see _SIMPLE_FIELDS and the im:/au:/vi:/re: prefixes below
   align   — optional first character: < (left), > (right), 0 (zero-pad right)
   fmt     — digit string (minimum width) for integers/strings;
             strftime format for date/datetime fields
@@ -19,7 +19,7 @@ import os
 import re
 from dataclasses import dataclass
 
-from pbrenamer.core import audio_meta, meta
+from pbrenamer.core import audio_meta, image_meta, video_meta
 
 _log = logging.getLogger(__name__)
 
@@ -36,6 +36,16 @@ _SIMPLE_FIELDS = frozenset(
 )
 _GROUP_RE = re.compile(r"^[1-9][0-9]*$")
 _TOKEN_RE = re.compile(r"\{\{|\{([^{}]*)\}")
+
+# All prefixes that introduce a namespaced field (3 characters including the colon).
+_META_PREFIXES = frozenset({"im:", "au:", "vi:", "re:"})
+
+# Mapping from field prefix to the corresponding metadata reader function.
+_META_READERS = {
+    "im:": image_meta.read_field,
+    "au:": audio_meta.read_field,
+    "vi:": video_meta.read_field,
+}
 
 
 @dataclass
@@ -100,19 +110,13 @@ def _is_valid_name(name: str) -> bool:
     if _GROUP_RE.match(name):
         return True
     low = name.lower()
-    if low.startswith("im:"):
-        return len(name) > 3
-    if low.startswith("au:"):
-        return len(name) > 3
-    if low.startswith("re:"):
-        return len(name) > 3
-    return False
+    return any(low.startswith(p) for p in _META_PREFIXES) and len(name) > 3
 
 
 def _split_name_options(content: str) -> tuple[str, str]:
     """Return (field_name, options_string) from the raw content of {…}."""
     low = content.lower()
-    if low.startswith("im:") or low.startswith("au:") or low.startswith("re:"):
+    if any(low.startswith(p) for p in _META_PREFIXES):
         # Format: "im:FieldName[:options]" — the colon after FieldName is the separator
         rest = content[3:]
         idx = rest.find(":")
@@ -351,10 +355,8 @@ def _resolve(
         parent = os.path.dirname(path)
         return os.path.basename(parent) if parent else None
 
-    if low.startswith("im:"):
-        return meta.read_field(path, name[3:])
-
-    if low.startswith("au:"):
-        return audio_meta.read_field(path, name[3:])
+    reader = _META_READERS.get(low[:3])
+    if reader is not None:
+        return reader(path, name[3:])
 
     return None

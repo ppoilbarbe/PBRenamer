@@ -14,6 +14,30 @@ _CASE_MAP = {"upper": 0, "lower": 1, "capitalize": 2, "title": 3}
 # Map --list value → get_file_listing() mode index
 _LIST_MAP = {"files": 0, "dirs": 1, "all": 2}
 
+# Map --sep value → replace_spaces() mode index
+_SEP_MAP = {
+    "space-underscore": 0,
+    "underscore-space": 1,
+    "space-dot": 2,
+    "dot-space": 3,
+    "space-dash": 4,
+    "dash-space": 5,
+}
+
+# save config integer indices → CLI string values
+_SEP_IDX = [
+    "none",
+    "space-underscore",
+    "underscore-space",
+    "space-dot",
+    "dot-space",
+    "space-dash",
+    "dash-space",
+]
+_CASE_IDX = ["none", "upper", "lower", "capitalize", "title"]
+
+_SEP_CHOICES = ["none"] + list(_SEP_MAP)
+
 
 def _build_parser() -> argparse.ArgumentParser:
     from pbrenamer import __version__
@@ -22,7 +46,8 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="pbrenamer",
         description="PBRenamer — graphical batch file renaming utility.",
         epilog=(
-            "Headless mode is activated when --search is provided; "
+            "Headless mode is activated when --search or --saved is provided; "
+            "the two options are mutually exclusive. "
             "Qt platform options (--style, --platform, …) are forwarded to Qt "
             "in GUI mode."
         ),
@@ -44,26 +69,37 @@ def _build_parser() -> argparse.ArgumentParser:
     # ── Headless rename options ───────────────────────────────────────────────
     rename_group = parser.add_argument_group(
         "headless rename",
-        "These options activate headless (no GUI) mode when --search is given.",
+        "These options activate headless (no GUI) mode"
+        " when --search or --saved is given.",
     )
-    rename_group.add_argument(
+    headless_source = rename_group.add_mutually_exclusive_group()
+    headless_source.add_argument(
         "-s",
         "--search",
         metavar="TEXT",
         default=None,
         help="Search pattern/expression — activates headless mode",
     )
+    headless_source.add_argument(
+        "--saved",
+        metavar="NAME",
+        default=None,
+        help=(
+            "Load a named save — activates headless mode; "
+            "other options override values from the save"
+        ),
+    )
     rename_group.add_argument(
         "-r",
         "--replace",
         metavar="TEXT",
-        default="",
+        default=None,
         help="Replacement string (default: empty string)",
     )
     rename_group.add_argument(
         "--mode",
         choices=["pattern", "regex", "plain"],
-        default="pattern",
+        default=None,
         metavar="{pattern,regex,plain}",
         help="Search mode: pattern (default), regex, or plain text",
     )
@@ -83,7 +119,7 @@ def _build_parser() -> argparse.ArgumentParser:
     rename_group.add_argument(
         "--keep-ext",
         action=argparse.BooleanOptionalAction,
-        default=True,
+        default=None,
         help="Preserve file extension during rename (default: --keep-ext)",
     )
     rename_group.add_argument(
@@ -96,19 +132,26 @@ def _build_parser() -> argparse.ArgumentParser:
     rename_group.add_argument(
         "--accent",
         action=argparse.BooleanOptionalAction,
-        default=False,
+        default=None,
         help="Strip diacritics from result names (default: --no-accent)",
     )
     rename_group.add_argument(
         "--dup",
         action=argparse.BooleanOptionalAction,
-        default=False,
+        default=None,
         help="Collapse consecutive duplicate separators (default: --no-dup)",
+    )
+    rename_group.add_argument(
+        "--sep",
+        choices=_SEP_CHOICES,
+        default=None,
+        metavar="{none,space-underscore,underscore-space,space-dot,dot-space,space-dash,dash-space}",
+        help="Separator conversion applied after rename (default: none)",
     )
     rename_group.add_argument(
         "--case",
         choices=["none", "upper", "lower", "capitalize", "title"],
-        default="none",
+        default=None,
         metavar="{none,upper,lower,capitalize,title}",
         help="Capitalisation applied after rename (default: none)",
     )
@@ -117,6 +160,24 @@ def _build_parser() -> argparse.ArgumentParser:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="Preview changes and ask for confirmation (default: --no-confirm)",
+    )
+
+    # ── Help export ───────────────────────────────────────────────────────────
+    help_group = parser.add_argument_group(
+        "help export",
+        "Print pattern-field help HTML to stdout and exit.",
+    )
+    help_group.add_argument(
+        "--help-search",
+        action="store_true",
+        default=False,
+        help="Print search-field help HTML and exit",
+    )
+    help_group.add_argument(
+        "--help-replace",
+        action="store_true",
+        default=False,
+        help="Print replacement-field help HTML and exit",
     )
 
     # ── Logging verbosity ─────────────────────────────────────────────────────
@@ -155,16 +216,75 @@ def _build_parser() -> argparse.ArgumentParser:
 # ---------------------------------------------------------------------------
 
 
+def _resolve_ns(ns: argparse.Namespace) -> None:
+    """Fill None fields in *ns*, loading a named save when --saved is given.
+
+    Precedence: explicit CLI flag > saved config > hardcoded default.
+    """
+    if ns.saved is not None:
+        from pbrenamer.ui.presets import PatternPresets
+
+        saves = PatternPresets().get_saves()
+        if ns.saved not in saves:
+            print(f"error: save '{ns.saved}' not found", file=sys.stderr)
+            sys.exit(1)
+        cfg = saves[ns.saved]
+        if ns.search is None and "search_pattern" in cfg:
+            ns.search = str(cfg["search_pattern"])
+        if ns.mode is None and "search_mode" in cfg:
+            ns.mode = str(cfg["search_mode"])
+        if ns.replace is None and "replace_pattern" in cfg:
+            ns.replace = str(cfg["replace_pattern"])
+        if ns.sep is None and "separator" in cfg:
+            idx = int(cfg["separator"])
+            ns.sep = _SEP_IDX[idx] if 0 <= idx < len(_SEP_IDX) else "none"
+        if ns.accent is None and "remove_accents" in cfg:
+            ns.accent = bool(cfg["remove_accents"])
+        if ns.dup is None and "remove_duplicates" in cfg:
+            ns.dup = bool(cfg["remove_duplicates"])
+        if ns.case is None and "case" in cfg:
+            idx = int(cfg["case"])
+            ns.case = _CASE_IDX[idx] if 0 <= idx < len(_CASE_IDX) else "none"
+        if ns.keep_ext is None and "keep_extension" in cfg:
+            ns.keep_ext = bool(cfg["keep_extension"])
+
+    if ns.search is None:
+        print(
+            "error: --search or --saved is required for headless mode",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    # Fill remaining None fields with hardcoded defaults
+    if ns.mode is None:
+        ns.mode = "pattern"
+    if ns.replace is None:
+        ns.replace = ""
+    if ns.sep is None:
+        ns.sep = "none"
+    if ns.accent is None:
+        ns.accent = False
+    if ns.dup is None:
+        ns.dup = False
+    if ns.case is None:
+        ns.case = "none"
+    if ns.keep_ext is None:
+        ns.keep_ext = True
+
+
 def _apply_postproc(
     name: str,
     path: str,
     *,
+    sep: str = "none",
     accent: bool,
     dup: bool,
     case: str,
 ) -> str:
     from pbrenamer.core import filetools
 
+    if sep != "none":
+        name, _ = filetools.replace_spaces(name, path, _SEP_MAP[sep])
     if accent:
         name, _ = filetools.replace_accents(name, path)
     if dup:
@@ -260,7 +380,12 @@ def _plan(
                 if raw is None:
                     break
                 processed = _apply_postproc(
-                    raw, stem_path, accent=ns.accent, dup=ns.dup, case=ns.case
+                    raw,
+                    stem_path,
+                    sep=ns.sep,
+                    accent=ns.accent,
+                    dup=ns.dup,
+                    case=ns.case,
                 )
                 candidate = filetools.add_extension(processed, stem_path, ext)[0]
                 cand_path = os.path.join(dir_path, candidate)
@@ -285,7 +410,12 @@ def _plan(
                 raw = None
             if raw is not None:
                 processed = _apply_postproc(
-                    raw, stem_path, accent=ns.accent, dup=ns.dup, case=ns.case
+                    raw,
+                    stem_path,
+                    sep=ns.sep,
+                    accent=ns.accent,
+                    dup=ns.dup,
+                    case=ns.case,
                 )
                 new_name = filetools.add_extension(processed, stem_path, ext)[0]
 
@@ -428,10 +558,24 @@ def main() -> None:
     # untouched so they can be forwarded to QApplication.
     _ns, qt_argv = _build_parser().parse_known_args()
 
-    if _ns.search is not None:
+    if _ns.help_search or _ns.help_replace:
+        # Help export — no Qt needed; NullTranslations returns msgids as-is
+        import gettext
+
+        gettext.NullTranslations().install()
+        from pbrenamer.ui.pattern_help import replace_html, search_html
+
+        if _ns.help_search:
+            sys.stdout.write(search_html())
+        if _ns.help_replace:
+            sys.stdout.write(replace_html())
+        return
+
+    if _ns.search is not None or _ns.saved is not None:
         # Headless mode — no Qt needed
         if _ns.log_level:
             logging.getLogger().setLevel(_ns.log_level)
+        _resolve_ns(_ns)
         _headless_run(_ns)
         return
 

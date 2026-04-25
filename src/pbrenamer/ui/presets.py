@@ -8,6 +8,7 @@ History is LRU: the most recently used entry is at the top.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from pbrenamer.platform import AppDirs
@@ -15,6 +16,7 @@ from pbrenamer.platform import AppDirs
 _CONFIG_DIR = AppDirs("pbrenamer").config_home / "patterns"
 
 _SEARCH_MODES = {"pattern", "regex", "plain"}
+_SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
 _SEARCH_DEFAULTS: list[tuple[str, str]] = [("pattern", "{X}")]
 _REPLACE_DEFAULTS: list[str] = ["{1}"]
@@ -106,3 +108,39 @@ class PatternPresets:
     def set_replace(self, entries: list[str]) -> None:
         """Overwrite the entire replace history with *entries*."""
         self._write_replace([e for e in entries if e])
+
+    # ── Named saves ───────────────────────────────────────────────────────────
+
+    def _read_saves_raw(self) -> dict[str, dict]:
+        data = _read_json(self._dir / "saves.json")
+        if not isinstance(data, dict):
+            return {}
+        return {
+            name: cfg
+            for name, cfg in data.items()
+            if _SAVE_NAME_RE.match(name) and isinstance(cfg, dict)
+        }
+
+    def _write_saves(self, saves: dict[str, dict]) -> None:
+        (self._dir / "saves.json").write_text(
+            json.dumps(saves, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+
+    def get_saves(self) -> dict[str, dict]:
+        """Return all named saves as {name: config_dict}."""
+        return self._read_saves_raw()
+
+    def set_save(self, name: str, config: dict) -> None:
+        """Create or overwrite the named save *name* with *config*."""
+        if not _SAVE_NAME_RE.match(name):
+            return
+        saves = self._read_saves_raw()
+        saves[name] = config
+        self._write_saves(saves)
+
+    def delete_save(self, name: str) -> None:
+        """Delete the named save *name* (no-op if not found)."""
+        saves = self._read_saves_raw()
+        if name in saves:
+            saves.pop(name)
+            self._write_saves(saves)
