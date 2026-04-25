@@ -7,11 +7,13 @@ from pathlib import Path
 # Make the src layout importable by autodoc without installing the package.
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from pbrenamer import __version__
+
 project = "PBRenamer"
 author = "Marcel Spock"
 copyright = "2026, PBMou"
-release = "0.3.1"
-version = "0.3"
+release = __version__
+version = ".".join(__version__.split(".")[:2])
 
 extensions = [
     "sphinx.ext.autodoc",
