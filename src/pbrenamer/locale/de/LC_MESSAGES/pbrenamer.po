@@ -1,0 +1,1255 @@
+# German translation for PBRenamer.
+# Copyright (C) 2024 Marcel Spock <mrspock@cardolan.net>
+# License: GPLv3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 14:52+0200\n"
+"PO-Revision-Date: 2026-05-03 00:00+0000\n"
+"Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
+"Language-Team: German <de@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/pbrenamer/ui/settings_dialog.py:19
+msgid "System default"
+msgstr "Systemstandard"
+
+#: src/pbrenamer/ui/pattern_help.py:76
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>… "
+"are <em>captured</em> and available for reuse in the replacement field."
+msgstr ""
+"Token fungieren als typisierte Platzhalter. Segmente in <b>{1}</b>, "
+"<b>{2}</b>… werden <em>erfasst</em> und können im Ersetzungsfeld "
+"wiederverwendet werden."
+
+#: src/pbrenamer/ui/pattern_help.py:81
+msgid "One or more digits (0–9)"
+msgstr "Eine oder mehrere Ziffern (0–9)"
+
+#: src/pbrenamer/ui/pattern_help.py:82
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Ein oder mehrere Buchstaben (a–z, A–Z und Unicode-Buchstaben)"
+
+#: src/pbrenamer/ui/pattern_help.py:83
+msgid "One or more non-whitespace characters"
+msgstr "Ein oder mehrere Zeichen ohne Leerzeichen"
+
+#: src/pbrenamer/ui/pattern_help.py:84
+msgid "Any sequence of characters, including empty"
+msgstr "Beliebige Zeichenfolge, auch leer"
+
+#: src/pbrenamer/ui/pattern_help.py:85
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Papierkorb — trifft ein Segment und verwirft es (nicht erfasst)"
+
+#: src/pbrenamer/ui/pattern_help.py:89
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Erfassungsgruppe — der gematchte Text wird in der Ersetzung an {1}, {2}… "
+"gebunden"
+
+#: src/pbrenamer/ui/pattern_help.py:97 src/pbrenamer/ui/pattern_help.py:137
+#: src/pbrenamer/ui/pattern_help.py:153
+msgid "Example"
+msgstr "Beispiel"
+
+#: src/pbrenamer/ui/pattern_help.py:99 src/pbrenamer/ui/pattern_help.py:139
+#: src/pbrenamer/ui/pattern_help.py:155 /tmp/_pbrenamer_ui_strings.py:89
+msgid "Search:"
+msgstr "Suche:"
+
+#: src/pbrenamer/ui/pattern_help.py:101 src/pbrenamer/ui/pattern_help.py:141
+#: src/pbrenamer/ui/pattern_help.py:157 /tmp/_pbrenamer_ui_strings.py:105
+msgid "Replace:"
+msgstr "Ersetzen:"
+
+#: src/pbrenamer/ui/pattern_help.py:108
+msgid ""
+"Full Python <code>re</code>-module syntax. The match is applied to the file "
+"stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr ""
+"Vollständige Syntax des Python-Moduls <code>re</code>. Die Übereinstimmung "
+"wird auf den Dateinamen ohne Erweiterung angewendet (oder den vollständigen "
+"Namen, wenn <em>Erweiterung behalten</em> deaktiviert ist)."
+
+#: src/pbrenamer/ui/pattern_help.py:113
+msgid "Any single character"
+msgstr "Ein beliebiges Zeichen"
+
+#: src/pbrenamer/ui/pattern_help.py:115
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Beliebige Folge (gierig), nicht-leere Variante"
+
+#: src/pbrenamer/ui/pattern_help.py:117
+msgid "One or more digits"
+msgstr "Eine oder mehrere Ziffern"
+
+#: src/pbrenamer/ui/pattern_help.py:118
+msgid "Word characters (letters, digits, _)"
+msgstr "Wortzeichen (Buchstaben, Ziffern, _)"
+
+#: src/pbrenamer/ui/pattern_help.py:122
+msgid ""
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in replacement"
+msgstr ""
+"Nummerierte Erfassungsgruppe → <code>\\1</code>, <code>\\2</code>… in der "
+"Ersetzung"
+
+#: src/pbrenamer/ui/pattern_help.py:129
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr ""
+"Benannte Erfassungsgruppe → <code>\\g&lt;name&gt;</code> in der Ersetzung"
+
+#: src/pbrenamer/ui/pattern_help.py:131
+msgid "Case-insensitive flag"
+msgstr "Groß-/Kleinschreibung ignorieren"
+
+#: src/pbrenamer/ui/pattern_help.py:132
+msgid "Start / end of the name"
+msgstr "Anfang / Ende des Namens"
+
+#: src/pbrenamer/ui/pattern_help.py:148
+msgid ""
+"The search field is matched as a literal string — no wildcards, no special "
+"characters. Every occurrence of the exact text in the file name is replaced."
+msgstr ""
+"Das Suchfeld wird als wörtliche Zeichenkette verglichen — keine Platzhalter, "
+"keine Sonderzeichen. Jedes Vorkommen des genauen Textes im Dateinamen wird "
+"ersetzt."
+
+#: src/pbrenamer/ui/pattern_help.py:164
+msgid "Search patterns"
+msgstr "Suchmuster"
+
+#: src/pbrenamer/ui/pattern_help.py:165
+msgid "Pattern mode"
+msgstr "Mustermodus"
+
+#: src/pbrenamer/ui/pattern_help.py:170 /tmp/_pbrenamer_ui_strings.py:10
+msgid "Regular expression mode"
+msgstr "Regulärer-Ausdruck-Modus"
+
+#: src/pbrenamer/ui/pattern_help.py:175 /tmp/_pbrenamer_ui_strings.py:12
+msgid "Plain text mode"
+msgstr "Nur-Text-Modus"
+
+#: src/pbrenamer/ui/pattern_help.py:186
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields are "
+"written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"Die Ersetzungszeichenkette ist unabhängig vom Suchmodus dieselbe. Felder "
+"werden als <code>{name}</code> geschrieben und können Formatierungsoptionen "
+"enthalten:"
+
+#: src/pbrenamer/ui/pattern_help.py:191
+msgid "plain value"
+msgstr "einfacher Wert"
+
+#: src/pbrenamer/ui/pattern_help.py:192
+msgid "with format"
+msgstr "mit Format"
+
+#: src/pbrenamer/ui/pattern_help.py:193
+msgid "with format and fallback"
+msgstr "mit Format und Fallback"
+
+#: src/pbrenamer/ui/pattern_help.py:194
+msgid "left-align  (digit fmt = min width)"
+msgstr "linksbündig  (Zifferformat = Mindestbreite)"
+
+#: src/pbrenamer/ui/pattern_help.py:195
+msgid "right-align"
+msgstr "rechtsbündig"
+
+#: src/pbrenamer/ui/pattern_help.py:196
+msgid "zero-pad right (numbers)"
+msgstr "Nullen rechts auffüllen (Zahlen)"
+
+#: src/pbrenamer/ui/pattern_help.py:197
+msgid "literal '{' character"
+msgstr "wörtliches Zeichen '{'"
+
+#: src/pbrenamer/ui/pattern_help.py:201
+msgid ""
+"<b>fmt</b> is a minimum width (digit) for text/numbers, or a <code>strftime</"
+"code> format for dates/datetimes.<br><b>default</b>: used when the field is "
+"absent; omitting it makes absence an error (file shown in red in the "
+"preview)."
+msgstr ""
+"<b>fmt</b> ist eine Mindestbreite (Ziffer) für Text/Zahlen oder ein "
+"<code>strftime</code>-Format für Datumsangaben.<br><b>default</b>: wird "
+"verwendet, wenn das Feld fehlt; Weglassen macht das Fehlen zu einem Fehler "
+"(Datei wird in der Vorschau rot angezeigt)."
+
+#: src/pbrenamer/ui/pattern_help.py:208
+msgid "all modes"
+msgstr "alle Modi"
+
+#: src/pbrenamer/ui/pattern_help.py:209
+msgid "pattern, regex"
+msgstr "Muster, Regex"
+
+#: src/pbrenamer/ui/pattern_help.py:210
+msgid "regex only"
+msgstr "nur Regex"
+
+#: src/pbrenamer/ui/pattern_help.py:211
+msgid "Field"
+msgstr "Feld"
+
+#: src/pbrenamer/ui/pattern_help.py:212
+msgid "Available in"
+msgstr "Verfügbar in"
+
+#: src/pbrenamer/ui/pattern_help.py:213
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/pbrenamer/ui/pattern_help.py:224
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Vollständig gematchter Text (oder Suchliteral im Nur-Text-Modus)"
+
+#: src/pbrenamer/ui/pattern_help.py:230
+msgid "Numbered capture groups (1-based)"
+msgstr "Nummerierte Erfassungsgruppen (ab 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:235
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Benannte Gruppe <code>(?P&lt;name&gt;…)</code> aus dem Such-Regex"
+
+#: src/pbrenamer/ui/pattern_help.py:242
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; <em>default</em> "
+"sets the start value (e.g. <code>{num:02:10}</code> starts at 10, zero-"
+"padded to 2 digits)"
+msgstr ""
+"Automatisch inkrementierender Zähler — Standard-fmt ist eine Mindestbreite; "
+"<em>default</em> setzt den Startwert (z. B. <code>{num:02:10}</code> startet "
+"bei 10, auf 2 Stellen mit Nullen aufgefüllt)"
+
+#: src/pbrenamer/ui/pattern_help.py:251
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists on "
+"disk or has been assigned to another file in the same batch — guarantees no "
+"conflicts"
+msgstr ""
+"Wie <code>{num}</code>, überspringt aber Werte, deren Zielname bereits auf "
+"der Festplatte existiert oder einer anderen Datei im selben Stapel zugewiesen "
+"wurde — garantiert Konfliktfreiheit"
+
+#: src/pbrenamer/ui/pattern_help.py:260
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Heutiges Datum — Standardformat <code>%Y-%m-%d</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:266
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Aktuelles Datum und Uhrzeit — Standardformat <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:271
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr ""
+"Dateiänderungsdatum/-uhrzeit — Standardformat <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:278
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode "
+"change time on Linux)"
+msgstr ""
+"Dateierstellungsdatum/-uhrzeit — Standardformat <code>%Y-%m-%d_%H%M%S</code> "
+"(Inode-Änderungszeit unter Linux)"
+
+#: src/pbrenamer/ui/pattern_help.py:282
+msgid "Name of the immediate parent folder"
+msgstr "Name des unmittelbaren übergeordneten Ordners"
+
+#: src/pbrenamer/ui/pattern_help.py:286
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "EXIF- oder IPTC-Metadatenfeld (nur Bilder — siehe Liste unten)"
+
+#: src/pbrenamer/ui/pattern_help.py:291
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Audio-Metadatenfeld (mp3, ogg, flac… — siehe Liste unten)"
+
+#: src/pbrenamer/ui/pattern_help.py:297
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Video-Metadatenfeld (mp4, mkv, avi… — siehe Liste unten)"
+
+#: src/pbrenamer/ui/pattern_help.py:303
+msgid ""
+"Field names are case-insensitive. A <b>default</b> is strongly recommended "
+"for metadata fields — they may be absent from non-image files or images "
+"without metadata."
+msgstr ""
+"Feldnamen unterscheiden nicht zwischen Groß- und Kleinschreibung. Ein "
+"<b>default</b>-Wert wird für Metadatenfelder dringend empfohlen — sie können "
+"in Nicht-Bilddateien oder Bildern ohne Metadaten fehlen."
+
+#: src/pbrenamer/ui/pattern_help.py:307
+msgid "Type"
+msgstr "Typ"
+
+#: src/pbrenamer/ui/pattern_help.py:314
+msgid "Date/time the photo was taken"
+msgstr "Datum/Uhrzeit der Aufnahme"
+
+#: src/pbrenamer/ui/pattern_help.py:315
+msgid "Date/time the image was digitised"
+msgstr "Datum/Uhrzeit der Digitalisierung"
+
+#: src/pbrenamer/ui/pattern_help.py:319
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Datum/Uhrzeit der letzten Dateiänderung (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:322
+msgid "Camera manufacturer"
+msgstr "Kamerahersteller"
+
+#: src/pbrenamer/ui/pattern_help.py:323
+msgid "Camera model"
+msgstr "Kameramodell"
+
+#: src/pbrenamer/ui/pattern_help.py:324
+msgid "Lens model"
+msgstr "Objektivmodell"
+
+#: src/pbrenamer/ui/pattern_help.py:325
+msgid "ISO speed"
+msgstr "ISO-Empfindlichkeit"
+
+#: src/pbrenamer/ui/pattern_help.py:326
+msgid "Aperture (e.g. 2.8)"
+msgstr "Blende (z. B. 2.8)"
+
+#: src/pbrenamer/ui/pattern_help.py:327
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Verschlusszeit (z. B. 1/125)"
+
+#: src/pbrenamer/ui/pattern_help.py:328
+msgid "Focal length in mm"
+msgstr "Brennweite in mm"
+
+#: src/pbrenamer/ui/pattern_help.py:329
+msgid "Image description / title"
+msgstr "Bildbeschreibung / Titel"
+
+#: src/pbrenamer/ui/pattern_help.py:330
+msgid "Photographer / creator (EXIF)"
+msgstr "Fotograf / Ersteller (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:331
+msgid "Copyright notice"
+msgstr "Urheberrechtshinweis"
+
+#: src/pbrenamer/ui/pattern_help.py:332
+msgid "IPTC title / object name"
+msgstr "IPTC-Titel / Objektname"
+
+#: src/pbrenamer/ui/pattern_help.py:333
+msgid "IPTC photographer / creator"
+msgstr "IPTC-Fotograf / Ersteller"
+
+#: src/pbrenamer/ui/pattern_help.py:334
+msgid "IPTC city"
+msgstr "IPTC-Stadt"
+
+#: src/pbrenamer/ui/pattern_help.py:335
+msgid "IPTC country"
+msgstr "IPTC-Land"
+
+#: src/pbrenamer/ui/pattern_help.py:336
+msgid "IPTC creation date"
+msgstr "IPTC-Erstellungsdatum"
+
+#: src/pbrenamer/ui/pattern_help.py:337
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "IPTC-Schlagwörter (durch Semikolon getrennt)"
+
+#: src/pbrenamer/ui/pattern_help.py:342
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, opus, "
+"aac/m4a and others supported by mutagen. A <b>default</b> is strongly "
+"recommended — tags may be absent or the file may not be a supported audio "
+"format."
+msgstr ""
+"Feldnamen unterscheiden nicht zwischen Groß- und Kleinschreibung. "
+"Unterstützte Formate: mp3, ogg, flac, opus, aac/m4a und andere von mutagen "
+"unterstützte Formate. Ein <b>default</b>-Wert wird dringend empfohlen — "
+"Tags können fehlen oder die Datei ist möglicherweise kein unterstütztes "
+"Audioformat."
+
+#: src/pbrenamer/ui/pattern_help.py:349
+msgid "Track title"
+msgstr "Titelname"
+
+#: src/pbrenamer/ui/pattern_help.py:350
+msgid "Track artist"
+msgstr "Interpret"
+
+#: src/pbrenamer/ui/pattern_help.py:351
+msgid "Album artist"
+msgstr "Albumkünstler"
+
+#: src/pbrenamer/ui/pattern_help.py:352
+msgid "Album name"
+msgstr "Albumname"
+
+#: src/pbrenamer/ui/pattern_help.py:354
+msgid "Track number (strips /total if present)"
+msgstr "Titelnummer (entfernt /Gesamt, falls vorhanden)"
+
+#: src/pbrenamer/ui/pattern_help.py:356
+msgid "Disc number (strips /total if present)"
+msgstr "Disc-Nummer (entfernt /Gesamt, falls vorhanden)"
+
+#: src/pbrenamer/ui/pattern_help.py:361
+msgid ""
+"Release date — datetime.date when full date available (strftime formatting); "
+"plain text otherwise"
+msgstr ""
+"Veröffentlichungsdatum — datetime.date wenn vollständiges Datum verfügbar "
+"(strftime-Formatierung); andernfalls Klartext"
+
+#: src/pbrenamer/ui/pattern_help.py:366
+msgid "Release year (extracted from date tag)"
+msgstr "Erscheinungsjahr (aus dem Datum-Tag extrahiert)"
+
+#: src/pbrenamer/ui/pattern_help.py:367
+msgid "Genre"
+msgstr "Genre"
+
+#: src/pbrenamer/ui/pattern_help.py:368
+msgid "Comment"
+msgstr "Kommentar"
+
+#: src/pbrenamer/ui/pattern_help.py:369
+msgid "Composer"
+msgstr "Komponist"
+
+#: src/pbrenamer/ui/pattern_help.py:370
+msgid "Beats per minute"
+msgstr "Schläge pro Minute"
+
+#: src/pbrenamer/ui/pattern_help.py:371 src/pbrenamer/ui/pattern_help.py:386
+msgid "Duration in seconds"
+msgstr "Dauer in Sekunden"
+
+#: src/pbrenamer/ui/pattern_help.py:372
+msgid "Bitrate in kbps"
+msgstr "Bitrate in kbps"
+
+#: src/pbrenamer/ui/pattern_help.py:377
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is "
+"strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+msgstr ""
+"Feldnamen unterscheiden nicht zwischen Groß- und Kleinschreibung. "
+"Unterstützte Formate: mp4, mkv, avi, mov, webm und andere von MediaInfo "
+"(pymediainfo) unterstützte Formate. Ein <b>default</b>-Wert wird dringend "
+"empfohlen — Felder können fehlen oder die Datei ist möglicherweise kein "
+"unterstütztes Videoformat."
+
+#: src/pbrenamer/ui/pattern_help.py:384
+msgid "Video width in pixels"
+msgstr "Videobreite in Pixeln"
+
+#: src/pbrenamer/ui/pattern_help.py:385
+msgid "Video height in pixels"
+msgstr "Videohöhe in Pixeln"
+
+#: src/pbrenamer/ui/pattern_help.py:387
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Bildrate (z. B. 29.970)"
+
+#: src/pbrenamer/ui/pattern_help.py:388
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Video-Codec-Name (z. B. AVC, HEVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:389
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Audio-Codec-Name (z. B. AAC, AC-3)"
+
+#: src/pbrenamer/ui/pattern_help.py:390
+msgid "Number of audio channels"
+msgstr "Anzahl der Audiokanäle"
+
+#: src/pbrenamer/ui/pattern_help.py:391
+msgid "Overall bitrate in kbps"
+msgstr "Gesamtbitrate in kbps"
+
+#: src/pbrenamer/ui/pattern_help.py:392
+msgid "Title tag"
+msgstr "Titel-Tag"
+
+#: src/pbrenamer/ui/pattern_help.py:393
+msgid "Encoded date/time"
+msgstr "Kodierungsdatum/-uhrzeit"
+
+#: src/pbrenamer/ui/pattern_help.py:401
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Erfassungsgruppe 1, gefolgt von einem 4-stelligen, mit Nullen aufgefüllten "
+"Zähler (beginnt bei 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:406
+msgid "Same, but counter starts at 10"
+msgstr "Wie oben, aber der Zähler beginnt bei 10"
+
+#: src/pbrenamer/ui/pattern_help.py:410
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
+"already exists"
+msgstr ""
+"Konfliktfreier 3-stelliger Zähler: überspringt Werte, bei denen "
+"<code>backup_NNN</code> bereits existiert"
+
+#: src/pbrenamer/ui/pattern_help.py:415
+msgid "Today's date prepended to the matched text"
+msgstr "Heutiges Datum dem gematchten Text vorangestellt"
+
+#: src/pbrenamer/ui/pattern_help.py:418
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Aufnahmedatum/-uhrzeit kompakt; „unbekannt\" wenn EXIF fehlt"
+
+#: src/pbrenamer/ui/pattern_help.py:423
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Stunde+Minute der Digitalisierung; „0000\" wenn fehlend"
+
+#: src/pbrenamer/ui/pattern_help.py:427
+msgid "Camera make and model (empty string if absent)"
+msgstr "Kameramarke und -modell (leere Zeichenkette wenn fehlend)"
+
+#: src/pbrenamer/ui/pattern_help.py:432
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Audiokünstler und -titel; „unbekannt\"/„ohne Titel\" wenn fehlend"
+
+#: src/pbrenamer/ui/pattern_help.py:436
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Audio-Veröffentlichungsdatum, mit Nullen aufgefüllte Titelnummer, Titel"
+
+#: src/pbrenamer/ui/pattern_help.py:441
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Videoauflösung und Codec (z. B. 1920x1080_AVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:445
+msgid "Video encoded date and duration in seconds"
+msgstr "Videokodierungsdatum und Dauer in Sekunden"
+
+#: src/pbrenamer/ui/pattern_help.py:448
+msgid "Named regex groups (regex mode only)"
+msgstr "Benannte Regex-Gruppen (nur Regex-Modus)"
+
+#: src/pbrenamer/ui/pattern_help.py:451
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Übergeordneter Ordner, Dateiänderungsdatum, 3-stelliger Zähler"
+
+#: src/pbrenamer/ui/pattern_help.py:458
+msgid "Replacement fields"
+msgstr "Ersetzungsfelder"
+
+#: src/pbrenamer/ui/pattern_help.py:463
+msgid "Available fields"
+msgstr "Verfügbare Felder"
+
+#: src/pbrenamer/ui/pattern_help.py:469
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Metadatenfelder für <code>{im:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:476
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Audio-Metadatenfelder für <code>{au:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:483
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Video-Metadatenfelder für <code>{vi:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:490
+msgid "Examples"
+msgstr "Beispiele"
+
+#: src/pbrenamer/ui/main_window.py:202
+msgid "Select folder"
+msgstr "Ordner auswählen"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:86
+msgid "Original"
+msgstr "Original"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:85
+#: /tmp/_pbrenamer_ui_strings.py:146
+msgid "Preview"
+msgstr "Vorschau"
+
+#: src/pbrenamer/ui/main_window.py:258
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} Element(e)"
+
+#: src/pbrenamer/ui/main_window.py:530
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} nicht verfügbar"
+
+#: src/pbrenamer/ui/main_window.py:610
+msgid "Search — Help"
+msgstr "Suche — Hilfe"
+
+#: src/pbrenamer/ui/main_window.py:625
+msgid "Replace — Help"
+msgstr "Ersetzen — Hilfe"
+
+#: src/pbrenamer/ui/main_window.py:811
+msgid "Rename errors"
+msgstr "Umbenennungsfehler"
+
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:161
+msgid "language_name"
+msgstr "Deutsch"
+
+#: /tmp/_pbrenamer_ui_strings.py:1
+msgid "History"
+msgstr "Verlauf"
+
+#: /tmp/_pbrenamer_ui_strings.py:2
+msgid "Search"
+msgstr "Suche"
+
+#: /tmp/_pbrenamer_ui_strings.py:3
+msgid "Search pattern history"
+msgstr "Verlauf der Suchmuster"
+
+#: /tmp/_pbrenamer_ui_strings.py:4 /tmp/_pbrenamer_ui_strings.py:23
+msgid "Select one or more entries to remove them"
+msgstr "Einen oder mehrere Einträge zum Entfernen auswählen"
+
+#: /tmp/_pbrenamer_ui_strings.py:5 /tmp/_pbrenamer_ui_strings.py:24
+msgid "Pattern…"
+msgstr "Muster…"
+
+#: /tmp/_pbrenamer_ui_strings.py:6
+msgid "New search pattern to add"
+msgstr "Neues Suchmuster zum Hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:7
+msgid "pat"
+msgstr "pat"
+
+#: /tmp/_pbrenamer_ui_strings.py:8
+msgid "Pattern token mode"
+msgstr "Token-Mustermodus"
+
+#: /tmp/_pbrenamer_ui_strings.py:9
+msgid "RE"
+msgstr "RE"
+
+#: /tmp/_pbrenamer_ui_strings.py:11
+msgid "txt"
+msgstr "txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:13 /tmp/_pbrenamer_ui_strings.py:26
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:14
+msgid "Add this pattern to the search history"
+msgstr "Dieses Muster zum Suchverlauf hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:15 /tmp/_pbrenamer_ui_strings.py:28
+msgid "Remove"
+msgstr "Entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:16 /tmp/_pbrenamer_ui_strings.py:29
+msgid "Remove selected entries"
+msgstr "Ausgewählte Einträge entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:17
+msgid "Delete the selected search history entries"
+msgstr "Ausgewählte Einträge aus dem Suchverlauf löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:18 /tmp/_pbrenamer_ui_strings.py:31
+msgid "Clear all"
+msgstr "Alles löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:19
+msgid "Remove all search history entries"
+msgstr "Alle Einträge aus dem Suchverlauf entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:20
+msgid "Delete the entire search pattern history"
+msgstr "Den gesamten Suchmusterverlauf löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:21
+msgid "Replace"
+msgstr "Ersetzen"
+
+#: /tmp/_pbrenamer_ui_strings.py:22
+msgid "Replacement pattern history"
+msgstr "Verlauf der Ersetzungsmuster"
+
+#: /tmp/_pbrenamer_ui_strings.py:25
+msgid "New replacement pattern to add"
+msgstr "Neues Ersetzungsmuster zum Hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:27
+msgid "Add this pattern to the replacement history"
+msgstr "Dieses Muster zum Ersetzungsverlauf hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:30
+msgid "Delete the selected replacement history entries"
+msgstr "Ausgewählte Einträge aus dem Ersetzungsverlauf löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:32
+msgid "Remove all replacement history entries"
+msgstr "Alle Einträge aus dem Ersetzungsverlauf entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:33
+msgid "Delete the entire replacement pattern history"
+msgstr "Den gesamten Ersetzungsmusterverlauf löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:34
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: /tmp/_pbrenamer_ui_strings.py:35
+msgid "Language:"
+msgstr "Sprache:"
+
+#: /tmp/_pbrenamer_ui_strings.py:36
+msgid "Select the interface language"
+msgstr "Oberflächensprache auswählen"
+
+#: /tmp/_pbrenamer_ui_strings.py:37
+msgid "Log level:"
+msgstr "Protokollstufe:"
+
+#: /tmp/_pbrenamer_ui_strings.py:38
+msgid "Set the application logging verbosity"
+msgstr "Protokollierungsausführlichkeit der Anwendung festlegen"
+
+#: /tmp/_pbrenamer_ui_strings.py:39
+msgid "A restart is required for the language change to take effect."
+msgstr "Ein Neustart ist erforderlich, damit die Sprachänderung wirksam wird."
+
+#: /tmp/_pbrenamer_ui_strings.py:40 /tmp/_pbrenamer_ui_strings.py:61
+msgid "About PBRenamer"
+msgstr "Über PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:41
+msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+
+#: /tmp/_pbrenamer_ui_strings.py:42
+msgid "Application version"
+msgstr "Anwendungsversion"
+
+#: /tmp/_pbrenamer_ui_strings.py:43
+msgid "A graphical batch file renaming utility."
+msgstr "Ein grafisches Dienstprogramm zur stapelweisen Dateiumbenennung."
+
+#: /tmp/_pbrenamer_ui_strings.py:44
+msgid "© 2026 Marcel Spock <mrspock@cardolan.net>"
+msgstr "© 2026 Marcel Spock <mrspock@cardolan.net>"
+
+#: /tmp/_pbrenamer_ui_strings.py:45
+msgid "License: GPLv3"
+msgstr "Lizenz: GPLv3"
+
+#: /tmp/_pbrenamer_ui_strings.py:46
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:47
+msgid "Open folder…"
+msgstr "Ordner öffnen…"
+
+#: /tmp/_pbrenamer_ui_strings.py:48
+msgid "Ctrl+O"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:49
+msgid "Open a folder"
+msgstr "Einen Ordner öffnen"
+
+#: /tmp/_pbrenamer_ui_strings.py:50
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr ""
+"Einen Ordnerauswahldialog öffnen und zur ausgewählten Verzeichnisstruktur "
+"navigieren"
+
+#: /tmp/_pbrenamer_ui_strings.py:51
+msgid "Quit"
+msgstr "Beenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:52
+msgid "Ctrl+Q"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:53
+msgid "Quit PBRenamer"
+msgstr "PBRenamer beenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:54
+msgid "Exit the application"
+msgstr "Anwendung schließen"
+
+#: /tmp/_pbrenamer_ui_strings.py:55
+msgid "History…"
+msgstr "Verlauf…"
+
+#: /tmp/_pbrenamer_ui_strings.py:56
+msgid "Manage pattern history"
+msgstr "Musterverlauf verwalten"
+
+#: /tmp/_pbrenamer_ui_strings.py:57
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr ""
+"Einträge aus dem Such- und Ersetzungsmusterverlauf hinzufügen oder entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:58
+msgid "Settings…"
+msgstr "Einstellungen…"
+
+#: /tmp/_pbrenamer_ui_strings.py:59
+msgid "Open settings"
+msgstr "Einstellungen öffnen"
+
+#: /tmp/_pbrenamer_ui_strings.py:60
+msgid "Configure language and other preferences"
+msgstr "Sprache und weitere Einstellungen konfigurieren"
+
+#: /tmp/_pbrenamer_ui_strings.py:62
+msgid "About this application"
+msgstr "Über diese Anwendung"
+
+#: /tmp/_pbrenamer_ui_strings.py:63
+msgid "Show version and license information"
+msgstr "Versions- und Lizenzinformationen anzeigen"
+
+#: /tmp/_pbrenamer_ui_strings.py:64
+msgid "Show:"
+msgstr "Anzeigen:"
+
+#: /tmp/_pbrenamer_ui_strings.py:65
+msgid "Files only"
+msgstr "Nur Dateien"
+
+#: /tmp/_pbrenamer_ui_strings.py:66
+msgid "Directories only"
+msgstr "Nur Verzeichnisse"
+
+#: /tmp/_pbrenamer_ui_strings.py:67
+msgid "Files and directories"
+msgstr "Dateien und Verzeichnisse"
+
+#: /tmp/_pbrenamer_ui_strings.py:68
+msgid "Choose which entries to list"
+msgstr "Auswählen, welche Einträge aufgelistet werden sollen"
+
+#: /tmp/_pbrenamer_ui_strings.py:69
+msgid "List files only, directories only, or both"
+msgstr "Nur Dateien, nur Verzeichnisse oder beides auflisten"
+
+#: /tmp/_pbrenamer_ui_strings.py:70
+msgid "Recursive"
+msgstr "Rekursiv"
+
+#: /tmp/_pbrenamer_ui_strings.py:71
+msgid "Include all subdirectories"
+msgstr "Alle Unterverzeichnisse einbeziehen"
+
+#: /tmp/_pbrenamer_ui_strings.py:72
+msgid "When checked, files from all subdirectories are listed"
+msgstr "Wenn aktiviert, werden Dateien aus allen Unterverzeichnissen aufgelistet"
+
+#: /tmp/_pbrenamer_ui_strings.py:73
+msgid "Keep extension"
+msgstr "Erweiterung behalten"
+
+#: /tmp/_pbrenamer_ui_strings.py:74
+msgid "Preserve the file extension"
+msgstr "Dateiendung beibehalten"
+
+#: /tmp/_pbrenamer_ui_strings.py:75
+msgid ""
+"Apply transformations to the file stem only, leaving the extension unchanged"
+msgstr ""
+"Transformationen nur auf den Dateinamen ohne Endung anwenden, die Erweiterung "
+"unverändert lassen"
+
+#: /tmp/_pbrenamer_ui_strings.py:76
+msgid "Auto-preview"
+msgstr "Automatische Vorschau"
+
+#: /tmp/_pbrenamer_ui_strings.py:77
+msgid "Refresh the preview automatically"
+msgstr "Vorschau automatisch aktualisieren"
+
+#: /tmp/_pbrenamer_ui_strings.py:78
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Vorschau bei jeder Änderung des Musters oder der Optionen neu berechnen"
+
+#: /tmp/_pbrenamer_ui_strings.py:79
+msgid "Filter:"
+msgstr "Filter:"
+
+#: /tmp/_pbrenamer_ui_strings.py:80
+msgid "*.txt"
+msgstr "*.txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:81
+msgid "Glob pattern to filter the file list"
+msgstr "Glob-Muster zum Filtern der Dateiliste"
+
+#: /tmp/_pbrenamer_ui_strings.py:82
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr ""
+"Nur Dateien, die diesem Glob-Muster entsprechen, werden aufgelistet "
+"(z. B. *.txt, image_*)"
+
+#: /tmp/_pbrenamer_ui_strings.py:83
+msgid "Browse the filesystem"
+msgstr "Dateisystem durchsuchen"
+
+#: /tmp/_pbrenamer_ui_strings.py:84
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "Ein Verzeichnis auswählen, um dessen Inhalt im rechten Bereich anzuzeigen"
+
+#: /tmp/_pbrenamer_ui_strings.py:87
+msgid "Files to be renamed"
+msgstr "Umzubenennende Dateien"
+
+#: /tmp/_pbrenamer_ui_strings.py:88
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to apply "
+"to all"
+msgstr ""
+"Zeilen auswählen, um Operationen auf diese Dateien zu beschränken; keine "
+"Auswahl, um auf alle anzuwenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:90
+msgid "Search pattern"
+msgstr "Suchmuster"
+
+#: /tmp/_pbrenamer_ui_strings.py:91
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} letters, "
+"{C} non-space, {X} anything"
+msgstr ""
+"Muster für den Abgleich mit Dateinamen. Token verwenden: {#} Ziffern, "
+"{L} Buchstaben, {C} ohne Leerzeichen, {X} beliebig"
+
+#: /tmp/_pbrenamer_ui_strings.py:92 /tmp/_pbrenamer_ui_strings.py:108
+msgid "Save to history"
+msgstr "Im Verlauf speichern"
+
+#: /tmp/_pbrenamer_ui_strings.py:93
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "Aktuelles Suchmuster und Modus zum Dropdown-Verlauf hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:94
+msgid "Search pattern help"
+msgstr "Hilfe zu Suchmustern"
+
+#: /tmp/_pbrenamer_ui_strings.py:95
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, Plain "
+"text)"
+msgstr ""
+"Hilfe zu Suchmustern anzeigen (Muster-Token, Reguläre Ausdrücke, Nur-Text)"
+
+#: /tmp/_pbrenamer_ui_strings.py:96
+msgid "Pattern"
+msgstr "Muster"
+
+#: /tmp/_pbrenamer_ui_strings.py:97
+msgid "Search using pattern tokens"
+msgstr "Mit Muster-Token suchen"
+
+#: /tmp/_pbrenamer_ui_strings.py:98
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "Dateinamen mit Muster-Token abgleichen ({#}, {L}, {X}…)"
+
+#: /tmp/_pbrenamer_ui_strings.py:99
+msgid "Regular expression"
+msgstr "Regulärer Ausdruck"
+
+#: /tmp/_pbrenamer_ui_strings.py:100
+msgid "Search using a Python regular expression"
+msgstr "Mit einem regulären Python-Ausdruck suchen"
+
+#: /tmp/_pbrenamer_ui_strings.py:101
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr ""
+"Dateinamen mit einem regulären Python-Ausdruck abgleichen; \\1 \\2… für "
+"Rückverweise in der Ersetzung verwenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:102
+msgid "Plain text"
+msgstr "Nur Text"
+
+#: /tmp/_pbrenamer_ui_strings.py:103
+msgid "Search for a literal string"
+msgstr "Nach einer wörtlichen Zeichenkette suchen"
+
+#: /tmp/_pbrenamer_ui_strings.py:104
+msgid "Match file names by looking for the search text as a literal string"
+msgstr "Dateinamen durch wörtliche Suche nach dem Suchtext abgleichen"
+
+#: /tmp/_pbrenamer_ui_strings.py:106
+msgid "Replacement pattern"
+msgstr "Ersetzungsmuster"
+
+#: /tmp/_pbrenamer_ui_strings.py:107
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, "
+"{date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Ersetzungsmuster. {1} {2}… für Erfassungsgruppen, {num} für einen Zähler, "
+"{date} für das heutige Datum, {dir} für den übergeordneten Ordnernamen"
+
+#: /tmp/_pbrenamer_ui_strings.py:109
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "Aktuelles Ersetzungsmuster zum Dropdown-Verlauf hinzufügen"
+
+#: /tmp/_pbrenamer_ui_strings.py:110
+msgid "Replacement pattern help"
+msgstr "Hilfe zu Ersetzungsmustern"
+
+#: /tmp/_pbrenamer_ui_strings.py:111
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr ""
+"Hilfe zu Ersetzungsmustern anzeigen (Erfassungsgruppen, Zähler, Datum, "
+"Verzeichnis-Token)"
+
+#: /tmp/_pbrenamer_ui_strings.py:112
+msgid "Post-processing"
+msgstr "Nachbearbeitung"
+
+#: /tmp/_pbrenamer_ui_strings.py:113
+msgid "Separator:"
+msgstr "Trennzeichen:"
+
+#: /tmp/_pbrenamer_ui_strings.py:114 /tmp/_pbrenamer_ui_strings.py:130
+msgid "No change"
+msgstr "Keine Änderung"
+
+#: /tmp/_pbrenamer_ui_strings.py:115
+msgid "Spaces → underscores"
+msgstr "Leerzeichen → Unterstriche"
+
+#: /tmp/_pbrenamer_ui_strings.py:116
+msgid "Underscores → spaces"
+msgstr "Unterstriche → Leerzeichen"
+
+#: /tmp/_pbrenamer_ui_strings.py:117
+msgid "Spaces → dots"
+msgstr "Leerzeichen → Punkte"
+
+#: /tmp/_pbrenamer_ui_strings.py:118
+msgid "Dots → spaces"
+msgstr "Punkte → Leerzeichen"
+
+#: /tmp/_pbrenamer_ui_strings.py:119
+msgid "Spaces → dashes"
+msgstr "Leerzeichen → Bindestriche"
+
+#: /tmp/_pbrenamer_ui_strings.py:120
+msgid "Dashes → spaces"
+msgstr "Bindestriche → Leerzeichen"
+
+#: /tmp/_pbrenamer_ui_strings.py:121
+msgid "Separator conversion"
+msgstr "Trennzeichenkonvertierung"
+
+#: /tmp/_pbrenamer_ui_strings.py:122
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the "
+"pattern"
+msgstr ""
+"Nach Anwendung des Musters eine Trennzeichenkonvertierung auf jeden "
+"umbenannten Dateinamen anwenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:123
+msgid "Remove accents"
+msgstr "Akzente entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:124
+msgid "Strip diacritical marks"
+msgstr "Diakritische Zeichen entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:125
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "Akzentuierte Zeichen in ASCII-Entsprechungen umwandeln (é→e, ü→u, usw.)"
+
+#: /tmp/_pbrenamer_ui_strings.py:126
+msgid "Remove duplicate separators"
+msgstr "Doppelte Trennzeichen entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:127
+msgid "Collapse consecutive separators"
+msgstr "Aufeinanderfolgende Trennzeichen zusammenfassen"
+
+#: /tmp/_pbrenamer_ui_strings.py:128
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Folgen identischer Trennzeichen (Leerzeichen, Punkte, Bindestriche, "
+"Unterstriche) auf eines reduzieren"
+
+#: /tmp/_pbrenamer_ui_strings.py:129
+msgid "Case:"
+msgstr "Schreibweise:"
+
+#: /tmp/_pbrenamer_ui_strings.py:131
+msgid "UPPERCASE"
+msgstr "GROẞBUCHSTABEN"
+
+#: /tmp/_pbrenamer_ui_strings.py:132
+msgid "lowercase"
+msgstr "kleinbuchstaben"
+
+#: /tmp/_pbrenamer_ui_strings.py:133
+msgid "Capitalize first letter"
+msgstr "Ersten Buchstaben großschreiben"
+
+#: /tmp/_pbrenamer_ui_strings.py:134
+msgid "Title Case"
+msgstr "Jeden Wortanfang großschreiben"
+
+#: /tmp/_pbrenamer_ui_strings.py:135
+msgid "Capitalization mode"
+msgstr "Groß-/Kleinschreibungsmodus"
+
+#: /tmp/_pbrenamer_ui_strings.py:136
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr ""
+"Auswählen, wie die Schreibweise der Dateinamen nach der Musteranwendung "
+"geändert werden soll"
+
+#: /tmp/_pbrenamer_ui_strings.py:137
+msgid "Save:"
+msgstr "Speichern:"
+
+#: /tmp/_pbrenamer_ui_strings.py:138
+msgid "Named save"
+msgstr "Benannte Speicherung"
+
+#: /tmp/_pbrenamer_ui_strings.py:139
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace "
+"parameters"
+msgstr ""
+"Namen eingeben (Buchstaben, Ziffern, _ und -), um alle Such-/Ersetzungs-"
+"parameter zu speichern oder zu laden"
+
+#: /tmp/_pbrenamer_ui_strings.py:140
+msgid "Save"
+msgstr "Speichern"
+
+#: /tmp/_pbrenamer_ui_strings.py:141
+msgid "Save current settings under this name"
+msgstr "Aktuelle Einstellungen unter diesem Namen speichern"
+
+#: /tmp/_pbrenamer_ui_strings.py:142
+msgid ""
+"Save all search, replace and post-processing settings under the current name "
+"(overwrites any existing save with the same name)"
+msgstr ""
+"Alle Such-, Ersetzungs- und Nachbearbeitungseinstellungen unter dem aktuellen "
+"Namen speichern (überschreibt vorhandene Speicherungen mit demselben Namen)"
+
+#: /tmp/_pbrenamer_ui_strings.py:143
+msgid "Delete"
+msgstr "Löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:144
+msgid "Delete this named save"
+msgstr "Diese benannte Speicherung löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:145
+msgid "Permanently delete the named save matching the current name"
+msgstr "Die benannte Speicherung mit dem aktuellen Namen dauerhaft löschen"
+
+#: /tmp/_pbrenamer_ui_strings.py:147
+msgid "Compute rename preview"
+msgstr "Umbenennungsvorschau berechnen"
+
+#: /tmp/_pbrenamer_ui_strings.py:148
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Das aktuelle Muster auf alle aufgelisteten Dateien anwenden und das Ergebnis "
+"in der Vorschauspalte anzeigen"
+
+#: /tmp/_pbrenamer_ui_strings.py:149
+msgid "Clear"
+msgstr "Leeren"
+
+#: /tmp/_pbrenamer_ui_strings.py:150
+msgid "Clear the preview"
+msgstr "Vorschau leeren"
+
+#: /tmp/_pbrenamer_ui_strings.py:151
+msgid "Remove all preview values from the Preview column"
+msgstr "Alle Vorschauwerte aus der Vorschauspalte entfernen"
+
+#: /tmp/_pbrenamer_ui_strings.py:152
+msgid "Undo"
+msgstr "Rückgängig"
+
+#: /tmp/_pbrenamer_ui_strings.py:153
+msgid "Undo last rename batch"
+msgstr "Letzten Umbenennungsstapel rückgängig machen"
+
+#: /tmp/_pbrenamer_ui_strings.py:154
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Den letzten auf der Festplatte ausgeführten Umbenennungsstapel umkehren"
+
+#: /tmp/_pbrenamer_ui_strings.py:155
+msgid "Rename"
+msgstr "Umbenennen"
+
+#: /tmp/_pbrenamer_ui_strings.py:156
+msgid "Apply renames on disk"
+msgstr "Umbenennungen auf der Festplatte anwenden"
+
+#: /tmp/_pbrenamer_ui_strings.py:157
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled when "
+"there are no conflicts)"
+msgstr ""
+"Alle in der Vorschauspalte angezeigten Dateien dauerhaft umbenennen (nur "
+"aktiv, wenn keine Konflikte bestehen)"
+
+#: /tmp/_pbrenamer_ui_strings.py:158
+msgid "File"
+msgstr "Datei"
+
+#: /tmp/_pbrenamer_ui_strings.py:159
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: /tmp/_pbrenamer_ui_strings.py:160
+msgid "Help"
+msgstr "Hilfe"

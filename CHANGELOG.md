@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.0.0] - 2026-05-03
+
+### Added
+
+- Translations for six new languages: German (`de`), Spanish (`es`), Italian
+  (`it`), Russian (`ru`), Vietnamese (`vi`), and Simplified Chinese (`zh_CN`)
+- All 272 translatable strings covered in each new locale; `.mo` files compiled
+  and committed alongside the `.po` sources
+
+## [0.3.2] - 2026-04-25
+
+### Fixed
+
+- `docs/conf.py`: read `release` and `version` dynamically from
+  `pbrenamer.__version__` instead of a hard-coded string, so the Sphinx build
+  always reflects the current version without a manual update
+
 ## [0.3.1] - 2026-04-25
 
 ### Fixed
@@ -72,6 +89,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
 
+[1.0.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v1.0.0
+[0.3.2]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.2
 [0.3.1]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.1
 [0.3.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.0
 [0.2.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.2.0

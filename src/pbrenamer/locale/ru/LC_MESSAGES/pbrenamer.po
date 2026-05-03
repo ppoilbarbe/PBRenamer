@@ -1,0 +1,1247 @@
+# Russian translation for PBRenamer.
+# Copyright (C) 2024 Marcel Spock <mrspock@cardolan.net>
+# License: GPLv3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 14:52+0200\n"
+"PO-Revision-Date: 2026-05-03 00:00+0000\n"
+"Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/pbrenamer/ui/settings_dialog.py:19
+msgid "System default"
+msgstr "Системный язык"
+
+#: src/pbrenamer/ui/pattern_help.py:76
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>… "
+"are <em>captured</em> and available for reuse in the replacement field."
+msgstr ""
+"Токены действуют как типизированные подстановочные знаки. Сегменты, "
+"заключённые в <b>{1}</b>, <b>{2}</b>…, <em>захватываются</em> и доступны "
+"для повторного использования в поле замены."
+
+#: src/pbrenamer/ui/pattern_help.py:81
+msgid "One or more digits (0–9)"
+msgstr "Одна или несколько цифр (0–9)"
+
+#: src/pbrenamer/ui/pattern_help.py:82
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Одна или несколько букв (a–z, A–Z и буквы Unicode)"
+
+#: src/pbrenamer/ui/pattern_help.py:83
+msgid "One or more non-whitespace characters"
+msgstr "Один или несколько символов без пробелов"
+
+#: src/pbrenamer/ui/pattern_help.py:84
+msgid "Any sequence of characters, including empty"
+msgstr "Любая последовательность символов, включая пустую"
+
+#: src/pbrenamer/ui/pattern_help.py:85
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Мусор — соответствует сегменту и отбрасывает его (не захватывается)"
+
+#: src/pbrenamer/ui/pattern_help.py:89
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Группа захвата — совпавший текст привязывается к {1}, {2}… в замене"
+
+#: src/pbrenamer/ui/pattern_help.py:97 src/pbrenamer/ui/pattern_help.py:137
+#: src/pbrenamer/ui/pattern_help.py:153
+msgid "Example"
+msgstr "Пример"
+
+#: src/pbrenamer/ui/pattern_help.py:99 src/pbrenamer/ui/pattern_help.py:139
+#: src/pbrenamer/ui/pattern_help.py:155 /tmp/_pbrenamer_ui_strings.py:89
+msgid "Search:"
+msgstr "Поиск:"
+
+#: src/pbrenamer/ui/pattern_help.py:101 src/pbrenamer/ui/pattern_help.py:141
+#: src/pbrenamer/ui/pattern_help.py:157 /tmp/_pbrenamer_ui_strings.py:105
+msgid "Replace:"
+msgstr "Замена:"
+
+#: src/pbrenamer/ui/pattern_help.py:108
+msgid ""
+"Full Python <code>re</code>-module syntax. The match is applied to the file "
+"stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr ""
+"Полный синтаксис модуля Python <code>re</code>. Совпадение применяется к "
+"имени файла без расширения (или к полному имени, если <em>Сохранять "
+"расширение</em> не отмечено)."
+
+#: src/pbrenamer/ui/pattern_help.py:113
+msgid "Any single character"
+msgstr "Любой одиночный символ"
+
+#: src/pbrenamer/ui/pattern_help.py:115
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Любая последовательность (жадная), непустой вариант"
+
+#: src/pbrenamer/ui/pattern_help.py:117
+msgid "One or more digits"
+msgstr "Одна или несколько цифр"
+
+#: src/pbrenamer/ui/pattern_help.py:118
+msgid "Word characters (letters, digits, _)"
+msgstr "Символы слова (буквы, цифры, _)"
+
+#: src/pbrenamer/ui/pattern_help.py:122
+msgid ""
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in replacement"
+msgstr ""
+"Нумерованная группа захвата → <code>\\1</code>, <code>\\2</code>… в замене"
+
+#: src/pbrenamer/ui/pattern_help.py:129
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Именованная группа захвата → <code>\\g&lt;name&gt;</code> в замене"
+
+#: src/pbrenamer/ui/pattern_help.py:131
+msgid "Case-insensitive flag"
+msgstr "Флаг без учёта регистра"
+
+#: src/pbrenamer/ui/pattern_help.py:132
+msgid "Start / end of the name"
+msgstr "Начало / конец имени"
+
+#: src/pbrenamer/ui/pattern_help.py:148
+msgid ""
+"The search field is matched as a literal string — no wildcards, no special "
+"characters. Every occurrence of the exact text in the file name is replaced."
+msgstr ""
+"Поле поиска сравнивается как буквальная строка — без подстановочных знаков, "
+"без специальных символов. Каждое вхождение точного текста в имени файла "
+"заменяется."
+
+#: src/pbrenamer/ui/pattern_help.py:164
+msgid "Search patterns"
+msgstr "Шаблоны поиска"
+
+#: src/pbrenamer/ui/pattern_help.py:165
+msgid "Pattern mode"
+msgstr "Режим шаблона"
+
+#: src/pbrenamer/ui/pattern_help.py:170 /tmp/_pbrenamer_ui_strings.py:10
+msgid "Regular expression mode"
+msgstr "Режим регулярных выражений"
+
+#: src/pbrenamer/ui/pattern_help.py:175 /tmp/_pbrenamer_ui_strings.py:12
+msgid "Plain text mode"
+msgstr "Режим простого текста"
+
+#: src/pbrenamer/ui/pattern_help.py:186
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields are "
+"written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"Строка замены одинакова независимо от режима поиска. Поля записываются как "
+"<code>{name}</code> и могут включать параметры форматирования:"
+
+#: src/pbrenamer/ui/pattern_help.py:191
+msgid "plain value"
+msgstr "простое значение"
+
+#: src/pbrenamer/ui/pattern_help.py:192
+msgid "with format"
+msgstr "с форматом"
+
+#: src/pbrenamer/ui/pattern_help.py:193
+msgid "with format and fallback"
+msgstr "с форматом и запасным значением"
+
+#: src/pbrenamer/ui/pattern_help.py:194
+msgid "left-align  (digit fmt = min width)"
+msgstr "выравнивание влево  (цифровой fmt = минимальная ширина)"
+
+#: src/pbrenamer/ui/pattern_help.py:195
+msgid "right-align"
+msgstr "выравнивание вправо"
+
+#: src/pbrenamer/ui/pattern_help.py:196
+msgid "zero-pad right (numbers)"
+msgstr "дополнение нулями справа (числа)"
+
+#: src/pbrenamer/ui/pattern_help.py:197
+msgid "literal '{' character"
+msgstr "буквальный символ '{'"
+
+#: src/pbrenamer/ui/pattern_help.py:201
+msgid ""
+"<b>fmt</b> is a minimum width (digit) for text/numbers, or a <code>strftime</"
+"code> format for dates/datetimes.<br><b>default</b>: used when the field is "
+"absent; omitting it makes absence an error (file shown in red in the "
+"preview)."
+msgstr ""
+"<b>fmt</b> — минимальная ширина (цифра) для текста/чисел или формат "
+"<code>strftime</code> для дат/времени.<br><b>default</b>: используется, "
+"когда поле отсутствует; его пропуск делает отсутствие ошибкой (файл "
+"показывается красным в предварительном просмотре)."
+
+#: src/pbrenamer/ui/pattern_help.py:208
+msgid "all modes"
+msgstr "все режимы"
+
+#: src/pbrenamer/ui/pattern_help.py:209
+msgid "pattern, regex"
+msgstr "шаблон, regex"
+
+#: src/pbrenamer/ui/pattern_help.py:210
+msgid "regex only"
+msgstr "только regex"
+
+#: src/pbrenamer/ui/pattern_help.py:211
+msgid "Field"
+msgstr "Поле"
+
+#: src/pbrenamer/ui/pattern_help.py:212
+msgid "Available in"
+msgstr "Доступно в"
+
+#: src/pbrenamer/ui/pattern_help.py:213
+msgid "Description"
+msgstr "Описание"
+
+#: src/pbrenamer/ui/pattern_help.py:224
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Полный совпавший текст (или буквальный поиск в режиме простого текста)"
+
+#: src/pbrenamer/ui/pattern_help.py:230
+msgid "Numbered capture groups (1-based)"
+msgstr "Нумерованные группы захвата (с 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:235
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Именованная группа <code>(?P&lt;name&gt;…)</code> из поискового regex"
+
+#: src/pbrenamer/ui/pattern_help.py:242
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; <em>default</em> "
+"sets the start value (e.g. <code>{num:02:10}</code> starts at 10, zero-"
+"padded to 2 digits)"
+msgstr ""
+"Автоинкрементный счётчик — fmt по умолчанию является минимальной шириной; "
+"<em>default</em> задаёт начальное значение (напр. <code>{num:02:10}</code> "
+"начинает с 10, дополненное нулями до 2 цифр)"
+
+#: src/pbrenamer/ui/pattern_help.py:251
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists on "
+"disk or has been assigned to another file in the same batch — guarantees no "
+"conflicts"
+msgstr ""
+"Как <code>{num}</code>, но пропускает значения, чьё целевое имя уже "
+"существует на диске или было назначено другому файлу в том же пакете — "
+"гарантирует отсутствие конфликтов"
+
+#: src/pbrenamer/ui/pattern_help.py:260
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Сегодняшняя дата — формат по умолчанию <code>%Y-%m-%d</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:266
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Текущая дата и время — формат по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:271
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr ""
+"Дата/время изменения файла — формат по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:278
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode "
+"change time on Linux)"
+msgstr ""
+"Дата/время создания файла — формат по умолчанию <code>%Y-%m-%d_%H%M%S</code> "
+"(время изменения inode в Linux)"
+
+#: src/pbrenamer/ui/pattern_help.py:282
+msgid "Name of the immediate parent folder"
+msgstr "Имя непосредственной родительской папки"
+
+#: src/pbrenamer/ui/pattern_help.py:286
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "Поле метаданных EXIF или IPTC (только изображения — см. список ниже)"
+
+#: src/pbrenamer/ui/pattern_help.py:291
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Поле метаданных аудио (mp3, ogg, flac… — см. список ниже)"
+
+#: src/pbrenamer/ui/pattern_help.py:297
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Поле метаданных видео (mp4, mkv, avi… — см. список ниже)"
+
+#: src/pbrenamer/ui/pattern_help.py:303
+msgid ""
+"Field names are case-insensitive. A <b>default</b> is strongly recommended "
+"for metadata fields — they may be absent from non-image files or images "
+"without metadata."
+msgstr ""
+"Имена полей нечувствительны к регистру. Значение <b>default</b> настоятельно "
+"рекомендуется для полей метаданных — они могут отсутствовать в файлах, "
+"не являющихся изображениями, или в изображениях без метаданных."
+
+#: src/pbrenamer/ui/pattern_help.py:307
+msgid "Type"
+msgstr "Тип"
+
+#: src/pbrenamer/ui/pattern_help.py:314
+msgid "Date/time the photo was taken"
+msgstr "Дата/время съёмки"
+
+#: src/pbrenamer/ui/pattern_help.py:315
+msgid "Date/time the image was digitised"
+msgstr "Дата/время оцифровки изображения"
+
+#: src/pbrenamer/ui/pattern_help.py:319
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Дата/время последнего изменения файла (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:322
+msgid "Camera manufacturer"
+msgstr "Производитель камеры"
+
+#: src/pbrenamer/ui/pattern_help.py:323
+msgid "Camera model"
+msgstr "Модель камеры"
+
+#: src/pbrenamer/ui/pattern_help.py:324
+msgid "Lens model"
+msgstr "Модель объектива"
+
+#: src/pbrenamer/ui/pattern_help.py:325
+msgid "ISO speed"
+msgstr "Чувствительность ISO"
+
+#: src/pbrenamer/ui/pattern_help.py:326
+msgid "Aperture (e.g. 2.8)"
+msgstr "Диафрагма (напр. 2.8)"
+
+#: src/pbrenamer/ui/pattern_help.py:327
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Выдержка (напр. 1/125)"
+
+#: src/pbrenamer/ui/pattern_help.py:328
+msgid "Focal length in mm"
+msgstr "Фокусное расстояние в мм"
+
+#: src/pbrenamer/ui/pattern_help.py:329
+msgid "Image description / title"
+msgstr "Описание / заголовок изображения"
+
+#: src/pbrenamer/ui/pattern_help.py:330
+msgid "Photographer / creator (EXIF)"
+msgstr "Фотограф / автор (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:331
+msgid "Copyright notice"
+msgstr "Уведомление об авторских правах"
+
+#: src/pbrenamer/ui/pattern_help.py:332
+msgid "IPTC title / object name"
+msgstr "Заголовок IPTC / имя объекта"
+
+#: src/pbrenamer/ui/pattern_help.py:333
+msgid "IPTC photographer / creator"
+msgstr "Фотограф IPTC / автор"
+
+#: src/pbrenamer/ui/pattern_help.py:334
+msgid "IPTC city"
+msgstr "Город IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:335
+msgid "IPTC country"
+msgstr "Страна IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:336
+msgid "IPTC creation date"
+msgstr "Дата создания IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:337
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Ключевые слова IPTC (через точку с запятой)"
+
+#: src/pbrenamer/ui/pattern_help.py:342
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, opus, "
+"aac/m4a and others supported by mutagen. A <b>default</b> is strongly "
+"recommended — tags may be absent or the file may not be a supported audio "
+"format."
+msgstr ""
+"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp3, ogg, "
+"flac, opus, aac/m4a и другие форматы, поддерживаемые mutagen. Значение "
+"<b>default</b> настоятельно рекомендуется — теги могут отсутствовать или "
+"файл может не быть поддерживаемым аудиоформатом."
+
+#: src/pbrenamer/ui/pattern_help.py:349
+msgid "Track title"
+msgstr "Название трека"
+
+#: src/pbrenamer/ui/pattern_help.py:350
+msgid "Track artist"
+msgstr "Исполнитель трека"
+
+#: src/pbrenamer/ui/pattern_help.py:351
+msgid "Album artist"
+msgstr "Исполнитель альбома"
+
+#: src/pbrenamer/ui/pattern_help.py:352
+msgid "Album name"
+msgstr "Название альбома"
+
+#: src/pbrenamer/ui/pattern_help.py:354
+msgid "Track number (strips /total if present)"
+msgstr "Номер трека (удаляет /общее количество, если присутствует)"
+
+#: src/pbrenamer/ui/pattern_help.py:356
+msgid "Disc number (strips /total if present)"
+msgstr "Номер диска (удаляет /общее количество, если присутствует)"
+
+#: src/pbrenamer/ui/pattern_help.py:361
+msgid ""
+"Release date — datetime.date when full date available (strftime formatting); "
+"plain text otherwise"
+msgstr ""
+"Дата выпуска — datetime.date, когда полная дата доступна (форматирование "
+"strftime); иначе простой текст"
+
+#: src/pbrenamer/ui/pattern_help.py:366
+msgid "Release year (extracted from date tag)"
+msgstr "Год выпуска (извлечён из тега даты)"
+
+#: src/pbrenamer/ui/pattern_help.py:367
+msgid "Genre"
+msgstr "Жанр"
+
+#: src/pbrenamer/ui/pattern_help.py:368
+msgid "Comment"
+msgstr "Комментарий"
+
+#: src/pbrenamer/ui/pattern_help.py:369
+msgid "Composer"
+msgstr "Композитор"
+
+#: src/pbrenamer/ui/pattern_help.py:370
+msgid "Beats per minute"
+msgstr "Ударов в минуту"
+
+#: src/pbrenamer/ui/pattern_help.py:371 src/pbrenamer/ui/pattern_help.py:386
+msgid "Duration in seconds"
+msgstr "Длительность в секундах"
+
+#: src/pbrenamer/ui/pattern_help.py:372
+msgid "Bitrate in kbps"
+msgstr "Битрейт в кбит/с"
+
+#: src/pbrenamer/ui/pattern_help.py:377
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is "
+"strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+msgstr ""
+"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp4, mkv, "
+"avi, mov, webm и другие форматы, поддерживаемые MediaInfo (pymediainfo). "
+"Значение <b>default</b> настоятельно рекомендуется — поля могут "
+"отсутствовать или файл может не быть поддерживаемым видеоформатом."
+
+#: src/pbrenamer/ui/pattern_help.py:384
+msgid "Video width in pixels"
+msgstr "Ширина видео в пикселях"
+
+#: src/pbrenamer/ui/pattern_help.py:385
+msgid "Video height in pixels"
+msgstr "Высота видео в пикселях"
+
+#: src/pbrenamer/ui/pattern_help.py:387
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Частота кадров (напр. 29.970)"
+
+#: src/pbrenamer/ui/pattern_help.py:388
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Название видеокодека (напр. AVC, HEVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:389
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Название аудиокодека (напр. AAC, AC-3)"
+
+#: src/pbrenamer/ui/pattern_help.py:390
+msgid "Number of audio channels"
+msgstr "Количество аудиоканалов"
+
+#: src/pbrenamer/ui/pattern_help.py:391
+msgid "Overall bitrate in kbps"
+msgstr "Общий битрейт в кбит/с"
+
+#: src/pbrenamer/ui/pattern_help.py:392
+msgid "Title tag"
+msgstr "Тег заголовка"
+
+#: src/pbrenamer/ui/pattern_help.py:393
+msgid "Encoded date/time"
+msgstr "Дата/время кодирования"
+
+#: src/pbrenamer/ui/pattern_help.py:401
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Группа захвата 1, за которой следует 4-значный счётчик с ведущими нулями "
+"(начинается с 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:406
+msgid "Same, but counter starts at 10"
+msgstr "То же, но счётчик начинается с 10"
+
+#: src/pbrenamer/ui/pattern_help.py:410
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
+"already exists"
+msgstr ""
+"Бесконфликтный 3-значный счётчик: пропускает значения, при которых "
+"<code>backup_NNN</code> уже существует"
+
+#: src/pbrenamer/ui/pattern_help.py:415
+msgid "Today's date prepended to the matched text"
+msgstr "Сегодняшняя дата, добавленная перед совпавшим текстом"
+
+#: src/pbrenamer/ui/pattern_help.py:418
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Дата/время съёмки компактно; \"неизвестно\" если EXIF отсутствует"
+
+#: src/pbrenamer/ui/pattern_help.py:423
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Час+минута оцифровки; \"0000\" если отсутствует"
+
+#: src/pbrenamer/ui/pattern_help.py:427
+msgid "Camera make and model (empty string if absent)"
+msgstr "Марка и модель камеры (пустая строка если отсутствует)"
+
+#: src/pbrenamer/ui/pattern_help.py:432
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Исполнитель и название аудио; \"неизвестно\"/\"без названия\" если отсутствует"
+
+#: src/pbrenamer/ui/pattern_help.py:436
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Дата выпуска аудио, номер трека с ведущими нулями, название"
+
+#: src/pbrenamer/ui/pattern_help.py:441
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Разрешение и кодек видео (напр. 1920x1080_AVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:445
+msgid "Video encoded date and duration in seconds"
+msgstr "Дата кодирования видео и длительность в секундах"
+
+#: src/pbrenamer/ui/pattern_help.py:448
+msgid "Named regex groups (regex mode only)"
+msgstr "Именованные группы regex (только режим regex)"
+
+#: src/pbrenamer/ui/pattern_help.py:451
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Родительская папка, дата изменения файла, 3-значный счётчик"
+
+#: src/pbrenamer/ui/pattern_help.py:458
+msgid "Replacement fields"
+msgstr "Поля замены"
+
+#: src/pbrenamer/ui/pattern_help.py:463
+msgid "Available fields"
+msgstr "Доступные поля"
+
+#: src/pbrenamer/ui/pattern_help.py:469
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Поля метаданных для <code>{im:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:476
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Поля аудиометаданных для <code>{au:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:483
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Поля видеометаданных для <code>{vi:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:490
+msgid "Examples"
+msgstr "Примеры"
+
+#: src/pbrenamer/ui/main_window.py:202
+msgid "Select folder"
+msgstr "Выбрать папку"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:86
+msgid "Original"
+msgstr "Оригинал"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:85
+#: /tmp/_pbrenamer_ui_strings.py:146
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: src/pbrenamer/ui/main_window.py:258
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} элемент(ов)"
+
+#: src/pbrenamer/ui/main_window.py:530
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} недоступно"
+
+#: src/pbrenamer/ui/main_window.py:610
+msgid "Search — Help"
+msgstr "Поиск — Справка"
+
+#: src/pbrenamer/ui/main_window.py:625
+msgid "Replace — Help"
+msgstr "Замена — Справка"
+
+#: src/pbrenamer/ui/main_window.py:811
+msgid "Rename errors"
+msgstr "Ошибки переименования"
+
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:161
+msgid "language_name"
+msgstr "Русский"
+
+#: /tmp/_pbrenamer_ui_strings.py:1
+msgid "History"
+msgstr "История"
+
+#: /tmp/_pbrenamer_ui_strings.py:2
+msgid "Search"
+msgstr "Поиск"
+
+#: /tmp/_pbrenamer_ui_strings.py:3
+msgid "Search pattern history"
+msgstr "История шаблонов поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:4 /tmp/_pbrenamer_ui_strings.py:23
+msgid "Select one or more entries to remove them"
+msgstr "Выберите одну или несколько записей для удаления"
+
+#: /tmp/_pbrenamer_ui_strings.py:5 /tmp/_pbrenamer_ui_strings.py:24
+msgid "Pattern…"
+msgstr "Шаблон…"
+
+#: /tmp/_pbrenamer_ui_strings.py:6
+msgid "New search pattern to add"
+msgstr "Новый шаблон поиска для добавления"
+
+#: /tmp/_pbrenamer_ui_strings.py:7
+msgid "pat"
+msgstr "pat"
+
+#: /tmp/_pbrenamer_ui_strings.py:8
+msgid "Pattern token mode"
+msgstr "Режим токенов шаблона"
+
+#: /tmp/_pbrenamer_ui_strings.py:9
+msgid "RE"
+msgstr "RE"
+
+#: /tmp/_pbrenamer_ui_strings.py:11
+msgid "txt"
+msgstr "txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:13 /tmp/_pbrenamer_ui_strings.py:26
+msgid "Add"
+msgstr "Добавить"
+
+#: /tmp/_pbrenamer_ui_strings.py:14
+msgid "Add this pattern to the search history"
+msgstr "Добавить этот шаблон в историю поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:15 /tmp/_pbrenamer_ui_strings.py:28
+msgid "Remove"
+msgstr "Удалить"
+
+#: /tmp/_pbrenamer_ui_strings.py:16 /tmp/_pbrenamer_ui_strings.py:29
+msgid "Remove selected entries"
+msgstr "Удалить выбранные записи"
+
+#: /tmp/_pbrenamer_ui_strings.py:17
+msgid "Delete the selected search history entries"
+msgstr "Удалить выбранные записи из истории поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:18 /tmp/_pbrenamer_ui_strings.py:31
+msgid "Clear all"
+msgstr "Очистить всё"
+
+#: /tmp/_pbrenamer_ui_strings.py:19
+msgid "Remove all search history entries"
+msgstr "Удалить все записи из истории поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:20
+msgid "Delete the entire search pattern history"
+msgstr "Удалить всю историю шаблонов поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:21
+msgid "Replace"
+msgstr "Замена"
+
+#: /tmp/_pbrenamer_ui_strings.py:22
+msgid "Replacement pattern history"
+msgstr "История шаблонов замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:25
+msgid "New replacement pattern to add"
+msgstr "Новый шаблон замены для добавления"
+
+#: /tmp/_pbrenamer_ui_strings.py:27
+msgid "Add this pattern to the replacement history"
+msgstr "Добавить этот шаблон в историю замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:30
+msgid "Delete the selected replacement history entries"
+msgstr "Удалить выбранные записи из истории замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:32
+msgid "Remove all replacement history entries"
+msgstr "Удалить все записи из истории замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:33
+msgid "Delete the entire replacement pattern history"
+msgstr "Удалить всю историю шаблонов замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:34
+msgid "Settings"
+msgstr "Настройки"
+
+#: /tmp/_pbrenamer_ui_strings.py:35
+msgid "Language:"
+msgstr "Язык:"
+
+#: /tmp/_pbrenamer_ui_strings.py:36
+msgid "Select the interface language"
+msgstr "Выбрать язык интерфейса"
+
+#: /tmp/_pbrenamer_ui_strings.py:37
+msgid "Log level:"
+msgstr "Уровень журнала:"
+
+#: /tmp/_pbrenamer_ui_strings.py:38
+msgid "Set the application logging verbosity"
+msgstr "Задать уровень детализации журнала приложения"
+
+#: /tmp/_pbrenamer_ui_strings.py:39
+msgid "A restart is required for the language change to take effect."
+msgstr "Для применения изменения языка требуется перезапуск."
+
+#: /tmp/_pbrenamer_ui_strings.py:40 /tmp/_pbrenamer_ui_strings.py:61
+msgid "About PBRenamer"
+msgstr "О программе PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:41
+msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+
+#: /tmp/_pbrenamer_ui_strings.py:42
+msgid "Application version"
+msgstr "Версия приложения"
+
+#: /tmp/_pbrenamer_ui_strings.py:43
+msgid "A graphical batch file renaming utility."
+msgstr "Графическая утилита для массового переименования файлов."
+
+#: /tmp/_pbrenamer_ui_strings.py:44
+msgid "© 2026 Marcel Spock <mrspock@cardolan.net>"
+msgstr "© 2026 Marcel Spock <mrspock@cardolan.net>"
+
+#: /tmp/_pbrenamer_ui_strings.py:45
+msgid "License: GPLv3"
+msgstr "Лицензия: GPLv3"
+
+#: /tmp/_pbrenamer_ui_strings.py:46
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:47
+msgid "Open folder…"
+msgstr "Открыть папку…"
+
+#: /tmp/_pbrenamer_ui_strings.py:48
+msgid "Ctrl+O"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:49
+msgid "Open a folder"
+msgstr "Открыть папку"
+
+#: /tmp/_pbrenamer_ui_strings.py:50
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr ""
+"Открыть диалог выбора каталога и перейти в дереве к выбранной папке"
+
+#: /tmp/_pbrenamer_ui_strings.py:51
+msgid "Quit"
+msgstr "Выйти"
+
+#: /tmp/_pbrenamer_ui_strings.py:52
+msgid "Ctrl+Q"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:53
+msgid "Quit PBRenamer"
+msgstr "Выйти из PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:54
+msgid "Exit the application"
+msgstr "Закрыть приложение"
+
+#: /tmp/_pbrenamer_ui_strings.py:55
+msgid "History…"
+msgstr "История…"
+
+#: /tmp/_pbrenamer_ui_strings.py:56
+msgid "Manage pattern history"
+msgstr "Управление историей шаблонов"
+
+#: /tmp/_pbrenamer_ui_strings.py:57
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr "Добавить или удалить записи из истории шаблонов поиска и замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:58
+msgid "Settings…"
+msgstr "Настройки…"
+
+#: /tmp/_pbrenamer_ui_strings.py:59
+msgid "Open settings"
+msgstr "Открыть настройки"
+
+#: /tmp/_pbrenamer_ui_strings.py:60
+msgid "Configure language and other preferences"
+msgstr "Настроить язык и другие параметры"
+
+#: /tmp/_pbrenamer_ui_strings.py:62
+msgid "About this application"
+msgstr "О приложении"
+
+#: /tmp/_pbrenamer_ui_strings.py:63
+msgid "Show version and license information"
+msgstr "Показать информацию о версии и лицензии"
+
+#: /tmp/_pbrenamer_ui_strings.py:64
+msgid "Show:"
+msgstr "Показать:"
+
+#: /tmp/_pbrenamer_ui_strings.py:65
+msgid "Files only"
+msgstr "Только файлы"
+
+#: /tmp/_pbrenamer_ui_strings.py:66
+msgid "Directories only"
+msgstr "Только папки"
+
+#: /tmp/_pbrenamer_ui_strings.py:67
+msgid "Files and directories"
+msgstr "Файлы и папки"
+
+#: /tmp/_pbrenamer_ui_strings.py:68
+msgid "Choose which entries to list"
+msgstr "Выбрать, какие элементы отображать"
+
+#: /tmp/_pbrenamer_ui_strings.py:69
+msgid "List files only, directories only, or both"
+msgstr "Отображать только файлы, только папки или и то, и другое"
+
+#: /tmp/_pbrenamer_ui_strings.py:70
+msgid "Recursive"
+msgstr "Рекурсивно"
+
+#: /tmp/_pbrenamer_ui_strings.py:71
+msgid "Include all subdirectories"
+msgstr "Включить все подпапки"
+
+#: /tmp/_pbrenamer_ui_strings.py:72
+msgid "When checked, files from all subdirectories are listed"
+msgstr "Если отмечено, отображаются файлы из всех подпапок"
+
+#: /tmp/_pbrenamer_ui_strings.py:73
+msgid "Keep extension"
+msgstr "Сохранять расширение"
+
+#: /tmp/_pbrenamer_ui_strings.py:74
+msgid "Preserve the file extension"
+msgstr "Сохранять расширение файла"
+
+#: /tmp/_pbrenamer_ui_strings.py:75
+msgid ""
+"Apply transformations to the file stem only, leaving the extension unchanged"
+msgstr ""
+"Применять преобразования только к имени файла без расширения, оставляя "
+"расширение неизменным"
+
+#: /tmp/_pbrenamer_ui_strings.py:76
+msgid "Auto-preview"
+msgstr "Автопредпросмотр"
+
+#: /tmp/_pbrenamer_ui_strings.py:77
+msgid "Refresh the preview automatically"
+msgstr "Обновлять предпросмотр автоматически"
+
+#: /tmp/_pbrenamer_ui_strings.py:78
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Пересчитывать предпросмотр при каждом изменении шаблона или параметров"
+
+#: /tmp/_pbrenamer_ui_strings.py:79
+msgid "Filter:"
+msgstr "Фильтр:"
+
+#: /tmp/_pbrenamer_ui_strings.py:80
+msgid "*.txt"
+msgstr "*.txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:81
+msgid "Glob pattern to filter the file list"
+msgstr "Glob-шаблон для фильтрации списка файлов"
+
+#: /tmp/_pbrenamer_ui_strings.py:82
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr ""
+"Отображаются только файлы, соответствующие этому glob-шаблону "
+"(напр. *.txt, image_*)"
+
+#: /tmp/_pbrenamer_ui_strings.py:83
+msgid "Browse the filesystem"
+msgstr "Обзор файловой системы"
+
+#: /tmp/_pbrenamer_ui_strings.py:84
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "Выберите каталог для отображения его содержимого на правой панели"
+
+#: /tmp/_pbrenamer_ui_strings.py:87
+msgid "Files to be renamed"
+msgstr "Файлы для переименования"
+
+#: /tmp/_pbrenamer_ui_strings.py:88
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to apply "
+"to all"
+msgstr ""
+"Выберите строки для ограничения операций этими файлами; оставьте без "
+"выбора, чтобы применить ко всем"
+
+#: /tmp/_pbrenamer_ui_strings.py:90
+msgid "Search pattern"
+msgstr "Шаблон поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:91
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} letters, "
+"{C} non-space, {X} anything"
+msgstr ""
+"Шаблон для сопоставления с именами файлов. Используйте токены: {#} цифры, "
+"{L} буквы, {C} без пробелов, {X} любое"
+
+#: /tmp/_pbrenamer_ui_strings.py:92 /tmp/_pbrenamer_ui_strings.py:108
+msgid "Save to history"
+msgstr "Сохранить в историю"
+
+#: /tmp/_pbrenamer_ui_strings.py:93
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "Добавить текущий шаблон поиска и режим в историю выпадающего списка"
+
+#: /tmp/_pbrenamer_ui_strings.py:94
+msgid "Search pattern help"
+msgstr "Справка по шаблонам поиска"
+
+#: /tmp/_pbrenamer_ui_strings.py:95
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, Plain "
+"text)"
+msgstr ""
+"Показать справку по шаблонам поиска (токены шаблона, регулярные выражения, "
+"простой текст)"
+
+#: /tmp/_pbrenamer_ui_strings.py:96
+msgid "Pattern"
+msgstr "Шаблон"
+
+#: /tmp/_pbrenamer_ui_strings.py:97
+msgid "Search using pattern tokens"
+msgstr "Поиск с использованием токенов шаблона"
+
+#: /tmp/_pbrenamer_ui_strings.py:98
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "Сопоставлять имена файлов с помощью токенов шаблона ({#}, {L}, {X}…)"
+
+#: /tmp/_pbrenamer_ui_strings.py:99
+msgid "Regular expression"
+msgstr "Регулярное выражение"
+
+#: /tmp/_pbrenamer_ui_strings.py:100
+msgid "Search using a Python regular expression"
+msgstr "Поиск с использованием регулярного выражения Python"
+
+#: /tmp/_pbrenamer_ui_strings.py:101
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr ""
+"Сопоставлять имена файлов с помощью регулярного выражения Python; "
+"использовать \\1 \\2… для обратных ссылок в замене"
+
+#: /tmp/_pbrenamer_ui_strings.py:102
+msgid "Plain text"
+msgstr "Простой текст"
+
+#: /tmp/_pbrenamer_ui_strings.py:103
+msgid "Search for a literal string"
+msgstr "Искать буквальную строку"
+
+#: /tmp/_pbrenamer_ui_strings.py:104
+msgid "Match file names by looking for the search text as a literal string"
+msgstr "Сопоставлять имена файлов, ища поисковый текст как буквальную строку"
+
+#: /tmp/_pbrenamer_ui_strings.py:106
+msgid "Replacement pattern"
+msgstr "Шаблон замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:107
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, "
+"{date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Шаблон замены. Используйте {1} {2}… для групп захвата, {num} для счётчика, "
+"{date} для сегодняшней даты, {dir} для имени родительской папки"
+
+#: /tmp/_pbrenamer_ui_strings.py:109
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "Добавить текущий шаблон замены в историю выпадающего списка"
+
+#: /tmp/_pbrenamer_ui_strings.py:110
+msgid "Replacement pattern help"
+msgstr "Справка по шаблонам замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:111
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr ""
+"Показать справку по шаблонам замены (группы захвата, счётчик, дата, "
+"токены каталога)"
+
+#: /tmp/_pbrenamer_ui_strings.py:112
+msgid "Post-processing"
+msgstr "Постобработка"
+
+#: /tmp/_pbrenamer_ui_strings.py:113
+msgid "Separator:"
+msgstr "Разделитель:"
+
+#: /tmp/_pbrenamer_ui_strings.py:114 /tmp/_pbrenamer_ui_strings.py:130
+msgid "No change"
+msgstr "Без изменений"
+
+#: /tmp/_pbrenamer_ui_strings.py:115
+msgid "Spaces → underscores"
+msgstr "Пробелы → подчёркивания"
+
+#: /tmp/_pbrenamer_ui_strings.py:116
+msgid "Underscores → spaces"
+msgstr "Подчёркивания → пробелы"
+
+#: /tmp/_pbrenamer_ui_strings.py:117
+msgid "Spaces → dots"
+msgstr "Пробелы → точки"
+
+#: /tmp/_pbrenamer_ui_strings.py:118
+msgid "Dots → spaces"
+msgstr "Точки → пробелы"
+
+#: /tmp/_pbrenamer_ui_strings.py:119
+msgid "Spaces → dashes"
+msgstr "Пробелы → дефисы"
+
+#: /tmp/_pbrenamer_ui_strings.py:120
+msgid "Dashes → spaces"
+msgstr "Дефисы → пробелы"
+
+#: /tmp/_pbrenamer_ui_strings.py:121
+msgid "Separator conversion"
+msgstr "Преобразование разделителей"
+
+#: /tmp/_pbrenamer_ui_strings.py:122
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the "
+"pattern"
+msgstr ""
+"Применить преобразование разделителей к каждому переименованному имени "
+"файла после применения шаблона"
+
+#: /tmp/_pbrenamer_ui_strings.py:123
+msgid "Remove accents"
+msgstr "Удалить акценты"
+
+#: /tmp/_pbrenamer_ui_strings.py:124
+msgid "Strip diacritical marks"
+msgstr "Убрать диакритические знаки"
+
+#: /tmp/_pbrenamer_ui_strings.py:125
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "Преобразовать символы с акцентами в их ASCII-эквиваленты (é→e, ü→u и т.д.)"
+
+#: /tmp/_pbrenamer_ui_strings.py:126
+msgid "Remove duplicate separators"
+msgstr "Удалить повторяющиеся разделители"
+
+#: /tmp/_pbrenamer_ui_strings.py:127
+msgid "Collapse consecutive separators"
+msgstr "Свернуть последовательные разделители"
+
+#: /tmp/_pbrenamer_ui_strings.py:128
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Свернуть последовательности одинаковых разделителей (пробелы, точки, "
+"дефисы, подчёркивания) в один"
+
+#: /tmp/_pbrenamer_ui_strings.py:129
+msgid "Case:"
+msgstr "Регистр:"
+
+#: /tmp/_pbrenamer_ui_strings.py:131
+msgid "UPPERCASE"
+msgstr "ВЕРХНИЙ РЕГИСТР"
+
+#: /tmp/_pbrenamer_ui_strings.py:132
+msgid "lowercase"
+msgstr "нижний регистр"
+
+#: /tmp/_pbrenamer_ui_strings.py:133
+msgid "Capitalize first letter"
+msgstr "Первая буква заглавная"
+
+#: /tmp/_pbrenamer_ui_strings.py:134
+msgid "Title Case"
+msgstr "Каждое слово с заглавной"
+
+#: /tmp/_pbrenamer_ui_strings.py:135
+msgid "Capitalization mode"
+msgstr "Режим регистра"
+
+#: /tmp/_pbrenamer_ui_strings.py:136
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr ""
+"Выбрать, как изменять регистр имён файлов после применения шаблона"
+
+#: /tmp/_pbrenamer_ui_strings.py:137
+msgid "Save:"
+msgstr "Сохранить:"
+
+#: /tmp/_pbrenamer_ui_strings.py:138
+msgid "Named save"
+msgstr "Именованное сохранение"
+
+#: /tmp/_pbrenamer_ui_strings.py:139
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace "
+"parameters"
+msgstr ""
+"Введите имя (буквы, цифры, _ и -) для сохранения или загрузки всех "
+"параметров поиска/замены"
+
+#: /tmp/_pbrenamer_ui_strings.py:140
+msgid "Save"
+msgstr "Сохранить"
+
+#: /tmp/_pbrenamer_ui_strings.py:141
+msgid "Save current settings under this name"
+msgstr "Сохранить текущие настройки под этим именем"
+
+#: /tmp/_pbrenamer_ui_strings.py:142
+msgid ""
+"Save all search, replace and post-processing settings under the current name "
+"(overwrites any existing save with the same name)"
+msgstr ""
+"Сохранить все настройки поиска, замены и постобработки под текущим именем "
+"(перезаписывает существующее сохранение с тем же именем)"
+
+#: /tmp/_pbrenamer_ui_strings.py:143
+msgid "Delete"
+msgstr "Удалить"
+
+#: /tmp/_pbrenamer_ui_strings.py:144
+msgid "Delete this named save"
+msgstr "Удалить это именованное сохранение"
+
+#: /tmp/_pbrenamer_ui_strings.py:145
+msgid "Permanently delete the named save matching the current name"
+msgstr "Безвозвратно удалить именованное сохранение, соответствующее текущему имени"
+
+#: /tmp/_pbrenamer_ui_strings.py:147
+msgid "Compute rename preview"
+msgstr "Вычислить предпросмотр переименования"
+
+#: /tmp/_pbrenamer_ui_strings.py:148
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Применить текущий шаблон ко всем перечисленным файлам и показать результат "
+"в столбце Предпросмотр"
+
+#: /tmp/_pbrenamer_ui_strings.py:149
+msgid "Clear"
+msgstr "Очистить"
+
+#: /tmp/_pbrenamer_ui_strings.py:150
+msgid "Clear the preview"
+msgstr "Очистить предпросмотр"
+
+#: /tmp/_pbrenamer_ui_strings.py:151
+msgid "Remove all preview values from the Preview column"
+msgstr "Удалить все значения предпросмотра из столбца Предпросмотр"
+
+#: /tmp/_pbrenamer_ui_strings.py:152
+msgid "Undo"
+msgstr "Отменить"
+
+#: /tmp/_pbrenamer_ui_strings.py:153
+msgid "Undo last rename batch"
+msgstr "Отменить последний пакет переименований"
+
+#: /tmp/_pbrenamer_ui_strings.py:154
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Обратить последний пакет переименований, выполненных на диске"
+
+#: /tmp/_pbrenamer_ui_strings.py:155
+msgid "Rename"
+msgstr "Переименовать"
+
+#: /tmp/_pbrenamer_ui_strings.py:156
+msgid "Apply renames on disk"
+msgstr "Применить переименования на диске"
+
+#: /tmp/_pbrenamer_ui_strings.py:157
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled when "
+"there are no conflicts)"
+msgstr ""
+"Безвозвратно переименовать все файлы, показанные в столбце Предпросмотр "
+"(доступно только при отсутствии конфликтов)"
+
+#: /tmp/_pbrenamer_ui_strings.py:158
+msgid "File"
+msgstr "Файл"
+
+#: /tmp/_pbrenamer_ui_strings.py:159
+msgid "Edit"
+msgstr "Правка"
+
+#: /tmp/_pbrenamer_ui_strings.py:160
+msgid "Help"
+msgstr "Справка"

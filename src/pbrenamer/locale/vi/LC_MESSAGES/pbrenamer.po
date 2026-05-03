@@ -1,0 +1,1243 @@
+# Vietnamese translation for PBRenamer.
+# Copyright (C) 2024 Marcel Spock <mrspock@cardolan.net>
+# License: GPLv3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 14:52+0200\n"
+"PO-Revision-Date: 2026-05-03 00:00+0000\n"
+"Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
+"Language-Team: Vietnamese <vi@li.org>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/pbrenamer/ui/settings_dialog.py:19
+msgid "System default"
+msgstr "Mặc định hệ thống"
+
+#: src/pbrenamer/ui/pattern_help.py:76
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, <b>{2}</b>… "
+"are <em>captured</em> and available for reuse in the replacement field."
+msgstr ""
+"Token hoạt động như ký tự đại diện có kiểu. Các đoạn nằm trong <b>{1}</b>, "
+"<b>{2}</b>… được <em>chụp lại</em> và có thể tái sử dụng trong trường thay "
+"thế."
+
+#: src/pbrenamer/ui/pattern_help.py:81
+msgid "One or more digits (0–9)"
+msgstr "Một hoặc nhiều chữ số (0–9)"
+
+#: src/pbrenamer/ui/pattern_help.py:82
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Một hoặc nhiều chữ cái (a–z, A–Z và chữ cái Unicode)"
+
+#: src/pbrenamer/ui/pattern_help.py:83
+msgid "One or more non-whitespace characters"
+msgstr "Một hoặc nhiều ký tự không phải khoảng trắng"
+
+#: src/pbrenamer/ui/pattern_help.py:84
+msgid "Any sequence of characters, including empty"
+msgstr "Bất kỳ chuỗi ký tự nào, kể cả rỗng"
+
+#: src/pbrenamer/ui/pattern_help.py:85
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Thùng rác — khớp và bỏ qua một đoạn (không chụp lại)"
+
+#: src/pbrenamer/ui/pattern_help.py:89
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Nhóm chụp — văn bản khớp được gắn với {1}, {2}… trong phần thay thế"
+
+#: src/pbrenamer/ui/pattern_help.py:97 src/pbrenamer/ui/pattern_help.py:137
+#: src/pbrenamer/ui/pattern_help.py:153
+msgid "Example"
+msgstr "Ví dụ"
+
+#: src/pbrenamer/ui/pattern_help.py:99 src/pbrenamer/ui/pattern_help.py:139
+#: src/pbrenamer/ui/pattern_help.py:155 /tmp/_pbrenamer_ui_strings.py:89
+msgid "Search:"
+msgstr "Tìm kiếm:"
+
+#: src/pbrenamer/ui/pattern_help.py:101 src/pbrenamer/ui/pattern_help.py:141
+#: src/pbrenamer/ui/pattern_help.py:157 /tmp/_pbrenamer_ui_strings.py:105
+msgid "Replace:"
+msgstr "Thay thế:"
+
+#: src/pbrenamer/ui/pattern_help.py:108
+msgid ""
+"Full Python <code>re</code>-module syntax. The match is applied to the file "
+"stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr ""
+"Cú pháp đầy đủ của mô-đun <code>re</code> Python. Khớp được áp dụng cho "
+"tên cơ sở của tệp (hoặc tên đầy đủ nếu <em>Giữ phần mở rộng</em> "
+"bị bỏ chọn)."
+
+#: src/pbrenamer/ui/pattern_help.py:113
+msgid "Any single character"
+msgstr "Bất kỳ ký tự đơn nào"
+
+#: src/pbrenamer/ui/pattern_help.py:115
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Bất kỳ chuỗi nào (tham lam), biến thể không rỗng"
+
+#: src/pbrenamer/ui/pattern_help.py:117
+msgid "One or more digits"
+msgstr "Một hoặc nhiều chữ số"
+
+#: src/pbrenamer/ui/pattern_help.py:118
+msgid "Word characters (letters, digits, _)"
+msgstr "Ký tự từ (chữ cái, chữ số, _)"
+
+#: src/pbrenamer/ui/pattern_help.py:122
+msgid ""
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in replacement"
+msgstr ""
+"Nhóm chụp được đánh số → <code>\\1</code>, <code>\\2</code>… trong phần "
+"thay thế"
+
+#: src/pbrenamer/ui/pattern_help.py:129
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Nhóm chụp có tên → <code>\\g&lt;name&gt;</code> trong phần thay thế"
+
+#: src/pbrenamer/ui/pattern_help.py:131
+msgid "Case-insensitive flag"
+msgstr "Cờ không phân biệt chữ hoa/thường"
+
+#: src/pbrenamer/ui/pattern_help.py:132
+msgid "Start / end of the name"
+msgstr "Đầu / cuối tên"
+
+#: src/pbrenamer/ui/pattern_help.py:148
+msgid ""
+"The search field is matched as a literal string — no wildcards, no special "
+"characters. Every occurrence of the exact text in the file name is replaced."
+msgstr ""
+"Trường tìm kiếm được khớp như chuỗi ký tự — không có ký tự đại diện, không "
+"có ký tự đặc biệt. Mỗi lần xuất hiện văn bản chính xác trong tên tệp đều "
+"được thay thế."
+
+#: src/pbrenamer/ui/pattern_help.py:164
+msgid "Search patterns"
+msgstr "Mẫu tìm kiếm"
+
+#: src/pbrenamer/ui/pattern_help.py:165
+msgid "Pattern mode"
+msgstr "Chế độ mẫu"
+
+#: src/pbrenamer/ui/pattern_help.py:170 /tmp/_pbrenamer_ui_strings.py:10
+msgid "Regular expression mode"
+msgstr "Chế độ biểu thức chính quy"
+
+#: src/pbrenamer/ui/pattern_help.py:175 /tmp/_pbrenamer_ui_strings.py:12
+msgid "Plain text mode"
+msgstr "Chế độ văn bản thuần"
+
+#: src/pbrenamer/ui/pattern_help.py:186
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields are "
+"written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"Chuỗi thay thế giống nhau bất kể chế độ tìm kiếm. Các trường được viết là "
+"<code>{name}</code> và có thể bao gồm các tùy chọn định dạng:"
+
+#: src/pbrenamer/ui/pattern_help.py:191
+msgid "plain value"
+msgstr "giá trị thuần"
+
+#: src/pbrenamer/ui/pattern_help.py:192
+msgid "with format"
+msgstr "có định dạng"
+
+#: src/pbrenamer/ui/pattern_help.py:193
+msgid "with format and fallback"
+msgstr "có định dạng và giá trị dự phòng"
+
+#: src/pbrenamer/ui/pattern_help.py:194
+msgid "left-align  (digit fmt = min width)"
+msgstr "căn trái  (fmt chữ số = độ rộng tối thiểu)"
+
+#: src/pbrenamer/ui/pattern_help.py:195
+msgid "right-align"
+msgstr "căn phải"
+
+#: src/pbrenamer/ui/pattern_help.py:196
+msgid "zero-pad right (numbers)"
+msgstr "đệm số không bên phải (số)"
+
+#: src/pbrenamer/ui/pattern_help.py:197
+msgid "literal '{' character"
+msgstr "ký tự '{' theo nghĩa đen"
+
+#: src/pbrenamer/ui/pattern_help.py:201
+msgid ""
+"<b>fmt</b> is a minimum width (digit) for text/numbers, or a <code>strftime</"
+"code> format for dates/datetimes.<br><b>default</b>: used when the field is "
+"absent; omitting it makes absence an error (file shown in red in the "
+"preview)."
+msgstr ""
+"<b>fmt</b> là độ rộng tối thiểu (chữ số) cho văn bản/số, hoặc định dạng "
+"<code>strftime</code> cho ngày/giờ.<br><b>default</b>: được dùng khi trường "
+"vắng mặt; bỏ qua nó làm sự vắng mặt thành lỗi (tệp hiển thị màu đỏ trong "
+"bản xem trước)."
+
+#: src/pbrenamer/ui/pattern_help.py:208
+msgid "all modes"
+msgstr "tất cả chế độ"
+
+#: src/pbrenamer/ui/pattern_help.py:209
+msgid "pattern, regex"
+msgstr "mẫu, regex"
+
+#: src/pbrenamer/ui/pattern_help.py:210
+msgid "regex only"
+msgstr "chỉ regex"
+
+#: src/pbrenamer/ui/pattern_help.py:211
+msgid "Field"
+msgstr "Trường"
+
+#: src/pbrenamer/ui/pattern_help.py:212
+msgid "Available in"
+msgstr "Có sẵn trong"
+
+#: src/pbrenamer/ui/pattern_help.py:213
+msgid "Description"
+msgstr "Mô tả"
+
+#: src/pbrenamer/ui/pattern_help.py:224
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Toàn bộ văn bản khớp (hoặc chuỗi tìm kiếm trong chế độ văn bản thuần)"
+
+#: src/pbrenamer/ui/pattern_help.py:230
+msgid "Numbered capture groups (1-based)"
+msgstr "Nhóm chụp được đánh số (bắt đầu từ 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:235
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Nhóm có tên <code>(?P&lt;name&gt;…)</code> từ regex tìm kiếm"
+
+#: src/pbrenamer/ui/pattern_help.py:242
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; <em>default</em> "
+"sets the start value (e.g. <code>{num:02:10}</code> starts at 10, zero-"
+"padded to 2 digits)"
+msgstr ""
+"Bộ đếm tự tăng — fmt mặc định là độ rộng tối thiểu; <em>default</em> đặt "
+"giá trị bắt đầu (vd. <code>{num:02:10}</code> bắt đầu từ 10, đệm số không "
+"thành 2 chữ số)"
+
+#: src/pbrenamer/ui/pattern_help.py:251
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists on "
+"disk or has been assigned to another file in the same batch — guarantees no "
+"conflicts"
+msgstr ""
+"Giống <code>{num}</code> nhưng bỏ qua các giá trị mà tên đích đã tồn tại "
+"trên đĩa hoặc đã được gán cho tệp khác trong cùng lô — đảm bảo không có "
+"xung đột"
+
+#: src/pbrenamer/ui/pattern_help.py:260
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Ngày hôm nay — định dạng mặc định <code>%Y-%m-%d</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:266
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Ngày và giờ hiện tại — định dạng mặc định <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:271
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr ""
+"Ngày/giờ sửa đổi tệp — định dạng mặc định <code>%Y-%m-%d_%H%M%S</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:278
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode "
+"change time on Linux)"
+msgstr ""
+"Ngày/giờ tạo tệp — định dạng mặc định <code>%Y-%m-%d_%H%M%S</code> "
+"(thời gian thay đổi inode trên Linux)"
+
+#: src/pbrenamer/ui/pattern_help.py:282
+msgid "Name of the immediate parent folder"
+msgstr "Tên thư mục cha trực tiếp"
+
+#: src/pbrenamer/ui/pattern_help.py:286
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "Trường siêu dữ liệu EXIF hoặc IPTC (chỉ ảnh — xem danh sách bên dưới)"
+
+#: src/pbrenamer/ui/pattern_help.py:291
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Trường siêu dữ liệu âm thanh (mp3, ogg, flac… — xem danh sách bên dưới)"
+
+#: src/pbrenamer/ui/pattern_help.py:297
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Trường siêu dữ liệu video (mp4, mkv, avi… — xem danh sách bên dưới)"
+
+#: src/pbrenamer/ui/pattern_help.py:303
+msgid ""
+"Field names are case-insensitive. A <b>default</b> is strongly recommended "
+"for metadata fields — they may be absent from non-image files or images "
+"without metadata."
+msgstr ""
+"Tên trường không phân biệt chữ hoa/thường. Nên đặt giá trị <b>default</b> "
+"cho các trường siêu dữ liệu — chúng có thể vắng mặt trong tệp không phải "
+"ảnh hoặc ảnh không có siêu dữ liệu."
+
+#: src/pbrenamer/ui/pattern_help.py:307
+msgid "Type"
+msgstr "Loại"
+
+#: src/pbrenamer/ui/pattern_help.py:314
+msgid "Date/time the photo was taken"
+msgstr "Ngày/giờ chụp ảnh"
+
+#: src/pbrenamer/ui/pattern_help.py:315
+msgid "Date/time the image was digitised"
+msgstr "Ngày/giờ số hóa ảnh"
+
+#: src/pbrenamer/ui/pattern_help.py:319
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Ngày/giờ thay đổi tệp lần cuối (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:322
+msgid "Camera manufacturer"
+msgstr "Nhà sản xuất máy ảnh"
+
+#: src/pbrenamer/ui/pattern_help.py:323
+msgid "Camera model"
+msgstr "Mẫu máy ảnh"
+
+#: src/pbrenamer/ui/pattern_help.py:324
+msgid "Lens model"
+msgstr "Mẫu ống kính"
+
+#: src/pbrenamer/ui/pattern_help.py:325
+msgid "ISO speed"
+msgstr "Độ nhạy ISO"
+
+#: src/pbrenamer/ui/pattern_help.py:326
+msgid "Aperture (e.g. 2.8)"
+msgstr "Khẩu độ (vd. 2.8)"
+
+#: src/pbrenamer/ui/pattern_help.py:327
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Tốc độ màn trập (vd. 1/125)"
+
+#: src/pbrenamer/ui/pattern_help.py:328
+msgid "Focal length in mm"
+msgstr "Tiêu cự tính bằng mm"
+
+#: src/pbrenamer/ui/pattern_help.py:329
+msgid "Image description / title"
+msgstr "Mô tả / tiêu đề ảnh"
+
+#: src/pbrenamer/ui/pattern_help.py:330
+msgid "Photographer / creator (EXIF)"
+msgstr "Nhiếp ảnh gia / tác giả (EXIF)"
+
+#: src/pbrenamer/ui/pattern_help.py:331
+msgid "Copyright notice"
+msgstr "Thông báo bản quyền"
+
+#: src/pbrenamer/ui/pattern_help.py:332
+msgid "IPTC title / object name"
+msgstr "Tiêu đề IPTC / tên đối tượng"
+
+#: src/pbrenamer/ui/pattern_help.py:333
+msgid "IPTC photographer / creator"
+msgstr "Nhiếp ảnh gia IPTC / tác giả"
+
+#: src/pbrenamer/ui/pattern_help.py:334
+msgid "IPTC city"
+msgstr "Thành phố IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:335
+msgid "IPTC country"
+msgstr "Quốc gia IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:336
+msgid "IPTC creation date"
+msgstr "Ngày tạo IPTC"
+
+#: src/pbrenamer/ui/pattern_help.py:337
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Từ khóa IPTC (phân cách bằng dấu chấm phẩy)"
+
+#: src/pbrenamer/ui/pattern_help.py:342
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, opus, "
+"aac/m4a and others supported by mutagen. A <b>default</b> is strongly "
+"recommended — tags may be absent or the file may not be a supported audio "
+"format."
+msgstr ""
+"Tên trường không phân biệt chữ hoa/thường. Định dạng được hỗ trợ: mp3, "
+"ogg, flac, opus, aac/m4a và các định dạng khác được mutagen hỗ trợ. Nên "
+"đặt giá trị <b>default</b> — thẻ có thể vắng mặt hoặc tệp có thể không "
+"phải định dạng âm thanh được hỗ trợ."
+
+#: src/pbrenamer/ui/pattern_help.py:349
+msgid "Track title"
+msgstr "Tiêu đề bản nhạc"
+
+#: src/pbrenamer/ui/pattern_help.py:350
+msgid "Track artist"
+msgstr "Nghệ sĩ bản nhạc"
+
+#: src/pbrenamer/ui/pattern_help.py:351
+msgid "Album artist"
+msgstr "Nghệ sĩ album"
+
+#: src/pbrenamer/ui/pattern_help.py:352
+msgid "Album name"
+msgstr "Tên album"
+
+#: src/pbrenamer/ui/pattern_help.py:354
+msgid "Track number (strips /total if present)"
+msgstr "Số bản nhạc (bỏ /tổng số nếu có)"
+
+#: src/pbrenamer/ui/pattern_help.py:356
+msgid "Disc number (strips /total if present)"
+msgstr "Số đĩa (bỏ /tổng số nếu có)"
+
+#: src/pbrenamer/ui/pattern_help.py:361
+msgid ""
+"Release date — datetime.date when full date available (strftime formatting); "
+"plain text otherwise"
+msgstr ""
+"Ngày phát hành — datetime.date khi có ngày đầy đủ (định dạng strftime); "
+"văn bản thuần trong trường hợp khác"
+
+#: src/pbrenamer/ui/pattern_help.py:366
+msgid "Release year (extracted from date tag)"
+msgstr "Năm phát hành (trích xuất từ thẻ ngày)"
+
+#: src/pbrenamer/ui/pattern_help.py:367
+msgid "Genre"
+msgstr "Thể loại"
+
+#: src/pbrenamer/ui/pattern_help.py:368
+msgid "Comment"
+msgstr "Nhận xét"
+
+#: src/pbrenamer/ui/pattern_help.py:369
+msgid "Composer"
+msgstr "Nhạc sĩ"
+
+#: src/pbrenamer/ui/pattern_help.py:370
+msgid "Beats per minute"
+msgstr "Nhịp mỗi phút"
+
+#: src/pbrenamer/ui/pattern_help.py:371 src/pbrenamer/ui/pattern_help.py:386
+msgid "Duration in seconds"
+msgstr "Thời lượng tính bằng giây"
+
+#: src/pbrenamer/ui/pattern_help.py:372
+msgid "Bitrate in kbps"
+msgstr "Tốc độ bit tính bằng kbps"
+
+#: src/pbrenamer/ui/pattern_help.py:377
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is "
+"strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+msgstr ""
+"Tên trường không phân biệt chữ hoa/thường. Định dạng được hỗ trợ: mp4, "
+"mkv, avi, mov, webm và các định dạng khác được MediaInfo (pymediainfo) hỗ "
+"trợ. Nên đặt giá trị <b>default</b> — các trường có thể vắng mặt hoặc tệp "
+"có thể không phải định dạng video được hỗ trợ."
+
+#: src/pbrenamer/ui/pattern_help.py:384
+msgid "Video width in pixels"
+msgstr "Chiều rộng video tính bằng pixel"
+
+#: src/pbrenamer/ui/pattern_help.py:385
+msgid "Video height in pixels"
+msgstr "Chiều cao video tính bằng pixel"
+
+#: src/pbrenamer/ui/pattern_help.py:387
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Tốc độ khung hình (vd. 29.970)"
+
+#: src/pbrenamer/ui/pattern_help.py:388
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Tên codec video (vd. AVC, HEVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:389
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Tên codec âm thanh (vd. AAC, AC-3)"
+
+#: src/pbrenamer/ui/pattern_help.py:390
+msgid "Number of audio channels"
+msgstr "Số kênh âm thanh"
+
+#: src/pbrenamer/ui/pattern_help.py:391
+msgid "Overall bitrate in kbps"
+msgstr "Tổng tốc độ bit tính bằng kbps"
+
+#: src/pbrenamer/ui/pattern_help.py:392
+msgid "Title tag"
+msgstr "Thẻ tiêu đề"
+
+#: src/pbrenamer/ui/pattern_help.py:393
+msgid "Encoded date/time"
+msgstr "Ngày/giờ mã hóa"
+
+#: src/pbrenamer/ui/pattern_help.py:401
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Nhóm chụp 1 theo sau bởi bộ đếm 4 chữ số đệm số không (bắt đầu từ 1)"
+
+#: src/pbrenamer/ui/pattern_help.py:406
+msgid "Same, but counter starts at 10"
+msgstr "Tương tự, nhưng bộ đếm bắt đầu từ 10"
+
+#: src/pbrenamer/ui/pattern_help.py:410
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code> "
+"already exists"
+msgstr ""
+"Bộ đếm 3 chữ số không xung đột: bỏ qua các giá trị mà <code>backup_NNN</"
+"code> đã tồn tại"
+
+#: src/pbrenamer/ui/pattern_help.py:415
+msgid "Today's date prepended to the matched text"
+msgstr "Ngày hôm nay được thêm vào trước văn bản khớp"
+
+#: src/pbrenamer/ui/pattern_help.py:418
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Ngày/giờ chụp dạng gọn; \"không rõ\" nếu thiếu EXIF"
+
+#: src/pbrenamer/ui/pattern_help.py:423
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Giờ+phút số hóa; \"0000\" nếu vắng mặt"
+
+#: src/pbrenamer/ui/pattern_help.py:427
+msgid "Camera make and model (empty string if absent)"
+msgstr "Hãng và mẫu máy ảnh (chuỗi rỗng nếu vắng mặt)"
+
+#: src/pbrenamer/ui/pattern_help.py:432
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Nghệ sĩ và tiêu đề âm thanh; \"không rõ\"/\"không tên\" nếu vắng mặt"
+
+#: src/pbrenamer/ui/pattern_help.py:436
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Ngày phát hành âm thanh, số bản nhạc đệm số không, tiêu đề"
+
+#: src/pbrenamer/ui/pattern_help.py:441
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Độ phân giải và codec video (vd. 1920x1080_AVC)"
+
+#: src/pbrenamer/ui/pattern_help.py:445
+msgid "Video encoded date and duration in seconds"
+msgstr "Ngày mã hóa video và thời lượng tính bằng giây"
+
+#: src/pbrenamer/ui/pattern_help.py:448
+msgid "Named regex groups (regex mode only)"
+msgstr "Nhóm regex có tên (chỉ chế độ regex)"
+
+#: src/pbrenamer/ui/pattern_help.py:451
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Thư mục cha, ngày sửa đổi tệp, bộ đếm 3 chữ số"
+
+#: src/pbrenamer/ui/pattern_help.py:458
+msgid "Replacement fields"
+msgstr "Trường thay thế"
+
+#: src/pbrenamer/ui/pattern_help.py:463
+msgid "Available fields"
+msgstr "Trường khả dụng"
+
+#: src/pbrenamer/ui/pattern_help.py:469
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Trường siêu dữ liệu cho <code>{im:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:476
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Trường siêu dữ liệu âm thanh cho <code>{au:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:483
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Trường siêu dữ liệu video cho <code>{vi:…}</code>"
+
+#: src/pbrenamer/ui/pattern_help.py:490
+msgid "Examples"
+msgstr "Ví dụ"
+
+#: src/pbrenamer/ui/main_window.py:202
+msgid "Select folder"
+msgstr "Chọn thư mục"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:86
+msgid "Original"
+msgstr "Gốc"
+
+#: src/pbrenamer/ui/main_window.py:245 /tmp/_pbrenamer_ui_strings.py:85
+#: /tmp/_pbrenamer_ui_strings.py:146
+msgid "Preview"
+msgstr "Xem trước"
+
+#: src/pbrenamer/ui/main_window.py:258
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} mục"
+
+#: src/pbrenamer/ui/main_window.py:530
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} không khả dụng"
+
+#: src/pbrenamer/ui/main_window.py:610
+msgid "Search — Help"
+msgstr "Tìm kiếm — Trợ giúp"
+
+#: src/pbrenamer/ui/main_window.py:625
+msgid "Replace — Help"
+msgstr "Thay thế — Trợ giúp"
+
+#: src/pbrenamer/ui/main_window.py:811
+msgid "Rename errors"
+msgstr "Lỗi đổi tên"
+
+#: src/pbrenamer/i18n.py:65 /tmp/_pbrenamer_ui_strings.py:161
+msgid "language_name"
+msgstr "Tiếng Việt"
+
+#: /tmp/_pbrenamer_ui_strings.py:1
+msgid "History"
+msgstr "Lịch sử"
+
+#: /tmp/_pbrenamer_ui_strings.py:2
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:3
+msgid "Search pattern history"
+msgstr "Lịch sử mẫu tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:4 /tmp/_pbrenamer_ui_strings.py:23
+msgid "Select one or more entries to remove them"
+msgstr "Chọn một hoặc nhiều mục để xóa chúng"
+
+#: /tmp/_pbrenamer_ui_strings.py:5 /tmp/_pbrenamer_ui_strings.py:24
+msgid "Pattern…"
+msgstr "Mẫu…"
+
+#: /tmp/_pbrenamer_ui_strings.py:6
+msgid "New search pattern to add"
+msgstr "Mẫu tìm kiếm mới để thêm"
+
+#: /tmp/_pbrenamer_ui_strings.py:7
+msgid "pat"
+msgstr "pat"
+
+#: /tmp/_pbrenamer_ui_strings.py:8
+msgid "Pattern token mode"
+msgstr "Chế độ token mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:9
+msgid "RE"
+msgstr "RE"
+
+#: /tmp/_pbrenamer_ui_strings.py:11
+msgid "txt"
+msgstr "txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:13 /tmp/_pbrenamer_ui_strings.py:26
+msgid "Add"
+msgstr "Thêm"
+
+#: /tmp/_pbrenamer_ui_strings.py:14
+msgid "Add this pattern to the search history"
+msgstr "Thêm mẫu này vào lịch sử tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:15 /tmp/_pbrenamer_ui_strings.py:28
+msgid "Remove"
+msgstr "Xóa"
+
+#: /tmp/_pbrenamer_ui_strings.py:16 /tmp/_pbrenamer_ui_strings.py:29
+msgid "Remove selected entries"
+msgstr "Xóa các mục đã chọn"
+
+#: /tmp/_pbrenamer_ui_strings.py:17
+msgid "Delete the selected search history entries"
+msgstr "Xóa các mục đã chọn khỏi lịch sử tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:18 /tmp/_pbrenamer_ui_strings.py:31
+msgid "Clear all"
+msgstr "Xóa tất cả"
+
+#: /tmp/_pbrenamer_ui_strings.py:19
+msgid "Remove all search history entries"
+msgstr "Xóa tất cả mục khỏi lịch sử tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:20
+msgid "Delete the entire search pattern history"
+msgstr "Xóa toàn bộ lịch sử mẫu tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:21
+msgid "Replace"
+msgstr "Thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:22
+msgid "Replacement pattern history"
+msgstr "Lịch sử mẫu thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:25
+msgid "New replacement pattern to add"
+msgstr "Mẫu thay thế mới để thêm"
+
+#: /tmp/_pbrenamer_ui_strings.py:27
+msgid "Add this pattern to the replacement history"
+msgstr "Thêm mẫu này vào lịch sử thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:30
+msgid "Delete the selected replacement history entries"
+msgstr "Xóa các mục đã chọn khỏi lịch sử thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:32
+msgid "Remove all replacement history entries"
+msgstr "Xóa tất cả mục khỏi lịch sử thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:33
+msgid "Delete the entire replacement pattern history"
+msgstr "Xóa toàn bộ lịch sử mẫu thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:34
+msgid "Settings"
+msgstr "Cài đặt"
+
+#: /tmp/_pbrenamer_ui_strings.py:35
+msgid "Language:"
+msgstr "Ngôn ngữ:"
+
+#: /tmp/_pbrenamer_ui_strings.py:36
+msgid "Select the interface language"
+msgstr "Chọn ngôn ngữ giao diện"
+
+#: /tmp/_pbrenamer_ui_strings.py:37
+msgid "Log level:"
+msgstr "Mức ghi nhật ký:"
+
+#: /tmp/_pbrenamer_ui_strings.py:38
+msgid "Set the application logging verbosity"
+msgstr "Đặt mức độ chi tiết ghi nhật ký của ứng dụng"
+
+#: /tmp/_pbrenamer_ui_strings.py:39
+msgid "A restart is required for the language change to take effect."
+msgstr "Cần khởi động lại để thay đổi ngôn ngữ có hiệu lực."
+
+#: /tmp/_pbrenamer_ui_strings.py:40 /tmp/_pbrenamer_ui_strings.py:61
+msgid "About PBRenamer"
+msgstr "Giới thiệu về PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:41
+msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+
+#: /tmp/_pbrenamer_ui_strings.py:42
+msgid "Application version"
+msgstr "Phiên bản ứng dụng"
+
+#: /tmp/_pbrenamer_ui_strings.py:43
+msgid "A graphical batch file renaming utility."
+msgstr "Tiện ích đổi tên tệp hàng loạt có giao diện đồ họa."
+
+#: /tmp/_pbrenamer_ui_strings.py:44
+msgid "© 2026 Marcel Spock <mrspock@cardolan.net>"
+msgstr "© 2026 Marcel Spock <mrspock@cardolan.net>"
+
+#: /tmp/_pbrenamer_ui_strings.py:45
+msgid "License: GPLv3"
+msgstr "Giấy phép: GPLv3"
+
+#: /tmp/_pbrenamer_ui_strings.py:46
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:47
+msgid "Open folder…"
+msgstr "Mở thư mục…"
+
+#: /tmp/_pbrenamer_ui_strings.py:48
+msgid "Ctrl+O"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:49
+msgid "Open a folder"
+msgstr "Mở một thư mục"
+
+#: /tmp/_pbrenamer_ui_strings.py:50
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr ""
+"Mở hộp chọn thư mục và điều hướng trong cây đến thư mục đã chọn"
+
+#: /tmp/_pbrenamer_ui_strings.py:51
+msgid "Quit"
+msgstr "Thoát"
+
+#: /tmp/_pbrenamer_ui_strings.py:52
+msgid "Ctrl+Q"
+msgstr ""
+
+#: /tmp/_pbrenamer_ui_strings.py:53
+msgid "Quit PBRenamer"
+msgstr "Thoát PBRenamer"
+
+#: /tmp/_pbrenamer_ui_strings.py:54
+msgid "Exit the application"
+msgstr "Đóng ứng dụng"
+
+#: /tmp/_pbrenamer_ui_strings.py:55
+msgid "History…"
+msgstr "Lịch sử…"
+
+#: /tmp/_pbrenamer_ui_strings.py:56
+msgid "Manage pattern history"
+msgstr "Quản lý lịch sử mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:57
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr "Thêm hoặc xóa mục khỏi lịch sử mẫu tìm kiếm và thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:58
+msgid "Settings…"
+msgstr "Cài đặt…"
+
+#: /tmp/_pbrenamer_ui_strings.py:59
+msgid "Open settings"
+msgstr "Mở cài đặt"
+
+#: /tmp/_pbrenamer_ui_strings.py:60
+msgid "Configure language and other preferences"
+msgstr "Cấu hình ngôn ngữ và các tùy chọn khác"
+
+#: /tmp/_pbrenamer_ui_strings.py:62
+msgid "About this application"
+msgstr "Giới thiệu về ứng dụng này"
+
+#: /tmp/_pbrenamer_ui_strings.py:63
+msgid "Show version and license information"
+msgstr "Hiển thị thông tin phiên bản và giấy phép"
+
+#: /tmp/_pbrenamer_ui_strings.py:64
+msgid "Show:"
+msgstr "Hiển thị:"
+
+#: /tmp/_pbrenamer_ui_strings.py:65
+msgid "Files only"
+msgstr "Chỉ tệp"
+
+#: /tmp/_pbrenamer_ui_strings.py:66
+msgid "Directories only"
+msgstr "Chỉ thư mục"
+
+#: /tmp/_pbrenamer_ui_strings.py:67
+msgid "Files and directories"
+msgstr "Tệp và thư mục"
+
+#: /tmp/_pbrenamer_ui_strings.py:68
+msgid "Choose which entries to list"
+msgstr "Chọn mục nào sẽ hiển thị"
+
+#: /tmp/_pbrenamer_ui_strings.py:69
+msgid "List files only, directories only, or both"
+msgstr "Liệt kê chỉ tệp, chỉ thư mục hoặc cả hai"
+
+#: /tmp/_pbrenamer_ui_strings.py:70
+msgid "Recursive"
+msgstr "Đệ quy"
+
+#: /tmp/_pbrenamer_ui_strings.py:71
+msgid "Include all subdirectories"
+msgstr "Bao gồm tất cả thư mục con"
+
+#: /tmp/_pbrenamer_ui_strings.py:72
+msgid "When checked, files from all subdirectories are listed"
+msgstr "Khi được chọn, tệp từ tất cả thư mục con sẽ được liệt kê"
+
+#: /tmp/_pbrenamer_ui_strings.py:73
+msgid "Keep extension"
+msgstr "Giữ phần mở rộng"
+
+#: /tmp/_pbrenamer_ui_strings.py:74
+msgid "Preserve the file extension"
+msgstr "Bảo toàn phần mở rộng tệp"
+
+#: /tmp/_pbrenamer_ui_strings.py:75
+msgid ""
+"Apply transformations to the file stem only, leaving the extension unchanged"
+msgstr ""
+"Áp dụng biến đổi chỉ cho tên cơ sở của tệp, giữ nguyên phần mở rộng"
+
+#: /tmp/_pbrenamer_ui_strings.py:76
+msgid "Auto-preview"
+msgstr "Tự động xem trước"
+
+#: /tmp/_pbrenamer_ui_strings.py:77
+msgid "Refresh the preview automatically"
+msgstr "Tự động làm mới bản xem trước"
+
+#: /tmp/_pbrenamer_ui_strings.py:78
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Tính lại bản xem trước mỗi khi mẫu hoặc tùy chọn thay đổi"
+
+#: /tmp/_pbrenamer_ui_strings.py:79
+msgid "Filter:"
+msgstr "Bộ lọc:"
+
+#: /tmp/_pbrenamer_ui_strings.py:80
+msgid "*.txt"
+msgstr "*.txt"
+
+#: /tmp/_pbrenamer_ui_strings.py:81
+msgid "Glob pattern to filter the file list"
+msgstr "Mẫu glob để lọc danh sách tệp"
+
+#: /tmp/_pbrenamer_ui_strings.py:82
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr ""
+"Chỉ liệt kê các tệp khớp với mẫu glob này (vd. *.txt, image_*)"
+
+#: /tmp/_pbrenamer_ui_strings.py:83
+msgid "Browse the filesystem"
+msgstr "Duyệt hệ thống tệp"
+
+#: /tmp/_pbrenamer_ui_strings.py:84
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "Chọn một thư mục để liệt kê nội dung của nó trong bảng bên phải"
+
+#: /tmp/_pbrenamer_ui_strings.py:87
+msgid "Files to be renamed"
+msgstr "Tệp cần đổi tên"
+
+#: /tmp/_pbrenamer_ui_strings.py:88
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to apply "
+"to all"
+msgstr ""
+"Chọn hàng để giới hạn thao tác cho những tệp đó; để trống để áp dụng cho "
+"tất cả"
+
+#: /tmp/_pbrenamer_ui_strings.py:90
+msgid "Search pattern"
+msgstr "Mẫu tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:91
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} letters, "
+"{C} non-space, {X} anything"
+msgstr ""
+"Mẫu để khớp với tên tệp. Dùng token: {#} số, {L} chữ cái, {C} không phải "
+"khoảng trắng, {X} bất kỳ"
+
+#: /tmp/_pbrenamer_ui_strings.py:92 /tmp/_pbrenamer_ui_strings.py:108
+msgid "Save to history"
+msgstr "Lưu vào lịch sử"
+
+#: /tmp/_pbrenamer_ui_strings.py:93
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "Thêm mẫu tìm kiếm và chế độ hiện tại vào lịch sử danh sách thả"
+
+#: /tmp/_pbrenamer_ui_strings.py:94
+msgid "Search pattern help"
+msgstr "Trợ giúp mẫu tìm kiếm"
+
+#: /tmp/_pbrenamer_ui_strings.py:95
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, Plain "
+"text)"
+msgstr ""
+"Hiển thị trợ giúp về mẫu tìm kiếm (token mẫu, biểu thức chính quy, "
+"văn bản thuần)"
+
+#: /tmp/_pbrenamer_ui_strings.py:96
+msgid "Pattern"
+msgstr "Mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:97
+msgid "Search using pattern tokens"
+msgstr "Tìm kiếm bằng token mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:98
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "Khớp tên tệp bằng token mẫu ({#}, {L}, {X}…)"
+
+#: /tmp/_pbrenamer_ui_strings.py:99
+msgid "Regular expression"
+msgstr "Biểu thức chính quy"
+
+#: /tmp/_pbrenamer_ui_strings.py:100
+msgid "Search using a Python regular expression"
+msgstr "Tìm kiếm bằng biểu thức chính quy Python"
+
+#: /tmp/_pbrenamer_ui_strings.py:101
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr ""
+"Khớp tên tệp bằng biểu thức chính quy Python; dùng \\1 \\2… cho tham chiếu "
+"ngược trong phần thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:102
+msgid "Plain text"
+msgstr "Văn bản thuần"
+
+#: /tmp/_pbrenamer_ui_strings.py:103
+msgid "Search for a literal string"
+msgstr "Tìm kiếm chuỗi ký tự"
+
+#: /tmp/_pbrenamer_ui_strings.py:104
+msgid "Match file names by looking for the search text as a literal string"
+msgstr "Khớp tên tệp bằng cách tìm văn bản tìm kiếm như chuỗi ký tự"
+
+#: /tmp/_pbrenamer_ui_strings.py:106
+msgid "Replacement pattern"
+msgstr "Mẫu thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:107
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a counter, "
+"{date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Mẫu thay thế. Dùng {1} {2}… cho nhóm chụp, {num} cho bộ đếm, {date} cho "
+"ngày hôm nay, {dir} cho tên thư mục cha"
+
+#: /tmp/_pbrenamer_ui_strings.py:109
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "Thêm mẫu thay thế hiện tại vào lịch sử danh sách thả"
+
+#: /tmp/_pbrenamer_ui_strings.py:110
+msgid "Replacement pattern help"
+msgstr "Trợ giúp mẫu thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:111
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr ""
+"Hiển thị trợ giúp về mẫu thay thế (nhóm chụp, bộ đếm, ngày, token thư mục)"
+
+#: /tmp/_pbrenamer_ui_strings.py:112
+msgid "Post-processing"
+msgstr "Hậu xử lý"
+
+#: /tmp/_pbrenamer_ui_strings.py:113
+msgid "Separator:"
+msgstr "Dấu phân cách:"
+
+#: /tmp/_pbrenamer_ui_strings.py:114 /tmp/_pbrenamer_ui_strings.py:130
+msgid "No change"
+msgstr "Không thay đổi"
+
+#: /tmp/_pbrenamer_ui_strings.py:115
+msgid "Spaces → underscores"
+msgstr "Khoảng trắng → dấu gạch dưới"
+
+#: /tmp/_pbrenamer_ui_strings.py:116
+msgid "Underscores → spaces"
+msgstr "Dấu gạch dưới → khoảng trắng"
+
+#: /tmp/_pbrenamer_ui_strings.py:117
+msgid "Spaces → dots"
+msgstr "Khoảng trắng → dấu chấm"
+
+#: /tmp/_pbrenamer_ui_strings.py:118
+msgid "Dots → spaces"
+msgstr "Dấu chấm → khoảng trắng"
+
+#: /tmp/_pbrenamer_ui_strings.py:119
+msgid "Spaces → dashes"
+msgstr "Khoảng trắng → dấu gạch ngang"
+
+#: /tmp/_pbrenamer_ui_strings.py:120
+msgid "Dashes → spaces"
+msgstr "Dấu gạch ngang → khoảng trắng"
+
+#: /tmp/_pbrenamer_ui_strings.py:121
+msgid "Separator conversion"
+msgstr "Chuyển đổi dấu phân cách"
+
+#: /tmp/_pbrenamer_ui_strings.py:122
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the "
+"pattern"
+msgstr ""
+"Áp dụng chuyển đổi dấu phân cách cho mỗi tên tệp đã đổi tên sau khi áp "
+"dụng mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:123
+msgid "Remove accents"
+msgstr "Xóa dấu thanh"
+
+#: /tmp/_pbrenamer_ui_strings.py:124
+msgid "Strip diacritical marks"
+msgstr "Bỏ dấu phụ"
+
+#: /tmp/_pbrenamer_ui_strings.py:125
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "Chuyển đổi ký tự có dấu sang tương đương ASCII (é→e, ü→u, v.v.)"
+
+#: /tmp/_pbrenamer_ui_strings.py:126
+msgid "Remove duplicate separators"
+msgstr "Xóa dấu phân cách trùng lặp"
+
+#: /tmp/_pbrenamer_ui_strings.py:127
+msgid "Collapse consecutive separators"
+msgstr "Thu gọn dấu phân cách liên tiếp"
+
+#: /tmp/_pbrenamer_ui_strings.py:128
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Thu gọn chuỗi dấu phân cách giống nhau (khoảng trắng, dấu chấm, dấu gạch "
+"ngang, dấu gạch dưới) thành một"
+
+#: /tmp/_pbrenamer_ui_strings.py:129
+msgid "Case:"
+msgstr "Kiểu chữ:"
+
+#: /tmp/_pbrenamer_ui_strings.py:131
+msgid "UPPERCASE"
+msgstr "CHỮ HOA"
+
+#: /tmp/_pbrenamer_ui_strings.py:132
+msgid "lowercase"
+msgstr "chữ thường"
+
+#: /tmp/_pbrenamer_ui_strings.py:133
+msgid "Capitalize first letter"
+msgstr "Viết hoa chữ cái đầu"
+
+#: /tmp/_pbrenamer_ui_strings.py:134
+msgid "Title Case"
+msgstr "Viết hoa đầu mỗi từ"
+
+#: /tmp/_pbrenamer_ui_strings.py:135
+msgid "Capitalization mode"
+msgstr "Chế độ kiểu chữ"
+
+#: /tmp/_pbrenamer_ui_strings.py:136
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr "Chọn cách thay đổi kiểu chữ của tên tệp sau khi áp dụng mẫu"
+
+#: /tmp/_pbrenamer_ui_strings.py:137
+msgid "Save:"
+msgstr "Lưu:"
+
+#: /tmp/_pbrenamer_ui_strings.py:138
+msgid "Named save"
+msgstr "Lưu có tên"
+
+#: /tmp/_pbrenamer_ui_strings.py:139
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace "
+"parameters"
+msgstr ""
+"Nhập tên (chữ cái, chữ số, _ và -) để lưu hoặc tải tất cả tham số "
+"tìm kiếm/thay thế"
+
+#: /tmp/_pbrenamer_ui_strings.py:140
+msgid "Save"
+msgstr "Lưu"
+
+#: /tmp/_pbrenamer_ui_strings.py:141
+msgid "Save current settings under this name"
+msgstr "Lưu cài đặt hiện tại với tên này"
+
+#: /tmp/_pbrenamer_ui_strings.py:142
+msgid ""
+"Save all search, replace and post-processing settings under the current name "
+"(overwrites any existing save with the same name)"
+msgstr ""
+"Lưu tất cả cài đặt tìm kiếm, thay thế và hậu xử lý với tên hiện tại "
+"(ghi đè bất kỳ lần lưu nào có cùng tên)"
+
+#: /tmp/_pbrenamer_ui_strings.py:143
+msgid "Delete"
+msgstr "Xóa"
+
+#: /tmp/_pbrenamer_ui_strings.py:144
+msgid "Delete this named save"
+msgstr "Xóa lần lưu có tên này"
+
+#: /tmp/_pbrenamer_ui_strings.py:145
+msgid "Permanently delete the named save matching the current name"
+msgstr "Xóa vĩnh viễn lần lưu có tên khớp với tên hiện tại"
+
+#: /tmp/_pbrenamer_ui_strings.py:147
+msgid "Compute rename preview"
+msgstr "Tính bản xem trước đổi tên"
+
+#: /tmp/_pbrenamer_ui_strings.py:148
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Áp dụng mẫu hiện tại cho tất cả tệp được liệt kê và hiển thị kết quả "
+"trong cột Xem trước"
+
+#: /tmp/_pbrenamer_ui_strings.py:149
+msgid "Clear"
+msgstr "Xóa"
+
+#: /tmp/_pbrenamer_ui_strings.py:150
+msgid "Clear the preview"
+msgstr "Xóa bản xem trước"
+
+#: /tmp/_pbrenamer_ui_strings.py:151
+msgid "Remove all preview values from the Preview column"
+msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
+
+#: /tmp/_pbrenamer_ui_strings.py:152
+msgid "Undo"
+msgstr "Hoàn tác"
+
+#: /tmp/_pbrenamer_ui_strings.py:153
+msgid "Undo last rename batch"
+msgstr "Hoàn tác lô đổi tên cuối cùng"
+
+#: /tmp/_pbrenamer_ui_strings.py:154
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Đảo ngược lô đổi tên cuối cùng đã thực hiện trên đĩa"
+
+#: /tmp/_pbrenamer_ui_strings.py:155
+msgid "Rename"
+msgstr "Đổi tên"
+
+#: /tmp/_pbrenamer_ui_strings.py:156
+msgid "Apply renames on disk"
+msgstr "Áp dụng đổi tên trên đĩa"
+
+#: /tmp/_pbrenamer_ui_strings.py:157
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled when "
+"there are no conflicts)"
+msgstr ""
+"Đổi tên vĩnh viễn tất cả tệp hiển thị trong cột Xem trước (chỉ bật khi "
+"không có xung đột)"
+
+#: /tmp/_pbrenamer_ui_strings.py:158
+msgid "File"
+msgstr "Tệp"
+
+#: /tmp/_pbrenamer_ui_strings.py:159
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: /tmp/_pbrenamer_ui_strings.py:160
+msgid "Help"
+msgstr "Trợ giúp"

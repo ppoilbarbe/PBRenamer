@@ -8,7 +8,7 @@ SRC        := src
 DOCS       := docs
 LOCALE_DIR := src/pbrenamer/locale
 POT_FILE   := $(LOCALE_DIR)/pbrenamer.pot
-PO_LOCALES := en fr
+PO_LOCALES := en fr de es it ru vi zh_CN
 
 R  := \033[0m
 B  := \033[1m
