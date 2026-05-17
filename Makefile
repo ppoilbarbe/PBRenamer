@@ -28,7 +28,7 @@ TRANSLATE_STAMP := .translate.stamp
 
 .DEFAULT_GOAL := help
 .PHONY: all help venv venv-update install ui translate new-lang run test coverage \
-        lint format docs docs-live designer dist clean force-translate \
+        lint format docs docs-live designer dist srcdist clean force-translate \
         bump-major bump-minor bump-patch bump-set
 
 all: translate ## Build all generated artifacts (UI → Python, strings → .mo)
@@ -157,16 +157,27 @@ designer: ## Launch Qt Designer
 # ── Distribution ──────────────────────────────────────────────────────────────
 
 # PyInstaller builds natively: run this target on the target OS.
-# The output name embeds version + platform to allow mixed-OS dist/ directories.
-#   Linux  → dist/PBRenamer-<ver>-linux-x86_64
-#   Windows→ dist/PBRenamer-<ver>-windows-x86_64.exe
-#   macOS  → dist/PBRenamer-<ver>-macos-arm64.app
+# Version comes from the exact git tag when HEAD is tagged and the tree is
+# clean; otherwise "dev".  Output in dist/:
+#   Linux   → dist/pbrenamer-<ver>-linux-x86_64
+#   Windows → dist/pbrenamer-<ver>-windows-x86_64.exe
+#   macOS   → dist/pbrenamer-<ver>-macos-arm64  (.app bundle)
 dist: translate ## Build a standalone executable for the current platform
-	@printf "$(C)PyInstaller — platform: $(shell $(CONDA_RUN) python -c 'import sys; print(sys.platform)')$(R)\n"
-	$(CONDA_RUN) pyinstaller --clean --noconfirm \
+	@ver=$$(bash tools/git_version.sh); \
+	printf "$(C)PyInstaller — version: $$ver  platform: $$($(CONDA_RUN) python -c 'import sys; print(sys.platform)')$(R)\n"; \
+	mkdir -p dist; \
+	PBRENAMER_VERSION=$$ver $(CONDA_RUN) pyinstaller --clean --noconfirm \
 	    --distpath dist --workpath build/pyinstaller \
 	    pbrenamer.spec
 	@printf "$(G)Done.$(R) Executable in $(Y)dist/$(R)\n"
+
+srcdist: ## Build a source archive (dist/pbrenamer-<ver>-src.tar.gz) via git archive
+	@ver=$$(bash tools/git_version.sh); \
+	out="dist/pbrenamer-$$ver-src.tar.gz"; \
+	printf "$(C)Source archive — version: $$ver$(R)\n"; \
+	mkdir -p dist; \
+	git archive --format=tar.gz --prefix="pbrenamer-$$ver/" HEAD -o "$$out"; \
+	printf "$(G)Done.$(R) Archive: $(Y)$$out$(R)\n"
 
 # ── Versioning ────────────────────────────────────────────────────────────────
 

@@ -17,11 +17,17 @@ import tomllib
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# Version (read from pyproject.toml — single source of truth)
+# Version — from PBRENAMER_VERSION env var (set by `make dist` via
+# tools/git_version.sh), falling back to pyproject.toml for direct
+# `pyinstaller pbrenamer.spec` invocations.
 # ---------------------------------------------------------------------------
 
-with open("pyproject.toml", "rb") as _f:
-    _version = tomllib.load(_f)["project"]["version"]
+import os
+
+_version = os.environ.get("PBRENAMER_VERSION")
+if not _version:
+    with open("pyproject.toml", "rb") as _f:
+        _version = tomllib.load(_f)["project"]["version"]
 
 # ---------------------------------------------------------------------------
 # Platform tag  (OS-arch, e.g. linux-x86_64, windows-x86_64, macos-arm64)

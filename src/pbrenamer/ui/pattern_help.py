@@ -51,10 +51,7 @@ def _row2_plain(col1: str, desc: str, bg: str = "") -> str:
     """Two-column row, first column not in <code><b>."""
     sty = f' style="{bg}"' if bg else ""
     return (
-        f"  <tr{sty}>\n"
-        f"    <td><code>{col1}</code></td>\n"
-        f"    <td>{desc}</td>\n"
-        f"  </tr>\n"
+        f"  <tr{sty}>\n    <td><code>{col1}</code></td>\n    <td>{desc}</td>\n  </tr>\n"
     )
 
 
