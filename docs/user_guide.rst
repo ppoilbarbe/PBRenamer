@@ -166,7 +166,7 @@ Settings
 Open **Edit → Settings** to configure:
 
 **Language**
-    Select the UI language.  English and French are bundled.  The selection
+    Select the UI language.  Several languages are bundled; the selection
     takes effect immediately and is persisted.
 
 **Log level**
@@ -248,12 +248,12 @@ full name if *Keep extension* is unchecked).
 
 **Example** — reformat an ISO date:
 
-+------------------------------------+------------+------------------+
-| Search                             | Replace    | Result           |
-+====================================+============+==================+
-| ``(\\d{4})-(\\d{2})-(\\d{2})``     | ``{3}/{2}/{1}`` | 2024-06-15  |
-|                                    |            | → 15/06/2024     |
-+------------------------------------+------------+------------------+
++------------------------------------+------------------+------------------+
+| Search                             | Replace          | Result           |
++====================================+==================+==================+
+| ``(\\d{4})-(\\d{2})-(\\d{2})``     | ``{3}/{2}/{1}``  | 2024-06-15       |
+|                                    |                  | → 15/06/2024     |
++------------------------------------+------------------+------------------+
 
 .. _plain-mode:
 
