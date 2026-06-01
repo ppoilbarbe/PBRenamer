@@ -18,7 +18,7 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up conda environment
         uses: conda-incubator/setup-miniconda@v4
@@ -46,7 +46,7 @@ jobs:
     name: Pre-commit hooks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up conda environment
         uses: conda-incubator/setup-miniconda@v4
@@ -72,7 +72,7 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up conda environment
         uses: conda-incubator/setup-miniconda@v4
@@ -87,7 +87,7 @@ jobs:
         run: make docs NOCONDA=1
 
       - name: Upload documentation artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: docs-html
           path: docs/_build/html/
@@ -104,7 +104,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up conda environment
         uses: conda-incubator/setup-miniconda@v4
@@ -151,7 +151,7 @@ jobs:
           done
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           # One artifact per runner; merged in the release job.
           name: build-${{ runner.os }}
@@ -170,10 +170,10 @@ jobs:
       contents: write   # required to create a release and upload assets
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Download all build artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           # Merge all per-OS artifacts into a single flat directory.
           path: dist
