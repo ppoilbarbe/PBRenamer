@@ -4,9 +4,9 @@
 The output name embeds the version and the target platform so that builds
 for different systems can coexist in the same directory:
 
-  Linux   → dist/PBRenamer-<version>-linux-x86_64
-  Windows → dist/PBRenamer-<version>-windows-x86_64.exe
-  macOS   → dist/PBRenamer-<version>-macos-arm64.app
+  Linux   → dist/pbrenamer-<version>-linux-x86_64
+  Windows → dist/pbrenamer-<version>-windows-x86_64.exe
+  macOS   → dist/pbrenamer-<version>-macos-arm64.app
 
 Build with:  make dist
 """
@@ -50,7 +50,7 @@ elif sys.platform == "darwin":
 else:
     _os = sys.platform
 
-_artifact_name = f"PBRenamer-{_version}-{_os}-{_arch}"
+_artifact_name = f"pbrenamer-{_version}-{_os}-{_arch}"
 
 # ---------------------------------------------------------------------------
 # Data files to bundle

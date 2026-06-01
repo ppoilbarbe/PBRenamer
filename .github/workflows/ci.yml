@@ -155,7 +155,7 @@ jobs:
         with:
           # One artifact per runner; merged in the release job.
           name: build-${{ runner.os }}
-          path: dist/PBRenamer-*
+          path: dist/pbrenamer-*
           if-no-files-found: error
 
   # ── GitHub release ───────────────────────────────────────────────────────────
@@ -187,5 +187,5 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           body: ${{ steps.changelog.outputs.body }}
-          files: dist/PBRenamer-*
+          files: dist/pbrenamer-*
           fail_on_unmatched_files: true
