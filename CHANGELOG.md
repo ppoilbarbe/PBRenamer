@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] - 2026-06-01
+
+### Changed
+
+- i18n toolchain replaced: `xgettext`/`msgmerge`/`msgfmt`/`msginit` removed in
+  favour of `pybabel extract`/`update`/`compile`/`init`; `babel.cfg` mapping
+  file added; `gettext` dependency replaced by `babel` in `environment.yml`
+- `.mo` compiled catalogues removed from the repository (now gitignored); the
+  CI regenerates them via `pybabel compile` before each PyInstaller build
+- CI: add git-tag versioning and `srcdist` target (source archive via
+  `git archive`, named `pbrenamer-<ver>-src.tar.gz`, placed in `dist/`)
+
 ## [1.0.0] - 2026-05-03
 
 ### Added
