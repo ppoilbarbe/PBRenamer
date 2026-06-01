@@ -64,36 +64,22 @@ ui: $(UI_PY) ## Compile all .ui files to Python via pyside6-uic
 translate: $(TRANSLATE_STAMP) ## Extract translatable strings, update .po files and compile .mo
 
 $(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
-	@printf "$(C)Extracting from Python sources...$(R)\n"
-	$(CONDA_RUN) xgettext --language=Python --keyword=_ \
-	    --from-code=UTF-8 --package-name=pbrenamer \
+	@printf "$(C)Extracting UI strings...$(R)\n"
+	$(CONDA_RUN) python tools/extract_ui_strings.py \
+	    $(UI_PY) > tools/_ui_strings_tmp.py
+	@echo '_("language_name")' >> tools/_ui_strings_tmp.py
+	@printf "$(C)Extracting all translatable strings...$(R)\n"
+	$(CONDA_RUN) pybabel extract -F babel.cfg \
 	    --copyright-holder="Marcel Spock" \
 	    --msgid-bugs-address="mrspock@cardolan.net" \
-	    --output=$(POT_FILE) \
-	    $(PY_SOURCES)
-	@printf "$(C)Extracting from generated UI code...$(R)\n"
-	$(CONDA_RUN) python tools/extract_ui_strings.py \
-	    $(UI_PY) > /tmp/_pbrenamer_ui_strings.py
-	@echo '_("language_name")' >> /tmp/_pbrenamer_ui_strings.py
-	$(CONDA_RUN) xgettext --language=Python --keyword=_ \
-	    --from-code=UTF-8 --join-existing \
-	    --output=$(POT_FILE) \
-	    /tmp/_pbrenamer_ui_strings.py
-	@rm -f /tmp/_pbrenamer_ui_strings.py
+	    -k _ -o $(POT_FILE) \
+	    $(PY_SOURCES) tools/_ui_strings_tmp.py
+	@rm -f tools/_ui_strings_tmp.py
 	@printf "$(C)Updating .po files...$(R)\n"
-	@for lang in $(PO_LOCALES); do \
-	    po=$(LOCALE_DIR)/$$lang/LC_MESSAGES/pbrenamer.po; \
-	    if [ -f "$$po" ]; then \
-	        $(CONDA_RUN) msgmerge --update --no-fuzzy-matching --backup=none \
-	            "$$po" $(POT_FILE); \
-	    fi; \
-	done
+	$(CONDA_RUN) pybabel update -i $(POT_FILE) -d $(LOCALE_DIR) \
+	    -D pbrenamer --no-fuzzy-matching
 	@printf "$(C)Compiling .mo files...$(R)\n"
-	@for lang in $(PO_LOCALES); do \
-	    po=$(LOCALE_DIR)/$$lang/LC_MESSAGES/pbrenamer.po; \
-	    mo=$(LOCALE_DIR)/$$lang/LC_MESSAGES/pbrenamer.mo; \
-	    $(CONDA_RUN) msgfmt "$$po" -o "$$mo" && printf "  $(G)$$mo$(R)\n"; \
-	done
+	$(CONDA_RUN) pybabel compile -d $(LOCALE_DIR) -D pbrenamer
 	@printf "$(G)Done.$(R)\n"
 	@touch $@
 
@@ -106,9 +92,8 @@ new-lang: ## Scaffold a new translation (usage: make new-lang LOCALE=de)
 	    printf "$(Y)Usage:$(R) make new-lang LOCALE=<lang-code>  (e.g. LOCALE=de)\n"; exit 1; }
 	@test -f $(POT_FILE) || { \
 	    printf "$(Y)Run 'make translate' first to generate the .pot template.$(R)\n"; exit 1; }
-	@mkdir -p $(LOCALE_DIR)/$(LOCALE)/LC_MESSAGES
-	$(CONDA_RUN) msginit --input=$(POT_FILE) --locale=$(LOCALE) --no-wrap \
-	    --output=$(LOCALE_DIR)/$(LOCALE)/LC_MESSAGES/pbrenamer.po
+	$(CONDA_RUN) pybabel init -i $(POT_FILE) -d $(LOCALE_DIR) \
+	    -D pbrenamer -l $(LOCALE)
 	@printf "\n$(G)Created:$(R) $(LOCALE_DIR)/$(LOCALE)/LC_MESSAGES/pbrenamer.po\n\n"
 	@printf "$(Y)Next steps:$(R)\n"
 	@printf "  1. Edit the .po file and translate every msgstr entry.\n"

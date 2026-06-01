@@ -38,8 +38,10 @@ Thumbs.db
 # Make stamp files
 .translate.stamp
 
-# i18n — generated template, rebuilt on demand by make translate
+# i18n — generated artifacts, rebuilt on demand by make translate
 *.pot
+*.mo
+tools/_ui_strings_tmp.py
 
 # Claude Code
 .claude/settings.local.json
