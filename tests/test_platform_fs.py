@@ -68,3 +68,27 @@ class TestConflictKey:
             assert conflict_key("/dir/Photo.JPG", "/dir") != conflict_key(
                 "/dir/photo.jpg", "/dir"
             )
+
+
+class TestIsCaseSensitiveOsErrorFallback:
+    """Cover the OSError branch in is_case_sensitive (lines 32-35)."""
+
+    def _probe(self, platform: str, unique_dir: str) -> bool:
+        is_case_sensitive.cache_clear()
+        with patch("pbrenamer.platform.fs.sys.platform", platform):
+            with patch(
+                "pbrenamer.platform.fs.tempfile.NamedTemporaryFile",
+                side_effect=OSError("permission denied"),
+            ):
+                result = is_case_sensitive(unique_dir)
+        is_case_sensitive.cache_clear()
+        return result
+
+    def test_linux_falls_back_to_true(self):
+        assert self._probe("linux", "/oserr_fallback_linux") is True
+
+    def test_win32_falls_back_to_false(self):
+        assert self._probe("win32", "/oserr_fallback_win32") is False
+
+    def test_darwin_falls_back_to_false(self):
+        assert self._probe("darwin", "/oserr_fallback_darwin") is False

@@ -248,6 +248,78 @@ class TestAudioChannels:
 # ---------------------------------------------------------------------------
 
 
+class TestBitrateNoGeneralTrack:
+    def test_none_when_no_general_track(self):
+        assert _read("bitrate") is None
+
+
+class TestEncodedDateNoGeneralTrack:
+    def test_none_when_no_general_track(self):
+        assert _read("encodeddate") is None
+
+
+class TestDurationValueError:
+    def test_non_numeric_duration_returns_none(self):
+        assert _read("duration", general={"duration": "not-a-number"}) is None
+
+
+class TestBitrateValueError:
+    def test_non_numeric_bitrate_returns_none(self):
+        assert _read("bitrate", general={"overall_bit_rate": "not-a-number"}) is None
+
+
+class TestIntAttr:
+    def test_non_numeric_value_returns_none(self):
+        track = MagicMock()
+        track.width = "not-a-number"
+        assert video_meta._int_attr(track, "width") is None
+
+    def test_none_attribute_returns_none(self):
+        track = MagicMock()
+        track.width = None
+        assert video_meta._int_attr(track, "width") is None
+
+
+class TestCanRead:
+    def test_returns_false_when_mediainfo_unavailable(self, tmp_path):
+        f = tmp_path / "video.mp4"
+        f.touch()
+        with patch.object(video_meta, "_MEDIAINFO", False):
+            assert video_meta.can_read(str(f)) is False
+
+    def test_returns_true_when_video_track_found(self, tmp_path):
+        f = tmp_path / "video.mp4"
+        f.touch()
+        mock_track = MagicMock()
+        mock_track.track_type = "Video"
+        mock_info = MagicMock()
+        mock_info.tracks = [mock_track]
+        with patch.object(video_meta, "_MEDIAINFO", True):
+            with patch("pbrenamer.core.video_meta.MediaInfo") as mock_cls:
+                mock_cls.parse.return_value = mock_info
+                assert video_meta.can_read(str(f)) is True
+
+    def test_returns_false_when_no_video_track(self, tmp_path):
+        f = tmp_path / "audio.mp3"
+        f.touch()
+        mock_track = MagicMock()
+        mock_track.track_type = "Audio"
+        mock_info = MagicMock()
+        mock_info.tracks = [mock_track]
+        with patch.object(video_meta, "_MEDIAINFO", True):
+            with patch("pbrenamer.core.video_meta.MediaInfo") as mock_cls:
+                mock_cls.parse.return_value = mock_info
+                assert video_meta.can_read(str(f)) is False
+
+    def test_returns_false_on_exception(self, tmp_path):
+        f = tmp_path / "broken.mp4"
+        f.touch()
+        with patch.object(video_meta, "_MEDIAINFO", True):
+            with patch("pbrenamer.core.video_meta.MediaInfo") as mock_cls:
+                mock_cls.parse.side_effect = Exception("parse error")
+                assert video_meta.can_read(str(f)) is False
+
+
 class TestUnknownField:
     def test_unknown_field_returns_none(self):
         assert _read("nonexistent", general={"duration": 1000}) is None

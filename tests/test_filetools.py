@@ -208,6 +208,40 @@ class TestRenameUsingPatterns:
             None,
         )
 
+    def test_case_sensitive_no_match_on_wrong_case(self):
+        assert filetools.rename_using_patterns(
+            "img_001",
+            _p("img_001"),
+            "IMG_{#}",
+            "photo_{1}",
+            1,
+            case_insensitive=False,
+        ) == (None, None)
+
+    def test_case_insensitive_matches_wrong_case(self):
+        name, path = filetools.rename_using_patterns(
+            "img_001",
+            _p("img_001"),
+            "IMG_{#}",
+            "photo_{1}",
+            1,
+            case_insensitive=True,
+        )
+        assert name == "photo_001"
+        assert path == _p("photo_001")
+
+    def test_case_insensitive_letter_token(self):
+        # {L} matches uppercase letters even when name is lowercase
+        name, _ = filetools.rename_using_patterns(
+            "abc_007",
+            _p("abc_007"),
+            "{L}_{#}",
+            "{1}_photo_{2}",
+            1,
+            case_insensitive=True,
+        )
+        assert name == "abc_photo_007"
+
 
 class TestRenameUsingPlainText:
     def test_basic_replace(self):
@@ -244,6 +278,46 @@ class TestRenameUsingPlainText:
             None,
             None,
         )
+
+    def test_case_sensitive_no_match_on_wrong_case(self):
+        assert filetools.rename_using_plain_text(
+            "img_001.jpg",
+            _p("img_001.jpg"),
+            "IMG",
+            "photo",
+            case_insensitive=False,
+        ) == (None, None)
+
+    def test_case_insensitive_matches_wrong_case(self):
+        name, _ = filetools.rename_using_plain_text(
+            "IMG_001.jpg",
+            _p("IMG_001.jpg"),
+            "img",
+            "photo",
+            case_insensitive=True,
+        )
+        assert name == "photo_001.jpg"
+
+    def test_case_insensitive_replaces_all_occurrences(self):
+        name, _ = filetools.rename_using_plain_text(
+            "AA_bb_Aa",
+            _p("AA_bb_Aa"),
+            "aa",
+            "cc",
+            case_insensitive=True,
+        )
+        assert name == "cc_bb_cc"
+
+    def test_case_insensitive_full_match_token(self):
+        # {0} should expand to the actual matched text (preserving original case)
+        name, _ = filetools.rename_using_plain_text(
+            "Hello_World",
+            _p("Hello_World"),
+            "hello",
+            "prefix_{0}",
+            case_insensitive=True,
+        )
+        assert name == "prefix_Hello_World"
 
 
 class TestRenameUsingRegex:
@@ -291,6 +365,42 @@ class TestRenameUsingRegex:
             None,
             None,
         )
+
+    def test_all_matches_replaced(self):
+        # ([^.]+) matches "IMG_5100" and "jpeg"; both are substituted.
+        name, _ = filetools.rename_using_regex(
+            "IMG_5100.jpeg", _p("IMG_5100.jpeg"), r"([^.]+)", "{1}.jpg"
+        )
+        assert name == "IMG_5100.jpg.jpeg.jpg"
+
+    def test_case_sensitive_no_match_on_wrong_case(self):
+        assert filetools.rename_using_regex(
+            "img_001",
+            _p("img_001"),
+            r"IMG_(\d+)",
+            "photo_{1}",
+            case_insensitive=False,
+        ) == (None, None)
+
+    def test_case_insensitive_matches_wrong_case(self):
+        name, _ = filetools.rename_using_regex(
+            "img_001",
+            _p("img_001"),
+            r"IMG_(\d+)",
+            "photo_{1}",
+            case_insensitive=True,
+        )
+        assert name == "photo_001"
+
+    def test_case_insensitive_named_group(self):
+        name, _ = filetools.rename_using_regex(
+            "PHOTO_2024",
+            _p("PHOTO_2024"),
+            r"(?P<title>[a-z]+)_(?P<year>\d{4})",
+            "{re:year}_{re:title}",
+            case_insensitive=True,
+        )
+        assert name == "2024_PHOTO"
 
 
 # ---------------------------------------------------------------------------
@@ -849,3 +959,336 @@ class TestNewNum:
 
         names = sorted(os.listdir(str(tmp_path)))
         assert names == ["photo_001.jpg", "photo_002.jpg", "photo_003.jpg"]
+
+
+# ---------------------------------------------------------------------------
+# Workflow helpers shared by the three mode test classes below
+# ---------------------------------------------------------------------------
+
+
+def _pat(stem, stem_path, search, replace, *, case_insensitive=False):
+    """Thin wrapper for rename_using_patterns with a fixed counter."""
+    return filetools.rename_using_patterns(
+        stem, stem_path, search, replace, 1, case_insensitive=case_insensitive
+    )
+
+
+def _workflow(fn, src, search, replace, *, keep_ext: bool, case_insensitive: bool):
+    """Simulate the main-window preview for one filename (no disk I/O).
+
+    Returns the predicted new filename, or *src* unchanged when no match.
+    """
+    path = _p(src)
+    if keep_ext:
+        stem, stem_path, ext = filetools.cut_extension(src, path)
+    else:
+        stem, stem_path, ext = src, path, ""
+    result, result_path = fn(
+        stem, stem_path, search, replace, case_insensitive=case_insensitive
+    )
+    if result is None:
+        return src
+    return filetools.add_extension(result, result_path, ext)[0]
+
+
+# ---------------------------------------------------------------------------
+# Rename workflow — pattern mode
+# ---------------------------------------------------------------------------
+
+
+class TestPatternModeWorkflow:
+    @pytest.mark.parametrize(
+        "src, search, replace, expected, keep_ext, case_insensitive",
+        [
+            # keep_ext=True  case_sensitive  — replaces all "i" in stem only
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.img",
+                True,
+                False,
+            ),
+            # keep_ext=False case_sensitive  — replaces all "i" in full name
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                False,
+            ),
+            # keep_ext=False case_insensitive — "I" matches every "i"/"I"
+            (
+                "checking multi.img",
+                "I",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                True,
+            ),
+            # keep_ext=True  case_sensitive  — "I" not in stem → no change
+            ("checking multi.img", "I", "-found-", "checking multi.img", True, False),
+        ],
+    )
+    def test_rename(self, src, search, replace, expected, keep_ext, case_insensitive):
+        assert (
+            _workflow(
+                _pat,
+                src,
+                search,
+                replace,
+                keep_ext=keep_ext,
+                case_insensitive=case_insensitive,
+            )
+            == expected
+        )
+
+
+# ---------------------------------------------------------------------------
+# Rename workflow — regex mode
+# ---------------------------------------------------------------------------
+
+
+class TestRegexModeWorkflow:
+    @pytest.mark.parametrize(
+        "src, search, replace, expected, keep_ext, case_insensitive",
+        [
+            # ── basic character substitution ─────────────────────────────
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.img",
+                True,
+                False,
+            ),
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                False,
+            ),
+            (
+                "checking multi.img",
+                "I",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                True,
+            ),
+            ("checking multi.img", "I", "-found-", "checking multi.img", True, False),
+            # ── multi-occurrence of same character ───────────────────────
+            (
+                "checking multi.img",
+                "c",
+                "-found-",
+                "-found-he-found-king multi.img",
+                True,
+                False,
+            ),
+            # ── start anchor ─────────────────────────────────────────────
+            (
+                "checking multi.img",
+                "^c",
+                "-found-",
+                "-found-hecking multi.img",
+                True,
+                False,
+            ),
+            # ── end anchor, matches ───────────────────────────────────────
+            (
+                "checking multi.img",
+                "i$",
+                "-found-",
+                "checking mult-found-.img",
+                True,
+                False,
+            ),
+            # ── end anchor, no match (stem ends with "i", not "g") ───────
+            ("checking multi.img", "g$", "-found-", "checking multi.img", True, False),
+            # ── end anchor on full name (ends with "g") ──────────────────
+            (
+                "checking multi.img",
+                "g$",
+                "-found-",
+                "checking multi.im-found-",
+                False,
+                False,
+            ),
+            # ── anchored greedy pattern ──────────────────────────────────
+            (
+                "checking multi.img",
+                "^c.+c",
+                "-found-",
+                "-found-king multi.img",
+                True,
+                False,
+            ),
+            # ── non-whitespace token, stem only ─────────────────────────
+            (
+                "checking multi.img",
+                r"[^\s]+",
+                "-found-",
+                "-found- -found-.img",
+                True,
+                False,
+            ),
+            # ── non-whitespace token, full name ─────────────────────────
+            (
+                "checking multi.img",
+                r"[^\s]+",
+                "-found-",
+                "-found- -found-",
+                False,
+                False,
+            ),
+            # ── literal-dot pattern on double extension, full name ───────
+            (
+                "IMG-20260509.JPG.JPG",
+                r"\.JPG",
+                ".jpg",
+                "IMG-20260509.jpg.jpg",
+                False,
+                False,
+            ),
+            (
+                "IMG-20260509ajpg.JPG.JPG",
+                r"\.JPG",
+                ".jpg",
+                "IMG-20260509ajpg.jpg.jpg",
+                False,
+                False,
+            ),
+            # ── regex dot matches letter + case-insensitive ──────────────
+            (
+                "IMG-20260509ajpg.JPG.JPG",
+                ".JPG",
+                ".jpg",
+                "IMG-20260509.jpg.jpg.jpg",
+                False,
+                True,
+            ),
+            # ── regex dot matches letter + case-sensitive ────────────────
+            (
+                "IMG-20260509ajpg.JPG.JPG",
+                ".jpg",
+                ".jpg",
+                "IMG-20260509.jpg.JPG.JPG",
+                False,
+                False,
+            ),
+        ],
+    )
+    def test_rename(self, src, search, replace, expected, keep_ext, case_insensitive):
+        assert (
+            _workflow(
+                filetools.rename_using_regex,
+                src,
+                search,
+                replace,
+                keep_ext=keep_ext,
+                case_insensitive=case_insensitive,
+            )
+            == expected
+        )
+
+
+# ---------------------------------------------------------------------------
+# Rename workflow — plain text mode
+# ---------------------------------------------------------------------------
+
+
+class TestPlainTextModeWorkflow:
+    @pytest.mark.parametrize(
+        "src, search, replace, expected, keep_ext, case_insensitive",
+        [
+            # ── basic character substitution ─────────────────────────────
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.img",
+                True,
+                False,
+            ),
+            (
+                "checking multi.img",
+                "i",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                False,
+            ),
+            (
+                "checking multi.img",
+                "I",
+                "-found-",
+                "check-found-ng mult-found-.-found-mg",
+                False,
+                True,
+            ),
+            ("checking multi.img", "I", "-found-", "checking multi.img", True, False),
+            # ── extension substring, stem only ───────────────────────────
+            # uppercase search, case_sensitive → matches the .JPG in stem
+            (
+                "IMG-20260509.JPG.JPG",
+                ".JPG",
+                ".jpg",
+                "IMG-20260509.jpg.JPG",
+                True,
+                False,
+            ),
+            # lowercase search, case_insensitive → same visual result
+            (
+                "IMG-20260509.JPG.JPG",
+                ".jpg",
+                ".jpg",
+                "IMG-20260509.jpg.JPG",
+                True,
+                True,
+            ),
+            # ── extension substring, full name ───────────────────────────
+            # uppercase search, case_sensitive → replaces both .JPG
+            (
+                "IMG-20260509.JPG.JPG",
+                ".JPG",
+                ".jpg",
+                "IMG-20260509.jpg.jpg",
+                False,
+                False,
+            ),
+            # lowercase search, case_sensitive → .JPG not found → no change
+            (
+                "IMG-20260509.JPG.JPG",
+                ".jpg",
+                ".jpg",
+                "IMG-20260509.JPG.JPG",
+                False,
+                False,
+            ),
+            # lowercase search, case_insensitive → replaces both .JPG
+            (
+                "IMG-20260509.JPG.JPG",
+                ".jpg",
+                ".jpg",
+                "IMG-20260509.jpg.jpg",
+                False,
+                True,
+            ),
+        ],
+    )
+    def test_rename(self, src, search, replace, expected, keep_ext, case_insensitive):
+        assert (
+            _workflow(
+                filetools.rename_using_plain_text,
+                src,
+                search,
+                replace,
+                keep_ext=keep_ext,
+                case_insensitive=case_insensitive,
+            )
+            == expected
+        )

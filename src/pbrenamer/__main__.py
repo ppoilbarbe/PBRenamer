@@ -607,8 +607,8 @@ def main() -> None:
 
     from pbrenamer.ui.main_window import MainWindow
 
-    start_dir = os.path.abspath(_ns.directory) if _ns.directory else os.getcwd()
-    _log.debug("Start directory: %s", start_dir)
+    start_dir = os.path.abspath(_ns.directory) if _ns.directory else None
+    _log.debug("Start directory: %s", start_dir or os.getcwd())
     window = MainWindow(start_dir=start_dir)
     window.show()
     sys.exit(app.exec())

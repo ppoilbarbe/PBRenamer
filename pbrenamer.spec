@@ -86,11 +86,13 @@ a = Analysis(
         "pbrenamer.platform.dirs",
         "pbrenamer.platform.fs",
         "pbrenamer.platform.locale",
+        # email.utils is used by about_dialog.py — do not add to excludes
+        "email.utils",
     ],
     hookspath=[],
     runtime_hooks=[],
     # Exclude heavy stdlib modules that PBRenamer never uses.
-    excludes=["tkinter", "unittest", "email", "http", "xml", "numpy", "matplotlib"],
+    excludes=["tkinter", "unittest", "http", "xml", "numpy", "matplotlib"],
     noarchive=False,
 )
 

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer 0.1.0\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 22:53+0200\n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: 2026-05-03 00:00+0000\n"
 "Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
 "Language: es\n"
@@ -17,10 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: src/pbrenamer/ui/settings_dialog.py:19
-msgid "System default"
-msgstr "Predeterminado del sistema"
-
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:73
 #, python-brace-format
 msgid ""
@@ -28,8 +25,10 @@ msgid ""
 "<b>{2}</b>… are <em>captured</em> and available for reuse in the "
 "replacement field."
 msgstr ""
-"Los tokens actúan como comodines tipados. Los segmentos entre <b>{1}</b>,"
-" <b>{2}</b>… son <em>capturados</em> y están disponibles para "
+"Los tokens actúan como comodines. Los segmentos entre <b>{1}</b>, "
+"<b>{2}</b>… son <em>capturados</em> y están disponibles en el campo de "
+"reemplazo.Los tokens actúan como comodines tipados. Los segmentos entre "
+"<b>{1}</b>, <b>{2}</b>… son <em>capturados</em> y están disponibles para "
 "reutilizarse en el campo de reemplazo."
 
 #: src/pbrenamer/ui/pattern_help.py:78
@@ -52,12 +51,14 @@ msgstr "Cualquier secuencia de caracteres, incluso vacía"
 msgid "Trash — matches and discards a segment (not captured)"
 msgstr "Basura — coincide con un segmento y lo descarta (no capturado)"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:86
 #, python-brace-format
 msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
 msgstr ""
-"Grupo de captura — el texto coincidente queda vinculado a {1}, {2}… en el"
-" reemplazo"
+"Grupo de captura — el texto coincidente se asocia a {1}, {2}… en el "
+"reemplazoGrupo de captura — el texto coincidente queda vinculado a {1}, "
+"{2}… en el reemplazo"
 
 #: src/pbrenamer/ui/pattern_help.py:94 src/pbrenamer/ui/pattern_help.py:134
 #: src/pbrenamer/ui/pattern_help.py:150
@@ -65,15 +66,16 @@ msgid "Example"
 msgstr "Ejemplo"
 
 #: src/pbrenamer/ui/pattern_help.py:96 src/pbrenamer/ui/pattern_help.py:136
-#: src/pbrenamer/ui/pattern_help.py:152 tools/_ui_strings_tmp.py:89
+#: src/pbrenamer/ui/pattern_help.py:152 tools/_ui_strings_tmp.py:84
 msgid "Search:"
 msgstr "Buscar:"
 
 #: src/pbrenamer/ui/pattern_help.py:98 src/pbrenamer/ui/pattern_help.py:138
-#: src/pbrenamer/ui/pattern_help.py:154 tools/_ui_strings_tmp.py:105
+#: src/pbrenamer/ui/pattern_help.py:154 tools/_ui_strings_tmp.py:103
 msgid "Replace:"
 msgstr "Reemplazar:"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:105
 msgid ""
 "Full Python <code>re</code>-module syntax. The match is applied to the "
@@ -119,15 +121,18 @@ msgstr "Indicador sin distinción de mayúsculas/minúsculas"
 msgid "Start / end of the name"
 msgstr "Inicio / fin del nombre"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:145
 msgid ""
 "The search field is matched as a literal string — no wildcards, no "
 "special characters. Every occurrence of the exact text in the file name "
 "is replaced."
 msgstr ""
-"El campo de búsqueda se compara como cadena literal — sin comodines, sin "
-"caracteres especiales. Cada aparición del texto exacto en el nombre de "
-"archivo es reemplazada."
+"El campo de búsqueda se compara como una cadena literal — sin comodines, "
+"sin caracteres especiales. Se reemplaza cada aparición del texto exacto "
+"en el nombre de archivo.El campo de búsqueda se compara como cadena "
+"literal — sin comodines, sin caracteres especiales. Cada aparición del "
+"texto exacto en el nombre de archivo es reemplazada."
 
 #: src/pbrenamer/ui/pattern_help.py:161
 msgid "Search patterns"
@@ -145,6 +150,7 @@ msgstr "Modo de expresión regular"
 msgid "Plain text mode"
 msgstr "Modo de texto plano"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:183
 #, python-brace-format
 msgid ""
@@ -183,6 +189,7 @@ msgstr "rellenar con ceros a la derecha (números)"
 msgid "literal '{' character"
 msgstr "carácter '{' literal"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:198
 msgid ""
 "<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
@@ -192,8 +199,12 @@ msgid ""
 msgstr ""
 "<b>fmt</b> es un ancho mínimo (dígito) para texto/números, o un formato "
 "<code>strftime</code> para fechas/horas.<br><b>default</b>: se usa cuando"
-" el campo está ausente; omitirlo hace que la ausencia sea un error (el "
-"archivo aparece en rojo en la vista previa)."
+" el campo está ausente; omitirlo convierte la ausencia en un error "
+"(archivo en rojo en la vista previa).<b>fmt</b> es un ancho mínimo "
+"(dígito) para texto/números, o un formato <code>strftime</code> para "
+"fechas/horas.<br><b>default</b>: se usa cuando el campo está ausente; "
+"omitirlo hace que la ausencia sea un error (el archivo aparece en rojo en"
+" la vista previa)."
 
 #: src/pbrenamer/ui/pattern_help.py:205
 msgid "all modes"
@@ -207,7 +218,7 @@ msgstr "patrón, regex"
 msgid "regex only"
 msgstr "solo regex"
 
-#: src/pbrenamer/ui/pattern_help.py:208
+#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:208
 msgid "Field"
 msgstr "Campo"
 
@@ -215,7 +226,7 @@ msgstr "Campo"
 msgid "Available in"
 msgstr "Disponible en"
 
-#: src/pbrenamer/ui/pattern_help.py:210
+#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:210
 msgid "Description"
 msgstr "Descripción"
 
@@ -231,6 +242,7 @@ msgstr "Grupos de captura numerados (desde 1)"
 msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
 msgstr "Grupo nombrado <code>(?P&lt;name&gt;…)</code> de la regex de búsqueda"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:239
 #, python-brace-format
 msgid ""
@@ -238,10 +250,14 @@ msgid ""
 "<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
 "starts at 10, zero-padded to 2 digits)"
 msgstr ""
-"Contador autoincremental — el fmt predeterminado es un ancho mínimo; "
-"<em>default</em> establece el valor inicial (p. ej. "
-"<code>{num:02:10}</code> empieza en 10, relleno con ceros a 2 dígitos)"
+"Contador autoincremental — fmt es un ancho mínimo; <em>default</em> "
+"establece el valor inicial (p. ej. <code>{num:02:10}</code> comienza en "
+"10, relleno con ceros a 2 dígitos)Contador autoincremental — el fmt "
+"predeterminado es un ancho mínimo; <em>default</em> establece el valor "
+"inicial (p. ej. <code>{num:02:10}</code> empieza en 10, relleno con ceros"
+" a 2 dígitos)"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:248
 #, python-brace-format
 msgid ""
@@ -250,36 +266,39 @@ msgid ""
 "guarantees no conflicts"
 msgstr ""
 "Como <code>{num}</code> pero omite valores cuyo nombre destino ya existe "
-"en disco o ha sido asignado a otro archivo del mismo lote — garantiza "
-"ausencia de conflictos"
+"en disco o se ha asignado a otro archivo del mismo lote — garantiza "
+"ausencia de conflictosComo <code>{num}</code> pero omite valores cuyo "
+"nombre destino ya existe en disco o ha sido asignado a otro archivo del "
+"mismo lote — garantiza ausencia de conflictos"
 
 #: src/pbrenamer/ui/pattern_help.py:257
 #, python-format
 msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
 msgstr "Fecha de hoy — formato predeterminado <code>%Y-%m-%d</code>"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:263
 #, python-format
 msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr ""
-"Fecha y hora actuales — formato predeterminado "
-"<code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Fecha y hora actuales — fmt predeterminado <code>%Y-%m-%d_%H%M%S</code>"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:268
 #, python-format
 msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
 msgstr ""
-"Fecha/hora de modificación del archivo — formato predeterminado "
+"Fecha/hora de modificación — fmt predeterminado "
 "<code>%Y-%m-%d_%H%M%S</code>"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:275
 #, python-format
 msgid ""
 "File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
 " change time on Linux)"
 msgstr ""
-"Fecha/hora de creación del archivo — formato predeterminado "
-"<code>%Y-%m-%d_%H%M%S</code> (tiempo de cambio de inodo en Linux)"
+"Fecha/hora de creación — fmt predeterminado <code>%Y-%m-%d_%H%M%S</code> "
+"(tiempo de cambio de inodo en Linux)"
 
 #: src/pbrenamer/ui/pattern_help.py:279
 msgid "Name of the immediate parent folder"
@@ -297,14 +316,18 @@ msgstr "Campo de metadatos de audio (mp3, ogg, flac… — ver lista abajo)"
 msgid "Video metadata field (mp4, mkv, avi… — see list below)"
 msgstr "Campo de metadatos de vídeo (mp4, mkv, avi… — ver lista abajo)"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:300
 msgid ""
 "Field names are case-insensitive. A <b>default</b> is strongly "
 "recommended for metadata fields — they may be absent from non-image files"
 " or images without metadata."
 msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Se "
-"recomienda encarecidamente un valor <b>default</b> para los campos de "
+"Los nombres de campo no distinguen mayúsculas. Se recomienda "
+"encarecidamente un <b>default</b> para los campos de metadatos — pueden "
+"estar ausentes en archivos que no son imágenes o imágenes sin "
+"metadatos.Los nombres de campo no distinguen mayúsculas de minúsculas. Se"
+" recomienda encarecidamente un valor <b>default</b> para los campos de "
 "metadatos — pueden estar ausentes en archivos que no son imágenes o en "
 "imágenes sin metadatos."
 
@@ -388,6 +411,7 @@ msgstr "Fecha de creación IPTC"
 msgid "IPTC keywords (semicolon-separated)"
 msgstr "Palabras clave IPTC (separadas por punto y coma)"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:339
 msgid ""
 "Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
@@ -395,11 +419,14 @@ msgid ""
 "strongly recommended — tags may be absent or the file may not be a "
 "supported audio format."
 msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Formatos "
-"admitidos: mp3, ogg, flac, opus, aac/m4a y otros compatibles con mutagen."
-" Se recomienda encarecidamente un valor <b>default</b> — las etiquetas "
-"pueden estar ausentes o el archivo puede no ser un formato de audio "
-"compatible."
+"Los nombres de campo no distinguen mayúsculas. Formatos admitidos: mp3, "
+"ogg, flac, opus, aac/m4a y otros compatibles con mutagen. Se recomienda "
+"encarecidamente un <b>default</b> — las etiquetas pueden estar ausentes o"
+" el archivo puede no ser un formato de audio admitido.Los nombres de "
+"campo no distinguen mayúsculas de minúsculas. Formatos admitidos: mp3, "
+"ogg, flac, opus, aac/m4a y otros compatibles con mutagen. Se recomienda "
+"encarecidamente un valor <b>default</b> — las etiquetas pueden estar "
+"ausentes o el archivo puede no ser un formato de audio compatible."
 
 #: src/pbrenamer/ui/pattern_help.py:346
 msgid "Track title"
@@ -425,13 +452,16 @@ msgstr "Número de pista (elimina /total si está presente)"
 msgid "Disc number (strips /total if present)"
 msgstr "Número de disco (elimina /total si está presente)"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:358
 msgid ""
 "Release date — datetime.date when full date available (strftime "
 "formatting); plain text otherwise"
 msgstr ""
-"Fecha de lanzamiento — datetime.date cuando la fecha completa está "
-"disponible (formato strftime); texto plano en caso contrario"
+"Fecha de lanzamiento — datetime.date cuando hay fecha completa disponible"
+" (formato strftime); texto plano en caso contrarioFecha de lanzamiento — "
+"datetime.date cuando la fecha completa está disponible (formato "
+"strftime); texto plano en caso contrario"
 
 #: src/pbrenamer/ui/pattern_help.py:363
 msgid "Release year (extracted from date tag)"
@@ -461,6 +491,7 @@ msgstr "Duración en segundos"
 msgid "Bitrate in kbps"
 msgstr "Tasa de bits en kbps"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:374
 msgid ""
 "Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
@@ -468,7 +499,11 @@ msgid ""
 " strongly recommended — fields may be absent or the file may not be a "
 "supported video format."
 msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Formatos "
+"Los nombres de campo no distinguen mayúsculas. Formatos admitidos: mp4, "
+"mkv, avi, mov, webm y otros compatibles con MediaInfo (pymediainfo). Se "
+"recomienda encarecidamente un <b>default</b> — los campos pueden estar "
+"ausentes o el archivo puede no ser un formato de vídeo admitido.Los "
+"nombres de campo no distinguen mayúsculas de minúsculas. Formatos "
 "admitidos: mp4, mkv, avi, mov, webm y otros compatibles con MediaInfo "
 "(pymediainfo). Se recomienda encarecidamente un valor <b>default</b> — "
 "los campos pueden estar ausentes o el archivo puede no ser un formato de "
@@ -510,16 +545,19 @@ msgstr "Etiqueta de título"
 msgid "Encoded date/time"
 msgstr "Fecha/hora de codificación"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:398
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr ""
 "Grupo de captura 1 seguido de un contador de 4 dígitos con relleno de "
-"ceros (empieza en 1)"
+"ceros (comienza en 1)Grupo de captura 1 seguido de un contador de 4 "
+"dígitos con relleno de ceros (empieza en 1)"
 
 #: src/pbrenamer/ui/pattern_help.py:403
 msgid "Same, but counter starts at 10"
 msgstr "Igual, pero el contador empieza en 10"
 
+# ==AUTO== Automatically translated
 #: src/pbrenamer/ui/pattern_help.py:407
 msgid ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
@@ -595,42 +633,265 @@ msgstr "Campos de metadatos de vídeo para <code>{vi:…}</code>"
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: src/pbrenamer/ui/main_window.py:202
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/shortcuts_dialog.py:25
+msgid "Edit Shortcuts"
+msgstr "Editar accesos directos"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/shortcuts_dialog.py:31
+msgid "Move up"
+msgstr "Subir"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/shortcuts_dialog.py:32
+msgid "Move down"
+msgstr "Bajar"
+
+#: src/pbrenamer/ui/shortcuts_dialog.py:33 tools/_ui_strings_tmp.py:15
+#: tools/_ui_strings_tmp.py:28
+msgid "Remove"
+msgstr "Eliminar"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/shortcuts_dialog.py:46
+msgid "Saved shortcuts:"
+msgstr "Accesos directos guardados:"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:57
+#: src/pbrenamer/ui/file_info_window.py:137
+#: src/pbrenamer/ui/file_info_window.py:144
+msgid "File information"
+msgstr "Información del archivo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:71
+msgid "Value"
+msgstr "Valor"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:92
+msgid "Image"
+msgstr "Imagen"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:93
+msgid "Audio"
+msgstr "Audio"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:94
+msgid "Video"
+msgstr "Vídeo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:95
+msgid "Directory"
+msgstr "Directorio"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:96
+#: src/pbrenamer/ui/file_info_window.py:97
+msgid "Other"
+msgstr "Otro"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:99
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Información del archivo — {name}"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:102
+msgid "File:"
+msgstr "Archivo:"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:102
+msgid "Type:"
+msgstr "Tipo:"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:113
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Metadatos de imagen (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:121
+msgid "Audio metadata"
+msgstr "Metadatos de audio"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:129
+msgid "Video metadata"
+msgstr "Metadatos de vídeo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:140
+msgid "Select a single file to display its information."
+msgstr "Seleccione un único archivo para mostrar su información."
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:147
+msgid "Select a file to display its information."
+msgstr "Seleccione un archivo para mostrar su información."
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:153
+msgid "Universal fields"
+msgstr "Campos universales"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:155
+msgid "Today's date"
+msgstr "Fecha de hoy"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:156
+msgid "Current date and time"
+msgstr "Fecha y hora actuales"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:159
+#: src/pbrenamer/ui/file_info_window.py:162
+msgid "File modification date/time"
+msgstr "Fecha/hora de modificación del archivo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:162
+#: src/pbrenamer/ui/file_info_window.py:171
+#: src/pbrenamer/ui/file_info_window.py:178
+#: src/pbrenamer/ui/file_info_window.py:194
+msgid "Missing"
+msgstr "Faltante"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:169
+#: src/pbrenamer/ui/file_info_window.py:171
+msgid "File creation date/time"
+msgstr "Fecha/hora de creación del archivo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:177
+msgid "Parent folder name"
+msgstr "Nombre de la carpeta principal"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:183
+msgid "Batch fields"
+msgstr "Campos de lote"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:184
+msgid "Computed"
+msgstr "Calculado"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:185
+msgid "Full matched text"
+msgstr "Texto completamente coincidente"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:186
+msgid "Capture groups"
+msgstr "Grupos de captura"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:187
+msgid "Auto-incrementing counter"
+msgstr "Contador de incremento automático"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:188
+msgid "Conflict-free counter"
+msgstr "Contador sin conflictos"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/file_info_window.py:189
+msgid "Named regex group"
+msgstr "Grupo regex con nombre"
+
+#: src/pbrenamer/ui/settings_dialog.py:19
+msgid "System default"
+msgstr "Predeterminado del sistema"
+
+#: src/pbrenamer/ui/main_window.py:231
 msgid "Select folder"
 msgstr "Seleccionar carpeta"
 
-#: src/pbrenamer/ui/main_window.py:245 tools/_ui_strings_tmp.py:86
+#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:81
 msgid "Original"
 msgstr "Original"
 
-#: src/pbrenamer/ui/main_window.py:245 tools/_ui_strings_tmp.py:85
-#: tools/_ui_strings_tmp.py:146
+#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:80
+#: tools/_ui_strings_tmp.py:144
 msgid "Preview"
 msgstr "Vista previa"
 
-#: src/pbrenamer/ui/main_window.py:258
+#: src/pbrenamer/ui/main_window.py:287
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} elemento(s)"
 
-#: src/pbrenamer/ui/main_window.py:530
+#: src/pbrenamer/ui/main_window.py:566
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} no disponible"
 
-#: src/pbrenamer/ui/main_window.py:610
+#: src/pbrenamer/ui/main_window.py:646
 msgid "Search — Help"
 msgstr "Búsqueda — Ayuda"
 
-#: src/pbrenamer/ui/main_window.py:625
+#: src/pbrenamer/ui/main_window.py:661
 msgid "Replace — Help"
 msgstr "Reemplazo — Ayuda"
 
-#: src/pbrenamer/ui/main_window.py:811
+#: src/pbrenamer/ui/main_window.py:859
 msgid "Rename errors"
 msgstr "Errores de renombrado"
 
-#: src/pbrenamer/i18n.py:65 tools/_ui_strings_tmp.py:161
+# ==AUTO== Automatically translated
+#: src/pbrenamer/ui/main_window.py:952
+msgid "Add as shortcut"
+msgstr "Agregar como acceso directo"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:45
+msgid "Home"
+msgstr "Inicio"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:46
+msgid "Desktop"
+msgstr "Escritorio"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:47
+msgid "Documents"
+msgstr "Documentos"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:48
+msgid "Downloads"
+msgstr "Descargas"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:49
+msgid "Pictures"
+msgstr "Imágenes"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:50
+msgid "Music"
+msgstr "Música"
+
+# ==AUTO== Automatically translated
+#: src/pbrenamer/platform/bookmarks.py:51
+msgid "Videos"
+msgstr "Vídeos"
+
+#: src/pbrenamer/i18n.py:65 tools/_ui_strings_tmp.py:174
 msgid "language_name"
 msgstr "Español"
 
@@ -682,10 +943,6 @@ msgstr "Añadir"
 msgid "Add this pattern to the search history"
 msgstr "Añadir este patrón al historial de búsqueda"
 
-#: tools/_ui_strings_tmp.py:15 tools/_ui_strings_tmp.py:28
-msgid "Remove"
-msgstr "Eliminar"
-
 #: tools/_ui_strings_tmp.py:16 tools/_ui_strings_tmp.py:29
 msgid "Remove selected entries"
 msgstr "Eliminar entradas seleccionadas"
@@ -735,172 +992,164 @@ msgid "Delete the entire replacement pattern history"
 msgstr "Eliminar todo el historial de patrones de reemplazo"
 
 #: tools/_ui_strings_tmp.py:34
-msgid "Settings"
-msgstr "Preferencias"
-
-#: tools/_ui_strings_tmp.py:35
-msgid "Language:"
-msgstr "Idioma:"
-
-#: tools/_ui_strings_tmp.py:36
-msgid "Select the interface language"
-msgstr "Seleccionar el idioma de la interfaz"
-
-#: tools/_ui_strings_tmp.py:37
-msgid "Log level:"
-msgstr "Nivel de registro:"
-
-#: tools/_ui_strings_tmp.py:38
-msgid "Set the application logging verbosity"
-msgstr "Establecer el nivel de detalle del registro de la aplicación"
-
-#: tools/_ui_strings_tmp.py:39
-msgid "A restart is required for the language change to take effect."
-msgstr ""
-"Se necesita reiniciar la aplicación para que el cambio de idioma surta "
-"efecto."
-
-#: tools/_ui_strings_tmp.py:40 tools/_ui_strings_tmp.py:61
-msgid "About PBRenamer"
-msgstr "Acerca de PBRenamer"
-
-#: tools/_ui_strings_tmp.py:41
-msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
-msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
-
-#: tools/_ui_strings_tmp.py:42
-msgid "Application version"
-msgstr "Versión de la aplicación"
-
-#: tools/_ui_strings_tmp.py:43
-msgid "A graphical batch file renaming utility."
-msgstr "Utilidad gráfica para el renombrado masivo de archivos."
-
-#: tools/_ui_strings_tmp.py:44
-msgid "© 2026 Marcel Spock <mrspock@cardolan.net>"
-msgstr "© 2026 Marcel Spock <mrspock@cardolan.net>"
-
-#: tools/_ui_strings_tmp.py:45
-msgid "License: GPLv3"
-msgstr "Licencia: GPLv3"
-
-#: tools/_ui_strings_tmp.py:46
 msgid "PBRenamer"
 msgstr "PBRenamer"
 
-#: tools/_ui_strings_tmp.py:47
+#: tools/_ui_strings_tmp.py:35
 msgid "Open folder…"
 msgstr "Abrir carpeta…"
 
-#: tools/_ui_strings_tmp.py:48
+#: tools/_ui_strings_tmp.py:36
 msgid "Ctrl+O"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:49
+#: tools/_ui_strings_tmp.py:37
 msgid "Open a folder"
 msgstr "Abrir una carpeta"
 
-#: tools/_ui_strings_tmp.py:50
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:38
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr ""
-"Abrir un selector de directorios y navegar por el árbol hasta la carpeta "
-"seleccionada"
+"Abrir un selector de directorio y navegar hasta la carpeta "
+"seleccionadaAbrir un selector de directorios y navegar por el árbol hasta"
+" la carpeta seleccionada"
 
-#: tools/_ui_strings_tmp.py:51
+#: tools/_ui_strings_tmp.py:39
 msgid "Quit"
 msgstr "Salir"
 
-#: tools/_ui_strings_tmp.py:52
+#: tools/_ui_strings_tmp.py:40
 msgid "Ctrl+Q"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:53
+#: tools/_ui_strings_tmp.py:41
 msgid "Quit PBRenamer"
 msgstr "Salir de PBRenamer"
 
-#: tools/_ui_strings_tmp.py:54
+#: tools/_ui_strings_tmp.py:42
 msgid "Exit the application"
 msgstr "Cerrar la aplicación"
 
-#: tools/_ui_strings_tmp.py:55
+#: tools/_ui_strings_tmp.py:43
 msgid "History…"
 msgstr "Historial…"
 
-#: tools/_ui_strings_tmp.py:56
+#: tools/_ui_strings_tmp.py:44
 msgid "Manage pattern history"
 msgstr "Gestionar historial de patrones"
 
-#: tools/_ui_strings_tmp.py:57
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:45
 msgid "Add or remove entries from the search and replacement pattern history"
 msgstr ""
 "Añadir o eliminar entradas del historial de patrones de búsqueda y "
 "reemplazo"
 
-#: tools/_ui_strings_tmp.py:58
+#: tools/_ui_strings_tmp.py:46
 msgid "Settings…"
 msgstr "Preferencias…"
 
-#: tools/_ui_strings_tmp.py:59
+#: tools/_ui_strings_tmp.py:47
 msgid "Open settings"
 msgstr "Abrir preferencias"
 
-#: tools/_ui_strings_tmp.py:60
+#: tools/_ui_strings_tmp.py:48
 msgid "Configure language and other preferences"
 msgstr "Configurar el idioma y otras preferencias"
 
-#: tools/_ui_strings_tmp.py:62
+#: tools/_ui_strings_tmp.py:49 tools/_ui_strings_tmp.py:160
+msgid "About PBRenamer"
+msgstr "Acerca de PBRenamer"
+
+#: tools/_ui_strings_tmp.py:50
 msgid "About this application"
 msgstr "Acerca de esta aplicación"
 
-#: tools/_ui_strings_tmp.py:63
+#: tools/_ui_strings_tmp.py:51
 msgid "Show version and license information"
 msgstr "Mostrar información de versión y licencia"
 
-#: tools/_ui_strings_tmp.py:64
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:52
+msgid "Edit shortcuts…"
+msgstr "Editar accesos directos…"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:53
+msgid "Manage directory shortcuts"
+msgstr "Administrar accesos directos de directorios"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:54
+msgid "Add or remove entries from the shortcuts list"
+msgstr "Agregar o eliminar entradas de la lista de accesos directos"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:55
+msgid "Information"
+msgstr "Información"
+
+#: tools/_ui_strings_tmp.py:56
+msgid "Ctrl+I"
+msgstr ""
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:57
+msgid "Show file field values"
+msgstr "Mostrar valores de campos del archivo"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:58
+msgid "Open the file information window for the selected file"
+msgstr "Abrir la ventana de información para el archivo seleccionado"
+
+#: tools/_ui_strings_tmp.py:59
 msgid "Show:"
 msgstr "Mostrar:"
 
-#: tools/_ui_strings_tmp.py:65
+#: tools/_ui_strings_tmp.py:60
 msgid "Files only"
 msgstr "Solo archivos"
 
-#: tools/_ui_strings_tmp.py:66
+#: tools/_ui_strings_tmp.py:61
 msgid "Directories only"
 msgstr "Solo directorios"
 
-#: tools/_ui_strings_tmp.py:67
+#: tools/_ui_strings_tmp.py:62
 msgid "Files and directories"
 msgstr "Archivos y directorios"
 
-#: tools/_ui_strings_tmp.py:68
+#: tools/_ui_strings_tmp.py:63
 msgid "Choose which entries to list"
 msgstr "Elegir qué entradas mostrar"
 
-#: tools/_ui_strings_tmp.py:69
+#: tools/_ui_strings_tmp.py:64
 msgid "List files only, directories only, or both"
 msgstr "Listar solo archivos, solo directorios o ambos"
 
-#: tools/_ui_strings_tmp.py:70
+#: tools/_ui_strings_tmp.py:65
 msgid "Recursive"
 msgstr "Recursivo"
 
-#: tools/_ui_strings_tmp.py:71
+#: tools/_ui_strings_tmp.py:66
 msgid "Include all subdirectories"
 msgstr "Incluir todos los subdirectorios"
 
-#: tools/_ui_strings_tmp.py:72
+#: tools/_ui_strings_tmp.py:67
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Si está marcado, se listan los archivos de todos los subdirectorios"
 
-#: tools/_ui_strings_tmp.py:73
+#: tools/_ui_strings_tmp.py:68
 msgid "Keep extension"
 msgstr "Conservar extensión"
 
-#: tools/_ui_strings_tmp.py:74
+#: tools/_ui_strings_tmp.py:69
 msgid "Preserve the file extension"
 msgstr "Preservar la extensión del archivo"
 
-#: tools/_ui_strings_tmp.py:75
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:70
 msgid ""
 "Apply transformations to the file stem only, leaving the extension "
 "unchanged"
@@ -908,51 +1157,56 @@ msgstr ""
 "Aplicar transformaciones solo al nombre base del archivo, dejando la "
 "extensión sin cambios"
 
-#: tools/_ui_strings_tmp.py:76
+#: tools/_ui_strings_tmp.py:71
 msgid "Auto-preview"
 msgstr "Vista previa automática"
 
-#: tools/_ui_strings_tmp.py:77
+#: tools/_ui_strings_tmp.py:72
 msgid "Refresh the preview automatically"
 msgstr "Actualizar la vista previa automáticamente"
 
-#: tools/_ui_strings_tmp.py:78
+#: tools/_ui_strings_tmp.py:73
 msgid "Recompute the preview each time the pattern or options change"
 msgstr "Recalcular la vista previa cada vez que cambie el patrón u opciones"
 
-#: tools/_ui_strings_tmp.py:79
+#: tools/_ui_strings_tmp.py:74
 msgid "Filter:"
 msgstr "Filtro:"
 
-#: tools/_ui_strings_tmp.py:80
+#: tools/_ui_strings_tmp.py:75
 msgid "*.txt"
 msgstr "*.txt"
 
-#: tools/_ui_strings_tmp.py:81
+#: tools/_ui_strings_tmp.py:76
 msgid "Glob pattern to filter the file list"
 msgstr "Patrón glob para filtrar la lista de archivos"
 
-#: tools/_ui_strings_tmp.py:82
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:77
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr ""
-"Solo se listan los archivos que coincidan con este patrón glob (p. ej. "
-"*.txt, image_*)"
+"Solo se listan los archivos que coinciden con este patrón glob (p. ej. "
+"*.txt, image_*)Solo se listan los archivos que coincidan con este patrón "
+"glob (p. ej. *.txt, image_*)"
 
-#: tools/_ui_strings_tmp.py:83
+#: tools/_ui_strings_tmp.py:78
 msgid "Browse the filesystem"
 msgstr "Explorar el sistema de archivos"
 
-#: tools/_ui_strings_tmp.py:84
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:79
 msgid "Select a directory to list its contents in the panel on the right"
 msgstr ""
-"Seleccionar un directorio para mostrar su contenido en el panel de la "
-"derecha"
+"Seleccionar un directorio para listar su contenido en el panel de la "
+"derechaSeleccionar un directorio para mostrar su contenido en el panel de"
+" la derecha"
 
-#: tools/_ui_strings_tmp.py:87
+#: tools/_ui_strings_tmp.py:82
 msgid "Files to be renamed"
 msgstr "Archivos a renombrar"
 
-#: tools/_ui_strings_tmp.py:88
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:83
 msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
@@ -960,63 +1214,69 @@ msgstr ""
 "Seleccionar filas para restringir las operaciones a esos archivos; dejar "
 "sin seleccionar para aplicar a todos"
 
-#: tools/_ui_strings_tmp.py:90
+#: tools/_ui_strings_tmp.py:85
 msgid "Search pattern"
 msgstr "Patrón de búsqueda"
 
-#: tools/_ui_strings_tmp.py:91
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:86
 #, python-brace-format
 msgid ""
 "Pattern to match against file names. Use tokens: {#} numbers, {L} "
 "letters, {C} non-space, {X} anything"
 msgstr ""
 "Patrón para comparar con nombres de archivo. Use tokens: {#} números, {L}"
-" letras, {C} sin espacios, {X} cualquier cosa"
+" letras, {C} sin espacio, {X} cualquier cosaPatrón para comparar con "
+"nombres de archivo. Use tokens: {#} números, {L} letras, {C} sin "
+"espacios, {X} cualquier cosa"
 
-#: tools/_ui_strings_tmp.py:92 tools/_ui_strings_tmp.py:108
+#: tools/_ui_strings_tmp.py:87 tools/_ui_strings_tmp.py:106
 msgid "Save to history"
 msgstr "Guardar en el historial"
 
-#: tools/_ui_strings_tmp.py:93
+#: tools/_ui_strings_tmp.py:88
 msgid "Add the current search pattern and mode to the drop-down history"
 msgstr "Añadir el patrón de búsqueda y modo actuales al historial desplegable"
 
-#: tools/_ui_strings_tmp.py:94
+#: tools/_ui_strings_tmp.py:89
 msgid "Search pattern help"
 msgstr "Ayuda sobre patrones de búsqueda"
 
-#: tools/_ui_strings_tmp.py:95
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:90
 msgid ""
 "Show help about search patterns (Pattern tokens, Regular expressions, "
 "Plain text)"
 msgstr ""
-"Mostrar ayuda sobre patrones de búsqueda (tokens de patrón, expresiones "
-"regulares, texto plano)"
+"Mostrar ayuda sobre patrones de búsqueda (tokens, expresiones regulares, "
+"texto plano)Mostrar ayuda sobre patrones de búsqueda (tokens de patrón, "
+"expresiones regulares, texto plano)"
 
-#: tools/_ui_strings_tmp.py:96
+#: tools/_ui_strings_tmp.py:91
 msgid "Pattern"
 msgstr "Patrón"
 
-#: tools/_ui_strings_tmp.py:97
+#: tools/_ui_strings_tmp.py:92
 msgid "Search using pattern tokens"
 msgstr "Buscar usando tokens de patrón"
 
-#: tools/_ui_strings_tmp.py:98
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:93
 #, python-brace-format
 msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
 msgstr ""
-"Hacer coincidir nombres de archivo usando tokens de patrón ({#}, {L}, "
-"{X}…)"
+"Buscar nombres de archivo usando tokens de patrón ({#}, {L}, {X}…)Hacer "
+"coincidir nombres de archivo usando tokens de patrón ({#}, {L}, {X}…)"
 
-#: tools/_ui_strings_tmp.py:99
+#: tools/_ui_strings_tmp.py:94
 msgid "Regular expression"
 msgstr "Expresión regular"
 
-#: tools/_ui_strings_tmp.py:100
+#: tools/_ui_strings_tmp.py:95
 msgid "Search using a Python regular expression"
 msgstr "Buscar usando una expresión regular de Python"
 
-#: tools/_ui_strings_tmp.py:101
+#: tools/_ui_strings_tmp.py:96
 msgid ""
 "Match file names using a Python regular expression; use \\1 \\2… for "
 "backreferences in the replacement"
@@ -1024,23 +1284,43 @@ msgstr ""
 "Hacer coincidir nombres de archivo usando una expresión regular de "
 "Python; usar \\1 \\2… para referencias hacia atrás en el reemplazo"
 
-#: tools/_ui_strings_tmp.py:102
+#: tools/_ui_strings_tmp.py:97
 msgid "Plain text"
 msgstr "Texto plano"
 
-#: tools/_ui_strings_tmp.py:103
+#: tools/_ui_strings_tmp.py:98
 msgid "Search for a literal string"
 msgstr "Buscar una cadena literal"
 
-#: tools/_ui_strings_tmp.py:104
+#: tools/_ui_strings_tmp.py:99
 msgid "Match file names by looking for the search text as a literal string"
 msgstr "Hacer coincidir nombres de archivo buscando el texto como cadena literal"
 
-#: tools/_ui_strings_tmp.py:106
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:100
+msgid "Case-insensitive"
+msgstr "No distinguir mayúsculas"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:101
+msgid "Ignore case when searching"
+msgstr "Ignorar mayúsculas al buscar"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:102
+msgid ""
+"When checked, the search pattern matches file names regardless of letter "
+"case"
+msgstr ""
+"Cuando está marcada, el patrón de búsqueda coincide con nombres de "
+"archivo independientemente de las mayúsculas"
+
+#: tools/_ui_strings_tmp.py:104
 msgid "Replacement pattern"
 msgstr "Patrón de reemplazo"
 
-#: tools/_ui_strings_tmp.py:107
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:105
 #, python-brace-format
 msgid ""
 "Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
@@ -1050,15 +1330,16 @@ msgstr ""
 "contador, {date} para la fecha de hoy, {dir} para el nombre de la carpeta"
 " padre"
 
-#: tools/_ui_strings_tmp.py:109
+#: tools/_ui_strings_tmp.py:107
 msgid "Add the current replacement pattern to the drop-down history"
 msgstr "Añadir el patrón de reemplazo actual al historial desplegable"
 
-#: tools/_ui_strings_tmp.py:110
+#: tools/_ui_strings_tmp.py:108
 msgid "Replacement pattern help"
 msgstr "Ayuda sobre patrones de reemplazo"
 
-#: tools/_ui_strings_tmp.py:111
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:109
 msgid ""
 "Show help about replacement patterns (capture groups, counter, date, "
 "directory tokens)"
@@ -1066,121 +1347,128 @@ msgstr ""
 "Mostrar ayuda sobre patrones de reemplazo (grupos de captura, contador, "
 "fecha, tokens de directorio)"
 
-#: tools/_ui_strings_tmp.py:112
+#: tools/_ui_strings_tmp.py:110
 msgid "Post-processing"
 msgstr "Postprocesamiento"
 
-#: tools/_ui_strings_tmp.py:113
+#: tools/_ui_strings_tmp.py:111
 msgid "Separator:"
 msgstr "Separador:"
 
-#: tools/_ui_strings_tmp.py:114 tools/_ui_strings_tmp.py:130
+#: tools/_ui_strings_tmp.py:112 tools/_ui_strings_tmp.py:128
 msgid "No change"
 msgstr "Sin cambios"
 
-#: tools/_ui_strings_tmp.py:115
+#: tools/_ui_strings_tmp.py:113
 msgid "Spaces → underscores"
 msgstr "Espacios → guiones bajos"
 
-#: tools/_ui_strings_tmp.py:116
+#: tools/_ui_strings_tmp.py:114
 msgid "Underscores → spaces"
 msgstr "Guiones bajos → espacios"
 
-#: tools/_ui_strings_tmp.py:117
+#: tools/_ui_strings_tmp.py:115
 msgid "Spaces → dots"
 msgstr "Espacios → puntos"
 
-#: tools/_ui_strings_tmp.py:118
+#: tools/_ui_strings_tmp.py:116
 msgid "Dots → spaces"
 msgstr "Puntos → espacios"
 
-#: tools/_ui_strings_tmp.py:119
+#: tools/_ui_strings_tmp.py:117
 msgid "Spaces → dashes"
 msgstr "Espacios → guiones"
 
-#: tools/_ui_strings_tmp.py:120
+#: tools/_ui_strings_tmp.py:118
 msgid "Dashes → spaces"
 msgstr "Guiones → espacios"
 
-#: tools/_ui_strings_tmp.py:121
+#: tools/_ui_strings_tmp.py:119
 msgid "Separator conversion"
 msgstr "Conversión de separadores"
 
-#: tools/_ui_strings_tmp.py:122
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:120
 msgid ""
 "Apply a separator conversion to each renamed file name after applying the"
 " pattern"
 msgstr ""
-"Aplicar una conversión de separadores a cada nombre de archivo renombrado"
-" tras aplicar el patrón"
+"Aplicar una conversión de separador a cada nombre de archivo renombrado "
+"después de aplicar el patrónAplicar una conversión de separadores a cada "
+"nombre de archivo renombrado tras aplicar el patrón"
 
-#: tools/_ui_strings_tmp.py:123
+#: tools/_ui_strings_tmp.py:121
 msgid "Remove accents"
 msgstr "Eliminar acentos"
 
-#: tools/_ui_strings_tmp.py:124
+#: tools/_ui_strings_tmp.py:122
 msgid "Strip diacritical marks"
 msgstr "Eliminar marcas diacríticas"
 
-#: tools/_ui_strings_tmp.py:125
+#: tools/_ui_strings_tmp.py:123
 msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
 msgstr "Convertir caracteres acentuados a sus equivalentes ASCII (é→e, ü→u, etc.)"
 
-#: tools/_ui_strings_tmp.py:126
+#: tools/_ui_strings_tmp.py:124
 msgid "Remove duplicate separators"
 msgstr "Eliminar separadores duplicados"
 
-#: tools/_ui_strings_tmp.py:127
+#: tools/_ui_strings_tmp.py:125
 msgid "Collapse consecutive separators"
 msgstr "Contraer separadores consecutivos"
 
-#: tools/_ui_strings_tmp.py:128
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:126
 msgid ""
 "Collapse runs of identical separator characters (spaces, dots, dashes, "
 "underscores) into one"
 msgstr ""
-"Contraer secuencias de separadores idénticos (espacios, puntos, guiones, "
-"guiones bajos) en uno solo"
+"Reducir secuencias de separadores idénticos (espacios, puntos, guiones, "
+"guiones bajos) a unoContraer secuencias de separadores idénticos "
+"(espacios, puntos, guiones, guiones bajos) en uno solo"
 
-#: tools/_ui_strings_tmp.py:129
+#: tools/_ui_strings_tmp.py:127
 msgid "Case:"
 msgstr "Mayúsculas/minúsculas:"
 
-#: tools/_ui_strings_tmp.py:131
+#: tools/_ui_strings_tmp.py:129
 msgid "UPPERCASE"
 msgstr "MAYÚSCULAS"
 
-#: tools/_ui_strings_tmp.py:132
+#: tools/_ui_strings_tmp.py:130
 msgid "lowercase"
 msgstr "minúsculas"
 
-#: tools/_ui_strings_tmp.py:133
+#: tools/_ui_strings_tmp.py:131
 msgid "Capitalize first letter"
 msgstr "Primera letra en mayúscula"
 
-#: tools/_ui_strings_tmp.py:134
+#: tools/_ui_strings_tmp.py:132
 msgid "Title Case"
 msgstr "Primera letra de cada palabra"
 
-#: tools/_ui_strings_tmp.py:135
+#: tools/_ui_strings_tmp.py:133
 msgid "Capitalization mode"
 msgstr "Modo de capitalización"
 
-#: tools/_ui_strings_tmp.py:136
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:134
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr ""
-"Elegir cómo cambiar las mayúsculas/minúsculas de los nombres de archivo "
-"después de aplicar el patrón"
+"Elegir cómo cambiar las mayúsculas de los nombres de archivo después de "
+"aplicar el patrónElegir cómo cambiar las mayúsculas/minúsculas de los "
+"nombres de archivo después de aplicar el patrón"
 
-#: tools/_ui_strings_tmp.py:137
+#: tools/_ui_strings_tmp.py:135
 msgid "Save:"
 msgstr "Guardar:"
 
-#: tools/_ui_strings_tmp.py:138
+#: tools/_ui_strings_tmp.py:136
 msgid "Named save"
 msgstr "Guardado con nombre"
 
-#: tools/_ui_strings_tmp.py:139
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:137
 msgid ""
 "Type a name (letters, digits, _ and -) to save or load all search/replace"
 " parameters"
@@ -1188,40 +1476,44 @@ msgstr ""
 "Escribir un nombre (letras, dígitos, _ y -) para guardar o cargar todos "
 "los parámetros de búsqueda/reemplazo"
 
-#: tools/_ui_strings_tmp.py:140
+#: tools/_ui_strings_tmp.py:138
 msgid "Save"
 msgstr "Guardar"
 
-#: tools/_ui_strings_tmp.py:141
+#: tools/_ui_strings_tmp.py:139
 msgid "Save current settings under this name"
 msgstr "Guardar la configuración actual con este nombre"
 
-#: tools/_ui_strings_tmp.py:142
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:140
 msgid ""
 "Save all search, replace and post-processing settings under the current "
 "name (overwrites any existing save with the same name)"
 msgstr ""
-"Guardar todos los ajustes de búsqueda, reemplazo y postprocesamiento bajo"
-" el nombre actual (sobrescribe cualquier guardado existente con el mismo "
-"nombre)"
+"Guardar todos los ajustes de búsqueda, reemplazo y posprocesamiento bajo "
+"el nombre actual (sobrescribe cualquier guardado existente con el mismo "
+"nombre)Guardar todos los ajustes de búsqueda, reemplazo y "
+"postprocesamiento bajo el nombre actual (sobrescribe cualquier guardado "
+"existente con el mismo nombre)"
 
-#: tools/_ui_strings_tmp.py:143
+#: tools/_ui_strings_tmp.py:141
 msgid "Delete"
 msgstr "Eliminar"
 
-#: tools/_ui_strings_tmp.py:144
+#: tools/_ui_strings_tmp.py:142
 msgid "Delete this named save"
 msgstr "Eliminar este guardado con nombre"
 
-#: tools/_ui_strings_tmp.py:145
+#: tools/_ui_strings_tmp.py:143
 msgid "Permanently delete the named save matching the current name"
 msgstr "Eliminar permanentemente el guardado con nombre que coincida con el actual"
 
-#: tools/_ui_strings_tmp.py:147
+#: tools/_ui_strings_tmp.py:145
 msgid "Compute rename preview"
 msgstr "Calcular vista previa del renombrado"
 
-#: tools/_ui_strings_tmp.py:148
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:146
 msgid ""
 "Apply the current pattern to all listed files and show the result in the "
 "Preview column"
@@ -1229,54 +1521,121 @@ msgstr ""
 "Aplicar el patrón actual a todos los archivos listados y mostrar el "
 "resultado en la columna Vista previa"
 
-#: tools/_ui_strings_tmp.py:149
+#: tools/_ui_strings_tmp.py:147
 msgid "Clear"
 msgstr "Borrar"
 
-#: tools/_ui_strings_tmp.py:150
+#: tools/_ui_strings_tmp.py:148
 msgid "Clear the preview"
 msgstr "Borrar la vista previa"
 
-#: tools/_ui_strings_tmp.py:151
+#: tools/_ui_strings_tmp.py:149
 msgid "Remove all preview values from the Preview column"
 msgstr "Eliminar todos los valores de la columna Vista previa"
 
-#: tools/_ui_strings_tmp.py:152
+#: tools/_ui_strings_tmp.py:150
 msgid "Undo"
 msgstr "Deshacer"
 
-#: tools/_ui_strings_tmp.py:153
+#: tools/_ui_strings_tmp.py:151
 msgid "Undo last rename batch"
 msgstr "Deshacer el último lote de renombrado"
 
-#: tools/_ui_strings_tmp.py:154
+#: tools/_ui_strings_tmp.py:152
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Revertir el último lote de renombrados realizados en disco"
 
-#: tools/_ui_strings_tmp.py:155
+#: tools/_ui_strings_tmp.py:153
 msgid "Rename"
 msgstr "Renombrar"
 
-#: tools/_ui_strings_tmp.py:156
+#: tools/_ui_strings_tmp.py:154
 msgid "Apply renames on disk"
 msgstr "Aplicar renombrados en disco"
 
-#: tools/_ui_strings_tmp.py:157
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:155
 msgid ""
 "Permanently rename all files shown in the Preview column (only enabled "
 "when there are no conflicts)"
 msgstr ""
-"Renombrar permanentemente todos los archivos mostrados en la columna "
-"Vista previa (solo activo cuando no hay conflictos)"
+"Renombrar definitivamente todos los archivos mostrados en la columna "
+"Vista previa (solo habilitado cuando no hay conflictos)Renombrar "
+"permanentemente todos los archivos mostrados en la columna Vista previa "
+"(solo activo cuando no hay conflictos)"
 
-#: tools/_ui_strings_tmp.py:158
+#: tools/_ui_strings_tmp.py:156
 msgid "File"
 msgstr "Archivo"
 
-#: tools/_ui_strings_tmp.py:159
+#: tools/_ui_strings_tmp.py:157
 msgid "Edit"
 msgstr "Editar"
 
-#: tools/_ui_strings_tmp.py:160
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:158
+msgid "Shortcuts"
+msgstr "Accesos directos"
+
+#: tools/_ui_strings_tmp.py:159
 msgid "Help"
 msgstr "Ayuda"
+
+#: tools/_ui_strings_tmp.py:161
+msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+
+#: tools/_ui_strings_tmp.py:162
+msgid "Application version"
+msgstr "Versión de la aplicación"
+
+#: tools/_ui_strings_tmp.py:163
+msgid "A graphical batch file renaming utility."
+msgstr "Utilidad gráfica para el renombrado masivo de archivos."
+
+#: tools/_ui_strings_tmp.py:164
+msgid "License: GPLv3"
+msgstr "Licencia: GPLv3"
+
+#: tools/_ui_strings_tmp.py:165
+msgid "Settings"
+msgstr "Preferencias"
+
+#: tools/_ui_strings_tmp.py:166
+msgid "Language:"
+msgstr "Idioma:"
+
+#: tools/_ui_strings_tmp.py:167
+msgid "Select the interface language"
+msgstr "Seleccionar el idioma de la interfaz"
+
+#: tools/_ui_strings_tmp.py:168
+msgid "Log level:"
+msgstr "Nivel de registro:"
+
+#: tools/_ui_strings_tmp.py:169
+msgid "Set the application logging verbosity"
+msgstr "Establecer el nivel de detalle del registro de la aplicación"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:170
+msgid "Behaviour"
+msgstr "Comportamiento"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:171
+msgid "Restore last opened directory"
+msgstr "Restaurar el último directorio abierto"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:172
+msgid "On startup, reopen the directory that was active in the previous session"
+msgstr "Al iniciar, volver a abrir el directorio activo en la sesión anterior"
+
+# ==AUTO== Automatically translated
+#: tools/_ui_strings_tmp.py:173
+msgid "A restart is required for the language change to take effect."
+msgstr ""
+"Es necesario reiniciar para que el cambio de idioma surta efecto.Se "
+"necesita reiniciar la aplicación para que el cambio de idioma surta "
+"efecto."

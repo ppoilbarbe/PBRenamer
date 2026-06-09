@@ -32,6 +32,8 @@ class SettingsDialog(QDialog):
         if idx >= 0:
             self._ui.cmbLogLevel.setCurrentIndex(idx)
 
+        self._ui.chkRestoreLastDir.setChecked(settings.get_restore_last_dir())
+
         self._ui.buttonBox.accepted.connect(self._save_and_accept)
 
     def _save_and_accept(self) -> None:
@@ -39,4 +41,5 @@ class SettingsDialog(QDialog):
         level = self._ui.cmbLogLevel.currentText()
         settings.set_log_level(level)
         settings.apply_log_level(level)
+        settings.set_restore_last_dir(self._ui.chkRestoreLastDir.isChecked())
         self.accept()

@@ -3,7 +3,7 @@
  <class>SettingsDialog</class>
  <widget class="QDialog" name="SettingsDialog">
   <property name="geometry">
-   <rect><x>0</x><y>0</y><width>380</width><height>165</height></rect>
+   <rect><x>0</x><y>0</y><width>380</width><height>230</height></rect>
   </property>
   <property name="minimumSize">
    <size><width>340</width><height>0</height></size>
@@ -35,6 +35,19 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="grpBehaviour">
+     <property name="title"><string>Behaviour</string></property>
+     <layout class="QVBoxLayout" name="layoutBehaviour">
+      <item>
+       <widget class="QCheckBox" name="chkRestoreLastDir">
+        <property name="text"><string>Restore last opened directory</string></property>
+        <property name="toolTip"><string>On startup, reopen the directory that was active in the previous session</string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="lblNotice">

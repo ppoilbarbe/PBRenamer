@@ -184,31 +184,45 @@ def rename_using_patterns(
     ext: str = "",
     *,
     newnum: int | None = None,
+    case_insensitive: bool = False,
 ) -> tuple[str | None, str | None]:
-    """Apply a search/replacement pattern pair.
+    """Apply a search/replacement pattern pair to all matches within *name*.
 
     Returns (newname, newpath), or (None, None) on no match or syntax error.
     Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
     regex = _build_regex(pattern_ini)
+    flags = re.IGNORECASE if case_insensitive else 0
     try:
-        m = re.search(regex, name)
-        if m is None:
+        if re.search(regex, name, flags) is None:
             return None, None
     except re.error:
         return None, None
 
-    newname = _apply_replacement(
-        pattern_end,
-        full_match=m.group(0),
-        groups=list(m.groups()),
-        named_groups={},
-        path=path,
-        counter=count,
-        now=datetime.now(),
-        newnum=newnum,
-    )
-    if newname is None:
+    now = datetime.now()
+    _syntax_error = False
+
+    def _repl(m: re.Match) -> str:
+        nonlocal _syntax_error
+        if not m.group(0):
+            return ""
+        result = _apply_replacement(
+            pattern_end,
+            full_match=m.group(0),
+            groups=list(m.groups()),
+            named_groups={},
+            path=path,
+            counter=count,
+            now=now,
+            newnum=newnum,
+        )
+        if result is None:
+            _syntax_error = True
+            return m.group(0)
+        return result
+
+    newname = re.sub(regex, _repl, name, flags=flags)
+    if _syntax_error:
         return None, None
     return newname, _new_path(newname, path)
 
@@ -220,18 +234,26 @@ def rename_using_plain_text(
     replacement_template: str,
     *,
     newnum: int | None = None,
+    case_insensitive: bool = False,
 ) -> tuple[str | None, str | None]:
     """Literal string search; unified replacement syntax.
 
     Returns (None, None) if *search* does not appear in *name*.
     Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
-    if search not in name:
-        return None, None
+    if case_insensitive:
+        m = re.search(re.escape(search), name, re.IGNORECASE)
+        if m is None:
+            return None, None
+        actual_match = m.group(0)
+    else:
+        if search not in name:
+            return None, None
+        actual_match = search
 
     newname = _apply_replacement(
         replacement_template,
-        full_match=search,
+        full_match=actual_match,
         groups=[],
         named_groups={},
         path=path,
@@ -241,7 +263,11 @@ def rename_using_plain_text(
     )
     if newname is None:
         return None, None
-    return name.replace(search, newname), _new_path(name.replace(search, newname), path)
+    if case_insensitive:
+        result = re.sub(re.escape(search), lambda _: newname, name, flags=re.IGNORECASE)
+    else:
+        result = name.replace(search, newname)
+    return result, _new_path(result, path)
 
 
 def rename_using_regex(
@@ -251,50 +277,48 @@ def rename_using_regex(
     replacement_template: str,
     *,
     newnum: int | None = None,
+    case_insensitive: bool = False,
 ) -> tuple[str | None, str | None]:
-    """Apply a Python regex search with unified replacement syntax.
+    """Apply a Python regex substitution to all matches within *name*.
+
+    Use {0} for the full match, {1}/{2}/… for numbered groups,
+    {re:name} for named groups.
 
     Returns (newname, newpath), or (None, None) on no match or invalid pattern.
     Raises replacement.FieldResolutionError when a field cannot be resolved.
     """
-    from pbrenamer.core import replacement as _repl
-
+    flags = re.IGNORECASE if case_insensitive else 0
     try:
-        if not re.search(pattern, name):
+        if re.search(pattern, name, flags) is None:
             return None, None
-        tokens = _repl.parse(replacement_template)
-    except (re.error, _repl.ReplacementSyntaxError):
-        return None, None
-
-    now = datetime.now()
-    field_error: _repl.FieldResolutionError | None = None
-
-    def _cb(m: re.Match) -> str:
-        nonlocal field_error
-        if field_error:
-            return m.group(0)
-        try:
-            return _repl.substitute(
-                tokens,
-                full_match=m.group(0),
-                groups=list(m.groups()),
-                named_groups=m.groupdict(),
-                path=path,
-                counter=1,
-                now=now,
-                newnum=newnum,
-            )
-        except _repl.FieldResolutionError as exc:
-            field_error = exc
-            return m.group(0)
-
-    try:
-        newname = re.sub(pattern, _cb, name)
     except re.error:
         return None, None
 
-    if field_error:
-        raise field_error
+    now = datetime.now()
+    _syntax_error = False
+
+    def _repl(m: re.Match) -> str:
+        nonlocal _syntax_error
+        if not m.group(0):
+            return ""
+        result = _apply_replacement(
+            replacement_template,
+            full_match=m.group(0),
+            groups=list(m.groups()),
+            named_groups=m.groupdict(),
+            path=path,
+            counter=1,
+            now=now,
+            newnum=newnum,
+        )
+        if result is None:
+            _syntax_error = True
+            return m.group(0)
+        return result
+
+    newname = re.sub(pattern, _repl, name, flags=flags)
+    if _syntax_error:
+        return None, None
     return newname, _new_path(newname, path)
 
 

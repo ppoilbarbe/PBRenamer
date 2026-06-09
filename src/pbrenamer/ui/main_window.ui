@@ -87,6 +87,7 @@
       <widget class="QTreeView" name="treeDirectory">
        <property name="minimumWidth"><number>180</number></property>
        <property name="headerHidden"><bool>true</bool></property>
+       <property name="contextMenuPolicy"><enum>Qt::CustomContextMenu</enum></property>
        <property name="toolTip"><string>Browse the filesystem</string></property>
        <property name="statusTip"><string>Select a directory to list its contents in the panel on the right</string></property>
       </widget>
@@ -97,6 +98,7 @@
 
        <!-- File list: Original | Preview -->
        <widget class="QTreeWidget" name="tblFiles">
+        <property name="contextMenuPolicy"><enum>Qt::CustomContextMenu</enum></property>
         <property name="selectionMode"><enum>QAbstractItemView::ExtendedSelection</enum></property>
         <property name="alternatingRowColors"><bool>true</bool></property>
         <property name="rootIsDecorated"><bool>false</bool></property>
@@ -183,6 +185,14 @@
                 <property name="text"><string>Plain text</string></property>
                 <property name="toolTip"><string>Search for a literal string</string></property>
                 <property name="statusTip"><string>Match file names by looking for the search text as a literal string</string></property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkCaseInsensitive">
+                <property name="text"><string>Case-insensitive</string></property>
+                <property name="checked"><bool>true</bool></property>
+                <property name="toolTip"><string>Ignore case when searching</string></property>
+                <property name="statusTip"><string>When checked, the search pattern matches file names regardless of letter case</string></property>
                </widget>
               </item>
               <item>
@@ -407,6 +417,8 @@
     <property name="title"><string>File</string></property>
     <addaction name="actionOpenFolder"/>
     <addaction name="separator"/>
+    <addaction name="actionFileInfo"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -415,12 +427,17 @@
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuShortcuts">
+    <property name="title"><string>Shortcuts</string></property>
+    <addaction name="actionEditShortcuts"/>
+   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title"><string>Help</string></property>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuShortcuts"/>
    <addaction name="menuHelp"/>
   </widget>
 
@@ -450,6 +467,17 @@
    <property name="text"><string>About PBRenamer</string></property>
    <property name="toolTip"><string>About this application</string></property>
    <property name="statusTip"><string>Show version and license information</string></property>
+  </action>
+  <action name="actionEditShortcuts">
+   <property name="text"><string>Edit shortcuts…</string></property>
+   <property name="toolTip"><string>Manage directory shortcuts</string></property>
+   <property name="statusTip"><string>Add or remove entries from the shortcuts list</string></property>
+  </action>
+  <action name="actionFileInfo">
+   <property name="text"><string>Information</string></property>
+   <property name="shortcut"><string>Ctrl+I</string></property>
+   <property name="toolTip"><string>Show file field values</string></property>
+   <property name="statusTip"><string>Open the file information window for the selected file</string></property>
   </action>
 
  </widget>

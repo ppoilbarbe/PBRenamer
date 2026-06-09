@@ -72,12 +72,14 @@ $(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
 	$(CONDA_RUN) pybabel extract -F babel.cfg \
 	    --copyright-holder="Marcel Spock" \
 	    --msgid-bugs-address="mrspock@cardolan.net" \
+	    --project="PBRenamer" \
 	    -k _ -o $(POT_FILE) \
 	    $(PY_SOURCES) tools/_ui_strings_tmp.py
 	@rm -f tools/_ui_strings_tmp.py
 	@printf "$(C)Updating .po files...$(R)\n"
 	$(CONDA_RUN) pybabel update -i $(POT_FILE) -d $(LOCALE_DIR) \
 	    -D pbrenamer --no-fuzzy-matching
+	$(CONDA_RUN) python tools/fix_pot_date.py $(LOCALE_DIR)
 	@printf "$(C)Compiling .mo files...$(R)\n"
 	$(CONDA_RUN) pybabel compile -d $(LOCALE_DIR) -D pbrenamer
 	@printf "$(G)Done.$(R)\n"
@@ -108,8 +110,8 @@ install: ## Install package in editable mode and register git hooks
 	$(CONDA_RUN) pip install -e ".[dev]"
 	$(CONDA_RUN) pre-commit install
 
-run: ## Launch PBRenamer from the conda env
-	$(CONDA_RUN) python -m pbrenamer
+run: ## Launch PBRenamer from the conda env  (usage: make run ARGS="--debug /some/dir")
+	$(CONDA_RUN) python -m pbrenamer $(ARGS)
 
 test: ## Run test suite
 	$(CONDA_RUN) pytest

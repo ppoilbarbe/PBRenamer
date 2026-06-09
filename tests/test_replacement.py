@@ -324,3 +324,46 @@ class TestSubstituteFields:
     def test_mixed_literal_and_field(self):
         result = _sub("photo_{num:03}_copy", counter=5)
         assert result == "photo_005_copy"
+
+
+# ---------------------------------------------------------------------------
+# {num} non-numeric offset (lines 308-309 in substitute)
+# ---------------------------------------------------------------------------
+
+
+class TestNumNonNumericOffset:
+    def test_non_numeric_default_is_ignored(self):
+        # {num::badval} — seg.default = "badval", int("badval") raises ValueError
+        # expect: offset silently ignored, counter value used as-is
+        result = _sub("{num::badval}", counter=3)
+        assert result == "3"
+
+
+# ---------------------------------------------------------------------------
+# _resolve fallthrough to return None (line 375)
+# ---------------------------------------------------------------------------
+
+
+class TestResolveUnknownField:
+    def test_unknown_field_with_default_uses_default(self):
+        # A FieldSegment whose name passes _is_valid_name() but is unknown
+        # at resolve-time can be injected directly to hit the final return None.
+        from pbrenamer.core.replacement import FieldSegment, _resolve
+
+        seg = FieldSegment(
+            name="totally_unknown_x",
+            align="",
+            fmt="",
+            default=None,
+            raw="{totally_unknown_x}",
+        )
+        result = _resolve(
+            seg,
+            full_match=None,
+            groups=[],
+            named_groups={},
+            path="/",
+            counter=1,
+            now=_NOW,
+        )
+        assert result is None

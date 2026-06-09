@@ -73,6 +73,17 @@ def _int_attr(track, attr: str) -> int | None:
         return None
 
 
+def can_read(path: str) -> bool:
+    """Return True if pymediainfo finds a video track in *path*."""
+    if not _MEDIAINFO:
+        return False
+    try:
+        info = MediaInfo.parse(path)
+        return any(t.track_type == "Video" for t in info.tracks)
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def read_field(path: str, field: str) -> Any | None:
     """Return the value of a video metadata field for *path*, or None if unavailable.
 

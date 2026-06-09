@@ -210,6 +210,22 @@ def _read_iptc(path: str, key: str) -> Any | None:
 # ---------------------------------------------------------------------------
 
 
+def can_read(path: str) -> bool:
+    """Return True if PIL can open *path* as a recognised image format."""
+    if not _PILLOW:
+        return False
+    from PIL import Image, UnidentifiedImageError  # noqa: PLC0415
+
+    try:
+        with Image.open(path) as img:
+            img.verify()
+        return True
+    except (UnidentifiedImageError, OSError):
+        return False
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def field_type(field: str) -> FieldType:
     """Return the FieldType for *field* (case-insensitive); STRING if unknown."""
     return FIELD_REGISTRY.get(field.lower(), FieldInfo("", FieldType.STRING)).type

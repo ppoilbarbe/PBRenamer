@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pbrenamer"
-version = "1.0.0"
+version = "1.1.0"
 description = "A graphical batch file renaming utility"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -74,9 +74,12 @@ extend-select = [
 
 [tool.ruff.lint.per-file-ignores]
 # _() is installed into builtins by gettext at runtime — not a real F821
-"src/pbrenamer/ui/main_window.py"     = ["F821"]
-"src/pbrenamer/ui/settings_dialog.py" = ["F821"]
-"src/pbrenamer/ui/pattern_help.py"    = ["F821"]
+"src/pbrenamer/ui/main_window.py"         = ["F821"]
+"src/pbrenamer/ui/settings_dialog.py"     = ["F821"]
+"src/pbrenamer/ui/pattern_help.py"        = ["F821"]
+"src/pbrenamer/ui/shortcuts_dialog.py"    = ["F821"]
+"src/pbrenamer/ui/file_info_window.py"    = ["F821"]
+"src/pbrenamer/platform/bookmarks.py"     = ["F821"]
 
 [tool.ruff.format]
 # Black-compatible defaults (double quotes, trailing commas, magic trailing comma)

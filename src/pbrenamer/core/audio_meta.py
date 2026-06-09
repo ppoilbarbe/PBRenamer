@@ -115,6 +115,16 @@ def _read_easy_field(path: str, key: str) -> Any | None:
     return raw.strip() or None
 
 
+def can_read(path: str) -> bool:
+    """Return True if mutagen recognises *path* as a supported audio file."""
+    if not _MUTAGEN:
+        return False
+    try:
+        return mutagen.File(path) is not None
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def read_field(path: str, field: str) -> Any | None:
     """Return the value of an audio metadata field for *path*, or None if unavailable.
 

@@ -7,23 +7,27 @@ import os
 import re
 from collections import defaultdict
 
-from PySide6.QtCore import QDir, Qt
-from PySide6.QtGui import QColor
+from PySide6.QtCore import QDir, Qt, QTimer, QUrl
+from PySide6.QtGui import QColor, QDesktopServices
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
     QFileSystemModel,
     QMainWindow,
+    QMenu,
     QMessageBox,
     QStyledItemDelegate,
     QTreeWidgetItem,
 )
 
+import pbrenamer.settings as _cfg
 from pbrenamer.core import filetools
 from pbrenamer.core import replacement as _repl
 from pbrenamer.core.undo import UndoManager
+from pbrenamer.platform import system_bookmarks
 from pbrenamer.platform.fs import conflict_key, same_file_path
 from pbrenamer.ui.about_dialog import AboutDialog
+from pbrenamer.ui.file_info_window import FileInfoWindow
 from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
 from pbrenamer.ui.pattern_help import (
@@ -35,6 +39,7 @@ from pbrenamer.ui.pattern_help import (
 )
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
+from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 from pbrenamer.ui.widgets import WhitespaceLineEdit
 from pbrenamer.ui.window_state import WindowState
 
@@ -90,6 +95,7 @@ class MainWindow(QMainWindow):
         self._window_state = WindowState()
         self._search_help: PatternHelpDialog | None = None
         self._replace_help: PatternHelpDialog | None = None
+        self._file_info: FileInfoWindow | None = None
 
         self._setup_directory_tree()
         self._populate_pattern_combos()
@@ -99,7 +105,13 @@ class MainWindow(QMainWindow):
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
         self._restore_window_state()
-        self._navigate_to(start_dir or os.getcwd())
+        if start_dir:
+            initial_dir = start_dir
+        elif _cfg.get_restore_last_dir():
+            initial_dir = _cfg.get_last_dir() or os.getcwd()
+        else:
+            initial_dir = os.getcwd()
+        QTimer.singleShot(0, lambda: self._startup_navigate(initial_dir))
 
     # ── Initial setup ─────────────────────────────────────────────────────────
 
@@ -111,6 +123,17 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.setRootIndex(root_idx)
         for col in range(1, self._fs_model.columnCount()):
             self._ui.treeDirectory.hideColumn(col)
+
+    def _startup_navigate(self, path: str) -> None:
+        """Navigate to *path* at startup, loading the file list even when the
+        QFileSystemModel hasn't populated the index for *path* yet (deep paths
+        are loaded lazily in background threads; index() returns invalid until
+        each ancestor has been fetched, so selectionChanged never fires and
+        _reload_files is never called).  Fall back to a direct assignment."""
+        self._navigate_to(path)
+        if os.path.isdir(path) and self._current_dir != path:
+            self._current_dir = path
+            self._reload_files()
 
     def _navigate_to(self, path: str) -> None:
         if not os.path.isdir(path):
@@ -170,9 +193,10 @@ class MainWindow(QMainWindow):
         self._ui.btnSaveSave.clicked.connect(self._on_save_save)
         self._ui.btnSaveDelete.clicked.connect(self._on_save_delete)
 
-        # Search mode (Pattern / Regex / Plain text)
+        # Search mode (Pattern / Regex / Plain text) + case sensitivity
         for rad in (self._ui.radPattern, self._ui.radRegex, self._ui.radPlainText):
             rad.toggled.connect(lambda _: self._on_mode_changed())
+        self._ui.chkCaseInsensitive.toggled.connect(lambda _: self._on_mode_changed())
         self._ui.cmbPatternSearch.activated.connect(self._on_search_preset_selected)
         self._ui.cmbPatternDest.activated.connect(self._on_replace_preset_selected)
         self._ui.cmbPatternSearch.currentTextChanged.connect(
@@ -195,6 +219,21 @@ class MainWindow(QMainWindow):
         self._ui.actionHistory.triggered.connect(self._on_history)
         self._ui.actionSettings.triggered.connect(self._on_settings)
         self._ui.actionAbout.triggered.connect(self._on_about)
+        self._ui.actionEditShortcuts.triggered.connect(self._on_edit_shortcuts)
+        self._ui.actionFileInfo.triggered.connect(self._on_file_info)
+        self._ui.menuShortcuts.aboutToShow.connect(self._build_shortcuts_menu)
+
+        # Directory tree context menu
+        self._ui.treeDirectory.customContextMenuRequested.connect(
+            self._on_tree_context_menu
+        )
+
+        # File list context menu + selection tracking for info window
+        self._ui.tblFiles.customContextMenuRequested.connect(
+            self._on_files_context_menu
+        )
+        self._ui.tblFiles.itemSelectionChanged.connect(self._on_file_selection_changed)
+        self._ui.tblFiles.itemDoubleClicked.connect(self._on_file_double_clicked)
 
     # ── Directory / file loading ──────────────────────────────────────────────
 
@@ -375,6 +414,7 @@ class MainWindow(QMainWindow):
         counter: int,
         *,
         newnum: int | None = None,
+        case_insensitive: bool = False,
     ) -> tuple[str | None, str | None]:
         """Dispatch to the appropriate filetools rename function.
 
@@ -383,14 +423,30 @@ class MainWindow(QMainWindow):
         """
         if use_regex:
             return filetools.rename_using_regex(
-                stem, orig_path, search, replace, newnum=newnum
+                stem,
+                orig_path,
+                search,
+                replace,
+                newnum=newnum,
+                case_insensitive=case_insensitive,
             )
         if use_plain:
             return filetools.rename_using_plain_text(
-                stem, orig_path, search, replace, newnum=newnum
+                stem,
+                orig_path,
+                search,
+                replace,
+                newnum=newnum,
+                case_insensitive=case_insensitive,
             )
         return filetools.rename_using_patterns(
-            stem, orig_path, search, replace, counter, newnum=newnum
+            stem,
+            orig_path,
+            search,
+            replace,
+            counter,
+            newnum=newnum,
+            case_insensitive=case_insensitive,
         )
 
     def _apply_postproc(self, name: str, path: str) -> str:
@@ -434,6 +490,7 @@ class MainWindow(QMainWindow):
 
         use_regex = self._ui.radRegex.isChecked()
         use_plain = self._ui.radPlainText.isChecked()
+        case_insensitive = self._ui.chkCaseInsensitive.isChecked()
         if use_regex and not self._validate_search_input():
             return
         if not self._validate_replace_input():
@@ -482,6 +539,7 @@ class MainWindow(QMainWindow):
                             replace,
                             counter,
                             newnum=k,
+                            case_insensitive=case_insensitive,
                         )
                     except _repl.FieldResolutionError as err:
                         field_error = True
@@ -511,6 +569,7 @@ class MainWindow(QMainWindow):
                         search,
                         replace,
                         counter,
+                        case_insensitive=case_insensitive,
                     )
                 except _repl.FieldResolutionError as err:
                     field_error = True
@@ -724,9 +783,10 @@ class MainWindow(QMainWindow):
         self._apply_save_config(cfg)
 
     def _collect_save_config(self) -> dict:
-        return {
+        cfg: dict = {
             "search_pattern": self._ui.cmbPatternSearch.currentText(),
             "search_mode": self._current_search_mode(),
+            "case_insensitive": self._ui.chkCaseInsensitive.isChecked(),
             "replace_pattern": self._ui.cmbPatternDest.currentText(),
             "separator": self._ui.cmbSpaces.currentIndex(),
             "remove_accents": self._ui.chkRemoveAccents.isChecked(),
@@ -734,6 +794,10 @@ class MainWindow(QMainWindow):
             "case": self._ui.cmbCaps.currentIndex(),
             "keep_extension": self._ui.chkKeepExtension.isChecked(),
         }
+        f = self._ui.edtFilter.text()
+        if f:
+            cfg["filter"] = f
+        return cfg
 
     def _apply_save_config(self, cfg: dict) -> None:
         if "search_pattern" in cfg:
@@ -745,6 +809,8 @@ class MainWindow(QMainWindow):
             self._ui.radPlainText.setChecked(True)
         elif mode == "pattern":
             self._ui.radPattern.setChecked(True)
+        if "case_insensitive" in cfg:
+            self._ui.chkCaseInsensitive.setChecked(bool(cfg["case_insensitive"]))
         if "replace_pattern" in cfg:
             self._ui.cmbPatternDest.setCurrentText(cfg["replace_pattern"])
         if "separator" in cfg:
@@ -757,6 +823,11 @@ class MainWindow(QMainWindow):
             self._ui.cmbCaps.setCurrentIndex(int(cfg["case"]))
         if "keep_extension" in cfg:
             self._ui.chkKeepExtension.setChecked(bool(cfg["keep_extension"]))
+        current_filter = self._ui.edtFilter.text()
+        new_filter = cfg.get("filter", "")
+        self._ui.edtFilter.setText(new_filter)
+        if new_filter != current_filter:
+            self._reload_files()
 
     def _on_save_save(self) -> None:
         name = self._ui.cmbNamedSaves.currentText()
@@ -839,6 +910,8 @@ class MainWindow(QMainWindow):
             self._ui.splitterMain.saveState(),
             self._ui.splitterRight.saveState(),
         )
+        if self._current_dir:
+            _cfg.set_last_dir(self._current_dir)
         super().closeEvent(event)
 
     # ── Auto-preview / tab change ─────────────────────────────────────────────
@@ -861,3 +934,96 @@ class MainWindow(QMainWindow):
 
     def _on_about(self) -> None:
         AboutDialog(self).exec()
+
+    # ── Shortcuts menu ────────────────────────────────────────────────────────
+
+    def _build_shortcuts_menu(self) -> None:
+        menu = self._ui.menuShortcuts
+        menu.clear()
+
+        sys_bookmarks = system_bookmarks()
+        for name, path in sys_bookmarks:
+            action = menu.addAction(name)
+            action.setStatusTip(path)
+            action.triggered.connect(lambda _checked, p=path: self._on_shortcut(p))
+
+        menu.addSeparator()
+
+        prog_shortcuts = _cfg.get_shortcuts()
+        for name, path in prog_shortcuts:
+            action = menu.addAction(name)
+            action.setStatusTip(path)
+            action.triggered.connect(lambda _checked, p=path: self._on_shortcut(p))
+
+        menu.addSeparator()
+        menu.addAction(self._ui.actionEditShortcuts)
+
+    def _on_shortcut(self, path: str) -> None:
+        if not os.path.isdir(path):
+            return
+        self._navigate_to(path)
+        self._current_dir = path
+        self._reload_files()
+
+    def _on_tree_context_menu(self, pos) -> None:
+        index = self._ui.treeDirectory.indexAt(pos)
+        path = self._fs_model.filePath(index) if index.isValid() else self._current_dir
+        if not path or not os.path.isdir(path):
+            return
+
+        menu = QMenu(self)
+        add_action = menu.addAction(_("Add as shortcut"))
+        add_action.setStatusTip(path)
+        chosen = menu.exec(self._ui.treeDirectory.viewport().mapToGlobal(pos))
+        if chosen is add_action:
+            self._add_shortcut(path)
+
+    def _add_shortcut(self, path: str) -> None:
+        name = os.path.basename(path) or path
+        shortcuts = _cfg.get_shortcuts()
+        if any(p == path for _, p in shortcuts):
+            return
+        shortcuts.append((name, path))
+        _cfg.set_shortcuts(shortcuts)
+
+    def _on_edit_shortcuts(self) -> None:
+        ShortcutsDialog(self).exec()
+
+    # ── File information window ───────────────────────────────────────────────
+
+    def _on_file_info(self) -> None:
+        if self._file_info is None:
+            self._file_info = FileInfoWindow(self)
+        self._refresh_file_info()
+        self._file_info.show()
+        self._file_info.raise_()
+        self._file_info.activateWindow()
+
+    def _on_file_selection_changed(self) -> None:
+        if self._file_info is not None and self._file_info.isVisible():
+            self._refresh_file_info()
+
+    def _refresh_file_info(self) -> None:
+        if self._file_info is None:
+            return
+        items = self._ui.tblFiles.selectedItems()
+        if len(items) > 1:
+            self._file_info.show_multiple()
+        elif len(items) == 1:
+            path = items[0].data(0, Qt.ItemDataRole.UserRole)
+            if path:
+                self._file_info.update_file(path)
+            else:
+                self._file_info.show_empty()
+        else:
+            self._file_info.show_empty()
+
+    def _on_file_double_clicked(self, item: QTreeWidgetItem) -> None:
+        path = item.data(0, Qt.ItemDataRole.UserRole)
+        if path:
+            QDesktopServices.openUrl(QUrl.fromLocalFile(path))
+
+    def _on_files_context_menu(self, pos) -> None:
+        menu = QMenu(self)
+        menu.addAction(self._ui.actionFileInfo)
+        menu.exec(self._ui.tblFiles.viewport().mapToGlobal(pos))

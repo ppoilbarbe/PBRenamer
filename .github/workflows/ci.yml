@@ -35,6 +35,10 @@ jobs:
             pyside6-uic "$ui" -o "${ui%.ui}_ui.py"
           done
 
+      - name: Compile translation catalogues
+        shell: bash -el {0}
+        run: pybabel compile -d src/pbrenamer/locale -D pbrenamer
+
       - name: Run test suite
         shell: bash -el {0}
         env:

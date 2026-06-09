@@ -304,3 +304,82 @@ class TestRealFile:
 
     def test_case_insensitive(self):
         assert read_field(self.path, "TITLE") == read_field(self.path, "title")
+
+
+# ---------------------------------------------------------------------------
+# _read_info_field edge cases
+# ---------------------------------------------------------------------------
+
+
+class TestReadInfoFieldEdgeCases:
+    def test_info_attribute_is_none_returns_none(self, tmp_path):
+        f = tmp_path / "song.mp3"
+        f.touch()
+        mock_file = MagicMock()
+        mock_file.info = None
+        with patch("mutagen.File", return_value=mock_file):
+            assert read_field(str(f), "duration") is None
+
+    def test_unknown_info_key_returns_none(self, tmp_path):
+        f = tmp_path / "song.mp3"
+        f.touch()
+        mock_file = _make_raw_file()
+        with patch("mutagen.File", return_value=mock_file):
+            # Call internal helper directly with a key outside _INFO_FIELDS
+            result = audio_meta._read_info_field(str(f), "unknown_key")
+        assert result is None
+
+
+# ---------------------------------------------------------------------------
+# _read_easy_field year edge cases
+# ---------------------------------------------------------------------------
+
+
+class TestReadEasyFieldYearEdgeCases:
+    def test_year_field_no_date_tag_returns_none(self, tmp_path):
+        f = tmp_path / "song.mp3"
+        f.touch()
+        mock_file = _make_easy_file({})
+        with patch("mutagen.File", return_value=mock_file):
+            assert read_field(str(f), "year") is None
+
+    def test_year_field_non_numeric_value_returns_none(self, tmp_path):
+        f = tmp_path / "song.mp3"
+        f.touch()
+        mock_file = _make_easy_file({"date": ["not-a-year"]})
+        with patch("mutagen.File", return_value=mock_file):
+            assert read_field(str(f), "year") is None
+
+
+# ---------------------------------------------------------------------------
+# can_read
+# ---------------------------------------------------------------------------
+
+
+class TestCanRead:
+    def test_returns_false_when_mutagen_unavailable(self, tmp_path):
+        f = tmp_path / "song.mp3"
+        f.touch()
+        with patch.object(audio_meta, "_MUTAGEN", False):
+            assert audio_meta.can_read(str(f)) is False
+
+    def test_returns_true_for_supported_format(self, tmp_path):
+        f = tmp_path / "song.ogg"
+        f.touch()
+        with patch.object(audio_meta, "_MUTAGEN", True):
+            with patch("mutagen.File", return_value=MagicMock()):
+                assert audio_meta.can_read(str(f)) is True
+
+    def test_returns_false_for_unsupported_format(self, tmp_path):
+        f = tmp_path / "doc.txt"
+        f.touch()
+        with patch.object(audio_meta, "_MUTAGEN", True):
+            with patch("mutagen.File", return_value=None):
+                assert audio_meta.can_read(str(f)) is False
+
+    def test_returns_false_on_exception(self, tmp_path):
+        f = tmp_path / "broken.mp3"
+        f.touch()
+        with patch.object(audio_meta, "_MUTAGEN", True):
+            with patch("mutagen.File", side_effect=Exception("corrupt")):
+                assert audio_meta.can_read(str(f)) is False

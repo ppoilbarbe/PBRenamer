@@ -3,7 +3,7 @@
  <class>AboutDialog</class>
  <widget class="QDialog" name="AboutDialog">
   <property name="geometry">
-   <rect><x>0</x><y>0</y><width>400</width><height>230</height></rect>
+   <rect><x>0</x><y>0</y><width>400</width><height>290</height></rect>
   </property>
   <property name="minimumSize">
    <size><width>360</width><height>0</height></size>
@@ -70,13 +70,26 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="lblCopyright">
-     <property name="text"><string>© 2026 Marcel Spock &lt;mrspock@cardolan.net&gt;</string></property>
+    <widget class="QLabel" name="lblAuthors">
+     <property name="text"><string/></property>
+     <property name="textFormat"><enum>Qt::RichText</enum></property>
+     <property name="openExternalLinks"><bool>true</bool></property>
+     <property name="wordWrap"><bool>true</bool></property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="lblLicense">
      <property name="text"><string>License: GPLv3</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblPythonVersion">
+     <property name="text"><string/></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblPySideVersion">
+     <property name="text"><string/></property>
     </widget>
    </item>
    <item>
