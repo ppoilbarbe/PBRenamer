@@ -36,6 +36,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Executable names are now lowercase in the PyInstaller spec and CI artifact globs
   (e.g. `pbrenamer-1.2.0-linux-x86_64` instead of `PBRenamer-…`)
+- `pybabel extract` now uses `--no-location` to omit source-file/line-number
+  comments from `.po` files; `make translate` is idempotent on an unchanged
+  source tree, fixing `make dist` always producing a `dev` build instead of
+  using the git tag version
 
 ## [1.1.0] - 2026-06-01
 
