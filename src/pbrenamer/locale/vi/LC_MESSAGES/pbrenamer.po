@@ -18,7 +18,6 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:73
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -31,48 +30,35 @@ msgstr ""
 "trong <b>{1}</b>, <b>{2}</b>… được <em>chụp lại</em> và có thể tái sử "
 "dụng trong trường thay thế."
 
-#: src/pbrenamer/ui/pattern_help.py:78
 msgid "One or more digits (0–9)"
 msgstr "Một hoặc nhiều chữ số (0–9)"
 
-#: src/pbrenamer/ui/pattern_help.py:79
 msgid "One or more letters (a–z, A–Z and Unicode letters)"
 msgstr "Một hoặc nhiều chữ cái (a–z, A–Z và chữ cái Unicode)"
 
-#: src/pbrenamer/ui/pattern_help.py:80
 msgid "One or more non-whitespace characters"
 msgstr "Một hoặc nhiều ký tự không phải khoảng trắng"
 
-#: src/pbrenamer/ui/pattern_help.py:81
 msgid "Any sequence of characters, including empty"
 msgstr "Bất kỳ chuỗi ký tự nào, kể cả rỗng"
 
-#: src/pbrenamer/ui/pattern_help.py:82
 msgid "Trash — matches and discards a segment (not captured)"
 msgstr "Thùng rác — khớp và bỏ qua một đoạn (không chụp lại)"
 
-#: src/pbrenamer/ui/pattern_help.py:86
 #, python-brace-format
 msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
 msgstr "Nhóm chụp — văn bản khớp được gắn với {1}, {2}… trong phần thay thế"
 
-#: src/pbrenamer/ui/pattern_help.py:94 src/pbrenamer/ui/pattern_help.py:134
-#: src/pbrenamer/ui/pattern_help.py:150
 msgid "Example"
 msgstr "Ví dụ"
 
-#: src/pbrenamer/ui/pattern_help.py:96 src/pbrenamer/ui/pattern_help.py:136
-#: src/pbrenamer/ui/pattern_help.py:152 tools/_ui_strings_tmp.py:84
 msgid "Search:"
 msgstr "Tìm kiếm:"
 
-#: src/pbrenamer/ui/pattern_help.py:98 src/pbrenamer/ui/pattern_help.py:138
-#: src/pbrenamer/ui/pattern_help.py:154 tools/_ui_strings_tmp.py:103
 msgid "Replace:"
 msgstr "Thay thế:"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:105
 msgid ""
 "Full Python <code>re</code>-module syntax. The match is applied to the "
 "file stem (or full name if <em>Keep extension</em> is unchecked)."
@@ -83,23 +69,18 @@ msgstr ""
 "dụng cho tên cơ sở của tệp (hoặc tên đầy đủ nếu <em>Giữ phần mở rộng</em>"
 " bị bỏ chọn)."
 
-#: src/pbrenamer/ui/pattern_help.py:110
 msgid "Any single character"
 msgstr "Bất kỳ ký tự đơn nào"
 
-#: src/pbrenamer/ui/pattern_help.py:112
 msgid "Any sequence (greedy), non-empty variant"
 msgstr "Bất kỳ chuỗi nào (tham lam), biến thể không rỗng"
 
-#: src/pbrenamer/ui/pattern_help.py:114
 msgid "One or more digits"
 msgstr "Một hoặc nhiều chữ số"
 
-#: src/pbrenamer/ui/pattern_help.py:115
 msgid "Word characters (letters, digits, _)"
 msgstr "Ký tự từ (chữ cái, chữ số, _)"
 
-#: src/pbrenamer/ui/pattern_help.py:119
 msgid ""
 "Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
 "replacement"
@@ -107,20 +88,16 @@ msgstr ""
 "Nhóm chụp được đánh số → <code>\\1</code>, <code>\\2</code>… trong phần "
 "thay thế"
 
-#: src/pbrenamer/ui/pattern_help.py:126
 msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
 msgstr "Nhóm chụp có tên → <code>\\g&lt;name&gt;</code> trong phần thay thế"
 
-#: src/pbrenamer/ui/pattern_help.py:128
 msgid "Case-insensitive flag"
 msgstr "Cờ không phân biệt chữ hoa/thường"
 
-#: src/pbrenamer/ui/pattern_help.py:129
 msgid "Start / end of the name"
 msgstr "Đầu / cuối tên"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:145
 msgid ""
 "The search field is matched as a literal string — no wildcards, no "
 "special characters. Every occurrence of the exact text in the file name "
@@ -132,24 +109,19 @@ msgstr ""
 "ký tự — không có ký tự đại diện, không có ký tự đặc biệt. Mỗi lần xuất "
 "hiện văn bản chính xác trong tên tệp đều được thay thế."
 
-#: src/pbrenamer/ui/pattern_help.py:161
 msgid "Search patterns"
 msgstr "Mẫu tìm kiếm"
 
-#: src/pbrenamer/ui/pattern_help.py:162
 msgid "Pattern mode"
 msgstr "Chế độ mẫu"
 
-#: src/pbrenamer/ui/pattern_help.py:167 tools/_ui_strings_tmp.py:10
 msgid "Regular expression mode"
 msgstr "Chế độ biểu thức chính quy"
 
-#: src/pbrenamer/ui/pattern_help.py:172 tools/_ui_strings_tmp.py:12
 msgid "Plain text mode"
 msgstr "Chế độ văn bản thuần"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:183
 #, python-brace-format
 msgid ""
 "The replacement string is the same regardless of the search mode. Fields "
@@ -158,36 +130,28 @@ msgstr ""
 "Chuỗi thay thế giống nhau bất kể chế độ tìm kiếm. Các trường được viết là"
 " <code>{name}</code> và có thể bao gồm các tùy chọn định dạng:"
 
-#: src/pbrenamer/ui/pattern_help.py:188
 msgid "plain value"
 msgstr "giá trị thuần"
 
-#: src/pbrenamer/ui/pattern_help.py:189
 msgid "with format"
 msgstr "có định dạng"
 
-#: src/pbrenamer/ui/pattern_help.py:190
 msgid "with format and fallback"
 msgstr "có định dạng và giá trị dự phòng"
 
-#: src/pbrenamer/ui/pattern_help.py:191
 msgid "left-align  (digit fmt = min width)"
 msgstr "căn trái  (fmt chữ số = độ rộng tối thiểu)"
 
-#: src/pbrenamer/ui/pattern_help.py:192
 msgid "right-align"
 msgstr "căn phải"
 
-#: src/pbrenamer/ui/pattern_help.py:193
 msgid "zero-pad right (numbers)"
 msgstr "đệm số không bên phải (số)"
 
-#: src/pbrenamer/ui/pattern_help.py:194
 msgid "literal '{' character"
 msgstr "ký tự '{' theo nghĩa đen"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:198
 msgid ""
 "<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
 "<code>strftime</code> format for dates/datetimes.<br><b>default</b>: used"
@@ -202,44 +166,34 @@ msgstr ""
 "ngày/giờ.<br><b>default</b>: được dùng khi trường vắng mặt; bỏ qua nó làm"
 " sự vắng mặt thành lỗi (tệp hiển thị màu đỏ trong bản xem trước)."
 
-#: src/pbrenamer/ui/pattern_help.py:205
 msgid "all modes"
 msgstr "tất cả chế độ"
 
-#: src/pbrenamer/ui/pattern_help.py:206
 msgid "pattern, regex"
 msgstr "mẫu, regex"
 
-#: src/pbrenamer/ui/pattern_help.py:207
 msgid "regex only"
 msgstr "chỉ regex"
 
-#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:208
 msgid "Field"
 msgstr "Trường"
 
-#: src/pbrenamer/ui/pattern_help.py:209
 msgid "Available in"
 msgstr "Có sẵn trong"
 
-#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:210
 msgid "Description"
 msgstr "Mô tả"
 
-#: src/pbrenamer/ui/pattern_help.py:221
 msgid "Full matched text (or search literal in plain-text mode)"
 msgstr "Toàn bộ văn bản khớp (hoặc chuỗi tìm kiếm trong chế độ văn bản thuần)"
 
-#: src/pbrenamer/ui/pattern_help.py:227
 msgid "Numbered capture groups (1-based)"
 msgstr "Nhóm chụp được đánh số (bắt đầu từ 1)"
 
-#: src/pbrenamer/ui/pattern_help.py:232
 msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
 msgstr "Nhóm có tên <code>(?P&lt;name&gt;…)</code> từ regex tìm kiếm"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:239
 #, python-brace-format
 msgid ""
 "Auto-incrementing counter — default fmt is a minimum width; "
@@ -253,7 +207,6 @@ msgstr ""
 "đầu từ 10, đệm số không thành 2 chữ số)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:248
 #, python-brace-format
 msgid ""
 "Like <code>{num}</code> but skips values whose target name already exists"
@@ -264,23 +217,19 @@ msgstr ""
 "trên đĩa hoặc đã được gán cho tệp khác trong cùng lô — đảm bảo không có "
 "xung đột"
 
-#: src/pbrenamer/ui/pattern_help.py:257
 #, python-format
 msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
 msgstr "Ngày hôm nay — định dạng mặc định <code>%Y-%m-%d</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:263
 #, python-format
 msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
 msgstr "Ngày và giờ hiện tại — định dạng mặc định <code>%Y-%m-%d_%H%M%S</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:268
 #, python-format
 msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
 msgstr "Ngày/giờ sửa đổi tệp — định dạng mặc định <code>%Y-%m-%d_%H%M%S</code>"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:275
 #, python-format
 msgid ""
 "File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
@@ -289,24 +238,19 @@ msgstr ""
 "Ngày/giờ tạo tệp — fmt mặc định <code>%Y-%m-%d_%H%M%S</code> (thời gian "
 "thay đổi inode trên Linux)"
 
-#: src/pbrenamer/ui/pattern_help.py:279
 msgid "Name of the immediate parent folder"
 msgstr "Tên thư mục cha trực tiếp"
 
-#: src/pbrenamer/ui/pattern_help.py:283
 msgid "EXIF or IPTC metadata field (images only — see list below)"
 msgstr "Trường siêu dữ liệu EXIF hoặc IPTC (chỉ ảnh — xem danh sách bên dưới)"
 
-#: src/pbrenamer/ui/pattern_help.py:288
 msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
 msgstr "Trường siêu dữ liệu âm thanh (mp3, ogg, flac… — xem danh sách bên dưới)"
 
-#: src/pbrenamer/ui/pattern_help.py:294
 msgid "Video metadata field (mp4, mkv, avi… — see list below)"
 msgstr "Trường siêu dữ liệu video (mp4, mkv, avi… — xem danh sách bên dưới)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:300
 msgid ""
 "Field names are case-insensitive. A <b>default</b> is strongly "
 "recommended for metadata fields — they may be absent from non-image files"
@@ -318,88 +262,67 @@ msgstr ""
 " Nên đặt giá trị <b>default</b> cho các trường siêu dữ liệu — chúng có "
 "thể vắng mặt trong tệp không phải ảnh hoặc ảnh không có siêu dữ liệu."
 
-#: src/pbrenamer/ui/pattern_help.py:304
 msgid "Type"
 msgstr "Loại"
 
-#: src/pbrenamer/ui/pattern_help.py:311
 msgid "Date/time the photo was taken"
 msgstr "Ngày/giờ chụp ảnh"
 
-#: src/pbrenamer/ui/pattern_help.py:312
 msgid "Date/time the image was digitised"
 msgstr "Ngày/giờ số hóa ảnh"
 
-#: src/pbrenamer/ui/pattern_help.py:316
 msgid "Date/time the file was last changed (EXIF)"
 msgstr "Ngày/giờ thay đổi tệp lần cuối (EXIF)"
 
-#: src/pbrenamer/ui/pattern_help.py:319
 msgid "Camera manufacturer"
 msgstr "Nhà sản xuất máy ảnh"
 
-#: src/pbrenamer/ui/pattern_help.py:320
 msgid "Camera model"
 msgstr "Mẫu máy ảnh"
 
-#: src/pbrenamer/ui/pattern_help.py:321
 msgid "Lens model"
 msgstr "Mẫu ống kính"
 
-#: src/pbrenamer/ui/pattern_help.py:322
 msgid "ISO speed"
 msgstr "Độ nhạy ISO"
 
-#: src/pbrenamer/ui/pattern_help.py:323
 msgid "Aperture (e.g. 2.8)"
 msgstr "Khẩu độ (vd. 2.8)"
 
-#: src/pbrenamer/ui/pattern_help.py:324
 msgid "Shutter speed (e.g. 1/125)"
 msgstr "Tốc độ màn trập (vd. 1/125)"
 
-#: src/pbrenamer/ui/pattern_help.py:325
 msgid "Focal length in mm"
 msgstr "Tiêu cự tính bằng mm"
 
-#: src/pbrenamer/ui/pattern_help.py:326
 msgid "Image description / title"
 msgstr "Mô tả / tiêu đề ảnh"
 
-#: src/pbrenamer/ui/pattern_help.py:327
 msgid "Photographer / creator (EXIF)"
 msgstr "Nhiếp ảnh gia / tác giả (EXIF)"
 
-#: src/pbrenamer/ui/pattern_help.py:328
 msgid "Copyright notice"
 msgstr "Thông báo bản quyền"
 
-#: src/pbrenamer/ui/pattern_help.py:329
 msgid "IPTC title / object name"
 msgstr "Tiêu đề IPTC / tên đối tượng"
 
-#: src/pbrenamer/ui/pattern_help.py:330
 msgid "IPTC photographer / creator"
 msgstr "Nhiếp ảnh gia IPTC / tác giả"
 
-#: src/pbrenamer/ui/pattern_help.py:331
 msgid "IPTC city"
 msgstr "Thành phố IPTC"
 
-#: src/pbrenamer/ui/pattern_help.py:332
 msgid "IPTC country"
 msgstr "Quốc gia IPTC"
 
-#: src/pbrenamer/ui/pattern_help.py:333
 msgid "IPTC creation date"
 msgstr "Ngày tạo IPTC"
 
-#: src/pbrenamer/ui/pattern_help.py:334
 msgid "IPTC keywords (semicolon-separated)"
 msgstr "Từ khóa IPTC (phân cách bằng dấu chấm phẩy)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:339
 msgid ""
 "Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
 "opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
@@ -414,32 +337,25 @@ msgstr ""
 "được mutagen hỗ trợ. Nên đặt giá trị <b>default</b> — thẻ có thể vắng mặt"
 " hoặc tệp có thể không phải định dạng âm thanh được hỗ trợ."
 
-#: src/pbrenamer/ui/pattern_help.py:346
 msgid "Track title"
 msgstr "Tiêu đề bản nhạc"
 
-#: src/pbrenamer/ui/pattern_help.py:347
 msgid "Track artist"
 msgstr "Nghệ sĩ bản nhạc"
 
-#: src/pbrenamer/ui/pattern_help.py:348
 msgid "Album artist"
 msgstr "Nghệ sĩ album"
 
-#: src/pbrenamer/ui/pattern_help.py:349
 msgid "Album name"
 msgstr "Tên album"
 
-#: src/pbrenamer/ui/pattern_help.py:351
 msgid "Track number (strips /total if present)"
 msgstr "Số bản nhạc (bỏ /tổng số nếu có)"
 
-#: src/pbrenamer/ui/pattern_help.py:353
 msgid "Disc number (strips /total if present)"
 msgstr "Số đĩa (bỏ /tổng số nếu có)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:358
 msgid ""
 "Release date — datetime.date when full date available (strftime "
 "formatting); plain text otherwise"
@@ -448,36 +364,28 @@ msgstr ""
 "văn bản thuần túy nếu khôngNgày phát hành — datetime.date khi có ngày đầy"
 " đủ (định dạng strftime); văn bản thuần trong trường hợp khác"
 
-#: src/pbrenamer/ui/pattern_help.py:363
 msgid "Release year (extracted from date tag)"
 msgstr "Năm phát hành (trích xuất từ thẻ ngày)"
 
-#: src/pbrenamer/ui/pattern_help.py:364
 msgid "Genre"
 msgstr "Thể loại"
 
-#: src/pbrenamer/ui/pattern_help.py:365
 msgid "Comment"
 msgstr "Nhận xét"
 
-#: src/pbrenamer/ui/pattern_help.py:366
 msgid "Composer"
 msgstr "Nhạc sĩ"
 
-#: src/pbrenamer/ui/pattern_help.py:367
 msgid "Beats per minute"
 msgstr "Nhịp mỗi phút"
 
-#: src/pbrenamer/ui/pattern_help.py:368 src/pbrenamer/ui/pattern_help.py:383
 msgid "Duration in seconds"
 msgstr "Thời lượng tính bằng giây"
 
-#: src/pbrenamer/ui/pattern_help.py:369
 msgid "Bitrate in kbps"
 msgstr "Tốc độ bit tính bằng kbps"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:374
 msgid ""
 "Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
 "webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
@@ -493,52 +401,40 @@ msgstr ""
 "<b>default</b> — các trường có thể vắng mặt hoặc tệp có thể không phải "
 "định dạng video được hỗ trợ."
 
-#: src/pbrenamer/ui/pattern_help.py:381
 msgid "Video width in pixels"
 msgstr "Chiều rộng video tính bằng pixel"
 
-#: src/pbrenamer/ui/pattern_help.py:382
 msgid "Video height in pixels"
 msgstr "Chiều cao video tính bằng pixel"
 
-#: src/pbrenamer/ui/pattern_help.py:384
 msgid "Frame rate (e.g. 29.970)"
 msgstr "Tốc độ khung hình (vd. 29.970)"
 
-#: src/pbrenamer/ui/pattern_help.py:385
 msgid "Video codec name (e.g. AVC, HEVC)"
 msgstr "Tên codec video (vd. AVC, HEVC)"
 
-#: src/pbrenamer/ui/pattern_help.py:386
 msgid "Audio codec name (e.g. AAC, AC-3)"
 msgstr "Tên codec âm thanh (vd. AAC, AC-3)"
 
-#: src/pbrenamer/ui/pattern_help.py:387
 msgid "Number of audio channels"
 msgstr "Số kênh âm thanh"
 
-#: src/pbrenamer/ui/pattern_help.py:388
 msgid "Overall bitrate in kbps"
 msgstr "Tổng tốc độ bit tính bằng kbps"
 
-#: src/pbrenamer/ui/pattern_help.py:389
 msgid "Title tag"
 msgstr "Thẻ tiêu đề"
 
-#: src/pbrenamer/ui/pattern_help.py:390
 msgid "Encoded date/time"
 msgstr "Ngày/giờ mã hóa"
 
-#: src/pbrenamer/ui/pattern_help.py:398
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr "Nhóm chụp 1 theo sau bởi bộ đếm 4 chữ số đệm số không (bắt đầu từ 1)"
 
-#: src/pbrenamer/ui/pattern_help.py:403
 msgid "Same, but counter starts at 10"
 msgstr "Tương tự, nhưng bộ đếm bắt đầu từ 10"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:407
 msgid ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
 " already exists"
@@ -546,629 +442,479 @@ msgstr ""
 "Bộ đếm 3 chữ số không xung đột: bỏ qua các giá trị mà "
 "<code>backup_NNN</code> đã tồn tại"
 
-#: src/pbrenamer/ui/pattern_help.py:412
 msgid "Today's date prepended to the matched text"
 msgstr "Ngày hôm nay được thêm vào trước văn bản khớp"
 
-#: src/pbrenamer/ui/pattern_help.py:415
 msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
 msgstr "Ngày/giờ chụp dạng gọn; \"không rõ\" nếu thiếu EXIF"
 
-#: src/pbrenamer/ui/pattern_help.py:420
 msgid "Hour+minute of digitisation; \"0000\" if absent"
 msgstr "Giờ+phút số hóa; \"0000\" nếu vắng mặt"
 
-#: src/pbrenamer/ui/pattern_help.py:424
 msgid "Camera make and model (empty string if absent)"
 msgstr "Hãng và mẫu máy ảnh (chuỗi rỗng nếu vắng mặt)"
 
-#: src/pbrenamer/ui/pattern_help.py:429
 msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
 msgstr "Nghệ sĩ và tiêu đề âm thanh; \"không rõ\"/\"không tên\" nếu vắng mặt"
 
-#: src/pbrenamer/ui/pattern_help.py:433
 msgid "Audio release date, zero-padded track number, title"
 msgstr "Ngày phát hành âm thanh, số bản nhạc đệm số không, tiêu đề"
 
-#: src/pbrenamer/ui/pattern_help.py:438
 msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
 msgstr "Độ phân giải và codec video (vd. 1920x1080_AVC)"
 
-#: src/pbrenamer/ui/pattern_help.py:442
 msgid "Video encoded date and duration in seconds"
 msgstr "Ngày mã hóa video và thời lượng tính bằng giây"
 
-#: src/pbrenamer/ui/pattern_help.py:445
 msgid "Named regex groups (regex mode only)"
 msgstr "Nhóm regex có tên (chỉ chế độ regex)"
 
-#: src/pbrenamer/ui/pattern_help.py:448
 msgid "Parent folder, file modification date, 3-digit counter"
 msgstr "Thư mục cha, ngày sửa đổi tệp, bộ đếm 3 chữ số"
 
-#: src/pbrenamer/ui/pattern_help.py:455
 msgid "Replacement fields"
 msgstr "Trường thay thế"
 
-#: src/pbrenamer/ui/pattern_help.py:460
 msgid "Available fields"
 msgstr "Trường khả dụng"
 
-#: src/pbrenamer/ui/pattern_help.py:466
 #, python-brace-format
 msgid "Metadata fields for <code>{im:…}</code>"
 msgstr "Trường siêu dữ liệu cho <code>{im:…}</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:473
 #, python-brace-format
 msgid "Audio metadata fields for <code>{au:…}</code>"
 msgstr "Trường siêu dữ liệu âm thanh cho <code>{au:…}</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:480
 #, python-brace-format
 msgid "Video metadata fields for <code>{vi:…}</code>"
 msgstr "Trường siêu dữ liệu video cho <code>{vi:…}</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:487
 msgid "Examples"
 msgstr "Ví dụ"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:25
 msgid "Edit Shortcuts"
 msgstr "Chỉnh sửa phím tắt"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:31
 msgid "Move up"
 msgstr "Di chuyển lên"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:32
 msgid "Move down"
 msgstr "Di chuyển xuống"
 
-#: src/pbrenamer/ui/shortcuts_dialog.py:33 tools/_ui_strings_tmp.py:15
-#: tools/_ui_strings_tmp.py:28
 msgid "Remove"
 msgstr "Xóa"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:46
 msgid "Saved shortcuts:"
 msgstr "Phím tắt đã lưu:"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:57
-#: src/pbrenamer/ui/file_info_window.py:137
-#: src/pbrenamer/ui/file_info_window.py:144
 msgid "File information"
 msgstr "Thông tin tệp"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:71
 msgid "Value"
 msgstr "Giá trị"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:92
 msgid "Image"
 msgstr "Ảnh"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:93
 msgid "Audio"
 msgstr "Âm thanh"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:94
 msgid "Video"
 msgstr "Video"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:95
 msgid "Directory"
 msgstr "Thư mục"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:96
-#: src/pbrenamer/ui/file_info_window.py:97
 msgid "Other"
 msgstr "Khác"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:99
 #, python-brace-format
 msgid "File information — {name}"
 msgstr "Thông tin tệp — {name}"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:102
 msgid "File:"
 msgstr "Tệp:"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:102
 msgid "Type:"
 msgstr "Loại:"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:113
 msgid "Image metadata (EXIF / IPTC)"
 msgstr "Siêu dữ liệu ảnh (EXIF / IPTC)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:121
 msgid "Audio metadata"
 msgstr "Siêu dữ liệu âm thanh"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:129
 msgid "Video metadata"
 msgstr "Siêu dữ liệu video"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:140
 msgid "Select a single file to display its information."
 msgstr "Chọn một tệp duy nhất để hiển thị thông tin."
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:147
 msgid "Select a file to display its information."
 msgstr "Chọn một tệp để hiển thị thông tin."
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:153
 msgid "Universal fields"
 msgstr "Trường chung"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:155
 msgid "Today's date"
 msgstr "Ngày hôm nay"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:156
 msgid "Current date and time"
 msgstr "Ngày và giờ hiện tại"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:159
-#: src/pbrenamer/ui/file_info_window.py:162
 msgid "File modification date/time"
 msgstr "Ngày/giờ sửa đổi tệp"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:162
-#: src/pbrenamer/ui/file_info_window.py:171
-#: src/pbrenamer/ui/file_info_window.py:178
-#: src/pbrenamer/ui/file_info_window.py:194
 msgid "Missing"
 msgstr "Thiếu"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:169
-#: src/pbrenamer/ui/file_info_window.py:171
 msgid "File creation date/time"
 msgstr "Ngày/giờ tạo tệp"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:177
 msgid "Parent folder name"
 msgstr "Tên thư mục cha"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:183
 msgid "Batch fields"
 msgstr "Trường hàng loạt"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:184
 msgid "Computed"
 msgstr "Đã tính"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:185
 msgid "Full matched text"
 msgstr "Văn bản khớp đầy đủ"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:186
 msgid "Capture groups"
 msgstr "Nhóm bắt giữ"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:187
 msgid "Auto-incrementing counter"
 msgstr "Bộ đếm tự tăng"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:188
 msgid "Conflict-free counter"
 msgstr "Bộ đếm không xung đột"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:189
 msgid "Named regex group"
 msgstr "Nhóm regex được đặt tên"
 
-#: src/pbrenamer/ui/settings_dialog.py:19
 msgid "System default"
 msgstr "Mặc định hệ thống"
 
-#: src/pbrenamer/ui/main_window.py:231
 msgid "Select folder"
 msgstr "Chọn thư mục"
 
-#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:81
 msgid "Original"
 msgstr "Gốc"
 
-#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:80
-#: tools/_ui_strings_tmp.py:144
 msgid "Preview"
 msgstr "Xem trước"
 
-#: src/pbrenamer/ui/main_window.py:287
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} mục"
 
-#: src/pbrenamer/ui/main_window.py:566
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} không khả dụng"
 
-#: src/pbrenamer/ui/main_window.py:646
 msgid "Search — Help"
 msgstr "Tìm kiếm — Trợ giúp"
 
-#: src/pbrenamer/ui/main_window.py:661
 msgid "Replace — Help"
 msgstr "Thay thế — Trợ giúp"
 
-#: src/pbrenamer/ui/main_window.py:859
 msgid "Rename errors"
 msgstr "Lỗi đổi tên"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/main_window.py:952
 msgid "Add as shortcut"
 msgstr "Thêm vào phím tắt"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:45
 msgid "Home"
 msgstr "Thư mục gốc"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:46
 msgid "Desktop"
 msgstr "Màn hình nền"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:47
 msgid "Documents"
 msgstr "Tài liệu"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:48
 msgid "Downloads"
 msgstr "Tải xuống"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:49
 msgid "Pictures"
 msgstr "Ảnh"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:50
 msgid "Music"
 msgstr "Nhạc"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:51
 msgid "Videos"
 msgstr "Video"
 
-#: src/pbrenamer/i18n.py:65 tools/_ui_strings_tmp.py:174
 msgid "language_name"
 msgstr "Tiếng Việt"
 
-#: tools/_ui_strings_tmp.py:1
 msgid "History"
 msgstr "Lịch sử"
 
-#: tools/_ui_strings_tmp.py:2
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:3
 msgid "Search pattern history"
 msgstr "Lịch sử mẫu tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:4 tools/_ui_strings_tmp.py:23
 msgid "Select one or more entries to remove them"
 msgstr "Chọn một hoặc nhiều mục để xóa chúng"
 
-#: tools/_ui_strings_tmp.py:5 tools/_ui_strings_tmp.py:24
 msgid "Pattern…"
 msgstr "Mẫu…"
 
-#: tools/_ui_strings_tmp.py:6
 msgid "New search pattern to add"
 msgstr "Mẫu tìm kiếm mới để thêm"
 
-#: tools/_ui_strings_tmp.py:7
 msgid "pat"
 msgstr "pat"
 
-#: tools/_ui_strings_tmp.py:8
 msgid "Pattern token mode"
 msgstr "Chế độ token mẫu"
 
-#: tools/_ui_strings_tmp.py:9
 msgid "RE"
 msgstr "RE"
 
-#: tools/_ui_strings_tmp.py:11
 msgid "txt"
 msgstr "txt"
 
-#: tools/_ui_strings_tmp.py:13 tools/_ui_strings_tmp.py:26
 msgid "Add"
 msgstr "Thêm"
 
-#: tools/_ui_strings_tmp.py:14
 msgid "Add this pattern to the search history"
 msgstr "Thêm mẫu này vào lịch sử tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:16 tools/_ui_strings_tmp.py:29
 msgid "Remove selected entries"
 msgstr "Xóa các mục đã chọn"
 
-#: tools/_ui_strings_tmp.py:17
 msgid "Delete the selected search history entries"
 msgstr "Xóa các mục đã chọn khỏi lịch sử tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:18 tools/_ui_strings_tmp.py:31
 msgid "Clear all"
 msgstr "Xóa tất cả"
 
-#: tools/_ui_strings_tmp.py:19
 msgid "Remove all search history entries"
 msgstr "Xóa tất cả mục khỏi lịch sử tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:20
 msgid "Delete the entire search pattern history"
 msgstr "Xóa toàn bộ lịch sử mẫu tìm kiếm"
 
-#: tools/_ui_strings_tmp.py:21
 msgid "Replace"
 msgstr "Thay thế"
 
-#: tools/_ui_strings_tmp.py:22
 msgid "Replacement pattern history"
 msgstr "Lịch sử mẫu thay thế"
 
-#: tools/_ui_strings_tmp.py:25
 msgid "New replacement pattern to add"
 msgstr "Mẫu thay thế mới để thêm"
 
-#: tools/_ui_strings_tmp.py:27
 msgid "Add this pattern to the replacement history"
 msgstr "Thêm mẫu này vào lịch sử thay thế"
 
-#: tools/_ui_strings_tmp.py:30
 msgid "Delete the selected replacement history entries"
 msgstr "Xóa các mục đã chọn khỏi lịch sử thay thế"
 
-#: tools/_ui_strings_tmp.py:32
 msgid "Remove all replacement history entries"
 msgstr "Xóa tất cả mục khỏi lịch sử thay thế"
 
-#: tools/_ui_strings_tmp.py:33
 msgid "Delete the entire replacement pattern history"
 msgstr "Xóa toàn bộ lịch sử mẫu thay thế"
 
-#: tools/_ui_strings_tmp.py:34
 msgid "PBRenamer"
 msgstr "PBRenamer"
 
-#: tools/_ui_strings_tmp.py:35
 msgid "Open folder…"
 msgstr "Mở thư mục…"
 
-#: tools/_ui_strings_tmp.py:36
 msgid "Ctrl+O"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:37
 msgid "Open a folder"
 msgstr "Mở một thư mục"
 
-#: tools/_ui_strings_tmp.py:38
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Mở hộp chọn thư mục và điều hướng trong cây đến thư mục đã chọn"
 
-#: tools/_ui_strings_tmp.py:39
 msgid "Quit"
 msgstr "Thoát"
 
-#: tools/_ui_strings_tmp.py:40
 msgid "Ctrl+Q"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:41
 msgid "Quit PBRenamer"
 msgstr "Thoát PBRenamer"
 
-#: tools/_ui_strings_tmp.py:42
 msgid "Exit the application"
 msgstr "Đóng ứng dụng"
 
-#: tools/_ui_strings_tmp.py:43
 msgid "History…"
 msgstr "Lịch sử…"
 
-#: tools/_ui_strings_tmp.py:44
 msgid "Manage pattern history"
 msgstr "Quản lý lịch sử mẫu"
 
-#: tools/_ui_strings_tmp.py:45
 msgid "Add or remove entries from the search and replacement pattern history"
 msgstr "Thêm hoặc xóa mục khỏi lịch sử mẫu tìm kiếm và thay thế"
 
-#: tools/_ui_strings_tmp.py:46
 msgid "Settings…"
 msgstr "Cài đặt…"
 
-#: tools/_ui_strings_tmp.py:47
 msgid "Open settings"
 msgstr "Mở cài đặt"
 
-#: tools/_ui_strings_tmp.py:48
 msgid "Configure language and other preferences"
 msgstr "Cấu hình ngôn ngữ và các tùy chọn khác"
 
-#: tools/_ui_strings_tmp.py:49 tools/_ui_strings_tmp.py:160
 msgid "About PBRenamer"
 msgstr "Giới thiệu về PBRenamer"
 
-#: tools/_ui_strings_tmp.py:50
 msgid "About this application"
 msgstr "Giới thiệu về ứng dụng này"
 
-#: tools/_ui_strings_tmp.py:51
 msgid "Show version and license information"
 msgstr "Hiển thị thông tin phiên bản và giấy phép"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:52
 msgid "Edit shortcuts…"
 msgstr "Chỉnh sửa phím tắt…"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:53
 msgid "Manage directory shortcuts"
 msgstr "Quản lý phím tắt thư mục"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:54
 msgid "Add or remove entries from the shortcuts list"
 msgstr "Thêm hoặc xóa mục khỏi danh sách phím tắt"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:55
 msgid "Information"
 msgstr "Thông tin"
 
-#: tools/_ui_strings_tmp.py:56
 msgid "Ctrl+I"
 msgstr ""
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:57
 msgid "Show file field values"
 msgstr "Hiển thị giá trị trường tệp"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:58
 msgid "Open the file information window for the selected file"
 msgstr "Mở cửa sổ thông tin cho tệp đã chọn"
 
-#: tools/_ui_strings_tmp.py:59
 msgid "Show:"
 msgstr "Hiển thị:"
 
-#: tools/_ui_strings_tmp.py:60
 msgid "Files only"
 msgstr "Chỉ tệp"
 
-#: tools/_ui_strings_tmp.py:61
 msgid "Directories only"
 msgstr "Chỉ thư mục"
 
-#: tools/_ui_strings_tmp.py:62
 msgid "Files and directories"
 msgstr "Tệp và thư mục"
 
-#: tools/_ui_strings_tmp.py:63
 msgid "Choose which entries to list"
 msgstr "Chọn mục nào sẽ hiển thị"
 
-#: tools/_ui_strings_tmp.py:64
 msgid "List files only, directories only, or both"
 msgstr "Liệt kê chỉ tệp, chỉ thư mục hoặc cả hai"
 
-#: tools/_ui_strings_tmp.py:65
 msgid "Recursive"
 msgstr "Đệ quy"
 
-#: tools/_ui_strings_tmp.py:66
 msgid "Include all subdirectories"
 msgstr "Bao gồm tất cả thư mục con"
 
-#: tools/_ui_strings_tmp.py:67
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Khi được chọn, tệp từ tất cả thư mục con sẽ được liệt kê"
 
-#: tools/_ui_strings_tmp.py:68
 msgid "Keep extension"
 msgstr "Giữ phần mở rộng"
 
-#: tools/_ui_strings_tmp.py:69
 msgid "Preserve the file extension"
 msgstr "Bảo toàn phần mở rộng tệp"
 
-#: tools/_ui_strings_tmp.py:70
 msgid ""
 "Apply transformations to the file stem only, leaving the extension "
 "unchanged"
 msgstr "Áp dụng biến đổi chỉ cho tên cơ sở của tệp, giữ nguyên phần mở rộng"
 
-#: tools/_ui_strings_tmp.py:71
 msgid "Auto-preview"
 msgstr "Tự động xem trước"
 
-#: tools/_ui_strings_tmp.py:72
 msgid "Refresh the preview automatically"
 msgstr "Tự động làm mới bản xem trước"
 
-#: tools/_ui_strings_tmp.py:73
 msgid "Recompute the preview each time the pattern or options change"
 msgstr "Tính lại bản xem trước mỗi khi mẫu hoặc tùy chọn thay đổi"
 
-#: tools/_ui_strings_tmp.py:74
 msgid "Filter:"
 msgstr "Bộ lọc:"
 
-#: tools/_ui_strings_tmp.py:75
 msgid "*.txt"
 msgstr "*.txt"
 
-#: tools/_ui_strings_tmp.py:76
 msgid "Glob pattern to filter the file list"
 msgstr "Mẫu glob để lọc danh sách tệp"
 
-#: tools/_ui_strings_tmp.py:77
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Chỉ liệt kê các tệp khớp với mẫu glob này (vd. *.txt, image_*)"
 
-#: tools/_ui_strings_tmp.py:78
 msgid "Browse the filesystem"
 msgstr "Duyệt hệ thống tệp"
 
-#: tools/_ui_strings_tmp.py:79
 msgid "Select a directory to list its contents in the panel on the right"
 msgstr "Chọn một thư mục để liệt kê nội dung của nó trong bảng bên phải"
 
-#: tools/_ui_strings_tmp.py:82
 msgid "Files to be renamed"
 msgstr "Tệp cần đổi tên"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:83
 msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
@@ -1177,12 +923,10 @@ msgstr ""
 "cho tất cảChọn hàng để giới hạn thao tác cho những tệp đó; để trống để áp"
 " dụng cho tất cả"
 
-#: tools/_ui_strings_tmp.py:85
 msgid "Search pattern"
 msgstr "Mẫu tìm kiếm"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:86
 #, python-brace-format
 msgid ""
 "Pattern to match against file names. Use tokens: {#} numbers, {L} "
@@ -1192,20 +936,16 @@ msgstr ""
 "phải khoảng trắng, {X} bất kỳMẫu để khớp với tên tệp. Dùng token: {#} số,"
 " {L} chữ cái, {C} không phải khoảng trắng, {X} bất kỳ"
 
-#: tools/_ui_strings_tmp.py:87 tools/_ui_strings_tmp.py:106
 msgid "Save to history"
 msgstr "Lưu vào lịch sử"
 
-#: tools/_ui_strings_tmp.py:88
 msgid "Add the current search pattern and mode to the drop-down history"
 msgstr "Thêm mẫu tìm kiếm và chế độ hiện tại vào lịch sử danh sách thả"
 
-#: tools/_ui_strings_tmp.py:89
 msgid "Search pattern help"
 msgstr "Trợ giúp mẫu tìm kiếm"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:90
 msgid ""
 "Show help about search patterns (Pattern tokens, Regular expressions, "
 "Plain text)"
@@ -1214,28 +954,22 @@ msgstr ""
 "bản thuần túy)Hiển thị trợ giúp về mẫu tìm kiếm (token mẫu, biểu thức "
 "chính quy, văn bản thuần)"
 
-#: tools/_ui_strings_tmp.py:91
 msgid "Pattern"
 msgstr "Mẫu"
 
-#: tools/_ui_strings_tmp.py:92
 msgid "Search using pattern tokens"
 msgstr "Tìm kiếm bằng token mẫu"
 
-#: tools/_ui_strings_tmp.py:93
 #, python-brace-format
 msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
 msgstr "Khớp tên tệp bằng token mẫu ({#}, {L}, {X}…)"
 
-#: tools/_ui_strings_tmp.py:94
 msgid "Regular expression"
 msgstr "Biểu thức chính quy"
 
-#: tools/_ui_strings_tmp.py:95
 msgid "Search using a Python regular expression"
 msgstr "Tìm kiếm bằng biểu thức chính quy Python"
 
-#: tools/_ui_strings_tmp.py:96
 msgid ""
 "Match file names using a Python regular expression; use \\1 \\2… for "
 "backreferences in the replacement"
@@ -1243,41 +977,33 @@ msgstr ""
 "Khớp tên tệp bằng biểu thức chính quy Python; dùng \\1 \\2… cho tham "
 "chiếu ngược trong phần thay thế"
 
-#: tools/_ui_strings_tmp.py:97
 msgid "Plain text"
 msgstr "Văn bản thuần"
 
-#: tools/_ui_strings_tmp.py:98
 msgid "Search for a literal string"
 msgstr "Tìm kiếm chuỗi ký tự"
 
-#: tools/_ui_strings_tmp.py:99
 msgid "Match file names by looking for the search text as a literal string"
 msgstr "Khớp tên tệp bằng cách tìm văn bản tìm kiếm như chuỗi ký tự"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:100
 msgid "Case-insensitive"
 msgstr "Không phân biệt hoa/thường"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:101
 msgid "Ignore case when searching"
 msgstr "Bỏ qua chữ hoa/thường khi tìm kiếm"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:102
 msgid ""
 "When checked, the search pattern matches file names regardless of letter "
 "case"
 msgstr "Khi được chọn, mẫu tìm kiếm khớp với tên tệp bất kể chữ hoa hay chữ thường"
 
-#: tools/_ui_strings_tmp.py:104
 msgid "Replacement pattern"
 msgstr "Mẫu thay thế"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:105
 #, python-brace-format
 msgid ""
 "Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
@@ -1288,62 +1014,48 @@ msgstr ""
 "nhóm chụp, {num} cho bộ đếm, {date} cho ngày hôm nay, {dir} cho tên thư "
 "mục cha"
 
-#: tools/_ui_strings_tmp.py:107
 msgid "Add the current replacement pattern to the drop-down history"
 msgstr "Thêm mẫu thay thế hiện tại vào lịch sử danh sách thả"
 
-#: tools/_ui_strings_tmp.py:108
 msgid "Replacement pattern help"
 msgstr "Trợ giúp mẫu thay thế"
 
-#: tools/_ui_strings_tmp.py:109
 msgid ""
 "Show help about replacement patterns (capture groups, counter, date, "
 "directory tokens)"
 msgstr "Hiển thị trợ giúp về mẫu thay thế (nhóm chụp, bộ đếm, ngày, token thư mục)"
 
-#: tools/_ui_strings_tmp.py:110
 msgid "Post-processing"
 msgstr "Hậu xử lý"
 
-#: tools/_ui_strings_tmp.py:111
 msgid "Separator:"
 msgstr "Dấu phân cách:"
 
-#: tools/_ui_strings_tmp.py:112 tools/_ui_strings_tmp.py:128
 msgid "No change"
 msgstr "Không thay đổi"
 
-#: tools/_ui_strings_tmp.py:113
 msgid "Spaces → underscores"
 msgstr "Khoảng trắng → dấu gạch dưới"
 
-#: tools/_ui_strings_tmp.py:114
 msgid "Underscores → spaces"
 msgstr "Dấu gạch dưới → khoảng trắng"
 
-#: tools/_ui_strings_tmp.py:115
 msgid "Spaces → dots"
 msgstr "Khoảng trắng → dấu chấm"
 
-#: tools/_ui_strings_tmp.py:116
 msgid "Dots → spaces"
 msgstr "Dấu chấm → khoảng trắng"
 
-#: tools/_ui_strings_tmp.py:117
 msgid "Spaces → dashes"
 msgstr "Khoảng trắng → dấu gạch ngang"
 
-#: tools/_ui_strings_tmp.py:118
 msgid "Dashes → spaces"
 msgstr "Dấu gạch ngang → khoảng trắng"
 
-#: tools/_ui_strings_tmp.py:119
 msgid "Separator conversion"
 msgstr "Chuyển đổi dấu phân cách"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:120
 msgid ""
 "Apply a separator conversion to each renamed file name after applying the"
 " pattern"
@@ -1351,28 +1063,22 @@ msgstr ""
 "Áp dụng chuyển đổi dấu phân cách cho mỗi tên tệp đã đổi tên sau khi áp "
 "dụng mẫu"
 
-#: tools/_ui_strings_tmp.py:121
 msgid "Remove accents"
 msgstr "Xóa dấu thanh"
 
-#: tools/_ui_strings_tmp.py:122
 msgid "Strip diacritical marks"
 msgstr "Bỏ dấu phụ"
 
-#: tools/_ui_strings_tmp.py:123
 msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
 msgstr "Chuyển đổi ký tự có dấu sang tương đương ASCII (é→e, ü→u, v.v.)"
 
-#: tools/_ui_strings_tmp.py:124
 msgid "Remove duplicate separators"
 msgstr "Xóa dấu phân cách trùng lặp"
 
-#: tools/_ui_strings_tmp.py:125
 msgid "Collapse consecutive separators"
 msgstr "Thu gọn dấu phân cách liên tiếp"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:126
 msgid ""
 "Collapse runs of identical separator characters (spaces, dots, dashes, "
 "underscores) into one"
@@ -1381,44 +1087,34 @@ msgstr ""
 " gạch ngang, dấu gạch dưới) thành mộtThu gọn chuỗi dấu phân cách giống "
 "nhau (khoảng trắng, dấu chấm, dấu gạch ngang, dấu gạch dưới) thành một"
 
-#: tools/_ui_strings_tmp.py:127
 msgid "Case:"
 msgstr "Kiểu chữ:"
 
-#: tools/_ui_strings_tmp.py:129
 msgid "UPPERCASE"
 msgstr "CHỮ HOA"
 
-#: tools/_ui_strings_tmp.py:130
 msgid "lowercase"
 msgstr "chữ thường"
 
-#: tools/_ui_strings_tmp.py:131
 msgid "Capitalize first letter"
 msgstr "Viết hoa chữ cái đầu"
 
-#: tools/_ui_strings_tmp.py:132
 msgid "Title Case"
 msgstr "Viết hoa đầu mỗi từ"
 
-#: tools/_ui_strings_tmp.py:133
 msgid "Capitalization mode"
 msgstr "Chế độ kiểu chữ"
 
-#: tools/_ui_strings_tmp.py:134
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "Chọn cách thay đổi kiểu chữ của tên tệp sau khi áp dụng mẫu"
 
-#: tools/_ui_strings_tmp.py:135
 msgid "Save:"
 msgstr "Lưu:"
 
-#: tools/_ui_strings_tmp.py:136
 msgid "Named save"
 msgstr "Lưu có tên"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:137
 msgid ""
 "Type a name (letters, digits, _ and -) to save or load all search/replace"
 " parameters"
@@ -1426,16 +1122,13 @@ msgstr ""
 "Nhập tên (chữ cái, chữ số, _ và -) để lưu hoặc tải tất cả tham số tìm "
 "kiếm/thay thế"
 
-#: tools/_ui_strings_tmp.py:138
 msgid "Save"
 msgstr "Lưu"
 
-#: tools/_ui_strings_tmp.py:139
 msgid "Save current settings under this name"
 msgstr "Lưu cài đặt hiện tại với tên này"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:140
 msgid ""
 "Save all search, replace and post-processing settings under the current "
 "name (overwrites any existing save with the same name)"
@@ -1444,24 +1137,19 @@ msgstr ""
 "(ghi đè bất kỳ bản lưu nào có cùng tên)Lưu tất cả cài đặt tìm kiếm, thay "
 "thế và hậu xử lý với tên hiện tại (ghi đè bất kỳ lần lưu nào có cùng tên)"
 
-#: tools/_ui_strings_tmp.py:141
 msgid "Delete"
 msgstr "Xóa"
 
-#: tools/_ui_strings_tmp.py:142
 msgid "Delete this named save"
 msgstr "Xóa lần lưu có tên này"
 
-#: tools/_ui_strings_tmp.py:143
 msgid "Permanently delete the named save matching the current name"
 msgstr "Xóa vĩnh viễn lần lưu có tên khớp với tên hiện tại"
 
-#: tools/_ui_strings_tmp.py:145
 msgid "Compute rename preview"
 msgstr "Tính bản xem trước đổi tên"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:146
 msgid ""
 "Apply the current pattern to all listed files and show the result in the "
 "Preview column"
@@ -1469,40 +1157,31 @@ msgstr ""
 "Áp dụng mẫu hiện tại cho tất cả tệp được liệt kê và hiển thị kết quả "
 "trong cột Xem trước"
 
-#: tools/_ui_strings_tmp.py:147
 msgid "Clear"
 msgstr "Xóa"
 
-#: tools/_ui_strings_tmp.py:148
 msgid "Clear the preview"
 msgstr "Xóa bản xem trước"
 
-#: tools/_ui_strings_tmp.py:149
 msgid "Remove all preview values from the Preview column"
 msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
 
-#: tools/_ui_strings_tmp.py:150
 msgid "Undo"
 msgstr "Hoàn tác"
 
-#: tools/_ui_strings_tmp.py:151
 msgid "Undo last rename batch"
 msgstr "Hoàn tác lô đổi tên cuối cùng"
 
-#: tools/_ui_strings_tmp.py:152
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Đảo ngược lô đổi tên cuối cùng đã thực hiện trên đĩa"
 
-#: tools/_ui_strings_tmp.py:153
 msgid "Rename"
 msgstr "Đổi tên"
 
-#: tools/_ui_strings_tmp.py:154
 msgid "Apply renames on disk"
 msgstr "Áp dụng đổi tên trên đĩa"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:155
 msgid ""
 "Permanently rename all files shown in the Preview column (only enabled "
 "when there are no conflicts)"
@@ -1510,74 +1189,57 @@ msgstr ""
 "Đổi tên vĩnh viễn tất cả tệp hiển thị trong cột Xem trước (chỉ bật khi "
 "không có xung đột)"
 
-#: tools/_ui_strings_tmp.py:156
 msgid "File"
 msgstr "Tệp"
 
-#: tools/_ui_strings_tmp.py:157
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:158
 msgid "Shortcuts"
 msgstr "Phím tắt"
 
-#: tools/_ui_strings_tmp.py:159
 msgid "Help"
 msgstr "Trợ giúp"
 
-#: tools/_ui_strings_tmp.py:161
 msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 
-#: tools/_ui_strings_tmp.py:162
 msgid "Application version"
 msgstr "Phiên bản ứng dụng"
 
-#: tools/_ui_strings_tmp.py:163
 msgid "A graphical batch file renaming utility."
 msgstr "Tiện ích đổi tên tệp hàng loạt có giao diện đồ họa."
 
-#: tools/_ui_strings_tmp.py:164
 msgid "License: GPLv3"
 msgstr "Giấy phép: GPLv3"
 
-#: tools/_ui_strings_tmp.py:165
 msgid "Settings"
 msgstr "Cài đặt"
 
-#: tools/_ui_strings_tmp.py:166
 msgid "Language:"
 msgstr "Ngôn ngữ:"
 
-#: tools/_ui_strings_tmp.py:167
 msgid "Select the interface language"
 msgstr "Chọn ngôn ngữ giao diện"
 
-#: tools/_ui_strings_tmp.py:168
 msgid "Log level:"
 msgstr "Mức ghi nhật ký:"
 
-#: tools/_ui_strings_tmp.py:169
 msgid "Set the application logging verbosity"
 msgstr "Đặt mức độ chi tiết ghi nhật ký của ứng dụng"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:170
 msgid "Behaviour"
 msgstr "Hành vi"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:171
 msgid "Restore last opened directory"
 msgstr "Khôi phục thư mục đã mở lần trước"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:172
 msgid "On startup, reopen the directory that was active in the previous session"
 msgstr "Khi khởi động, mở lại thư mục đang hoạt động trong phiên trước"
 
-#: tools/_ui_strings_tmp.py:173
 msgid "A restart is required for the language change to take effect."
 msgstr "Cần khởi động lại để thay đổi ngôn ngữ có hiệu lực."

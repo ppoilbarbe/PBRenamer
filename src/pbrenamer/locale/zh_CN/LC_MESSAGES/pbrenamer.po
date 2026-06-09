@@ -17,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: src/pbrenamer/ui/pattern_help.py:73
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -25,146 +24,111 @@ msgid ""
 "replacement field."
 msgstr "令牌充当有类型的通配符。包含在 <b>{1}</b>、<b>{2}</b>… 中的片段将被<em>捕获</em>，可在替换字段中重复使用。"
 
-#: src/pbrenamer/ui/pattern_help.py:78
 msgid "One or more digits (0–9)"
 msgstr "一个或多个数字（0–9）"
 
-#: src/pbrenamer/ui/pattern_help.py:79
 msgid "One or more letters (a–z, A–Z and Unicode letters)"
 msgstr "一个或多个字母（a–z、A–Z 及 Unicode 字母）"
 
-#: src/pbrenamer/ui/pattern_help.py:80
 msgid "One or more non-whitespace characters"
 msgstr "一个或多个非空白字符"
 
-#: src/pbrenamer/ui/pattern_help.py:81
 msgid "Any sequence of characters, including empty"
 msgstr "任意字符序列，包括空序列"
 
-#: src/pbrenamer/ui/pattern_help.py:82
 msgid "Trash — matches and discards a segment (not captured)"
 msgstr "垃圾桶——匹配并丢弃一个片段（不捕获）"
 
-#: src/pbrenamer/ui/pattern_help.py:86
 #, python-brace-format
 msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
 msgstr "捕获组——匹配的文本绑定到替换中的 {1}、{2}…"
 
-#: src/pbrenamer/ui/pattern_help.py:94 src/pbrenamer/ui/pattern_help.py:134
-#: src/pbrenamer/ui/pattern_help.py:150
 msgid "Example"
 msgstr "示例"
 
-#: src/pbrenamer/ui/pattern_help.py:96 src/pbrenamer/ui/pattern_help.py:136
-#: src/pbrenamer/ui/pattern_help.py:152 tools/_ui_strings_tmp.py:84
 msgid "Search:"
 msgstr "搜索："
 
-#: src/pbrenamer/ui/pattern_help.py:98 src/pbrenamer/ui/pattern_help.py:138
-#: src/pbrenamer/ui/pattern_help.py:154 tools/_ui_strings_tmp.py:103
 msgid "Replace:"
 msgstr "替换："
 
-#: src/pbrenamer/ui/pattern_help.py:105
 msgid ""
 "Full Python <code>re</code>-module syntax. The match is applied to the "
 "file stem (or full name if <em>Keep extension</em> is unchecked)."
 msgstr "完整的 Python <code>re</code> 模块语法。匹配应用于文件名主干（如果<em>保留扩展名</em>未勾选，则应用于完整名称）。"
 
-#: src/pbrenamer/ui/pattern_help.py:110
 msgid "Any single character"
 msgstr "任意单个字符"
 
-#: src/pbrenamer/ui/pattern_help.py:112
 msgid "Any sequence (greedy), non-empty variant"
 msgstr "任意序列（贪婪），非空变体"
 
-#: src/pbrenamer/ui/pattern_help.py:114
 msgid "One or more digits"
 msgstr "一个或多个数字"
 
-#: src/pbrenamer/ui/pattern_help.py:115
 msgid "Word characters (letters, digits, _)"
 msgstr "单词字符（字母、数字、_）"
 
-#: src/pbrenamer/ui/pattern_help.py:119
 msgid ""
 "Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
 "replacement"
 msgstr "编号捕获组 → 替换中的 <code>\\1</code>、<code>\\2</code>…"
 
-#: src/pbrenamer/ui/pattern_help.py:126
 msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
 msgstr "命名捕获组 → 替换中的 <code>\\g&lt;name&gt;</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:128
 msgid "Case-insensitive flag"
 msgstr "不区分大小写标志"
 
-#: src/pbrenamer/ui/pattern_help.py:129
 msgid "Start / end of the name"
 msgstr "名称的开头 / 结尾"
 
-#: src/pbrenamer/ui/pattern_help.py:145
 msgid ""
 "The search field is matched as a literal string — no wildcards, no "
 "special characters. Every occurrence of the exact text in the file name "
 "is replaced."
 msgstr "搜索字段作为字面字符串进行匹配——没有通配符，没有特殊字符。文件名中每次出现的精确文本都会被替换。"
 
-#: src/pbrenamer/ui/pattern_help.py:161
 msgid "Search patterns"
 msgstr "搜索模式"
 
-#: src/pbrenamer/ui/pattern_help.py:162
 msgid "Pattern mode"
 msgstr "模式令牌模式"
 
-#: src/pbrenamer/ui/pattern_help.py:167 tools/_ui_strings_tmp.py:10
 msgid "Regular expression mode"
 msgstr "正则表达式模式"
 
-#: src/pbrenamer/ui/pattern_help.py:172 tools/_ui_strings_tmp.py:12
 msgid "Plain text mode"
 msgstr "纯文本模式"
 
-#: src/pbrenamer/ui/pattern_help.py:183
 #, python-brace-format
 msgid ""
 "The replacement string is the same regardless of the search mode. Fields "
 "are written <code>{name}</code> and may include formatting options:"
 msgstr "无论搜索模式如何，替换字符串都相同。字段写作 <code>{name}</code>，可包含格式化选项："
 
-#: src/pbrenamer/ui/pattern_help.py:188
 msgid "plain value"
 msgstr "普通值"
 
-#: src/pbrenamer/ui/pattern_help.py:189
 msgid "with format"
 msgstr "带格式"
 
-#: src/pbrenamer/ui/pattern_help.py:190
 msgid "with format and fallback"
 msgstr "带格式和回退值"
 
-#: src/pbrenamer/ui/pattern_help.py:191
 msgid "left-align  (digit fmt = min width)"
 msgstr "左对齐  （数字格式 = 最小宽度）"
 
-#: src/pbrenamer/ui/pattern_help.py:192
 msgid "right-align"
 msgstr "右对齐"
 
-#: src/pbrenamer/ui/pattern_help.py:193
 msgid "zero-pad right (numbers)"
 msgstr "右侧补零（数字）"
 
-#: src/pbrenamer/ui/pattern_help.py:194
 msgid "literal '{' character"
 msgstr "字面 '{' 字符"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:198
 msgid ""
 "<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
 "<code>strftime</code> format for dates/datetimes.<br><b>default</b>: used"
@@ -176,44 +140,34 @@ msgstr ""
 "是文本/数字的最小宽度（数字），或日期/时间的 <code>strftime</code> "
 "格式。<br><b>default</b>：当字段缺失时使用；省略它会使缺失成为错误（文件在预览中显示为红色）。"
 
-#: src/pbrenamer/ui/pattern_help.py:205
 msgid "all modes"
 msgstr "所有模式"
 
-#: src/pbrenamer/ui/pattern_help.py:206
 msgid "pattern, regex"
 msgstr "模式，正则"
 
-#: src/pbrenamer/ui/pattern_help.py:207
 msgid "regex only"
 msgstr "仅正则"
 
-#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:208
 msgid "Field"
 msgstr "字段"
 
-#: src/pbrenamer/ui/pattern_help.py:209
 msgid "Available in"
 msgstr "适用于"
 
-#: src/pbrenamer/ui/file_info_window.py:71 src/pbrenamer/ui/pattern_help.py:210
 msgid "Description"
 msgstr "描述"
 
-#: src/pbrenamer/ui/pattern_help.py:221
 msgid "Full matched text (or search literal in plain-text mode)"
 msgstr "完整匹配文本（或纯文本模式下的搜索字面量）"
 
-#: src/pbrenamer/ui/pattern_help.py:227
 msgid "Numbered capture groups (1-based)"
 msgstr "编号捕获组（从 1 开始）"
 
-#: src/pbrenamer/ui/pattern_help.py:232
 msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
 msgstr "搜索正则中的命名组 <code>(?P&lt;name&gt;…)</code>"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:239
 #, python-brace-format
 msgid ""
 "Auto-incrementing counter — default fmt is a minimum width; "
@@ -224,7 +178,6 @@ msgstr ""
 "10 开始，补零至 2 位）自动递增计数器——默认格式为最小宽度；<em>default</em> 设置起始值（例如 "
 "<code>{num:02:10}</code> 从 10 开始，补零到 2 位）"
 
-#: src/pbrenamer/ui/pattern_help.py:248
 #, python-brace-format
 msgid ""
 "Like <code>{num}</code> but skips values whose target name already exists"
@@ -232,133 +185,103 @@ msgid ""
 "guarantees no conflicts"
 msgstr "类似 <code>{num}</code>，但跳过目标名称已存在于磁盘或已分配给同一批次另一文件的值——保证无冲突"
 
-#: src/pbrenamer/ui/pattern_help.py:257
 #, python-format
 msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
 msgstr "今天的日期——默认格式 <code>%Y-%m-%d</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:263
 #, python-format
 msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
 msgstr "当前日期和时间——默认格式 <code>%Y-%m-%d_%H%M%S</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:268
 #, python-format
 msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
 msgstr "文件修改日期/时间——默认格式 <code>%Y-%m-%d_%H%M%S</code>"
 
-#: src/pbrenamer/ui/pattern_help.py:275
 #, python-format
 msgid ""
 "File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
 " change time on Linux)"
 msgstr "文件创建日期/时间——默认格式 <code>%Y-%m-%d_%H%M%S</code>（Linux 上的 inode 更改时间）"
 
-#: src/pbrenamer/ui/pattern_help.py:279
 msgid "Name of the immediate parent folder"
 msgstr "直接父文件夹的名称"
 
-#: src/pbrenamer/ui/pattern_help.py:283
 msgid "EXIF or IPTC metadata field (images only — see list below)"
 msgstr "EXIF 或 IPTC 元数据字段（仅图像——见下方列表）"
 
-#: src/pbrenamer/ui/pattern_help.py:288
 msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
 msgstr "音频元数据字段（mp3、ogg、flac…——见下方列表）"
 
-#: src/pbrenamer/ui/pattern_help.py:294
 msgid "Video metadata field (mp4, mkv, avi… — see list below)"
 msgstr "视频元数据字段（mp4、mkv、avi…——见下方列表）"
 
-#: src/pbrenamer/ui/pattern_help.py:300
 msgid ""
 "Field names are case-insensitive. A <b>default</b> is strongly "
 "recommended for metadata fields — they may be absent from non-image files"
 " or images without metadata."
 msgstr "字段名称不区分大小写。强烈建议为元数据字段设置 <b>default</b> 值——这些字段在非图像文件或没有元数据的图像中可能缺失。"
 
-#: src/pbrenamer/ui/pattern_help.py:304
 msgid "Type"
 msgstr "类型"
 
-#: src/pbrenamer/ui/pattern_help.py:311
 msgid "Date/time the photo was taken"
 msgstr "拍照的日期/时间"
 
-#: src/pbrenamer/ui/pattern_help.py:312
 msgid "Date/time the image was digitised"
 msgstr "图像数字化的日期/时间"
 
-#: src/pbrenamer/ui/pattern_help.py:316
 msgid "Date/time the file was last changed (EXIF)"
 msgstr "文件最后更改的日期/时间（EXIF）"
 
-#: src/pbrenamer/ui/pattern_help.py:319
 msgid "Camera manufacturer"
 msgstr "相机制造商"
 
-#: src/pbrenamer/ui/pattern_help.py:320
 msgid "Camera model"
 msgstr "相机型号"
 
-#: src/pbrenamer/ui/pattern_help.py:321
 msgid "Lens model"
 msgstr "镜头型号"
 
-#: src/pbrenamer/ui/pattern_help.py:322
 msgid "ISO speed"
 msgstr "ISO 感光度"
 
-#: src/pbrenamer/ui/pattern_help.py:323
 msgid "Aperture (e.g. 2.8)"
 msgstr "光圈（如 2.8）"
 
-#: src/pbrenamer/ui/pattern_help.py:324
 msgid "Shutter speed (e.g. 1/125)"
 msgstr "快门速度（如 1/125）"
 
-#: src/pbrenamer/ui/pattern_help.py:325
 msgid "Focal length in mm"
 msgstr "焦距（毫米）"
 
-#: src/pbrenamer/ui/pattern_help.py:326
 msgid "Image description / title"
 msgstr "图像描述 / 标题"
 
-#: src/pbrenamer/ui/pattern_help.py:327
 msgid "Photographer / creator (EXIF)"
 msgstr "摄影师 / 创作者（EXIF）"
 
-#: src/pbrenamer/ui/pattern_help.py:328
 msgid "Copyright notice"
 msgstr "版权声明"
 
-#: src/pbrenamer/ui/pattern_help.py:329
 msgid "IPTC title / object name"
 msgstr "IPTC 标题 / 对象名称"
 
-#: src/pbrenamer/ui/pattern_help.py:330
 msgid "IPTC photographer / creator"
 msgstr "IPTC 摄影师 / 创作者"
 
-#: src/pbrenamer/ui/pattern_help.py:331
 msgid "IPTC city"
 msgstr "IPTC 城市"
 
-#: src/pbrenamer/ui/pattern_help.py:332
 msgid "IPTC country"
 msgstr "IPTC 国家"
 
-#: src/pbrenamer/ui/pattern_help.py:333
 msgid "IPTC creation date"
 msgstr "IPTC 创建日期"
 
-#: src/pbrenamer/ui/pattern_help.py:334
 msgid "IPTC keywords (semicolon-separated)"
 msgstr "IPTC 关键词（分号分隔）"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:339
 msgid ""
 "Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
 "opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
@@ -370,66 +293,51 @@ msgstr ""
 "标签可能不存在或文件可能不是受支持的音频格式。字段名称不区分大小写。支持的格式：mp3、ogg、flac、opus、aac/m4a 及 "
 "mutagen 支持的其他格式。强烈建议设置 <b>default</b> 值——标签可能缺失，或文件可能不是受支持的音频格式。"
 
-#: src/pbrenamer/ui/pattern_help.py:346
 msgid "Track title"
 msgstr "曲目标题"
 
-#: src/pbrenamer/ui/pattern_help.py:347
 msgid "Track artist"
 msgstr "曲目艺术家"
 
-#: src/pbrenamer/ui/pattern_help.py:348
 msgid "Album artist"
 msgstr "专辑艺术家"
 
-#: src/pbrenamer/ui/pattern_help.py:349
 msgid "Album name"
 msgstr "专辑名称"
 
-#: src/pbrenamer/ui/pattern_help.py:351
 msgid "Track number (strips /total if present)"
 msgstr "曲目编号（如有 /总数则去除）"
 
-#: src/pbrenamer/ui/pattern_help.py:353
 msgid "Disc number (strips /total if present)"
 msgstr "碟片编号（如有 /总数则去除）"
 
-#: src/pbrenamer/ui/pattern_help.py:358
 msgid ""
 "Release date — datetime.date when full date available (strftime "
 "formatting); plain text otherwise"
 msgstr "发行日期——完整日期可用时为 datetime.date（strftime 格式）；否则为纯文本"
 
-#: src/pbrenamer/ui/pattern_help.py:363
 msgid "Release year (extracted from date tag)"
 msgstr "发行年份（从日期标签提取）"
 
-#: src/pbrenamer/ui/pattern_help.py:364
 msgid "Genre"
 msgstr "流派"
 
-#: src/pbrenamer/ui/pattern_help.py:365
 msgid "Comment"
 msgstr "注释"
 
-#: src/pbrenamer/ui/pattern_help.py:366
 msgid "Composer"
 msgstr "作曲家"
 
-#: src/pbrenamer/ui/pattern_help.py:367
 msgid "Beats per minute"
 msgstr "每分钟节拍数"
 
-#: src/pbrenamer/ui/pattern_help.py:368 src/pbrenamer/ui/pattern_help.py:383
 msgid "Duration in seconds"
 msgstr "时长（秒）"
 
-#: src/pbrenamer/ui/pattern_help.py:369
 msgid "Bitrate in kbps"
 msgstr "比特率（kbps）"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/pattern_help.py:374
 msgid ""
 "Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
 "webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
@@ -441,1049 +349,803 @@ msgstr ""
 "字段可能不存在或文件可能不是受支持的视频格式。字段名称不区分大小写。支持的格式：mp4、mkv、avi、mov、webm 及 MediaInfo "
 "（pymediainfo）支持的其他格式。强烈建议设置 <b>default</b> 值——字段可能缺失，或文件可能不是受支持的视频格式。"
 
-#: src/pbrenamer/ui/pattern_help.py:381
 msgid "Video width in pixels"
 msgstr "视频宽度（像素）"
 
-#: src/pbrenamer/ui/pattern_help.py:382
 msgid "Video height in pixels"
 msgstr "视频高度（像素）"
 
-#: src/pbrenamer/ui/pattern_help.py:384
 msgid "Frame rate (e.g. 29.970)"
 msgstr "帧率（如 29.970）"
 
-#: src/pbrenamer/ui/pattern_help.py:385
 msgid "Video codec name (e.g. AVC, HEVC)"
 msgstr "视频编解码器名称（如 AVC、HEVC）"
 
-#: src/pbrenamer/ui/pattern_help.py:386
 msgid "Audio codec name (e.g. AAC, AC-3)"
 msgstr "音频编解码器名称（如 AAC、AC-3）"
 
-#: src/pbrenamer/ui/pattern_help.py:387
 msgid "Number of audio channels"
 msgstr "音频声道数"
 
-#: src/pbrenamer/ui/pattern_help.py:388
 msgid "Overall bitrate in kbps"
 msgstr "总比特率（kbps）"
 
-#: src/pbrenamer/ui/pattern_help.py:389
 msgid "Title tag"
 msgstr "标题标签"
 
-#: src/pbrenamer/ui/pattern_help.py:390
 msgid "Encoded date/time"
 msgstr "编码日期/时间"
 
-#: src/pbrenamer/ui/pattern_help.py:398
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr "捕获组 1 后跟 4 位补零计数器（从 1 开始）"
 
-#: src/pbrenamer/ui/pattern_help.py:403
 msgid "Same, but counter starts at 10"
 msgstr "同上，但计数器从 10 开始"
 
-#: src/pbrenamer/ui/pattern_help.py:407
 msgid ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
 " already exists"
 msgstr "无冲突 3 位计数器：跳过 <code>backup_NNN</code> 已存在的值"
 
-#: src/pbrenamer/ui/pattern_help.py:412
 msgid "Today's date prepended to the matched text"
 msgstr "今天的日期添加到匹配文本之前"
 
-#: src/pbrenamer/ui/pattern_help.py:415
 msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
 msgstr "拍摄日期/时间（紧凑格式）；EXIF 缺失时为\"unknown\""
 
-#: src/pbrenamer/ui/pattern_help.py:420
 msgid "Hour+minute of digitisation; \"0000\" if absent"
 msgstr "数字化的时+分；缺失时为\"0000\""
 
-#: src/pbrenamer/ui/pattern_help.py:424
 msgid "Camera make and model (empty string if absent)"
 msgstr "相机品牌和型号（缺失时为空字符串）"
 
-#: src/pbrenamer/ui/pattern_help.py:429
 msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
 msgstr "音频艺术家和标题；缺失时为\"unknown\"/\"untitled\""
 
-#: src/pbrenamer/ui/pattern_help.py:433
 msgid "Audio release date, zero-padded track number, title"
 msgstr "音频发行日期、补零曲目编号、标题"
 
-#: src/pbrenamer/ui/pattern_help.py:438
 msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
 msgstr "视频分辨率和编解码器（如 1920x1080_AVC）"
 
-#: src/pbrenamer/ui/pattern_help.py:442
 msgid "Video encoded date and duration in seconds"
 msgstr "视频编码日期和时长（秒）"
 
-#: src/pbrenamer/ui/pattern_help.py:445
 msgid "Named regex groups (regex mode only)"
 msgstr "命名正则组（仅正则模式）"
 
-#: src/pbrenamer/ui/pattern_help.py:448
 msgid "Parent folder, file modification date, 3-digit counter"
 msgstr "父文件夹、文件修改日期、3 位计数器"
 
-#: src/pbrenamer/ui/pattern_help.py:455
 msgid "Replacement fields"
 msgstr "替换字段"
 
-#: src/pbrenamer/ui/pattern_help.py:460
 msgid "Available fields"
 msgstr "可用字段"
 
-#: src/pbrenamer/ui/pattern_help.py:466
 #, python-brace-format
 msgid "Metadata fields for <code>{im:…}</code>"
 msgstr "<code>{im:…}</code> 的元数据字段"
 
-#: src/pbrenamer/ui/pattern_help.py:473
 #, python-brace-format
 msgid "Audio metadata fields for <code>{au:…}</code>"
 msgstr "<code>{au:…}</code> 的音频元数据字段"
 
-#: src/pbrenamer/ui/pattern_help.py:480
 #, python-brace-format
 msgid "Video metadata fields for <code>{vi:…}</code>"
 msgstr "<code>{vi:…}</code> 的视频元数据字段"
 
-#: src/pbrenamer/ui/pattern_help.py:487
 msgid "Examples"
 msgstr "示例"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:25
 msgid "Edit Shortcuts"
 msgstr "编辑快捷方式"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:31
 msgid "Move up"
 msgstr "上移"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:32
 msgid "Move down"
 msgstr "下移"
 
-#: src/pbrenamer/ui/shortcuts_dialog.py:33 tools/_ui_strings_tmp.py:15
-#: tools/_ui_strings_tmp.py:28
 msgid "Remove"
 msgstr "删除"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/shortcuts_dialog.py:46
 msgid "Saved shortcuts:"
 msgstr "已保存的快捷方式："
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:57
-#: src/pbrenamer/ui/file_info_window.py:137
-#: src/pbrenamer/ui/file_info_window.py:144
 msgid "File information"
 msgstr "文件信息"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:71
 msgid "Value"
 msgstr "值"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:92
 msgid "Image"
 msgstr "图像"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:93
 msgid "Audio"
 msgstr "音频"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:94
 msgid "Video"
 msgstr "视频"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:95
 msgid "Directory"
 msgstr "目录"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:96
-#: src/pbrenamer/ui/file_info_window.py:97
 msgid "Other"
 msgstr "其他"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:99
 #, python-brace-format
 msgid "File information — {name}"
 msgstr "文件信息 — {name}"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:102
 msgid "File:"
 msgstr "文件："
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:102
 msgid "Type:"
 msgstr "类型："
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:113
 msgid "Image metadata (EXIF / IPTC)"
 msgstr "图像元数据 (EXIF / IPTC)"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:121
 msgid "Audio metadata"
 msgstr "音频元数据"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:129
 msgid "Video metadata"
 msgstr "视频元数据"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:140
 msgid "Select a single file to display its information."
 msgstr "选择单个文件以显示其信息。"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:147
 msgid "Select a file to display its information."
 msgstr "选择文件以显示其信息。"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:153
 msgid "Universal fields"
 msgstr "通用字段"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:155
 msgid "Today's date"
 msgstr "今天的日期"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:156
 msgid "Current date and time"
 msgstr "当前日期和时间"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:159
-#: src/pbrenamer/ui/file_info_window.py:162
 msgid "File modification date/time"
 msgstr "文件修改日期/时间"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:162
-#: src/pbrenamer/ui/file_info_window.py:171
-#: src/pbrenamer/ui/file_info_window.py:178
-#: src/pbrenamer/ui/file_info_window.py:194
 msgid "Missing"
 msgstr "缺失"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:169
-#: src/pbrenamer/ui/file_info_window.py:171
 msgid "File creation date/time"
 msgstr "文件创建日期/时间"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:177
 msgid "Parent folder name"
 msgstr "父文件夹名称"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:183
 msgid "Batch fields"
 msgstr "批量字段"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:184
 msgid "Computed"
 msgstr "已计算"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:185
 msgid "Full matched text"
 msgstr "完整匹配文本"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:186
 msgid "Capture groups"
 msgstr "捕获组"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:187
 msgid "Auto-incrementing counter"
 msgstr "自动递增计数器"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:188
 msgid "Conflict-free counter"
 msgstr "无冲突计数器"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/file_info_window.py:189
 msgid "Named regex group"
 msgstr "命名正则表达式组"
 
-#: src/pbrenamer/ui/settings_dialog.py:19
 msgid "System default"
 msgstr "系统默认"
 
-#: src/pbrenamer/ui/main_window.py:231
 msgid "Select folder"
 msgstr "选择文件夹"
 
-#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:81
 msgid "Original"
 msgstr "原始"
 
-#: src/pbrenamer/ui/main_window.py:274 tools/_ui_strings_tmp.py:80
-#: tools/_ui_strings_tmp.py:144
 msgid "Preview"
 msgstr "预览"
 
-#: src/pbrenamer/ui/main_window.py:287
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} 项"
 
-#: src/pbrenamer/ui/main_window.py:566
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} 不可用"
 
-#: src/pbrenamer/ui/main_window.py:646
 msgid "Search — Help"
 msgstr "搜索 — 帮助"
 
-#: src/pbrenamer/ui/main_window.py:661
 msgid "Replace — Help"
 msgstr "替换 — 帮助"
 
-#: src/pbrenamer/ui/main_window.py:859
 msgid "Rename errors"
 msgstr "重命名错误"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/ui/main_window.py:952
 msgid "Add as shortcut"
 msgstr "添加为快捷方式"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:45
 msgid "Home"
 msgstr "主目录"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:46
 msgid "Desktop"
 msgstr "桌面"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:47
 msgid "Documents"
 msgstr "文档"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:48
 msgid "Downloads"
 msgstr "下载"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:49
 msgid "Pictures"
 msgstr "图片"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:50
 msgid "Music"
 msgstr "音乐"
 
 # ==AUTO== Automatically translated
-#: src/pbrenamer/platform/bookmarks.py:51
 msgid "Videos"
 msgstr "视频"
 
-#: src/pbrenamer/i18n.py:65 tools/_ui_strings_tmp.py:174
 msgid "language_name"
 msgstr "中文（简体）"
 
-#: tools/_ui_strings_tmp.py:1
 msgid "History"
 msgstr "历史"
 
-#: tools/_ui_strings_tmp.py:2
 msgid "Search"
 msgstr "搜索"
 
-#: tools/_ui_strings_tmp.py:3
 msgid "Search pattern history"
 msgstr "搜索模式历史"
 
-#: tools/_ui_strings_tmp.py:4 tools/_ui_strings_tmp.py:23
 msgid "Select one or more entries to remove them"
 msgstr "选择一个或多个条目以删除它们"
 
-#: tools/_ui_strings_tmp.py:5 tools/_ui_strings_tmp.py:24
 msgid "Pattern…"
 msgstr "模式…"
 
-#: tools/_ui_strings_tmp.py:6
 msgid "New search pattern to add"
 msgstr "要添加的新搜索模式"
 
-#: tools/_ui_strings_tmp.py:7
 msgid "pat"
 msgstr "pat"
 
-#: tools/_ui_strings_tmp.py:8
 msgid "Pattern token mode"
 msgstr "模式令牌模式"
 
-#: tools/_ui_strings_tmp.py:9
 msgid "RE"
 msgstr "RE"
 
-#: tools/_ui_strings_tmp.py:11
 msgid "txt"
 msgstr "txt"
 
-#: tools/_ui_strings_tmp.py:13 tools/_ui_strings_tmp.py:26
 msgid "Add"
 msgstr "添加"
 
-#: tools/_ui_strings_tmp.py:14
 msgid "Add this pattern to the search history"
 msgstr "将此模式添加到搜索历史"
 
-#: tools/_ui_strings_tmp.py:16 tools/_ui_strings_tmp.py:29
 msgid "Remove selected entries"
 msgstr "删除选中的条目"
 
-#: tools/_ui_strings_tmp.py:17
 msgid "Delete the selected search history entries"
 msgstr "删除选中的搜索历史条目"
 
-#: tools/_ui_strings_tmp.py:18 tools/_ui_strings_tmp.py:31
 msgid "Clear all"
 msgstr "全部清除"
 
-#: tools/_ui_strings_tmp.py:19
 msgid "Remove all search history entries"
 msgstr "删除所有搜索历史条目"
 
-#: tools/_ui_strings_tmp.py:20
 msgid "Delete the entire search pattern history"
 msgstr "删除全部搜索模式历史"
 
-#: tools/_ui_strings_tmp.py:21
 msgid "Replace"
 msgstr "替换"
 
-#: tools/_ui_strings_tmp.py:22
 msgid "Replacement pattern history"
 msgstr "替换模式历史"
 
-#: tools/_ui_strings_tmp.py:25
 msgid "New replacement pattern to add"
 msgstr "要添加的新替换模式"
 
-#: tools/_ui_strings_tmp.py:27
 msgid "Add this pattern to the replacement history"
 msgstr "将此模式添加到替换历史"
 
-#: tools/_ui_strings_tmp.py:30
 msgid "Delete the selected replacement history entries"
 msgstr "删除选中的替换历史条目"
 
-#: tools/_ui_strings_tmp.py:32
 msgid "Remove all replacement history entries"
 msgstr "删除所有替换历史条目"
 
-#: tools/_ui_strings_tmp.py:33
 msgid "Delete the entire replacement pattern history"
 msgstr "删除全部替换模式历史"
 
-#: tools/_ui_strings_tmp.py:34
 msgid "PBRenamer"
 msgstr "PBRenamer"
 
-#: tools/_ui_strings_tmp.py:35
 msgid "Open folder…"
 msgstr "打开文件夹…"
 
-#: tools/_ui_strings_tmp.py:36
 msgid "Ctrl+O"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:37
 msgid "Open a folder"
 msgstr "打开一个文件夹"
 
-#: tools/_ui_strings_tmp.py:38
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "打开目录选择器并在树中导航到所选文件夹"
 
-#: tools/_ui_strings_tmp.py:39
 msgid "Quit"
 msgstr "退出"
 
-#: tools/_ui_strings_tmp.py:40
 msgid "Ctrl+Q"
 msgstr ""
 
-#: tools/_ui_strings_tmp.py:41
 msgid "Quit PBRenamer"
 msgstr "退出 PBRenamer"
 
-#: tools/_ui_strings_tmp.py:42
 msgid "Exit the application"
 msgstr "关闭应用程序"
 
-#: tools/_ui_strings_tmp.py:43
 msgid "History…"
 msgstr "历史…"
 
-#: tools/_ui_strings_tmp.py:44
 msgid "Manage pattern history"
 msgstr "管理模式历史"
 
-#: tools/_ui_strings_tmp.py:45
 msgid "Add or remove entries from the search and replacement pattern history"
 msgstr "从搜索和替换模式历史中添加或删除条目"
 
-#: tools/_ui_strings_tmp.py:46
 msgid "Settings…"
 msgstr "设置…"
 
-#: tools/_ui_strings_tmp.py:47
 msgid "Open settings"
 msgstr "打开设置"
 
-#: tools/_ui_strings_tmp.py:48
 msgid "Configure language and other preferences"
 msgstr "配置语言和其他偏好设置"
 
-#: tools/_ui_strings_tmp.py:49 tools/_ui_strings_tmp.py:160
 msgid "About PBRenamer"
 msgstr "关于 PBRenamer"
 
-#: tools/_ui_strings_tmp.py:50
 msgid "About this application"
 msgstr "关于此应用程序"
 
-#: tools/_ui_strings_tmp.py:51
 msgid "Show version and license information"
 msgstr "显示版本和许可证信息"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:52
 msgid "Edit shortcuts…"
 msgstr "编辑快捷方式…"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:53
 msgid "Manage directory shortcuts"
 msgstr "管理目录快捷方式"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:54
 msgid "Add or remove entries from the shortcuts list"
 msgstr "从快捷方式列表中添加或删除条目"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:55
 msgid "Information"
 msgstr "信息"
 
-#: tools/_ui_strings_tmp.py:56
 msgid "Ctrl+I"
 msgstr ""
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:57
 msgid "Show file field values"
 msgstr "显示文件字段值"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:58
 msgid "Open the file information window for the selected file"
 msgstr "打开所选文件的信息窗口"
 
-#: tools/_ui_strings_tmp.py:59
 msgid "Show:"
 msgstr "显示："
 
-#: tools/_ui_strings_tmp.py:60
 msgid "Files only"
 msgstr "仅文件"
 
-#: tools/_ui_strings_tmp.py:61
 msgid "Directories only"
 msgstr "仅目录"
 
-#: tools/_ui_strings_tmp.py:62
 msgid "Files and directories"
 msgstr "文件和目录"
 
-#: tools/_ui_strings_tmp.py:63
 msgid "Choose which entries to list"
 msgstr "选择要列出的条目类型"
 
-#: tools/_ui_strings_tmp.py:64
 msgid "List files only, directories only, or both"
 msgstr "仅列出文件、仅列出目录，或两者都列出"
 
-#: tools/_ui_strings_tmp.py:65
 msgid "Recursive"
 msgstr "递归"
 
-#: tools/_ui_strings_tmp.py:66
 msgid "Include all subdirectories"
 msgstr "包括所有子目录"
 
-#: tools/_ui_strings_tmp.py:67
 msgid "When checked, files from all subdirectories are listed"
 msgstr "勾选后，将列出所有子目录中的文件"
 
-#: tools/_ui_strings_tmp.py:68
 msgid "Keep extension"
 msgstr "保留扩展名"
 
-#: tools/_ui_strings_tmp.py:69
 msgid "Preserve the file extension"
 msgstr "保留文件扩展名"
 
-#: tools/_ui_strings_tmp.py:70
 msgid ""
 "Apply transformations to the file stem only, leaving the extension "
 "unchanged"
 msgstr "仅对文件名主干应用变换，保持扩展名不变"
 
-#: tools/_ui_strings_tmp.py:71
 msgid "Auto-preview"
 msgstr "自动预览"
 
-#: tools/_ui_strings_tmp.py:72
 msgid "Refresh the preview automatically"
 msgstr "自动刷新预览"
 
-#: tools/_ui_strings_tmp.py:73
 msgid "Recompute the preview each time the pattern or options change"
 msgstr "每次模式或选项更改时重新计算预览"
 
-#: tools/_ui_strings_tmp.py:74
 msgid "Filter:"
 msgstr "过滤器："
 
-#: tools/_ui_strings_tmp.py:75
 msgid "*.txt"
 msgstr "*.txt"
 
-#: tools/_ui_strings_tmp.py:76
 msgid "Glob pattern to filter the file list"
 msgstr "用于过滤文件列表的 glob 模式"
 
-#: tools/_ui_strings_tmp.py:77
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "仅列出与此 glob 模式匹配的文件（如 *.txt、image_*）"
 
-#: tools/_ui_strings_tmp.py:78
 msgid "Browse the filesystem"
 msgstr "浏览文件系统"
 
-#: tools/_ui_strings_tmp.py:79
 msgid "Select a directory to list its contents in the panel on the right"
 msgstr "选择一个目录以在右侧面板中列出其内容"
 
-#: tools/_ui_strings_tmp.py:82
 msgid "Files to be renamed"
 msgstr "待重命名的文件"
 
-#: tools/_ui_strings_tmp.py:83
 msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
 msgstr "选择行以将操作限制到这些文件；不选则应用到所有文件"
 
-#: tools/_ui_strings_tmp.py:85
 msgid "Search pattern"
 msgstr "搜索模式"
 
-#: tools/_ui_strings_tmp.py:86
 #, python-brace-format
 msgid ""
 "Pattern to match against file names. Use tokens: {#} numbers, {L} "
 "letters, {C} non-space, {X} anything"
 msgstr "用于匹配文件名的模式。使用令牌：{#} 数字，{L} 字母，{C} 非空白，{X} 任意"
 
-#: tools/_ui_strings_tmp.py:87 tools/_ui_strings_tmp.py:106
 msgid "Save to history"
 msgstr "保存到历史"
 
-#: tools/_ui_strings_tmp.py:88
 msgid "Add the current search pattern and mode to the drop-down history"
 msgstr "将当前搜索模式和模式添加到下拉历史"
 
-#: tools/_ui_strings_tmp.py:89
 msgid "Search pattern help"
 msgstr "搜索模式帮助"
 
-#: tools/_ui_strings_tmp.py:90
 msgid ""
 "Show help about search patterns (Pattern tokens, Regular expressions, "
 "Plain text)"
 msgstr "显示搜索模式帮助（模式令牌、正则表达式、纯文本）"
 
-#: tools/_ui_strings_tmp.py:91
 msgid "Pattern"
 msgstr "模式"
 
-#: tools/_ui_strings_tmp.py:92
 msgid "Search using pattern tokens"
 msgstr "使用模式令牌搜索"
 
-#: tools/_ui_strings_tmp.py:93
 #, python-brace-format
 msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
 msgstr "使用模式令牌匹配文件名（{#}、{L}、{X}…）"
 
-#: tools/_ui_strings_tmp.py:94
 msgid "Regular expression"
 msgstr "正则表达式"
 
-#: tools/_ui_strings_tmp.py:95
 msgid "Search using a Python regular expression"
 msgstr "使用 Python 正则表达式搜索"
 
-#: tools/_ui_strings_tmp.py:96
 msgid ""
 "Match file names using a Python regular expression; use \\1 \\2… for "
 "backreferences in the replacement"
 msgstr "使用 Python 正则表达式匹配文件名；在替换中使用 \\1 \\2… 作为反向引用"
 
-#: tools/_ui_strings_tmp.py:97
 msgid "Plain text"
 msgstr "纯文本"
 
-#: tools/_ui_strings_tmp.py:98
 msgid "Search for a literal string"
 msgstr "搜索字面字符串"
 
-#: tools/_ui_strings_tmp.py:99
 msgid "Match file names by looking for the search text as a literal string"
 msgstr "通过将搜索文本作为字面字符串查找来匹配文件名"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:100
 msgid "Case-insensitive"
 msgstr "忽略大小写"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:101
 msgid "Ignore case when searching"
 msgstr "搜索时忽略大小写"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:102
 msgid ""
 "When checked, the search pattern matches file names regardless of letter "
 "case"
 msgstr "勾选后，搜索模式匹配文件名时不区分大小写"
 
-#: tools/_ui_strings_tmp.py:104
 msgid "Replacement pattern"
 msgstr "替换模式"
 
-#: tools/_ui_strings_tmp.py:105
 #, python-brace-format
 msgid ""
 "Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
 "counter, {date} for today's date, {dir} for the parent folder name"
 msgstr "替换模式。使用 {1} {2}… 表示捕获组，{num} 表示计数器，{date} 表示今天的日期，{dir} 表示父文件夹名称"
 
-#: tools/_ui_strings_tmp.py:107
 msgid "Add the current replacement pattern to the drop-down history"
 msgstr "将当前替换模式添加到下拉历史"
 
-#: tools/_ui_strings_tmp.py:108
 msgid "Replacement pattern help"
 msgstr "替换模式帮助"
 
-#: tools/_ui_strings_tmp.py:109
 msgid ""
 "Show help about replacement patterns (capture groups, counter, date, "
 "directory tokens)"
 msgstr "显示替换模式帮助（捕获组、计数器、日期、目录令牌）"
 
-#: tools/_ui_strings_tmp.py:110
 msgid "Post-processing"
 msgstr "后处理"
 
-#: tools/_ui_strings_tmp.py:111
 msgid "Separator:"
 msgstr "分隔符："
 
-#: tools/_ui_strings_tmp.py:112 tools/_ui_strings_tmp.py:128
 msgid "No change"
 msgstr "不更改"
 
-#: tools/_ui_strings_tmp.py:113
 msgid "Spaces → underscores"
 msgstr "空格 → 下划线"
 
-#: tools/_ui_strings_tmp.py:114
 msgid "Underscores → spaces"
 msgstr "下划线 → 空格"
 
-#: tools/_ui_strings_tmp.py:115
 msgid "Spaces → dots"
 msgstr "空格 → 点"
 
-#: tools/_ui_strings_tmp.py:116
 msgid "Dots → spaces"
 msgstr "点 → 空格"
 
-#: tools/_ui_strings_tmp.py:117
 msgid "Spaces → dashes"
 msgstr "空格 → 连字符"
 
-#: tools/_ui_strings_tmp.py:118
 msgid "Dashes → spaces"
 msgstr "连字符 → 空格"
 
-#: tools/_ui_strings_tmp.py:119
 msgid "Separator conversion"
 msgstr "分隔符转换"
 
-#: tools/_ui_strings_tmp.py:120
 msgid ""
 "Apply a separator conversion to each renamed file name after applying the"
 " pattern"
 msgstr "在应用模式后对每个重命名的文件名应用分隔符转换"
 
-#: tools/_ui_strings_tmp.py:121
 msgid "Remove accents"
 msgstr "删除重音符号"
 
-#: tools/_ui_strings_tmp.py:122
 msgid "Strip diacritical marks"
 msgstr "去除附加符号"
 
-#: tools/_ui_strings_tmp.py:123
 msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
 msgstr "将带重音字符转换为其 ASCII 等效字符（é→e、ü→u 等）"
 
-#: tools/_ui_strings_tmp.py:124
 msgid "Remove duplicate separators"
 msgstr "删除重复分隔符"
 
-#: tools/_ui_strings_tmp.py:125
 msgid "Collapse consecutive separators"
 msgstr "合并连续分隔符"
 
-#: tools/_ui_strings_tmp.py:126
 msgid ""
 "Collapse runs of identical separator characters (spaces, dots, dashes, "
 "underscores) into one"
 msgstr "将连续相同的分隔符（空格、点、连字符、下划线）合并为一个"
 
-#: tools/_ui_strings_tmp.py:127
 msgid "Case:"
 msgstr "大小写："
 
-#: tools/_ui_strings_tmp.py:129
 msgid "UPPERCASE"
 msgstr "全大写"
 
-#: tools/_ui_strings_tmp.py:130
 msgid "lowercase"
 msgstr "全小写"
 
-#: tools/_ui_strings_tmp.py:131
 msgid "Capitalize first letter"
 msgstr "首字母大写"
 
-#: tools/_ui_strings_tmp.py:132
 msgid "Title Case"
 msgstr "每个单词首字母大写"
 
-#: tools/_ui_strings_tmp.py:133
 msgid "Capitalization mode"
 msgstr "大小写模式"
 
-#: tools/_ui_strings_tmp.py:134
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "选择在应用模式后如何更改文件名的大小写"
 
-#: tools/_ui_strings_tmp.py:135
 msgid "Save:"
 msgstr "保存："
 
-#: tools/_ui_strings_tmp.py:136
 msgid "Named save"
 msgstr "命名保存"
 
-#: tools/_ui_strings_tmp.py:137
 msgid ""
 "Type a name (letters, digits, _ and -) to save or load all search/replace"
 " parameters"
 msgstr "输入名称（字母、数字、_ 和 -）以保存或加载所有搜索/替换参数"
 
-#: tools/_ui_strings_tmp.py:138
 msgid "Save"
 msgstr "保存"
 
-#: tools/_ui_strings_tmp.py:139
 msgid "Save current settings under this name"
 msgstr "以此名称保存当前设置"
 
-#: tools/_ui_strings_tmp.py:140
 msgid ""
 "Save all search, replace and post-processing settings under the current "
 "name (overwrites any existing save with the same name)"
 msgstr "以当前名称保存所有搜索、替换和后处理设置（覆盖同名的现有保存）"
 
-#: tools/_ui_strings_tmp.py:141
 msgid "Delete"
 msgstr "删除"
 
-#: tools/_ui_strings_tmp.py:142
 msgid "Delete this named save"
 msgstr "删除此命名保存"
 
-#: tools/_ui_strings_tmp.py:143
 msgid "Permanently delete the named save matching the current name"
 msgstr "永久删除与当前名称匹配的命名保存"
 
-#: tools/_ui_strings_tmp.py:145
 msgid "Compute rename preview"
 msgstr "计算重命名预览"
 
-#: tools/_ui_strings_tmp.py:146
 msgid ""
 "Apply the current pattern to all listed files and show the result in the "
 "Preview column"
 msgstr "将当前模式应用于所有列出的文件并在预览列中显示结果"
 
-#: tools/_ui_strings_tmp.py:147
 msgid "Clear"
 msgstr "清除"
 
-#: tools/_ui_strings_tmp.py:148
 msgid "Clear the preview"
 msgstr "清除预览"
 
-#: tools/_ui_strings_tmp.py:149
 msgid "Remove all preview values from the Preview column"
 msgstr "从预览列中删除所有预览值"
 
-#: tools/_ui_strings_tmp.py:150
 msgid "Undo"
 msgstr "撤销"
 
-#: tools/_ui_strings_tmp.py:151
 msgid "Undo last rename batch"
 msgstr "撤销上一批重命名"
 
-#: tools/_ui_strings_tmp.py:152
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "撤销在磁盘上执行的上一批重命名"
 
-#: tools/_ui_strings_tmp.py:153
 msgid "Rename"
 msgstr "重命名"
 
-#: tools/_ui_strings_tmp.py:154
 msgid "Apply renames on disk"
 msgstr "在磁盘上应用重命名"
 
-#: tools/_ui_strings_tmp.py:155
 msgid ""
 "Permanently rename all files shown in the Preview column (only enabled "
 "when there are no conflicts)"
 msgstr "永久重命名预览列中显示的所有文件（仅在没有冲突时启用）"
 
-#: tools/_ui_strings_tmp.py:156
 msgid "File"
 msgstr "文件"
 
-#: tools/_ui_strings_tmp.py:157
 msgid "Edit"
 msgstr "编辑"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:158
 msgid "Shortcuts"
 msgstr "快捷方式"
 
-#: tools/_ui_strings_tmp.py:159
 msgid "Help"
 msgstr "帮助"
 
-#: tools/_ui_strings_tmp.py:161
 msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 
-#: tools/_ui_strings_tmp.py:162
 msgid "Application version"
 msgstr "应用程序版本"
 
-#: tools/_ui_strings_tmp.py:163
 msgid "A graphical batch file renaming utility."
 msgstr "一款图形化批量文件重命名工具。"
 
-#: tools/_ui_strings_tmp.py:164
 msgid "License: GPLv3"
 msgstr "许可证：GPLv3"
 
-#: tools/_ui_strings_tmp.py:165
 msgid "Settings"
 msgstr "设置"
 
-#: tools/_ui_strings_tmp.py:166
 msgid "Language:"
 msgstr "语言："
 
-#: tools/_ui_strings_tmp.py:167
 msgid "Select the interface language"
 msgstr "选择界面语言"
 
-#: tools/_ui_strings_tmp.py:168
 msgid "Log level:"
 msgstr "日志级别："
 
-#: tools/_ui_strings_tmp.py:169
 msgid "Set the application logging verbosity"
 msgstr "设置应用程序日志详细程度"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:170
 msgid "Behaviour"
 msgstr "行为"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:171
 msgid "Restore last opened directory"
 msgstr "恢复上次打开的目录"
 
 # ==AUTO== Automatically translated
-#: tools/_ui_strings_tmp.py:172
 msgid "On startup, reopen the directory that was active in the previous session"
 msgstr "启动时，重新打开上次会话中活动的目录"
 
-#: tools/_ui_strings_tmp.py:173
 msgid "A restart is required for the language change to take effect."
 msgstr "更改语言需要重启应用程序才能生效。"

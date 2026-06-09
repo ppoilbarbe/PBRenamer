@@ -73,6 +73,7 @@ $(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
 	    --copyright-holder="Marcel Spock" \
 	    --msgid-bugs-address="mrspock@cardolan.net" \
 	    --project="PBRenamer" \
+	    --no-location \
 	    -k _ -o $(POT_FILE) \
 	    $(PY_SOURCES) tools/_ui_strings_tmp.py
 	@rm -f tools/_ui_strings_tmp.py

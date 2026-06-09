@@ -29,5 +29,6 @@ for po in sorted(locale_dir.glob("*/LC_MESSAGES/*.po")):
     new = _DATE_RE.sub(lambda _: f'"POT-Creation-Date: {POT_DATE_SENTINEL}\\n"', text)
     new = _VER_RE.sub(lambda _: '"Project-Id-Version: PBRenamer\\n"', new)
     new = _OBSOLETE_RE.sub("", new)
+    new = new.rstrip("\n") + "\n"
     if new != text:
         po.write_text(new, encoding="utf-8")
