@@ -111,6 +111,13 @@ locale
    :members:
    :undoc-members:
 
+bookmarks
+~~~~~~~~~
+
+.. automodule:: pbrenamer.platform.bookmarks
+   :members:
+   :undoc-members:
+
 ui
 --
 
@@ -132,6 +139,20 @@ pattern\_help
 ~~~~~~~~~~~~~
 
 .. automodule:: pbrenamer.ui.pattern_help
+   :members:
+   :undoc-members:
+
+file\_info\_window
+~~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.file_info_window
+   :members:
+   :undoc-members:
+
+shortcuts\_dialog
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.shortcuts_dialog
    :members:
    :undoc-members:
 

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.0] - 2026-06-09
+
+### Added
+
+- **Shortcuts menu** (`Go → Shortcuts`): navigate instantly to system directories
+  (Home, Desktop, Documents, Downloads, Pictures, Music, Videos on all platforms;
+  GTK bookmarks on Linux) and user-defined shortcuts
+- Right-click on any directory in the tree to **Add as shortcut**; shortcuts are
+  persisted to `shortcuts.json` in the user config directory
+- **Edit Shortcuts** dialog (`Go → Edit Shortcuts`): reorder (Move up / Move down)
+  and remove user-defined shortcuts
+- **File information window** (`View → File information`): non-modal window that
+  shows the actual values of all replacement fields (`{date}`, `{mdatetime}`,
+  `{dir}`, `{im:…}`, `{au:…}`, `{vi:…}`, …) for the currently selected file;
+  updates live as the selection changes
+- **Restore last opened directory** setting in the new *Behaviour* group of the
+  Settings dialog; when enabled, the app reopens the last accessed directory at
+  startup (CLI-provided directory always takes priority; default: disabled)
+- `make run` now accepts an `ARGS` variable to forward arguments and options to
+  the program (e.g. `make run ARGS="--debug /some/dir"`)
+
+### Fixed
+
+- `email.utils` was incorrectly listed in PyInstaller `excludes`, causing
+  `importlib.metadata` calls in the About dialog to fail in packaged builds
+- CI `test` job now compiles `.mo` catalogues before running the test suite,
+  fixing four `test_i18n.py` failures (`available_languages()` globs `.mo` files
+  which are gitignored and were absent on the runner)
+
+### Changed
+
+- Executable names are now lowercase in the PyInstaller spec and CI artifact globs
+  (e.g. `pbrenamer-1.2.0-linux-x86_64` instead of `PBRenamer-…`)
+
 ## [1.1.0] - 2026-06-01
 
 ### Added
@@ -110,6 +144,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
 
+[1.2.0]: https://github.com/ppoilbarbe/PBRenamer/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/ppoilbarbe/PBRenamer/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v1.0.0
 [0.3.2]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.2
 [0.3.1]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.1

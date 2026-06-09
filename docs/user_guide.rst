@@ -160,6 +160,43 @@ Undo
 Click **Undo** (or press **Ctrl+Z**) to revert the most recent rename batch.
 Only one level of undo is available.
 
+Shortcuts
+~~~~~~~~~
+
+The **Go → Shortcuts** menu provides one-click navigation to common directories.
+
+**System directories**
+    The top of the menu lists platform directories (Home, Desktop, Documents,
+    Downloads, Pictures, Music, Videos).  On Linux, GTK bookmarks are shown
+    instead when the file ``~/.config/gtk-3.0/bookmarks`` (or
+    ``~/.gtk-bookmarks``) exists.
+
+**User-defined shortcuts**
+    Right-click any directory in the left-hand tree and choose
+    **Add as shortcut**.  The entry is appended to the shortcuts list and
+    persisted between sessions.
+
+**Editing shortcuts**
+    Choose **Go → Edit Shortcuts** to open the *Edit Shortcuts* dialog, where
+    shortcuts can be reordered with *Move up* / *Move down* or removed.
+
+File information
+~~~~~~~~~~~~~~~~
+
+Open **View → File information** to display a non-modal window listing the
+actual values of every replacement field for the selected file.
+
+The window has three groups:
+
+* **Universal fields** — ``{date}``, ``{datetime}``, ``{mdatetime}``,
+  ``{cdatetime}``, ``{dir}``; values are read from the file system.
+* **Batch fields** — ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``,
+  ``{re:name}``; labelled *Computed* (they depend on the active pattern).
+* **Metadata fields** — ``{im:…}``, ``{au:…}``, or ``{vi:…}`` depending on
+  the file type; values are read from the file's embedded metadata.
+
+The window updates live whenever the selection changes.
+
 Settings
 --------
 
@@ -173,6 +210,11 @@ Open **Edit → Settings** to configure:
     Controls diagnostic output written to the console.  Choices: ``DEBUG``,
     ``INFO`` (default), ``WARNING``, ``ERROR``, ``CRITICAL``.  Can be
     overridden at launch with ``--debug``, ``--verbose``, or ``--quiet``.
+
+**Restore last opened directory** *(Behaviour group)*
+    When enabled, the app reopens the directory that was active in the
+    previous session.  A directory passed on the command line always takes
+    priority.  Default: disabled (current working directory is used).
 
 .. _search-patterns:
 
