@@ -17,6 +17,118 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
+msgid "Edit Shortcuts"
+msgstr "Edit Shortcuts"
+
+msgid "Move up"
+msgstr "Move up"
+
+msgid "Move down"
+msgstr "Move down"
+
+msgid "Remove"
+msgstr "Remove"
+
+msgid "Saved shortcuts:"
+msgstr "Saved shortcuts:"
+
+msgid "File information"
+msgstr "File information"
+
+msgid "Field"
+msgstr "Field"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Directory"
+msgstr "Directory"
+
+msgid "Other"
+msgstr "Other"
+
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "File information — {name}"
+
+msgid "File:"
+msgstr "File:"
+
+msgid "Type:"
+msgstr "Type:"
+
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Image metadata (EXIF / IPTC)"
+
+msgid "Audio metadata"
+msgstr "Audio metadata"
+
+msgid "Video metadata"
+msgstr "Video metadata"
+
+msgid "Select a single file to display its information."
+msgstr "Select a single file to display its information."
+
+msgid "Select a file to display its information."
+msgstr "Select a file to display its information."
+
+msgid "Universal fields"
+msgstr "Universal fields"
+
+msgid "Today's date"
+msgstr "Today's date"
+
+msgid "Current date and time"
+msgstr "Current date and time"
+
+msgid "File modification date/time"
+msgstr "File modification date/time"
+
+msgid "Missing"
+msgstr "Missing"
+
+msgid "File creation date/time"
+msgstr "File creation date/time"
+
+msgid "Parent folder name"
+msgstr "Parent folder name"
+
+msgid "Batch fields"
+msgstr "Batch fields"
+
+msgid "Computed"
+msgstr "Computed"
+
+msgid "Full matched text"
+msgstr "Full matched text"
+
+msgid "Capture groups"
+msgstr "Capture groups"
+
+msgid "Auto-incrementing counter"
+msgstr "Auto-incrementing counter"
+
+msgid "Conflict-free counter"
+msgstr "Conflict-free counter"
+
+msgid "Named regex group"
+msgstr "Named regex group"
+
+msgid "System default"
+msgstr "System default"
+
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -122,34 +234,31 @@ msgstr ""
 msgid "plain value"
 msgstr "plain value"
 
-msgid "with format"
-msgstr "with format"
+msgid "with format  (digit = min width · strftime for dates)"
+msgstr "with format  (digit = min width · strftime for dates)"
 
-msgid "with format and fallback"
-msgstr "with format and fallback"
+msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
+msgstr "case:   - lower   + upper   ! Caps   * Title   = unchanged"
 
-msgid "left-align  (digit fmt = min width)"
-msgstr "left-align  (digit fmt = min width)"
+msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
+msgstr "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
 
-msgid "right-align"
-msgstr "right-align"
-
-msgid "zero-pad right (numbers)"
-msgstr "zero-pad right (numbers)"
+msgid "all options; default used when field is absent"
+msgstr "all options; default used when field is absent"
 
 msgid "literal '{' character"
 msgstr "literal '{' character"
 
 msgid ""
-"<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: used"
-" when the field is absent; omitting it makes absence an error (file shown"
-" in red in the preview)."
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
 msgstr ""
-"<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: used"
-" when the field is absent; omitting it makes absence an error (file shown"
-" in red in the preview)."
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
 
 msgid "all modes"
 msgstr "all modes"
@@ -160,14 +269,8 @@ msgstr "pattern, regex"
 msgid "regex only"
 msgstr "regex only"
 
-msgid "Field"
-msgstr "Field"
-
 msgid "Available in"
 msgstr "Available in"
-
-msgid "Description"
-msgstr "Description"
 
 msgid "Full matched text (or search literal in plain-text mode)"
 msgstr "Full matched text (or search literal in plain-text mode)"
@@ -437,6 +540,15 @@ msgstr "Named regex groups (regex mode only)"
 msgid "Parent folder, file modification date, 3-digit counter"
 msgstr "Parent folder, file modification date, 3-digit counter"
 
+msgid "Capture group 1 left-aligned in 12 characters"
+msgstr "Capture group 1 left-aligned in 12 characters"
+
+msgid "Camera model centred in 30 characters, each word capitalised"
+msgstr "Camera model centred in 30 characters, each word capitalised"
+
+msgid "Camera make in lowercase, exact field length"
+msgstr "Camera make in lowercase, exact field length"
+
 msgid "Replacement fields"
 msgstr "Replacement fields"
 
@@ -457,112 +569,6 @@ msgstr "Video metadata fields for <code>{vi:…}</code>"
 
 msgid "Examples"
 msgstr "Examples"
-
-msgid "Edit Shortcuts"
-msgstr "Edit Shortcuts"
-
-msgid "Move up"
-msgstr "Move up"
-
-msgid "Move down"
-msgstr "Move down"
-
-msgid "Remove"
-msgstr "Remove"
-
-msgid "Saved shortcuts:"
-msgstr "Saved shortcuts:"
-
-msgid "File information"
-msgstr "File information"
-
-msgid "Value"
-msgstr "Value"
-
-msgid "Image"
-msgstr "Image"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Directory"
-msgstr "Directory"
-
-msgid "Other"
-msgstr "Other"
-
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "File information — {name}"
-
-msgid "File:"
-msgstr "File:"
-
-msgid "Type:"
-msgstr "Type:"
-
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Image metadata (EXIF / IPTC)"
-
-msgid "Audio metadata"
-msgstr "Audio metadata"
-
-msgid "Video metadata"
-msgstr "Video metadata"
-
-msgid "Select a single file to display its information."
-msgstr "Select a single file to display its information."
-
-msgid "Select a file to display its information."
-msgstr "Select a file to display its information."
-
-msgid "Universal fields"
-msgstr "Universal fields"
-
-msgid "Today's date"
-msgstr "Today's date"
-
-msgid "Current date and time"
-msgstr "Current date and time"
-
-msgid "File modification date/time"
-msgstr "File modification date/time"
-
-msgid "Missing"
-msgstr "Missing"
-
-msgid "File creation date/time"
-msgstr "File creation date/time"
-
-msgid "Parent folder name"
-msgstr "Parent folder name"
-
-msgid "Batch fields"
-msgstr "Batch fields"
-
-msgid "Computed"
-msgstr "Computed"
-
-msgid "Full matched text"
-msgstr "Full matched text"
-
-msgid "Capture groups"
-msgstr "Capture groups"
-
-msgid "Auto-incrementing counter"
-msgstr "Auto-incrementing counter"
-
-msgid "Conflict-free counter"
-msgstr "Conflict-free counter"
-
-msgid "Named regex group"
-msgstr "Named regex group"
-
-msgid "System default"
-msgstr "System default"
 
 msgid "Select folder"
 msgstr "Select folder"
@@ -589,6 +595,20 @@ msgstr "Replace — Help"
 
 msgid "Rename errors"
 msgstr "Rename errors"
+
+#, python-format
+msgid "Undo (%d)"
+msgstr "Undo (%d)"
+
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Undo last rename batch (%d level(s) available)"
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "Undo last rename batch"
+msgstr "Undo last rename batch"
 
 msgid "Add as shortcut"
 msgstr "Add as shortcut"
@@ -1094,12 +1114,6 @@ msgstr "Clear the preview"
 msgid "Remove all preview values from the Preview column"
 msgstr "Remove all preview values from the Preview column"
 
-msgid "Undo"
-msgstr "Undo"
-
-msgid "Undo last rename batch"
-msgstr "Undo last rename batch"
-
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Reverse the last batch of renames performed on disk"
 
@@ -1166,6 +1180,29 @@ msgstr "Restore last opened directory"
 
 msgid "On startup, reopen the directory that was active in the previous session"
 msgstr "On startup, reopen the directory that was active in the previous session"
+
+msgid "Restore toolbar state"
+msgstr "Restore toolbar state"
+
+msgid ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+
+msgid "Auto-preview delay:"
+msgstr "Auto-preview delay:"
+
+msgid ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+
+msgid " ms"
+msgstr " ms"
 
 msgid "A restart is required for the language change to take effect."
 msgstr "A restart is required for the language change to take effect."

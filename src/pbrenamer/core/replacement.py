@@ -4,13 +4,20 @@ Syntax::
 
     {field}
     {field:fmt}
-    {field:alignfmt:default}
+    {field:casefmt}
+    {field:alignfmt}
+    {field:casealignfmt:default}
 
 ``field``
     See ``_SIMPLE_FIELDS`` and the ``im:/au:/vi:/re:`` prefixes.
 
+``case``
+    Optional first character: ``=`` (unchanged, default if absent), ``-`` (lower),
+    ``+`` (upper), ``!`` (capitalise first char, rest lower), ``*`` (Title Case).
+
 ``align``
-    Optional first character: ``<`` (left), ``>`` (right), ``0`` (zero-pad right).
+    Optional character after ``case``: ``<`` (left), ``>`` (right),
+    ``0`` (zero-pad right), ``^`` (centre; extra space on left when padding is odd).
 
 ``fmt``
     Digit string (minimum width) for integers/strings;
@@ -69,7 +76,8 @@ class LiteralSegment:
 @dataclass
 class FieldSegment:
     name: str  # e.g. "0", "1", "num", "date", "im:Make", "re:year"
-    align: str  # "<", ">", "0", or ""
+    case: str  # "=", "-", "+", "!", "*", or "" (treated as "=")
+    align: str  # "<", ">", "0", "^", or ""
     fmt: str  # width digits or strftime string, or ""
     default: str | None  # None = no default → error when field absent
     raw: str  # original "{…}" text for error reporting
@@ -142,19 +150,23 @@ def _split_name_options(content: str) -> tuple[str, str]:
     return content[:idx], content[idx + 1 :]
 
 
-def _parse_options(options: str) -> tuple[str, str, str | None]:
-    """Return (align, fmt, default) from the options part of a field token."""
+def _parse_options(options: str) -> tuple[str, str, str, str | None]:
+    """Return (case, align, fmt, default) from the options part of a field token."""
     if not options:
-        return "", "", None
-    align = ""
+        return "", "", "", None
+    case = ""
     rest = options
-    if rest and rest[0] in "<>0":
+    if rest and rest[0] in "=-+!*":
+        case = rest[0]
+        rest = rest[1:]
+    align = ""
+    if rest and rest[0] in "<>0^":
         align = rest[0]
         rest = rest[1:]
     idx = rest.find(":")
     if idx == -1:
-        return align, rest, None
-    return align, rest[:idx], rest[idx + 1 :]
+        return case, align, rest, None
+    return case, align, rest[:idx], rest[idx + 1 :]
 
 
 def _parse_field(content: str) -> FieldSegment:
@@ -164,8 +176,10 @@ def _parse_field(content: str) -> FieldSegment:
     name, options = _split_name_options(content)
     if not _is_valid_name(name):
         raise ReplacementSyntaxError(f"Unknown field name: {name!r}", raw)
-    align, fmt, default = _parse_options(options)
-    return FieldSegment(name=name, align=align, fmt=fmt, default=default, raw=raw)
+    case, align, fmt, default = _parse_options(options)
+    return FieldSegment(
+        name=name, case=case, align=align, fmt=fmt, default=default, raw=raw
+    )
 
 
 def parse(template: str) -> list[Segment]:
@@ -220,6 +234,20 @@ def validate(segments: list[Segment], search_mode: str) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
+def _apply_case(s: str, case: str) -> str:
+    if not case or case == "=":
+        return s
+    if case == "-":
+        return s.lower()
+    if case == "+":
+        return s.upper()
+    if case == "!":
+        return s[:1].upper() + s[1:].lower() if s else s
+    if case == "*":
+        return s.title()
+    return s
+
+
 def _apply_align(s: str, align: str, fmt: str) -> str:
     if not fmt.isdigit():
         return s
@@ -228,21 +256,26 @@ def _apply_align(s: str, align: str, fmt: str) -> str:
         return s.zfill(w)
     if align == "<":
         return s.ljust(w)
+    if align == "^":
+        total_pad = max(0, w - len(s))
+        left_pad = (total_pad + 1) // 2
+        return " " * left_pad + s + " " * (total_pad - left_pad)
     return s.rjust(w)  # ">" or ""
 
 
 def _format_value(seg: FieldSegment, value: object) -> str:
     if isinstance(value, datetime.datetime):
         fmt = seg.fmt or "%Y-%m-%d_%H%M%S"
-        return value.strftime(fmt)
+        return _apply_case(value.strftime(fmt), seg.case)
     if isinstance(value, datetime.date):
         fmt = seg.fmt or "%Y-%m-%d"
-        return value.strftime(fmt)
+        return _apply_case(value.strftime(fmt), seg.case)
     if isinstance(value, int):
         s = str(value)
         return _apply_align(s, seg.align, seg.fmt)
     # str, rational (already str from meta), and default values
     s = str(value)
+    s = _apply_case(s, seg.case)
     return _apply_align(s, seg.align, seg.fmt)
 
 
@@ -291,11 +324,11 @@ def substitute(
 
         if value is None:
             if seg.default is not None:
-                # Default is a literal string; still apply numeric width.
+                default_str = _apply_case(seg.default, seg.case)
                 parts.append(
-                    _apply_align(seg.default, seg.align, seg.fmt)
+                    _apply_align(default_str, seg.align, seg.fmt)
                     if seg.fmt.isdigit()
-                    else seg.default
+                    else default_str
                 )
             else:
                 raise FieldResolutionError(seg.name)

@@ -23,5 +23,8 @@ class UndoManager:
     def can_undo(self) -> bool:
         return bool(self._history)
 
+    def __len__(self) -> int:
+        return len(self._history)
+
     def clear(self) -> None:
         self._history.clear()

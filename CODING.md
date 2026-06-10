@@ -66,9 +66,10 @@ PBRenamer/
 │   └── test_undo.py             undo stack
 ├── docs/                        Sphinx documentation source
 ├── tools/
-│   ├── extract_ui_strings.py    extracts strings from *_ui.py for xgettext
+│   ├── extract_ui_strings.py    extracts strings from *_ui.py for pybabel
 │   ├── extract_changelog.py     reads CHANGELOG.md entry for a tag (CI release)
-│   └── bump_version.py          increments or force-sets the version in both source files
+│   ├── bump_version.py          increments or force-sets the version in both source files
+│   └── po_check.py              inspect .po files (stats, untranslated, search) — use instead of grep/msgfmt
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               CI pipeline
@@ -193,15 +194,18 @@ Translatable strings are wrapped with `_()` (installed into builtins by
 ```
 Python source + *_ui.py
        │
-       ▼ xgettext
+       ▼ pybabel extract
   locale/pbrenamer.pot          ← template (not committed)
        │
-       ▼ msgmerge / msginit
+       ▼ pybabel update / pybabel init
   locale/<lang>/LC_MESSAGES/pbrenamer.po   ← human-edited, committed
        │
-       ▼ msgfmt
+       ▼ pybabel compile
   locale/<lang>/LC_MESSAGES/pbrenamer.mo   ← binary catalogue, committed
 ```
+
+To inspect `.po` files (statistics, untranslated entries, pattern search) use
+`tools/po_check.py` — never `grep` or `msgfmt`, both break on multi-line entries.
 
 Run `make translate` to regenerate everything for all languages listed in
 `PO_LOCALES` (Makefile). The application discovers available languages at
@@ -222,7 +226,7 @@ make translate
 make new-lang LOCALE=de      # replace 'de' with the BCP-47 language code
 ```
 
-This runs `msginit` to create
+This runs `pybabel init` to create
 `src/pbrenamer/locale/de/LC_MESSAGES/pbrenamer.po` pre-filled with all
 message IDs.
 

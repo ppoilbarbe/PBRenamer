@@ -38,7 +38,8 @@ src/pbrenamer/
 
 tools/
 ├── extract_ui_strings.py   extracts translatable strings from *_ui.py
-└── extract_changelog.py    extracts CHANGELOG entry for a tag (CI)
+├── extract_changelog.py    extracts CHANGELOG entry for a tag (CI)
+└── po_check.py             inspect .po files (stats, untranslated, search) — use instead of grep/msgfmt
 
 .github/workflows/ci.yml    CI pipeline
 pbrenamer.spec              PyInstaller spec
@@ -61,7 +62,7 @@ Python strings: wrap with `_("…")`. UI strings (`text`, `toolTip`, `statusTip`
 2. `make translate` — updates `.pot`, merges `.po`, compiles `.mo`
 3. Fill every new `msgstr ""` in `en` and `fr` `.po` files (keyboard shortcuts stay empty)
 4. `make translate` again to compile the filled entries
-5. Verify: `msgfmt --statistics locale/fr/.../pbrenamer.po -o /dev/null` — only shortcut msgids should remain untranslated
+5. Verify: `python tools/po_check.py --empty` — only shortcut msgids should remain untranslated
 
 `msgstr ""\n"continued…"` is multi-line syntax, not an empty string. A truly empty msgstr is followed by a blank line with nothing after the `""`.
 

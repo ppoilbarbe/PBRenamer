@@ -1,16 +1,17 @@
-# Russian translation for PBRenamer.
-# Copyright (C) 2024 Marcel Spock <mrspock@cardolan.net>
-# License: GPLv3
+# Russian translations for PBRenamer.
+# Copyright (C) 2026 Marcel Spock
+# This file is distributed under the same license as the PBRenamer project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PBRenamer\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mrspock@cardolan.net\n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
-"PO-Revision-Date: 2026-05-03 00:00+0000\n"
-"Last-Translator: Marcel Spock <mrspock@cardolan.net>\n"
+"PO-Revision-Date: 2026-06-10 13:33+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Language-Team: ru <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
@@ -19,518 +20,36 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
-"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
-"replacement field."
-msgstr ""
-"Токены действуют как типизированные шаблоны. Сегменты, заключённые в "
-"<b>{1}</b>, <b>{2}</b>…, <em>захватываются</em> и доступны в поле "
-"замены.Токены действуют как типизированные подстановочные знаки. "
-"Сегменты, заключённые в <b>{1}</b>, <b>{2}</b>…, <em>захватываются</em> и"
-" доступны для повторного использования в поле замены."
-
-msgid "One or more digits (0–9)"
-msgstr "Одна или несколько цифр (0–9)"
-
-msgid "One or more letters (a–z, A–Z and Unicode letters)"
-msgstr "Одна или несколько букв (a–z, A–Z и буквы Unicode)"
-
-msgid "One or more non-whitespace characters"
-msgstr "Один или несколько символов без пробелов"
-
-msgid "Any sequence of characters, including empty"
-msgstr "Любая последовательность символов, включая пустую"
-
-msgid "Trash — matches and discards a segment (not captured)"
-msgstr "Мусор — соответствует сегменту и отбрасывает его (не захватывается)"
-
-#, python-brace-format
-msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
-msgstr "Группа захвата — совпавший текст привязывается к {1}, {2}… в замене"
-
-msgid "Example"
-msgstr "Пример"
-
-msgid "Search:"
-msgstr "Поиск:"
-
-msgid "Replace:"
-msgstr "Замена:"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Full Python <code>re</code>-module syntax. The match is applied to the "
-"file stem (or full name if <em>Keep extension</em> is unchecked)."
-msgstr ""
-"Полный синтаксис модуля <code>re</code> Python. Совпадение применяется к "
-"имени файла без расширения (или к полному имени, если <em>Сохранять "
-"расширение</em> снято).Полный синтаксис модуля Python <code>re</code>. "
-"Совпадение применяется к имени файла без расширения (или к полному имени,"
-" если <em>Сохранять расширение</em> не отмечено)."
-
-msgid "Any single character"
-msgstr "Любой одиночный символ"
-
-msgid "Any sequence (greedy), non-empty variant"
-msgstr "Любая последовательность (жадная), непустой вариант"
-
-msgid "One or more digits"
-msgstr "Одна или несколько цифр"
-
-msgid "Word characters (letters, digits, _)"
-msgstr "Символы слова (буквы, цифры, _)"
-
-msgid ""
-"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
-"replacement"
-msgstr "Нумерованная группа захвата → <code>\\1</code>, <code>\\2</code>… в замене"
-
-msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
-msgstr "Именованная группа захвата → <code>\\g&lt;name&gt;</code> в замене"
-
-msgid "Case-insensitive flag"
-msgstr "Флаг без учёта регистра"
-
-msgid "Start / end of the name"
-msgstr "Начало / конец имени"
-
-# ==AUTO== Automatically translated
-msgid ""
-"The search field is matched as a literal string — no wildcards, no "
-"special characters. Every occurrence of the exact text in the file name "
-"is replaced."
-msgstr ""
-"Поле поиска сопоставляется как буквальная строка — без шаблонов и "
-"специальных символов. Каждое вхождение точного текста в имени файла "
-"заменяется.Поле поиска сравнивается как буквальная строка — без "
-"подстановочных знаков, без специальных символов. Каждое вхождение точного"
-" текста в имени файла заменяется."
-
-msgid "Search patterns"
-msgstr "Шаблоны поиска"
-
-msgid "Pattern mode"
-msgstr "Режим шаблона"
-
-msgid "Regular expression mode"
-msgstr "Режим регулярных выражений"
-
-msgid "Plain text mode"
-msgstr "Режим простого текста"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"The replacement string is the same regardless of the search mode. Fields "
-"are written <code>{name}</code> and may include formatting options:"
-msgstr ""
-"Строка замены одинакова независимо от режима поиска. Поля записываются "
-"как <code>{name}</code> и могут включать параметры форматирования:"
-
-msgid "plain value"
-msgstr "простое значение"
-
-msgid "with format"
-msgstr "с форматом"
-
-msgid "with format and fallback"
-msgstr "с форматом и запасным значением"
-
-msgid "left-align  (digit fmt = min width)"
-msgstr "выравнивание влево  (цифровой fmt = минимальная ширина)"
-
-msgid "right-align"
-msgstr "выравнивание вправо"
-
-msgid "zero-pad right (numbers)"
-msgstr "дополнение нулями справа (числа)"
-
-msgid "literal '{' character"
-msgstr "буквальный символ '{'"
-
-# ==AUTO== Automatically translated
-msgid ""
-"<b>fmt</b> is a minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: used"
-" when the field is absent; omitting it makes absence an error (file shown"
-" in red in the preview)."
-msgstr ""
-"<b>fmt</b> — минимальная ширина (цифра) для текста/чисел или формат "
-"<code>strftime</code> для дат/времени.<br><b>default</b>: используется "
-"при отсутствии поля; если не указать, отсутствие будет ошибкой (файл "
-"выделяется красным в предпросмотре).<b>fmt</b> — минимальная ширина "
-"(цифра) для текста/чисел или формат <code>strftime</code> для "
-"дат/времени.<br><b>default</b>: используется, когда поле отсутствует; его"
-" пропуск делает отсутствие ошибкой (файл показывается красным в "
-"предварительном просмотре)."
-
-msgid "all modes"
-msgstr "все режимы"
-
-msgid "pattern, regex"
-msgstr "шаблон, regex"
-
-msgid "regex only"
-msgstr "только regex"
-
-msgid "Field"
-msgstr "Поле"
-
-msgid "Available in"
-msgstr "Доступно в"
-
-msgid "Description"
-msgstr "Описание"
-
-msgid "Full matched text (or search literal in plain-text mode)"
-msgstr "Полный совпавший текст (или буквальный поиск в режиме простого текста)"
-
-msgid "Numbered capture groups (1-based)"
-msgstr "Нумерованные группы захвата (с 1)"
-
-msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
-msgstr "Именованная группа <code>(?P&lt;name&gt;…)</code> из поискового regex"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Auto-incrementing counter — default fmt is a minimum width; "
-"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
-"starts at 10, zero-padded to 2 digits)"
-msgstr ""
-"Автоинкрементный счётчик — fmt является минимальной шириной; "
-"<em>default</em> задаёт начальное значение (например, "
-"<code>{num:02:10}</code> начинается с 10, дополняется нулями до 2 "
-"цифр)Автоинкрементный счётчик — fmt по умолчанию является минимальной "
-"шириной; <em>default</em> задаёт начальное значение (напр. "
-"<code>{num:02:10}</code> начинает с 10, дополненное нулями до 2 цифр)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Like <code>{num}</code> but skips values whose target name already exists"
-" on disk or has been assigned to another file in the same batch — "
-"guarantees no conflicts"
-msgstr ""
-"Как <code>{num}</code>, но пропускает значения, имя цели которых уже "
-"существует на диске или назначено другому файлу в том же пакете — "
-"гарантирует отсутствие конфликтовКак <code>{num}</code>, но пропускает "
-"значения, чьё целевое имя уже существует на диске или было назначено "
-"другому файлу в том же пакете — гарантирует отсутствие конфликтов"
-
-#, python-format
-msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
-msgstr "Сегодняшняя дата — формат по умолчанию <code>%Y-%m-%d</code>"
-
-#, python-format
-msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Текущая дата и время — формат по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Дата/время изменения — fmt по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid ""
-"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
-" change time on Linux)"
-msgstr ""
-"Дата/время создания — fmt по умолчанию <code>%Y-%m-%d_%H%M%S</code> "
-"(время изменения inode в Linux)"
-
-msgid "Name of the immediate parent folder"
-msgstr "Имя непосредственной родительской папки"
-
-msgid "EXIF or IPTC metadata field (images only — see list below)"
-msgstr "Поле метаданных EXIF или IPTC (только изображения — см. список ниже)"
-
-msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
-msgstr "Поле метаданных аудио (mp3, ogg, flac… — см. список ниже)"
-
-msgid "Video metadata field (mp4, mkv, avi… — see list below)"
-msgstr "Поле метаданных видео (mp4, mkv, avi… — см. список ниже)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. A <b>default</b> is strongly "
-"recommended for metadata fields — they may be absent from non-image files"
-" or images without metadata."
-msgstr ""
-"Имена полей нечувствительны к регистру. Настоятельно рекомендуется "
-"указывать <b>default</b> для полей метаданных — они могут отсутствовать в"
-" файлах, не являющихся изображениями, или в изображениях без "
-"метаданных.Имена полей нечувствительны к регистру. Значение "
-"<b>default</b> настоятельно рекомендуется для полей метаданных — они "
-"могут отсутствовать в файлах, не являющихся изображениями, или в "
-"изображениях без метаданных."
-
-msgid "Type"
-msgstr "Тип"
-
-msgid "Date/time the photo was taken"
-msgstr "Дата/время съёмки"
-
-msgid "Date/time the image was digitised"
-msgstr "Дата/время оцифровки изображения"
-
-msgid "Date/time the file was last changed (EXIF)"
-msgstr "Дата/время последнего изменения файла (EXIF)"
-
-msgid "Camera manufacturer"
-msgstr "Производитель камеры"
-
-msgid "Camera model"
-msgstr "Модель камеры"
-
-msgid "Lens model"
-msgstr "Модель объектива"
-
-msgid "ISO speed"
-msgstr "Чувствительность ISO"
-
-msgid "Aperture (e.g. 2.8)"
-msgstr "Диафрагма (напр. 2.8)"
-
-msgid "Shutter speed (e.g. 1/125)"
-msgstr "Выдержка (напр. 1/125)"
-
-msgid "Focal length in mm"
-msgstr "Фокусное расстояние в мм"
-
-msgid "Image description / title"
-msgstr "Описание / заголовок изображения"
-
-msgid "Photographer / creator (EXIF)"
-msgstr "Фотограф / автор (EXIF)"
-
-msgid "Copyright notice"
-msgstr "Уведомление об авторских правах"
-
-msgid "IPTC title / object name"
-msgstr "Заголовок IPTC / имя объекта"
-
-msgid "IPTC photographer / creator"
-msgstr "Фотограф IPTC / автор"
-
-msgid "IPTC city"
-msgstr "Город IPTC"
-
-msgid "IPTC country"
-msgstr "Страна IPTC"
-
-msgid "IPTC creation date"
-msgstr "Дата создания IPTC"
-
-msgid "IPTC keywords (semicolon-separated)"
-msgstr "Ключевые слова IPTC (через точку с запятой)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
-"opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
-"strongly recommended — tags may be absent or the file may not be a "
-"supported audio format."
-msgstr ""
-"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp3, ogg,"
-" flac, opus, aac/m4a и другие, поддерживаемые mutagen. Настоятельно "
-"рекомендуется <b>default</b> — теги могут отсутствовать или файл может не"
-" быть поддерживаемым аудиоформатом.Имена полей нечувствительны к "
-"регистру. Поддерживаемые форматы: mp3, ogg, flac, opus, aac/m4a и другие "
-"форматы, поддерживаемые mutagen. Значение <b>default</b> настоятельно "
-"рекомендуется — теги могут отсутствовать или файл может не быть "
-"поддерживаемым аудиоформатом."
-
-msgid "Track title"
-msgstr "Название трека"
-
-msgid "Track artist"
-msgstr "Исполнитель трека"
-
-msgid "Album artist"
-msgstr "Исполнитель альбома"
-
-msgid "Album name"
-msgstr "Название альбома"
-
-msgid "Track number (strips /total if present)"
-msgstr "Номер трека (удаляет /общее количество, если присутствует)"
-
-msgid "Disc number (strips /total if present)"
-msgstr "Номер диска (удаляет /общее количество, если присутствует)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Release date — datetime.date when full date available (strftime "
-"formatting); plain text otherwise"
-msgstr ""
-"Дата выпуска — datetime.date, если полная дата доступна (форматирование "
-"strftime); иначе обычный текстДата выпуска — datetime.date, когда полная "
-"дата доступна (форматирование strftime); иначе простой текст"
-
-msgid "Release year (extracted from date tag)"
-msgstr "Год выпуска (извлечён из тега даты)"
-
-msgid "Genre"
-msgstr "Жанр"
-
-msgid "Comment"
-msgstr "Комментарий"
-
-msgid "Composer"
-msgstr "Композитор"
-
-msgid "Beats per minute"
-msgstr "Ударов в минуту"
-
-msgid "Duration in seconds"
-msgstr "Длительность в секундах"
-
-msgid "Bitrate in kbps"
-msgstr "Битрейт в кбит/с"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
-"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
-" strongly recommended — fields may be absent or the file may not be a "
-"supported video format."
-msgstr ""
-"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp4, mkv,"
-" avi, mov, webm и другие, поддерживаемые MediaInfo (pymediainfo). "
-"Настоятельно рекомендуется <b>default</b> — поля могут отсутствовать или "
-"файл может не быть поддерживаемым видеоформатом.Имена полей "
-"нечувствительны к регистру. Поддерживаемые форматы: mp4, mkv, avi, mov, "
-"webm и другие форматы, поддерживаемые MediaInfo (pymediainfo). Значение "
-"<b>default</b> настоятельно рекомендуется — поля могут отсутствовать или "
-"файл может не быть поддерживаемым видеоформатом."
-
-msgid "Video width in pixels"
-msgstr "Ширина видео в пикселях"
-
-msgid "Video height in pixels"
-msgstr "Высота видео в пикселях"
-
-msgid "Frame rate (e.g. 29.970)"
-msgstr "Частота кадров (напр. 29.970)"
-
-msgid "Video codec name (e.g. AVC, HEVC)"
-msgstr "Название видеокодека (напр. AVC, HEVC)"
-
-msgid "Audio codec name (e.g. AAC, AC-3)"
-msgstr "Название аудиокодека (напр. AAC, AC-3)"
-
-msgid "Number of audio channels"
-msgstr "Количество аудиоканалов"
-
-msgid "Overall bitrate in kbps"
-msgstr "Общий битрейт в кбит/с"
-
-msgid "Title tag"
-msgstr "Тег заголовка"
-
-msgid "Encoded date/time"
-msgstr "Дата/время кодирования"
-
-# ==AUTO== Automatically translated
-msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
-msgstr ""
-"Группа захвата 1 за которой следует 4-значный счётчик с дополнением "
-"нулями (начинается с 1)Группа захвата 1, за которой следует 4-значный "
-"счётчик с ведущими нулями (начинается с 1)"
-
-msgid "Same, but counter starts at 10"
-msgstr "То же, но счётчик начинается с 10"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
-" already exists"
-msgstr ""
-"3-значный счётчик без конфликтов: пропускает значения, где "
-"<code>backup_NNN</code> уже существуетБесконфликтный 3-значный счётчик: "
-"пропускает значения, при которых <code>backup_NNN</code> уже существует"
-
-msgid "Today's date prepended to the matched text"
-msgstr "Сегодняшняя дата, добавленная перед совпавшим текстом"
-
-msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
-msgstr "Дата/время съёмки компактно; \"неизвестно\" если EXIF отсутствует"
-
-msgid "Hour+minute of digitisation; \"0000\" if absent"
-msgstr "Час+минута оцифровки; \"0000\" если отсутствует"
-
-msgid "Camera make and model (empty string if absent)"
-msgstr "Марка и модель камеры (пустая строка если отсутствует)"
-
-# ==AUTO== Automatically translated
-msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
-msgstr ""
-"Исполнитель и название аудиозаписи; «unknown»/«untitled» если "
-"отсутствуютИсполнитель и название аудио; \"неизвестно\"/\"без названия\" "
-"если отсутствует"
-
-msgid "Audio release date, zero-padded track number, title"
-msgstr "Дата выпуска аудио, номер трека с ведущими нулями, название"
-
-msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
-msgstr "Разрешение и кодек видео (напр. 1920x1080_AVC)"
-
-msgid "Video encoded date and duration in seconds"
-msgstr "Дата кодирования видео и длительность в секундах"
-
-msgid "Named regex groups (regex mode only)"
-msgstr "Именованные группы regex (только режим regex)"
-
-msgid "Parent folder, file modification date, 3-digit counter"
-msgstr "Родительская папка, дата изменения файла, 3-значный счётчик"
-
-msgid "Replacement fields"
-msgstr "Поля замены"
-
-msgid "Available fields"
-msgstr "Доступные поля"
-
-#, python-brace-format
-msgid "Metadata fields for <code>{im:…}</code>"
-msgstr "Поля метаданных для <code>{im:…}</code>"
-
-#, python-brace-format
-msgid "Audio metadata fields for <code>{au:…}</code>"
-msgstr "Поля аудиометаданных для <code>{au:…}</code>"
-
-#, python-brace-format
-msgid "Video metadata fields for <code>{vi:…}</code>"
-msgstr "Поля видеометаданных для <code>{vi:…}</code>"
-
-msgid "Examples"
-msgstr "Примеры"
-
-# ==AUTO== Automatically translated
 msgid "Edit Shortcuts"
-msgstr "Редактировать ссылки"
+msgstr "Редактировать ярлыки"
 
 # ==AUTO== Automatically translated
 msgid "Move up"
-msgstr "Переместить вверх"
+msgstr "Вверх"
 
 # ==AUTO== Automatically translated
 msgid "Move down"
-msgstr "Переместить вниз"
+msgstr "Вниз"
 
+# ==AUTO== Automatically translated
 msgid "Remove"
 msgstr "Удалить"
 
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
-msgstr "Сохранённые ссылки:"
+msgstr "Сохранённые ярлыки:"
 
 # ==AUTO== Automatically translated
 msgid "File information"
-msgstr "Сведения о файле"
+msgstr "Информация о файле"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Поле"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Описание"
 
 # ==AUTO== Automatically translated
 msgid "Value"
@@ -550,16 +69,16 @@ msgstr "Видео"
 
 # ==AUTO== Automatically translated
 msgid "Directory"
-msgstr "Каталог"
+msgstr "Папка"
 
 # ==AUTO== Automatically translated
 msgid "Other"
-msgstr "Другое"
+msgstr "Прочее"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
 msgid "File information — {name}"
-msgstr "Сведения о файле — {name}"
+msgstr "Информация о файле — {name}"
 
 # ==AUTO== Automatically translated
 msgid "File:"
@@ -583,11 +102,11 @@ msgstr "Метаданные видео"
 
 # ==AUTO== Automatically translated
 msgid "Select a single file to display its information."
-msgstr "Выберите один файл для отображения его сведений."
+msgstr "Выберите один файл для отображения информации."
 
 # ==AUTO== Automatically translated
 msgid "Select a file to display its information."
-msgstr "Выберите файл для отображения его сведений."
+msgstr "Выберите файл для отображения информации."
 
 # ==AUTO== Automatically translated
 msgid "Universal fields"
@@ -599,7 +118,7 @@ msgstr "Сегодняшняя дата"
 
 # ==AUTO== Automatically translated
 msgid "Current date and time"
-msgstr "Текущие дата и время"
+msgstr "Текущая дата и время"
 
 # ==AUTO== Automatically translated
 msgid "File modification date/time"
@@ -619,15 +138,15 @@ msgstr "Имя родительской папки"
 
 # ==AUTO== Automatically translated
 msgid "Batch fields"
-msgstr "Пакетные поля"
+msgstr "Поля пакетной обработки"
 
 # ==AUTO== Automatically translated
 msgid "Computed"
-msgstr "Вычислено"
+msgstr "Вычисляется"
 
 # ==AUTO== Automatically translated
 msgid "Full matched text"
-msgstr "Полностью совпавший текст"
+msgstr "Полный совпавший текст"
 
 # ==AUTO== Automatically translated
 msgid "Capture groups"
@@ -635,7 +154,7 @@ msgstr "Группы захвата"
 
 # ==AUTO== Automatically translated
 msgid "Auto-incrementing counter"
-msgstr "Счётчик с автоинкрементом"
+msgstr "Автоинкрементный счётчик"
 
 # ==AUTO== Automatically translated
 msgid "Conflict-free counter"
@@ -645,42 +164,630 @@ msgstr "Счётчик без конфликтов"
 msgid "Named regex group"
 msgstr "Именованная группа regex"
 
+# ==AUTO== Automatically translated
 msgid "System default"
 msgstr "Системный язык"
 
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
+"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
+"replacement field."
+msgstr ""
+"Токены действуют как типизированные подстановочные знаки. Сегменты внутри"
+" <b>{1}</b>, <b>{2}</b>… <em>захватываются</em> и доступны для повторного"
+" использования в поле замены."
+
+# ==AUTO== Automatically translated
+msgid "One or more digits (0–9)"
+msgstr "Одна или несколько цифр (0–9)"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Одна или несколько букв (a–z, A–Z и буквы Unicode)"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "Один или несколько непробельных символов"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "Любая последовательность символов, включая пустую"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Корзина — совпадает с сегментом и отбрасывает его (не захватывается)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr "Группа захвата — совпавший текст привязывается к {1}, {2}… в замене"
+
+# ==AUTO== Automatically translated
+msgid "Example"
+msgstr "Пример"
+
+# ==AUTO== Automatically translated
+msgid "Search:"
+msgstr "Поиск:"
+
+# ==AUTO== Automatically translated
+msgid "Replace:"
+msgstr "Замена:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Full Python <code>re</code>-module syntax. The match is applied to the "
+"file stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr ""
+"Полный синтаксис модуля Python <code>re</code>. Совпадение применяется к "
+"основе имени файла (или полному имени, если <em>Сохранить расширение</em>"
+" снято)."
+
+# ==AUTO== Automatically translated
+msgid "Any single character"
+msgstr "Любой одиночный символ"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Любая последовательность (жадная), непустой вариант"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "Одна или несколько цифр"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, _)"
+msgstr "Символы слова (буквы, цифры, _)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
+"replacement"
+msgstr "Нумерованная группа захвата → <code>\\1</code>, <code>\\2</code>… в замене"
+
+# ==AUTO== Automatically translated
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Именованная группа захвата → <code>\\g&lt;name&gt;</code> в замене"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive flag"
+msgstr "Флаг без учёта регистра"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "Начало / конец имени"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters. Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr ""
+"Поле поиска сравнивается как строка буквально — без подстановочных "
+"знаков, без специальных символов. Каждое вхождение точного текста в имени"
+" файла заменяется."
+
+# ==AUTO== Automatically translated
+msgid "Search patterns"
+msgstr "Шаблоны поиска"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "Режим шаблона"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Режим регулярных выражений"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Режим обычного текста"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields "
+"are written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"Строка замены одинакова независимо от режима поиска. Поля записываются "
+"как <code>{name}</code> и могут включать параметры форматирования:"
+
+# ==AUTO== Automatically translated
+msgid "plain value"
+msgstr "простое значение"
+
+# ==AUTO== Automatically translated
+msgid "with format  (digit = min width · strftime for dates)"
+msgstr "с форматом  (цифра = мин. ширина · strftime для дат)"
+
+# ==AUTO== Automatically translated
+msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
+msgstr ""
+"регистр:  - строчн.   + ПРОПИСН.   ! Первая Загл.   * Каждое Слово   = "
+"без изм."
+
+# ==AUTO== Automatically translated
+msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
+msgstr "выравн.:  &lt; влево   &gt; вправо   0 нули слева   ^ по центру"
+
+# ==AUTO== Automatically translated
+msgid "all options; default used when field is absent"
+msgstr "все параметры; значение по умолчанию, если поле отсутствует"
+
+# ==AUTO== Automatically translated
+msgid "literal '{' character"
+msgstr "символ '{' буквально"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
+msgstr ""
+"<b>fmt</b>: минимальная ширина (цифра) для текста/чисел или формат "
+"<code>strftime</code> для дат/времени.<br><b>default</b>: буквальный "
+"запасной вариант, если поле отсутствует; отсутствие этого параметра "
+"выделяет файл красным в предпросмотре."
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "все режимы"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "шаблон, regex"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "только regex"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "Доступно в"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Полный совпавший текст (или буквальный поиск в режиме обычного текста)"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "Нумерованные группы захвата (с 1)"
+
+# ==AUTO== Automatically translated
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Именованная группа <code>(?P&lt;name&gt;…)</code> из поискового regex"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; "
+"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
+"starts at 10, zero-padded to 2 digits)"
+msgstr ""
+"Автоинкрементный счётчик — fmt задаёт минимальную ширину; "
+"<em>default</em> устанавливает начальное значение (напр. "
+"<code>{num:02:10}</code> начинает с 10, дополняется нулями до 2 цифр)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists"
+" on disk or has been assigned to another file in the same batch — "
+"guarantees no conflicts"
+msgstr ""
+"Как <code>{num}</code>, но пропускает значения, чьё целевое имя уже "
+"существует на диске или назначено другому файлу в том же пакете — "
+"гарантирует отсутствие конфликтов"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Сегодняшняя дата — fmt по умолчанию <code>%Y-%m-%d</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Текущая дата и время — fmt по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Дата/время изменения файла — fmt по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
+" change time on Linux)"
+msgstr ""
+"Дата/время создания файла — fmt по умолчанию <code>%Y-%m-%d_%H%M%S</code>"
+" (время изменения inode в Linux)"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "Имя непосредственной родительской папки"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "Поле метаданных EXIF или IPTC (только изображения — см. список ниже)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Поле аудиометаданных (mp3, ogg, flac… — см. список ниже)"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Поле видеометаданных (mp4, mkv, avi… — см. список ниже)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Field names are case-insensitive. A <b>default</b> is strongly "
+"recommended for metadata fields — they may be absent from non-image files"
+" or images without metadata."
+msgstr ""
+"Имена полей нечувствительны к регистру. Настоятельно рекомендуется "
+"указывать <b>default</b> для полей метаданных — они могут отсутствовать в"
+" не-изображениях или изображениях без метаданных."
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "Тип"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "Дата/время съёмки"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "Дата/время оцифровки"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Дата/время последнего изменения файла (EXIF)"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "Производитель камеры"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "Модель камеры"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "Модель объектива"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "Чувствительность ISO"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. 2.8)"
+msgstr "Диафрагма (напр. 2,8)"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Выдержка (напр. 1/125)"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "Фокусное расстояние в мм"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "Описание / название изображения"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "Фотограф / создатель (EXIF)"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "Уведомление об авторских правах"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "Заголовок IPTC / имя объекта"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "Фотограф IPTC / создатель"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "Город IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "Страна IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "Дата создания IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Ключевые слова IPTC (разделены точкой с запятой)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
+"opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
+"strongly recommended — tags may be absent or the file may not be a "
+"supported audio format."
+msgstr ""
+"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp3, ogg,"
+" flac, opus, aac/m4a и другие, поддерживаемые mutagen. Настоятельно "
+"рекомендуется указывать <b>default</b> — теги могут отсутствовать или "
+"файл может не быть поддерживаемым аудиоформатом."
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "Название трека"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "Исполнитель трека"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "Исполнитель альбома"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "Название альбома"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips /total if present)"
+msgstr "Номер трека (удаляет /всего, если есть)"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips /total if present)"
+msgstr "Номер диска (удаляет /всего, если есть)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — datetime.date when full date available (strftime "
+"formatting); plain text otherwise"
+msgstr ""
+"Дата выхода — datetime.date если полная дата доступна (форматирование "
+"strftime); иначе обычный текст"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from date tag)"
+msgstr "Год выхода (извлекается из тега даты)"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "Жанр"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "Комментарий"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "Композитор"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "Ударов в минуту"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "Длительность в секундах"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "Битрейт в кбит/с"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
+" strongly recommended — fields may be absent or the file may not be a "
+"supported video format."
+msgstr ""
+"Имена полей нечувствительны к регистру. Поддерживаемые форматы: mp4, mkv,"
+" avi, mov, webm и другие, поддерживаемые MediaInfo (pymediainfo). "
+"Настоятельно рекомендуется указывать <b>default</b> — поля могут "
+"отсутствовать или файл может не быть поддерживаемым видеоформатом."
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "Ширина видео в пикселях"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "Высота видео в пикселях"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Частота кадров (напр. 29,970)"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Название видеокодека (напр. AVC, HEVC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Название аудиокодека (напр. AAC, AC-3)"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "Количество аудиоканалов"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "Общий битрейт в кбит/с"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "Тег названия"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "Дата/время кодирования"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Группа захвата 1, за которой следует 4-значный счётчик с нулевым "
+"дополнением (начинается с 1)"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "То же, но счётчик начинается с 10"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
+" already exists"
+msgstr ""
+"Трёхзначный счётчик без конфликтов: пропускает значения, где "
+"<code>backup_NNN</code> уже существует"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "Сегодняшняя дата добавляется перед совпавшим текстом"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Дата/время съёмки компактно; \"неизвестно\" если EXIF отсутствует"
+
+# ==AUTO== Automatically translated
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Час+минута оцифровки; \"0000\" если отсутствует"
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "Марка и модель камеры (пустая строка если отсутствует)"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Исполнитель и название аудио; \"unknown\"/\"untitled\" если отсутствует"
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Дата выхода аудио, номер трека с нулевым дополнением, название"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Разрешение и кодек видео (напр. 1920x1080_AVC)"
+
+# ==AUTO== Automatically translated
+msgid "Video encoded date and duration in seconds"
+msgstr "Дата кодирования и длительность в секундах"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "Именованные группы regex (только режим regex)"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Родительская папка, дата изменения файла, 3-значный счётчик"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 left-aligned in 12 characters"
+msgstr "Группа захвата 1 выровнена по левому краю в 12 символах"
+
+# ==AUTO== Automatically translated
+msgid "Camera model centred in 30 characters, each word capitalised"
+msgstr "Модель камеры по центру в 30 символах, каждое слово с заглавной буквы"
+
+# ==AUTO== Automatically translated
+msgid "Camera make in lowercase, exact field length"
+msgstr "Марка камеры строчными буквами, точная длина поля"
+
+# ==AUTO== Automatically translated
+msgid "Replacement fields"
+msgstr "Поля замены"
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "Доступные поля"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Поля метаданных для <code>{im:…}</code>"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Поля аудиометаданных для <code>{au:…}</code>"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Поля видеометаданных для <code>{vi:…}</code>"
+
+# ==AUTO== Automatically translated
+msgid "Examples"
+msgstr "Примеры"
+
+# ==AUTO== Automatically translated
 msgid "Select folder"
 msgstr "Выбрать папку"
 
+# ==AUTO== Automatically translated
 msgid "Original"
 msgstr "Оригинал"
 
+# ==AUTO== Automatically translated
 msgid "Preview"
 msgstr "Предпросмотр"
 
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} элемент(ов)"
+msgstr "{path} — {n} элемент(а/ов)"
 
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "⚠ {field} unavailable"
 msgstr "⚠ {field} недоступно"
 
+# ==AUTO== Automatically translated
 msgid "Search — Help"
 msgstr "Поиск — Справка"
 
+# ==AUTO== Automatically translated
 msgid "Replace — Help"
 msgstr "Замена — Справка"
 
+# ==AUTO== Automatically translated
 msgid "Rename errors"
 msgstr "Ошибки переименования"
 
 # ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Отменить (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Отменить последний пакет переименований (%d уровень(ей) доступно)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Отменить"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Отменить последний пакет переименований"
+
+# ==AUTO== Automatically translated
 msgid "Add as shortcut"
-msgstr "Добавить в ссылки"
+msgstr "Добавить в ярлыки"
 
 # ==AUTO== Automatically translated
 msgid "Home"
-msgstr "Домашняя папка"
+msgstr "Домой"
 
 # ==AUTO== Automatically translated
 msgid "Desktop"
@@ -706,151 +813,195 @@ msgstr "Музыка"
 msgid "Videos"
 msgstr "Видео"
 
+# ==AUTO== Automatically translated
 msgid "language_name"
 msgstr "Русский"
 
+# ==AUTO== Automatically translated
 msgid "History"
 msgstr "История"
 
+# ==AUTO== Automatically translated
 msgid "Search"
 msgstr "Поиск"
 
+# ==AUTO== Automatically translated
 msgid "Search pattern history"
 msgstr "История шаблонов поиска"
 
+# ==AUTO== Automatically translated
 msgid "Select one or more entries to remove them"
 msgstr "Выберите одну или несколько записей для удаления"
 
+# ==AUTO== Automatically translated
 msgid "Pattern…"
 msgstr "Шаблон…"
 
+# ==AUTO== Automatically translated
 msgid "New search pattern to add"
 msgstr "Новый шаблон поиска для добавления"
 
+# ==AUTO== Automatically translated
 msgid "pat"
-msgstr "pat"
+msgstr "шаб"
 
+# ==AUTO== Automatically translated
 msgid "Pattern token mode"
-msgstr "Режим токенов шаблона"
+msgstr "Режим токена шаблона"
 
+# ==AUTO== Automatically translated
 msgid "RE"
 msgstr "RE"
 
+# ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
 
+# ==AUTO== Automatically translated
 msgid "Add"
 msgstr "Добавить"
 
+# ==AUTO== Automatically translated
 msgid "Add this pattern to the search history"
 msgstr "Добавить этот шаблон в историю поиска"
 
+# ==AUTO== Automatically translated
 msgid "Remove selected entries"
 msgstr "Удалить выбранные записи"
 
+# ==AUTO== Automatically translated
 msgid "Delete the selected search history entries"
-msgstr "Удалить выбранные записи из истории поиска"
+msgstr "Удалить выбранные записи истории поиска"
 
+# ==AUTO== Automatically translated
 msgid "Clear all"
 msgstr "Очистить всё"
 
+# ==AUTO== Automatically translated
 msgid "Remove all search history entries"
-msgstr "Удалить все записи из истории поиска"
+msgstr "Удалить все записи истории поиска"
 
+# ==AUTO== Automatically translated
 msgid "Delete the entire search pattern history"
-msgstr "Удалить всю историю шаблонов поиска"
+msgstr "Удалить весь журнал шаблонов поиска"
 
+# ==AUTO== Automatically translated
 msgid "Replace"
 msgstr "Замена"
 
+# ==AUTO== Automatically translated
 msgid "Replacement pattern history"
 msgstr "История шаблонов замены"
 
+# ==AUTO== Automatically translated
 msgid "New replacement pattern to add"
 msgstr "Новый шаблон замены для добавления"
 
+# ==AUTO== Automatically translated
 msgid "Add this pattern to the replacement history"
 msgstr "Добавить этот шаблон в историю замены"
 
+# ==AUTO== Automatically translated
 msgid "Delete the selected replacement history entries"
-msgstr "Удалить выбранные записи из истории замены"
+msgstr "Удалить выбранные записи истории замены"
 
+# ==AUTO== Automatically translated
 msgid "Remove all replacement history entries"
-msgstr "Удалить все записи из истории замены"
+msgstr "Удалить все записи истории замены"
 
+# ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
-msgstr "Удалить всю историю шаблонов замены"
+msgstr "Удалить весь журнал шаблонов замены"
 
+# ==AUTO== Automatically translated
 msgid "PBRenamer"
 msgstr "PBRenamer"
 
+# ==AUTO== Automatically translated
 msgid "Open folder…"
 msgstr "Открыть папку…"
 
+# ==AUTO== Automatically translated
 msgid "Ctrl+O"
 msgstr ""
 
+# ==AUTO== Automatically translated
 msgid "Open a folder"
 msgstr "Открыть папку"
 
+# ==AUTO== Automatically translated
 msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Открыть диалог выбора каталога и перейти в дереве к выбранной папке"
+msgstr "Открыть диалог выбора папки и перейти к выбранной папке"
 
+# ==AUTO== Automatically translated
 msgid "Quit"
-msgstr "Выйти"
+msgstr "Выход"
 
+# ==AUTO== Automatically translated
 msgid "Ctrl+Q"
 msgstr ""
 
+# ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
 msgstr "Выйти из PBRenamer"
 
+# ==AUTO== Automatically translated
 msgid "Exit the application"
 msgstr "Закрыть приложение"
 
+# ==AUTO== Automatically translated
 msgid "History…"
 msgstr "История…"
 
+# ==AUTO== Automatically translated
 msgid "Manage pattern history"
 msgstr "Управление историей шаблонов"
 
+# ==AUTO== Automatically translated
 msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "Добавить или удалить записи из истории шаблонов поиска и замены"
+msgstr "Добавлять или удалять записи из истории шаблонов поиска и замены"
 
+# ==AUTO== Automatically translated
 msgid "Settings…"
 msgstr "Настройки…"
 
+# ==AUTO== Automatically translated
 msgid "Open settings"
 msgstr "Открыть настройки"
 
+# ==AUTO== Automatically translated
 msgid "Configure language and other preferences"
 msgstr "Настроить язык и другие параметры"
 
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
-msgstr "О программе PBRenamer"
+msgstr "О PBRenamer"
 
+# ==AUTO== Automatically translated
 msgid "About this application"
-msgstr "О приложении"
+msgstr "Об этом приложении"
 
+# ==AUTO== Automatically translated
 msgid "Show version and license information"
 msgstr "Показать информацию о версии и лицензии"
 
 # ==AUTO== Automatically translated
 msgid "Edit shortcuts…"
-msgstr "Редактировать ссылки…"
+msgstr "Редактировать ярлыки…"
 
 # ==AUTO== Automatically translated
 msgid "Manage directory shortcuts"
-msgstr "Управлять ссылками на каталоги"
+msgstr "Управление ярлыками папок"
 
 # ==AUTO== Automatically translated
 msgid "Add or remove entries from the shortcuts list"
-msgstr "Добавить или удалить записи из списка ссылок"
+msgstr "Добавлять или удалять записи из списка ярлыков"
 
 # ==AUTO== Automatically translated
 msgid "Information"
-msgstr "Сведения"
+msgstr "Информация"
 
+# ==AUTO== Automatically translated
 msgid "Ctrl+I"
 msgstr ""
 
@@ -860,81 +1011,99 @@ msgstr "Показать значения полей файла"
 
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
-msgstr "Открыть окно сведений для выбранного файла"
+msgstr "Открыть окно информации для выбранного файла"
 
+# ==AUTO== Automatically translated
 msgid "Show:"
 msgstr "Показать:"
 
+# ==AUTO== Automatically translated
 msgid "Files only"
 msgstr "Только файлы"
 
+# ==AUTO== Automatically translated
 msgid "Directories only"
 msgstr "Только папки"
 
+# ==AUTO== Automatically translated
 msgid "Files and directories"
 msgstr "Файлы и папки"
 
+# ==AUTO== Automatically translated
 msgid "Choose which entries to list"
-msgstr "Выбрать, какие элементы отображать"
+msgstr "Выберите, какие записи отображать"
 
+# ==AUTO== Automatically translated
 msgid "List files only, directories only, or both"
-msgstr "Отображать только файлы, только папки или и то, и другое"
+msgstr "Показывать только файлы, только папки или и то, и другое"
 
+# ==AUTO== Automatically translated
 msgid "Recursive"
 msgstr "Рекурсивно"
 
+# ==AUTO== Automatically translated
 msgid "Include all subdirectories"
 msgstr "Включить все подпапки"
 
+# ==AUTO== Automatically translated
 msgid "When checked, files from all subdirectories are listed"
-msgstr "Если отмечено, отображаются файлы из всех подпапок"
+msgstr "Если установлено, файлы из всех подпапок включаются в список"
 
+# ==AUTO== Automatically translated
 msgid "Keep extension"
-msgstr "Сохранять расширение"
+msgstr "Сохранить расширение"
 
+# ==AUTO== Automatically translated
 msgid "Preserve the file extension"
-msgstr "Сохранять расширение файла"
+msgstr "Сохранить расширение файла"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Apply transformations to the file stem only, leaving the extension "
 "unchanged"
 msgstr ""
-"Применять преобразования только к имени файла без расширения, не изменяя "
-"расширениеПрименять преобразования только к имени файла без расширения, "
-"оставляя расширение неизменным"
+"Применять преобразования только к основной части имени файла, оставляя "
+"расширение без изменений"
 
+# ==AUTO== Automatically translated
 msgid "Auto-preview"
-msgstr "Автопредпросмотр"
+msgstr "Авто-предпросмотр"
 
+# ==AUTO== Automatically translated
 msgid "Refresh the preview automatically"
-msgstr "Обновлять предпросмотр автоматически"
+msgstr "Автоматически обновлять предпросмотр"
 
+# ==AUTO== Automatically translated
 msgid "Recompute the preview each time the pattern or options change"
 msgstr "Пересчитывать предпросмотр при каждом изменении шаблона или параметров"
 
+# ==AUTO== Automatically translated
 msgid "Filter:"
 msgstr "Фильтр:"
 
+# ==AUTO== Automatically translated
 msgid "*.txt"
-msgstr "*.txt"
+msgstr ""
 
+# ==AUTO== Automatically translated
 msgid "Glob pattern to filter the file list"
 msgstr "Glob-шаблон для фильтрации списка файлов"
 
 # ==AUTO== Automatically translated
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr ""
-"Отображаются только файлы, соответствующие этому шаблону glob (например "
-"*.txt, image_*)Отображаются только файлы, соответствующие этому "
-"glob-шаблону (напр. *.txt, image_*)"
+"В списке отображаются только файлы, соответствующие этому glob-шаблону "
+"(напр. *.txt, image_*)"
 
+# ==AUTO== Automatically translated
 msgid "Browse the filesystem"
 msgstr "Обзор файловой системы"
 
+# ==AUTO== Automatically translated
 msgid "Select a directory to list its contents in the panel on the right"
-msgstr "Выберите каталог для отображения его содержимого на правой панели"
+msgstr "Выбрать папку для отображения её содержимого в правой панели"
 
+# ==AUTO== Automatically translated
 msgid "Files to be renamed"
 msgstr "Файлы для переименования"
 
@@ -944,8 +1113,9 @@ msgid ""
 "apply to all"
 msgstr ""
 "Выберите строки для ограничения операций этими файлами; оставьте без "
-"выбора, чтобы применить ко всем"
+"выбора для применения ко всем"
 
+# ==AUTO== Automatically translated
 msgid "Search pattern"
 msgstr "Шаблон поиска"
 
@@ -956,16 +1126,17 @@ msgid ""
 "letters, {C} non-space, {X} anything"
 msgstr ""
 "Шаблон для сопоставления с именами файлов. Используйте токены: {#} цифры,"
-" {L} буквы, {C} без пробела, {X} что угодноШаблон для сопоставления с "
-"именами файлов. Используйте токены: {#} цифры, {L} буквы, {C} без "
-"пробелов, {X} любое"
+" {L} буквы, {C} без пробела, {X} всё"
 
+# ==AUTO== Automatically translated
 msgid "Save to history"
 msgstr "Сохранить в историю"
 
+# ==AUTO== Automatically translated
 msgid "Add the current search pattern and mode to the drop-down history"
-msgstr "Добавить текущий шаблон поиска и режим в историю выпадающего списка"
+msgstr "Добавить текущий шаблон поиска и режим в раскрывающийся список истории"
 
+# ==AUTO== Automatically translated
 msgid "Search pattern help"
 msgstr "Справка по шаблонам поиска"
 
@@ -974,41 +1145,51 @@ msgid ""
 "Show help about search patterns (Pattern tokens, Regular expressions, "
 "Plain text)"
 msgstr ""
-"Показать справку по шаблонам поиска (токены, регулярные выражения, "
-"обычный текст)Показать справку по шаблонам поиска (токены шаблона, "
-"регулярные выражения, простой текст)"
+"Показать справку по шаблонам поиска (токены шаблона, регулярные "
+"выражения, обычный текст)"
 
+# ==AUTO== Automatically translated
 msgid "Pattern"
 msgstr "Шаблон"
 
+# ==AUTO== Automatically translated
 msgid "Search using pattern tokens"
 msgstr "Поиск с использованием токенов шаблона"
 
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
-msgstr "Сопоставлять имена файлов с помощью токенов шаблона ({#}, {L}, {X}…)"
+msgstr ""
+"Сопоставлять имена файлов с использованием токенов шаблона ({#}, {L}, "
+"{X}…)"
 
+# ==AUTO== Automatically translated
 msgid "Regular expression"
 msgstr "Регулярное выражение"
 
+# ==AUTO== Automatically translated
 msgid "Search using a Python regular expression"
 msgstr "Поиск с использованием регулярного выражения Python"
 
+# ==AUTO== Automatically translated
 msgid ""
 "Match file names using a Python regular expression; use \\1 \\2… for "
 "backreferences in the replacement"
 msgstr ""
-"Сопоставлять имена файлов с помощью регулярного выражения Python; "
-"использовать \\1 \\2… для обратных ссылок в замене"
+"Сопоставлять имена файлов с регулярным выражением Python; используйте \\1"
+" \\2… для обратных ссылок в замене"
 
+# ==AUTO== Automatically translated
 msgid "Plain text"
-msgstr "Простой текст"
+msgstr "Обычный текст"
 
+# ==AUTO== Automatically translated
 msgid "Search for a literal string"
-msgstr "Искать буквальную строку"
+msgstr "Поиск строки буквально"
 
+# ==AUTO== Automatically translated
 msgid "Match file names by looking for the search text as a literal string"
-msgstr "Сопоставлять имена файлов, ища поисковый текст как буквальную строку"
+msgstr "Сопоставлять имена файлов, ища текст поиска как буквальную строку"
 
 # ==AUTO== Automatically translated
 msgid "Case-insensitive"
@@ -1016,16 +1197,17 @@ msgstr "Без учёта регистра"
 
 # ==AUTO== Automatically translated
 msgid "Ignore case when searching"
-msgstr "Не учитывать регистр при поиске"
+msgstr "Игнорировать регистр при поиске"
 
 # ==AUTO== Automatically translated
 msgid ""
 "When checked, the search pattern matches file names regardless of letter "
 "case"
 msgstr ""
-"Если включено, шаблон поиска сопоставляет имена файлов независимо от "
-"регистра букв"
+"Если установлено, шаблон поиска соответствует именам файлов независимо от"
+" регистра"
 
+# ==AUTO== Automatically translated
 msgid "Replacement pattern"
 msgstr "Шаблон замены"
 
@@ -1038,9 +1220,11 @@ msgstr ""
 "Шаблон замены. Используйте {1} {2}… для групп захвата, {num} для "
 "счётчика, {date} для сегодняшней даты, {dir} для имени родительской папки"
 
+# ==AUTO== Automatically translated
 msgid "Add the current replacement pattern to the drop-down history"
-msgstr "Добавить текущий шаблон замены в историю выпадающего списка"
+msgstr "Добавить текущий шаблон замены в раскрывающийся список истории"
 
+# ==AUTO== Automatically translated
 msgid "Replacement pattern help"
 msgstr "Справка по шаблонам замены"
 
@@ -1050,36 +1234,45 @@ msgid ""
 "directory tokens)"
 msgstr ""
 "Показать справку по шаблонам замены (группы захвата, счётчик, дата, "
-"токены директории)Показать справку по шаблонам замены (группы захвата, "
-"счётчик, дата, токены каталога)"
+"токены каталога)"
 
+# ==AUTO== Automatically translated
 msgid "Post-processing"
 msgstr "Постобработка"
 
+# ==AUTO== Automatically translated
 msgid "Separator:"
 msgstr "Разделитель:"
 
+# ==AUTO== Automatically translated
 msgid "No change"
 msgstr "Без изменений"
 
+# ==AUTO== Automatically translated
 msgid "Spaces → underscores"
 msgstr "Пробелы → подчёркивания"
 
+# ==AUTO== Automatically translated
 msgid "Underscores → spaces"
 msgstr "Подчёркивания → пробелы"
 
+# ==AUTO== Automatically translated
 msgid "Spaces → dots"
 msgstr "Пробелы → точки"
 
+# ==AUTO== Automatically translated
 msgid "Dots → spaces"
 msgstr "Точки → пробелы"
 
+# ==AUTO== Automatically translated
 msgid "Spaces → dashes"
 msgstr "Пробелы → дефисы"
 
+# ==AUTO== Automatically translated
 msgid "Dashes → spaces"
 msgstr "Дефисы → пробелы"
 
+# ==AUTO== Automatically translated
 msgid "Separator conversion"
 msgstr "Преобразование разделителей"
 
@@ -1088,58 +1281,72 @@ msgid ""
 "Apply a separator conversion to each renamed file name after applying the"
 " pattern"
 msgstr ""
-"Применять преобразование разделителей к каждому переименованному файлу "
-"после применения шаблонаПрименить преобразование разделителей к каждому "
-"переименованному имени файла после применения шаблона"
+"Применять преобразование разделителей к каждому переименованному имени "
+"файла после применения шаблона"
 
+# ==AUTO== Automatically translated
 msgid "Remove accents"
-msgstr "Удалить акценты"
+msgstr "Убрать диакритику"
 
+# ==AUTO== Automatically translated
 msgid "Strip diacritical marks"
 msgstr "Убрать диакритические знаки"
 
+# ==AUTO== Automatically translated
 msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
-msgstr "Преобразовать символы с акцентами в их ASCII-эквиваленты (é→e, ü→u и т.д.)"
+msgstr ""
+"Преобразовать акцентированные символы в их ASCII-эквиваленты (é→e, ü→u и "
+"т. д.)"
 
+# ==AUTO== Automatically translated
 msgid "Remove duplicate separators"
 msgstr "Удалить повторяющиеся разделители"
 
+# ==AUTO== Automatically translated
 msgid "Collapse consecutive separators"
-msgstr "Свернуть последовательные разделители"
+msgstr "Сжать последовательные разделители"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Collapse runs of identical separator characters (spaces, dots, dashes, "
 "underscores) into one"
 msgstr ""
-"Сворачивать последовательности одинаковых разделителей (пробелы, точки, "
-"дефисы, подчёркивания) в одинСвернуть последовательности одинаковых "
-"разделителей (пробелы, точки, дефисы, подчёркивания) в один"
+"Сжимать последовательности одинаковых разделительных символов (пробелы, "
+"точки, дефисы, подчёркивания) в один"
 
+# ==AUTO== Automatically translated
 msgid "Case:"
 msgstr "Регистр:"
 
+# ==AUTO== Automatically translated
 msgid "UPPERCASE"
-msgstr "ВЕРХНИЙ РЕГИСТР"
+msgstr "ПРОПИСНЫЕ"
 
+# ==AUTO== Automatically translated
 msgid "lowercase"
-msgstr "нижний регистр"
+msgstr "строчные"
 
+# ==AUTO== Automatically translated
 msgid "Capitalize first letter"
 msgstr "Первая буква заглавная"
 
+# ==AUTO== Automatically translated
 msgid "Title Case"
-msgstr "Каждое слово с заглавной"
+msgstr "Каждое Слово с Заглавной"
 
+# ==AUTO== Automatically translated
 msgid "Capitalization mode"
-msgstr "Режим регистра"
+msgstr "Режим капитализации"
 
+# ==AUTO== Automatically translated
 msgid "Choose how to change the case of file names after applying the pattern"
-msgstr "Выбрать, как изменять регистр имён файлов после применения шаблона"
+msgstr "Выберите, как изменить регистр имён файлов после применения шаблона"
 
+# ==AUTO== Automatically translated
 msgid "Save:"
 msgstr "Сохранить:"
 
+# ==AUTO== Automatically translated
 msgid "Named save"
 msgstr "Именованное сохранение"
 
@@ -1151,9 +1358,11 @@ msgstr ""
 "Введите имя (буквы, цифры, _ и -) для сохранения или загрузки всех "
 "параметров поиска/замены"
 
+# ==AUTO== Automatically translated
 msgid "Save"
 msgstr "Сохранить"
 
+# ==AUTO== Automatically translated
 msgid "Save current settings under this name"
 msgstr "Сохранить текущие настройки под этим именем"
 
@@ -1162,21 +1371,22 @@ msgid ""
 "Save all search, replace and post-processing settings under the current "
 "name (overwrites any existing save with the same name)"
 msgstr ""
-"Сохранить все настройки поиска, замены и постобработки под текущим именем"
+"Сохранить все параметры поиска, замены и постобработки под текущим именем"
 " (перезаписывает существующее сохранение с тем же именем)"
 
+# ==AUTO== Automatically translated
 msgid "Delete"
 msgstr "Удалить"
 
+# ==AUTO== Automatically translated
 msgid "Delete this named save"
 msgstr "Удалить это именованное сохранение"
 
 # ==AUTO== Automatically translated
 msgid "Permanently delete the named save matching the current name"
-msgstr ""
-"Безвозвратно удалить именованное сохранение, соответствующее текущему "
-"имени"
+msgstr "Навсегда удалить именованное сохранение, совпадающее с текущим именем"
 
+# ==AUTO== Automatically translated
 msgid "Compute rename preview"
 msgstr "Вычислить предпросмотр переименования"
 
@@ -1185,31 +1395,30 @@ msgid ""
 "Apply the current pattern to all listed files and show the result in the "
 "Preview column"
 msgstr ""
-"Применить текущий шаблон ко всем перечисленным файлам и показать "
-"результат в столбце «Предпросмотр»Применить текущий шаблон ко всем "
-"перечисленным файлам и показать результат в столбце Предпросмотр"
+"Применить текущий шаблон ко всем файлам в списке и показать результат в "
+"столбце «Предпросмотр»"
 
+# ==AUTO== Automatically translated
 msgid "Clear"
 msgstr "Очистить"
 
+# ==AUTO== Automatically translated
 msgid "Clear the preview"
 msgstr "Очистить предпросмотр"
 
+# ==AUTO== Automatically translated
 msgid "Remove all preview values from the Preview column"
-msgstr "Удалить все значения предпросмотра из столбца Предпросмотр"
+msgstr "Удалить все значения предпросмотра из столбца «Предпросмотр»"
 
-msgid "Undo"
-msgstr "Отменить"
-
-msgid "Undo last rename batch"
-msgstr "Отменить последний пакет переименований"
-
+# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Обратить последний пакет переименований, выполненных на диске"
 
+# ==AUTO== Automatically translated
 msgid "Rename"
 msgstr "Переименовать"
 
+# ==AUTO== Automatically translated
 msgid "Apply renames on disk"
 msgstr "Применить переименования на диске"
 
@@ -1218,50 +1427,60 @@ msgid ""
 "Permanently rename all files shown in the Preview column (only enabled "
 "when there are no conflicts)"
 msgstr ""
-"Окончательно переименовать все файлы, показанные в столбце «Предпросмотр»"
-" (доступно только при отсутствии конфликтов)Безвозвратно переименовать "
-"все файлы, показанные в столбце Предпросмотр (доступно только при "
-"отсутствии конфликтов)"
+"Навсегда переименовать все файлы в столбце «Предпросмотр» (доступно "
+"только при отсутствии конфликтов)"
 
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "Файл"
 
+# ==AUTO== Automatically translated
 msgid "Edit"
 msgstr "Правка"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
-msgstr "Быстрые ссылки"
+msgstr "Ярлыки"
 
+# ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Справка"
 
+# ==AUTO== Automatically translated
 msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
 
+# ==AUTO== Automatically translated
 msgid "Application version"
 msgstr "Версия приложения"
 
+# ==AUTO== Automatically translated
 msgid "A graphical batch file renaming utility."
-msgstr "Графическая утилита для массового переименования файлов."
+msgstr "Графическая утилита для пакетного переименования файлов."
 
+# ==AUTO== Automatically translated
 msgid "License: GPLv3"
 msgstr "Лицензия: GPLv3"
 
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Настройки"
 
+# ==AUTO== Automatically translated
 msgid "Language:"
 msgstr "Язык:"
 
+# ==AUTO== Automatically translated
 msgid "Select the interface language"
 msgstr "Выбрать язык интерфейса"
 
+# ==AUTO== Automatically translated
 msgid "Log level:"
 msgstr "Уровень журнала:"
 
+# ==AUTO== Automatically translated
 msgid "Set the application logging verbosity"
-msgstr "Задать уровень детализации журнала приложения"
+msgstr "Установить уровень детализации журнала приложения"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
@@ -1269,11 +1488,43 @@ msgstr "Поведение"
 
 # ==AUTO== Automatically translated
 msgid "Restore last opened directory"
-msgstr "Восстановить последний открытый каталог"
+msgstr "Восстановить последнюю открытую папку"
 
 # ==AUTO== Automatically translated
 msgid "On startup, reopen the directory that was active in the previous session"
-msgstr "При запуске повторно открыть каталог, активный в предыдущем сеансе"
+msgstr ""
+"При запуске снова открывать папку, которая была активна в предыдущем "
+"сеансе"
 
+# ==AUTO== Automatically translated
+msgid "Restore toolbar state"
+msgstr "Восстановить состояние панели инструментов"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr ""
+"При запуске восстанавливать параметры панели инструментов из предыдущего "
+"сеанса (режим отображения, рекурсивно, сохранить расширение, "
+"авто-предпросмотр, фильтр)"
+
+# ==AUTO== Automatically translated
+msgid "Auto-preview delay:"
+msgstr "Задержка авто-предпросмотра:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr ""
+"Задержка перед обновлением предпросмотра после изменения шаблона поиска "
+"или замены (мс)"
+
+# ==AUTO== Automatically translated
+msgid " ms"
+msgstr " мс"
+
+# ==AUTO== Automatically translated
 msgid "A restart is required for the language change to take effect."
-msgstr "Для применения изменения языка требуется перезапуск."
+msgstr "Для вступления изменения языка в силу требуется перезапуск."

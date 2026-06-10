@@ -96,6 +96,9 @@ class MainWindow(QMainWindow):
         self._search_help: PatternHelpDialog | None = None
         self._replace_help: PatternHelpDialog | None = None
         self._file_info: FileInfoWindow | None = None
+        self._preview_timer = QTimer(self)
+        self._preview_timer.setSingleShot(True)
+        self._preview_timer.timeout.connect(self._on_preview)
 
         self._setup_directory_tree()
         self._populate_pattern_combos()
@@ -105,6 +108,8 @@ class MainWindow(QMainWindow):
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
         self._restore_window_state()
+        if _cfg.get_restore_toolbar_state():
+            self._restore_toolbar_state()
         if start_dir:
             initial_dir = start_dir
         elif _cfg.get_restore_last_dir():
@@ -357,10 +362,14 @@ class MainWindow(QMainWindow):
     def _on_search_text_changed(self) -> None:
         self._validate_search_input()
         self._update_search_add_button()
+        if self._ui.chkAutoPreview.isChecked():
+            self._preview_timer.start(_cfg.get_preview_delay())
 
     def _on_replace_text_changed(self) -> None:
         self._validate_replace_input()
         self._update_replace_add_button()
+        if self._ui.chkAutoPreview.isChecked():
+            self._preview_timer.start(_cfg.get_preview_delay())
 
     def _on_mode_changed(self) -> None:
         self._validate_search_input()
@@ -874,7 +883,7 @@ class MainWindow(QMainWindow):
         _log.info("Renamed %d file(s), %d error(s)", len(done), len(errors))
         if done:
             self._undo.add_batch(done)
-            self._ui.btnUndo.setEnabled(True)
+            self._refresh_undo_button()
 
         if errors:
             QMessageBox.warning(
@@ -890,8 +899,20 @@ class MainWindow(QMainWindow):
     def _on_undo(self) -> None:
         _log.info("Undoing last rename batch")
         self._undo.undo()
-        self._ui.btnUndo.setEnabled(self._undo.can_undo())
+        self._refresh_undo_button()
         self._reload_files()
+
+    def _refresh_undo_button(self) -> None:
+        n = len(self._undo)
+        self._ui.btnUndo.setEnabled(n > 0)
+        if n > 0:
+            self._ui.btnUndo.setText(_("Undo (%d)") % n)
+            self._ui.btnUndo.setToolTip(
+                _("Undo last rename batch (%d level(s) available)") % n
+            )
+        else:
+            self._ui.btnUndo.setText(_("Undo"))
+            self._ui.btnUndo.setToolTip(_("Undo last rename batch"))
 
     # ── Window state (geometry + splitters) ──────────────────────────────────
 
@@ -912,13 +933,43 @@ class MainWindow(QMainWindow):
         )
         if self._current_dir:
             _cfg.set_last_dir(self._current_dir)
+        if _cfg.get_restore_toolbar_state():
+            _cfg.set_toolbar_state(self._collect_toolbar_state())
         super().closeEvent(event)
+
+    def _collect_toolbar_state(self) -> dict:
+        return {
+            "mode": self._ui.cmbMode.currentIndex(),
+            "recursive": self._ui.chkRecursive.isChecked(),
+            "keep_extension": self._ui.chkKeepExtension.isChecked(),
+            "auto_preview": self._ui.chkAutoPreview.isChecked(),
+            "filter": self._ui.edtFilter.text(),
+        }
+
+    def _restore_toolbar_state(self) -> None:
+        state = _cfg.get_toolbar_state()
+        if not state:
+            return
+        if "mode" in state:
+            idx = int(state["mode"])
+            if 0 <= idx < self._ui.cmbMode.count():
+                self._ui.cmbMode.setCurrentIndex(idx)
+        if "recursive" in state:
+            self._ui.chkRecursive.setChecked(bool(state["recursive"]))
+        if "keep_extension" in state:
+            self._ui.chkKeepExtension.setChecked(bool(state["keep_extension"]))
+        if "auto_preview" in state:
+            self._ui.chkAutoPreview.setChecked(bool(state["auto_preview"]))
+        if "filter" in state:
+            self._ui.edtFilter.setText(str(state["filter"]))
 
     # ── Auto-preview / tab change ─────────────────────────────────────────────
 
     def _on_auto_preview_toggled(self, checked: bool) -> None:
         if checked:
             self._on_preview()
+        else:
+            self._preview_timer.stop()
 
     # ── Menu handlers ─────────────────────────────────────────────────────────
 

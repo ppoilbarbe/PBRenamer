@@ -141,6 +141,28 @@ class TestParse:
         assert field.align == ">"
         assert field.fmt == "8"
 
+    def test_field_with_case_lower(self):
+        segs = parse("{0:-}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.case == "-"
+        assert field.align == ""
+        assert field.fmt == ""
+
+    def test_field_with_case_and_align(self):
+        segs = parse("{0:*^10}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.case == "*"
+        assert field.align == "^"
+        assert field.fmt == "10"
+
+    def test_field_with_case_align_default(self):
+        segs = parse("{0:*^10:fallback}")
+        field = next(s for s in segs if isinstance(s, FieldSegment))
+        assert field.case == "*"
+        assert field.align == "^"
+        assert field.fmt == "10"
+        assert field.default == "fallback"
+
 
 # ---------------------------------------------------------------------------
 # Validator
@@ -194,6 +216,53 @@ class TestApplyAlign:
 
     def test_no_align_no_pad(self):
         assert _sub("{num}") == "1"
+
+    def test_center_align_even_padding(self):
+        # "ab" in width 6: pad=4, left=2, right=2
+        result = _sub("{0:^6}", full_match="ab")
+        assert result == "  ab  "
+
+    def test_center_align_odd_padding(self):
+        # "ab" in width 7: pad=5, left_pad=(5+1)//2=3, right_pad=2
+        result = _sub("{0:^7}", full_match="ab")
+        assert result == "   ab  "
+
+    def test_center_align_string_longer_than_width(self):
+        result = _sub("{0:^3}", full_match="abcde")
+        assert result == "abcde"
+
+
+class TestApplyCase:
+    def test_lowercase(self):
+        assert _sub("{0:-}", full_match="HELLO World") == "hello world"
+
+    def test_uppercase(self):
+        assert _sub("{0:+}", full_match="hello world") == "HELLO WORLD"
+
+    def test_capitalize(self):
+        assert _sub("{0:!}", full_match="hello world") == "Hello world"
+
+    def test_capitalize_rest_lowercased(self):
+        assert _sub("{0:!}", full_match="hELLO WORLD") == "Hello world"
+
+    def test_title(self):
+        assert _sub("{0:*}", full_match="hello world") == "Hello World"
+
+    def test_unchanged_explicit(self):
+        assert _sub("{0:=}", full_match="Hello World") == "Hello World"
+
+    def test_no_case_modifier(self):
+        assert _sub("{0}", full_match="Hello World") == "Hello World"
+
+    def test_case_with_align(self):
+        # "*^10" on "hi": title="Hi" (len 2), pad=8, left=4, right=4
+        result = _sub("{0:*^10}", full_match="hi")
+        assert result == "    Hi    "
+
+    def test_case_applied_to_default(self):
+        # Field absent, default "hello" with uppercase modifier
+        result = _sub("{2:+:hello}", groups=[])
+        assert result == "HELLO"
 
 
 # ---------------------------------------------------------------------------
@@ -352,6 +421,7 @@ class TestResolveUnknownField:
 
         seg = FieldSegment(
             name="totally_unknown_x",
+            case="",
             align="",
             fmt="",
             default=None,

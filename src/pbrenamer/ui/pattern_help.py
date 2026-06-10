@@ -185,20 +185,27 @@ def replace_html() -> str:
     )
     fmt_pre = (
         '<pre style="background:#f5f5f5; padding:6px; border-radius:4px;">\n'
-        "{name}                 " + _("plain value") + "\n"
-        "{name:fmt}             " + _("with format") + "\n"
-        "{name:fmt:default}     " + _("with format and fallback") + "\n"
-        "{name:&lt;fmt}            " + _("left-align  (digit fmt = min width)") + "\n"
-        "{name:&gt;fmt}            " + _("right-align") + "\n"
-        "{name:0fmt}            " + _("zero-pad right (numbers)") + "\n"
-        "{{                     " + _("literal '{' character") + "\n"
+        "{name}                    " + _("plain value") + "\n"
+        "{name:fmt}                "
+        + _("with format  (digit = min width · strftime for dates)")
+        + "\n"
+        "{name:-fmt}               "
+        + _("case:   - lower   + upper   ! Caps   * Title   = unchanged")
+        + "\n"
+        "{name:&lt;fmt}               "
+        + _("align:  &lt; left   &gt; right   0 zero-pad   ^ centre")
+        + "\n"
+        "{name:*^fmt:default}      "
+        + _("all options; default used when field is absent")
+        + "\n"
+        "{{                        " + _("literal '{' character") + "\n"
         "</pre>\n"
     )
     fmt_note = _(
-        "<b>fmt</b> is a minimum width (digit) for text/numbers, "
+        "<b>fmt</b>: minimum width (digit) for text/numbers, "
         "or a <code>strftime</code> format for dates/datetimes.<br>"
-        "<b>default</b>: used when the field is absent; omitting it makes absence "
-        "an error (file shown in red in the preview)."
+        "<b>default</b>: literal fallback used when the field is absent; "
+        "omitting it flags the file in red in the preview."
     )
 
     # ── Available fields table ────────────────────────────────────────────────
@@ -448,6 +455,13 @@ def replace_html() -> str:
             _("Parent folder, file modification date, 3-digit counter"),
             _BG1,
         )
+        + _row2("{1:&lt;12}", _("Capture group 1 left-aligned in 12 characters"))
+        + _row2(
+            "{im:Model:*^30}",
+            _("Camera model centred in 30 characters, each word capitalised"),
+            _BG1,
+        )
+        + _row2("{im:Make:-}", _("Camera make in lowercase, exact field length"))
     )
 
     return (

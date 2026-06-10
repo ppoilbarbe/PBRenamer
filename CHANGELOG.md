@@ -1,7 +1,27 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- Undo button displays the number of available undo levels — text changes to
+  "Undo (N)" and the tooltip explains how many rename batches can be reverted
+- Case-transform modifier in replacement field tokens: `=` (unchanged), `-`
+  (lower), `+` (upper), `!` (capitalise first char), `*` (Title Case)
+- Centre-align (`^`) in replacement field tokens
+- Toolbar-state and preview-delay persistence in Settings
+- `tools/po_check.py`: PO file inspection tool using the babel library
+  (statistics, untranslated entries, regex search, language diff) — replaces
+  ad-hoc `grep`/`msgfmt` usage that breaks on multi-line entries
+
+### Fixed
+
+- Pattern help dialog: HTML-escaped `{1:&lt;12}` so the browser no longer
+  interprets `<12>` as an HTML tag
 
 ## [1.2.0] - 2026-06-09
 
