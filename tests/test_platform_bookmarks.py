@@ -8,6 +8,7 @@ from unittest.mock import patch
 from pbrenamer.platform.bookmarks import (
     _gtk_bookmarks,
     _parse_gtk,
+    _standard_locations,
     system_bookmarks,
 )
 
@@ -119,3 +120,55 @@ class TestSystemBookmarks:
             ):
                 result = system_bookmarks()
         assert result == fake
+
+
+class TestParseGtkValueError:
+    def test_value_error_in_urlparse_is_skipped(self, tmp_path):
+        bm = tmp_path / "bookmarks"
+        bm.write_text(f"file://{tmp_path} Good\n", encoding="utf-8")
+
+        from urllib.parse import urlparse as _real_urlparse
+
+        call_count = 0
+
+        def _bad_urlparse(url):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                raise ValueError("bad url")
+            return _real_urlparse(url)
+
+        with patch("pbrenamer.platform.bookmarks.urlparse", side_effect=_bad_urlparse):
+            result = _parse_gtk(bm)
+        assert result == []
+
+
+class TestStandardLocations:
+    def test_returns_list_of_pairs(self, qtbot):
+        result = _standard_locations()
+        assert isinstance(result, list)
+        assert all(
+            isinstance(name, str) and isinstance(path, str) for name, path in result
+        )
+
+    def test_all_returned_paths_are_directories(self, qtbot):
+        for _, path in _standard_locations():
+            assert Path(path).is_dir(), f"{path} is not a directory"
+
+    def test_home_is_included(self, qtbot):
+        result = _standard_locations()
+        paths = [p for _, p in result]
+        home = str(Path.home())
+        assert home in paths
+
+    def test_nonexistent_standard_locations_excluded(self, qtbot):
+        from PySide6.QtCore import QStandardPaths
+
+        def fake_standard_locations(loc):
+            return ["/nonexistent/path/that/should/not/exist/xyz"]
+
+        with patch.object(
+            QStandardPaths, "standardLocations", side_effect=fake_standard_locations
+        ):
+            result = _standard_locations()
+        assert result == []

@@ -497,6 +497,74 @@ class TestPlan:
         with pytest.raises(SystemExit):
             _plan(entries, ns)
 
+    def test_newnum_assigns_sequential_numbers(self, tmp_path):
+        _make_files(tmp_path, "alpha.txt", "beta.txt")
+        entries = [
+            ("alpha.txt", str(tmp_path / "alpha.txt")),
+            ("beta.txt", str(tmp_path / "beta.txt")),
+        ]
+        ns = _ns(search="{L}", replace="{newnum}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        names = {orig: new for _, orig, new in result}
+        assert names["alpha.txt"] == "1.txt"
+        assert names["beta.txt"] == "2.txt"
+
+    def test_field_resolution_error_yields_no_new_name(self, tmp_path):
+        # {im:artist} cannot be resolved for a plain text file → new_name stays None
+        _make_files(tmp_path, "doc.txt")
+        entries = [("doc.txt", str(tmp_path / "doc.txt"))]
+        ns = _ns(search="{L}", replace="{im:artist}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        assert result[0][2] is None
+
+    def test_newnum_with_valid_integer_start(self, tmp_path):
+        # {newnum::5} → seg.default="5" → start=5
+        _make_files(tmp_path, "a.txt", "b.txt")
+        entries = [
+            ("a.txt", str(tmp_path / "a.txt")),
+            ("b.txt", str(tmp_path / "b.txt")),
+        ]
+        ns = _ns(search="{L}", replace="{newnum::5}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        names = {orig: new for _, orig, new in result}
+        assert names["a.txt"] == "5.txt"
+        assert names["b.txt"] == "6.txt"
+
+    def test_newnum_with_non_integer_start_falls_back_to_one(self, tmp_path):
+        # {newnum::abc} → int("abc") raises ValueError → start stays 1
+        _make_files(tmp_path, "a.txt")
+        entries = [("a.txt", str(tmp_path / "a.txt"))]
+        ns = _ns(search="{L}", replace="{newnum::abc}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        assert result[0][2] == "1.txt"
+
+    def test_newnum_no_match_yields_no_new_name(self, tmp_path):
+        # {D} matches digit sequences; "abc" has none → raw=None inside newnum loop
+        _make_files(tmp_path, "abc.txt")
+        entries = [("abc.txt", str(tmp_path / "abc.txt"))]
+        ns = _ns(search="{D}", replace="{newnum}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        assert result[0][2] is None
+
+    def test_newnum_field_error_in_loop_yields_no_new_name(self, tmp_path):
+        # {im:artist} inside newnum template → FieldResolutionError in the while loop
+        _make_files(tmp_path, "doc.txt")
+        entries = [("doc.txt", str(tmp_path / "doc.txt"))]
+        ns = _ns(
+            search="{L}", replace="{newnum}_{im:artist}", mode="pattern", keep_ext=True
+        )
+        result = _plan(entries, ns)
+        assert result[0][2] is None
+
+    def test_newnum_collision_increments_counter(self, tmp_path):
+        # "1.txt" already exists → first candidate blocked → k+=1 → assigned "2.txt"
+        _make_files(tmp_path, "abc.txt")
+        (tmp_path / "1.txt").write_text("existing")
+        entries = [("abc.txt", str(tmp_path / "abc.txt"))]
+        ns = _ns(search="{L}", replace="{newnum}", mode="pattern", keep_ext=True)
+        result = _plan(entries, ns)
+        assert result[0][2] == "2.txt"
+
 
 # ---------------------------------------------------------------------------
 # _detect_conflicts
@@ -732,6 +800,17 @@ class TestHeadlessRun:
         _headless_run(ns)
         assert (tmp_path / "new_name.txt").exists()
 
+    def test_rename_failure_exits_with_error(self, tmp_path, capsys, monkeypatch):
+        _make_files(tmp_path, "foo.txt")
+        from pbrenamer.core import filetools as _ft
+
+        monkeypatch.setattr(_ft, "rename_file", lambda *a: (False, "permission denied"))
+        ns = _ns(search="foo", replace="bar", mode="plain", directory=str(tmp_path))
+        with pytest.raises(SystemExit) as exc_info:
+            _headless_run(ns)
+        assert exc_info.value.code == 1
+        assert "permission denied" in capsys.readouterr().err
+
 
 # ---------------------------------------------------------------------------
 # --help-search / --help-replace
@@ -783,3 +862,56 @@ class TestHelpExport:
         out = capsys.readouterr().out
         assert "Search patterns" in out
         assert "Replacement fields" in out
+
+
+# ---------------------------------------------------------------------------
+# main() headless dispatch
+# ---------------------------------------------------------------------------
+
+
+class TestMainDispatch:
+    def test_main_dispatches_headless_with_search_flag(self, tmp_path, monkeypatch):
+        (tmp_path / "old_name.txt").touch()
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "pbrenamer",
+                str(tmp_path),
+                "--search",
+                "old",
+                "--replace",
+                "new",
+                "--mode",
+                "plain",
+            ],
+        )
+        from pbrenamer.__main__ import main
+
+        main()
+        assert (tmp_path / "new_name.txt").exists()
+
+    def test_main_sets_log_level_when_flag_given(self, tmp_path, monkeypatch):
+        import logging
+
+        (tmp_path / "old.txt").touch()
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "pbrenamer",
+                str(tmp_path),
+                "--search",
+                "old",
+                "--replace",
+                "new",
+                "--mode",
+                "plain",
+                "--verbose",
+            ],
+        )
+        from pbrenamer.__main__ import main
+
+        main()
+        assert (tmp_path / "new.txt").exists()
+        assert logging.getLogger().level == logging.INFO

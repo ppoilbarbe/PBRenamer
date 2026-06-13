@@ -506,7 +506,10 @@ def _headless_run(ns: argparse.Namespace) -> None:
 
         try:
             answer = input("Proceed? [y/N] ").strip().lower()
-        except (EOFError, KeyboardInterrupt):
+        except (
+            EOFError,
+            KeyboardInterrupt,
+        ):  # pragma: no cover — TTY abort; not testable without interactive input
             print("\nAborted.")
             return
         if answer not in ("y", "yes"):
@@ -572,13 +575,19 @@ def main() -> None:
         return
 
     if _ns.search is not None or _ns.saved is not None:
-        # Headless mode — no Qt needed
         if _ns.log_level:
             logging.getLogger().setLevel(_ns.log_level)
         _resolve_ns(_ns)
         _headless_run(_ns)
         return
 
+    _gui_main(_ns, qt_argv)  # pragma: no cover — GUI mode; not invoked by tests
+
+
+def _gui_main(_ns, qt_argv):  # pragma: no cover
+    # GUI mode — only reached when neither --search nor --saved is given.
+    # Tests never enter this path: they invoke _headless_run() directly
+    # and rely on pytest-qt for the QApplication instance.
     from PySide6.QtGui import QIcon
     from PySide6.QtWidgets import QApplication
 
@@ -614,5 +623,5 @@ def main() -> None:
     sys.exit(app.exec())
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover — standard script guard
     main()

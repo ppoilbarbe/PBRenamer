@@ -264,6 +264,11 @@ class TestApplyCase:
         result = _sub("{2:+:hello}", groups=[])
         assert result == "HELLO"
 
+    def test_unknown_case_value_returns_string_unchanged(self):
+        from pbrenamer.core.replacement import _apply_case
+
+        assert _apply_case("Hello", "?") == "Hello"
+
 
 # ---------------------------------------------------------------------------
 # Substitutor — simple fields

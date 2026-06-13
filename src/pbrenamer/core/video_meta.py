@@ -14,7 +14,7 @@ try:
     from pymediainfo import MediaInfo
 
     _MEDIAINFO = True
-except ImportError:
+except ImportError:  # pragma: no cover — required dep; absent only outside project env
     MediaInfo = None  # type: ignore[assignment,misc]
     _MEDIAINFO = False
     _log.debug(

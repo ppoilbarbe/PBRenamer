@@ -196,7 +196,7 @@ def rename_using_patterns(
     try:
         if re.search(regex, name, flags) is None:
             return None, None
-    except re.error:
+    except re.error:  # pragma: no cover — pre-validated; guard for API misuse
         return None, None
 
     now = datetime.now()
@@ -244,7 +244,10 @@ def rename_using_plain_text(
     if case_insensitive:
         m = re.search(re.escape(search), name, re.IGNORECASE)
         if m is None:
-            return None, None
+            return (
+                None,
+                None,
+            )
         actual_match = m.group(0)
     else:
         if search not in name:

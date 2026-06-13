@@ -15,7 +15,7 @@ try:
     from PIL.ExifTags import TAGS as _EXIF_TAGS
 
     _PILLOW = True
-except ImportError:
+except ImportError:  # pragma: no cover — required dep; absent only outside project env
     _PILLOW = False
     _log.debug("Pillow not available — {im:…} metadata fields will always be empty")
 

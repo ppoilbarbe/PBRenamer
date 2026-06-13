@@ -91,3 +91,20 @@ class TestUndoOnDisk:
             um.add_batch([(str(tmp_path / f"{i}a"), str(tmp_path / f"{i}b"))])
         um.clear()
         assert not um.can_undo()
+
+
+class TestLen:
+    def test_len_empty(self):
+        assert len(UndoManager()) == 0
+
+    def test_len_after_add(self):
+        um = UndoManager()
+        um.add_batch([("/a", "/b")])
+        um.add_batch([("/c", "/d")])
+        assert len(um) == 2
+
+    def test_len_after_clear(self):
+        um = UndoManager()
+        um.add_batch([("/a", "/b")])
+        um.clear()
+        assert len(um) == 0

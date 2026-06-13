@@ -104,3 +104,46 @@ class TestSetup:
         app = QApplication.instance()
         with patch.object(i18n, "_system_language", return_value="xx"):
             i18n.setup(app)  # must not raise
+
+
+class TestAvailableLanguagesEdgeCases:
+    def test_skips_mo_files_that_cannot_be_loaded(self, tmp_path, monkeypatch):
+        """FileNotFoundError in gettext.translation → entry is skipped."""
+        fake_locale = tmp_path / "locale"
+        lang_dir = fake_locale / "xx" / "LC_MESSAGES"
+        lang_dir.mkdir(parents=True)
+        (lang_dir / "pbrenamer.mo").touch()
+
+        monkeypatch.setattr(i18n, "_LOCALE_DIR", fake_locale)
+        import gettext as _gt
+
+        def _fake_translation(domain, localedir, languages):
+            raise FileNotFoundError("no catalogue")
+
+        monkeypatch.setattr(_gt, "translation", _fake_translation)
+        langs = available_languages()
+        assert all(c != "xx" for c, _ in langs)
+
+    def test_lang_name_falls_back_to_code_when_msgstr_is_msgid(
+        self, tmp_path, monkeypatch
+    ):
+        """When lang_name == 'language_name' the code is used as the name."""
+        fake_locale = tmp_path / "locale"
+        lang_dir = fake_locale / "zz" / "LC_MESSAGES"
+        lang_dir.mkdir(parents=True)
+        (lang_dir / "pbrenamer.mo").touch()
+
+        monkeypatch.setattr(i18n, "_LOCALE_DIR", fake_locale)
+        import gettext as _gt
+
+        class _NullWithCode(_gt.NullTranslations):
+            def gettext(self, msg):
+                return msg  # returns the msgid unchanged
+
+        def _fake_translation(domain, localedir, languages):
+            return _NullWithCode()
+
+        monkeypatch.setattr(_gt, "translation", _fake_translation)
+        langs = available_languages()
+        mapping = dict(langs)
+        assert mapping.get("zz") == "zz"

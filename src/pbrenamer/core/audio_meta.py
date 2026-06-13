@@ -14,7 +14,7 @@ try:
     import mutagen
 
     _MUTAGEN = True
-except ImportError:
+except ImportError:  # pragma: no cover — required dep; absent only outside project env
     _MUTAGEN = False
     _log.debug("mutagen not available — {au:…} metadata fields will always be empty")
 

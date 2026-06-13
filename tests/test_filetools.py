@@ -319,6 +319,11 @@ class TestRenameUsingPlainText:
         )
         assert name == "prefix_Hello_World"
 
+    def test_case_insensitive_no_match_returns_none_pair(self):
+        assert filetools.rename_using_plain_text(
+            "hello.txt", _p("hello.txt"), "xyz", "new", case_insensitive=True
+        ) == (None, None)
+
 
 class TestRenameUsingRegex:
     def test_basic_capture_group(self):
@@ -365,6 +370,12 @@ class TestRenameUsingRegex:
             None,
             None,
         )
+
+    def test_zero_width_match_is_skipped(self):
+        # (?:) matches at every position (zero-width); the guard returns "" for each
+        # empty match, leaving the original name unchanged.
+        name, _ = filetools.rename_using_regex("hello", _p("hello"), r"(?:)", "X")
+        assert name == "hello"
 
     def test_all_matches_replaced(self):
         # ([^.]+) matches "IMG_5100" and "jpeg"; both are substituted.

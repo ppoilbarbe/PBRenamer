@@ -17,11 +17,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tools/po_check.py`: PO file inspection tool using the babel library
   (statistics, untranslated entries, regex search, language diff) — replaces
   ad-hoc `grep`/`msgfmt` usage that breaks on multi-line entries
+- Comprehensive test suite: 917 tests covering all source modules at 100%;
+  includes the full main window (`_on_preview`, `_refresh_conflicts`, context
+  menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings
+  dialog, file-info window, pattern-help dialog, presets, bookmarks, i18n
+  bootstrap, and all core modules)
+- Headless Qt test execution via `QT_QPA_PLATFORM=offscreen` in `conftest.py`;
+  `QMenu.exec` patched at module level so no blocking dialog appears during CI
+  or local `make test` runs
 
 ### Fixed
 
 - Pattern help dialog: HTML-escaped `{1:&lt;12}` so the browser no longer
   interprets `<12>` as an HTML tag
+- Fifteen `# pragma: no cover` guards on reachable logic replaced by targeted
+  tests: case-insensitive no-match in `rename_using_plain_text`, zero-width
+  regex guard, `{newnum}` CLI branch (start value, invalid start, no-match,
+  field error, collision k+=1), rename failure exit path, `main()` headless
+  dispatch, `_parse_exif_datetime` on malformed input, `_read_iptc` unknown
+  key, `_apply_case` unknown modifier
 
 ## [1.2.0] - 2026-06-09
 

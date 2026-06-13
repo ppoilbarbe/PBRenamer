@@ -279,6 +279,19 @@ class TestReadExifUnknownKey:
 
 
 # ---------------------------------------------------------------------------
+# _parse_exif_datetime
+# ---------------------------------------------------------------------------
+
+
+class TestParseExifDatetime:
+    def test_malformed_string_returns_none(self):
+        assert image_meta._parse_exif_datetime("not-a-date") is None
+
+    def test_none_input_returns_none(self):
+        assert image_meta._parse_exif_datetime(None) is None
+
+
+# ---------------------------------------------------------------------------
 # _read_iptc (mocked)
 # ---------------------------------------------------------------------------
 
@@ -342,6 +355,11 @@ class TestReadIptc:
         with patch("PIL.Image.open", return_value=_make_image(exif)):
             result = image_meta.read_field("dummy.jpg", "Make")
         assert result == "Nikon"
+
+    def test_unknown_iptc_key_returns_none_without_opening_file(self):
+        # Key not in _IPTC_DATASETS → early return before any file I/O
+        result = image_meta._read_iptc("dummy.jpg", "not_an_iptc_key")
+        assert result is None
 
 
 # ---------------------------------------------------------------------------
