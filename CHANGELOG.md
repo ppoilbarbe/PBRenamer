@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-06-15
+
 ### Added
 
 - Undo button displays the number of available undo levels — text changes to
@@ -23,11 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   hidden from the `usage:` line to reduce noise while remaining fully visible in
   the `--help` output
 - `tools/fix_po_files.py`: utility to normalise PO file formatting in bulk
-- Comprehensive test suite: 917 tests covering all source modules at 100%;
-  includes the full main window (`_on_preview`, `_refresh_conflicts`, context
-  menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings
-  dialog, file-info window, pattern-help dialog, presets, bookmarks, i18n
-  bootstrap, and all core modules)
+- Comprehensive test suite covering all source modules at 100%; includes the
+  full main window (`_on_preview`, `_refresh_conflicts`, context menus, undo,
+  conflict detection, drag-and-drop, keyboard shortcuts, settings dialog,
+  file-info window, pattern-help dialog, presets, bookmarks, i18n bootstrap,
+  and all core modules)
 - Headless Qt test execution via `QT_QPA_PLATFORM=offscreen` in `conftest.py`;
   `QMenu.exec` patched at module level so no blocking dialog appears during CI
   or local `make test` runs
@@ -39,6 +41,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `{L}` search-pattern token now matches Unicode letters; accented Latin
+  (`é`, `ê`, `ü`, …), Cyrillic, Greek and all other Unicode letter categories
+  are captured correctly — was limited to ASCII `[a-zA-Z]`, now uses
+  `[^\W\d_]` which covers all `\w` characters that are neither digits nor
+  underscores
+- Qt built-in translations are now loaded alongside the application catalogue
+  so dialog buttons (`OK`, `Cancel`, `Yes`, `No`, …) are correctly translated
+  when a non-English language is selected
 - Pattern help dialog: HTML-escaped `{1:&lt;12}` so the browser no longer
   interprets `<12>` as an HTML tag
 - Fifteen `# pragma: no cover` guards on reachable logic replaced by targeted

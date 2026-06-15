@@ -242,6 +242,87 @@ class TestRenameUsingPatterns:
         )
         assert name == "abc_photo_007"
 
+    # ------------------------------------------------------------------
+    # Unicode coverage for {L}
+    # ------------------------------------------------------------------
+
+    def test_token_l_matches_accented_latin(self):
+        # ê, é, à and similar accented letters must be captured by {L}
+        name, _ = filetools.rename_using_patterns(
+            "été_42", _p("été_42"), "{L}_{#}", "saison_{1}_num_{2}", 1
+        )
+        assert name == "saison_été_num_42"
+
+    def test_token_l_matches_full_unicode_word(self):
+        # naïve: all characters are Unicode letters — {L} should capture the whole word
+        name, _ = filetools.rename_using_patterns(
+            "naïve", _p("naïve"), "{L}", "mot_{1}", 1
+        )
+        assert name == "mot_naïve"
+
+    def test_token_l_matches_mixed_accented_and_digit(self):
+        # café123 — {L} takes the letters, {#} takes the digits
+        name, _ = filetools.rename_using_patterns(
+            "café123", _p("café123"), "{L}{#}", "{1}_{2}", 1
+        )
+        assert name == "café_123"
+
+    def test_token_l_does_not_match_digits(self):
+        # {L} must not consume digits: "007" should produce no match with "{L}"
+        # because {L} matches zero or more letters then the rest must also match —
+        # but "IMG_{L}" against "IMG_007" captures "" for {L}, so the whole pattern
+        # still substitutes; verify that {1} (the {L} capture) is empty, not "007".
+        name, _ = filetools.rename_using_patterns(
+            "IMG_007", _p("IMG_007"), "IMG_{L}{#}", "photo_{1}_{2}", 1
+        )
+        # {L} captures "" (no letters), {#} captures "007"
+        assert name == "photo__007"
+
+    def test_token_l_does_not_match_underscore(self):
+        # underscore is not a letter — {L} must stop before it
+        name, _ = filetools.rename_using_patterns(
+            "abc_def", _p("abc_def"), "{L}_{L}", "{1}-{2}", 1
+        )
+        assert name == "abc-def"
+
+    def test_token_l_matches_cyrillic(self):
+        # Cyrillic characters are Unicode letters
+        name, _ = filetools.rename_using_patterns(
+            "файл_01", _p("файл_01"), "{L}_{#}", "doc_{1}_{2}", 1
+        )
+        assert name == "doc_файл_01"
+
+    # ------------------------------------------------------------------
+    # Unicode coverage for {C} and {X} (regression guard)
+    # ------------------------------------------------------------------
+
+    def test_token_c_matches_unicode_nonspace(self):
+        # {C} must capture accented words (non-whitespace Unicode)
+        name, _ = filetools.rename_using_patterns(
+            "été 2024", _p("été 2024"), "{C} {#}", "{1}_{2}", 1
+        )
+        assert name == "été_2024"
+
+    def test_token_x_matches_unicode_string(self):
+        # {X} must match an entirely Unicode name
+        name, _ = filetools.rename_using_patterns(
+            "café crème", _p("café crème"), "{X}", "renamed", 1
+        )
+        assert name == "renamed"
+
+    # ------------------------------------------------------------------
+    # {#} stays ASCII-only (intentional design)
+    # ------------------------------------------------------------------
+
+    def test_hash_does_not_capture_unicode_digits(self):
+        # {#} uses [0-9] (ASCII only): Arabic-Indic digits are not consumed.
+        # The pattern "file{#}" matches "file" + "" (zero ASCII digits), so
+        # re.sub replaces "file" with "num_" and leaves the Unicode digits intact.
+        name, _ = filetools.rename_using_patterns(
+            "file٤٢", _p("file٤٢"), "file{#}", "num_{1}", 1
+        )
+        assert name == "num_٤٢"
+
 
 class TestRenameUsingPlainText:
     def test_basic_replace(self):

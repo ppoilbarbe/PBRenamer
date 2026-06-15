@@ -128,7 +128,7 @@ def replace_duplicated(name: str, path: str) -> tuple[str, str]:
 
 _PATTERN_TOKENS: dict[str, str] = {
     "{#}": "([0-9]*)",
-    "{L}": "([a-zA-Z]*)",
+    "{L}": "([^\\W\\d_]*)",
     "{C}": r"([\S]*)",
     "{X}": r"([\S\s]*)",
     "{@}": "(?:.*)",  # non-capturing: does not consume a group number

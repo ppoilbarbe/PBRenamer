@@ -13,7 +13,7 @@ from __future__ import annotations
 import gettext
 from pathlib import Path
 
-from PySide6.QtCore import QSettings, QTranslator
+from PySide6.QtCore import QLibraryInfo, QSettings, QTranslator
 from PySide6.QtWidgets import QApplication
 
 from pbrenamer.platform import AppDirs, system_language
@@ -105,3 +105,10 @@ def setup(app: QApplication) -> None:
 
     translator = _GettextTranslator(t, app)
     app.installTranslator(translator)
+
+    # Load Qt's own translations (dialog buttons, standard item views, etc.)
+    qt_translations = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
+    qt_lang = lang.split("_")[0] if lang else ""
+    qt_translator = QTranslator(app)
+    if qt_translator.load(f"qtbase_{qt_lang}", qt_translations):
+        app.installTranslator(qt_translator)

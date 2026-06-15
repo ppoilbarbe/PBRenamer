@@ -200,7 +200,9 @@ compatibility. All new code must import from `pbrenamer.platform`.
 ## Internationalisation (i18n)
 
 Translatable strings are wrapped with `_()` (installed into builtins by
-`i18n.setup()`). The full toolchain:
+`i18n.setup()`). On startup, `setup()` also loads Qt's own translation
+catalogue (`qtbase_<lang>.qm`) so that built-in dialog buttons (`OK`,
+`Cancel`, `Yes`, `No`, …) are translated automatically.  The full toolchain:
 
 ```
 Python source + *_ui.py
@@ -285,12 +287,12 @@ pytest -k test_foo      # run a single test by name
 pytest --no-cov         # skip coverage instrumentation
 ```
 
-Tests live in `tests/` and are organised by module:
+Tests live in `tests/`, organised by module:
 
 | Test file                    | What it covers |
 |------------------------------|----------------|
 | `test_argparse_qt.py`        | `add_qt_arguments`: flag accumulation into `args.qt_args`, value flags, `nargs=0` flags, rejection of unknown flags |
-| `test_filetools.py`          | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow |
+| `test_filetools.py`          | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow, Unicode coverage for pattern tokens (`{L}`, `{C}`, `{X}`, `{#}`) |
 | `test_headless.py`           | CLI argument parser (defaults, flags, unknown-flag rejection), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
 | `test_i18n.py`               | `i18n.setup()` — language selection, env-var override, fallback to `en`, builtins injection |
 | `test_main_window.py`        | Full main window: `_on_preview`, `_refresh_conflicts`, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks |
