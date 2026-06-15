@@ -25,6 +25,7 @@ PBRenamer/
 ├── src/pbrenamer/
 │   ├── __init__.py              version / author metadata
 │   ├── __main__.py              CLI entry point — GUI mode or headless rename (--search/--saved)
+│   ├── argparse_qt.py           argparse integration for Qt CLI options (add_qt_arguments)
 │   ├── i18n.py                  gettext bootstrap; language from platform.dirs
 │   ├── settings.py              application preferences — log level (QSettings)
 │   ├── xdg.py                   compat re-export → platform.dirs (do not use directly)
@@ -55,15 +56,25 @@ PBRenamer/
 │       ├── widgets.py           custom reusable widgets (WhitespaceLineEdit, …)
 │       └── window_state.py      persistent window geometry and splitter positions
 ├── tests/
+│   ├── test_argparse_qt.py      add_qt_arguments — flag accumulation, value/nargs=0 flags, unknown rejection
 │   ├── test_filetools.py        listing, transforms, rename engine, disk I/O, newnum workflow
-│   ├── test_headless.py         CLI parser, headless plan/postproc/conflict/run, --saved
-│   ├── test_main_window.py      main window smoke tests
+│   ├── test_headless.py         CLI argument parser (defaults, flags, unknown-flag rejection), --saved preset loading + CLI overrides, _apply_postproc, _plan (all three modes, keep-ext, postproc, syntax errors), _detect_conflicts, _headless_run integration
+│   ├── test_i18n.py             i18n bootstrap — setup(), language selection, fallback chain
+│   ├── test_main_window.py      full main window: _on_preview, _refresh_conflicts, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks
 │   ├── test_meta_audio.py       audio metadata — field registry, mutagen parsing, real file
 │   ├── test_meta_image.py       EXIF/IPTC metadata (image_meta) — main IFD, sub-IFD, encoding, real file
 │   ├── test_meta_video.py       video metadata — field registry, pymediainfo parsing, real file
+│   ├── test_platform_bookmarks.py  platform.bookmarks — system dirs, GTK bookmarks, user-defined shortcuts
+│   ├── test_platform_dirs.py    cross-platform directory resolution (XDG / macOS / Windows)
 │   ├── test_platform_fs.py      case-sensitivity probe, path comparison, conflict keys
+│   ├── test_platform_locale.py  system language detection — env vars, locale.getlocale fallback
+│   ├── test_presets.py          PatternPresets — CRUD, persistence, migration
 │   ├── test_replacement.py      replacement parser, validator, formatter, substitutor
-│   └── test_undo.py             undo stack
+│   ├── test_resources.py        bundled resources and xdg re-export shim
+│   ├── test_settings.py         Settings — log level, shortcuts, toolbar-state, preview-delay persistence
+│   ├── test_ui_dialogs.py       AboutDialog, SettingsDialog, HistoryDialog, ShortcutsDialog, FileInfoWindow, PatternHelpDialog, WhitespaceLineEdit
+│   ├── test_undo.py             UndoManager — add_batch, undo (single/multi-file, LIFO), can_undo, clear, __len__
+│   └── test_window_state.py     WindowState — geometry/splitter persistence
 ├── docs/                        Sphinx documentation source
 ├── tools/
 │   ├── extract_ui_strings.py    extracts strings from *_ui.py for pybabel
@@ -276,17 +287,27 @@ pytest --no-cov         # skip coverage instrumentation
 
 Tests live in `tests/` and are organised by module:
 
-| Test file              | What it covers |
-|------------------------|----------------|
-| `test_filetools.py`    | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow |
-| `test_headless.py`     | CLI argument parser (defaults, flags, rejection of invalid values), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
-| `test_meta_audio.py`   | Audio metadata: field registry, integer/date parsing, `read_field` with and without mutagen, easy-tag and info-tag fields, real MP3 fixture |
-| `test_meta_image.py`   | EXIF/IPTC metadata (`image_meta`): main IFD, sub-IFD, encoding, case-insensitive lookup, Pillow-unavailable path, real JPEG fixture |
-| `test_meta_video.py`   | Video metadata: field registry, encoded-date parsing, track selection, duration/bitrate/resolution/codec fields, library-unavailable path, real video fixture |
-| `test_replacement.py`  | Replacement-string parser (fields, defaults, align), validator, all built-in fields (`{num}`, `{date}`, `{datetime}`, `{dir}`, `{mdatetime}`, `{im:…}`, `{au:…}`, `{vi:…}`, `{re:…}`), formatting and error paths |
-| `test_platform_fs.py`  | `is_case_sensitive` probe, `same_file_path` and `conflict_key` on both case-sensitive and case-insensitive filesystems |
-| `test_undo.py`         | `UndoManager` — `add_batch`, `undo` (single and multi-file batches, LIFO order), `can_undo`, `clear` |
-| `test_main_window.py`  | Main window smoke tests (title, minimum size, initial button state) |
+| Test file                    | What it covers |
+|------------------------------|----------------|
+| `test_argparse_qt.py`        | `add_qt_arguments`: flag accumulation into `args.qt_args`, value flags, `nargs=0` flags, rejection of unknown flags |
+| `test_filetools.py`          | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow |
+| `test_headless.py`           | CLI argument parser (defaults, flags, unknown-flag rejection), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
+| `test_i18n.py`               | `i18n.setup()` — language selection, env-var override, fallback to `en`, builtins injection |
+| `test_main_window.py`        | Full main window: `_on_preview`, `_refresh_conflicts`, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks |
+| `test_meta_audio.py`         | Audio metadata: field registry, integer/date parsing, `read_field` with and without mutagen, easy-tag and info-tag fields, real MP3 fixture |
+| `test_meta_image.py`         | EXIF/IPTC metadata (`image_meta`): main IFD, sub-IFD, encoding, case-insensitive lookup, Pillow-unavailable path, real JPEG fixture |
+| `test_meta_video.py`         | Video metadata: field registry, encoded-date parsing, track selection, duration/bitrate/resolution/codec fields, library-unavailable path, real video fixture |
+| `test_platform_bookmarks.py` | `platform.bookmarks`: system directories, GTK bookmark parsing (Linux), user-defined shortcuts CRUD |
+| `test_platform_dirs.py`      | `AppDirs` factory — `XdgDirs` (Linux), `_MacDirs`, `_WindowsDirs`; `config_home`, `data_home`, `cache_home` |
+| `test_platform_fs.py`        | `is_case_sensitive` probe, `same_file_path` and `conflict_key` on both case-sensitive and case-insensitive filesystems |
+| `test_platform_locale.py`    | `system_language()` — env-var chain (LANGUAGE, LC_ALL, LANG), `locale.getlocale()` fallback, normalisation |
+| `test_presets.py`            | `PatternPresets` — CRUD (add, rename, delete, reorder), persistence to JSON, migration from legacy format |
+| `test_replacement.py`        | Replacement-string parser (fields, defaults, align, case-transform), validator, all built-in fields (`{num}`, `{date}`, `{datetime}`, `{dir}`, `{mdatetime}`, `{im:…}`, `{au:…}`, `{vi:…}`, `{re:…}`), formatting and error paths |
+| `test_resources.py`          | Bundled resource loading (`get_resource`), `xdg.py` re-export shim |
+| `test_settings.py`           | `Settings` — log level, shortcuts, toolbar-state and preview-delay persistence (QSettings) |
+| `test_ui_dialogs.py`         | `AboutDialog`, `SettingsDialog`, `HistoryDialog`, `ShortcutsDialog`, `FileInfoWindow`, `PatternHelpDialog`, `WhitespaceLineEdit` |
+| `test_undo.py`               | `UndoManager` — `add_batch`, `undo` (single and multi-file batches, LIFO order), `can_undo`, `clear`, `__len__` |
+| `test_window_state.py`       | `WindowState` — geometry and splitter-position persistence (save / restore cycle) |
 
 Use `qtbot` from `pytest-qt` for all widget interactions.
 Never instantiate `QApplication` manually — `pytest-qt` manages it.

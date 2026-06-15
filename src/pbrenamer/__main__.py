@@ -6,6 +6,8 @@ import os
 import sys
 from collections import defaultdict
 
+from pbrenamer.argparse_qt import add_qt_arguments
+
 _log = logging.getLogger(__name__)
 
 # Map --case value → replace_capitalization() mode index
@@ -207,6 +209,8 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Suppress informational messages (WARNING level)"
         " — overrides saved preferences",
     )
+
+    add_qt_arguments(parser)
 
     return parser
 
@@ -557,9 +561,8 @@ def main() -> None:
         level=logging.WARNING,
     )
 
-    # parse_known_args leaves Qt-specific flags (--style, --platform, …)
-    # untouched so they can be forwarded to QApplication.
-    _ns, qt_argv = _build_parser().parse_known_args()
+    parser = _build_parser()
+    _ns = parser.parse_args()
 
     if _ns.help_search or _ns.help_replace:
         # Help export — no Qt needed; NullTranslations returns msgids as-is
@@ -581,10 +584,10 @@ def main() -> None:
         _headless_run(_ns)
         return
 
-    _gui_main(_ns, qt_argv)  # pragma: no cover — GUI mode; not invoked by tests
+    _gui_main(_ns)  # pragma: no cover — GUI mode; not invoked by tests
 
 
-def _gui_main(_ns, qt_argv):  # pragma: no cover
+def _gui_main(_ns):  # pragma: no cover
     # GUI mode — only reached when neither --search nor --saved is given.
     # Tests never enter this path: they invoke _headless_run() directly
     # and rely on pytest-qt for the QApplication instance.
@@ -594,7 +597,7 @@ def _gui_main(_ns, qt_argv):  # pragma: no cover
     from pbrenamer import __version__
     from pbrenamer.resources import path as _resource
 
-    app = QApplication([sys.argv[0]] + qt_argv)
+    app = QApplication([sys.argv[0]] + _ns.qt_args)
     app.setApplicationName("PBRenamer")
     app.setApplicationVersion(__version__)
     app.setOrganizationName("ppoilbarbe")

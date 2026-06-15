@@ -80,7 +80,7 @@ $(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
 	@printf "$(C)Updating .po files...$(R)\n"
 	$(CONDA_RUN) pybabel update -i $(POT_FILE) -d $(LOCALE_DIR) \
 	    -D pbrenamer --no-fuzzy-matching
-	$(CONDA_RUN) python tools/fix_pot_date.py $(LOCALE_DIR)
+	$(CONDA_RUN) python tools/fix_po_files.py $(LOCALE_DIR)
 	@printf "$(C)Compiling .mo files...$(R)\n"
 	$(CONDA_RUN) pybabel compile -d $(LOCALE_DIR) -D pbrenamer
 	@printf "$(G)Done.$(R)\n"

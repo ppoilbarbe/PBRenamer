@@ -20,6 +20,7 @@ Publisher: PBMou | Author: Marcel Spock <mrspock@cardolan.net> | License: GPLv3
 src/pbrenamer/
 ├── __init__.py          version, author metadata
 ├── __main__.py          CLI entry point
+├── argparse_qt.py       argparse integration for Qt CLI options (add_qt_arguments)
 ├── i18n.py              gettext bootstrap
 ├── xdg.py               compat shim → platform.dirs (do not import directly)
 ├── core/

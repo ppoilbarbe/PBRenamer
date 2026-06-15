@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tools/po_check.py`: PO file inspection tool using the babel library
   (statistics, untranslated entries, regex search, language diff) — replaces
   ad-hoc `grep`/`msgfmt` usage that breaks on multi-line entries
+- `src/pbrenamer/argparse_qt.py`: `add_qt_arguments()` declares Qt CLI flags
+  (`--style`, `--platform`, …) as a proper argparse argument group; collected in
+  `args.qt_args` as single-dash tokens ready for `QApplication`
+- `tools/fix_po_files.py`: utility to normalise PO file formatting in bulk
 - Comprehensive test suite: 917 tests covering all source modules at 100%;
   includes the full main window (`_on_preview`, `_refresh_conflicts`, context
   menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings
@@ -25,6 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Headless Qt test execution via `QT_QPA_PLATFORM=offscreen` in `conftest.py`;
   `QMenu.exec` patched at module level so no blocking dialog appears during CI
   or local `make test` runs
+
+### Changed
+
+- `main()` now uses `parse_args()` instead of `parse_known_args()`; unknown
+  flags are rejected natively by argparse — `_validate_qt_argv` removed
 
 ### Fixed
 

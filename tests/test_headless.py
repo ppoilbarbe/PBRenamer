@@ -59,99 +59,99 @@ def _make_files(root, *names: str) -> list[str]:
 
 class TestParser:
     def test_search_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args([])
+        ns = _build_parser().parse_args([])
         assert ns.search is None
 
     def test_search_short_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "foo"])
+        ns = _build_parser().parse_args(["-s", "foo"])
         assert ns.search == "foo"
 
     def test_saved_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args([])
+        ns = _build_parser().parse_args([])
         assert ns.saved is None
 
     def test_saved_flag(self):
-        ns, _ = _build_parser().parse_known_args(["--saved", "mypreset"])
+        ns = _build_parser().parse_args(["--saved", "mypreset"])
         assert ns.saved == "mypreset"
 
     def test_replace_short_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "-r", "y"])
+        ns = _build_parser().parse_args(["-s", "x", "-r", "y"])
         assert ns.replace == "y"
 
     def test_replace_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.replace is None
 
     def test_mode_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.mode is None
 
     def test_mode_regex(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--mode", "regex"])
+        ns = _build_parser().parse_args(["-s", "x", "--mode", "regex"])
         assert ns.mode == "regex"
 
     def test_mode_plain(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--mode", "plain"])
+        ns = _build_parser().parse_args(["-s", "x", "--mode", "plain"])
         assert ns.mode == "plain"
 
     def test_list_default_files(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.list == "files"
 
     def test_list_dirs(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--list", "dirs"])
+        ns = _build_parser().parse_args(["-s", "x", "--list", "dirs"])
         assert ns.list == "dirs"
 
     def test_recurse_default_false(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.recurse is False
 
     def test_recurse_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--recurse"])
+        ns = _build_parser().parse_args(["-s", "x", "--recurse"])
         assert ns.recurse is True
 
     def test_no_recurse_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--no-recurse"])
+        ns = _build_parser().parse_args(["-s", "x", "--no-recurse"])
         assert ns.recurse is False
 
     def test_keep_ext_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.keep_ext is None
 
     def test_keep_ext_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--keep-ext"])
+        ns = _build_parser().parse_args(["-s", "x", "--keep-ext"])
         assert ns.keep_ext is True
 
     def test_no_keep_ext_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--no-keep-ext"])
+        ns = _build_parser().parse_args(["-s", "x", "--no-keep-ext"])
         assert ns.keep_ext is False
 
     def test_filter_default_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.filter_glob is None
 
     def test_filter_value(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--filter", "*.jpg"])
+        ns = _build_parser().parse_args(["-s", "x", "--filter", "*.jpg"])
         assert ns.filter_glob == "*.jpg"
 
     def test_accent_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.accent is None
 
     def test_accent_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--accent"])
+        ns = _build_parser().parse_args(["-s", "x", "--accent"])
         assert ns.accent is True
 
     def test_dup_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.dup is None
 
     def test_dup_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--dup"])
+        ns = _build_parser().parse_args(["-s", "x", "--dup"])
         assert ns.dup is True
 
     def test_sep_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.sep is None
 
     @pytest.mark.parametrize(
@@ -167,7 +167,7 @@ class TestParser:
         ],
     )
     def test_sep_values(self, value):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--sep", value])
+        ns = _build_parser().parse_args(["-s", "x", "--sep", value])
         assert ns.sep == value
 
     def test_sep_invalid_rejected(self):
@@ -175,20 +175,20 @@ class TestParser:
             _build_parser().parse_args(["-s", "x", "--sep", "camel"])
 
     def test_case_raw_default_is_none(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.case is None
 
     @pytest.mark.parametrize("value", ["none", "upper", "lower", "capitalize", "title"])
     def test_case_values(self, value):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--case", value])
+        ns = _build_parser().parse_args(["-s", "x", "--case", value])
         assert ns.case == value
 
     def test_confirm_default_false(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x"])
+        ns = _build_parser().parse_args(["-s", "x"])
         assert ns.confirm is False
 
     def test_confirm_flag(self):
-        ns, _ = _build_parser().parse_known_args(["-s", "x", "--confirm"])
+        ns = _build_parser().parse_args(["-s", "x", "--confirm"])
         assert ns.confirm is True
 
     def test_mode_invalid_rejected(self):
@@ -819,19 +819,19 @@ class TestHeadlessRun:
 
 class TestHelpExport:
     def test_help_search_default_is_false(self):
-        ns, _ = _build_parser().parse_known_args([])
+        ns = _build_parser().parse_args([])
         assert ns.help_search is False
 
     def test_help_replace_default_is_false(self):
-        ns, _ = _build_parser().parse_known_args([])
+        ns = _build_parser().parse_args([])
         assert ns.help_replace is False
 
     def test_help_search_flag(self):
-        ns, _ = _build_parser().parse_known_args(["--help-search"])
+        ns = _build_parser().parse_args(["--help-search"])
         assert ns.help_search is True
 
     def test_help_replace_flag(self):
-        ns, _ = _build_parser().parse_known_args(["--help-replace"])
+        ns = _build_parser().parse_args(["--help-replace"])
         assert ns.help_replace is True
 
     def test_help_search_outputs_html(self, capsys, monkeypatch):
