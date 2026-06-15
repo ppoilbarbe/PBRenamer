@@ -24,8 +24,24 @@ def add_qt_arguments(parser: argparse.ArgumentParser) -> None:
     Each ``--option [value]`` is stored as ``["-option"]`` or
     ``["-option", "value"]`` and appended to ``args.qt_args``, ready to be
     passed directly to ``QApplication``.
+
+    Qt options are hidden from the ``usage:`` line to reduce noise; they still
+    appear in the "Qt options" section of the full ``--help`` output.
     """
     parser.set_defaults(qt_args=[])
+
+    base_formatter = parser.formatter_class
+
+    class _Formatter(base_formatter):
+        def add_usage(self, usage, actions, groups, prefix=None):
+            super().add_usage(
+                usage,
+                [a for a in actions if not isinstance(a, _QtArgAction)],
+                groups,
+                prefix,
+            )
+
+    parser.formatter_class = _Formatter
     group = parser.add_argument_group(
         "Qt options",
         "Passed through to the Qt framework (see Qt documentation for details).",

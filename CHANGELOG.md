@@ -19,7 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ad-hoc `grep`/`msgfmt` usage that breaks on multi-line entries
 - `src/pbrenamer/argparse_qt.py`: `add_qt_arguments()` declares Qt CLI flags
   (`--style`, `--platform`, …) as a proper argparse argument group; collected in
-  `args.qt_args` as single-dash tokens ready for `QApplication`
+  `args.qt_args` as single-dash tokens ready for `QApplication`; Qt options are
+  hidden from the `usage:` line to reduce noise while remaining fully visible in
+  the `--help` output
 - `tools/fix_po_files.py`: utility to normalise PO file formatting in bulk
 - Comprehensive test suite: 917 tests covering all source modules at 100%;
   includes the full main window (`_on_preview`, `_refresh_conflicts`, context
