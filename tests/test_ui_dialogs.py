@@ -506,6 +506,23 @@ class TestDetectType:
         ):
             assert _detect_type(str(p)) == "video"
 
+    def test_mp4_not_classified_as_audio_when_video_track_present(self, tmp_path):
+        # Regression: audio_meta.can_read used to return True for MP4 containers
+        # because mutagen can read their tags; now it returns False when pymediainfo
+        # finds a video track. Even if audio_meta.can_read were True, video is
+        # checked first in _detect_type and must win.
+        from pbrenamer.core import audio_meta, image_meta, video_meta
+        from pbrenamer.ui.file_info_window import _detect_type
+
+        p = tmp_path / "movie.mp4"
+        p.touch()
+        with (
+            patch.object(image_meta, "can_read", return_value=False),
+            patch.object(video_meta, "can_read", return_value=True),
+            patch.object(audio_meta, "can_read", return_value=True),
+        ):
+            assert _detect_type(str(p)) == "video"
+
 
 class TestFmt:
     def test_datetime(self):

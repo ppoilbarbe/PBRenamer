@@ -18,6 +18,14 @@ except ImportError:  # pragma: no cover — required dep; absent only outside pr
     _MUTAGEN = False
     _log.debug("mutagen not available — {au:…} metadata fields will always be empty")
 
+try:
+    from pymediainfo import MediaInfo as _MediaInfo
+
+    _MEDIAINFO = True
+except ImportError:  # pragma: no cover
+    _MediaInfo = None  # type: ignore[assignment,misc]
+    _MEDIAINFO = False
+
 
 FIELD_REGISTRY: dict[str, FieldInfo] = {
     "title": FieldInfo("Track title", FieldType.STRING),
@@ -116,13 +124,28 @@ def _read_easy_field(path: str, key: str) -> Any | None:
 
 
 def can_read(path: str) -> bool:
-    """Return True if mutagen recognises *path* as a supported audio file."""
+    """Return True if *path* is a supported audio file (not a video file).
+
+    Uses mutagen to probe the container, then pymediainfo (when available) to
+    exclude files that contain a video track — MP4 and similar containers can
+    hold both audio and video, but only pure audio files should match {au:…}.
+    """
     if not _MUTAGEN:
         return False
     try:
-        return mutagen.File(path) is not None
+        if mutagen.File(path) is None:
+            return False
     except Exception:  # noqa: BLE001
         return False
+    # Exclude video containers that mutagen can partially read (e.g. MP4, MKV).
+    if _MEDIAINFO:
+        try:
+            info = _MediaInfo.parse(path)
+            if any(t.track_type == "Video" for t in info.tracks):
+                return False
+        except Exception:  # noqa: BLE001
+            pass
+    return True
 
 
 def read_field(path: str, field: str) -> Any | None:

@@ -356,6 +356,17 @@ class TestReadEasyFieldYearEdgeCases:
 # ---------------------------------------------------------------------------
 
 
+def _mock_mediainfo(has_video: bool):
+    """Return a mock _MediaInfo whose parse() result has or lacks a video track."""
+    mock_track = MagicMock()
+    mock_track.track_type = "Video" if has_video else "Audio"
+    mock_info = MagicMock()
+    mock_info.tracks = [mock_track]
+    mock_cls = MagicMock()
+    mock_cls.parse.return_value = mock_info
+    return mock_cls
+
+
 class TestCanRead:
     def test_returns_false_when_mutagen_unavailable(self, tmp_path):
         f = tmp_path / "song.mp3"
@@ -363,12 +374,53 @@ class TestCanRead:
         with patch.object(audio_meta, "_MUTAGEN", False):
             assert audio_meta.can_read(str(f)) is False
 
-    def test_returns_true_for_supported_format(self, tmp_path):
+    def test_returns_true_for_pure_audio_format(self, tmp_path):
         f = tmp_path / "song.ogg"
         f.touch()
-        with patch.object(audio_meta, "_MUTAGEN", True):
-            with patch("mutagen.File", return_value=MagicMock()):
-                assert audio_meta.can_read(str(f)) is True
+        with (
+            patch.object(audio_meta, "_MUTAGEN", True),
+            patch("mutagen.File", return_value=MagicMock()),
+            patch.object(audio_meta, "_MEDIAINFO", True),
+            patch.object(audio_meta, "_MediaInfo", _mock_mediainfo(has_video=False)),
+        ):
+            assert audio_meta.can_read(str(f)) is True
+
+    def test_returns_false_for_video_container(self, tmp_path):
+        # MP4 with a video track: mutagen reads it, but it is NOT an audio file.
+        f = tmp_path / "clip.mp4"
+        f.touch()
+        with (
+            patch.object(audio_meta, "_MUTAGEN", True),
+            patch("mutagen.File", return_value=MagicMock()),
+            patch.object(audio_meta, "_MEDIAINFO", True),
+            patch.object(audio_meta, "_MediaInfo", _mock_mediainfo(has_video=True)),
+        ):
+            assert audio_meta.can_read(str(f)) is False
+
+    def test_returns_true_when_mediainfo_unavailable(self, tmp_path):
+        # pymediainfo not installed: fall back to mutagen-only probe.
+        f = tmp_path / "song.mp3"
+        f.touch()
+        with (
+            patch.object(audio_meta, "_MUTAGEN", True),
+            patch("mutagen.File", return_value=MagicMock()),
+            patch.object(audio_meta, "_MEDIAINFO", False),
+        ):
+            assert audio_meta.can_read(str(f)) is True
+
+    def test_returns_true_when_mediainfo_raises(self, tmp_path):
+        # pymediainfo present but parse() fails: fall back to mutagen result.
+        f = tmp_path / "song.flac"
+        f.touch()
+        mock_cls = MagicMock()
+        mock_cls.parse.side_effect = Exception("parse error")
+        with (
+            patch.object(audio_meta, "_MUTAGEN", True),
+            patch("mutagen.File", return_value=MagicMock()),
+            patch.object(audio_meta, "_MEDIAINFO", True),
+            patch.object(audio_meta, "_MediaInfo", mock_cls),
+        ):
+            assert audio_meta.can_read(str(f)) is True
 
     def test_returns_false_for_unsupported_format(self, tmp_path):
         f = tmp_path / "doc.txt"
