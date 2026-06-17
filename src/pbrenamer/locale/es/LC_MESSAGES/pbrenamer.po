@@ -19,813 +19,87 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-msgid "Edit Shortcuts"
-msgstr "Editar atajos"
+msgid "Application version"
+msgstr "Versión de la aplicación"
 
 # ==AUTO== Automatically translated
-msgid "Move up"
-msgstr "Subir"
+msgid "A graphical batch file renaming utility."
+msgstr "Una utilidad gráfica para renombrar archivos por lotes."
 
 # ==AUTO== Automatically translated
-msgid "Move down"
-msgstr "Bajar"
+msgid "License: GPLv3"
+msgstr "Licencia: GPLv3"
 
 # ==AUTO== Automatically translated
-msgid "Remove"
-msgstr "Eliminar"
+msgid "About PBRenamer"
+msgstr "Acerca de PBRenamer"
 
 # ==AUTO== Automatically translated
-msgid "Saved shortcuts:"
-msgstr "Atajos guardados:"
+msgid "Settings"
+msgstr "Ajustes"
 
 # ==AUTO== Automatically translated
-msgid "File information"
-msgstr "Información del archivo"
+msgid "Select the interface language"
+msgstr "Seleccionar el idioma de la interfaz"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Campo"
+msgid "Language:"
+msgstr "Idioma:"
 
 # ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Descripción"
+msgid "Set the application logging verbosity"
+msgstr "Establecer el nivel de verbosidad del registro de la aplicación"
 
 # ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Valor"
+msgid "Log level:"
+msgstr "Nivel de registro:"
 
 # ==AUTO== Automatically translated
-msgid "Image"
-msgstr "Imagen"
+msgid "Behaviour"
+msgstr "Comportamiento"
 
 # ==AUTO== Automatically translated
-msgid "Audio"
-msgstr "Audio"
+msgid "Restore last opened directory"
+msgstr "Restaurar el último directorio abierto"
 
 # ==AUTO== Automatically translated
-msgid "Video"
-msgstr "Vídeo"
-
-# ==AUTO== Automatically translated
-msgid "Directory"
-msgstr "Directorio"
-
-# ==AUTO== Automatically translated
-msgid "Other"
-msgstr "Otro"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Información del archivo — {name}"
-
-# ==AUTO== Automatically translated
-msgid "File:"
-msgstr "Archivo:"
-
-# ==AUTO== Automatically translated
-msgid "Type:"
-msgstr "Tipo:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Metadatos de imagen (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Metadatos de audio"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Metadatos de vídeo"
-
-# ==AUTO== Automatically translated
-msgid "Select a single file to display its information."
-msgstr "Seleccione un único archivo para mostrar su información."
-
-# ==AUTO== Automatically translated
-msgid "Select a file to display its information."
-msgstr "Seleccione un archivo para mostrar su información."
-
-# ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Campos universales"
-
-# ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Fecha de hoy"
-
-# ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Fecha y hora actuales"
-
-# ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Fecha/hora de modificación del archivo"
-
-# ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "No disponible"
-
-# ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Fecha/hora de creación del archivo"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Nombre de la carpeta padre"
-
-# ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Campos de lote"
-
-# ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Calculado"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Texto completo coincidente"
-
-# ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Grupos de captura"
-
-# ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Contador autoincremental"
-
-# ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Contador sin conflictos"
-
-# ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Grupo regex nombrado"
-
-# ==AUTO== Automatically translated
-msgid "System default"
-msgstr "Predeterminado del sistema"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
-"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
-"replacement field."
+msgid "On startup, reopen the directory that was active in the previous session"
 msgstr ""
-"Los tokens actúan como comodines tipados. Los segmentos entre <b>{1}</b>,"
-" <b>{2}</b>… son <em>capturados</em> y pueden reutilizarse en el campo de"
-" reemplazo."
+"Al inicio, volver a abrir el directorio que estaba activo en la sesión "
+"anterior"
 
 # ==AUTO== Automatically translated
-msgid "One or more digits (0–9)"
-msgstr "Uno o más dígitos (0–9)"
-
-# ==AUTO== Automatically translated
-msgid "One or more letters (a–z, A–Z and Unicode letters)"
-msgstr "Una o más letras (a–z, A–Z y letras Unicode)"
-
-# ==AUTO== Automatically translated
-msgid "One or more non-whitespace characters"
-msgstr "Uno o más caracteres que no sean espacios en blanco"
-
-# ==AUTO== Automatically translated
-msgid "Any sequence of characters, including empty"
-msgstr "Cualquier secuencia de caracteres, incluida la vacía"
-
-# ==AUTO== Automatically translated
-msgid "Trash — matches and discards a segment (not captured)"
-msgstr "Papelera — coincide con un segmento y lo descarta (no capturado)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
-msgstr ""
-"Grupo de captura — el texto coincidente se vincula a {1}, {2}… en el "
-"reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Example"
-msgstr "Ejemplo"
-
-# ==AUTO== Automatically translated
-msgid "Search:"
-msgstr "Buscar:"
-
-# ==AUTO== Automatically translated
-msgid "Replace:"
-msgstr "Reemplazar:"
+msgid "Restore toolbar state"
+msgstr "Restaurar estado de la barra de herramientas"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Full Python <code>re</code>-module syntax. The match is applied to the "
-"file stem (or full name if <em>Keep extension</em> is unchecked)."
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
 msgstr ""
-"Sintaxis completa del módulo Python <code>re</code>. La coincidencia se "
-"aplica al nombre base del archivo (o al nombre completo si <em>Conservar "
-"extensión</em> está desactivado)."
-
-# ==AUTO== Automatically translated
-msgid "Any single character"
-msgstr "Cualquier carácter individual"
-
-# ==AUTO== Automatically translated
-msgid "Any sequence (greedy), non-empty variant"
-msgstr "Cualquier secuencia (codiciosa), variante no vacía"
-
-# ==AUTO== Automatically translated
-msgid "One or more digits"
-msgstr "Uno o más dígitos"
-
-# ==AUTO== Automatically translated
-msgid "Word characters (letters, digits, _)"
-msgstr "Caracteres de palabra (letras, dígitos, _)"
+"Al inicio, restaurar los ajustes de la barra de herramientas de la sesión"
+" anterior (modo de visualización, recursivo, conservar extensión, vista "
+"previa automática, filtro)"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
-"replacement"
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
 msgstr ""
-"Grupo de captura numerado → <code>\\1</code>, <code>\\2</code>… en el "
-"reemplazo"
+"Retardo de antirrebote antes de que la vista previa se actualice tras un "
+"cambio en el patrón de búsqueda o reemplazo (ms)"
 
 # ==AUTO== Automatically translated
-msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
-msgstr "Grupo de captura con nombre → <code>\\g&lt;name&gt;</code> en el reemplazo"
+msgid "Auto-preview delay:"
+msgstr "Retardo de vista previa automática:"
 
 # ==AUTO== Automatically translated
-msgid "Case-insensitive flag"
-msgstr "Indicador sin distinción de mayúsculas"
+msgid " ms"
+msgstr " ms"
 
 # ==AUTO== Automatically translated
-msgid "Start / end of the name"
-msgstr "Inicio / fin del nombre"
-
-# ==AUTO== Automatically translated
-msgid ""
-"The search field is matched as a literal string — no wildcards, no "
-"special characters. Every occurrence of the exact text in the file name "
-"is replaced."
-msgstr ""
-"El campo de búsqueda se compara como cadena literal — sin comodines, sin "
-"caracteres especiales. Cada aparición del texto exacto en el nombre de "
-"archivo se reemplaza."
-
-# ==AUTO== Automatically translated
-msgid "Search patterns"
-msgstr "Patrones de búsqueda"
-
-# ==AUTO== Automatically translated
-msgid "Pattern mode"
-msgstr "Modo patrón"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression mode"
-msgstr "Modo expresión regular"
-
-# ==AUTO== Automatically translated
-msgid "Plain text mode"
-msgstr "Modo texto plano"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"The replacement string is the same regardless of the search mode. Fields "
-"are written <code>{name}</code> and may include formatting options:"
-msgstr ""
-"La cadena de reemplazo es la misma independientemente del modo de "
-"búsqueda. Los campos se escriben <code>{name}</code> y pueden incluir "
-"opciones de formato:"
-
-# ==AUTO== Automatically translated
-msgid "plain value"
-msgstr "valor simple"
-
-# ==AUTO== Automatically translated
-msgid "with format  (digit = min width · strftime for dates)"
-msgstr "con formato  (dígito = ancho mínimo · strftime para fechas)"
-
-# ==AUTO== Automatically translated
-msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
-msgstr ""
-"mayús.:  - minús.   + MAYÚS.   ! Primera May.   * Cada Palabra   = sin "
-"cambio"
-
-# ==AUTO== Automatically translated
-msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
-msgstr "alin.:  &lt; izquierda   &gt; derecha   0 ceros   ^ centrado"
-
-# ==AUTO== Automatically translated
-msgid "all options; default used when field is absent"
-msgstr "todas las opciones; valor predeterminado si el campo está ausente"
-
-# ==AUTO== Automatically translated
-msgid "literal '{' character"
-msgstr "carácter '{' literal"
-
-# ==AUTO== Automatically translated
-msgid ""
-"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
-"literal fallback used when the field is absent; omitting it flags the "
-"file in red in the preview."
-msgstr ""
-"<b>fmt</b>: anchura mínima (dígito) para texto/números, o formato "
-"<code>strftime</code> para fechas/horas.<br><b>default</b>: valor literal"
-" de reserva cuando el campo está ausente; omitirlo marca el archivo en "
-"rojo en la vista previa."
-
-# ==AUTO== Automatically translated
-msgid "all modes"
-msgstr "todos los modos"
-
-# ==AUTO== Automatically translated
-msgid "pattern, regex"
-msgstr "patrón, regex"
-
-# ==AUTO== Automatically translated
-msgid "regex only"
-msgstr "solo regex"
-
-# ==AUTO== Automatically translated
-msgid "Available in"
-msgstr "Disponible en"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text (or search literal in plain-text mode)"
-msgstr "Texto completo coincidente (o literal de búsqueda en modo texto plano)"
-
-# ==AUTO== Automatically translated
-msgid "Numbered capture groups (1-based)"
-msgstr "Grupos de captura numerados (base 1)"
-
-# ==AUTO== Automatically translated
-msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
-msgstr "Grupo con nombre <code>(?P&lt;name&gt;…)</code> de la regex de búsqueda"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Auto-incrementing counter — default fmt is a minimum width; "
-"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
-"starts at 10, zero-padded to 2 digits)"
-msgstr ""
-"Contador autoincremental — fmt es un ancho mínimo; <em>default</em> "
-"establece el valor inicial (p. ej. <code>{num:02:10}</code> comienza en "
-"10, completado con ceros a 2 dígitos)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Like <code>{num}</code> but skips values whose target name already exists"
-" on disk or has been assigned to another file in the same batch — "
-"guarantees no conflicts"
-msgstr ""
-"Como <code>{num}</code> pero omite los valores cuyo nombre de destino ya "
-"existe en el disco o ha sido asignado a otro archivo del mismo lote — "
-"garantiza la ausencia de conflictos"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
-msgstr "Fecha de hoy — fmt predeterminado <code>%Y-%m-%d</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Fecha y hora actuales — fmt predeterminado <code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr ""
-"Fecha/hora de modificación del archivo — fmt predeterminado "
-"<code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid ""
-"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
-" change time on Linux)"
-msgstr ""
-"Fecha/hora de creación del archivo — fmt predeterminado "
-"<code>%Y-%m-%d_%H%M%S</code> (tiempo de cambio de inodo en Linux)"
-
-# ==AUTO== Automatically translated
-msgid "Name of the immediate parent folder"
-msgstr "Nombre de la carpeta padre inmediata"
-
-# ==AUTO== Automatically translated
-msgid "EXIF or IPTC metadata field (images only — see list below)"
-msgstr "Campo de metadatos EXIF o IPTC (solo imágenes — ver lista abajo)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
-msgstr "Campo de metadatos de audio (mp3, ogg, flac… — ver lista abajo)"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata field (mp4, mkv, avi… — see list below)"
-msgstr "Campo de metadatos de vídeo (mp4, mkv, avi… — ver lista abajo)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. A <b>default</b> is strongly "
-"recommended for metadata fields — they may be absent from non-image files"
-" or images without metadata."
-msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Se "
-"recomienda encarecidamente un <b>default</b> para los campos de metadatos"
-" — pueden estar ausentes en archivos que no son imágenes o en imágenes "
-"sin metadatos."
-
-# ==AUTO== Automatically translated
-msgid "Type"
-msgstr "Tipo"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the photo was taken"
-msgstr "Fecha/hora en que se tomó la foto"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the image was digitised"
-msgstr "Fecha/hora de digitalización de la imagen"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the file was last changed (EXIF)"
-msgstr "Fecha/hora del último cambio del archivo (EXIF)"
-
-# ==AUTO== Automatically translated
-msgid "Camera manufacturer"
-msgstr "Fabricante de la cámara"
-
-# ==AUTO== Automatically translated
-msgid "Camera model"
-msgstr "Modelo de cámara"
-
-# ==AUTO== Automatically translated
-msgid "Lens model"
-msgstr "Modelo de objetivo"
-
-# ==AUTO== Automatically translated
-msgid "ISO speed"
-msgstr "Velocidad ISO"
-
-# ==AUTO== Automatically translated
-msgid "Aperture (e.g. 2.8)"
-msgstr "Apertura (p. ej. 2,8)"
-
-# ==AUTO== Automatically translated
-msgid "Shutter speed (e.g. 1/125)"
-msgstr "Velocidad de obturación (p. ej. 1/125)"
-
-# ==AUTO== Automatically translated
-msgid "Focal length in mm"
-msgstr "Distancia focal en mm"
-
-# ==AUTO== Automatically translated
-msgid "Image description / title"
-msgstr "Descripción / título de la imagen"
-
-# ==AUTO== Automatically translated
-msgid "Photographer / creator (EXIF)"
-msgstr "Fotógrafo / creador (EXIF)"
-
-# ==AUTO== Automatically translated
-msgid "Copyright notice"
-msgstr "Aviso de copyright"
-
-# ==AUTO== Automatically translated
-msgid "IPTC title / object name"
-msgstr "Título IPTC / nombre de objeto"
-
-# ==AUTO== Automatically translated
-msgid "IPTC photographer / creator"
-msgstr "Fotógrafo IPTC / creador"
-
-# ==AUTO== Automatically translated
-msgid "IPTC city"
-msgstr "Ciudad IPTC"
-
-# ==AUTO== Automatically translated
-msgid "IPTC country"
-msgstr "País IPTC"
-
-# ==AUTO== Automatically translated
-msgid "IPTC creation date"
-msgstr "Fecha de creación IPTC"
-
-# ==AUTO== Automatically translated
-msgid "IPTC keywords (semicolon-separated)"
-msgstr "Palabras clave IPTC (separadas por punto y coma)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
-"opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
-"strongly recommended — tags may be absent or the file may not be a "
-"supported audio format."
-msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Formatos "
-"admitidos: mp3, ogg, flac, opus, aac/m4a y otros compatibles con mutagen."
-" Se recomienda encarecidamente un <b>default</b> — las etiquetas pueden "
-"estar ausentes o el archivo puede no ser un formato de audio admitido."
-
-# ==AUTO== Automatically translated
-msgid "Track title"
-msgstr "Título de la pista"
-
-# ==AUTO== Automatically translated
-msgid "Track artist"
-msgstr "Artista de la pista"
-
-# ==AUTO== Automatically translated
-msgid "Album artist"
-msgstr "Artista del álbum"
-
-# ==AUTO== Automatically translated
-msgid "Album name"
-msgstr "Nombre del álbum"
-
-# ==AUTO== Automatically translated
-msgid "Track number (strips /total if present)"
-msgstr "Número de pista (elimina /total si está presente)"
-
-# ==AUTO== Automatically translated
-msgid "Disc number (strips /total if present)"
-msgstr "Número de disco (elimina /total si está presente)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Release date — datetime.date when full date available (strftime "
-"formatting); plain text otherwise"
-msgstr ""
-"Fecha de lanzamiento — datetime.date cuando la fecha completa está "
-"disponible (formato strftime); texto plano en caso contrario"
-
-# ==AUTO== Automatically translated
-msgid "Release year (extracted from date tag)"
-msgstr "Año de lanzamiento (extraído de la etiqueta de fecha)"
-
-# ==AUTO== Automatically translated
-msgid "Genre"
-msgstr "Género"
-
-# ==AUTO== Automatically translated
-msgid "Comment"
-msgstr "Comentario"
-
-# ==AUTO== Automatically translated
-msgid "Composer"
-msgstr "Compositor"
-
-# ==AUTO== Automatically translated
-msgid "Beats per minute"
-msgstr "Pulsaciones por minuto"
-
-# ==AUTO== Automatically translated
-msgid "Duration in seconds"
-msgstr "Duración en segundos"
-
-# ==AUTO== Automatically translated
-msgid "Bitrate in kbps"
-msgstr "Tasa de bits en kbps"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
-"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
-" strongly recommended — fields may be absent or the file may not be a "
-"supported video format."
-msgstr ""
-"Los nombres de campo no distinguen mayúsculas de minúsculas. Formatos "
-"admitidos: mp4, mkv, avi, mov, webm y otros compatibles con MediaInfo "
-"(pymediainfo). Se recomienda encarecidamente un <b>default</b> — los "
-"campos pueden estar ausentes o el archivo puede no ser un formato de "
-"vídeo admitido."
-
-# ==AUTO== Automatically translated
-msgid "Video width in pixels"
-msgstr "Ancho del vídeo en píxeles"
-
-# ==AUTO== Automatically translated
-msgid "Video height in pixels"
-msgstr "Alto del vídeo en píxeles"
-
-# ==AUTO== Automatically translated
-msgid "Frame rate (e.g. 29.970)"
-msgstr "Frecuencia de fotogramas (p. ej. 29,970)"
-
-# ==AUTO== Automatically translated
-msgid "Video codec name (e.g. AVC, HEVC)"
-msgstr "Nombre del códec de vídeo (p. ej. AVC, HEVC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio codec name (e.g. AAC, AC-3)"
-msgstr "Nombre del códec de audio (p. ej. AAC, AC-3)"
-
-# ==AUTO== Automatically translated
-msgid "Number of audio channels"
-msgstr "Número de canales de audio"
-
-# ==AUTO== Automatically translated
-msgid "Overall bitrate in kbps"
-msgstr "Tasa de bits total en kbps"
-
-# ==AUTO== Automatically translated
-msgid "Title tag"
-msgstr "Etiqueta de título"
-
-# ==AUTO== Automatically translated
-msgid "Encoded date/time"
-msgstr "Fecha/hora de codificación"
-
-# ==AUTO== Automatically translated
-msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
-msgstr ""
-"Grupo de captura 1 seguido de un contador de 4 dígitos con relleno de "
-"ceros (comienza en 1)"
-
-# ==AUTO== Automatically translated
-msgid "Same, but counter starts at 10"
-msgstr "Igual, pero el contador empieza en 10"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
-" already exists"
-msgstr ""
-"Contador de 3 dígitos sin conflictos: omite los valores donde "
-"<code>backup_NNN</code> ya existe"
-
-# ==AUTO== Automatically translated
-msgid "Today's date prepended to the matched text"
-msgstr "Fecha de hoy antepuesta al texto coincidente"
-
-# ==AUTO== Automatically translated
-msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
-msgstr "Fecha/hora de captura compacta; \"desconocido\" si no hay EXIF"
-
-# ==AUTO== Automatically translated
-msgid "Hour+minute of digitisation; \"0000\" if absent"
-msgstr "Hora+minuto de digitalización; \"0000\" si está ausente"
-
-# ==AUTO== Automatically translated
-msgid "Camera make and model (empty string if absent)"
-msgstr "Marca y modelo de cámara (cadena vacía si está ausente)"
-
-# ==AUTO== Automatically translated
-msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
-msgstr "Artista y título de audio; \"desconocido\"/\"sin título\" si está ausente"
-
-# ==AUTO== Automatically translated
-msgid "Audio release date, zero-padded track number, title"
-msgstr "Fecha de lanzamiento de audio, número de pista con ceros, título"
-
-# ==AUTO== Automatically translated
-msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
-msgstr "Resolución y códec de vídeo (p. ej. 1920x1080_AVC)"
-
-# ==AUTO== Automatically translated
-msgid "Video encoded date and duration in seconds"
-msgstr "Fecha de codificación y duración en segundos"
-
-# ==AUTO== Automatically translated
-msgid "Named regex groups (regex mode only)"
-msgstr "Grupos regex con nombre (solo modo regex)"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder, file modification date, 3-digit counter"
-msgstr "Carpeta padre, fecha de modificación del archivo, contador de 3 dígitos"
-
-# ==AUTO== Automatically translated
-msgid "Capture group 1 left-aligned in 12 characters"
-msgstr "Grupo de captura 1 alineado a la izquierda en 12 caracteres"
-
-# ==AUTO== Automatically translated
-msgid "Camera model centred in 30 characters, each word capitalised"
-msgstr ""
-"Modelo de cámara centrado en 30 caracteres, cada palabra en mayúscula "
-"inicial"
-
-# ==AUTO== Automatically translated
-msgid "Camera make in lowercase, exact field length"
-msgstr "Marca de cámara en minúsculas, longitud exacta del campo"
-
-# ==AUTO== Automatically translated
-msgid "Replacement fields"
-msgstr "Campos de reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Available fields"
-msgstr "Campos disponibles"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Metadata fields for <code>{im:…}</code>"
-msgstr "Campos de metadatos para <code>{im:…}</code>"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Audio metadata fields for <code>{au:…}</code>"
-msgstr "Campos de metadatos de audio para <code>{au:…}</code>"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Video metadata fields for <code>{vi:…}</code>"
-msgstr "Campos de metadatos de vídeo para <code>{vi:…}</code>"
-
-# ==AUTO== Automatically translated
-msgid "Examples"
-msgstr "Ejemplos"
-
-# ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Seleccionar carpeta"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Original"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Vista previa"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} elemento(s)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} no disponible"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Búsqueda — Ayuda"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Reemplazar — Ayuda"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "Errores de renombrado"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Deshacer (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Deshacer el último lote de renombrado (%d nivel(es) disponible(s))"
-
-# ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Deshacer"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Deshacer el último lote de renombrado"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "Añadir como atajo"
-
-# ==AUTO== Automatically translated
-msgid "Home"
-msgstr "Inicio"
-
-# ==AUTO== Automatically translated
-msgid "Desktop"
-msgstr "Escritorio"
-
-# ==AUTO== Automatically translated
-msgid "Documents"
-msgstr "Documentos"
-
-# ==AUTO== Automatically translated
-msgid "Downloads"
-msgstr "Descargas"
-
-# ==AUTO== Automatically translated
-msgid "Pictures"
-msgstr "Imágenes"
-
-# ==AUTO== Automatically translated
-msgid "Music"
-msgstr "Música"
-
-# ==AUTO== Automatically translated
-msgid "Videos"
-msgstr "Vídeos"
-
-# ==AUTO== Automatically translated
-msgid "language_name"
-msgstr "Español"
+msgid "A restart is required for the language change to take effect."
+msgstr "Es necesario reiniciar para que el cambio de idioma surta efecto."
 
 # ==AUTO== Automatically translated
 msgid "History"
@@ -864,8 +138,16 @@ msgid "RE"
 msgstr "RE"
 
 # ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Modo expresión regular"
+
+# ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Modo texto plano"
 
 # ==AUTO== Automatically translated
 msgid "Add"
@@ -874,6 +156,10 @@ msgstr "Añadir"
 # ==AUTO== Automatically translated
 msgid "Add this pattern to the search history"
 msgstr "Añadir este patrón al historial de búsqueda"
+
+# ==AUTO== Automatically translated
+msgid "Remove"
+msgstr "Eliminar"
 
 # ==AUTO== Automatically translated
 msgid "Remove selected entries"
@@ -924,16 +210,8 @@ msgid "Delete the entire replacement pattern history"
 msgstr "Eliminar todo el historial de patrones de reemplazo"
 
 # ==AUTO== Automatically translated
-msgid "PBRenamer"
-msgstr "PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "Open folder…"
 msgstr "Abrir carpeta…"
-
-# ==AUTO== Automatically translated
-msgid "Ctrl+O"
-msgstr ""
 
 # ==AUTO== Automatically translated
 msgid "Open a folder"
@@ -946,10 +224,6 @@ msgstr "Abrir un selector de directorio y navegar hasta la carpeta seleccionada"
 # ==AUTO== Automatically translated
 msgid "Quit"
 msgstr "Salir"
-
-# ==AUTO== Automatically translated
-msgid "Ctrl+Q"
-msgstr ""
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -986,10 +260,6 @@ msgid "Configure language and other preferences"
 msgstr "Configurar idioma y otras preferencias"
 
 # ==AUTO== Automatically translated
-msgid "About PBRenamer"
-msgstr "Acerca de PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "About this application"
 msgstr "Acerca de esta aplicación"
 
@@ -1014,16 +284,22 @@ msgid "Information"
 msgstr "Información"
 
 # ==AUTO== Automatically translated
-msgid "Ctrl+I"
-msgstr ""
-
-# ==AUTO== Automatically translated
 msgid "Show file field values"
 msgstr "Mostrar valores de campos del archivo"
 
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "Abrir la ventana de información del archivo seleccionado"
+
+# ==AUTO== Automatically translated
+msgid "Browse the filesystem"
+msgstr "Explorar el sistema de archivos"
+
+# ==AUTO== Automatically translated
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr ""
+"Seleccionar un directorio para listar su contenido en el panel de la "
+"derecha"
 
 # ==AUTO== Automatically translated
 msgid "Show:"
@@ -1094,10 +370,6 @@ msgid "Filter:"
 msgstr "Filtro:"
 
 # ==AUTO== Automatically translated
-msgid "*.txt"
-msgstr ""
-
-# ==AUTO== Automatically translated
 msgid "Glob pattern to filter the file list"
 msgstr "Patrón glob para filtrar la lista de archivos"
 
@@ -1108,14 +380,12 @@ msgstr ""
 "*.txt, image_*)"
 
 # ==AUTO== Automatically translated
-msgid "Browse the filesystem"
-msgstr "Explorar el sistema de archivos"
+msgid "Original"
+msgstr "Original"
 
 # ==AUTO== Automatically translated
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr ""
-"Seleccionar un directorio para listar su contenido en el panel de la "
-"derecha"
+msgid "Preview"
+msgstr "Vista previa"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -1128,6 +398,10 @@ msgid ""
 msgstr ""
 "Seleccione filas para restringir las operaciones a esos archivos; deje "
 "sin seleccionar para aplicar a todos"
+
+# ==AUTO== Automatically translated
+msgid "Search:"
+msgstr "Buscar:"
 
 # ==AUTO== Automatically translated
 msgid "Search pattern"
@@ -1220,6 +494,10 @@ msgid ""
 msgstr ""
 "Cuando está marcado, el patrón de búsqueda coincide con los nombres de "
 "archivo independientemente de las mayúsculas"
+
+# ==AUTO== Automatically translated
+msgid "Replace:"
+msgstr "Reemplazar:"
 
 # ==AUTO== Automatically translated
 msgid "Replacement pattern"
@@ -1429,6 +707,14 @@ msgid "Remove all preview values from the Preview column"
 msgstr "Eliminar todos los valores de vista previa de la columna Vista previa"
 
 # ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Deshacer"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Deshacer el último lote de renombrado"
+
+# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Revertir el último lote de renombrados realizados en el disco"
 
@@ -1465,84 +751,816 @@ msgid "Help"
 msgstr "Ayuda"
 
 # ==AUTO== Automatically translated
-msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
-msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgid "Select folder"
+msgstr "Seleccionar carpeta"
 
 # ==AUTO== Automatically translated
-msgid "Application version"
-msgstr "Versión de la aplicación"
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} elemento(s)"
 
 # ==AUTO== Automatically translated
-msgid "A graphical batch file renaming utility."
-msgstr "Una utilidad gráfica para renombrar archivos por lotes."
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} no disponible"
 
 # ==AUTO== Automatically translated
-msgid "License: GPLv3"
-msgstr "Licencia: GPLv3"
+msgid "Search — Help"
+msgstr "Búsqueda — Ayuda"
 
 # ==AUTO== Automatically translated
-msgid "Settings"
-msgstr "Ajustes"
+msgid "Replace — Help"
+msgstr "Reemplazar — Ayuda"
 
 # ==AUTO== Automatically translated
-msgid "Language:"
-msgstr "Idioma:"
+msgid "Rename errors"
+msgstr "Errores de renombrado"
 
 # ==AUTO== Automatically translated
-msgid "Select the interface language"
-msgstr "Seleccionar el idioma de la interfaz"
+#, python-format
+msgid "Undo (%d)"
+msgstr "Deshacer (%d)"
 
 # ==AUTO== Automatically translated
-msgid "Log level:"
-msgstr "Nivel de registro:"
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Deshacer el último lote de renombrado (%d nivel(es) disponible(s))"
 
 # ==AUTO== Automatically translated
-msgid "Set the application logging verbosity"
-msgstr "Establecer el nivel de verbosidad del registro de la aplicación"
+msgid "Add as shortcut"
+msgstr "Añadir como atajo"
 
 # ==AUTO== Automatically translated
-msgid "Behaviour"
-msgstr "Comportamiento"
+msgid "File information"
+msgstr "Información del archivo"
 
 # ==AUTO== Automatically translated
-msgid "Restore last opened directory"
-msgstr "Restaurar el último directorio abierto"
+msgid "Field"
+msgstr "Campo"
 
 # ==AUTO== Automatically translated
-msgid "On startup, reopen the directory that was active in the previous session"
+msgid "Description"
+msgstr "Descripción"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Valor"
+
+# ==AUTO== Automatically translated
+msgid "Image"
+msgstr "Imagen"
+
+# ==AUTO== Automatically translated
+msgid "Audio"
+msgstr "Audio"
+
+# ==AUTO== Automatically translated
+msgid "Video"
+msgstr "Vídeo"
+
+# ==AUTO== Automatically translated
+msgid "Directory"
+msgstr "Directorio"
+
+# ==AUTO== Automatically translated
+msgid "Other"
+msgstr "Otro"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Información del archivo — {name}"
+
+# ==AUTO== Automatically translated
+msgid "File:"
+msgstr "Archivo:"
+
+# ==AUTO== Automatically translated
+msgid "Type:"
+msgstr "Tipo:"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Metadatos de imagen (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Metadatos de audio"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Metadatos de vídeo"
+
+# ==AUTO== Automatically translated
+msgid "Select a single file to display its information."
+msgstr "Seleccione un único archivo para mostrar su información."
+
+# ==AUTO== Automatically translated
+msgid "Select a file to display its information."
+msgstr "Seleccione un archivo para mostrar su información."
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Campos universales"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Fecha de hoy"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Fecha y hora actuales"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Fecha/hora de modificación del archivo"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "No disponible"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Fecha/hora de creación del archivo"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Nombre de la carpeta padre"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Campos de lote"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Calculado"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Texto completo coincidente"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Grupos de captura"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Contador autoincremental"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Contador sin conflictos"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Grupo regex nombrado"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "Insertar en el campo de reemplazo"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
+"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
+"replacement field."
 msgstr ""
-"Al inicio, volver a abrir el directorio que estaba activo en la sesión "
-"anterior"
+"Los tokens actúan como comodines tipados. Los segmentos entre <b>{1}</b>,"
+" <b>{2}</b>… son <em>capturados</em> y pueden reutilizarse en el campo de"
+" reemplazo."
 
 # ==AUTO== Automatically translated
-msgid "Restore toolbar state"
-msgstr "Restaurar estado de la barra de herramientas"
+msgid "One or more digits (0–9)"
+msgstr "Uno o más dígitos (0–9)"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Una o más letras (a–z, A–Z y letras Unicode)"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "Uno o más caracteres que no sean espacios en blanco"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "Cualquier secuencia de caracteres, incluida la vacía"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Papelera — coincide con un segmento y lo descarta (no capturado)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Grupo de captura — el texto coincidente se vincula a {1}, {2}… en el "
+"reemplazo"
+
+# ==AUTO== Automatically translated
+msgid "Example"
+msgstr "Ejemplo"
 
 # ==AUTO== Automatically translated
 msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
+"Full Python <code>re</code>-module syntax. The match is applied to the "
+"file stem (or full name if <em>Keep extension</em> is unchecked)."
 msgstr ""
-"Al inicio, restaurar los ajustes de la barra de herramientas de la sesión"
-" anterior (modo de visualización, recursivo, conservar extensión, vista "
-"previa automática, filtro)"
+"Sintaxis completa del módulo Python <code>re</code>. La coincidencia se "
+"aplica al nombre base del archivo (o al nombre completo si <em>Conservar "
+"extensión</em> está desactivado)."
 
 # ==AUTO== Automatically translated
-msgid "Auto-preview delay:"
-msgstr "Retardo de vista previa automática:"
+msgid "Any single character"
+msgstr "Cualquier carácter individual"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Cualquier secuencia (codiciosa), variante no vacía"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "Uno o más dígitos"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, _)"
+msgstr "Caracteres de palabra (letras, dígitos, _)"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
+"replacement"
 msgstr ""
-"Retardo de antirrebote antes de que la vista previa se actualice tras un "
-"cambio en el patrón de búsqueda o reemplazo (ms)"
+"Grupo de captura numerado → <code>\\1</code>, <code>\\2</code>… en el "
+"reemplazo"
 
 # ==AUTO== Automatically translated
-msgid " ms"
-msgstr " ms"
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Grupo de captura con nombre → <code>\\g&lt;name&gt;</code> en el reemplazo"
 
 # ==AUTO== Automatically translated
-msgid "A restart is required for the language change to take effect."
-msgstr "Es necesario reiniciar para que el cambio de idioma surta efecto."
+msgid "Case-insensitive flag"
+msgstr "Indicador sin distinción de mayúsculas"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "Inicio / fin del nombre"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters. Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr ""
+"El campo de búsqueda se compara como cadena literal — sin comodines, sin "
+"caracteres especiales. Cada aparición del texto exacto en el nombre de "
+"archivo se reemplaza."
+
+# ==AUTO== Automatically translated
+msgid "Search patterns"
+msgstr "Patrones de búsqueda"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "Modo patrón"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields "
+"are written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"La cadena de reemplazo es la misma independientemente del modo de "
+"búsqueda. Los campos se escriben <code>{name}</code> y pueden incluir "
+"opciones de formato:"
+
+# ==AUTO== Automatically translated
+msgid "plain value"
+msgstr "valor simple"
+
+# ==AUTO== Automatically translated
+msgid "with format  (digit = min width · strftime for dates)"
+msgstr "con formato  (dígito = ancho mínimo · strftime para fechas)"
+
+# ==AUTO== Automatically translated
+msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
+msgstr ""
+"mayús.:  - minús.   + MAYÚS.   ! Primera May.   * Cada Palabra   = sin "
+"cambio"
+
+# ==AUTO== Automatically translated
+msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
+msgstr "alin.:  &lt; izquierda   &gt; derecha   0 ceros   ^ centrado"
+
+# ==AUTO== Automatically translated
+msgid "all options; default used when field is absent"
+msgstr "todas las opciones; valor predeterminado si el campo está ausente"
+
+# ==AUTO== Automatically translated
+msgid "literal '{' character"
+msgstr "carácter '{' literal"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
+msgstr ""
+"<b>fmt</b>: anchura mínima (dígito) para texto/números, o formato "
+"<code>strftime</code> para fechas/horas.<br><b>default</b>: valor literal"
+" de reserva cuando el campo está ausente; omitirlo marca el archivo en "
+"rojo en la vista previa."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"<b>Mixed file types</b> — when the replacement contains fields from more "
+"than one file-type namespace (<code>{im:…}</code>, <code>{vi:…}</code>, "
+"<code>{au:…}</code>), a field that does not apply to the current file "
+"silently contributes an empty string, even without a default. With a "
+"<em>single</em> namespace only, the file is flagged in red if the field "
+"is absent and no default is set."
+msgstr ""
+"<b>Tipos de archivo mixtos</b> — cuando el reemplazo contiene campos de "
+"más de un espacio de nombres de tipo de archivo (<code>{im:…}</code>, "
+"<code>{vi:…}</code>, <code>{au:…}</code>), un campo que no se aplica al "
+"archivo actual contribuye silenciosamente con una cadena vacía, incluso "
+"sin valor predeterminado. Con un <em>único</em> espacio de nombres, el "
+"archivo se marca en rojo si el campo está ausente y no se define ningún "
+"valor predeterminado."
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "todos los modos"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "patrón, regex"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "solo regex"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "Disponible en"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "Texto completo coincidente (o literal de búsqueda en modo texto plano)"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "Grupos de captura numerados (base 1)"
+
+# ==AUTO== Automatically translated
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Grupo con nombre <code>(?P&lt;name&gt;…)</code> de la regex de búsqueda"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; "
+"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
+"starts at 10, zero-padded to 2 digits)"
+msgstr ""
+"Contador autoincremental — fmt es un ancho mínimo; <em>default</em> "
+"establece el valor inicial (p. ej. <code>{num:02:10}</code> comienza en "
+"10, completado con ceros a 2 dígitos)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists"
+" on disk or has been assigned to another file in the same batch — "
+"guarantees no conflicts"
+msgstr ""
+"Como <code>{num}</code> pero omite los valores cuyo nombre de destino ya "
+"existe en el disco o ha sido asignado a otro archivo del mismo lote — "
+"garantiza la ausencia de conflictos"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Fecha de hoy — fmt predeterminado <code>%Y-%m-%d</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Fecha y hora actuales — fmt predeterminado <code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr ""
+"Fecha/hora de modificación del archivo — fmt predeterminado "
+"<code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
+" change time on Linux)"
+msgstr ""
+"Fecha/hora de creación del archivo — fmt predeterminado "
+"<code>%Y-%m-%d_%H%M%S</code> (tiempo de cambio de inodo en Linux)"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "Nombre de la carpeta padre inmediata"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "Campo de metadatos EXIF o IPTC (solo imágenes — ver lista abajo)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Campo de metadatos de audio (mp3, ogg, flac… — ver lista abajo)"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Campo de metadatos de vídeo (mp4, mkv, avi… — ver lista abajo)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. When <code>{im:…}</code> is combined "
+"with <code>{vi:…}</code> or <code>{au:…}</code> in the same template, "
+"non-matching fields are silently empty — no default needed. With only "
+"<code>{im:…}</code> fields, a default is recommended to avoid flagging "
+"non-image files in red."
+msgstr ""
+"Los nombres de campo no distinguen entre mayúsculas y minúsculas. Cuando "
+"<code>{im:…}</code> se combina con <code>{vi:…}</code> o "
+"<code>{au:…}</code> en la misma plantilla, los campos no coincidentes "
+"están silenciosamente vacíos — no se necesita valor predeterminado. Con "
+"solo campos <code>{im:…}</code>, se recomienda un valor predeterminado "
+"para evitar marcar en rojo los archivos que no son imágenes."
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "Tipo"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "Fecha/hora en que se tomó la foto"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "Fecha/hora de digitalización de la imagen"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Fecha/hora del último cambio del archivo (EXIF)"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "Fabricante de la cámara"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "Modelo de cámara"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "Modelo de objetivo"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "Velocidad ISO"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. 2.8)"
+msgstr "Apertura (p. ej. 2,8)"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Velocidad de obturación (p. ej. 1/125)"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "Distancia focal en mm"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "Descripción / título de la imagen"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "Fotógrafo / creador (EXIF)"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "Aviso de copyright"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "Título IPTC / nombre de objeto"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "Fotógrafo IPTC / creador"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "Ciudad IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "País IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "Fecha de creación IPTC"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Palabras clave IPTC (separadas por punto y coma)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
+"opus, aac/m4a and others supported by mutagen. When combined with "
+"<code>{im:…}</code> or <code>{vi:…}</code>, non-matching fields are "
+"silently empty. With only <code>{au:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"Los nombres de campo no distinguen entre mayúsculas y minúsculas. "
+"Formatos admitidos: mp3, ogg, flac, opus, aac/m4a y otros compatibles con"
+" mutagen. Cuando se combina con <code>{im:…}</code> o "
+"<code>{vi:…}</code>, los campos no coincidentes están silenciosamente "
+"vacíos. Con solo campos <code>{au:…}</code>, se recomienda un valor "
+"predeterminado."
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "Título de la pista"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "Artista de la pista"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "Artista del álbum"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "Nombre del álbum"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips /total if present)"
+msgstr "Número de pista (elimina /total si está presente)"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips /total if present)"
+msgstr "Número de disco (elimina /total si está presente)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — datetime.date when full date available (strftime "
+"formatting); plain text otherwise"
+msgstr ""
+"Fecha de lanzamiento — datetime.date cuando la fecha completa está "
+"disponible (formato strftime); texto plano en caso contrario"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from date tag)"
+msgstr "Año de lanzamiento (extraído de la etiqueta de fecha)"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "Género"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "Comentario"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "Compositor"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "Pulsaciones por minuto"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "Duración en segundos"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "Tasa de bits en kbps"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). When combined with "
+"<code>{im:…}</code> or <code>{au:…}</code>, non-matching fields are "
+"silently empty. With only <code>{vi:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"Los nombres de campo no distinguen entre mayúsculas y minúsculas. "
+"Formatos admitidos: mp4, mkv, avi, mov, webm y otros compatibles con "
+"MediaInfo (pymediainfo). Cuando se combina con <code>{im:…}</code> o "
+"<code>{au:…}</code>, los campos no coincidentes están silenciosamente "
+"vacíos. Con solo campos <code>{vi:…}</code>, se recomienda un valor "
+"predeterminado."
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "Ancho del vídeo en píxeles"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "Alto del vídeo en píxeles"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Frecuencia de fotogramas (p. ej. 29,970)"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Nombre del códec de vídeo (p. ej. AVC, HEVC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Nombre del códec de audio (p. ej. AAC, AC-3)"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "Número de canales de audio"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "Tasa de bits total en kbps"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "Etiqueta de título"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "Fecha/hora de codificación"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Grupo de captura 1 seguido de un contador de 4 dígitos con relleno de "
+"ceros (comienza en 1)"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "Igual, pero el contador empieza en 10"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
+" already exists"
+msgstr ""
+"Contador de 3 dígitos sin conflictos: omite los valores donde "
+"<code>backup_NNN</code> ya existe"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "Fecha de hoy antepuesta al texto coincidente"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Fecha/hora de captura compacta; \"desconocido\" si no hay EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Hora+minuto de digitalización; \"0000\" si está ausente"
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "Marca y modelo de cámara (cadena vacía si está ausente)"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Artista y título de audio; \"desconocido\"/\"sin título\" si está ausente"
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Fecha de lanzamiento de audio, número de pista con ceros, título"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Resolución y códec de vídeo (p. ej. 1920x1080_AVC)"
+
+# ==AUTO== Automatically translated
+msgid "Video encoded date and duration in seconds"
+msgstr "Fecha de codificación y duración en segundos"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Shooting date for images, encoded date for videos — the non-matching "
+"field is silently empty (mixed-type template)"
+msgstr ""
+"Fecha de captura para imágenes, fecha de codificación para vídeos — el "
+"campo no coincidente está silenciosamente vacío (plantilla de tipo mixto)"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "Grupos regex con nombre (solo modo regex)"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Carpeta padre, fecha de modificación del archivo, contador de 3 dígitos"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 left-aligned in 12 characters"
+msgstr "Grupo de captura 1 alineado a la izquierda en 12 caracteres"
+
+# ==AUTO== Automatically translated
+msgid "Camera model centred in 30 characters, each word capitalised"
+msgstr ""
+"Modelo de cámara centrado en 30 caracteres, cada palabra en mayúscula "
+"inicial"
+
+# ==AUTO== Automatically translated
+msgid "Camera make in lowercase, exact field length"
+msgstr "Marca de cámara en minúsculas, longitud exacta del campo"
+
+# ==AUTO== Automatically translated
+msgid "Replacement fields"
+msgstr "Campos de reemplazo"
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "Campos disponibles"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Campos de metadatos para <code>{im:…}</code>"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Campos de metadatos de audio para <code>{au:…}</code>"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Campos de metadatos de vídeo para <code>{vi:…}</code>"
+
+# ==AUTO== Automatically translated
+msgid "Examples"
+msgstr "Ejemplos"
+
+# ==AUTO== Automatically translated
+msgid "System default"
+msgstr "Predeterminado del sistema"
+
+# ==AUTO== Automatically translated
+msgid "Edit Shortcuts"
+msgstr "Editar atajos"
+
+# ==AUTO== Automatically translated
+msgid "Move up"
+msgstr "Subir"
+
+# ==AUTO== Automatically translated
+msgid "Move down"
+msgstr "Bajar"
+
+# ==AUTO== Automatically translated
+msgid "Saved shortcuts:"
+msgstr "Atajos guardados:"
+
+# ==AUTO== Automatically translated
+msgid "Home"
+msgstr "Inicio"
+
+# ==AUTO== Automatically translated
+msgid "Desktop"
+msgstr "Escritorio"
+
+# ==AUTO== Automatically translated
+msgid "Documents"
+msgstr "Documentos"
+
+# ==AUTO== Automatically translated
+msgid "Downloads"
+msgstr "Descargas"
+
+# ==AUTO== Automatically translated
+msgid "Pictures"
+msgstr "Imágenes"
+
+# ==AUTO== Automatically translated
+msgid "Music"
+msgstr "Música"
+
+# ==AUTO== Automatically translated
+msgid "Videos"
+msgstr "Vídeos"
+
+# ==AUTO== Automatically translated
+msgid "language_name"
+msgstr "Español"

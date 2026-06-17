@@ -112,17 +112,25 @@ class TestSettingsDialog:
         monkeypatch.setattr(i18n, "_dirs", mock_dirs)
         return tmp_path
 
-    def test_dialog_opens(self, qtbot: QtBot, cfg_dir):
+    @pytest.fixture
+    def window_state(self):
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        return ws
+
+    def test_dialog_opens(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
-        dlg = SettingsDialog()
+        dlg = SettingsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg is not None
 
-    def test_log_level_combo_contains_all_levels(self, qtbot: QtBot, cfg_dir):
+    def test_log_level_combo_contains_all_levels(
+        self, qtbot: QtBot, cfg_dir, window_state
+    ):
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
-        dlg = SettingsDialog()
+        dlg = SettingsDialog(window_state)
         qtbot.addWidget(dlg)
         items = [
             dlg._ui.cmbLogLevel.itemText(i) for i in range(dlg._ui.cmbLogLevel.count())
@@ -130,18 +138,20 @@ class TestSettingsDialog:
         for lvl in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
             assert lvl in items
 
-    def test_language_combo_has_system_default(self, qtbot: QtBot, cfg_dir):
+    def test_language_combo_has_system_default(
+        self, qtbot: QtBot, cfg_dir, window_state
+    ):
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
-        dlg = SettingsDialog()
+        dlg = SettingsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg._ui.cmbLanguage.count() > 0
         assert dlg._ui.cmbLanguage.itemData(0) == ""
 
-    def test_accept_persists_settings(self, qtbot: QtBot, cfg_dir):
+    def test_accept_persists_settings(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
-        dlg = SettingsDialog()
+        dlg = SettingsDialog(window_state)
         qtbot.addWidget(dlg)
         idx = dlg._ui.cmbLogLevel.findText("WARNING")
         dlg._ui.cmbLogLevel.setCurrentIndex(idx)
@@ -152,12 +162,14 @@ class TestSettingsDialog:
         assert _cfg.get_restore_last_dir() is True
         assert _cfg.get_preview_delay() == 300
 
-    def test_saved_language_override_is_selected(self, qtbot: QtBot, cfg_dir):
+    def test_saved_language_override_is_selected(
+        self, qtbot: QtBot, cfg_dir, window_state
+    ):
         import pbrenamer.i18n as i18n
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
         i18n.set_language_override("fr")
-        dlg = SettingsDialog()
+        dlg = SettingsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg._ui.cmbLanguage.currentData() == "fr"
 
@@ -174,31 +186,37 @@ class TestHistoryDialog:
 
         return PatternPresets(tmp_path / "patterns")
 
-    def test_dialog_opens(self, qtbot: QtBot, presets):
+    @pytest.fixture
+    def window_state(self):
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        return ws
+
+    def test_dialog_opens(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         assert dlg is not None
 
-    def test_search_list_shows_defaults(self, qtbot: QtBot, presets):
+    def test_search_list_shows_defaults(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         assert dlg._ui.lstSearch.count() > 0
 
-    def test_replace_list_shows_defaults(self, qtbot: QtBot, presets):
+    def test_replace_list_shows_defaults(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         assert dlg._ui.lstReplace.count() > 0
 
-    def test_add_search_pattern_mode(self, qtbot: QtBot, presets):
+    def test_add_search_pattern_mode(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.edtSearch.setText("mypattern")
         dlg._ui.radPattern.setChecked(True)
@@ -206,10 +224,10 @@ class TestHistoryDialog:
         entries = presets.get_search()
         assert any(p == "mypattern" for _, p in entries)
 
-    def test_add_search_regex_mode(self, qtbot: QtBot, presets):
+    def test_add_search_regex_mode(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.edtSearch.setText(r"\d+")
         dlg._ui.radRegex.setChecked(True)
@@ -217,10 +235,10 @@ class TestHistoryDialog:
         entries = presets.get_search()
         assert any(m == "regex" and p == r"\d+" for m, p in entries)
 
-    def test_add_search_plain_mode(self, qtbot: QtBot, presets):
+    def test_add_search_plain_mode(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.edtSearch.setText("plaintext")
         dlg._ui.radPlainText.setChecked(True)
@@ -228,75 +246,75 @@ class TestHistoryDialog:
         entries = presets.get_search()
         assert any(m == "plain" and p == "plaintext" for m, p in entries)
 
-    def test_add_search_empty_is_noop(self, qtbot: QtBot, presets):
+    def test_add_search_empty_is_noop(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         before = presets.get_search()
         dlg._ui.edtSearch.setText("")
         dlg._on_add_search()
         assert presets.get_search() == before
 
-    def test_clear_search(self, qtbot: QtBot, presets):
+    def test_clear_search(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
         presets.add_search("plain", "something")
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._on_clear_search()
         from pbrenamer.ui.presets import _SEARCH_DEFAULTS
 
         assert presets.get_search() == list(_SEARCH_DEFAULTS)
 
-    def test_remove_selected_search(self, qtbot: QtBot, presets):
+    def test_remove_selected_search(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
         presets.add_search("plain", "keep")
         presets.add_search("plain", "remove-me")
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.lstSearch.setCurrentRow(0)
         dlg._on_remove_search()
         entries = presets.get_search()
         assert all(p != "remove-me" for _, p in entries)
 
-    def test_add_replace(self, qtbot: QtBot, presets):
+    def test_add_replace(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.edtReplace.setText("{2}_{1}")
         dlg._on_add_replace()
         assert "{2}_{1}" in presets.get_replace()
 
-    def test_add_replace_empty_is_noop(self, qtbot: QtBot, presets):
+    def test_add_replace_empty_is_noop(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         before = presets.get_replace()
         dlg._ui.edtReplace.setText("")
         dlg._on_add_replace()
         assert presets.get_replace() == before
 
-    def test_clear_replace(self, qtbot: QtBot, presets):
+    def test_clear_replace(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
         presets.add_replace("{A}")
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._on_clear_replace()
         from pbrenamer.ui.presets import _REPLACE_DEFAULTS
 
         assert presets.get_replace() == list(_REPLACE_DEFAULTS)
 
-    def test_remove_selected_replace(self, qtbot: QtBot, presets):
+    def test_remove_selected_replace(self, qtbot: QtBot, presets, window_state):
         from pbrenamer.ui.history_dialog import HistoryDialog
 
         presets.add_replace("keep")
         presets.add_replace("remove-me")
-        dlg = HistoryDialog(presets)
+        dlg = HistoryDialog(presets, window_state)
         qtbot.addWidget(dlg)
         dlg._ui.lstReplace.setCurrentRow(0)
         dlg._on_remove_replace()
@@ -317,33 +335,41 @@ class TestShortcutsDialog:
         monkeypatch.setattr(_cfg, "_SHORTCUTS_FILE", tmp_path / "shortcuts.json")
         return tmp_path
 
-    def test_dialog_opens(self, qtbot: QtBot, cfg_dir):
+    @pytest.fixture
+    def window_state(self):
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        return ws
+
+    def test_dialog_opens(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg is not None
 
-    def test_empty_shortcuts_shows_no_items(self, qtbot: QtBot, cfg_dir):
+    def test_empty_shortcuts_shows_no_items(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg._list.count() == 0
 
-    def test_list_shows_saved_shortcuts(self, qtbot: QtBot, cfg_dir):
+    def test_list_shows_saved_shortcuts(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("Home", "/home/user"), ("Docs", "/home/user/docs")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         assert dlg._list.count() == 2
 
-    def test_buttons_disabled_when_no_selection(self, qtbot: QtBot, cfg_dir):
+    def test_buttons_disabled_when_no_selection(
+        self, qtbot: QtBot, cfg_dir, window_state
+    ):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.clearSelection()
         dlg._on_selection_changed()
@@ -351,11 +377,11 @@ class TestShortcutsDialog:
         assert not dlg._btn_down.isEnabled()
         assert not dlg._btn_remove.isEnabled()
 
-    def test_move_up(self, qtbot: QtBot, cfg_dir):
+    def test_move_up(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(1)
         dlg._on_move_up()
@@ -363,21 +389,21 @@ class TestShortcutsDialog:
         assert shortcuts[0] == ("B", "/b")
         assert shortcuts[1] == ("A", "/a")
 
-    def test_move_up_noop_at_top(self, qtbot: QtBot, cfg_dir):
+    def test_move_up_noop_at_top(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(0)
         dlg._on_move_up()
         assert _cfg.get_shortcuts()[0] == ("A", "/a")
 
-    def test_move_down(self, qtbot: QtBot, cfg_dir):
+    def test_move_down(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(0)
         dlg._on_move_down()
@@ -385,39 +411,41 @@ class TestShortcutsDialog:
         assert shortcuts[0] == ("B", "/b")
         assert shortcuts[1] == ("A", "/a")
 
-    def test_move_down_noop_at_bottom(self, qtbot: QtBot, cfg_dir):
+    def test_move_down_noop_at_bottom(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(1)
         dlg._on_move_down()
         assert _cfg.get_shortcuts()[1] == ("B", "/b")
 
-    def test_remove_item(self, qtbot: QtBot, cfg_dir):
+    def test_remove_item(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(0)
         dlg._on_remove()
         shortcuts = _cfg.get_shortcuts()
         assert ("A", "/a") not in shortcuts
 
-    def test_remove_noop_when_no_item(self, qtbot: QtBot, cfg_dir):
+    def test_remove_noop_when_no_item(self, qtbot: QtBot, cfg_dir, window_state):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._on_remove()  # must not raise
 
-    def test_selection_changed_updates_buttons(self, qtbot: QtBot, cfg_dir):
+    def test_selection_changed_updates_buttons(
+        self, qtbot: QtBot, cfg_dir, window_state
+    ):
         from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 
         _cfg.set_shortcuts([("A", "/a"), ("B", "/b")])
-        dlg = ShortcutsDialog()
+        dlg = ShortcutsDialog(window_state)
         qtbot.addWidget(dlg)
         dlg._list.setCurrentRow(1)
         dlg._on_selection_changed()
@@ -508,69 +536,75 @@ class TestFmt:
 
 
 class TestFileInfoWindow:
-    def test_window_opens(self, qtbot: QtBot):
+    @pytest.fixture
+    def window_state(self):
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        return ws
+
+    def test_window_opens(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         assert w is not None
 
-    def test_show_empty(self, qtbot: QtBot):
+    def test_show_empty(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.show_empty()
         assert not w._lbl_status.isHidden()
         assert w._tree.isHidden()
 
-    def test_show_multiple(self, qtbot: QtBot):
+    def test_show_multiple(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.show_multiple()
         assert not w._lbl_status.isHidden()
         assert w._tree.isHidden()
 
-    def test_update_file_for_regular_file(self, qtbot: QtBot, tmp_path):
+    def test_update_file_for_regular_file(self, qtbot: QtBot, tmp_path, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         p = tmp_path / "test.txt"
         p.write_text("hello", encoding="utf-8")
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.update_file(str(p))
         assert not w._tree.isHidden()
         assert not w._lbl_info.isHidden()
 
-    def test_update_file_for_directory(self, qtbot: QtBot, tmp_path):
+    def test_update_file_for_directory(self, qtbot: QtBot, tmp_path, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.update_file(str(tmp_path))
         assert not w._tree.isHidden()
 
-    def test_update_file_with_image(self, qtbot: QtBot, tmp_path):
+    def test_update_file_with_image(self, qtbot: QtBot, tmp_path, window_state):
         from pbrenamer.core import image_meta
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         p = tmp_path / "photo.jpg"
         p.touch()
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         with patch.object(image_meta, "can_read", return_value=True):
             w.update_file(str(p))
         assert not w._tree.isHidden()
 
-    def test_update_file_with_audio(self, qtbot: QtBot, tmp_path):
+    def test_update_file_with_audio(self, qtbot: QtBot, tmp_path, window_state):
         from pbrenamer.core import audio_meta, image_meta
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         p = tmp_path / "song.mp3"
         p.touch()
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         with (
             patch.object(image_meta, "can_read", return_value=False),
@@ -579,13 +613,13 @@ class TestFileInfoWindow:
             w.update_file(str(p))
         assert not w._tree.isHidden()
 
-    def test_update_file_with_video(self, qtbot: QtBot, tmp_path):
+    def test_update_file_with_video(self, qtbot: QtBot, tmp_path, window_state):
         from pbrenamer.core import audio_meta, image_meta, video_meta
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         p = tmp_path / "clip.mp4"
         p.touch()
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         with (
             patch.object(image_meta, "can_read", return_value=False),
@@ -595,20 +629,22 @@ class TestFileInfoWindow:
             w.update_file(str(p))
         assert not w._tree.isHidden()
 
-    def test_update_file_title_contains_filename(self, qtbot: QtBot, tmp_path):
+    def test_update_file_title_contains_filename(
+        self, qtbot: QtBot, tmp_path, window_state
+    ):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         p = tmp_path / "myfile.txt"
         p.touch()
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.update_file(str(p))
         assert "myfile.txt" in w.windowTitle()
 
-    def test_universal_fields_oserror(self, qtbot: QtBot):
+    def test_universal_fields_oserror(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
-        w = FileInfoWindow()
+        w = FileInfoWindow(window_state)
         qtbot.addWidget(w)
         w.update_file("/this/path/does/not/exist/at/all.txt")
         assert w._tree.topLevelItemCount() > 0
@@ -666,6 +702,7 @@ class TestPatternHelpDialog:
         qtbot.addWidget(dlg1)
         dlg1.resize(700, 600)
         dlg1.show()
+        qtbot.waitExposed(dlg1)
         geo = dlg1.saveGeometry()
         window_state.save_geometry("key1", geo)
 
@@ -676,6 +713,8 @@ class TestPatternHelpDialog:
             window_state=window_state,
         )
         qtbot.addWidget(dlg2)
+        dlg2.show()
+        qtbot.waitExposed(dlg2)
         assert dlg2.geometry() == dlg1.geometry()
 
     def test_close_event_saves_geometry(self, qtbot: QtBot, window_state):

@@ -207,6 +207,15 @@ def replace_html() -> str:
         "<b>default</b>: literal fallback used when the field is absent; "
         "omitting it flags the file in red in the preview."
     )
+    multi_meta_note = _(
+        "<b>Mixed file types</b> — when the replacement contains fields from "
+        "more than one file-type namespace "
+        "(<code>{im:…}</code>, <code>{vi:…}</code>, <code>{au:…}</code>), "
+        "a field that does not apply to the current file silently contributes "
+        "an empty string, even without a default. "
+        "With a <em>single</em> namespace only, the file is flagged in red "
+        "if the field is absent and no default is set."
+    )
 
     # ── Available fields table ────────────────────────────────────────────────
     all_m = _("all modes")
@@ -305,8 +314,11 @@ def replace_html() -> str:
     # ── EXIF/IPTC metadata table ───────────────────────────────────────────────
     meta_intro = _(
         "Field names are case-insensitive. "
-        "A <b>default</b> is strongly recommended for metadata fields — they may be "
-        "absent from non-image files or images without metadata."
+        "When <code>{im:…}</code> is combined with <code>{vi:…}</code> or "
+        "<code>{au:…}</code> in the same template, non-matching fields are "
+        "silently empty — no default needed. "
+        "With only <code>{im:…}</code> fields, a default is recommended to "
+        "avoid flagging non-image files in red."
     )
     th_type = _("Type")
     meta_hdr = (
@@ -346,8 +358,9 @@ def replace_html() -> str:
         "Field names are case-insensitive. "
         "Supported formats: mp3, ogg, flac, opus, aac/m4a and others"
         " supported by mutagen. "
-        "A <b>default</b> is strongly recommended — tags may be absent or the file "
-        "may not be a supported audio format."
+        "When combined with <code>{im:…}</code> or <code>{vi:…}</code>, "
+        "non-matching fields are silently empty. "
+        "With only <code>{au:…}</code> fields, a default is recommended."
     )
     audio_rows = (
         _row3("title", "text", _("Track title"), _BG1)
@@ -381,8 +394,9 @@ def replace_html() -> str:
         "Field names are case-insensitive. "
         "Supported formats: mp4, mkv, avi, mov, webm and others"
         " supported by MediaInfo (pymediainfo). "
-        "A <b>default</b> is strongly recommended — fields may be absent or the file "
-        "may not be a supported video format."
+        "When combined with <code>{im:…}</code> or <code>{au:…}</code>, "
+        "non-matching fields are silently empty. "
+        "With only <code>{vi:…}</code> fields, a default is recommended."
     )
     video_rows = (
         _row3("width", "integer", _("Video width in pixels"), _BG1)
@@ -449,7 +463,14 @@ def replace_html() -> str:
             _("Video encoded date and duration in seconds"),
             _BG1,
         )
-        + _row2("{re:year}_{re:title}", _("Named regex groups (regex mode only)"))
+        + _row2(
+            "{im:DateTimeOriginal:%Y-%m-%d:}{vi:encodeddate:%Y-%m-%d:}",
+            _(
+                "Shooting date for images, encoded date for videos — "
+                "the non-matching field is silently empty (mixed-type template)"
+            ),
+        )
+        + _row2("{re:year}_{re:title}", _("Named regex groups (regex mode only)"), _BG1)
         + _row2(
             "{dir}_{mdatetime:%Y%m%d}_{num:03}",
             _("Parent folder, file modification date, 3-digit counter"),
@@ -470,6 +491,7 @@ def replace_html() -> str:
         + _p(intro)
         + fmt_pre
         + _p(fmt_note)
+        + _p(multi_meta_note)
         + "<hr/>\n"
         + _h3(_("Available fields"))
         + _TABLE_W
@@ -568,6 +590,7 @@ class PatternHelpDialog(QDialog):
 
         self._state_key = state_key
         self._window_state = window_state
+        self._geometry_restored = False
 
         browser = QTextBrowser()
         browser.setOpenExternalLinks(False)
@@ -580,11 +603,15 @@ class PatternHelpDialog(QDialog):
         layout.addWidget(browser)
         layout.addWidget(buttons)
 
-        geo = window_state.load_geometry(state_key)
-        if geo:
-            self.restoreGeometry(geo)
-        else:
-            self.resize(560, 500)
+        self.resize(560, 500)
+
+    def showEvent(self, event) -> None:  # noqa: N802
+        super().showEvent(event)
+        if not self._geometry_restored:
+            self._geometry_restored = True
+            geo = self._window_state.load_geometry(self._state_key)
+            if geo:
+                self.restoreGeometry(geo)
 
     def closeEvent(self, event) -> None:  # noqa: N802
         self._window_state.save_geometry(self._state_key, self.saveGeometry())

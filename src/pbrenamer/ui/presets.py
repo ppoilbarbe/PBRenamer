@@ -2,7 +2,8 @@
 
 search.json  : list of {"mode": str, "pattern": str} objects, most recent first.
 replace.json : list of strings, most recent first.
-History is LRU: the most recently used entry is at the top.
+saves.json   : list of {"name": str, ...config} objects, most recent first.
+All three lists are LRU-managed: the most recently used entry is at the top.
 """
 
 from __future__ import annotations
@@ -17,6 +18,8 @@ _CONFIG_DIR = AppDirs("pbrenamer").config_home / "patterns"
 
 _SEARCH_MODES = {"pattern", "regex", "plain"}
 _SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
+
+_MAX_HISTORY = 20
 
 _SEARCH_DEFAULTS: list[tuple[str, str]] = [("pattern", "{X}")]
 _REPLACE_DEFAULTS: list[str] = ["{1}"]
@@ -83,7 +86,7 @@ class PatternPresets:
         entries = self._read_search_raw()
         entries = [(m, p) for m, p in entries if not (m == mode and p == pattern)]
         entries.insert(0, (mode, pattern))
-        self._write_search(entries)
+        self._write_search(entries[:_MAX_HISTORY])
 
     def set_search(self, entries: list[tuple[str, str]]) -> None:
         """Overwrite the entire search history with *entries*."""
@@ -103,7 +106,7 @@ class PatternPresets:
         entries = self._read_replace_raw()
         entries = [e for e in entries if e != pattern]
         entries.insert(0, pattern)
-        self._write_replace(entries)
+        self._write_replace(entries[:_MAX_HISTORY])
 
     def set_replace(self, entries: list[str]) -> None:
         """Overwrite the entire replace history with *entries*."""
@@ -111,36 +114,68 @@ class PatternPresets:
 
     # ── Named saves ───────────────────────────────────────────────────────────
 
-    def _read_saves_raw(self) -> dict[str, dict]:
-        data = _read_json(self._dir / "saves.json")
-        if not isinstance(data, dict):
-            return {}
-        return {
-            name: cfg
-            for name, cfg in data.items()
-            if _SAVE_NAME_RE.match(name) and isinstance(cfg, dict)
-        }
+    def _read_saves_raw(self) -> list[tuple[str, dict]]:
+        """Return [(name, config)] in LRU order (most recent first).
 
-    def _write_saves(self, saves: dict[str, dict]) -> None:
+        Supports both the new list format and the legacy dict format.
+        """
+        data = _read_json(self._dir / "saves.json")
+        if isinstance(data, list):
+            result = []
+            seen: set[str] = set()
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                name = item.get("name", "")
+                if not isinstance(name, str) or not _SAVE_NAME_RE.match(name):
+                    continue
+                if name in seen:
+                    continue
+                seen.add(name)
+                result.append((name, {k: v for k, v in item.items() if k != "name"}))
+            return result
+        # Legacy dict format — migrate transparently
+        if isinstance(data, dict):
+            return [
+                (name, cfg)
+                for name, cfg in data.items()
+                if isinstance(name, str)
+                and _SAVE_NAME_RE.match(name)
+                and isinstance(cfg, dict)
+            ]
+        return []
+
+    def _write_saves(self, entries: list[tuple[str, dict]]) -> None:
+        data = [{"name": name, **config} for name, config in entries]
         (self._dir / "saves.json").write_text(
-            json.dumps(saves, ensure_ascii=False, indent=2), encoding="utf-8"
+            json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
         )
 
     def get_saves(self) -> dict[str, dict]:
-        """Return all named saves as {name: config_dict}."""
-        return self._read_saves_raw()
+        """Return all named saves as {name: config_dict} in LRU order."""
+        return dict(self._read_saves_raw())
 
     def set_save(self, name: str, config: dict) -> None:
-        """Create or overwrite the named save *name* with *config*."""
+        """Create or overwrite *name* with *config* (LRU: moves to front)."""
         if not _SAVE_NAME_RE.match(name):
             return
-        saves = self._read_saves_raw()
-        saves[name] = config
-        self._write_saves(saves)
+        entries = [(n, c) for n, c in self._read_saves_raw() if n != name]
+        entries.insert(0, (name, config))
+        self._write_saves(entries)
+
+    def use_save(self, name: str) -> None:
+        """Promote *name* to the front of the LRU list without changing its config."""
+        entries = self._read_saves_raw()
+        for i, (n, c) in enumerate(entries):
+            if n == name:
+                entries.pop(i)
+                entries.insert(0, (n, c))
+                self._write_saves(entries)
+                return
 
     def delete_save(self, name: str) -> None:
         """Delete the named save *name* (no-op if not found)."""
-        saves = self._read_saves_raw()
-        if name in saves:
-            saves.pop(name)
-            self._write_saves(saves)
+        entries = self._read_saves_raw()
+        new_entries = [(n, c) for n, c in entries if n != name]
+        if len(new_entries) < len(entries):
+            self._write_saves(new_entries)

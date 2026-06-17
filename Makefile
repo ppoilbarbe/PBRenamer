@@ -16,22 +16,19 @@ G  := \033[32m
 Y  := \033[33m
 C  := \033[36m
 
-UI_FILES := $(shell find $(SRC) -name "*.ui")
-UI_PY    := $(UI_FILES:.ui=_ui.py)
-
-# Python sources excluding auto-generated *_ui.py files
+# All Python sources (including *_ui.py which are now hand-written)
 PY_SOURCES := $(shell find $(SRC)/pbrenamer -name "*.py" \
-                ! -name "*_ui.py" ! -path "*/__pycache__/*")
+                ! -path "*/__pycache__/*")
 
 PO_FILES        := $(foreach lang,$(PO_LOCALES),$(LOCALE_DIR)/$(lang)/LC_MESSAGES/pbrenamer.po)
 TRANSLATE_STAMP := .translate.stamp
 
 .DEFAULT_GOAL := help
-.PHONY: all help venv venv-update install ui translate new-lang run test coverage \
-        lint format docs docs-live designer dist srcdist clean force-translate \
+.PHONY: all help venv venv-update install translate new-lang run test coverage \
+        lint format docs docs-live dist srcdist clean force-translate \
         bump-major bump-minor bump-patch bump-set
 
-all: translate ## Build all generated artifacts (UI → Python, strings → .mo)
+all: translate ## Build all generated artifacts (strings → .mo)
 
 help: ## This help
 	@printf "$(B)$(C)PBRenamer — Development Tasks$(R)\n\n"
@@ -53,30 +50,21 @@ venv-update: ## Update existing conda env from environment.yml
 	conda env update -f environment.yml --prune
 	@printf "$(G)Done.$(R)\n"
 
-ui: $(UI_PY) ## Compile all .ui files to Python via pyside6-uic
-
-%_ui.py: %.ui
-	@printf "$(C)uic:$(R) $< → $@\n"
-	$(CONDA_RUN) pyside6-uic $< -o $@
-
 # ── i18n ──────────────────────────────────────────────────────────────────────
 
 translate: $(TRANSLATE_STAMP) ## Extract translatable strings, update .po files and compile .mo
 
-$(TRANSLATE_STAMP): $(UI_PY) $(PY_SOURCES) $(PO_FILES)
-	@printf "$(C)Extracting UI strings...$(R)\n"
-	$(CONDA_RUN) python tools/extract_ui_strings.py \
-	    $(UI_PY) > tools/_ui_strings_tmp.py
-	@echo '_("language_name")' >> tools/_ui_strings_tmp.py
+$(TRANSLATE_STAMP): $(PY_SOURCES) $(PO_FILES)
 	@printf "$(C)Extracting all translatable strings...$(R)\n"
+	@printf '_("language_name")\n' > tools/_lang_name_stub.py
 	$(CONDA_RUN) pybabel extract -F babel.cfg \
 	    --copyright-holder="Marcel Spock" \
 	    --msgid-bugs-address="mrspock@cardolan.net" \
 	    --project="PBRenamer" \
 	    --no-location \
 	    -k _ -o $(POT_FILE) \
-	    $(PY_SOURCES) tools/_ui_strings_tmp.py
-	@rm -f tools/_ui_strings_tmp.py
+	    $(PY_SOURCES) tools/_lang_name_stub.py
+	@rm -f tools/_lang_name_stub.py
 	@printf "$(C)Updating .po files...$(R)\n"
 	$(CONDA_RUN) pybabel update -i $(POT_FILE) -d $(LOCALE_DIR) \
 	    -D pbrenamer --no-fuzzy-matching
@@ -139,9 +127,6 @@ docs: ## Build HTML documentation
 docs-live: ## Build docs and watch for changes (hot reload)
 	$(CONDA_RUN) sphinx-autobuild $(DOCS) $(DOCS)/_build/html
 
-designer: ## Launch Qt Designer
-	$(CONDA_RUN) pyside6-designer
-
 # ── Distribution ──────────────────────────────────────────────────────────────
 
 # PyInstaller builds natively: run this target on the target OS.
@@ -187,5 +172,4 @@ clean: ## Remove all build/cache artifacts
 	rm -rf build dist *.egg-info .pytest_cache .coverage htmlcov $(DOCS)/_build
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -name "*.pyc" -delete
-	find . -name "*_ui.py" -delete
 	rm -f $(POT_FILE) $(TRANSLATE_STAMP)

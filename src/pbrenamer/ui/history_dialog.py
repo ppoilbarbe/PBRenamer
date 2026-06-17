@@ -14,11 +14,16 @@ _MODE_LABEL = {"pattern": "pat", "regex": "RE", "plain": "txt"}
 class HistoryDialog(QDialog):
     """Dialog for viewing, adding, and removing search/replace history entries."""
 
-    def __init__(self, presets: PatternPresets, parent=None) -> None:
+    def __init__(self, presets: PatternPresets, window_state, parent=None) -> None:
         super().__init__(parent)
         self._ui = Ui_HistoryDialog()
         self._ui.setupUi(self)
         self._presets = presets
+        self._window_state = window_state
+
+        geo = window_state.load_geometry("history_dialog")
+        if geo:
+            self.restoreGeometry(geo)
 
         self._ui.btnAddSearch.clicked.connect(self._on_add_search)
         self._ui.edtSearch.returnPressed.connect(self._on_add_search)
@@ -32,6 +37,10 @@ class HistoryDialog(QDialog):
 
         self._reload_search()
         self._reload_replace()
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._window_state.save_geometry("history_dialog", self.saveGeometry())
+        super().closeEvent(event)
 
     # ── Search ────────────────────────────────────────────────────────────────
 

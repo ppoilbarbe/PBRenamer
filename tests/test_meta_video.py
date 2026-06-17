@@ -136,47 +136,51 @@ class TestReadFieldNoLibrary:
 
 class TestDuration:
     def test_milliseconds_converted_to_seconds(self):
-        assert _read("duration", general={"duration": 125_400}) == 125
+        assert _read("duration", general={"duration": 125_400}, video={}) == 125
 
     def test_fractional_rounded(self):
-        assert _read("duration", general={"duration": 1500}) == 2
+        assert _read("duration", general={"duration": 1500}, video={}) == 2
 
     def test_none_when_absent(self):
-        assert _read("duration", general={"duration": None}) is None
+        assert _read("duration", general={"duration": None}, video={}) is None
 
     def test_none_when_no_general_track(self):
         assert _read("duration") is None
 
     def test_case_insensitive(self):
-        assert _read("DURATION", general={"duration": 60_000}) == 60
+        assert _read("DURATION", general={"duration": 60_000}, video={}) == 60
 
 
 class TestBitrate:
     def test_bits_per_second_to_kbps(self):
-        assert _read("bitrate", general={"overall_bit_rate": 4_000_000}) == 4000
+        assert (
+            _read("bitrate", general={"overall_bit_rate": 4_000_000}, video={}) == 4000
+        )
 
     def test_none_when_absent(self):
-        assert _read("bitrate", general={"overall_bit_rate": None}) is None
+        assert _read("bitrate", general={"overall_bit_rate": None}, video={}) is None
 
 
 class TestTitle:
     def test_returns_title(self):
-        assert _read("title", general={"title": "My Movie"}) == "My Movie"
+        assert _read("title", general={"title": "My Movie"}, video={}) == "My Movie"
 
     def test_strips_whitespace(self):
-        assert _read("title", general={"title": "  Clip  "}) == "Clip"
+        assert _read("title", general={"title": "  Clip  "}, video={}) == "Clip"
 
     def test_none_when_empty(self):
-        assert _read("title", general={"title": ""}) is None
+        assert _read("title", general={"title": ""}, video={}) is None
 
     def test_none_when_absent(self):
-        assert _read("title", general={"title": None}) is None
+        assert _read("title", general={"title": None}, video={}) is None
 
 
 class TestEncodedDate:
     def test_parses_utc_date(self):
         result = _read(
-            "encodeddate", general={"encoded_date": "UTC 2022-03-15 08:00:00"}
+            "encodeddate",
+            general={"encoded_date": "UTC 2022-03-15 08:00:00"},
+            video={},
         )
         assert result == datetime.datetime(2022, 3, 15, 8, 0, 0)
 
@@ -184,6 +188,7 @@ class TestEncodedDate:
         result = _read(
             "encodeddate",
             general={"encoded_date": None, "tagged_date": None},
+            video={},
         )
         assert result is None
 
@@ -229,18 +234,22 @@ class TestVideoCodec:
 
 class TestAudioCodec:
     def test_returns_format(self):
-        assert _read("audiocodec", audio={"format": "AAC"}) == "AAC"
+        assert _read("audiocodec", video={}, audio={"format": "AAC"}) == "AAC"
 
     def test_none_when_no_audio_track(self):
-        assert _read("audiocodec") is None
+        assert _read("audiocodec", video={}) is None
+
+    def test_none_when_no_video_track(self):
+        # Audio-only file (e.g. MP3): vi: fields must not match.
+        assert _read("audiocodec", audio={"format": "MP3"}) is None
 
 
 class TestAudioChannels:
     def test_returns_int(self):
-        assert _read("audiochannels", audio={"channel_s": 2}) == 2
+        assert _read("audiochannels", video={}, audio={"channel_s": 2}) == 2
 
     def test_none_when_absent(self):
-        assert _read("audiochannels", audio={"channel_s": None}) is None
+        assert _read("audiochannels", video={}, audio={"channel_s": None}) is None
 
 
 # ---------------------------------------------------------------------------
@@ -323,6 +332,42 @@ class TestCanRead:
 class TestUnknownField:
     def test_unknown_field_returns_none(self):
         assert _read("nonexistent", general={"duration": 1000}) is None
+
+
+# ---------------------------------------------------------------------------
+# read_field — no video track (image / audio-only files)
+# Regression: MediaInfo can parse JPEG files and expose General-track metadata
+# (e.g. encoded_date from EXIF). Without the video-track guard, {vi:encodeddate}
+# would resolve on a JPEG, duplicating the date alongside {im:DateTimeDigitized}.
+# ---------------------------------------------------------------------------
+
+
+class TestNoVideoTrack:
+    """All vi: fields must return None when no Video track is present."""
+
+    def test_encodeddate_none_for_image_file(self):
+        # Simulates a JPEG: General track with encoded_date, but no Video track.
+        result = _read(
+            "encodeddate", general={"encoded_date": "UTC 2024-05-29 17:30:01"}
+        )
+        assert result is None
+
+    def test_duration_none_for_image_file(self):
+        assert _read("duration", general={"duration": 1000}) is None
+
+    def test_bitrate_none_for_image_file(self):
+        assert _read("bitrate", general={"overall_bit_rate": 1_000_000}) is None
+
+    def test_title_none_for_image_file(self):
+        assert _read("title", general={"title": "Photo"}) is None
+
+    def test_width_none_for_image_file(self):
+        # width is already None without a Video track; still None after fix.
+        assert _read("width", general={"duration": 0}) is None
+
+    def test_audiocodec_none_for_audio_only_file(self):
+        # Audio-only file has no Video track; vi: must not match.
+        assert _read("audiocodec", audio={"format": "FLAC"}) is None
 
 
 # ---------------------------------------------------------------------------

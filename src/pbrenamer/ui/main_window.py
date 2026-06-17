@@ -5,9 +5,10 @@ from __future__ import annotations
 import logging
 import os
 import re
+import time
 from collections import defaultdict
 
-from PySide6.QtCore import QDir, Qt, QTimer, QUrl
+from PySide6.QtCore import QDir, QFileSystemWatcher, Qt, QTimer, QUrl
 from PySide6.QtGui import QColor, QDesktopServices
 from PySide6.QtWidgets import (
     QApplication,
@@ -100,6 +101,15 @@ class MainWindow(QMainWindow):
         self._preview_timer.setSingleShot(True)
         self._preview_timer.timeout.connect(self._on_preview)
 
+        self._fs_watcher = QFileSystemWatcher(self)
+        self._fs_watcher.directoryChanged.connect(self._on_dir_changed_external)
+        self._fs_change_timer = QTimer(self)
+        self._fs_change_timer.setSingleShot(True)
+        self._fs_change_timer.timeout.connect(self._on_fs_change)
+        self._last_internal_reload: float = 0.0
+
+        self._geometry_restored = False
+
         self._setup_directory_tree()
         self._populate_pattern_combos()
         self._populate_named_saves()
@@ -107,7 +117,6 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
-        self._restore_window_state()
         if _cfg.get_restore_toolbar_state():
             self._restore_toolbar_state()
         if start_dir:
@@ -240,6 +249,31 @@ class MainWindow(QMainWindow):
         self._ui.tblFiles.itemSelectionChanged.connect(self._on_file_selection_changed)
         self._ui.tblFiles.itemDoubleClicked.connect(self._on_file_double_clicked)
 
+    # ── Filesystem change notifications ──────────────────────────────────────
+
+    def _on_dir_changed_external(self) -> None:
+        if time.monotonic() - self._last_internal_reload < 0.5:
+            return
+        self._fs_change_timer.start(200)
+
+    def _on_fs_change(self) -> None:
+        if not self._current_dir or not os.path.isdir(self._current_dir):
+            return
+        selected_paths = {
+            item.data(0, Qt.ItemDataRole.UserRole)
+            for item in self._ui.tblFiles.selectedItems()
+        }
+        self._reload_files()
+        if selected_paths:
+            root = self._ui.tblFiles.invisibleRootItem()
+            self._ui.tblFiles.blockSignals(True)
+            for i in range(root.childCount()):
+                item = root.child(i)
+                if item.data(0, Qt.ItemDataRole.UserRole) in selected_paths:
+                    item.setSelected(True)
+            self._ui.tblFiles.blockSignals(False)
+            self._on_file_selection_changed()
+
     # ── Directory / file loading ──────────────────────────────────────────────
 
     def _on_open(self) -> None:
@@ -259,6 +293,8 @@ class MainWindow(QMainWindow):
         path = self._fs_model.filePath(indexes[0])
         if not os.path.isdir(path):
             return
+        if path == self._current_dir:
+            return
         _log.info("Directory selected: %s", path)
         self._current_dir = path
         self._reload_files()
@@ -266,6 +302,13 @@ class MainWindow(QMainWindow):
     def _reload_files(self) -> None:
         if not self._current_dir or not os.path.isdir(self._current_dir):
             return
+        self._last_internal_reload = time.monotonic()
+        self._fs_change_timer.stop()
+        watched = self._fs_watcher.directories()
+        if list(watched) != [self._current_dir]:
+            if watched:
+                self._fs_watcher.removePaths(list(watched))
+            self._fs_watcher.addPath(self._current_dir)
         mode = self._ui.cmbMode.currentIndex()
         recursive = self._ui.chkRecursive.isChecked()
         pattern = self._ui.edtFilter.text().strip() or None
@@ -765,11 +808,23 @@ class MainWindow(QMainWindow):
     def _populate_named_saves(self) -> None:
         combo = self._ui.cmbNamedSaves
         current_text = combo.currentText()
+        # Block the embedded QLineEdit too: combo.blockSignals() alone does not
+        # stop the QCompleter from receiving textChanged events, which can queue
+        # a deferred activated() and corrupt the LRU order.
+        le = combo.lineEdit()
         combo.blockSignals(True)
+        if le is not None:
+            le.blockSignals(True)
         combo.clear()
-        for name in sorted(self._presets.get_saves()):
+        for name in self._presets.get_saves():
             combo.addItem(name)
-        combo.setCurrentText(current_text)
+        idx = combo.findText(current_text)
+        if idx >= 0:
+            combo.setCurrentIndex(idx)
+        else:
+            combo.setCurrentText(current_text)
+        if le is not None:
+            le.blockSignals(False)
         combo.blockSignals(False)
         self._update_save_buttons()
 
@@ -790,6 +845,9 @@ class MainWindow(QMainWindow):
         if cfg is None:
             return
         self._apply_save_config(cfg)
+        self._presets.use_save(name)
+        self._populate_named_saves()
+        self._ui.cmbNamedSaves.setCurrentText(name)
 
     def _collect_save_config(self) -> dict:
         cfg: dict = {
@@ -884,6 +942,15 @@ class MainWindow(QMainWindow):
         if done:
             self._undo.add_batch(done)
             self._refresh_undo_button()
+            search = self._ui.cmbPatternSearch.currentText()
+            replace = self._ui.cmbPatternDest.currentText()
+            if search:
+                self._presets.add_search(self._current_search_mode(), search)
+            if replace:
+                self._presets.add_replace(replace)
+            self._populate_pattern_combos()
+            self._ui.cmbPatternSearch.setCurrentIndex(0)
+            self._ui.cmbPatternDest.setCurrentIndex(0)
 
         if errors:
             QMessageBox.warning(
@@ -924,6 +991,12 @@ class MainWindow(QMainWindow):
             self._ui.splitterMain.restoreState(sm)
         if sr:
             self._ui.splitterRight.restoreState(sr)
+
+    def showEvent(self, event) -> None:  # noqa: N802
+        super().showEvent(event)
+        if not self._geometry_restored:
+            self._geometry_restored = True
+            self._restore_window_state()
 
     def closeEvent(self, event) -> None:  # noqa: N802
         self._window_state.save(
@@ -977,11 +1050,11 @@ class MainWindow(QMainWindow):
         QApplication.quit()
 
     def _on_history(self) -> None:
-        HistoryDialog(self._presets, self).exec()
+        HistoryDialog(self._presets, self._window_state, self).exec()
         self._populate_pattern_combos()
 
     def _on_settings(self) -> None:
-        SettingsDialog(self).exec()
+        SettingsDialog(self._window_state, self).exec()
 
     def _on_about(self) -> None:
         AboutDialog(self).exec()
@@ -1038,13 +1111,14 @@ class MainWindow(QMainWindow):
         _cfg.set_shortcuts(shortcuts)
 
     def _on_edit_shortcuts(self) -> None:
-        ShortcutsDialog(self).exec()
+        ShortcutsDialog(self._window_state, self).exec()
 
     # ── File information window ───────────────────────────────────────────────
 
     def _on_file_info(self) -> None:
         if self._file_info is None:
-            self._file_info = FileInfoWindow(self)
+            self._file_info = FileInfoWindow(self._window_state, self)
+            self._file_info.field_requested.connect(self._on_field_requested)
         self._refresh_file_info()
         self._file_info.show()
         self._file_info.raise_()
@@ -1068,6 +1142,9 @@ class MainWindow(QMainWindow):
                 self._file_info.show_empty()
         else:
             self._file_info.show_empty()
+
+    def _on_field_requested(self, field: str) -> None:
+        self._ui.cmbPatternDest.lineEdit().insert(field)
 
     def _on_file_double_clicked(self, item: QTreeWidgetItem) -> None:
         path = item.data(0, Qt.ItemDataRole.UserRole)

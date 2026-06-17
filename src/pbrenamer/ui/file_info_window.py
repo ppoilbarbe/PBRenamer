@@ -5,10 +5,11 @@ from __future__ import annotations
 import datetime
 import os
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QHeaderView,
     QLabel,
+    QMenu,
     QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
@@ -52,11 +53,15 @@ def _fmt(value: object) -> str:
 class FileInfoWindow(QWidget):
     """Non-modal window showing replacement field values for a selected file."""
 
-    def __init__(self, parent=None) -> None:
+    field_requested = Signal(str)
+
+    def __init__(self, window_state, parent=None) -> None:
         super().__init__(parent, Qt.WindowType.Window)
         self.setWindowTitle(_("File information"))
         self.setMinimumSize(600, 460)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
+        self._window_state = window_state
+        self._geometry_restored = False
 
         self._lbl_info = QLabel()
         self._lbl_info.setWordWrap(True)
@@ -75,6 +80,9 @@ class FileInfoWindow(QWidget):
         hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
         hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
         hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        self._tree.itemDoubleClicked.connect(self._on_item_double_clicked)
+        self._tree.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self._tree.customContextMenuRequested.connect(self._on_tree_context_menu)
         self._tree.hide()
 
         layout = QVBoxLayout(self)
@@ -212,3 +220,37 @@ class FileInfoWindow(QWidget):
 
     def _row(self, parent: QTreeWidgetItem, field: str, desc: str, value: str) -> None:
         QTreeWidgetItem(parent, [field, desc, value])
+
+    # ── Interaction ───────────────────────────────────────────────────────────
+
+    def showEvent(self, event) -> None:  # noqa: N802
+        super().showEvent(event)
+        if not self._geometry_restored:
+            self._geometry_restored = True
+            geo = self._window_state.load_geometry("file_info")
+            if geo:
+                self.restoreGeometry(geo)
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._window_state.save_geometry("file_info", self.saveGeometry())
+        super().closeEvent(event)
+
+    def _on_item_double_clicked(self, item: QTreeWidgetItem, _column: int) -> None:
+        if item.childCount() > 0:
+            return
+        field = item.text(0)
+        if field:
+            self.field_requested.emit(field)
+
+    def _on_tree_context_menu(self, pos) -> None:
+        item = self._tree.itemAt(pos)
+        if item is None or item.childCount() > 0:
+            return
+        field = item.text(0)
+        if not field:
+            return
+        menu = QMenu(self)
+        action = menu.addAction(_("Insert into replacement field"))
+        chosen = menu.exec(self._tree.viewport().mapToGlobal(pos))
+        if chosen is action:
+            self.field_requested.emit(field)

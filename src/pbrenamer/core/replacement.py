@@ -67,6 +67,17 @@ _META_READERS = {
     "vi:": video_meta.read_field,
 }
 
+# Mapping from field prefix to the file-type probe for that namespace.
+_META_CAN_READ = {
+    "im:": image_meta.can_read,
+    "au:": audio_meta.can_read,
+    "vi:": video_meta.can_read,
+}
+
+# File-type namespace prefixes (im:, au:, vi: and any future additions).
+# Used to detect "multi-meta mode" in substitute().
+_FILE_META_PREFIXES: frozenset[str] = frozenset(_META_READERS)
+
 
 @dataclass
 class LiteralSegment:
@@ -305,6 +316,31 @@ def substitute(
 
     Raises FieldResolutionError if a field is absent and has no default.
     """
+    # Multi-meta mode: when fields from more than one file-type namespace
+    # (im:, vi:, au:…) appear in the same template, each namespace is probed
+    # with can_read() to determine whether it applies to this file.
+    # - Applicable namespace: strict behaviour — absent field + no default → error.
+    # - Non-applicable namespace: silently contributes "".
+    # - No namespace applicable at all → FieldResolutionError on the first meta field.
+    # With a single namespace the strict behaviour is always preserved.
+    _active_ns = {
+        seg.name[:3].lower()
+        for seg in segments
+        if isinstance(seg, FieldSegment) and seg.name[:3].lower() in _FILE_META_PREFIXES
+    }
+    multi_meta = len(_active_ns) > 1
+
+    _applicable_ns: frozenset[str] = frozenset()
+    if multi_meta:
+        _applicable_ns = frozenset(ns for ns in _active_ns if _META_CAN_READ[ns](path))
+        if not _applicable_ns:
+            for seg in segments:
+                if (
+                    isinstance(seg, FieldSegment)
+                    and seg.name[:3].lower() in _FILE_META_PREFIXES
+                ):
+                    raise FieldResolutionError(seg.name)
+
     parts: list[str] = []
     for seg in segments:
         if isinstance(seg, LiteralSegment):
@@ -330,6 +366,10 @@ def substitute(
                     if seg.fmt.isdigit()
                     else default_str
                 )
+            elif multi_meta and seg.name[:3].lower() in _FILE_META_PREFIXES:
+                if seg.name[:3].lower() in _applicable_ns:
+                    raise FieldResolutionError(seg.name)
+                # non-applicable namespace in mixed template → silently ""
             else:
                 raise FieldResolutionError(seg.name)
         else:

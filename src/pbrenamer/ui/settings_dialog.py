@@ -11,10 +11,15 @@ from pbrenamer.ui.settings_dialog_ui import Ui_SettingsDialog
 class SettingsDialog(QDialog):
     """Application settings dialog."""
 
-    def __init__(self, parent=None) -> None:
+    def __init__(self, window_state, parent=None) -> None:
         super().__init__(parent)
         self._ui = Ui_SettingsDialog()
         self._ui.setupUi(self)
+        self._window_state = window_state
+
+        geo = window_state.load_geometry("settings_dialog")
+        if geo:
+            self.restoreGeometry(geo)
 
         self._ui.cmbLanguage.addItem(_("System default"), userData="")
         for code, name in i18n.available_languages():
@@ -37,6 +42,10 @@ class SettingsDialog(QDialog):
         self._ui.spnPreviewDelay.setValue(settings.get_preview_delay())
 
         self._ui.buttonBox.accepted.connect(self._save_and_accept)
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._window_state.save_geometry("settings_dialog", self.saveGeometry())
+        super().closeEvent(event)
 
     def _save_and_accept(self) -> None:
         i18n.set_language_override(self._ui.cmbLanguage.currentData())

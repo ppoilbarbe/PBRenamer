@@ -6,6 +6,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Window geometry persistence for all windows and dialogs (except About):
+  `MainWindow`, `FileInfoWindow`, `HistoryDialog`, `SettingsDialog`,
+  `ShortcutsDialog`, and `PatternHelpDialog` save/restore size and position
+  across sessions via `WindowState.save_geometry` / `load_geometry`
+- LRU management for search, replace, and named-saves dropdowns: the most
+  recently used entry is promoted to position 0 on each use; history is
+  capped at 20 entries
+- Mixed file-type replacement templates: when `{im:…}`, `{vi:…}`, or
+  `{au:…}` tokens from more than one namespace appear in the same template,
+  `substitute()` probes each namespace with `can_read()` at runtime — the
+  applicable namespace follows strict behaviour (absent field without default
+  → `FieldResolutionError`), non-applicable namespaces silently contribute
+  `""` without requiring a default
+- `{vi:…}` field resolution now rejects files that have no video track even
+  when MediaInfo returns a General track (e.g. JPEG files parsed by
+  pymediainfo)
+- UI layouts converted from Qt Designer `.ui` files to hand-written Python
+  source (`*_ui.py`): `main_window_ui.py`, `history_dialog_ui.py`,
+  `settings_dialog_ui.py`, `about_dialog_ui.py` — eliminates the Qt Designer
+  file-parsing step at build time
+
+### Changed
+
+- Named saves storage format migrated from a flat JSON dict (no ordering
+  guarantee) to an ordered JSON list `[{"name": …, …config…}, …]`; legacy
+  dict files are read transparently and upgraded on next write
+- `patternHelp.PatternHelpDialog`: geometry now restored in `showEvent`
+  (first paint) rather than in the constructor, matching the behaviour of all
+  other secondary windows
+
+### Fixed
+
+- Main window geometry was not restored at startup: `restoreGeometry()` was
+  called in `__init__` before `show()`, so the window manager ignored it;
+  moved to `showEvent` (fires once via `_geometry_restored` flag)
+- Named saves combo list order reverted to sorted order on a subsequent save:
+  Qt's `QCompleter` (auto-attached to the editable `QComboBox`) received
+  `textChanged` events from the embedded `QLineEdit` even while
+  `combo.blockSignals(True)` was active, and could queue a deferred
+  `activated` callback that called `use_save` with a wrong index; fixed by
+  blocking the `QLineEdit` signals separately and using `setCurrentIndex`
+  instead of `setCurrentText` during `_populate_named_saves`
+- Preview pane appeared and immediately disappeared on the first click in the
+  directory tree: `_on_directory_selected` was called twice for the initial
+  path, the second call with the same path clearing the just-populated
+  preview; fixed with an early-return guard when the path has not changed
+
+### Removed
+
+- Qt Designer `.ui` files (`about_dialog.ui`, `history_dialog.ui`,
+  `main_window.ui`, `settings_dialog.ui`) — replaced by `*_ui.py` Python
+  sources
+- `tools/extract_ui_strings.py` — no longer needed; translatable strings are
+  extracted directly from Python source via pybabel
+
 ## [1.3.0] - 2026-06-15
 
 ### Added

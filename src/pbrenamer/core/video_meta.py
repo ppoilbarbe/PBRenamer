@@ -106,6 +106,14 @@ def read_field(path: str, field: str) -> Any | None:
         return None
 
     tracks = info.tracks
+
+    # vi: fields apply only to proper video files; image/audio-only files
+    # (e.g. JPEG) may expose General-track metadata via MediaInfo but should
+    # not match {vi:…} tokens.
+    if not any(t.track_type == "Video" for t in tracks):
+        _log.debug("No video track in %s — {vi:…} fields return None", path)
+        return None
+
     general = _get_track(tracks, "General")
 
     if key == "duration":

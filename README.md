@@ -19,6 +19,10 @@ counters, date stamps, and metadata — all previewed live before any change is 
   - Image metadata (`{im:Make}`, `{im:Model}`, `{im:DateTimeOriginal}`… — EXIF/IPTC via Pillow)
   - Audio metadata (`{au:Title}`, `{au:Artist}`, `{au:Album}`, `{au:Year}`… — via mutagen)
   - Video metadata (`{vi:Title}`, `{vi:Duration}`, `{vi:Width}`, `{vi:Height}`, `{vi:VideoCodec}`… — via pymediainfo)
+  - **Mixed-type templates**: combining `{im:…}`, `{vi:…}` and `{au:…}` in the same
+    replacement field works across file types — the non-matching tokens silently
+    produce nothing (e.g. `{im:DateTimeOriginal:%Y-%m-%d:}{vi:encodeddate:%Y-%m-%d:}`
+    uses the EXIF date for images and the encoded date for videos)
 - **Directory colouring** — directories are shown in a distinct colour in the file list
 - **Keep extension** option — transformations apply to the stem only
 - **Recursive** directory traversal

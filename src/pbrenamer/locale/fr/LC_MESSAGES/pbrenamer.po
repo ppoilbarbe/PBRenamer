@@ -18,640 +18,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-msgid "Edit Shortcuts"
-msgstr "Modifier les raccourcis"
+msgid "Application version"
+msgstr "Version de l'application"
 
-msgid "Move up"
-msgstr "Monter"
+msgid "A graphical batch file renaming utility."
+msgstr "Utilitaire graphique de renommage de fichiers en lot."
 
-msgid "Move down"
-msgstr "Descendre"
+msgid "License: GPLv3"
+msgstr "Licence : GPLv3"
 
-msgid "Remove"
-msgstr "Supprimer"
+msgid "About PBRenamer"
+msgstr "À propos de PBRenamer"
 
-msgid "Saved shortcuts:"
-msgstr "Raccourcis enregistrés :"
+msgid "Settings"
+msgstr "Paramètres"
 
-msgid "File information"
-msgstr "Informations sur le fichier"
+msgid "Select the interface language"
+msgstr "Sélectionner la langue de l'interface"
 
-msgid "Field"
-msgstr "Champ"
+msgid "Language:"
+msgstr "Langue :"
 
-msgid "Description"
-msgstr "Description"
+msgid "Set the application logging verbosity"
+msgstr "Définir le niveau de verbosité de la journalisation de l'application"
 
-msgid "Value"
-msgstr "Valeur"
+msgid "Log level:"
+msgstr "Niveau de journalisation :"
 
-msgid "Image"
-msgstr "Image"
+msgid "Behaviour"
+msgstr "Comportement"
 
-msgid "Audio"
-msgstr "Audio"
+msgid "Restore last opened directory"
+msgstr "Restaurer le dernier dossier ouvert"
 
-msgid "Video"
-msgstr "Vidéo"
-
-msgid "Directory"
-msgstr "Dossier"
-
-msgid "Other"
-msgstr "Autre"
-
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Informations sur le fichier — {name}"
-
-msgid "File:"
-msgstr "Fichier :"
-
-msgid "Type:"
-msgstr "Type :"
-
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Métadonnées de l'image (EXIF / IPTC)"
-
-msgid "Audio metadata"
-msgstr "Métadonnées audio"
-
-msgid "Video metadata"
-msgstr "Métadonnées vidéo"
-
-msgid "Select a single file to display its information."
-msgstr "Sélectionnez un seul fichier pour afficher ses informations."
-
-msgid "Select a file to display its information."
-msgstr "Sélectionnez un fichier pour afficher ses informations."
-
-msgid "Universal fields"
-msgstr "Champs universels"
-
-msgid "Today's date"
-msgstr "Date d'aujourd'hui"
-
-msgid "Current date and time"
-msgstr "Date et heure actuelles"
-
-msgid "File modification date/time"
-msgstr "Date/heure de modification du fichier"
-
-msgid "Missing"
-msgstr "Manquant"
-
-msgid "File creation date/time"
-msgstr "Date/heure de création du fichier"
-
-msgid "Parent folder name"
-msgstr "Nom du dossier parent"
-
-msgid "Batch fields"
-msgstr "Champs de lot"
-
-msgid "Computed"
-msgstr "Calculé"
-
-msgid "Full matched text"
-msgstr "Texte intégralement correspondant"
-
-msgid "Capture groups"
-msgstr "Groupes de capture"
-
-msgid "Auto-incrementing counter"
-msgstr "Compteur auto-incrémenté"
-
-msgid "Conflict-free counter"
-msgstr "Compteur sans conflit"
-
-msgid "Named regex group"
-msgstr "Groupe regex nommé"
-
-msgid "System default"
-msgstr "Langue du système"
-
-#, python-brace-format
-msgid ""
-"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
-"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
-"replacement field."
+msgid "On startup, reopen the directory that was active in the previous session"
 msgstr ""
-"Les jetons agissent comme des jokers typés. Les segments entre "
-"<b>{1}</b>, <b>{2}</b>… sont <em>capturés</em> et réutilisables dans le "
-"champ de remplacement."
+"Au démarrage, rouvrir le dossier qui était actif dans la session "
+"précédente"
 
-msgid "One or more digits (0–9)"
-msgstr "Un ou plusieurs chiffres (0–9)"
-
-msgid "One or more letters (a–z, A–Z and Unicode letters)"
-msgstr "Une ou plusieurs lettres (a–z, A–Z et lettres Unicode)"
-
-msgid "One or more non-whitespace characters"
-msgstr "Un ou plusieurs caractères non-blancs"
-
-msgid "Any sequence of characters, including empty"
-msgstr "Toute séquence de caractères, y compris vide"
-
-msgid "Trash — matches and discards a segment (not captured)"
-msgstr "Poubelle — correspond à un segment et le rejette (non capturé)"
-
-#, python-brace-format
-msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
-msgstr ""
-"Groupe capturant — le texte correspondant est lié à {1}, {2}… dans le "
-"remplacement"
-
-msgid "Example"
-msgstr "Exemple"
-
-msgid "Search:"
-msgstr "Recherche :"
-
-msgid "Replace:"
-msgstr "Remplacement :"
+msgid "Restore toolbar state"
+msgstr "Restaurer l'état de la barre d'outils"
 
 msgid ""
-"Full Python <code>re</code>-module syntax. The match is applied to the "
-"file stem (or full name if <em>Keep extension</em> is unchecked)."
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
 msgstr ""
-"Syntaxe complète du module Python <code>re</code>. La correspondance "
-"porte sur le radical du fichier (ou le nom entier si <em>Conserver "
-"l'extension</em> est décoché)."
-
-msgid "Any single character"
-msgstr "N'importe quel caractère"
-
-msgid "Any sequence (greedy), non-empty variant"
-msgstr "Toute séquence (gourmand), variante non vide"
-
-msgid "One or more digits"
-msgstr "Un ou plusieurs chiffres"
-
-msgid "Word characters (letters, digits, _)"
-msgstr "Caractères de mot (lettres, chiffres, _)"
+"Au démarrage, restaurer les paramètres de la barre d'outils de la session"
+" précédente (mode d'affichage, récursif, conserver l'extension, aperçu "
+"automatique, filtre)"
 
 msgid ""
-"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
-"replacement"
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
 msgstr ""
-"Groupe capturant numéroté → <code>\\1</code>, <code>\\2</code>… dans le "
-"remplacement"
+"Délai avant rafraîchissement de l'aperçu après une modification du motif "
+"de recherche ou de remplacement (ms)"
 
-msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
-msgstr "Groupe capturant nommé → <code>\\g&lt;name&gt;</code> dans le remplacement"
+msgid "Auto-preview delay:"
+msgstr "Délai d'aperçu auto :"
 
-msgid "Case-insensitive flag"
-msgstr "Indicateur insensible à la casse"
+msgid " ms"
+msgstr " ms"
 
-msgid "Start / end of the name"
-msgstr "Début / fin du nom"
-
-msgid ""
-"The search field is matched as a literal string — no wildcards, no "
-"special characters. Every occurrence of the exact text in the file name "
-"is replaced."
+msgid "A restart is required for the language change to take effect."
 msgstr ""
-"Le champ de recherche est comparé en tant que chaîne littérale — sans "
-"jokers, sans caractères spéciaux. Toutes les occurrences du texte exact "
-"dans le nom de fichier sont remplacées."
-
-msgid "Search patterns"
-msgstr "Motifs de recherche"
-
-msgid "Pattern mode"
-msgstr "Mode motif"
-
-msgid "Regular expression mode"
-msgstr "Mode expression rationnelle"
-
-msgid "Plain text mode"
-msgstr "Mode texte brut"
-
-#, python-brace-format
-msgid ""
-"The replacement string is the same regardless of the search mode. Fields "
-"are written <code>{name}</code> and may include formatting options:"
-msgstr ""
-"La chaîne de remplacement est identique quel que soit le mode de "
-"recherche. Les champs s'écrivent <code>{name}</code> et peuvent inclure "
-"des options de formatage :"
-
-msgid "plain value"
-msgstr "valeur brute"
-
-msgid "with format  (digit = min width · strftime for dates)"
-msgstr "avec format  (entier = largeur min · strftime pour les dates)"
-
-msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
-msgstr ""
-"casse :  - minusc.   + MAJUSC.   ! Première maj.   * Chaque Mot   = "
-"inchangé"
-
-msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
-msgstr "alignt : &lt; gauche   &gt; droite   0 zéros à gauche   ^ centré"
-
-msgid "all options; default used when field is absent"
-msgstr "toutes les options ; défaut utilisé si le champ est absent"
-
-msgid "literal '{' character"
-msgstr "caractère '{' littéral"
-
-msgid ""
-"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
-"literal fallback used when the field is absent; omitting it flags the "
-"file in red in the preview."
-msgstr ""
-"<b>fmt</b> : largeur minimale (entier) pour les textes/nombres, ou format"
-" <code>strftime</code> pour les dates.<br><b>défaut</b> : valeur "
-"littérale utilisée si le champ est absent ; son omission signale le "
-"fichier en rouge dans l'aperçu."
-
-msgid "all modes"
-msgstr "tous modes"
-
-msgid "pattern, regex"
-msgstr "motif, regex"
-
-msgid "regex only"
-msgstr "regex uniquement"
-
-msgid "Available in"
-msgstr "Disponible en"
-
-msgid "Full matched text (or search literal in plain-text mode)"
-msgstr ""
-"Texte intégralement correspondant (ou littéral de recherche en mode texte"
-" brut)"
-
-msgid "Numbered capture groups (1-based)"
-msgstr "Groupes de capture numérotés (à partir de 1)"
-
-msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
-msgstr "Groupe nommé <code>(?P&lt;name&gt;…)</code> de la regex de recherche"
-
-#, python-brace-format
-msgid ""
-"Auto-incrementing counter — default fmt is a minimum width; "
-"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
-"starts at 10, zero-padded to 2 digits)"
-msgstr ""
-"Compteur auto-incrémenté — fmt est une largeur minimale ; "
-"<em>default</em> fixe la valeur de départ (ex. <code>{num:02:10}</code> "
-"démarre à 10, complété à 2 chiffres)"
-
-#, python-brace-format
-msgid ""
-"Like <code>{num}</code> but skips values whose target name already exists"
-" on disk or has been assigned to another file in the same batch — "
-"guarantees no conflicts"
-msgstr ""
-"Comme <code>{num}</code> mais saute les valeurs dont le nom cible existe "
-"déjà sur le disque ou a été attribué à un autre fichier du même lot — "
-"garantit l'absence de conflits"
-
-#, python-format
-msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
-msgstr "Date du jour — format par défaut <code>%Y-%m-%d</code>"
-
-#, python-format
-msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Date et heure courantes — format par défaut <code>%Y-%m-%d_%H%M%S</code>"
-
-#, python-format
-msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Date/heure de modification — fmt par défaut <code>%Y-%m-%d_%H%M%S</code>"
-
-#, python-format
-msgid ""
-"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
-" change time on Linux)"
-msgstr ""
-"Date/heure de création — fmt par défaut <code>%Y-%m-%d_%H%M%S</code> "
-"(date de changement d'inode sous Linux)"
-
-msgid "Name of the immediate parent folder"
-msgstr "Nom du dossier parent immédiat"
-
-msgid "EXIF or IPTC metadata field (images only — see list below)"
-msgstr ""
-"Champ de métadonnées EXIF ou IPTC (images uniquement — voir la liste ci-"
-"dessous)"
-
-msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
-msgstr "Champ de métadonnées audio (mp3, ogg, flac… — voir liste ci-dessous)"
-
-msgid "Video metadata field (mp4, mkv, avi… — see list below)"
-msgstr "Champ de métadonnées vidéo (mp4, mkv, avi… — voir liste ci-dessous)"
-
-msgid ""
-"Field names are case-insensitive. A <b>default</b> is strongly "
-"recommended for metadata fields — they may be absent from non-image files"
-" or images without metadata."
-msgstr ""
-"Les noms de champs sont insensibles à la casse. Une valeur <b>default</b>"
-" est fortement recommandée pour les champs de métadonnées — ils peuvent "
-"être absents des fichiers non-image ou des images sans métadonnées."
-
-msgid "Type"
-msgstr "Type"
-
-msgid "Date/time the photo was taken"
-msgstr "Date/heure de prise de vue"
-
-msgid "Date/time the image was digitised"
-msgstr "Date/heure de numérisation"
-
-msgid "Date/time the file was last changed (EXIF)"
-msgstr "Date/heure de la dernière modification du fichier (EXIF)"
-
-msgid "Camera manufacturer"
-msgstr "Fabricant de l'appareil"
-
-msgid "Camera model"
-msgstr "Modèle de l'appareil"
-
-msgid "Lens model"
-msgstr "Modèle d'objectif"
-
-msgid "ISO speed"
-msgstr "Sensibilité ISO"
-
-msgid "Aperture (e.g. 2.8)"
-msgstr "Ouverture (ex. 2,8)"
-
-msgid "Shutter speed (e.g. 1/125)"
-msgstr "Vitesse d'obturation (ex. 1/125)"
-
-msgid "Focal length in mm"
-msgstr "Focale en mm"
-
-msgid "Image description / title"
-msgstr "Description / titre de l'image"
-
-msgid "Photographer / creator (EXIF)"
-msgstr "Photographe / créateur (EXIF)"
-
-msgid "Copyright notice"
-msgstr "Mention de copyright"
-
-msgid "IPTC title / object name"
-msgstr "Titre IPTC / nom d'objet"
-
-msgid "IPTC photographer / creator"
-msgstr "Photographe IPTC / créateur"
-
-msgid "IPTC city"
-msgstr "Ville IPTC"
-
-msgid "IPTC country"
-msgstr "Pays IPTC"
-
-msgid "IPTC creation date"
-msgstr "Date de création IPTC"
-
-msgid "IPTC keywords (semicolon-separated)"
-msgstr "Mots-clés IPTC (séparés par des points-virgules)"
-
-msgid ""
-"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
-"opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
-"strongly recommended — tags may be absent or the file may not be a "
-"supported audio format."
-msgstr ""
-"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
-"mp3, ogg, flac, opus, aac/m4a et autres formats reconnus par mutagen. Une"
-" valeur <b>default</b> est fortement recommandée — les balises peuvent "
-"être absentes ou le fichier peut ne pas être un format audio reconnu."
-
-msgid "Track title"
-msgstr "Titre de la piste"
-
-msgid "Track artist"
-msgstr "Artiste de la piste"
-
-msgid "Album artist"
-msgstr "Artiste de l'album"
-
-msgid "Album name"
-msgstr "Nom de l'album"
-
-msgid "Track number (strips /total if present)"
-msgstr "Numéro de piste (supprime /total si présent)"
-
-msgid "Disc number (strips /total if present)"
-msgstr "Numéro de disque (supprime /total si présent)"
-
-msgid ""
-"Release date — datetime.date when full date available (strftime "
-"formatting); plain text otherwise"
-msgstr ""
-"Date de sortie — datetime.date si la date complète est disponible "
-"(formatage strftime) ; texte brut sinon"
-
-msgid "Release year (extracted from date tag)"
-msgstr "Année de sortie (extraite de la balise date)"
-
-msgid "Genre"
-msgstr "Genre"
-
-msgid "Comment"
-msgstr "Commentaire"
-
-msgid "Composer"
-msgstr "Compositeur"
-
-msgid "Beats per minute"
-msgstr "Battements par minute"
-
-msgid "Duration in seconds"
-msgstr "Durée en secondes"
-
-msgid "Bitrate in kbps"
-msgstr "Débit en kbps"
-
-msgid ""
-"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
-"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
-" strongly recommended — fields may be absent or the file may not be a "
-"supported video format."
-msgstr ""
-"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
-"mp4, mkv, avi, mov, webm et autres formats reconnus par MediaInfo "
-"(pymediainfo). Une valeur <b>default</b> est fortement recommandée — les "
-"champs peuvent être absents ou le fichier peut ne pas être un format "
-"vidéo reconnu."
-
-msgid "Video width in pixels"
-msgstr "Largeur vidéo en pixels"
-
-msgid "Video height in pixels"
-msgstr "Hauteur vidéo en pixels"
-
-msgid "Frame rate (e.g. 29.970)"
-msgstr "Fréquence d'images (ex. 29.970)"
-
-msgid "Video codec name (e.g. AVC, HEVC)"
-msgstr "Nom du codec vidéo (ex. AVC, HEVC)"
-
-msgid "Audio codec name (e.g. AAC, AC-3)"
-msgstr "Nom du codec audio (ex. AAC, AC-3)"
-
-msgid "Number of audio channels"
-msgstr "Nombre de canaux audio"
-
-msgid "Overall bitrate in kbps"
-msgstr "Débit global en kbps"
-
-msgid "Title tag"
-msgstr "Tag titre"
-
-msgid "Encoded date/time"
-msgstr "Date/heure d'encodage"
-
-msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
-msgstr ""
-"Groupe capturant 1 suivi d'un compteur à 4 chiffres complété par des "
-"zéros (commence à 1)"
-
-msgid "Same, but counter starts at 10"
-msgstr "Idem, mais le compteur démarre à 10"
-
-msgid ""
-"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
-" already exists"
-msgstr ""
-"Compteur à 3 chiffres sans conflit : saute les valeurs où "
-"<code>backup_NNN</code> existe déjà"
-
-msgid "Today's date prepended to the matched text"
-msgstr "Date du jour préfixée au texte correspondant"
-
-msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
-msgstr "Date/heure de prise de vue compact ; \"inconnu\" si EXIF absent"
-
-msgid "Hour+minute of digitisation; \"0000\" if absent"
-msgstr "Heure+minute de numérisation ; \"0000\" si absent"
-
-msgid "Camera make and model (empty string if absent)"
-msgstr "Marque et modèle d'appareil (chaîne vide si absent)"
-
-msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
-msgstr "Artiste et titre audio ; \"inconnu\"/\"sans titre\" si absent"
-
-msgid "Audio release date, zero-padded track number, title"
-msgstr "Date de sortie audio, numéro de piste complété par zéros, titre"
-
-msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
-msgstr "Résolution et codec vidéo (ex. 1920x1080_AVC)"
-
-msgid "Video encoded date and duration in seconds"
-msgstr "Date d'encodage et durée en secondes"
-
-msgid "Named regex groups (regex mode only)"
-msgstr "Groupes regex nommés (mode regex uniquement)"
-
-msgid "Parent folder, file modification date, 3-digit counter"
-msgstr "Dossier parent, date de modification du fichier, compteur 3 chiffres"
-
-msgid "Capture group 1 left-aligned in 12 characters"
-msgstr "Groupe capturant 1 aligné à gauche sur 12 caractères"
-
-msgid "Camera model centred in 30 characters, each word capitalised"
-msgstr ""
-"Modèle appareil centré sur 30 caractères, chaque mot avec majuscule "
-"initiale"
-
-msgid "Camera make in lowercase, exact field length"
-msgstr "Marque de l'appareil en minuscules, longueur exacte du champ"
-
-msgid "Replacement fields"
-msgstr "Champs de remplacement"
-
-msgid "Available fields"
-msgstr "Champs disponibles"
-
-#, python-brace-format
-msgid "Metadata fields for <code>{im:…}</code>"
-msgstr "Champs de métadonnées pour <code>{im:…}</code>"
-
-#, python-brace-format
-msgid "Audio metadata fields for <code>{au:…}</code>"
-msgstr "Champs de métadonnées audio pour <code>{au:…}</code>"
-
-#, python-brace-format
-msgid "Video metadata fields for <code>{vi:…}</code>"
-msgstr "Champs de métadonnées vidéo pour <code>{vi:…}</code>"
-
-msgid "Examples"
-msgstr "Exemples"
-
-msgid "Select folder"
-msgstr "Choisir un dossier"
-
-msgid "Original"
-msgstr "Original"
-
-msgid "Preview"
-msgstr "Aperçu"
-
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} élément(s)"
-
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} non disponible"
-
-msgid "Search — Help"
-msgstr "Recherche — Aide"
-
-msgid "Replace — Help"
-msgstr "Remplacement — Aide"
-
-msgid "Rename errors"
-msgstr "Erreurs de renommage"
-
-#, python-format
-msgid "Undo (%d)"
-msgstr "Annuler (%d)"
-
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Annuler le dernier lot (%d niveau(x) disponible(s))"
-
-msgid "Undo"
-msgstr "Annuler"
-
-msgid "Undo last rename batch"
-msgstr "Annuler le dernier lot de renommage"
-
-msgid "Add as shortcut"
-msgstr "Ajouter comme raccourci"
-
-msgid "Home"
-msgstr "Accueil"
-
-msgid "Desktop"
-msgstr "Bureau"
-
-msgid "Documents"
-msgstr "Documents"
-
-msgid "Downloads"
-msgstr "Téléchargements"
-
-msgid "Pictures"
-msgstr "Images"
-
-msgid "Music"
-msgstr "Musique"
-
-msgid "Videos"
-msgstr "Vidéos"
-
-msgid "language_name"
-msgstr "Français"
+"Un redémarrage est nécessaire pour que le changement de langue prenne "
+"effet."
 
 msgid "History"
 msgstr "Historique"
@@ -680,14 +112,23 @@ msgstr "Mode jeton de motif"
 msgid "RE"
 msgstr "RE"
 
+msgid "Regular expression mode"
+msgstr "Mode expression rationnelle"
+
 msgid "txt"
 msgstr "txt"
+
+msgid "Plain text mode"
+msgstr "Mode texte brut"
 
 msgid "Add"
 msgstr "Ajouter"
 
 msgid "Add this pattern to the search history"
 msgstr "Ajouter ce motif à l'historique de recherche"
+
+msgid "Remove"
+msgstr "Supprimer"
 
 msgid "Remove selected entries"
 msgstr "Supprimer les entrées sélectionnées"
@@ -725,14 +166,8 @@ msgstr "Supprimer toutes les entrées de l'historique de remplacement"
 msgid "Delete the entire replacement pattern history"
 msgstr "Supprimer tout l'historique des motifs de remplacement"
 
-msgid "PBRenamer"
-msgstr "PBRenamer"
-
 msgid "Open folder…"
 msgstr "Ouvrir un dossier…"
-
-msgid "Ctrl+O"
-msgstr ""
 
 msgid "Open a folder"
 msgstr "Ouvrir un dossier"
@@ -742,9 +177,6 @@ msgstr "Ouvrir un sélecteur de dossier et naviguer jusqu'au dossier sélectionn
 
 msgid "Quit"
 msgstr "Quitter"
-
-msgid "Ctrl+Q"
-msgstr ""
 
 msgid "Quit PBRenamer"
 msgstr "Quitter PBRenamer"
@@ -772,9 +204,6 @@ msgstr "Ouvrir les préférences"
 msgid "Configure language and other preferences"
 msgstr "Configurer la langue et les autres préférences"
 
-msgid "About PBRenamer"
-msgstr "À propos de PBRenamer"
-
 msgid "About this application"
 msgstr "À propos de cette application"
 
@@ -793,14 +222,19 @@ msgstr "Ajouter ou supprimer des entrées de la liste des raccourcis"
 msgid "Information"
 msgstr "Informations"
 
-msgid "Ctrl+I"
-msgstr ""
-
 msgid "Show file field values"
 msgstr "Afficher les valeurs des champs du fichier"
 
 msgid "Open the file information window for the selected file"
 msgstr "Ouvrir la fenêtre d'informations sur le fichier sélectionné"
+
+msgid "Browse the filesystem"
+msgstr "Parcourir le système de fichiers"
+
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr ""
+"Sélectionner un dossier pour afficher son contenu dans le panneau de "
+"droite"
 
 msgid "Show:"
 msgstr "Afficher :"
@@ -854,9 +288,6 @@ msgstr "Recalculer l'aperçu à chaque modification du motif ou des options"
 msgid "Filter:"
 msgstr "Filtre :"
 
-msgid "*.txt"
-msgstr ""
-
 msgid "Glob pattern to filter the file list"
 msgstr "Motif glob pour filtrer la liste de fichiers"
 
@@ -865,13 +296,11 @@ msgstr ""
 "Seuls les fichiers correspondant à ce motif glob sont listés (ex. *.txt, "
 "image_*)"
 
-msgid "Browse the filesystem"
-msgstr "Parcourir le système de fichiers"
+msgid "Original"
+msgstr "Original"
 
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr ""
-"Sélectionner un dossier pour afficher son contenu dans le panneau de "
-"droite"
+msgid "Preview"
+msgstr "Aperçu"
 
 msgid "Files to be renamed"
 msgstr "Fichiers à renommer"
@@ -882,6 +311,9 @@ msgid ""
 msgstr ""
 "Sélectionnez des lignes pour restreindre les opérations à ces fichiers ; "
 "laissez vide pour appliquer à tous"
+
+msgid "Search:"
+msgstr "Recherche :"
 
 msgid "Search pattern"
 msgstr "Motif de recherche"
@@ -958,6 +390,9 @@ msgid ""
 msgstr ""
 "Si coché, le motif de recherche correspond aux noms de fichiers quelle "
 "que soit la casse"
+
+msgid "Replace:"
+msgstr "Remplacement :"
 
 msgid "Replacement pattern"
 msgstr "Motif de remplacement"
@@ -1123,6 +558,12 @@ msgstr "Effacer l'aperçu"
 msgid "Remove all preview values from the Preview column"
 msgstr "Supprimer toutes les valeurs d'aperçu de la colonne Aperçu"
 
+msgid "Undo"
+msgstr "Annuler"
+
+msgid "Undo last rename batch"
+msgstr "Annuler le dernier lot de renommage"
+
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Inverser le dernier lot de renommages effectués sur le disque"
 
@@ -1151,69 +592,649 @@ msgstr "Raccourcis"
 msgid "Help"
 msgstr "Aide"
 
-msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
-msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgid "Select folder"
+msgstr "Choisir un dossier"
 
-msgid "Application version"
-msgstr "Version de l'application"
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} élément(s)"
 
-msgid "A graphical batch file renaming utility."
-msgstr "Utilitaire graphique de renommage de fichiers en lot."
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} non disponible"
 
-msgid "License: GPLv3"
-msgstr "Licence : GPLv3"
+msgid "Search — Help"
+msgstr "Recherche — Aide"
 
-msgid "Settings"
-msgstr "Paramètres"
+msgid "Replace — Help"
+msgstr "Remplacement — Aide"
 
-msgid "Language:"
-msgstr "Langue :"
+msgid "Rename errors"
+msgstr "Erreurs de renommage"
 
-msgid "Select the interface language"
-msgstr "Sélectionner la langue de l'interface"
+#, python-format
+msgid "Undo (%d)"
+msgstr "Annuler (%d)"
 
-msgid "Log level:"
-msgstr "Niveau de journalisation :"
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Annuler le dernier lot (%d niveau(x) disponible(s))"
 
-msgid "Set the application logging verbosity"
-msgstr "Définir le niveau de verbosité de la journalisation de l'application"
+msgid "Add as shortcut"
+msgstr "Ajouter comme raccourci"
 
-msgid "Behaviour"
-msgstr "Comportement"
+msgid "File information"
+msgstr "Informations sur le fichier"
 
-msgid "Restore last opened directory"
-msgstr "Restaurer le dernier dossier ouvert"
+msgid "Field"
+msgstr "Champ"
 
-msgid "On startup, reopen the directory that was active in the previous session"
+msgid "Description"
+msgstr "Description"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Vidéo"
+
+msgid "Directory"
+msgstr "Dossier"
+
+msgid "Other"
+msgstr "Autre"
+
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Informations sur le fichier — {name}"
+
+msgid "File:"
+msgstr "Fichier :"
+
+msgid "Type:"
+msgstr "Type :"
+
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Métadonnées de l'image (EXIF / IPTC)"
+
+msgid "Audio metadata"
+msgstr "Métadonnées audio"
+
+msgid "Video metadata"
+msgstr "Métadonnées vidéo"
+
+msgid "Select a single file to display its information."
+msgstr "Sélectionnez un seul fichier pour afficher ses informations."
+
+msgid "Select a file to display its information."
+msgstr "Sélectionnez un fichier pour afficher ses informations."
+
+msgid "Universal fields"
+msgstr "Champs universels"
+
+msgid "Today's date"
+msgstr "Date d'aujourd'hui"
+
+msgid "Current date and time"
+msgstr "Date et heure actuelles"
+
+msgid "File modification date/time"
+msgstr "Date/heure de modification du fichier"
+
+msgid "Missing"
+msgstr "Manquant"
+
+msgid "File creation date/time"
+msgstr "Date/heure de création du fichier"
+
+msgid "Parent folder name"
+msgstr "Nom du dossier parent"
+
+msgid "Batch fields"
+msgstr "Champs de lot"
+
+msgid "Computed"
+msgstr "Calculé"
+
+msgid "Full matched text"
+msgstr "Texte intégralement correspondant"
+
+msgid "Capture groups"
+msgstr "Groupes de capture"
+
+msgid "Auto-incrementing counter"
+msgstr "Compteur auto-incrémenté"
+
+msgid "Conflict-free counter"
+msgstr "Compteur sans conflit"
+
+msgid "Named regex group"
+msgstr "Groupe regex nommé"
+
+msgid "Insert into replacement field"
+msgstr "Insérer dans le champ de remplacement"
+
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
+"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
+"replacement field."
 msgstr ""
-"Au démarrage, rouvrir le dossier qui était actif dans la session "
-"précédente"
+"Les jetons agissent comme des jokers typés. Les segments entre "
+"<b>{1}</b>, <b>{2}</b>… sont <em>capturés</em> et réutilisables dans le "
+"champ de remplacement."
 
-msgid "Restore toolbar state"
-msgstr "Restaurer l'état de la barre d'outils"
+msgid "One or more digits (0–9)"
+msgstr "Un ou plusieurs chiffres (0–9)"
+
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "Une ou plusieurs lettres (a–z, A–Z et lettres Unicode)"
+
+msgid "One or more non-whitespace characters"
+msgstr "Un ou plusieurs caractères non-blancs"
+
+msgid "Any sequence of characters, including empty"
+msgstr "Toute séquence de caractères, y compris vide"
+
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Poubelle — correspond à un segment et le rejette (non capturé)"
+
+#, python-brace-format
+msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr ""
+"Groupe capturant — le texte correspondant est lié à {1}, {2}… dans le "
+"remplacement"
+
+msgid "Example"
+msgstr "Exemple"
 
 msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
+"Full Python <code>re</code>-module syntax. The match is applied to the "
+"file stem (or full name if <em>Keep extension</em> is unchecked)."
 msgstr ""
-"Au démarrage, restaurer les paramètres de la barre d'outils de la session"
-" précédente (mode d'affichage, récursif, conserver l'extension, aperçu "
-"automatique, filtre)"
+"Syntaxe complète du module Python <code>re</code>. La correspondance "
+"porte sur le radical du fichier (ou le nom entier si <em>Conserver "
+"l'extension</em> est décoché)."
 
-msgid "Auto-preview delay:"
-msgstr "Délai d'aperçu auto :"
+msgid "Any single character"
+msgstr "N'importe quel caractère"
+
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "Toute séquence (gourmand), variante non vide"
+
+msgid "One or more digits"
+msgstr "Un ou plusieurs chiffres"
+
+msgid "Word characters (letters, digits, _)"
+msgstr "Caractères de mot (lettres, chiffres, _)"
 
 msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
+"replacement"
 msgstr ""
-"Délai avant rafraîchissement de l'aperçu après une modification du motif "
-"de recherche ou de remplacement (ms)"
+"Groupe capturant numéroté → <code>\\1</code>, <code>\\2</code>… dans le "
+"remplacement"
 
-msgid " ms"
-msgstr " ms"
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "Groupe capturant nommé → <code>\\g&lt;name&gt;</code> dans le remplacement"
 
-msgid "A restart is required for the language change to take effect."
+msgid "Case-insensitive flag"
+msgstr "Indicateur insensible à la casse"
+
+msgid "Start / end of the name"
+msgstr "Début / fin du nom"
+
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters. Every occurrence of the exact text in the file name "
+"is replaced."
 msgstr ""
-"Un redémarrage est nécessaire pour que le changement de langue prenne "
-"effet."
+"Le champ de recherche est comparé en tant que chaîne littérale — sans "
+"jokers, sans caractères spéciaux. Toutes les occurrences du texte exact "
+"dans le nom de fichier sont remplacées."
+
+msgid "Search patterns"
+msgstr "Motifs de recherche"
+
+msgid "Pattern mode"
+msgstr "Mode motif"
+
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields "
+"are written <code>{name}</code> and may include formatting options:"
+msgstr ""
+"La chaîne de remplacement est identique quel que soit le mode de "
+"recherche. Les champs s'écrivent <code>{name}</code> et peuvent inclure "
+"des options de formatage :"
+
+msgid "plain value"
+msgstr "valeur brute"
+
+msgid "with format  (digit = min width · strftime for dates)"
+msgstr "avec format  (entier = largeur min · strftime pour les dates)"
+
+msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
+msgstr ""
+"casse :  - minusc.   + MAJUSC.   ! Première maj.   * Chaque Mot   = "
+"inchangé"
+
+msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
+msgstr "alignt : &lt; gauche   &gt; droite   0 zéros à gauche   ^ centré"
+
+msgid "all options; default used when field is absent"
+msgstr "toutes les options ; défaut utilisé si le champ est absent"
+
+msgid "literal '{' character"
+msgstr "caractère '{' littéral"
+
+msgid ""
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
+msgstr ""
+"<b>fmt</b> : largeur minimale (entier) pour les textes/nombres, ou format"
+" <code>strftime</code> pour les dates.<br><b>défaut</b> : valeur "
+"littérale utilisée si le champ est absent ; son omission signale le "
+"fichier en rouge dans l'aperçu."
+
+#, python-brace-format
+msgid ""
+"<b>Mixed file types</b> — when the replacement contains fields from more "
+"than one file-type namespace (<code>{im:…}</code>, <code>{vi:…}</code>, "
+"<code>{au:…}</code>), a field that does not apply to the current file "
+"silently contributes an empty string, even without a default. With a "
+"<em>single</em> namespace only, the file is flagged in red if the field "
+"is absent and no default is set."
+msgstr ""
+"<b>Types de fichiers mixtes</b> — lorsque le remplacement contient des "
+"champs de plusieurs espaces de noms (<code>{im:…}</code>, "
+"<code>{vi:…}</code>, <code>{au:…}</code>), un champ qui ne correspond pas"
+" au fichier courant produit silencieusement une chaîne vide, même sans "
+"valeur par défaut. Avec un <em>seul</em> espace de noms, le fichier est "
+"signalé en rouge si le champ est absent et qu'aucune valeur par défaut "
+"n'est définie."
+
+msgid "all modes"
+msgstr "tous modes"
+
+msgid "pattern, regex"
+msgstr "motif, regex"
+
+msgid "regex only"
+msgstr "regex uniquement"
+
+msgid "Available in"
+msgstr "Disponible en"
+
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr ""
+"Texte intégralement correspondant (ou littéral de recherche en mode texte"
+" brut)"
+
+msgid "Numbered capture groups (1-based)"
+msgstr "Groupes de capture numérotés (à partir de 1)"
+
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "Groupe nommé <code>(?P&lt;name&gt;…)</code> de la regex de recherche"
+
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; "
+"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
+"starts at 10, zero-padded to 2 digits)"
+msgstr ""
+"Compteur auto-incrémenté — fmt est une largeur minimale ; "
+"<em>default</em> fixe la valeur de départ (ex. <code>{num:02:10}</code> "
+"démarre à 10, complété à 2 chiffres)"
+
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists"
+" on disk or has been assigned to another file in the same batch — "
+"guarantees no conflicts"
+msgstr ""
+"Comme <code>{num}</code> mais saute les valeurs dont le nom cible existe "
+"déjà sur le disque ou a été attribué à un autre fichier du même lot — "
+"garantit l'absence de conflits"
+
+#, python-format
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "Date du jour — format par défaut <code>%Y-%m-%d</code>"
+
+#, python-format
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date et heure courantes — format par défaut <code>%Y-%m-%d_%H%M%S</code>"
+
+#, python-format
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date/heure de modification — fmt par défaut <code>%Y-%m-%d_%H%M%S</code>"
+
+#, python-format
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
+" change time on Linux)"
+msgstr ""
+"Date/heure de création — fmt par défaut <code>%Y-%m-%d_%H%M%S</code> "
+"(date de changement d'inode sous Linux)"
+
+msgid "Name of the immediate parent folder"
+msgstr "Nom du dossier parent immédiat"
+
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr ""
+"Champ de métadonnées EXIF ou IPTC (images uniquement — voir la liste ci-"
+"dessous)"
+
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "Champ de métadonnées audio (mp3, ogg, flac… — voir liste ci-dessous)"
+
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "Champ de métadonnées vidéo (mp4, mkv, avi… — voir liste ci-dessous)"
+
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. When <code>{im:…}</code> is combined "
+"with <code>{vi:…}</code> or <code>{au:…}</code> in the same template, "
+"non-matching fields are silently empty — no default needed. With only "
+"<code>{im:…}</code> fields, a default is recommended to avoid flagging "
+"non-image files in red."
+msgstr ""
+"Les noms de champs sont insensibles à la casse. Lorsque "
+"<code>{im:…}</code> est combiné avec <code>{vi:…}</code> ou "
+"<code>{au:…}</code> dans le même modèle, les champs non correspondants "
+"sont silencieusement vides — aucune valeur par défaut n'est nécessaire. "
+"Avec uniquement des champs <code>{im:…}</code>, une valeur par défaut est"
+" recommandée pour éviter de signaler les fichiers non-image en rouge."
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Date/time the photo was taken"
+msgstr "Date/heure de prise de vue"
+
+msgid "Date/time the image was digitised"
+msgstr "Date/heure de numérisation"
+
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Date/heure de la dernière modification du fichier (EXIF)"
+
+msgid "Camera manufacturer"
+msgstr "Fabricant de l'appareil"
+
+msgid "Camera model"
+msgstr "Modèle de l'appareil"
+
+msgid "Lens model"
+msgstr "Modèle d'objectif"
+
+msgid "ISO speed"
+msgstr "Sensibilité ISO"
+
+msgid "Aperture (e.g. 2.8)"
+msgstr "Ouverture (ex. 2,8)"
+
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "Vitesse d'obturation (ex. 1/125)"
+
+msgid "Focal length in mm"
+msgstr "Focale en mm"
+
+msgid "Image description / title"
+msgstr "Description / titre de l'image"
+
+msgid "Photographer / creator (EXIF)"
+msgstr "Photographe / créateur (EXIF)"
+
+msgid "Copyright notice"
+msgstr "Mention de copyright"
+
+msgid "IPTC title / object name"
+msgstr "Titre IPTC / nom d'objet"
+
+msgid "IPTC photographer / creator"
+msgstr "Photographe IPTC / créateur"
+
+msgid "IPTC city"
+msgstr "Ville IPTC"
+
+msgid "IPTC country"
+msgstr "Pays IPTC"
+
+msgid "IPTC creation date"
+msgstr "Date de création IPTC"
+
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Mots-clés IPTC (séparés par des points-virgules)"
+
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
+"opus, aac/m4a and others supported by mutagen. When combined with "
+"<code>{im:…}</code> or <code>{vi:…}</code>, non-matching fields are "
+"silently empty. With only <code>{au:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
+"mp3, ogg, flac, opus, aac/m4a et autres formats gérés par mutagen. "
+"Lorsque combiné avec <code>{im:…}</code> ou <code>{vi:…}</code>, les "
+"champs non correspondants sont silencieusement vides. Avec uniquement des"
+" champs <code>{au:…}</code>, une valeur par défaut est recommandée."
+
+msgid "Track title"
+msgstr "Titre de la piste"
+
+msgid "Track artist"
+msgstr "Artiste de la piste"
+
+msgid "Album artist"
+msgstr "Artiste de l'album"
+
+msgid "Album name"
+msgstr "Nom de l'album"
+
+msgid "Track number (strips /total if present)"
+msgstr "Numéro de piste (supprime /total si présent)"
+
+msgid "Disc number (strips /total if present)"
+msgstr "Numéro de disque (supprime /total si présent)"
+
+msgid ""
+"Release date — datetime.date when full date available (strftime "
+"formatting); plain text otherwise"
+msgstr ""
+"Date de sortie — datetime.date si la date complète est disponible "
+"(formatage strftime) ; texte brut sinon"
+
+msgid "Release year (extracted from date tag)"
+msgstr "Année de sortie (extraite de la balise date)"
+
+msgid "Genre"
+msgstr "Genre"
+
+msgid "Comment"
+msgstr "Commentaire"
+
+msgid "Composer"
+msgstr "Compositeur"
+
+msgid "Beats per minute"
+msgstr "Battements par minute"
+
+msgid "Duration in seconds"
+msgstr "Durée en secondes"
+
+msgid "Bitrate in kbps"
+msgstr "Débit en kbps"
+
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). When combined with "
+"<code>{im:…}</code> or <code>{au:…}</code>, non-matching fields are "
+"silently empty. With only <code>{vi:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
+"mp4, mkv, avi, mov, webm et autres formats gérés par MediaInfo "
+"(pymediainfo). Lorsque combiné avec <code>{im:…}</code> ou "
+"<code>{au:…}</code>, les champs non correspondants sont silencieusement "
+"vides. Avec uniquement des champs <code>{vi:…}</code>, une valeur par "
+"défaut est recommandée."
+
+msgid "Video width in pixels"
+msgstr "Largeur vidéo en pixels"
+
+msgid "Video height in pixels"
+msgstr "Hauteur vidéo en pixels"
+
+msgid "Frame rate (e.g. 29.970)"
+msgstr "Fréquence d'images (ex. 29.970)"
+
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "Nom du codec vidéo (ex. AVC, HEVC)"
+
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "Nom du codec audio (ex. AAC, AC-3)"
+
+msgid "Number of audio channels"
+msgstr "Nombre de canaux audio"
+
+msgid "Overall bitrate in kbps"
+msgstr "Débit global en kbps"
+
+msgid "Title tag"
+msgstr "Tag titre"
+
+msgid "Encoded date/time"
+msgstr "Date/heure d'encodage"
+
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Groupe capturant 1 suivi d'un compteur à 4 chiffres complété par des "
+"zéros (commence à 1)"
+
+msgid "Same, but counter starts at 10"
+msgstr "Idem, mais le compteur démarre à 10"
+
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
+" already exists"
+msgstr ""
+"Compteur à 3 chiffres sans conflit : saute les valeurs où "
+"<code>backup_NNN</code> existe déjà"
+
+msgid "Today's date prepended to the matched text"
+msgstr "Date du jour préfixée au texte correspondant"
+
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "Date/heure de prise de vue compact ; \"inconnu\" si EXIF absent"
+
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "Heure+minute de numérisation ; \"0000\" si absent"
+
+msgid "Camera make and model (empty string if absent)"
+msgstr "Marque et modèle d'appareil (chaîne vide si absent)"
+
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "Artiste et titre audio ; \"inconnu\"/\"sans titre\" si absent"
+
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Date de sortie audio, numéro de piste complété par zéros, titre"
+
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "Résolution et codec vidéo (ex. 1920x1080_AVC)"
+
+msgid "Video encoded date and duration in seconds"
+msgstr "Date d'encodage et durée en secondes"
+
+msgid ""
+"Shooting date for images, encoded date for videos — the non-matching "
+"field is silently empty (mixed-type template)"
+msgstr ""
+"Date de prise de vue pour les images, date d'encodage pour les vidéos — "
+"le champ non correspondant est silencieusement vide (modèle multi-type)"
+
+msgid "Named regex groups (regex mode only)"
+msgstr "Groupes regex nommés (mode regex uniquement)"
+
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Dossier parent, date de modification du fichier, compteur 3 chiffres"
+
+msgid "Capture group 1 left-aligned in 12 characters"
+msgstr "Groupe capturant 1 aligné à gauche sur 12 caractères"
+
+msgid "Camera model centred in 30 characters, each word capitalised"
+msgstr ""
+"Modèle appareil centré sur 30 caractères, chaque mot avec majuscule "
+"initiale"
+
+msgid "Camera make in lowercase, exact field length"
+msgstr "Marque de l'appareil en minuscules, longueur exacte du champ"
+
+msgid "Replacement fields"
+msgstr "Champs de remplacement"
+
+msgid "Available fields"
+msgstr "Champs disponibles"
+
+#, python-brace-format
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "Champs de métadonnées pour <code>{im:…}</code>"
+
+#, python-brace-format
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "Champs de métadonnées audio pour <code>{au:…}</code>"
+
+#, python-brace-format
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "Champs de métadonnées vidéo pour <code>{vi:…}</code>"
+
+msgid "Examples"
+msgstr "Exemples"
+
+msgid "System default"
+msgstr "Langue du système"
+
+msgid "Edit Shortcuts"
+msgstr "Modifier les raccourcis"
+
+msgid "Move up"
+msgstr "Monter"
+
+msgid "Move down"
+msgstr "Descendre"
+
+msgid "Saved shortcuts:"
+msgstr "Raccourcis enregistrés :"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Desktop"
+msgstr "Bureau"
+
+msgid "Documents"
+msgstr "Documents"
+
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgid "Pictures"
+msgstr "Images"
+
+msgid "Music"
+msgstr "Musique"
+
+msgid "Videos"
+msgstr "Vidéos"
+
+msgid "language_name"
+msgstr "Français"

@@ -32,9 +32,6 @@ docs/changelog.rst
 .DS_Store
 Thumbs.db
 
-# Qt — generated from .ui files, never committed
-*_ui.py
-
 # Make stamp files
 .translate.stamp
 

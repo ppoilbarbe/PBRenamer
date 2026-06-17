@@ -1,6 +1,7 @@
 """Tests for pbrenamer.core.replacement — parser, validator, formatter, substitutor."""
 
 import datetime
+from unittest.mock import patch
 
 import pytest
 
@@ -416,6 +417,159 @@ class TestNumNonNumericOffset:
 # ---------------------------------------------------------------------------
 # _resolve fallthrough to return None (line 375)
 # ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Regression: {vi:encodeddate} must not fire on JPEG files
+# Bug: MediaInfo can surface General-track metadata (e.g. encoded_date) for
+# any file including JPEG, causing {vi:encodeddate:…:} to duplicate the EXIF
+# date already resolved by {im:DateTimeDigitized:…:}.
+# ---------------------------------------------------------------------------
+
+_JPEG_DATE = datetime.datetime(2024, 5, 29, 17, 30, 1)
+_JPEG_DATE_STR = "2024-05-29 17-30-01"
+
+
+# ---------------------------------------------------------------------------
+# Multi-meta mode
+# When a template mixes fields from several file-type namespaces (im:, vi:,
+# au:…), a field whose namespace doesn't match the file is silently "".
+# With a single namespace the strict behaviour is kept (error if no default).
+# ---------------------------------------------------------------------------
+
+
+def _patch_meta(mapping: dict):
+    """Patch _META_READERS in replacement.py with the given prefix→callable dict."""
+    import pbrenamer.core.replacement as _repl
+
+    return patch.dict(_repl._META_READERS, mapping)
+
+
+def _patch_can_read(mapping: dict):
+    """Patch _META_CAN_READ in replacement.py with the given prefix→callable dict."""
+    import pbrenamer.core.replacement as _repl
+
+    return patch.dict(_repl._META_CAN_READ, mapping)
+
+
+class TestMultiMetaMode:
+    def test_non_matching_ns_produces_empty_in_mixed_template(self):
+        # im: matches the file and returns a value; vi: does not match → silently "".
+        with _patch_meta({"im:": lambda p, f: "Canon", "vi:": lambda p, f: None}):
+            with _patch_can_read({"im:": lambda p: True, "vi:": lambda p: False}):
+                result = _sub("{im:Make}{vi:encodeddate}", path="/x.jpg")
+        assert result == "Canon"
+
+    def test_no_matching_ns_raises(self):
+        # Neither im: nor vi: match the file → error (not silent "").
+        with _patch_meta({"im:": lambda p, f: None, "vi:": lambda p, f: None}):
+            with _patch_can_read({"im:": lambda p: False, "vi:": lambda p: False}):
+                with pytest.raises(FieldResolutionError):
+                    _sub("{im:Make}{vi:encodeddate}", path="/x.txt")
+
+    def test_all_three_ns_mixed(self):
+        # Three namespaces; only au: matches → im: and vi: silently "".
+        with _patch_meta(
+            {
+                "im:": lambda p, f: None,
+                "au:": lambda p, f: "Miles Davis",
+                "vi:": lambda p, f: None,
+            }
+        ):
+            with _patch_can_read(
+                {
+                    "im:": lambda p: False,
+                    "au:": lambda p: True,
+                    "vi:": lambda p: False,
+                }
+            ):
+                result = _sub("{im:Make}{au:artist}{vi:encodeddate}", path="/x.mp3")
+        assert result == "Miles Davis"
+
+    def test_single_ns_no_default_raises(self):
+        # Single namespace + absent field + no default → error (strict mode).
+        with _patch_meta({"im:": lambda p, f: None}):
+            with pytest.raises(FieldResolutionError):
+                _sub("{im:Make}", path="/x.jpg")
+
+    def test_single_ns_with_default_uses_default(self):
+        # Single namespace + absent field + default → uses default (strict mode).
+        with _patch_meta({"im:": lambda p, f: None}):
+            result = _sub("{im:Make::unknown}", path="/x.jpg")
+        assert result == "unknown"
+
+    def test_matching_ns_absent_field_no_default_raises(self):
+        # im: matches the file but the field is absent and has no default → error.
+        with _patch_meta({"im:": lambda p, f: None, "vi:": lambda p, f: "Avatar"}):
+            with _patch_can_read({"im:": lambda p: True, "vi:": lambda p: False}):
+                with pytest.raises(FieldResolutionError):
+                    _sub("{im:Make}{vi:title}", path="/x.jpg")
+
+    def test_mixed_ns_non_applicable_has_default_uses_default(self):
+        # Non-applicable namespace with an
+        # explicit default → uses default (not silenced).
+        with _patch_meta({"im:": lambda p, f: None, "vi:": lambda p, f: "2024"}):
+            with _patch_can_read({"im:": lambda p: False, "vi:": lambda p: True}):
+                result = _sub("{im:Make::fallback}{vi:title}", path="/x.mp4")
+        assert result == "fallback2024"
+
+    def test_literal_between_mixed_fields_preserved(self):
+        # Literals between fields are untouched even when one namespace is empty.
+        with _patch_meta({"im:": lambda p, f: "Canon", "vi:": lambda p, f: None}):
+            with _patch_can_read({"im:": lambda p: True, "vi:": lambda p: False}):
+                result = _sub("{im:Make}-{vi:encodeddate}", path="/x.jpg")
+        assert result == "Canon-"
+
+
+class TestViFieldIgnoredOnJpeg:
+    """End-to-end regression: mixed {im:…}{vi:…} template on a JPEG file.
+
+    Multi-meta mode silences the non-matching namespace; video_meta.read_field
+    independently returns None for files without a Video track.
+    """
+
+    def test_im_resolves_vi_returns_empty_on_jpeg(self):
+        # Mixed template: im: matches the file, resolves; vi: does not match → "".
+        template = (
+            "{im:DateTimeDigitized:%Y-%m-%d %H-%M-%S:}"
+            "{vi:encodeddate:%Y-%m-%d %H-%M-%S:}"
+        )
+        with _patch_meta({"im:": lambda p, f: _JPEG_DATE, "vi:": lambda p, f: None}):
+            with _patch_can_read({"im:": lambda p: True, "vi:": lambda p: False}):
+                result = _sub(template, path="/photos/img.jpg")
+        assert result == _JPEG_DATE_STR
+
+    def test_result_is_not_duplicated(self):
+        # Date must appear exactly once; vi: must not echo the EXIF date.
+        template = (
+            "{im:DateTimeDigitized:%Y-%m-%d %H-%M-%S:}"
+            "{vi:encodeddate:%Y-%m-%d %H-%M-%S:}"
+        )
+        with _patch_meta({"im:": lambda p, f: _JPEG_DATE, "vi:": lambda p, f: None}):
+            with _patch_can_read({"im:": lambda p: True, "vi:": lambda p: False}):
+                result = _sub(template, path="/photos/img.jpg")
+        assert result.count(_JPEG_DATE_STR) == 1
+
+    def test_vi_encodeddate_none_for_general_track_only(self):
+        # At the video_meta level: a file with only a General track (JPEG)
+        # must not expose encodeddate via {vi:…}.
+        from unittest.mock import MagicMock
+
+        from pbrenamer.core import video_meta
+
+        general = MagicMock()
+        general.track_type = "General"
+        general.encoded_date = "UTC 2024-05-29 17:30:01"
+        general.tagged_date = None
+
+        mock_info = MagicMock()
+        mock_info.tracks = [general]  # no Video track
+
+        with patch("pbrenamer.core.video_meta.MediaInfo") as mock_cls:
+            mock_cls.parse.return_value = mock_info
+            with patch.object(video_meta, "_MEDIAINFO", True):
+                result = video_meta.read_field("/photos/img.jpg", "encodeddate")
+        assert result is None
 
 
 class TestResolveUnknownField:

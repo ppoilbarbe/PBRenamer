@@ -19,768 +19,80 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-msgid "Edit Shortcuts"
-msgstr "编辑快捷方式"
+msgid "Application version"
+msgstr "应用程序版本"
 
 # ==AUTO== Automatically translated
-msgid "Move up"
-msgstr "上移"
+msgid "A graphical batch file renaming utility."
+msgstr "图形化批量文件重命名工具。"
 
 # ==AUTO== Automatically translated
-msgid "Move down"
-msgstr "下移"
+msgid "License: GPLv3"
+msgstr "许可证：GPLv3"
 
 # ==AUTO== Automatically translated
-msgid "Remove"
-msgstr "删除"
+msgid "About PBRenamer"
+msgstr "关于 PBRenamer"
 
 # ==AUTO== Automatically translated
-msgid "Saved shortcuts:"
-msgstr "已保存的快捷方式："
+msgid "Settings"
+msgstr "设置"
 
 # ==AUTO== Automatically translated
-msgid "File information"
-msgstr "文件信息"
+msgid "Select the interface language"
+msgstr "选择界面语言"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "字段"
+msgid "Language:"
+msgstr "语言："
 
 # ==AUTO== Automatically translated
-msgid "Description"
-msgstr "描述"
+msgid "Set the application logging verbosity"
+msgstr "设置应用程序日志记录详细程度"
 
 # ==AUTO== Automatically translated
-msgid "Value"
-msgstr "值"
+msgid "Log level:"
+msgstr "日志级别："
 
 # ==AUTO== Automatically translated
-msgid "Image"
-msgstr "图像"
+msgid "Behaviour"
+msgstr "行为"
 
 # ==AUTO== Automatically translated
-msgid "Audio"
-msgstr "音频"
+msgid "Restore last opened directory"
+msgstr "恢复上次打开的目录"
 
 # ==AUTO== Automatically translated
-msgid "Video"
-msgstr "视频"
+msgid "On startup, reopen the directory that was active in the previous session"
+msgstr "启动时重新打开上次会话中活动的目录"
 
 # ==AUTO== Automatically translated
-msgid "Directory"
-msgstr "目录"
-
-# ==AUTO== Automatically translated
-msgid "Other"
-msgstr "其他"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "文件信息 — {name}"
-
-# ==AUTO== Automatically translated
-msgid "File:"
-msgstr "文件："
-
-# ==AUTO== Automatically translated
-msgid "Type:"
-msgstr "类型："
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "图像元数据（EXIF / IPTC）"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "音频元数据"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "视频元数据"
-
-# ==AUTO== Automatically translated
-msgid "Select a single file to display its information."
-msgstr "选择单个文件以显示其信息。"
-
-# ==AUTO== Automatically translated
-msgid "Select a file to display its information."
-msgstr "选择文件以显示其信息。"
-
-# ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "通用字段"
-
-# ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "今天日期"
-
-# ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "当前日期和时间"
-
-# ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "文件修改日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "缺失"
-
-# ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "文件创建日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "父文件夹名称"
-
-# ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "批量字段"
-
-# ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "计算值"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "完整匹配文本"
-
-# ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "捕获组"
-
-# ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "自动递增计数器"
-
-# ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "无冲突计数器"
-
-# ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "命名正则表达式组"
-
-# ==AUTO== Automatically translated
-msgid "System default"
-msgstr "系统默认"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
-"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
-"replacement field."
-msgstr "标记充当带类型的通配符。<b>{1}</b>、<b>{2}</b>… 中的片段被<em>捕获</em>，可在替换字段中重用。"
-
-# ==AUTO== Automatically translated
-msgid "One or more digits (0–9)"
-msgstr "一个或多个数字（0–9）"
-
-# ==AUTO== Automatically translated
-msgid "One or more letters (a–z, A–Z and Unicode letters)"
-msgstr "一个或多个字母（a–z、A–Z 及 Unicode 字母）"
-
-# ==AUTO== Automatically translated
-msgid "One or more non-whitespace characters"
-msgstr "一个或多个非空白字符"
-
-# ==AUTO== Automatically translated
-msgid "Any sequence of characters, including empty"
-msgstr "任意字符序列，包括空序列"
-
-# ==AUTO== Automatically translated
-msgid "Trash — matches and discards a segment (not captured)"
-msgstr "丢弃 — 匹配并丢弃一个片段（不捕获）"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
-msgstr "捕获组 — 匹配文本绑定到替换中的 {1}、{2}…"
-
-# ==AUTO== Automatically translated
-msgid "Example"
-msgstr "示例"
-
-# ==AUTO== Automatically translated
-msgid "Search:"
-msgstr "搜索："
-
-# ==AUTO== Automatically translated
-msgid "Replace:"
-msgstr "替换："
+msgid "Restore toolbar state"
+msgstr "恢复工具栏状态"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Full Python <code>re</code>-module syntax. The match is applied to the "
-"file stem (or full name if <em>Keep extension</em> is unchecked)."
-msgstr "完整的 Python <code>re</code> 模块语法。匹配应用于文件名主干（若取消勾选<em>保留扩展名</em>则为完整文件名）。"
-
-# ==AUTO== Automatically translated
-msgid "Any single character"
-msgstr "任意单个字符"
-
-# ==AUTO== Automatically translated
-msgid "Any sequence (greedy), non-empty variant"
-msgstr "任意序列（贪婪），非空变体"
-
-# ==AUTO== Automatically translated
-msgid "One or more digits"
-msgstr "一个或多个数字"
-
-# ==AUTO== Automatically translated
-msgid "Word characters (letters, digits, _)"
-msgstr "单词字符（字母、数字、_）"
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr "启动时恢复上次会话的工具栏设置（显示模式、递归、保留扩展名、自动预览、过滤器）"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
-"replacement"
-msgstr "编号捕获组 → 替换中的 <code>\\1</code>、<code>\\2</code>…"
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr "搜索或替换模式更改后预览刷新前的防抖延迟（毫秒）"
 
 # ==AUTO== Automatically translated
-msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
-msgstr "命名捕获组 → 替换中的 <code>\\g&lt;name&gt;</code>"
+msgid "Auto-preview delay:"
+msgstr "自动预览延迟："
 
 # ==AUTO== Automatically translated
-msgid "Case-insensitive flag"
-msgstr "不区分大小写标志"
+msgid " ms"
+msgstr " ms"
 
 # ==AUTO== Automatically translated
-msgid "Start / end of the name"
-msgstr "名称的开头/结尾"
-
-# ==AUTO== Automatically translated
-msgid ""
-"The search field is matched as a literal string — no wildcards, no "
-"special characters. Every occurrence of the exact text in the file name "
-"is replaced."
-msgstr "搜索字段作为字面字符串匹配 — 无通配符，无特殊字符。文件名中每次出现的精确文本都会被替换。"
-
-# ==AUTO== Automatically translated
-msgid "Search patterns"
-msgstr "搜索模式"
-
-# ==AUTO== Automatically translated
-msgid "Pattern mode"
-msgstr "模式模式"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression mode"
-msgstr "正则表达式模式"
-
-# ==AUTO== Automatically translated
-msgid "Plain text mode"
-msgstr "纯文本模式"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"The replacement string is the same regardless of the search mode. Fields "
-"are written <code>{name}</code> and may include formatting options:"
-msgstr "无论搜索模式如何，替换字符串都相同。字段写为 <code>{name}</code>，可包含格式选项："
-
-# ==AUTO== Automatically translated
-msgid "plain value"
-msgstr "原始值"
-
-# ==AUTO== Automatically translated
-msgid "with format  (digit = min width · strftime for dates)"
-msgstr "含格式  （数字 = 最小宽度 · 日期用 strftime）"
-
-# ==AUTO== Automatically translated
-msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
-msgstr "大小写：  - 小写   + 大写   ! 首字母大写   * 每词首字母大写   = 不变"
-
-# ==AUTO== Automatically translated
-msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
-msgstr "对齐：  &lt; 左对齐   &gt; 右对齐   0 零填充   ^ 居中"
-
-# ==AUTO== Automatically translated
-msgid "all options; default used when field is absent"
-msgstr "所有选项；字段缺失时使用默认值"
-
-# ==AUTO== Automatically translated
-msgid "literal '{' character"
-msgstr "字面量 '{' 字符"
-
-# ==AUTO== Automatically translated
-msgid ""
-"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
-"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
-"literal fallback used when the field is absent; omitting it flags the "
-"file in red in the preview."
-msgstr ""
-"<b>fmt</b>：文本/数字的最小宽度（数字），或日期/时间的 <code>strftime</code> "
-"格式。<br><b>default</b>：字段缺失时使用的字面备用值；省略此项会在预览中将文件标为红色。"
-
-# ==AUTO== Automatically translated
-msgid "all modes"
-msgstr "所有模式"
-
-# ==AUTO== Automatically translated
-msgid "pattern, regex"
-msgstr "模式、正则"
-
-# ==AUTO== Automatically translated
-msgid "regex only"
-msgstr "仅正则"
-
-# ==AUTO== Automatically translated
-msgid "Available in"
-msgstr "可用于"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text (or search literal in plain-text mode)"
-msgstr "完整匹配文本（纯文本模式下为搜索字面量）"
-
-# ==AUTO== Automatically translated
-msgid "Numbered capture groups (1-based)"
-msgstr "编号捕获组（从 1 开始）"
-
-# ==AUTO== Automatically translated
-msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
-msgstr "来自搜索正则表达式的命名组 <code>(?P&lt;name&gt;…)</code>"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Auto-incrementing counter — default fmt is a minimum width; "
-"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
-"starts at 10, zero-padded to 2 digits)"
-msgstr ""
-"自动递增计数器 — fmt 为最小宽度；<em>default</em> 设置起始值（例如 <code>{num:02:10}</code> 从 "
-"10 开始，零填充至 2 位）"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Like <code>{num}</code> but skips values whose target name already exists"
-" on disk or has been assigned to another file in the same batch — "
-"guarantees no conflicts"
-msgstr "类似 <code>{num}</code>，但跳过目标名称已在磁盘上存在或已分配给同批次其他文件的值 — 保证无冲突"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
-msgstr "今天日期 — 默认 fmt <code>%Y-%m-%d</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "当前日期和时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "文件修改日期/时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid ""
-"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
-" change time on Linux)"
-msgstr "文件创建日期/时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>（Linux 上为 inode 修改时间）"
-
-# ==AUTO== Automatically translated
-msgid "Name of the immediate parent folder"
-msgstr "直接父文件夹名称"
-
-# ==AUTO== Automatically translated
-msgid "EXIF or IPTC metadata field (images only — see list below)"
-msgstr "EXIF 或 IPTC 元数据字段（仅限图像 — 见下方列表）"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
-msgstr "音频元数据字段（mp3、ogg、flac… — 见下方列表）"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata field (mp4, mkv, avi… — see list below)"
-msgstr "视频元数据字段（mp4、mkv、avi… — 见下方列表）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. A <b>default</b> is strongly "
-"recommended for metadata fields — they may be absent from non-image files"
-" or images without metadata."
-msgstr "字段名不区分大小写。强烈建议为元数据字段设置 <b>default</b> — 它们可能在非图像文件或没有元数据的图像中不存在。"
-
-# ==AUTO== Automatically translated
-msgid "Type"
-msgstr "类型"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the photo was taken"
-msgstr "拍照日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the image was digitised"
-msgstr "图像数字化日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Date/time the file was last changed (EXIF)"
-msgstr "文件最后修改日期/时间（EXIF）"
-
-# ==AUTO== Automatically translated
-msgid "Camera manufacturer"
-msgstr "相机制造商"
-
-# ==AUTO== Automatically translated
-msgid "Camera model"
-msgstr "相机型号"
-
-# ==AUTO== Automatically translated
-msgid "Lens model"
-msgstr "镜头型号"
-
-# ==AUTO== Automatically translated
-msgid "ISO speed"
-msgstr "ISO 感光度"
-
-# ==AUTO== Automatically translated
-msgid "Aperture (e.g. 2.8)"
-msgstr "光圈（例如 2.8）"
-
-# ==AUTO== Automatically translated
-msgid "Shutter speed (e.g. 1/125)"
-msgstr "快门速度（例如 1/125）"
-
-# ==AUTO== Automatically translated
-msgid "Focal length in mm"
-msgstr "焦距（毫米）"
-
-# ==AUTO== Automatically translated
-msgid "Image description / title"
-msgstr "图像描述/标题"
-
-# ==AUTO== Automatically translated
-msgid "Photographer / creator (EXIF)"
-msgstr "摄影师/创作者（EXIF）"
-
-# ==AUTO== Automatically translated
-msgid "Copyright notice"
-msgstr "版权声明"
-
-# ==AUTO== Automatically translated
-msgid "IPTC title / object name"
-msgstr "IPTC 标题/对象名称"
-
-# ==AUTO== Automatically translated
-msgid "IPTC photographer / creator"
-msgstr "IPTC 摄影师/创作者"
-
-# ==AUTO== Automatically translated
-msgid "IPTC city"
-msgstr "IPTC 城市"
-
-# ==AUTO== Automatically translated
-msgid "IPTC country"
-msgstr "IPTC 国家"
-
-# ==AUTO== Automatically translated
-msgid "IPTC creation date"
-msgstr "IPTC 创建日期"
-
-# ==AUTO== Automatically translated
-msgid "IPTC keywords (semicolon-separated)"
-msgstr "IPTC 关键词（分号分隔）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
-"opus, aac/m4a and others supported by mutagen. A <b>default</b> is "
-"strongly recommended — tags may be absent or the file may not be a "
-"supported audio format."
-msgstr ""
-"字段名不区分大小写。支持的格式：mp3、ogg、flac、opus、aac/m4a 以及 mutagen 支持的其他格式。强烈建议设置 "
-"<b>default</b> — 标签可能缺失，或文件可能不是受支持的音频格式。"
-
-# ==AUTO== Automatically translated
-msgid "Track title"
-msgstr "曲目标题"
-
-# ==AUTO== Automatically translated
-msgid "Track artist"
-msgstr "曲目艺术家"
-
-# ==AUTO== Automatically translated
-msgid "Album artist"
-msgstr "专辑艺术家"
-
-# ==AUTO== Automatically translated
-msgid "Album name"
-msgstr "专辑名称"
-
-# ==AUTO== Automatically translated
-msgid "Track number (strips /total if present)"
-msgstr "曲目编号（去除 /总数部分）"
-
-# ==AUTO== Automatically translated
-msgid "Disc number (strips /total if present)"
-msgstr "碟片编号（去除 /总数部分）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Release date — datetime.date when full date available (strftime "
-"formatting); plain text otherwise"
-msgstr "发布日期 — 完整日期时为 datetime.date（strftime 格式化）；否则为纯文本"
-
-# ==AUTO== Automatically translated
-msgid "Release year (extracted from date tag)"
-msgstr "发布年份（从日期标签中提取）"
-
-# ==AUTO== Automatically translated
-msgid "Genre"
-msgstr "流派"
-
-# ==AUTO== Automatically translated
-msgid "Comment"
-msgstr "注释"
-
-# ==AUTO== Automatically translated
-msgid "Composer"
-msgstr "作曲家"
-
-# ==AUTO== Automatically translated
-msgid "Beats per minute"
-msgstr "每分钟节拍数"
-
-# ==AUTO== Automatically translated
-msgid "Duration in seconds"
-msgstr "时长（秒）"
-
-# ==AUTO== Automatically translated
-msgid "Bitrate in kbps"
-msgstr "比特率（kbps）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
-"webm and others supported by MediaInfo (pymediainfo). A <b>default</b> is"
-" strongly recommended — fields may be absent or the file may not be a "
-"supported video format."
-msgstr ""
-"字段名不区分大小写。支持的格式：mp4、mkv、avi、mov、webm 以及 MediaInfo (pymediainfo) "
-"支持的其他格式。强烈建议设置 <b>default</b> — 字段可能缺失，或文件可能不是受支持的视频格式。"
-
-# ==AUTO== Automatically translated
-msgid "Video width in pixels"
-msgstr "视频宽度（像素）"
-
-# ==AUTO== Automatically translated
-msgid "Video height in pixels"
-msgstr "视频高度（像素）"
-
-# ==AUTO== Automatically translated
-msgid "Frame rate (e.g. 29.970)"
-msgstr "帧率（例如 29.970）"
-
-# ==AUTO== Automatically translated
-msgid "Video codec name (e.g. AVC, HEVC)"
-msgstr "视频编解码器名称（例如 AVC、HEVC）"
-
-# ==AUTO== Automatically translated
-msgid "Audio codec name (e.g. AAC, AC-3)"
-msgstr "音频编解码器名称（例如 AAC、AC-3）"
-
-# ==AUTO== Automatically translated
-msgid "Number of audio channels"
-msgstr "音频声道数"
-
-# ==AUTO== Automatically translated
-msgid "Overall bitrate in kbps"
-msgstr "总体比特率（kbps）"
-
-# ==AUTO== Automatically translated
-msgid "Title tag"
-msgstr "标题标签"
-
-# ==AUTO== Automatically translated
-msgid "Encoded date/time"
-msgstr "编码日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
-msgstr "捕获组 1 后跟 4 位零填充计数器（从 1 开始）"
-
-# ==AUTO== Automatically translated
-msgid "Same, but counter starts at 10"
-msgstr "同上，但计数器从 10 开始"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
-" already exists"
-msgstr "无冲突 3 位计数器：跳过 <code>backup_NNN</code> 已存在的值"
-
-# ==AUTO== Automatically translated
-msgid "Today's date prepended to the matched text"
-msgstr "今天日期添加到匹配文本之前"
-
-# ==AUTO== Automatically translated
-msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
-msgstr "拍摄日期/时间（紧凑格式）；EXIF 缺失时为 \"unknown\""
-
-# ==AUTO== Automatically translated
-msgid "Hour+minute of digitisation; \"0000\" if absent"
-msgstr "数字化时分；缺失时为 \"0000\""
-
-# ==AUTO== Automatically translated
-msgid "Camera make and model (empty string if absent)"
-msgstr "相机品牌和型号（缺失时为空字符串）"
-
-# ==AUTO== Automatically translated
-msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
-msgstr "音频艺术家和标题；缺失时为 \"unknown\"/\"untitled\""
-
-# ==AUTO== Automatically translated
-msgid "Audio release date, zero-padded track number, title"
-msgstr "音频发布日期、零填充曲目编号、标题"
-
-# ==AUTO== Automatically translated
-msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
-msgstr "视频分辨率和编解码器（例如 1920x1080_AVC）"
-
-# ==AUTO== Automatically translated
-msgid "Video encoded date and duration in seconds"
-msgstr "视频编码日期和时长（秒）"
-
-# ==AUTO== Automatically translated
-msgid "Named regex groups (regex mode only)"
-msgstr "命名正则表达式组（仅正则模式）"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder, file modification date, 3-digit counter"
-msgstr "父文件夹、文件修改日期、3 位计数器"
-
-# ==AUTO== Automatically translated
-msgid "Capture group 1 left-aligned in 12 characters"
-msgstr "捕获组 1 左对齐至 12 字符宽度"
-
-# ==AUTO== Automatically translated
-msgid "Camera model centred in 30 characters, each word capitalised"
-msgstr "相机型号居中至 30 字符宽度，每个单词首字母大写"
-
-# ==AUTO== Automatically translated
-msgid "Camera make in lowercase, exact field length"
-msgstr "相机品牌小写，字段精确长度"
-
-# ==AUTO== Automatically translated
-msgid "Replacement fields"
-msgstr "替换字段"
-
-# ==AUTO== Automatically translated
-msgid "Available fields"
-msgstr "可用字段"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Metadata fields for <code>{im:…}</code>"
-msgstr "<code>{im:…}</code> 的元数据字段"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Audio metadata fields for <code>{au:…}</code>"
-msgstr "<code>{au:…}</code> 的音频元数据字段"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Video metadata fields for <code>{vi:…}</code>"
-msgstr "<code>{vi:…}</code> 的视频元数据字段"
-
-# ==AUTO== Automatically translated
-msgid "Examples"
-msgstr "示例"
-
-# ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "选择文件夹"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "原始"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "预览"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} 个项目"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} 不可用"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "搜索 — 帮助"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "替换 — 帮助"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "重命名错误"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "撤销 (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "撤销上一次批量重命名（可用 %d 级）"
-
-# ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "撤销"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "撤销上一批重命名"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "添加为快捷方式"
-
-# ==AUTO== Automatically translated
-msgid "Home"
-msgstr "主目录"
-
-# ==AUTO== Automatically translated
-msgid "Desktop"
-msgstr "桌面"
-
-# ==AUTO== Automatically translated
-msgid "Documents"
-msgstr "文档"
-
-# ==AUTO== Automatically translated
-msgid "Downloads"
-msgstr "下载"
-
-# ==AUTO== Automatically translated
-msgid "Pictures"
-msgstr "图片"
-
-# ==AUTO== Automatically translated
-msgid "Music"
-msgstr "音乐"
-
-# ==AUTO== Automatically translated
-msgid "Videos"
-msgstr "视频"
-
-# ==AUTO== Automatically translated
-msgid "language_name"
-msgstr "中文（简体）"
+msgid "A restart is required for the language change to take effect."
+msgstr "需要重启才能使语言更改生效。"
 
 # ==AUTO== Automatically translated
 msgid "History"
@@ -819,8 +131,16 @@ msgid "RE"
 msgstr "RE"
 
 # ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "正则表达式模式"
+
+# ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "纯文本模式"
 
 # ==AUTO== Automatically translated
 msgid "Add"
@@ -829,6 +149,10 @@ msgstr "添加"
 # ==AUTO== Automatically translated
 msgid "Add this pattern to the search history"
 msgstr "将此模式添加到搜索历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Remove"
+msgstr "删除"
 
 # ==AUTO== Automatically translated
 msgid "Remove selected entries"
@@ -879,16 +203,8 @@ msgid "Delete the entire replacement pattern history"
 msgstr "删除整个替换模式历史记录"
 
 # ==AUTO== Automatically translated
-msgid "PBRenamer"
-msgstr "PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "Open folder…"
 msgstr "打开文件夹…"
-
-# ==AUTO== Automatically translated
-msgid "Ctrl+O"
-msgstr ""
 
 # ==AUTO== Automatically translated
 msgid "Open a folder"
@@ -901,10 +217,6 @@ msgstr "打开目录选择器并导航到所选文件夹"
 # ==AUTO== Automatically translated
 msgid "Quit"
 msgstr "退出"
-
-# ==AUTO== Automatically translated
-msgid "Ctrl+Q"
-msgstr ""
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -939,10 +251,6 @@ msgid "Configure language and other preferences"
 msgstr "配置语言和其他首选项"
 
 # ==AUTO== Automatically translated
-msgid "About PBRenamer"
-msgstr "关于 PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "About this application"
 msgstr "关于此应用程序"
 
@@ -967,16 +275,20 @@ msgid "Information"
 msgstr "信息"
 
 # ==AUTO== Automatically translated
-msgid "Ctrl+I"
-msgstr ""
-
-# ==AUTO== Automatically translated
 msgid "Show file field values"
 msgstr "显示文件字段值"
 
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "打开所选文件的文件信息窗口"
+
+# ==AUTO== Automatically translated
+msgid "Browse the filesystem"
+msgstr "浏览文件系统"
+
+# ==AUTO== Automatically translated
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "选择目录以在右侧面板中列出其内容"
 
 # ==AUTO== Automatically translated
 msgid "Show:"
@@ -1045,10 +357,6 @@ msgid "Filter:"
 msgstr "过滤器："
 
 # ==AUTO== Automatically translated
-msgid "*.txt"
-msgstr ""
-
-# ==AUTO== Automatically translated
 msgid "Glob pattern to filter the file list"
 msgstr "用于过滤文件列表的 Glob 模式"
 
@@ -1057,12 +365,12 @@ msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "仅列出匹配此 Glob 模式的文件（例如 *.txt、image_*）"
 
 # ==AUTO== Automatically translated
-msgid "Browse the filesystem"
-msgstr "浏览文件系统"
+msgid "Original"
+msgstr "原始"
 
 # ==AUTO== Automatically translated
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr "选择目录以在右侧面板中列出其内容"
+msgid "Preview"
+msgstr "预览"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -1073,6 +381,10 @@ msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
 msgstr "选择行以将操作限制在这些文件上；不选则应用于所有文件"
+
+# ==AUTO== Automatically translated
+msgid "Search:"
+msgstr "搜索："
 
 # ==AUTO== Automatically translated
 msgid "Search pattern"
@@ -1155,6 +467,10 @@ msgid ""
 "When checked, the search pattern matches file names regardless of letter "
 "case"
 msgstr "勾选后，搜索模式将不区分大小写地匹配文件名"
+
+# ==AUTO== Automatically translated
+msgid "Replace:"
+msgstr "替换："
 
 # ==AUTO== Automatically translated
 msgid "Replacement pattern"
@@ -1344,6 +660,14 @@ msgid "Remove all preview values from the Preview column"
 msgstr "从预览列中删除所有预览值"
 
 # ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "撤销"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "撤销上一批重命名"
+
+# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "撤销磁盘上执行的最后一批重命名"
 
@@ -1378,77 +702,764 @@ msgid "Help"
 msgstr "帮助"
 
 # ==AUTO== Automatically translated
-msgid "<b style=\"font-size: 16pt;\">PBRenamer</b>"
-msgstr "<b style=\"font-size: 16pt;\">PBRenamer</b>"
+msgid "Select folder"
+msgstr "选择文件夹"
 
 # ==AUTO== Automatically translated
-msgid "Application version"
-msgstr "应用程序版本"
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} 个项目"
 
 # ==AUTO== Automatically translated
-msgid "A graphical batch file renaming utility."
-msgstr "图形化批量文件重命名工具。"
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} 不可用"
 
 # ==AUTO== Automatically translated
-msgid "License: GPLv3"
-msgstr "许可证：GPLv3"
+msgid "Search — Help"
+msgstr "搜索 — 帮助"
 
 # ==AUTO== Automatically translated
-msgid "Settings"
-msgstr "设置"
+msgid "Replace — Help"
+msgstr "替换 — 帮助"
 
 # ==AUTO== Automatically translated
-msgid "Language:"
-msgstr "语言："
+msgid "Rename errors"
+msgstr "重命名错误"
 
 # ==AUTO== Automatically translated
-msgid "Select the interface language"
-msgstr "选择界面语言"
+#, python-format
+msgid "Undo (%d)"
+msgstr "撤销 (%d)"
 
 # ==AUTO== Automatically translated
-msgid "Log level:"
-msgstr "日志级别："
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "撤销上一次批量重命名（可用 %d 级）"
 
 # ==AUTO== Automatically translated
-msgid "Set the application logging verbosity"
-msgstr "设置应用程序日志记录详细程度"
+msgid "Add as shortcut"
+msgstr "添加为快捷方式"
 
 # ==AUTO== Automatically translated
-msgid "Behaviour"
-msgstr "行为"
+msgid "File information"
+msgstr "文件信息"
 
 # ==AUTO== Automatically translated
-msgid "Restore last opened directory"
-msgstr "恢复上次打开的目录"
+msgid "Field"
+msgstr "字段"
 
 # ==AUTO== Automatically translated
-msgid "On startup, reopen the directory that was active in the previous session"
-msgstr "启动时重新打开上次会话中活动的目录"
+msgid "Description"
+msgstr "描述"
 
 # ==AUTO== Automatically translated
-msgid "Restore toolbar state"
-msgstr "恢复工具栏状态"
+msgid "Value"
+msgstr "值"
+
+# ==AUTO== Automatically translated
+msgid "Image"
+msgstr "图像"
+
+# ==AUTO== Automatically translated
+msgid "Audio"
+msgstr "音频"
+
+# ==AUTO== Automatically translated
+msgid "Video"
+msgstr "视频"
+
+# ==AUTO== Automatically translated
+msgid "Directory"
+msgstr "目录"
+
+# ==AUTO== Automatically translated
+msgid "Other"
+msgstr "其他"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "文件信息 — {name}"
+
+# ==AUTO== Automatically translated
+msgid "File:"
+msgstr "文件："
+
+# ==AUTO== Automatically translated
+msgid "Type:"
+msgstr "类型："
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "图像元数据（EXIF / IPTC）"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "音频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "视频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Select a single file to display its information."
+msgstr "选择单个文件以显示其信息。"
+
+# ==AUTO== Automatically translated
+msgid "Select a file to display its information."
+msgstr "选择文件以显示其信息。"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "通用字段"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "今天日期"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "当前日期和时间"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "文件修改日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "缺失"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "文件创建日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "父文件夹名称"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "批量字段"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "计算值"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "完整匹配文本"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "捕获组"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "自动递增计数器"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "无冲突计数器"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "命名正则表达式组"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "插入到替换字段"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
+"<b>{2}</b>… are <em>captured</em> and available for reuse in the "
+"replacement field."
+msgstr "标记充当带类型的通配符。<b>{1}</b>、<b>{2}</b>… 中的片段被<em>捕获</em>，可在替换字段中重用。"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits (0–9)"
+msgstr "一个或多个数字（0–9）"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z and Unicode letters)"
+msgstr "一个或多个字母（a–z、A–Z 及 Unicode 字母）"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "一个或多个非空白字符"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "任意字符序列，包括空序列"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "丢弃 — 匹配并丢弃一个片段（不捕获）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
+msgstr "捕获组 — 匹配文本绑定到替换中的 {1}、{2}…"
+
+# ==AUTO== Automatically translated
+msgid "Example"
+msgstr "示例"
 
 # ==AUTO== Automatically translated
 msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
-msgstr "启动时恢复上次会话的工具栏设置（显示模式、递归、保留扩展名、自动预览、过滤器）"
+"Full Python <code>re</code>-module syntax. The match is applied to the "
+"file stem (or full name if <em>Keep extension</em> is unchecked)."
+msgstr "完整的 Python <code>re</code> 模块语法。匹配应用于文件名主干（若取消勾选<em>保留扩展名</em>则为完整文件名）。"
 
 # ==AUTO== Automatically translated
-msgid "Auto-preview delay:"
-msgstr "自动预览延迟："
+msgid "Any single character"
+msgstr "任意单个字符"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy), non-empty variant"
+msgstr "任意序列（贪婪），非空变体"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "一个或多个数字"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, _)"
+msgstr "单词字符（字母、数字、_）"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
-msgstr "搜索或替换模式更改后预览刷新前的防抖延迟（毫秒）"
+"Numbered capture group → <code>\\1</code>, <code>\\2</code>… in "
+"replacement"
+msgstr "编号捕获组 → 替换中的 <code>\\1</code>、<code>\\2</code>…"
 
 # ==AUTO== Automatically translated
-msgid " ms"
-msgstr " ms"
+msgid "Named capture group → <code>\\g&lt;name&gt;</code> in replacement"
+msgstr "命名捕获组 → 替换中的 <code>\\g&lt;name&gt;</code>"
 
 # ==AUTO== Automatically translated
-msgid "A restart is required for the language change to take effect."
-msgstr "需要重启才能使语言更改生效。"
+msgid "Case-insensitive flag"
+msgstr "不区分大小写标志"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "名称的开头/结尾"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters. Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr "搜索字段作为字面字符串匹配 — 无通配符，无特殊字符。文件名中每次出现的精确文本都会被替换。"
+
+# ==AUTO== Automatically translated
+msgid "Search patterns"
+msgstr "搜索模式"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "模式模式"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string is the same regardless of the search mode. Fields "
+"are written <code>{name}</code> and may include formatting options:"
+msgstr "无论搜索模式如何，替换字符串都相同。字段写为 <code>{name}</code>，可包含格式选项："
+
+# ==AUTO== Automatically translated
+msgid "plain value"
+msgstr "原始值"
+
+# ==AUTO== Automatically translated
+msgid "with format  (digit = min width · strftime for dates)"
+msgstr "含格式  （数字 = 最小宽度 · 日期用 strftime）"
+
+# ==AUTO== Automatically translated
+msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
+msgstr "大小写：  - 小写   + 大写   ! 首字母大写   * 每词首字母大写   = 不变"
+
+# ==AUTO== Automatically translated
+msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
+msgstr "对齐：  &lt; 左对齐   &gt; 右对齐   0 零填充   ^ 居中"
+
+# ==AUTO== Automatically translated
+msgid "all options; default used when field is absent"
+msgstr "所有选项；字段缺失时使用默认值"
+
+# ==AUTO== Automatically translated
+msgid "literal '{' character"
+msgstr "字面量 '{' 字符"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>fmt</b>: minimum width (digit) for text/numbers, or a "
+"<code>strftime</code> format for dates/datetimes.<br><b>default</b>: "
+"literal fallback used when the field is absent; omitting it flags the "
+"file in red in the preview."
+msgstr ""
+"<b>fmt</b>：文本/数字的最小宽度（数字），或日期/时间的 <code>strftime</code> "
+"格式。<br><b>default</b>：字段缺失时使用的字面备用值；省略此项会在预览中将文件标为红色。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"<b>Mixed file types</b> — when the replacement contains fields from more "
+"than one file-type namespace (<code>{im:…}</code>, <code>{vi:…}</code>, "
+"<code>{au:…}</code>), a field that does not apply to the current file "
+"silently contributes an empty string, even without a default. With a "
+"<em>single</em> namespace only, the file is flagged in red if the field "
+"is absent and no default is set."
+msgstr ""
+"<b>混合文件类型</b> —— "
+"当替换内容包含来自多个文件类型命名空间（<code>{im:…}</code>、<code>{vi:…}</code>、<code>{au:…}</code>）的字段时，不适用于当前文件的字段将静默贡献一个空字符串，即使没有默认值。仅使用<em>单一</em>命名空间时，若字段缺失且未设置默认值，文件将以红色标记。"
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "所有模式"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "模式、正则"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "仅正则"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "可用于"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or search literal in plain-text mode)"
+msgstr "完整匹配文本（纯文本模式下为搜索字面量）"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "编号捕获组（从 1 开始）"
+
+# ==AUTO== Automatically translated
+msgid "Named group <code>(?P&lt;name&gt;…)</code> from the search regex"
+msgstr "来自搜索正则表达式的命名组 <code>(?P&lt;name&gt;…)</code>"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter — default fmt is a minimum width; "
+"<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
+"starts at 10, zero-padded to 2 digits)"
+msgstr ""
+"自动递增计数器 — fmt 为最小宽度；<em>default</em> 设置起始值（例如 <code>{num:02:10}</code> 从 "
+"10 开始，零填充至 2 位）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Like <code>{num}</code> but skips values whose target name already exists"
+" on disk or has been assigned to another file in the same batch — "
+"guarantees no conflicts"
+msgstr "类似 <code>{num}</code>，但跳过目标名称已在磁盘上存在或已分配给同批次其他文件的值 — 保证无冲突"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
+msgstr "今天日期 — 默认 fmt <code>%Y-%m-%d</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "当前日期和时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "文件修改日期/时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
+" change time on Linux)"
+msgstr "文件创建日期/时间 — 默认 fmt <code>%Y-%m-%d_%H%M%S</code>（Linux 上为 inode 修改时间）"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "直接父文件夹名称"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images only — see list below)"
+msgstr "EXIF 或 IPTC 元数据字段（仅限图像 — 见下方列表）"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
+msgstr "音频元数据字段（mp3、ogg、flac… — 见下方列表）"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see list below)"
+msgstr "视频元数据字段（mp4、mkv、avi… — 见下方列表）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. When <code>{im:…}</code> is combined "
+"with <code>{vi:…}</code> or <code>{au:…}</code> in the same template, "
+"non-matching fields are silently empty — no default needed. With only "
+"<code>{im:…}</code> fields, a default is recommended to avoid flagging "
+"non-image files in red."
+msgstr ""
+"字段名称不区分大小写。当 <code>{im:…}</code> 与 <code>{vi:…}</code> 或 "
+"<code>{au:…}</code> 在同一模板中组合使用时，不匹配的字段将静默为空——无需默认值。仅使用 "
+"<code>{im:…}</code> 字段时，建议设置默认值，以避免将非图像文件标记为红色。"
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "类型"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "拍照日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "图像数字化日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "文件最后修改日期/时间（EXIF）"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "相机制造商"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "相机型号"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "镜头型号"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "ISO 感光度"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. 2.8)"
+msgstr "光圈（例如 2.8）"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. 1/125)"
+msgstr "快门速度（例如 1/125）"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "焦距（毫米）"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "图像描述/标题"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "摄影师/创作者（EXIF）"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "版权声明"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "IPTC 标题/对象名称"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "IPTC 摄影师/创作者"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "IPTC 城市"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "IPTC 国家"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "IPTC 创建日期"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "IPTC 关键词（分号分隔）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp3, ogg, flac, "
+"opus, aac/m4a and others supported by mutagen. When combined with "
+"<code>{im:…}</code> or <code>{vi:…}</code>, non-matching fields are "
+"silently empty. With only <code>{au:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"字段名称不区分大小写。支持的格式：mp3、ogg、flac、opus、aac/m4a 以及 mutagen 支持的其他格式。与 "
+"<code>{im:…}</code> 或 <code>{vi:…}</code> 组合使用时，不匹配的字段将静默为空。仅使用 "
+"<code>{au:…}</code> 字段时，建议设置默认值。"
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "曲目标题"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "曲目艺术家"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "专辑艺术家"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "专辑名称"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips /total if present)"
+msgstr "曲目编号（去除 /总数部分）"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips /total if present)"
+msgstr "碟片编号（去除 /总数部分）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — datetime.date when full date available (strftime "
+"formatting); plain text otherwise"
+msgstr "发布日期 — 完整日期时为 datetime.date（strftime 格式化）；否则为纯文本"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from date tag)"
+msgstr "发布年份（从日期标签中提取）"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "流派"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "注释"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "作曲家"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "每分钟节拍数"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "时长（秒）"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "比特率（kbps）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Field names are case-insensitive. Supported formats: mp4, mkv, avi, mov, "
+"webm and others supported by MediaInfo (pymediainfo). When combined with "
+"<code>{im:…}</code> or <code>{au:…}</code>, non-matching fields are "
+"silently empty. With only <code>{vi:…}</code> fields, a default is "
+"recommended."
+msgstr ""
+"字段名称不区分大小写。支持的格式：mp4、mkv、avi、mov、webm 以及 MediaInfo（pymediainfo）支持的其他格式。与 "
+"<code>{im:…}</code> 或 <code>{au:…}</code> 组合使用时，不匹配的字段将静默为空。仅使用 "
+"<code>{vi:…}</code> 字段时，建议设置默认值。"
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "视频宽度（像素）"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "视频高度（像素）"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. 29.970)"
+msgstr "帧率（例如 29.970）"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. AVC, HEVC)"
+msgstr "视频编解码器名称（例如 AVC、HEVC）"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. AAC, AC-3)"
+msgstr "音频编解码器名称（例如 AAC、AC-3）"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "音频声道数"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "总体比特率（kbps）"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "标题标签"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "编码日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr "捕获组 1 后跟 4 位零填充计数器（从 1 开始）"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "同上，但计数器从 10 开始"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
+" already exists"
+msgstr "无冲突 3 位计数器：跳过 <code>backup_NNN</code> 已存在的值"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "今天日期添加到匹配文本之前"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
+msgstr "拍摄日期/时间（紧凑格式）；EXIF 缺失时为 \"unknown\""
+
+# ==AUTO== Automatically translated
+msgid "Hour+minute of digitisation; \"0000\" if absent"
+msgstr "数字化时分；缺失时为 \"0000\""
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "相机品牌和型号（缺失时为空字符串）"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
+msgstr "音频艺术家和标题；缺失时为 \"unknown\"/\"untitled\""
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "音频发布日期、零填充曲目编号、标题"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. 1920x1080_AVC)"
+msgstr "视频分辨率和编解码器（例如 1920x1080_AVC）"
+
+# ==AUTO== Automatically translated
+msgid "Video encoded date and duration in seconds"
+msgstr "视频编码日期和时长（秒）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Shooting date for images, encoded date for videos — the non-matching "
+"field is silently empty (mixed-type template)"
+msgstr "图像的拍摄日期、视频的编码日期——不匹配的字段静默为空（混合类型模板）"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "命名正则表达式组（仅正则模式）"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "父文件夹、文件修改日期、3 位计数器"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 left-aligned in 12 characters"
+msgstr "捕获组 1 左对齐至 12 字符宽度"
+
+# ==AUTO== Automatically translated
+msgid "Camera model centred in 30 characters, each word capitalised"
+msgstr "相机型号居中至 30 字符宽度，每个单词首字母大写"
+
+# ==AUTO== Automatically translated
+msgid "Camera make in lowercase, exact field length"
+msgstr "相机品牌小写，字段精确长度"
+
+# ==AUTO== Automatically translated
+msgid "Replacement fields"
+msgstr "替换字段"
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "可用字段"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Metadata fields for <code>{im:…}</code>"
+msgstr "<code>{im:…}</code> 的元数据字段"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields for <code>{au:…}</code>"
+msgstr "<code>{au:…}</code> 的音频元数据字段"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields for <code>{vi:…}</code>"
+msgstr "<code>{vi:…}</code> 的视频元数据字段"
+
+# ==AUTO== Automatically translated
+msgid "Examples"
+msgstr "示例"
+
+# ==AUTO== Automatically translated
+msgid "System default"
+msgstr "系统默认"
+
+# ==AUTO== Automatically translated
+msgid "Edit Shortcuts"
+msgstr "编辑快捷方式"
+
+# ==AUTO== Automatically translated
+msgid "Move up"
+msgstr "上移"
+
+# ==AUTO== Automatically translated
+msgid "Move down"
+msgstr "下移"
+
+# ==AUTO== Automatically translated
+msgid "Saved shortcuts:"
+msgstr "已保存的快捷方式："
+
+# ==AUTO== Automatically translated
+msgid "Home"
+msgstr "主目录"
+
+# ==AUTO== Automatically translated
+msgid "Desktop"
+msgstr "桌面"
+
+# ==AUTO== Automatically translated
+msgid "Documents"
+msgstr "文档"
+
+# ==AUTO== Automatically translated
+msgid "Downloads"
+msgstr "下载"
+
+# ==AUTO== Automatically translated
+msgid "Pictures"
+msgstr "图片"
+
+# ==AUTO== Automatically translated
+msgid "Music"
+msgstr "音乐"
+
+# ==AUTO== Automatically translated
+msgid "Videos"
+msgstr "视频"
+
+# ==AUTO== Automatically translated
+msgid "language_name"
+msgstr "中文（简体）"
