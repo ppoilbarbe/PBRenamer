@@ -3,21 +3,14 @@
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
-
-from PySide6.QtCore import QByteArray
 
 from pbrenamer.platform import AppDirs
 
+_log = logging.getLogger(__name__)
+
 _STATE_FILE = AppDirs("pbrenamer").config_home / "window_state.json"
-
-
-def _encode(ba: QByteArray) -> str:
-    return bytes(ba).hex()
-
-
-def _decode(s: str) -> QByteArray:
-    return QByteArray(bytes.fromhex(s))
 
 
 class WindowState:
@@ -34,44 +27,80 @@ class WindowState:
 
     def _write(self, data: dict) -> None:
         self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._path.write_text(json.dumps(data), encoding="utf-8")
+        self._path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+    # ── Dialog geometry ───────────────────────────────────────────────────────
+
+    def save_geometry(self, key: str, x: int, y: int, w: int, h: int) -> None:
+        raw = self._load_raw()
+        raw[key] = {"x": x, "y": y, "w": w, "h": h}
+        self._write(raw)
+        _log.debug("save_geometry [%s] x=%d y=%d w=%d h=%d", key, x, y, w, h)
+
+    def load_geometry(self, key: str) -> tuple[int, int, int, int] | None:
+        raw = self._load_raw()
+        d = raw.get(key)
+        if not isinstance(d, dict):
+            _log.debug("load_geometry [%s] → not found", key)
+            return None
+        try:
+            result = int(d["x"]), int(d["y"]), int(d["w"]), int(d["h"])
+            _log.debug("load_geometry [%s] x=%d y=%d w=%d h=%d", key, *result)
+            return result
+        except (KeyError, TypeError, ValueError):
+            _log.debug("load_geometry [%s] → corrupt data: %r", key, d)
+            return None
+
+    # ── MainWindow state (geometry + two splitters) ───────────────────────────
 
     def save(
         self,
-        geometry: QByteArray,
-        splitter_main: QByteArray,
-        splitter_right: QByteArray,
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        splitter_main: list[int],
+        splitter_right: list[int],
     ) -> None:
-        data = self._load_raw()
-        data["geometry"] = _encode(geometry)
-        data["splitter_main"] = _encode(splitter_main)
-        data["splitter_right"] = _encode(splitter_right)
-        self._write(data)
+        raw = self._load_raw()
+        raw["main"] = {
+            "x": x,
+            "y": y,
+            "w": w,
+            "h": h,
+            "splitter_main": list(splitter_main),
+            "splitter_right": list(splitter_right),
+        }
+        self._write(raw)
+        _log.debug(
+            "save [main] x=%d y=%d w=%d h=%d splitter_main=%s splitter_right=%s",
+            x,
+            y,
+            w,
+            h,
+            list(splitter_main),
+            list(splitter_right),
+        )
 
     def load(
         self,
-    ) -> tuple[QByteArray | None, QByteArray | None, QByteArray | None]:
-        data = self._load_raw()
-        try:
-            geometry = _decode(data["geometry"]) if "geometry" in data else None
-            splitter_main = (
-                _decode(data["splitter_main"]) if "splitter_main" in data else None
-            )
-            splitter_right = (
-                _decode(data["splitter_right"]) if "splitter_right" in data else None
-            )
-            return geometry, splitter_main, splitter_right
-        except (ValueError, KeyError):
+    ) -> tuple[tuple[int, int, int, int] | None, list[int] | None, list[int] | None]:
+        raw = self._load_raw()
+        d = raw.get("main")
+        if not isinstance(d, dict):
+            _log.debug("load [main] → not found")
             return None, None, None
-
-    def save_geometry(self, key: str, geometry: QByteArray) -> None:
-        """Persist the geometry of a secondary window identified by *key*."""
-        data = self._load_raw()
-        data.setdefault("dialogs", {})[key] = _encode(geometry)
-        self._write(data)
-
-    def load_geometry(self, key: str) -> QByteArray | None:
-        """Return the saved geometry for *key*, or None if absent."""
-        data = self._load_raw()
-        encoded = data.get("dialogs", {}).get(key)
-        return _decode(encoded) if encoded else None
+        try:
+            geo = (int(d["x"]), int(d["y"]), int(d["w"]), int(d["h"]))
+            sm = [int(v) for v in d["splitter_main"]]
+            sr = [int(v) for v in d["splitter_right"]]
+            _log.debug(
+                "load [main] x=%d y=%d w=%d h=%d splitter_main=%s splitter_right=%s",
+                *geo,
+                sm,
+                sr,
+            )
+            return geo, sm, sr
+        except (KeyError, TypeError, ValueError):
+            _log.debug("load [main] → corrupt data: %r", d)
+            return None, None, None

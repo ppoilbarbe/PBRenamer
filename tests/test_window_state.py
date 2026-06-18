@@ -4,13 +4,7 @@ from __future__ import annotations
 
 import json
 
-from PySide6.QtCore import QByteArray
-
 from pbrenamer.ui.window_state import WindowState
-
-
-def _dummy_ba(content: str = "cafebabe") -> QByteArray:
-    return QByteArray(bytes.fromhex(content))
 
 
 class TestLoadRaw:
@@ -32,22 +26,21 @@ class TestLoadRaw:
 
     def test_returns_parsed_dict(self, tmp_path):
         p = tmp_path / "state.json"
-        p.write_text(json.dumps({"geometry": "deadbeef"}), encoding="utf-8")
+        p.write_text(
+            json.dumps({"main": {"x": 0, "y": 0, "w": 800, "h": 600}}), encoding="utf-8"
+        )
         ws = WindowState(p)
-        assert ws._load_raw() == {"geometry": "deadbeef"}
+        assert ws._load_raw()["main"]["w"] == 800
 
 
 class TestSaveAndLoad:
     def test_round_trip(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
-        geo = _dummy_ba("aabbcc")
-        sm = _dummy_ba("112233")
-        sr = _dummy_ba("445566")
-        ws.save(geo, sm, sr)
-        g2, m2, r2 = ws.load()
-        assert bytes(g2) == bytes(geo)
-        assert bytes(m2) == bytes(sm)
-        assert bytes(r2) == bytes(sr)
+        ws.save(10, 20, 800, 600, [300, 500], [200, 150])
+        geo, sm, sr = ws.load()
+        assert geo == (10, 20, 800, 600)
+        assert sm == [300, 500]
+        assert sr == [200, 150]
 
     def test_load_returns_none_triple_when_absent(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
@@ -59,11 +52,20 @@ class TestSaveAndLoad:
         ws = WindowState(p)
         assert ws.load() == (None, None, None)
 
-    def test_load_returns_none_on_corrupt_hex(self, tmp_path):
+    def test_load_returns_none_on_corrupt_data(self, tmp_path):
         p = tmp_path / "state.json"
         p.write_text(
             json.dumps(
-                {"geometry": "ZZ", "splitter_main": "00", "splitter_right": "00"}
+                {
+                    "main": {
+                        "x": "bad",
+                        "y": 0,
+                        "w": 800,
+                        "h": 600,
+                        "splitter_main": [1],
+                        "splitter_right": [1],
+                    }
+                }
             ),
             encoding="utf-8",
         )
@@ -73,30 +75,29 @@ class TestSaveAndLoad:
     def test_save_creates_parent_dirs(self, tmp_path):
         p = tmp_path / "nested" / "deep" / "state.json"
         ws = WindowState(p)
-        ws.save(_dummy_ba(), _dummy_ba(), _dummy_ba())
+        ws.save(0, 0, 800, 600, [300, 500], [200, 150])
         assert p.exists()
 
     def test_save_preserves_existing_keys(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
-        ws.save_geometry("mywin", _dummy_ba("aabb"))
-        ws.save(_dummy_ba(), _dummy_ba(), _dummy_ba())
+        ws.save_geometry("mywin", 10, 20, 300, 200)
+        ws.save(0, 0, 800, 600, [300, 500], [200, 150])
         data = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
-        assert "dialogs" in data
+        assert "mywin" in data
 
 
 class TestDialogGeometry:
     def test_save_and_load_geometry(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
-        geo = _dummy_ba("deadbeef")
-        ws.save_geometry("about", geo)
+        ws.save_geometry("about", 50, 100, 640, 480)
         loaded = ws.load_geometry("about")
-        assert bytes(loaded) == bytes(geo)
+        assert loaded == (50, 100, 640, 480)
 
     def test_load_geometry_returns_none_when_absent(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
         assert ws.load_geometry("missing") is None
 
-    def test_load_geometry_returns_none_when_no_dialogs_key(self, tmp_path):
+    def test_load_geometry_returns_none_when_key_absent(self, tmp_path):
         p = tmp_path / "state.json"
         p.write_text("{}", encoding="utf-8")
         ws = WindowState(p)
@@ -104,13 +105,22 @@ class TestDialogGeometry:
 
     def test_multiple_dialog_keys(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
-        ws.save_geometry("win1", _dummy_ba("aabb"))
-        ws.save_geometry("win2", _dummy_ba("ccdd"))
-        assert bytes(ws.load_geometry("win1")) == bytes.fromhex("aabb")
-        assert bytes(ws.load_geometry("win2")) == bytes.fromhex("ccdd")
+        ws.save_geometry("win1", 10, 20, 300, 200)
+        ws.save_geometry("win2", 50, 60, 400, 300)
+        assert ws.load_geometry("win1") == (10, 20, 300, 200)
+        assert ws.load_geometry("win2") == (50, 60, 400, 300)
 
     def test_overwrite_geometry(self, tmp_path):
         ws = WindowState(tmp_path / "state.json")
-        ws.save_geometry("win", _dummy_ba("aabb"))
-        ws.save_geometry("win", _dummy_ba("eeff"))
-        assert bytes(ws.load_geometry("win")) == bytes.fromhex("eeff")
+        ws.save_geometry("win", 10, 20, 300, 200)
+        ws.save_geometry("win", 99, 88, 640, 480)
+        assert ws.load_geometry("win") == (99, 88, 640, 480)
+
+    def test_load_geometry_returns_none_on_corrupt_data(self, tmp_path):
+        p = tmp_path / "state.json"
+        p.write_text(
+            json.dumps({"win": {"x": "bad", "y": 0, "w": 300, "h": 200}}),
+            encoding="utf-8",
+        )
+        ws = WindowState(p)
+        assert ws.load_geometry("win") is None

@@ -5,6 +5,8 @@ import sys
 
 import pytest
 
+import pbrenamer.__main__ as _main_mod
+import pbrenamer.settings as _settings
 from pbrenamer.__main__ import (
     _apply_postproc,
     _build_parser,
@@ -198,6 +200,22 @@ class TestParser:
     def test_case_invalid_rejected(self):
         with pytest.raises(SystemExit):
             _build_parser().parse_args(["-s", "x", "--case", "camelcase"])
+
+    def test_config_dir_default_is_none(self):
+        ns = _build_parser().parse_args([])
+        assert ns.config_dir is None
+
+    def test_config_dir_flag(self, tmp_path):
+        ns = _build_parser().parse_args(["--config-dir", str(tmp_path)])
+        assert ns.config_dir == str(tmp_path)
+
+    def test_config_dir_applies_to_settings(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(
+            sys, "argv", ["pbrenamer", "--config-dir", str(tmp_path), "-s", "x"]
+        )
+        monkeypatch.setattr(_main_mod, "_headless_run", lambda ns: None)
+        _main_mod.main()
+        assert _settings._dirs.config_home == tmp_path
 
 
 # ---------------------------------------------------------------------------

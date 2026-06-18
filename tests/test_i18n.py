@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 import gettext
-from unittest.mock import MagicMock, patch
-
-import pytest
+from unittest.mock import patch
 
 import pbrenamer.i18n as i18n
 from pbrenamer.i18n import (
@@ -14,15 +12,6 @@ from pbrenamer.i18n import (
     get_language_override,
     set_language_override,
 )
-
-
-@pytest.fixture
-def cfg_dir(tmp_path, monkeypatch):
-    """Redirect i18n settings I/O to a temporary directory."""
-    mock_dirs = MagicMock()
-    mock_dirs.config_home = tmp_path
-    monkeypatch.setattr(i18n, "_dirs", mock_dirs)
-    return tmp_path
 
 
 class TestAvailableLanguages:
@@ -49,19 +38,19 @@ class TestAvailableLanguages:
 
 
 class TestLanguageOverride:
-    def test_default_is_empty_string(self, cfg_dir):
+    def test_default_is_empty_string(self):
         assert get_language_override() == ""
 
-    def test_set_then_get(self, cfg_dir):
+    def test_set_then_get(self):
         set_language_override("fr")
         assert get_language_override() == "fr"
 
-    def test_clear_override(self, cfg_dir):
+    def test_clear_override(self):
         set_language_override("de")
         set_language_override("")
         assert get_language_override() == ""
 
-    def test_overwrite_changes_value(self, cfg_dir):
+    def test_overwrite_changes_value(self):
         set_language_override("fr")
         set_language_override("en")
         assert get_language_override() == "en"
@@ -84,21 +73,21 @@ class TestGettextTranslator:
 
 
 class TestSetup:
-    def test_setup_without_override_uses_system_language(self, cfg_dir, qtbot):
+    def test_setup_without_override_uses_system_language(self, qtbot):
         from PySide6.QtWidgets import QApplication
 
         app = QApplication.instance()
         with patch.object(i18n, "_system_language", return_value="en"):
             i18n.setup(app)
 
-    def test_setup_with_override_uses_override(self, cfg_dir, qtbot):
+    def test_setup_with_override_uses_override(self, qtbot):
         from PySide6.QtWidgets import QApplication
 
         app = QApplication.instance()
         set_language_override("fr")
         i18n.setup(app)
 
-    def test_setup_unknown_language_falls_back_gracefully(self, cfg_dir, qtbot):
+    def test_setup_unknown_language_falls_back_gracefully(self, qtbot):
         from PySide6.QtWidgets import QApplication
 
         app = QApplication.instance()

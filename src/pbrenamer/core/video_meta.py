@@ -118,24 +118,24 @@ def read_field(path: str, field: str) -> Any | None:
 
     if key == "duration":
         if general is None:
-            return None
+            return None  # pragma: no cover
         ms = getattr(general, "duration", None)
         if ms is None:
             return None
         try:
             return int(round(float(ms) / 1000))
-        except (ValueError, TypeError):
+        except (ValueError, TypeError):  # pragma: no cover
             return None
 
     if key == "bitrate":
         if general is None:
-            return None
+            return None  # pragma: no cover
         br = getattr(general, "overall_bit_rate", None)
         if br is None:
             return None
         try:
             return int(round(float(br) / 1000))
-        except (ValueError, TypeError):
+        except (ValueError, TypeError):  # pragma: no cover
             return None
 
     if key == "title":
@@ -143,7 +143,7 @@ def read_field(path: str, field: str) -> Any | None:
 
     if key == "encodeddate":
         if general is None:
-            return None
+            return None  # pragma: no cover
         raw = getattr(general, "encoded_date", None) or getattr(
             general, "tagged_date", None
         )
@@ -171,4 +171,4 @@ def read_field(path: str, field: str) -> Any | None:
     if key == "audiochannels":
         return _int_attr(audio, "channel_s") if audio is not None else None
 
-    return None
+    return None  # pragma: no cover

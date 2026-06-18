@@ -15,20 +15,17 @@ from PySide6.QtWidgets import (
 )
 
 import pbrenamer.settings as _cfg
+from pbrenamer.ui.geometry_mixin import GeometryMixin
 
 
-class ShortcutsDialog(QDialog):
+class ShortcutsDialog(GeometryMixin, QDialog):
     """List, reorder and remove user-defined directory shortcuts."""
 
     def __init__(self, window_state, parent=None) -> None:
         super().__init__(parent)
         self.setWindowTitle(_("Edit Shortcuts"))
         self.setMinimumSize(480, 320)
-        self._window_state = window_state
-
-        geo = window_state.load_geometry("shortcuts_dialog")
-        if geo:
-            self.restoreGeometry(geo)
+        self._init_geometry(window_state, "shortcuts_dialog")
 
         self._list = QListWidget()
         self._list.setAlternatingRowColors(True)
@@ -60,10 +57,6 @@ class ShortcutsDialog(QDialog):
         self._btn_down.clicked.connect(self._on_move_down)
         self._btn_remove.clicked.connect(self._on_remove)
         buttons.rejected.connect(self.reject)
-
-    def closeEvent(self, event) -> None:  # noqa: N802
-        self._window_state.save_geometry("shortcuts_dialog", self.saveGeometry())
-        super().closeEvent(event)
 
     def _load(self, select_row: int = -1) -> None:
         self._list.clear()

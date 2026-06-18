@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import logging
+from pathlib import Path
+from types import SimpleNamespace
 
 from PySide6.QtCore import QSettings
 
@@ -26,6 +28,23 @@ _PREVIEW_DELAY_MAX = 1000
 _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
 
 LEVELS: tuple[str, ...] = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
+
+
+def configure(config_dir: Path | None = None) -> None:
+    """Override the configuration directory used by all settings functions.
+
+    Pass ``None`` to restore the platform default. Intended for testing.
+    """
+    global _dirs, _SHORTCUTS_FILE
+    if config_dir is None:
+        _dirs = AppDirs(_DOMAIN)
+    else:
+        _dirs = SimpleNamespace(
+            config_home=config_dir,
+            data_home=config_dir,
+            cache_home=config_dir,
+        )
+    _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
 
 
 def _settings() -> QSettings:

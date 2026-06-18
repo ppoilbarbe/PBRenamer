@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 )
 
 from pbrenamer.core import audio_meta, image_meta, video_meta
+from pbrenamer.ui.geometry_mixin import GeometryMixin
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -50,7 +51,7 @@ def _fmt(value: object) -> str:
 # ---------------------------------------------------------------------------
 
 
-class FileInfoWindow(QWidget):
+class FileInfoWindow(GeometryMixin, QWidget):
     """Non-modal window showing replacement field values for a selected file."""
 
     field_requested = Signal(str)
@@ -60,8 +61,7 @@ class FileInfoWindow(QWidget):
         self.setWindowTitle(_("File information"))
         self.setMinimumSize(600, 460)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
-        self._window_state = window_state
-        self._geometry_restored = False
+        self._init_geometry(window_state, "file_info")
 
         self._lbl_info = QLabel()
         self._lbl_info.setWordWrap(True)
@@ -223,18 +223,6 @@ class FileInfoWindow(QWidget):
 
     # ── Interaction ───────────────────────────────────────────────────────────
 
-    def showEvent(self, event) -> None:  # noqa: N802
-        super().showEvent(event)
-        if not self._geometry_restored:
-            self._geometry_restored = True
-            geo = self._window_state.load_geometry("file_info")
-            if geo:
-                self.restoreGeometry(geo)
-
-    def closeEvent(self, event) -> None:  # noqa: N802
-        self._window_state.save_geometry("file_info", self.saveGeometry())
-        super().closeEvent(event)
-
     def _on_item_double_clicked(self, item: QTreeWidgetItem, _column: int) -> None:
         if item.childCount() > 0:
             return
@@ -247,7 +235,7 @@ class FileInfoWindow(QWidget):
         if item is None or item.childCount() > 0:
             return
         field = item.text(0)
-        if not field:
+        if not field:  # pragma: no cover
             return
         menu = QMenu(self)
         action = menu.addAction(_("Insert into replacement field"))

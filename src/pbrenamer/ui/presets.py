@@ -12,10 +12,6 @@ import json
 import re
 from pathlib import Path
 
-from pbrenamer.platform import AppDirs
-
-_CONFIG_DIR = AppDirs("pbrenamer").config_home / "patterns"
-
 _SEARCH_MODES = {"pattern", "regex", "plain"}
 _SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
@@ -33,7 +29,11 @@ def _read_json(path: Path) -> object:
 
 
 class PatternPresets:
-    def __init__(self, config_dir: Path = _CONFIG_DIR) -> None:
+    def __init__(self, config_dir: Path | None = None) -> None:
+        if config_dir is None:
+            import pbrenamer.settings as _settings
+
+            config_dir = _settings._dirs.config_home / "patterns"
         self._dir = config_dir
         self._dir.mkdir(parents=True, exist_ok=True)
 

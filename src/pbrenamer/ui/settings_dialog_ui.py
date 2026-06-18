@@ -43,7 +43,9 @@ class Ui_SettingsDialog:
 
         self.chkRestoreLastDir = QCheckBox(_("Restore last opened directory"), grp)
         self.chkRestoreLastDir.setToolTip(
-            _("On startup, reopen the directory that was active in the previous session")
+            _(
+                "On startup, reopen the directory that was active in the previous session"
+            )
         )
         grp_layout.addWidget(self.chkRestoreLastDir)
 
@@ -73,7 +75,9 @@ class Ui_SettingsDialog:
         self.spnPreviewDelay.setToolTip(delay_tip)
         delay_row.addWidget(self.spnPreviewDelay)
         delay_row.addItem(
-            QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+            QSpacerItem(
+                40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+            )
         )
         grp_layout.addLayout(delay_row)
 

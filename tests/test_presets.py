@@ -221,3 +221,24 @@ class TestNamedSaves:
     def test_hyphen_and_underscore_allowed_in_name(self, presets):
         presets.set_save("my-save_1", {"ok": True})
         assert "my-save_1" in presets.get_saves()
+
+    def test_list_format_filters_invalid_name(self, presets):
+        data = [
+            {"name": "bad name!", "x": 1},
+            {"name": "valid-save", "x": 2},
+        ]
+        (presets._dir / "saves.json").write_text(json.dumps(data), encoding="utf-8")
+        saves = presets.get_saves()
+        assert "bad name!" not in saves
+        assert "valid-save" in saves
+
+    def test_list_format_deduplicates_names(self, presets):
+        data = [
+            {"name": "dup", "x": 1},
+            {"name": "dup", "x": 2},
+            {"name": "other", "x": 3},
+        ]
+        (presets._dir / "saves.json").write_text(json.dumps(data), encoding="utf-8")
+        saves = presets.get_saves()
+        assert list(saves.keys()) == ["dup", "other"]
+        assert saves["dup"] == {"x": 1}  # first occurrence wins

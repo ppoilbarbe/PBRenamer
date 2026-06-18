@@ -24,10 +24,10 @@ For user-facing information see [README.md](README.md).
 PBRenamer/
 ├── src/pbrenamer/
 │   ├── __init__.py              version / author metadata
-│   ├── __main__.py              CLI entry point — GUI mode or headless rename (--search/--saved)
+│   ├── __main__.py              CLI entry point — GUI mode or headless rename (--search/--saved/--config-dir)
 │   ├── argparse_qt.py           argparse integration for Qt CLI options (add_qt_arguments)
-│   ├── i18n.py                  gettext bootstrap; language from platform.dirs
-│   ├── settings.py              application preferences — log level (QSettings)
+│   ├── i18n.py                  gettext bootstrap; language from platform.dirs; reads config dir from settings
+│   ├── settings.py              application preferences — log level (QSettings); configure() overrides config dir
 │   ├── xdg.py                   compat re-export → platform.dirs (do not use directly)
 │   ├── core/
 │   │   ├── filetools.py         file listing, text transforms, rename engine
@@ -296,7 +296,7 @@ Tests live in `tests/`, organised by module:
 |------------------------------|----------------|
 | `test_argparse_qt.py`        | `add_qt_arguments`: flag accumulation into `args.qt_args`, value flags, `nargs=0` flags, rejection of unknown flags |
 | `test_filetools.py`          | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow, Unicode coverage for pattern tokens (`{L}`, `{C}`, `{X}`, `{#}`) |
-| `test_headless.py`           | CLI argument parser (defaults, flags, unknown-flag rejection), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
+| `test_headless.py`           | CLI argument parser (defaults, flags, unknown-flag rejection, `--config-dir` integration), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
 | `test_i18n.py`               | `i18n.setup()` — language selection, env-var override, fallback to `en`, builtins injection |
 | `test_main_window.py`        | Full main window: `_on_preview`, `_refresh_conflicts`, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks |
 | `test_meta_audio.py`         | Audio metadata: field registry, integer/date parsing, `read_field` with and without mutagen, easy-tag and info-tag fields, real MP3 fixture |
@@ -316,6 +316,23 @@ Tests live in `tests/`, organised by module:
 
 Use `qtbot` from `pytest-qt` for all widget interactions.
 Never instantiate `QApplication` manually — `pytest-qt` manages it.
+
+### Test isolation
+
+`conftest.py` provides two fixtures:
+
+- **`config_dir`** (named, session-scoped per test): calls `settings.configure(tmp)`
+  to redirect all config I/O to a fresh temporary directory; yields the path so
+  tests that need to read/write config files directly can request it.
+- **`_isolated_config`** (autouse): depends on `config_dir`; ensures isolation
+  without the test knowing about it.  Teardown calls `settings.configure()` to
+  restore the platform default.
+
+The directory is created with `tmp_path_factory.mktemp()` so it lives outside
+the test's own `tmp_path`, avoiding false entries in directory-listing tests.
+
+Tests that need a custom config path (e.g. writing a known QSettings value
+before asserting) request `config_dir` explicitly.
 
 ## Packaging (`make dist`)
 

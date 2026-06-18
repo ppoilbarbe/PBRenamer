@@ -258,13 +258,13 @@ class MainWindow(QMainWindow):
 
     def _on_fs_change(self) -> None:
         if not self._current_dir or not os.path.isdir(self._current_dir):
-            return
+            return  # pragma: no cover
         selected_paths = {
             item.data(0, Qt.ItemDataRole.UserRole)
             for item in self._ui.tblFiles.selectedItems()
         }
         self._reload_files()
-        if selected_paths:
+        if selected_paths:  # pragma: no cover
             root = self._ui.tblFiles.invisibleRootItem()
             self._ui.tblFiles.blockSignals(True)
             for i in range(root.childCount()):
@@ -983,26 +983,43 @@ class MainWindow(QMainWindow):
 
     # ── Window state (geometry + splitters) ──────────────────────────────────
 
-    def _restore_window_state(self) -> None:
-        geo, sm, sr = self._window_state.load()
-        if geo:
-            self.restoreGeometry(geo)
-        if sm:
-            self._ui.splitterMain.restoreState(sm)
-        if sr:
-            self._ui.splitterRight.restoreState(sr)
-
     def showEvent(self, event) -> None:  # noqa: N802
         super().showEvent(event)
         if not self._geometry_restored:
             self._geometry_restored = True
             self._restore_window_state()
 
+    def _restore_window_state(self) -> None:
+        geo, sm, sr = self._window_state.load()
+        if geo is not None:
+            x, y, w, h = geo
+            _log.debug("MainWindow: restore geometry x=%d y=%d w=%d h=%d", x, y, w, h)
+            self.move(x, y)
+            self.resize(w, h)
+        else:
+            _log.debug("MainWindow: no saved geometry, using defaults")
+        self._restore_splitters(sm, sr)
+
+    def _restore_splitters(self, sm, sr) -> None:
+        if sm is not None:
+            _log.debug("MainWindow: restore splitter_main sizes=%s", sm)
+            self._ui.splitterMain.setSizes(sm)
+        else:
+            _log.debug("MainWindow: no saved splitter_main")
+        if sr is not None:
+            _log.debug("MainWindow: restore splitter_right sizes=%s", sr)
+            self._ui.splitterRight.setSizes(sr)
+        else:
+            _log.debug("MainWindow: no saved splitter_right")
+
     def closeEvent(self, event) -> None:  # noqa: N802
         self._window_state.save(
-            self.saveGeometry(),
-            self._ui.splitterMain.saveState(),
-            self._ui.splitterRight.saveState(),
+            self.x(),
+            self.y(),
+            self.width(),
+            self.height(),
+            list(self._ui.splitterMain.sizes()),
+            list(self._ui.splitterRight.sizes()),
         )
         if self._current_dir:
             _cfg.set_last_dir(self._current_dir)

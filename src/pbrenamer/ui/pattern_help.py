@@ -6,6 +6,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QTextBrowser, QVBoxLayout
 
+from pbrenamer.ui.geometry_mixin import GeometryMixin
+
 # ── HTML builders ─────────────────────────────────────────────────────────────
 #
 # Each function is called at dialog-creation time (after i18n.setup()), so
@@ -573,7 +575,7 @@ def make_help_icon(size: int = 18) -> QIcon:
 # ── Dialog ────────────────────────────────────────────────────────────────────
 
 
-class PatternHelpDialog(QDialog):
+class PatternHelpDialog(GeometryMixin, QDialog):
     """Non-modal help window; use show() not exec()."""
 
     def __init__(
@@ -587,10 +589,7 @@ class PatternHelpDialog(QDialog):
         super().__init__(parent, Qt.WindowType.Window)
         self.setWindowTitle(title)
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
-
-        self._state_key = state_key
-        self._window_state = window_state
-        self._geometry_restored = False
+        self._init_geometry(window_state, state_key)
 
         browser = QTextBrowser()
         browser.setOpenExternalLinks(False)
@@ -604,15 +603,3 @@ class PatternHelpDialog(QDialog):
         layout.addWidget(buttons)
 
         self.resize(560, 500)
-
-    def showEvent(self, event) -> None:  # noqa: N802
-        super().showEvent(event)
-        if not self._geometry_restored:
-            self._geometry_restored = True
-            geo = self._window_state.load_geometry(self._state_key)
-            if geo:
-                self.restoreGeometry(geo)
-
-    def closeEvent(self, event) -> None:  # noqa: N802
-        self._window_state.save_geometry(self._state_key, self.saveGeometry())
-        super().closeEvent(event)

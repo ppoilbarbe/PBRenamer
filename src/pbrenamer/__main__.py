@@ -182,6 +182,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Print replacement-field help HTML and exit",
     )
 
+    # ── Developer / testing ───────────────────────────────────────────────────
+    parser.add_argument(
+        "--config-dir",
+        metavar="DIR",
+        default=None,
+        help=(
+            "Override the configuration directory "
+            "(default: ~/.config/pbrenamer on Linux). "
+            "Intended for testing."
+        ),
+    )
+
     # ── Logging verbosity ─────────────────────────────────────────────────────
     level_group = parser.add_mutually_exclusive_group()
     level_group.add_argument(
@@ -563,6 +575,13 @@ def main() -> None:
 
     parser = _build_parser()
     _ns = parser.parse_args()
+
+    if _ns.config_dir is not None:
+        from pathlib import Path
+
+        from pbrenamer import settings as _settings
+
+        _settings.configure(Path(_ns.config_dir))
 
     if _ns.help_search or _ns.help_replace:
         # Help export — no Qt needed; NullTranslations returns msgids as-is

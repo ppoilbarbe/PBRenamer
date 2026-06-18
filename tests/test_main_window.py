@@ -20,7 +20,6 @@ from PySide6.QtWidgets import (
     QStyleOptionViewItem,
 )
 
-import pbrenamer.settings as _settings
 import pbrenamer.ui.main_window as _mwmod
 from pbrenamer.core import replacement as _repl
 from pbrenamer.settings import (
@@ -40,18 +39,6 @@ from pbrenamer.ui.main_window import MainWindow, _SearchModeDelegate
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture
-def cfg_dir(tmp_path, monkeypatch):
-    """Redirect all settings I/O to a subdirectory of tmp_path."""
-    cfg = tmp_path / "cfg"
-    cfg.mkdir()
-    mock_dirs = MagicMock()
-    mock_dirs.config_home = cfg
-    monkeypatch.setattr(_settings, "_dirs", mock_dirs)
-    monkeypatch.setattr(_settings, "_SHORTCUTS_FILE", cfg / "shortcuts.json")
-    return cfg
-
-
 @pytest.fixture(autouse=True)
 def mock_qmenu(monkeypatch):
     """Patch QMenu in main_window so menu.exec() never blocks in any test.
@@ -67,7 +54,7 @@ def mock_qmenu(monkeypatch):
 
 
 @pytest.fixture
-def window(qtbot, cfg_dir):
+def window(qtbot):
     w = MainWindow()
     qtbot.addWidget(w)
     return w
@@ -126,24 +113,24 @@ class TestSearchModeDelegate:
 
 
 class TestInit:
-    def test_with_start_dir(self, qtbot, cfg_dir, tmp_path):
+    def test_with_start_dir(self, qtbot, tmp_path):
         w = MainWindow(start_dir=str(tmp_path))
         qtbot.addWidget(w)
         # No crash; _startup_navigate will run after singleShot fires
 
-    def test_restore_last_dir_branch(self, qtbot, cfg_dir, tmp_path):
+    def test_restore_last_dir_branch(self, qtbot, tmp_path):
         set_restore_last_dir(True)
         set_last_dir(str(tmp_path))
         w = MainWindow()
         qtbot.addWidget(w)
 
-    def test_else_branch(self, qtbot, cfg_dir):
+    def test_else_branch(self, qtbot):
         # Neither start_dir nor restore_last_dir → os.getcwd()
         set_restore_last_dir(False)
         w = MainWindow()
         qtbot.addWidget(w)
 
-    def test_restore_toolbar_state_branch(self, qtbot, cfg_dir):
+    def test_restore_toolbar_state_branch(self, qtbot):
         set_restore_toolbar_state(True)
         set_toolbar_state(
             {
@@ -1020,16 +1007,16 @@ class TestWindowState:
     def test_restore_window_state_no_saved_state(self, window):
         window._restore_window_state()  # no crash when nothing saved
 
-    def test_close_event_saves_last_dir(self, window, cfg_dir, tmp_path):
+    def test_close_event_saves_last_dir(self, window, tmp_path):
         window._current_dir = str(tmp_path)
         window.close()
         assert get_last_dir() == str(tmp_path)
 
-    def test_close_event_no_dir_does_not_crash(self, window, cfg_dir):
+    def test_close_event_no_dir_does_not_crash(self, window):
         window._current_dir = None
         window.close()  # no crash
 
-    def test_close_event_saves_toolbar_when_enabled(self, window, cfg_dir):
+    def test_close_event_saves_toolbar_when_enabled(self, window):
         set_restore_toolbar_state(True)
         window._ui.cmbMode.setCurrentIndex(1)
         window.close()
@@ -1041,10 +1028,10 @@ class TestWindowState:
         for key in ("mode", "recursive", "keep_extension", "auto_preview", "filter"):
             assert key in state
 
-    def test_restore_toolbar_state_empty(self, window, cfg_dir):
+    def test_restore_toolbar_state_empty(self, window):
         window._restore_toolbar_state()  # no crash with empty state
 
-    def test_restore_toolbar_state_full(self, window, cfg_dir):
+    def test_restore_toolbar_state_full(self, window):
         set_toolbar_state(
             {
                 "mode": 1,
@@ -1064,7 +1051,7 @@ class TestWindowState:
         window._ui.chkRecursive.setChecked(False)
         window._ui.edtFilter.setText("")
 
-    def test_restore_toolbar_state_invalid_mode_ignored(self, window, cfg_dir):
+    def test_restore_toolbar_state_invalid_mode_ignored(self, window):
         set_toolbar_state({"mode": 999})
         window._restore_toolbar_state()  # out-of-range index → not set
 
@@ -1126,14 +1113,14 @@ class TestMenuHandlers:
 
 
 class TestShortcutsMenu:
-    def test_build_shortcuts_menu_empty(self, window, cfg_dir, monkeypatch):
+    def test_build_shortcuts_menu_empty(self, window, monkeypatch):
         monkeypatch.setattr("pbrenamer.ui.main_window.system_bookmarks", lambda: [])
         window._build_shortcuts_menu()
         # Should have at least the separator + edit shortcuts action
         menu = window._ui.menuShortcuts
         assert any(a is window._ui.actionEditShortcuts for a in menu.actions())
 
-    def test_build_shortcuts_menu_with_entries(self, window, cfg_dir, monkeypatch):
+    def test_build_shortcuts_menu_with_entries(self, window, monkeypatch):
         home = os.path.expanduser("~")
         monkeypatch.setattr("pbrenamer.ui.main_window.system_bookmarks", lambda: [])
         set_shortcuts([("Home", home)])
@@ -1142,9 +1129,7 @@ class TestShortcutsMenu:
         tips = [a.statusTip() for a in menu.actions() if not a.isSeparator()]
         assert home in tips
 
-    def test_build_shortcuts_menu_with_sys_bookmarks(
-        self, window, cfg_dir, monkeypatch
-    ):
+    def test_build_shortcuts_menu_with_sys_bookmarks(self, window, monkeypatch):
         home = os.path.expanduser("~")
         monkeypatch.setattr(
             "pbrenamer.ui.main_window.system_bookmarks", lambda: [("Home", home)]
@@ -1196,16 +1181,16 @@ class TestShortcutsMenu:
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
         assert called
 
-    def test_add_shortcut(self, window, tmp_path, cfg_dir):
+    def test_add_shortcut(self, window, tmp_path):
         window._add_shortcut(str(tmp_path))
         assert any(p == str(tmp_path) for _, p in get_shortcuts())
 
-    def test_add_shortcut_duplicate_noop(self, window, tmp_path, cfg_dir):
+    def test_add_shortcut_duplicate_noop(self, window, tmp_path):
         window._add_shortcut(str(tmp_path))
         window._add_shortcut(str(tmp_path))
         assert sum(1 for _, p in get_shortcuts() if p == str(tmp_path)) == 1
 
-    def test_add_shortcut_root_uses_path(self, window, cfg_dir):
+    def test_add_shortcut_root_uses_path(self, window):
         # os.path.basename("/") = "" → name falls back to path itself
         window._add_shortcut("/")
         assert any(p == "/" for _, p in get_shortcuts())
@@ -1608,3 +1593,53 @@ class TestRefreshConflicts:
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item_a) == "#cc0000"  # error color
         assert _item_color(item_b) == "#0066cc"  # preview color
+
+
+# ---------------------------------------------------------------------------
+# showEvent / _restore_window_state / _restore_splitters / _on_field_requested
+# ---------------------------------------------------------------------------
+
+
+class TestWindowStateRestore:
+    def test_show_event_triggers_restore(self, qtbot, monkeypatch):
+        called = []
+        w = MainWindow()
+        qtbot.addWidget(w)
+        monkeypatch.setattr(w, "_restore_window_state", lambda: called.append(True))
+        w.show()
+        qtbot.waitExposed(w)
+        qtbot.wait(50)  # allow QTimer.singleShot(0) to fire
+        assert called
+
+    def test_show_event_only_restores_once(self, qtbot, monkeypatch):
+        called = []
+        w = MainWindow()
+        qtbot.addWidget(w)
+        monkeypatch.setattr(w, "_restore_window_state", lambda: called.append(True))
+        w.show()
+        qtbot.waitExposed(w)
+        qtbot.wait(50)
+        w.hide()
+        w.show()
+        qtbot.waitExposed(w)
+        qtbot.wait(50)
+        assert len(called) == 1
+
+    def test_restore_window_state_no_saved_data(self, qtbot):
+        w = MainWindow()
+        qtbot.addWidget(w)
+        ws = MagicMock()
+        ws.load.return_value = (None, None, None)
+        w._window_state = ws
+        w._restore_window_state()  # covers "no saved geometry" branch
+
+    def test_restore_splitters_none(self, qtbot):
+        w = MainWindow()
+        qtbot.addWidget(w)
+        w._restore_splitters(None, None)  # covers both "no saved splitter" branches
+
+    def test_on_field_requested_inserts_into_dest(self, window):
+        w = window
+        w._ui.cmbPatternDest.lineEdit().clear()
+        w._on_field_requested("{X}")
+        assert "{X}" in w._ui.cmbPatternDest.lineEdit().text()

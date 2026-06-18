@@ -18,6 +18,13 @@ Entry point
 .. automodule:: pbrenamer.__main__
    :members: main
 
+argparse\_qt
+------------
+
+.. automodule:: pbrenamer.argparse_qt
+   :members:
+   :undoc-members:
+
 Internationalisation
 --------------------
 
@@ -121,6 +128,13 @@ bookmarks
 ui
 --
 
+widgets
+~~~~~~~
+
+.. automodule:: pbrenamer.ui.widgets
+   :members:
+   :undoc-members:
+
 presets
 ~~~~~~~
 
@@ -153,6 +167,27 @@ shortcuts\_dialog
 ~~~~~~~~~~~~~~~~~
 
 .. automodule:: pbrenamer.ui.shortcuts_dialog
+   :members:
+   :undoc-members:
+
+settings\_dialog
+~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.settings_dialog
+   :members:
+   :undoc-members:
+
+history\_dialog
+~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.history_dialog
+   :members:
+   :undoc-members:
+
+about\_dialog
+~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.about_dialog
    :members:
    :undoc-members:
 

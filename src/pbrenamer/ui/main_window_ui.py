@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
     QFrame,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -116,11 +117,13 @@ class Ui_MainWindow:
         bar.addWidget(QLabel(_("Show:"), parent))
 
         self.cmbMode = QComboBox(parent)
-        self.cmbMode.addItems([
-            _("Files only"),
-            _("Directories only"),
-            _("Files and directories"),
-        ])
+        self.cmbMode.addItems(
+            [
+                _("Files only"),
+                _("Directories only"),
+                _("Files and directories"),
+            ]
+        )
         self.cmbMode.setToolTip(_("Choose which entries to list"))
         self.cmbMode.setStatusTip(_("List files only, directories only, or both"))
         bar.addWidget(self.cmbMode)
@@ -136,7 +139,9 @@ class Ui_MainWindow:
         self.chkKeepExtension.setChecked(True)
         self.chkKeepExtension.setToolTip(_("Preserve the file extension"))
         self.chkKeepExtension.setStatusTip(
-            _("Apply transformations to the file stem only, leaving the extension unchanged")
+            _(
+                "Apply transformations to the file stem only, leaving the extension unchanged"
+            )
         )
         bar.addWidget(self.chkKeepExtension)
 
@@ -159,7 +164,9 @@ class Ui_MainWindow:
         bar.addWidget(self.edtFilter)
 
         bar.addItem(
-            QSpacerItem(20, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+            QSpacerItem(
+                20, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+            )
         )
         return bar
 
@@ -268,7 +275,9 @@ class Ui_MainWindow:
         self.radPattern = QRadioButton(_("Pattern"), parent)
         self.radPattern.setChecked(True)
         self.radPattern.setToolTip(_("Search using pattern tokens"))
-        self.radPattern.setStatusTip(_("Match file names using pattern tokens ({#}, {L}, {X}…)"))
+        self.radPattern.setStatusTip(
+            _("Match file names using pattern tokens ({#}, {L}, {X}…)")
+        )
         row.addWidget(self.radPattern)
 
         self.radRegex = QRadioButton(_("Regular expression"), parent)
@@ -300,7 +309,9 @@ class Ui_MainWindow:
         row.addWidget(self.chkCaseInsensitive)
 
         row.addItem(
-            QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+            QSpacerItem(
+                40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+            )
         )
         return row
 
@@ -351,21 +362,23 @@ class Ui_MainWindow:
     def _make_postprocess_group(self, parent):
         """Separator conversion, accent removal, duplicate removal, case change."""
         grp = QGroupBox(_("Post-processing"), parent)
-        grp.setMinimumHeight(60)
-        row = QHBoxLayout(grp)
+        grid = QGridLayout(grp)
 
-        row.addWidget(QLabel(_("Separator:"), grp))
+        # Row 0 — Separator: [label] [combo]   [chkRemoveAccents]
+        grid.addWidget(QLabel(_("Separator:"), grp), 0, 0)
 
         self.cmbSpaces = QComboBox(grp)
-        self.cmbSpaces.addItems([
-            _("No change"),
-            _("Spaces → underscores"),
-            _("Underscores → spaces"),
-            _("Spaces → dots"),
-            _("Dots → spaces"),
-            _("Spaces → dashes"),
-            _("Dashes → spaces"),
-        ])
+        self.cmbSpaces.addItems(
+            [
+                _("No change"),
+                _("Spaces → underscores"),
+                _("Underscores → spaces"),
+                _("Spaces → dots"),
+                _("Dots → spaces"),
+                _("Spaces → dashes"),
+                _("Dashes → spaces"),
+            ]
+        )
         self.cmbSpaces.setToolTip(_("Separator conversion"))
         self.cmbSpaces.setStatusTip(
             _(
@@ -373,14 +386,33 @@ class Ui_MainWindow:
                 " after applying the pattern"
             )
         )
-        row.addWidget(self.cmbSpaces)
+        grid.addWidget(self.cmbSpaces, 0, 1)
 
         self.chkRemoveAccents = QCheckBox(_("Remove accents"), grp)
         self.chkRemoveAccents.setToolTip(_("Strip diacritical marks"))
         self.chkRemoveAccents.setStatusTip(
             _("Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)")
         )
-        row.addWidget(self.chkRemoveAccents)
+        grid.addWidget(self.chkRemoveAccents, 0, 2)
+
+        # Row 1 — Case:      [label] [combo]   [chkRemoveDuplicates]
+        grid.addWidget(QLabel(_("Case:"), grp), 1, 0)
+
+        self.cmbCaps = QComboBox(grp)
+        self.cmbCaps.addItems(
+            [
+                _("No change"),
+                _("UPPERCASE"),
+                _("lowercase"),
+                _("Capitalize first letter"),
+                _("Title Case"),
+            ]
+        )
+        self.cmbCaps.setToolTip(_("Capitalization mode"))
+        self.cmbCaps.setStatusTip(
+            _("Choose how to change the case of file names after applying the pattern")
+        )
+        grid.addWidget(self.cmbCaps, 1, 1)
 
         self.chkRemoveDuplicates = QCheckBox(_("Remove duplicate separators"), grp)
         self.chkRemoveDuplicates.setToolTip(_("Collapse consecutive separators"))
@@ -390,27 +422,11 @@ class Ui_MainWindow:
                 " (spaces, dots, dashes, underscores) into one"
             )
         )
-        row.addWidget(self.chkRemoveDuplicates)
+        grid.addWidget(self.chkRemoveDuplicates, 1, 2)
 
-        row.addWidget(QLabel(_("Case:"), grp))
+        # Column 1 (combos) stretches; columns 0 and 2 stay at natural size
+        grid.setColumnStretch(1, 1)
 
-        self.cmbCaps = QComboBox(grp)
-        self.cmbCaps.addItems([
-            _("No change"),
-            _("UPPERCASE"),
-            _("lowercase"),
-            _("Capitalize first letter"),
-            _("Title Case"),
-        ])
-        self.cmbCaps.setToolTip(_("Capitalization mode"))
-        self.cmbCaps.setStatusTip(
-            _("Choose how to change the case of file names after applying the pattern")
-        )
-        row.addWidget(self.cmbCaps)
-
-        row.addItem(
-            QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-        )
         return grp
 
     def _make_save_row(self, parent):
@@ -477,13 +493,17 @@ class Ui_MainWindow:
         col.addWidget(self.btnClearPreview)
 
         col.addItem(
-            QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+            QSpacerItem(
+                20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+            )
         )
 
         self.btnUndo = QPushButton(_("Undo"), parent)
         self.btnUndo.setEnabled(False)
         self.btnUndo.setToolTip(_("Undo last rename batch"))
-        self.btnUndo.setStatusTip(_("Reverse the last batch of renames performed on disk"))
+        self.btnUndo.setStatusTip(
+            _("Reverse the last batch of renames performed on disk")
+        )
         col.addWidget(self.btnUndo)
 
         self.btnRename = QPushButton(_("Rename"), parent)

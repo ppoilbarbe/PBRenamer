@@ -158,7 +158,8 @@ Undo
 ~~~~
 
 Click **Undo** (or press **Ctrl+Z**) to revert the most recent rename batch.
-Only one level of undo is available.
+Each rename batch is recorded on an undo stack; the button label shows the
+number of available batches (e.g. **Undo (3)**) when more than one is queued.
 
 Shortcuts
 ~~~~~~~~~
@@ -636,6 +637,7 @@ window is opened; renames are performed and the process exits.
               [--dup | --no-dup]
               [--confirm | --no-confirm]
               [-d | -v | -q]
+              [--config-dir DIR]
               [DIR]
 
 Rename source (mutually exclusive)
@@ -696,6 +698,14 @@ Logging
 
 ``-q`` / ``--quiet``
     Suppress informational messages — WARNING level.
+
+Advanced
+~~~~~~~~
+
+``--config-dir DIR``
+    Override the configuration directory (default: ``~/.config/pbrenamer`` on
+    Linux, ``~/Library/Application Support/pbrenamer`` on macOS,
+    ``%APPDATA%\pbrenamer`` on Windows).  Intended for testing.
 
 Help export
 ~~~~~~~~~~~

@@ -47,7 +47,9 @@ class Ui_AboutDialog:
         layout.addWidget(separator)
 
         # ── Informational labels ───────────────────────────────────────────────
-        self.lblDescription = QLabel(_("A graphical batch file renaming utility."), dialog)
+        self.lblDescription = QLabel(
+            _("A graphical batch file renaming utility."), dialog
+        )
         self.lblDescription.setWordWrap(True)
         layout.addWidget(self.lblDescription)
 

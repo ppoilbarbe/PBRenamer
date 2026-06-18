@@ -26,8 +26,18 @@ counters, date stamps, and metadata — all previewed live before any change is 
 - **Directory colouring** — directories are shown in a distinct colour in the file list
 - **Keep extension** option — transformations apply to the stem only
 - **Recursive** directory traversal
-- **Undo** — revert the last rename batch in one click
+- **Undo** — revert the last rename batch in one click; the button shows the
+  number of batches available for undo
 - **Pattern presets** — save and reuse search/replace pairs
+- **Pattern history** — LRU drop-down lists for search and replacement fields;
+  full history browsable and editable via the History dialog
+- **Directory shortcuts** — Shortcuts menu combines system bookmarks (GTK /
+  macOS / Windows) with user-defined favourite directories for fast navigation;
+  last-used directory is restored on startup
+- **File info** — dedicated window showing filesystem metadata and embedded
+  EXIF/ID3/media tags for any selected file
+- **Window state persistence** — window size, position, and splitter ratios are
+  saved and restored between sessions
 - **Case-aware conflict detection** — honours the case sensitivity of the
   underlying filesystem (case-insensitive on Windows/macOS by default)
 - **Internationalised** — English and French included; additional languages can
@@ -41,9 +51,9 @@ Pre-built standalone executables are attached to every
 
 | Platform | File |
 |---|---|
-| Linux x86-64  | `PBRenamer-<ver>-linux-x86_64` |
-| Windows x86-64 | `PBRenamer-<ver>-windows-x86_64.exe` |
-| macOS (Apple Silicon) | `PBRenamer-<ver>-macos-arm64.zip` |
+| Linux x86-64  | `pbrenamer-<ver>-linux-x86_64` |
+| Windows x86-64 | `pbrenamer-<ver>-windows-x86_64.exe` |
+| macOS (Apple Silicon) | `pbrenamer-<ver>-macos-arm64.zip` |
 
 No installation required — just download and run.
 
@@ -73,8 +83,8 @@ pip install .
 ### GUI mode
 
 ```bash
-pbrenamer            # launch the GUI (current directory)
-pbrenamer /path/dir  # launch the GUI starting in a given directory
+pbrenamer            # launch the GUI (last-used directory)
+pbrenamer /path/dir  # launch the GUI starting in a given directory (use '.' for current)
 python -m pbrenamer  # launch from source
 
 pbrenamer --help     # show command-line help and exit
@@ -109,6 +119,7 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 | `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
 | `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
 | `--debug` / `--verbose` / `--quiet` | _(saved pref)_ | Override the saved log-level preference |
+| `--config-dir DIR` | _(platform default)_ | Override the configuration directory (intended for testing) |
 
 ¹ Exactly one of `--search` or `--saved` is required.
 

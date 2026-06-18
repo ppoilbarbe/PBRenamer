@@ -16,12 +16,11 @@ from pathlib import Path
 from PySide6.QtCore import QLibraryInfo, QSettings, QTranslator
 from PySide6.QtWidgets import QApplication
 
-from pbrenamer.platform import AppDirs, system_language
+from pbrenamer.platform import system_language
 
 _DOMAIN = "pbrenamer"
 _LOCALE_DIR = Path(__file__).parent / "locale"
 _SETTINGS_KEY = "language/override"
-_dirs = AppDirs(_DOMAIN)
 
 
 class _GettextTranslator(QTranslator):
@@ -70,7 +69,9 @@ def available_languages() -> list[tuple[str, str]]:
 
 
 def _settings() -> QSettings:
-    cfg = _dirs.config_home
+    import pbrenamer.settings as _settings_mod
+
+    cfg = _settings_mod._dirs.config_home
     cfg.mkdir(parents=True, exist_ok=True)
     return QSettings(str(cfg / f"{_DOMAIN}.conf"), QSettings.Format.IniFormat)
 

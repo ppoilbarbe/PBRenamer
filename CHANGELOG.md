@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `settings.configure(config_dir)` — new public function that overrides the
+  configuration directory used by all settings and i18n functions; a single call
+  redirects `settings`, `i18n`, and `PatternPresets` config I/O simultaneously;
+  pass `None` to restore the platform default; intended for testing
+- `--config-dir DIR` CLI option (both GUI and headless modes): overrides the
+  configuration directory at startup before any settings access; intended for
+  testing (noted in `--help`)
 - Window geometry persistence for all windows and dialogs (except About):
   `MainWindow`, `FileInfoWindow`, `HistoryDialog`, `SettingsDialog`,
   `ShortcutsDialog`, and `PatternHelpDialog` save/restore size and position
@@ -31,6 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Test configuration isolation: `conftest.py` provides a `config_dir` autouse
+  fixture that redirects all settings I/O to a per-test temporary directory via
+  `settings.configure()`; the real `~/.config/pbrenamer` is never touched
+  during test runs; tests that need direct file access can request the
+  `config_dir` fixture to obtain the path
 - Named saves storage format migrated from a flat JSON dict (no ordering
   guarantee) to an ordered JSON list `[{"name": …, …config…}, …]`; legacy
   dict files are read transparently and upgraded on next write
@@ -40,6 +52,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `audio_meta.can_read` now returns `False` for video container files (MP4,
+  MKV, MOV, …) that carry no audio-only track; previously a `General` track
+  from pymediainfo could satisfy the read check, causing `{au:…}` fields to
+  attempt — and silently fail — audio tag extraction on video files
 - Main window geometry was not restored at startup: `restoreGeometry()` was
   called in `__init__` before `show()`, so the window manager ignored it;
   moved to `showEvent` (fires once via `_geometry_restored` flag)

@@ -1,14 +1,13 @@
 """UI layout for the History dialog (search/replace pattern management)."""
 
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QAbstractItemView,
+    QComboBox,
     QDialogButtonBox,
     QGroupBox,
     QHBoxLayout,
     QListWidget,
     QPushButton,
-    QRadioButton,
     QSizePolicy,
     QSpacerItem,
     QVBoxLayout,
@@ -27,8 +26,8 @@ class Ui_HistoryDialog:
 
         # ── Side-by-side panels: Search (left) | Replace (right) ──────────────
         panels = QHBoxLayout()
-        panels.addWidget(self._make_search_panel(dialog))
-        panels.addWidget(self._make_replace_panel(dialog))
+        panels.addWidget(self._make_search_panel(dialog), 1)
+        panels.addWidget(self._make_replace_panel(dialog), 1)
         layout.addLayout(panels)
 
         # ── Close button ───────────────────────────────────────────────────────
@@ -55,18 +54,14 @@ class Ui_HistoryDialog:
         self.edtSearch.setToolTip(_("New search pattern to add"))
         add_row.addWidget(self.edtSearch)
 
-        self.radPattern = QRadioButton(_("pat"), grp)
-        self.radPattern.setChecked(True)
-        self.radPattern.setToolTip(_("Pattern token mode"))
-        add_row.addWidget(self.radPattern)
-
-        self.radRegex = QRadioButton(_("RE"), grp)
-        self.radRegex.setToolTip(_("Regular expression mode"))
-        add_row.addWidget(self.radRegex)
-
-        self.radPlainText = QRadioButton(_("txt"), grp)
-        self.radPlainText.setToolTip(_("Plain text mode"))
-        add_row.addWidget(self.radPlainText)
+        self.cmbSearchMode = QComboBox(grp)
+        self.cmbSearchMode.addItem(_("pat"), userData="pattern")
+        self.cmbSearchMode.addItem(_("RE"), userData="regex")
+        self.cmbSearchMode.addItem(_("txt"), userData="plain")
+        self.cmbSearchMode.setToolTip(
+            _("Search mode: pattern tokens, regex, or plain text")
+        )
+        add_row.addWidget(self.cmbSearchMode)
 
         self.btnAddSearch = QPushButton(_("Add"), grp)
         self.btnAddSearch.setToolTip(_("Add this pattern to the search history"))
@@ -77,7 +72,9 @@ class Ui_HistoryDialog:
         actions_row = QHBoxLayout()
         self.btnRemoveSearch = QPushButton(_("Remove"), grp)
         self.btnRemoveSearch.setToolTip(_("Remove selected entries"))
-        self.btnRemoveSearch.setStatusTip(_("Delete the selected search history entries"))
+        self.btnRemoveSearch.setStatusTip(
+            _("Delete the selected search history entries")
+        )
         actions_row.addWidget(self.btnRemoveSearch)
 
         self.btnClearSearch = QPushButton(_("Clear all"), grp)
@@ -86,7 +83,9 @@ class Ui_HistoryDialog:
         actions_row.addWidget(self.btnClearSearch)
 
         actions_row.addItem(
-            QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+            QSpacerItem(
+                40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+            )
         )
         grp_layout.addLayout(actions_row)
 
@@ -133,7 +132,9 @@ class Ui_HistoryDialog:
         actions_row.addWidget(self.btnClearReplace)
 
         actions_row.addItem(
-            QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+            QSpacerItem(
+                40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
+            )
         )
         grp_layout.addLayout(actions_row)
 
