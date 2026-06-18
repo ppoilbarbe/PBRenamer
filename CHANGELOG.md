@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- markdownlint-cli2 pre-commit hook with `.markdownlint-cli2.yaml` config
+  (MD013 disabled, MD024 `siblings_only`, `CLAUDE.md` excluded)
+
+### Changed
+
+- `*_ui.py` files removed from the global pre-commit exclude: now hand-written
+  Python, they are fully linted by ruff; Qt naming conventions (`Ui_Foo`,
+  `setupUi`) and the gettext `_()` builtin suppressed via `per-file-ignores`
+  (N801, N802, F821)
+
 ## [1.4.0] - 2026-06-18
 
 ### Added

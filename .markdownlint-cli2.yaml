@@ -1,0 +1,12 @@
+config:
+  # Line length not enforced — CHANGELOG bullets and docs are naturally long
+  MD013: false
+  # Duplicate headings allowed when they live under different parent sections
+  # (standard Keep-a-Changelog pattern: ### Added, ### Fixed repeat per release)
+  MD024:
+    siblings_only: true
+
+# CLAUDE.md is intentionally compact tool-specific files
+ignores:
+  - CLAUDE.md
+  - .pytest_cache/**

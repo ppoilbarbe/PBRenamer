@@ -80,6 +80,8 @@ extend-select = [
 "src/pbrenamer/ui/shortcuts_dialog.py"    = ["F821"]
 "src/pbrenamer/ui/file_info_window.py"    = ["F821"]
 "src/pbrenamer/platform/bookmarks.py"     = ["F821"]
+# *_ui.py: Qt naming conventions (Ui_Foo, setupUi) + _() builtin from gettext
+"src/pbrenamer/ui/*_ui.py"                = ["F821", "N801", "N802"]
 
 [tool.ruff.format]
 # Black-compatible defaults (double quotes, trailing commas, magic trailing comma)

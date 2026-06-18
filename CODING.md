@@ -20,7 +20,7 @@ For user-facing information see [README.md](README.md).
 
 ## Project layout
 
-```
+```text
 PBRenamer/
 ├── src/pbrenamer/
 │   ├── __init__.py              version / author metadata
@@ -161,7 +161,7 @@ more than one file-type namespace (`im:`, `vi:`, `au:`, and any future
 additions declared in `_META_READERS`).
 
 | Condition | Behaviour |
-|---|---|
+| --- | --- |
 | Single namespace only | Strict: absent field + no default → `FieldResolutionError` (file flagged red) |
 | Multiple namespaces | Lenient: a field whose namespace doesn't match the current file silently contributes `""` |
 
@@ -186,11 +186,11 @@ business-logic files. There is no Qt Designer step.
 
 All OS-specific code must live in this package. The three modules are:
 
-| Module       | Responsibility                                             |
-|--------------|------------------------------------------------------------|
-| `dirs.py`    | `AppDirs(name)` factory → `config_home`, `data_home`, `cache_home` |
-| `fs.py`      | `is_case_sensitive(dir)` — probes the filesystem at runtime; `conflict_key()`, `same_file_path()` |
-| `locale.py`  | `system_language()` — env vars (Unix) + `locale.getlocale()` (Windows/macOS) |
+| Module | Responsibility |
+| --- | --- |
+| `dirs.py` | `AppDirs(name)` factory → `config_home`, `data_home`, `cache_home` |
+| `fs.py` | `is_case_sensitive(dir)` — probes the filesystem at runtime; `conflict_key()`, `same_file_path()` |
+| `locale.py` | `system_language()` — env vars (Unix) + `locale.getlocale()` (Windows/macOS) |
 
 `AppDirs` dispatches to `XdgDirs` (Linux), `_MacDirs` (macOS), or `_WindowsDirs`
 (Windows) based on `sys.platform`. `is_case_sensitive` creates a temporary
@@ -207,7 +207,7 @@ Translatable strings are wrapped with `_()` (installed into builtins by
 catalogue (`qtbase_<lang>.qm`) so that built-in dialog buttons (`OK`,
 `Cancel`, `Yes`, `No`, …) are translated automatically.  The full toolchain:
 
-```
+```text
 Python source + *_ui.py
        │
        ▼ pybabel extract
@@ -252,11 +252,11 @@ Open the generated file in a PO editor (e.g. Poedit, Lokalize, or any text
 editor). Translate every `msgstr`. Pay special attention to two entries:
 
 | msgid | What to put in msgstr |
-|---|---|
+| --- | --- |
 | `language_name` | The language's own name, e.g. `Deutsch` — used in the Settings dialog |
 | All UI strings | Faithful translations |
 
-**4. Register the new locale**
+#### 4. Register the new locale
 
 Add the language code to `PO_LOCALES` in `Makefile`:
 
@@ -264,14 +264,14 @@ Add the language code to `PO_LOCALES` in `Makefile`:
 PO_LOCALES := en fr de
 ```
 
-**5. Compile and verify**
+#### 5. Compile and verify
 
 ```bash
 make translate          # updates the .po and compiles the .mo
 make run                # open Settings → Language to check the new entry
 ```
 
-**6. Commit**
+#### 6. Commit
 
 ```bash
 git add src/pbrenamer/locale/de/
@@ -292,27 +292,27 @@ pytest --no-cov         # skip coverage instrumentation
 
 Tests live in `tests/`, organised by module:
 
-| Test file                    | What it covers |
-|------------------------------|----------------|
-| `test_argparse_qt.py`        | `add_qt_arguments`: flag accumulation into `args.qt_args`, value flags, `nargs=0` flags, rejection of unknown flags |
-| `test_filetools.py`          | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow, Unicode coverage for pattern tokens (`{L}`, `{C}`, `{X}`, `{#}`) |
-| `test_headless.py`           | CLI argument parser (defaults, flags, unknown-flag rejection, `--config-dir` integration), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
-| `test_i18n.py`               | `i18n.setup()` — language selection, env-var override, fallback to `en`, builtins injection |
-| `test_main_window.py`        | Full main window: `_on_preview`, `_refresh_conflicts`, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks |
-| `test_meta_audio.py`         | Audio metadata: field registry, integer/date parsing, `read_field` with and without mutagen, easy-tag and info-tag fields, real MP3 fixture |
-| `test_meta_image.py`         | EXIF/IPTC metadata (`image_meta`): main IFD, sub-IFD, encoding, case-insensitive lookup, Pillow-unavailable path, real JPEG fixture |
-| `test_meta_video.py`         | Video metadata: field registry, encoded-date parsing, track selection, duration/bitrate/resolution/codec fields, library-unavailable path, real video fixture |
+| Test file | What it covers |
+| --- | --- |
+| `test_argparse_qt.py` | `add_qt_arguments`: flag accumulation into `args.qt_args`, value flags, `nargs=0` flags, rejection of unknown flags |
+| `test_filetools.py` | Text transforms, rename engine (patterns / plain / regex), file listing (recursive and non-recursive), disk rename, conflict handling, `{newnum}` workflow, Unicode coverage for pattern tokens (`{L}`, `{C}`, `{X}`, `{#}`) |
+| `test_headless.py` | CLI argument parser (defaults, flags, unknown-flag rejection, `--config-dir` integration), `--saved` preset loading + CLI overrides, `_apply_postproc`, `_plan` (all three modes, keep-ext, postproc, syntax errors), `_detect_conflicts`, `_headless_run` integration (confirm/abort, filter, recursion, case, dirs, conflicts, cwd fallback) |
+| `test_i18n.py` | `i18n.setup()` — language selection, env-var override, fallback to `en`, builtins injection |
+| `test_main_window.py` | Full main window: `_on_preview`, `_refresh_conflicts`, context menus, undo, conflict detection, drag-and-drop, keyboard shortcuts, settings dialog, file-info window, pattern-help dialog, presets, bookmarks |
+| `test_meta_audio.py` | Audio metadata: field registry, integer/date parsing, `read_field` with and without mutagen, easy-tag and info-tag fields, real MP3 fixture |
+| `test_meta_image.py` | EXIF/IPTC metadata (`image_meta`): main IFD, sub-IFD, encoding, case-insensitive lookup, Pillow-unavailable path, real JPEG fixture |
+| `test_meta_video.py` | Video metadata: field registry, encoded-date parsing, track selection, duration/bitrate/resolution/codec fields, library-unavailable path, real video fixture |
 | `test_platform_bookmarks.py` | `platform.bookmarks`: system directories, GTK bookmark parsing (Linux), user-defined shortcuts CRUD |
-| `test_platform_dirs.py`      | `AppDirs` factory — `XdgDirs` (Linux), `_MacDirs`, `_WindowsDirs`; `config_home`, `data_home`, `cache_home` |
-| `test_platform_fs.py`        | `is_case_sensitive` probe, `same_file_path` and `conflict_key` on both case-sensitive and case-insensitive filesystems |
-| `test_platform_locale.py`    | `system_language()` — env-var chain (LANGUAGE, LC_ALL, LANG), `locale.getlocale()` fallback, normalisation |
-| `test_presets.py`            | `PatternPresets` — CRUD (add, rename, delete, reorder), persistence to JSON, migration from legacy format |
-| `test_replacement.py`        | Replacement-string parser (fields, defaults, align, case-transform), validator, all built-in fields (`{num}`, `{date}`, `{datetime}`, `{dir}`, `{mdatetime}`, `{im:…}`, `{au:…}`, `{vi:…}`, `{re:…}`), formatting and error paths |
-| `test_resources.py`          | Bundled resource loading (`get_resource`), `xdg.py` re-export shim |
-| `test_settings.py`           | `Settings` — log level, shortcuts, toolbar-state and preview-delay persistence (QSettings) |
-| `test_ui_dialogs.py`         | `AboutDialog`, `SettingsDialog`, `HistoryDialog`, `ShortcutsDialog`, `FileInfoWindow`, `PatternHelpDialog`, `WhitespaceLineEdit` |
-| `test_undo.py`               | `UndoManager` — `add_batch`, `undo` (single and multi-file batches, LIFO order), `can_undo`, `clear`, `__len__` |
-| `test_window_state.py`       | `WindowState` — geometry and splitter-position persistence (save / restore cycle) |
+| `test_platform_dirs.py` | `AppDirs` factory — `XdgDirs` (Linux), `_MacDirs`, `_WindowsDirs`; `config_home`, `data_home`, `cache_home` |
+| `test_platform_fs.py` | `is_case_sensitive` probe, `same_file_path` and `conflict_key` on both case-sensitive and case-insensitive filesystems |
+| `test_platform_locale.py` | `system_language()` — env-var chain (LANGUAGE, LC_ALL, LANG), `locale.getlocale()` fallback, normalisation |
+| `test_presets.py` | `PatternPresets` — CRUD (add, rename, delete, reorder), persistence to JSON, migration from legacy format |
+| `test_replacement.py` | Replacement-string parser (fields, defaults, align, case-transform), validator, all built-in fields (`{num}`, `{date}`, `{datetime}`, `{dir}`, `{mdatetime}`, `{im:…}`, `{au:…}`, `{vi:…}`, `{re:…}`), formatting and error paths |
+| `test_resources.py` | Bundled resource loading (`get_resource`), `xdg.py` re-export shim |
+| `test_settings.py` | `Settings` — log level, shortcuts, toolbar-state and preview-delay persistence (QSettings) |
+| `test_ui_dialogs.py` | `AboutDialog`, `SettingsDialog`, `HistoryDialog`, `ShortcutsDialog`, `FileInfoWindow`, `PatternHelpDialog`, `WhitespaceLineEdit` |
+| `test_undo.py` | `UndoManager` — `add_batch`, `undo` (single and multi-file batches, LIFO order), `can_undo`, `clear`, `__len__` |
+| `test_window_state.py` | `WindowState` — geometry and splitter-position persistence (save / restore cycle) |
 
 Use `qtbot` from `pytest-qt` for all widget interactions.
 Never instantiate `QApplication` manually — `pytest-qt` manages it.
@@ -343,10 +343,10 @@ The artifact name embeds version and platform so builds for different OSes can
 coexist in the same directory:
 
 | Platform | Output |
-|---|---|
-| Linux   | `dist/PBRenamer-<ver>-linux-x86_64` |
+| --- | --- |
+| Linux | `dist/PBRenamer-<ver>-linux-x86_64` |
 | Windows | `dist/PBRenamer-<ver>-windows-x86_64.exe` |
-| macOS   | `dist/PBRenamer-<ver>-macos-arm64.app` |
+| macOS | `dist/PBRenamer-<ver>-macos-arm64.app` |
 
 The version is read from `pyproject.toml` at spec-evaluation time.
 PyInstaller cannot cross-compile; each platform must build natively.
@@ -355,7 +355,7 @@ PyInstaller cannot cross-compile; each platform must build natively.
 
 The pipeline runs on every push and pull request:
 
-```
+```text
 push / PR
   ├── test   (ubuntu) ──┐
   └── hooks  (ubuntu) ──┴── build ──── release  ← semver tags only

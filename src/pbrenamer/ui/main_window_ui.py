@@ -140,7 +140,8 @@ class Ui_MainWindow:
         self.chkKeepExtension.setToolTip(_("Preserve the file extension"))
         self.chkKeepExtension.setStatusTip(
             _(
-                "Apply transformations to the file stem only, leaving the extension unchanged"
+                "Apply transformations to the file stem only,"
+                " leaving the extension unchanged"
             )
         )
         bar.addWidget(self.chkKeepExtension)
@@ -198,7 +199,7 @@ class Ui_MainWindow:
         return panel
 
     def _make_rename_frame(self, parent):
-        """Framed panel with search/replace patterns, modes, post-processing and saves."""
+        """Framed panel with search/replace patterns, modes, post-processing, saves."""
         frame = QFrame(parent)
         frame.setFrameShape(QFrame.StyledPanel)
         frame.setFrameShadow(QFrame.Raised)
@@ -456,7 +457,8 @@ class Ui_MainWindow:
         self.btnSaveSave.setToolTip(_("Save current settings under this name"))
         self.btnSaveSave.setStatusTip(
             _(
-                "Save all search, replace and post-processing settings under the current name"
+                "Save all search, replace and post-processing settings"
+                " under the current name"
                 " (overwrites any existing save with the same name)"
             )
         )

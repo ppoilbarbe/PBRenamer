@@ -11,7 +11,7 @@ counters, date stamps, and metadata — all previewed live before any change is 
   existing files or with each other are highlighted in red; the Rename button
   is disabled until all conflicts are resolved
 - **Multi-selection** — apply transformations to selected files only
-- **Flexible renaming rules**
+- Flexible renaming rules
   - Pattern-based search / replace (`{#}`, `{L}`, `{X}`, `{@}`, capture groups…)
   - Text substitution (find & replace, spaces ↔ underscores / dots / dashes, case)
   - Counter (`{num}`, `{num:03}` zero-padded, `{num::10}` start offset), conflict-free auto-number (`{newnum}`)
@@ -50,8 +50,8 @@ Pre-built standalone executables are attached to every
 [GitHub release](https://github.com/ppoilbarbe/PBRenamer/releases):
 
 | Platform | File |
-|---|---|
-| Linux x86-64  | `pbrenamer-<ver>-linux-x86_64` |
+| --- | --- |
+| Linux x86-64 | `pbrenamer-<ver>-linux-x86_64` |
 | Windows x86-64 | `pbrenamer-<ver>-windows-x86_64.exe` |
 | macOS (Apple Silicon) | `pbrenamer-<ver>-macos-arm64.zip` |
 
@@ -99,12 +99,12 @@ to Qt and can be combined with the above flags.
 Providing `--search` disables the GUI and renames files directly from the
 terminal. All options that exist in the main window are available:
 
-```
+```text
 pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 ```
 
 | Option | Default | Description |
-|---|---|---|
+| --- | --- | --- |
 | `-s`, `--search TEXT` | _(required¹)_ | Search pattern — activates headless mode |
 | `--saved NAME` | _(required¹)_ | Load a named preset — activates headless mode; CLI options override preset values |
 | `-r`, `--replace TEXT` | `""` | Replacement string |
@@ -123,7 +123,7 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 
 ¹ Exactly one of `--search` or `--saved` is required.
 
-**Examples**
+### Examples
 
 ```bash
 # Replace underscores with hyphens, preview first

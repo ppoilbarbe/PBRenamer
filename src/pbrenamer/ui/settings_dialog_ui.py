@@ -44,7 +44,8 @@ class Ui_SettingsDialog:
         self.chkRestoreLastDir = QCheckBox(_("Restore last opened directory"), grp)
         self.chkRestoreLastDir.setToolTip(
             _(
-                "On startup, reopen the directory that was active in the previous session"
+                "On startup, reopen the directory that was active"
+                " in the previous session"
             )
         )
         grp_layout.addWidget(self.chkRestoreLastDir)
