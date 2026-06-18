@@ -6,19 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [1.4.1] - 2026-06-18
 
-- markdownlint-cli2 pre-commit hook with `.markdownlint-cli2.yaml` config
-  (MD013 disabled, MD024 `siblings_only`, `CLAUDE.md` excluded)
+### Fixed
 
-### Changed
+- `audio_meta.read_field` now returns `None` for video container files (MP4,
+  MKV, MOV, …); previously `read_field` called mutagen directly without going
+  through `can_read`, so mutagen — which can read MP4 tags — returned audio
+  field values (title, duration, …) for video files; `{au:…}` tokens in a
+  replacement template could therefore resolve on video files as if they were
+  pure-audio files
 
-- `*_ui.py` files removed from the global pre-commit exclude: now hand-written
-  Python, they are fully linted by ruff; Qt naming conventions (`Ui_Foo`,
-  `setupUi`) and the gettext `_()` builtin suppressed via `per-file-ignores`
-  (N801, N802, F821)
+## [1.4.0] - 2026-06-18 [YANKED]
 
-## [1.4.0] - 2026-06-18
+> Regression: `audio_meta.read_field` returns audio metadata for video
+> containers (MP4, MKV, …) because it bypasses `can_read`. Replaced by 1.4.1.
 
 ### Added
 

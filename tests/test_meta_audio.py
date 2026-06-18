@@ -16,6 +16,7 @@ from pbrenamer.core.meta_common import FieldType
 # Fields present: title, artist, album, albumartist, tracknumber, discnumber,
 #                 date, genre, duration, bitrate.
 SAMPLE_AUDIO = Path(__file__).parent / "data" / "sample_audio.ogg"
+SAMPLE_VIDEO = Path(__file__).parent / "data" / "sample_video.mp4"
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -304,6 +305,26 @@ class TestRealFile:
 
     def test_case_insensitive(self):
         assert read_field(self.path, "TITLE") == read_field(self.path, "title")
+
+
+# ---------------------------------------------------------------------------
+# Regression: video containers must not be treated as audio
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.skipif(not SAMPLE_VIDEO.exists(), reason="sample_video.mp4 not found")
+class TestVideoRejected:
+    path = str(SAMPLE_VIDEO)
+
+    def test_can_read_returns_false(self):
+        assert audio_meta.can_read(self.path) is False
+
+    def test_read_field_returns_none(self):
+        # Mutagen can read MP4 tags; read_field must still return None for video files.
+        assert read_field(self.path, "title") is None
+
+    def test_read_field_duration_returns_none(self):
+        assert read_field(self.path, "duration") is None
 
 
 # ---------------------------------------------------------------------------

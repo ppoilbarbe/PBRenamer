@@ -159,7 +159,7 @@ def read_field(path: str, field: str) -> Any | None:
     Returns None if mutagen is unavailable, the file is not a supported audio
     format, or the field is absent.
     """
-    if not _MUTAGEN:
+    if not can_read(path):
         return None
     key = field.lower()
     _log.debug("Reading audio field %r from %s", key, path)
