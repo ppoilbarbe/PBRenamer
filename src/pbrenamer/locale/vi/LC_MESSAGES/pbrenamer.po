@@ -99,6 +99,135 @@ msgid "A restart is required for the language change to take effect."
 msgstr "Cần khởi động lại để thay đổi ngôn ngữ có hiệu lực."
 
 # ==AUTO== Automatically translated
+msgid "File information"
+msgstr "Thông tin tệp"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Trường"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Mô tả"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Giá trị"
+
+# ==AUTO== Automatically translated
+msgid "Image"
+msgstr "Hình ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Audio"
+msgstr "Âm thanh"
+
+# ==AUTO== Automatically translated
+msgid "Video"
+msgstr "Video"
+
+# ==AUTO== Automatically translated
+msgid "Directory"
+msgstr "Thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Other"
+msgstr "Khác"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Thông tin tệp — {name}"
+
+# ==AUTO== Automatically translated
+msgid "File:"
+msgstr "Tệp:"
+
+# ==AUTO== Automatically translated
+msgid "Type:"
+msgstr "Loại:"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Siêu dữ liệu hình ảnh (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Siêu dữ liệu âm thanh"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Siêu dữ liệu video"
+
+# ==AUTO== Automatically translated
+msgid "Select a single file to display its information."
+msgstr "Chọn một tệp duy nhất để hiển thị thông tin của nó."
+
+# ==AUTO== Automatically translated
+msgid "Select a file to display its information."
+msgstr "Chọn một tệp để hiển thị thông tin của nó."
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Trường phổ quát"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Ngày hôm nay"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Ngày và giờ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Ngày/giờ sửa đổi tệp"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "Không có"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Ngày/giờ tạo tệp"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Tên thư mục cha"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Trường hàng loạt"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Tính toán"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Toàn bộ văn bản khớp"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Nhóm chụp"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Bộ đếm tự tăng"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Bộ đếm không xung đột"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Nhóm regex có tên"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "Chèn vào trường thay thế"
+
+# ==AUTO== Automatically translated
 msgid "History"
 msgstr "Lịch sử"
 
@@ -127,24 +256,15 @@ msgid "pat"
 msgstr "mẫu"
 
 # ==AUTO== Automatically translated
-msgid "Pattern token mode"
-msgstr "Chế độ token mẫu"
-
-# ==AUTO== Automatically translated
 msgid "RE"
 msgstr "RE"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression mode"
-msgstr "Chế độ biểu thức chính quy"
 
 # ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
 
-# ==AUTO== Automatically translated
-msgid "Plain text mode"
-msgstr "Chế độ văn bản thuần túy"
+msgid "Search mode: pattern tokens, regex, or plain text"
+msgstr "Chế độ tìm kiếm: token mẫu, regex hoặc văn bản thuần túy"
 
 # ==AUTO== Automatically translated
 msgid "Add"
@@ -205,6 +325,62 @@ msgstr "Xóa tất cả mục lịch sử thay thế"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Xóa toàn bộ lịch sử mẫu thay thế"
+
+# ==AUTO== Automatically translated
+msgid "Select folder"
+msgstr "Chọn thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Original"
+msgstr "Gốc"
+
+# ==AUTO== Automatically translated
+msgid "Preview"
+msgstr "Xem trước"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} mục"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} không có sẵn"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Tìm kiếm — Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Thay thế — Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Rename errors"
+msgstr "Lỗi đổi tên"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Hoàn tác (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Hoàn tác lô đổi tên cuối cùng"
+
+# ==AUTO== Automatically translated
+msgid "Add as shortcut"
+msgstr "Thêm làm phím tắt"
 
 # ==AUTO== Automatically translated
 msgid "Open folder…"
@@ -367,14 +543,6 @@ msgstr "Mẫu glob để lọc danh sách tệp"
 # ==AUTO== Automatically translated
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Chỉ liệt kê các tệp khớp với mẫu glob này (vd. *.txt, image_*)"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Gốc"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Xem trước"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -576,22 +744,6 @@ msgstr ""
 "v.v.)"
 
 # ==AUTO== Automatically translated
-msgid "Remove duplicate separators"
-msgstr "Xóa dấu phân cách trùng lặp"
-
-# ==AUTO== Automatically translated
-msgid "Collapse consecutive separators"
-msgstr "Thu gọn các dấu phân cách liên tiếp"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr ""
-"Thu gọn các chuỗi ký tự phân cách giống nhau (khoảng trắng, dấu chấm, "
-"gạch ngang, gạch dưới) thành một"
-
-# ==AUTO== Automatically translated
 msgid "Case:"
 msgstr "Hoa/Thường:"
 
@@ -618,6 +770,22 @@ msgstr "Chế độ viết hoa"
 # ==AUTO== Automatically translated
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "Chọn cách thay đổi hoa/thường của tên tệp sau khi áp dụng mẫu"
+
+# ==AUTO== Automatically translated
+msgid "Remove duplicate separators"
+msgstr "Xóa dấu phân cách trùng lặp"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive separators"
+msgstr "Thu gọn các dấu phân cách liên tiếp"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Thu gọn các chuỗi ký tự phân cách giống nhau (khoảng trắng, dấu chấm, "
+"gạch ngang, gạch dưới) thành một"
 
 # ==AUTO== Automatically translated
 msgid "Save:"
@@ -688,14 +856,6 @@ msgid "Remove all preview values from the Preview column"
 msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Hoàn tác"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Hoàn tác lô đổi tên cuối cùng"
-
-# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Đảo ngược lô đổi tên cuối cùng được thực hiện trên đĩa"
 
@@ -730,175 +890,6 @@ msgstr "Phím tắt"
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Chọn thư mục"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} mục"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} không có sẵn"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Tìm kiếm — Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Thay thế — Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "Lỗi đổi tên"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Hoàn tác (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "Thêm làm phím tắt"
-
-# ==AUTO== Automatically translated
-msgid "File information"
-msgstr "Thông tin tệp"
-
-# ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Trường"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Mô tả"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Giá trị"
-
-# ==AUTO== Automatically translated
-msgid "Image"
-msgstr "Hình ảnh"
-
-# ==AUTO== Automatically translated
-msgid "Audio"
-msgstr "Âm thanh"
-
-# ==AUTO== Automatically translated
-msgid "Video"
-msgstr "Video"
-
-# ==AUTO== Automatically translated
-msgid "Directory"
-msgstr "Thư mục"
-
-# ==AUTO== Automatically translated
-msgid "Other"
-msgstr "Khác"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Thông tin tệp — {name}"
-
-# ==AUTO== Automatically translated
-msgid "File:"
-msgstr "Tệp:"
-
-# ==AUTO== Automatically translated
-msgid "Type:"
-msgstr "Loại:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Siêu dữ liệu hình ảnh (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Siêu dữ liệu âm thanh"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Siêu dữ liệu video"
-
-# ==AUTO== Automatically translated
-msgid "Select a single file to display its information."
-msgstr "Chọn một tệp duy nhất để hiển thị thông tin của nó."
-
-# ==AUTO== Automatically translated
-msgid "Select a file to display its information."
-msgstr "Chọn một tệp để hiển thị thông tin của nó."
-
-# ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Trường phổ quát"
-
-# ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Ngày hôm nay"
-
-# ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Ngày và giờ hiện tại"
-
-# ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Ngày/giờ sửa đổi tệp"
-
-# ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "Không có"
-
-# ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Ngày/giờ tạo tệp"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Tên thư mục cha"
-
-# ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Trường hàng loạt"
-
-# ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Tính toán"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Toàn bộ văn bản khớp"
-
-# ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Nhóm chụp"
-
-# ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Bộ đếm tự tăng"
-
-# ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Bộ đếm không xung đột"
-
-# ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Nhóm regex có tên"
-
-# ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "Chèn vào trường thay thế"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1001,6 +992,14 @@ msgstr "Mẫu tìm kiếm"
 # ==AUTO== Automatically translated
 msgid "Pattern mode"
 msgstr "Chế độ mẫu"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Chế độ biểu thức chính quy"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Chế độ văn bản thuần túy"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

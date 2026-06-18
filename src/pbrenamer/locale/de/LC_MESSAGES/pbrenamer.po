@@ -102,6 +102,135 @@ msgid "A restart is required for the language change to take effect."
 msgstr "Ein Neustart ist erforderlich, damit die Sprachänderung wirksam wird."
 
 # ==AUTO== Automatically translated
+msgid "File information"
+msgstr "Dateiinformationen"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Feld"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Beschreibung"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Wert"
+
+# ==AUTO== Automatically translated
+msgid "Image"
+msgstr "Bild"
+
+# ==AUTO== Automatically translated
+msgid "Audio"
+msgstr "Audio"
+
+# ==AUTO== Automatically translated
+msgid "Video"
+msgstr "Video"
+
+# ==AUTO== Automatically translated
+msgid "Directory"
+msgstr "Verzeichnis"
+
+# ==AUTO== Automatically translated
+msgid "Other"
+msgstr "Sonstige"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Dateiinformationen — {name}"
+
+# ==AUTO== Automatically translated
+msgid "File:"
+msgstr "Datei:"
+
+# ==AUTO== Automatically translated
+msgid "Type:"
+msgstr "Typ:"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Bildmetadaten (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Audiometadaten"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Videometadaten"
+
+# ==AUTO== Automatically translated
+msgid "Select a single file to display its information."
+msgstr "Wählen Sie eine einzelne Datei aus, um ihre Informationen anzuzeigen."
+
+# ==AUTO== Automatically translated
+msgid "Select a file to display its information."
+msgstr "Wählen Sie eine Datei aus, um ihre Informationen anzuzeigen."
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Universelle Felder"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Heutiges Datum"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Aktuelles Datum und Uhrzeit"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Dateiänderungsdatum/-uhrzeit"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "Fehlt"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Dateierstellungsdatum/-uhrzeit"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Name des übergeordneten Ordners"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Stapelfelder"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Berechnet"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Vollständiger Treffertext"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Erfassungsgruppen"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Automatisch inkrementierender Zähler"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Konfliktfreier Zähler"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Benannte Regex-Gruppe"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "In das Ersetzungsfeld einfügen"
+
+# ==AUTO== Automatically translated
 msgid "History"
 msgstr "Verlauf"
 
@@ -130,24 +259,15 @@ msgid "pat"
 msgstr "Muster"
 
 # ==AUTO== Automatically translated
-msgid "Pattern token mode"
-msgstr "Mustertokenmodus"
-
-# ==AUTO== Automatically translated
 msgid "RE"
 msgstr "RE"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression mode"
-msgstr "Regulärer-Ausdruck-Modus"
 
 # ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
 
-# ==AUTO== Automatically translated
-msgid "Plain text mode"
-msgstr "Nur-Text-Modus"
+msgid "Search mode: pattern tokens, regex, or plain text"
+msgstr "Suchmodus: Muster-Token, Regex oder einfacher Text"
 
 # ==AUTO== Automatically translated
 msgid "Add"
@@ -208,6 +328,62 @@ msgstr "Alle Ersetzungsverlaufseinträge entfernen"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Gesamten Ersetzungsmuserverlauf löschen"
+
+# ==AUTO== Automatically translated
+msgid "Select folder"
+msgstr "Ordner auswählen"
+
+# ==AUTO== Automatically translated
+msgid "Original"
+msgstr "Original"
+
+# ==AUTO== Automatically translated
+msgid "Preview"
+msgstr "Vorschau"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} Element(e)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} nicht verfügbar"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Suche — Hilfe"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Ersetzen — Hilfe"
+
+# ==AUTO== Automatically translated
+msgid "Rename errors"
+msgstr "Umbenennungsfehler"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Rückgängig (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Letzten Umbenennungsvorgang rückgängig machen (%d Ebene(n) verfügbar)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Rückgängig"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Letzten Umbenennungsstapel rückgängig machen"
+
+# ==AUTO== Automatically translated
+msgid "Add as shortcut"
+msgstr "Als Verknüpfung hinzufügen"
 
 # ==AUTO== Automatically translated
 msgid "Open folder…"
@@ -374,14 +550,6 @@ msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr ""
 "Nur Dateien, die diesem Glob-Muster entsprechen, werden aufgelistet (z. "
 "B. *.txt, image_*)"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Original"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Vorschau"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -586,22 +754,6 @@ msgstr ""
 "usw.)"
 
 # ==AUTO== Automatically translated
-msgid "Remove duplicate separators"
-msgstr "Doppelte Trennzeichen entfernen"
-
-# ==AUTO== Automatically translated
-msgid "Collapse consecutive separators"
-msgstr "Aufeinanderfolgende Trennzeichen zusammenfassen"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr ""
-"Aufeinanderfolgende identische Trennzeichen (Leerzeichen, Punkte, "
-"Bindestriche, Unterstriche) zu einem zusammenfassen"
-
-# ==AUTO== Automatically translated
 msgid "Case:"
 msgstr "Schreibung:"
 
@@ -630,6 +782,22 @@ msgid "Choose how to change the case of file names after applying the pattern"
 msgstr ""
 "Wählen, wie die Groß-/Kleinschreibung der Dateinamen nach dem Anwenden "
 "des Musters geändert werden soll"
+
+# ==AUTO== Automatically translated
+msgid "Remove duplicate separators"
+msgstr "Doppelte Trennzeichen entfernen"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive separators"
+msgstr "Aufeinanderfolgende Trennzeichen zusammenfassen"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Aufeinanderfolgende identische Trennzeichen (Leerzeichen, Punkte, "
+"Bindestriche, Unterstriche) zu einem zusammenfassen"
 
 # ==AUTO== Automatically translated
 msgid "Save:"
@@ -701,14 +869,6 @@ msgid "Remove all preview values from the Preview column"
 msgstr "Alle Vorschauwerte aus der Vorschauspalte entfernen"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Rückgängig"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Letzten Umbenennungsstapel rückgängig machen"
-
-# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Den letzten Stapel von Umbenennungen auf dem Datenträger rückgängig machen"
 
@@ -743,175 +903,6 @@ msgstr "Verknüpfungen"
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Hilfe"
-
-# ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Ordner auswählen"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} Element(e)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} nicht verfügbar"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Suche — Hilfe"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Ersetzen — Hilfe"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "Umbenennungsfehler"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Rückgängig (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Letzten Umbenennungsvorgang rückgängig machen (%d Ebene(n) verfügbar)"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "Als Verknüpfung hinzufügen"
-
-# ==AUTO== Automatically translated
-msgid "File information"
-msgstr "Dateiinformationen"
-
-# ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Feld"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Beschreibung"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Wert"
-
-# ==AUTO== Automatically translated
-msgid "Image"
-msgstr "Bild"
-
-# ==AUTO== Automatically translated
-msgid "Audio"
-msgstr "Audio"
-
-# ==AUTO== Automatically translated
-msgid "Video"
-msgstr "Video"
-
-# ==AUTO== Automatically translated
-msgid "Directory"
-msgstr "Verzeichnis"
-
-# ==AUTO== Automatically translated
-msgid "Other"
-msgstr "Sonstige"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Dateiinformationen — {name}"
-
-# ==AUTO== Automatically translated
-msgid "File:"
-msgstr "Datei:"
-
-# ==AUTO== Automatically translated
-msgid "Type:"
-msgstr "Typ:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Bildmetadaten (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Audiometadaten"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Videometadaten"
-
-# ==AUTO== Automatically translated
-msgid "Select a single file to display its information."
-msgstr "Wählen Sie eine einzelne Datei aus, um ihre Informationen anzuzeigen."
-
-# ==AUTO== Automatically translated
-msgid "Select a file to display its information."
-msgstr "Wählen Sie eine Datei aus, um ihre Informationen anzuzeigen."
-
-# ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Universelle Felder"
-
-# ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Heutiges Datum"
-
-# ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Aktuelles Datum und Uhrzeit"
-
-# ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Dateiänderungsdatum/-uhrzeit"
-
-# ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "Fehlt"
-
-# ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Dateierstellungsdatum/-uhrzeit"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Name des übergeordneten Ordners"
-
-# ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Stapelfelder"
-
-# ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Berechnet"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Vollständiger Treffertext"
-
-# ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Erfassungsgruppen"
-
-# ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Automatisch inkrementierender Zähler"
-
-# ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Konfliktfreier Zähler"
-
-# ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Benannte Regex-Gruppe"
-
-# ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "In das Ersetzungsfeld einfügen"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1017,6 +1008,14 @@ msgstr "Suchmuster"
 # ==AUTO== Automatically translated
 msgid "Pattern mode"
 msgstr "Mustermodus"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Regulärer-Ausdruck-Modus"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Nur-Text-Modus"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

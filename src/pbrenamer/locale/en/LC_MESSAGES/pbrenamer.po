@@ -79,6 +79,103 @@ msgstr " ms"
 msgid "A restart is required for the language change to take effect."
 msgstr "A restart is required for the language change to take effect."
 
+msgid "File information"
+msgstr "File information"
+
+msgid "Field"
+msgstr "Field"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Directory"
+msgstr "Directory"
+
+msgid "Other"
+msgstr "Other"
+
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "File information — {name}"
+
+msgid "File:"
+msgstr "File:"
+
+msgid "Type:"
+msgstr "Type:"
+
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Image metadata (EXIF / IPTC)"
+
+msgid "Audio metadata"
+msgstr "Audio metadata"
+
+msgid "Video metadata"
+msgstr "Video metadata"
+
+msgid "Select a single file to display its information."
+msgstr "Select a single file to display its information."
+
+msgid "Select a file to display its information."
+msgstr "Select a file to display its information."
+
+msgid "Universal fields"
+msgstr "Universal fields"
+
+msgid "Today's date"
+msgstr "Today's date"
+
+msgid "Current date and time"
+msgstr "Current date and time"
+
+msgid "File modification date/time"
+msgstr "File modification date/time"
+
+msgid "Missing"
+msgstr "Missing"
+
+msgid "File creation date/time"
+msgstr "File creation date/time"
+
+msgid "Parent folder name"
+msgstr "Parent folder name"
+
+msgid "Batch fields"
+msgstr "Batch fields"
+
+msgid "Computed"
+msgstr "Computed"
+
+msgid "Full matched text"
+msgstr "Full matched text"
+
+msgid "Capture groups"
+msgstr "Capture groups"
+
+msgid "Auto-incrementing counter"
+msgstr "Auto-incrementing counter"
+
+msgid "Conflict-free counter"
+msgstr "Conflict-free counter"
+
+msgid "Named regex group"
+msgstr "Named regex group"
+
+msgid "Insert into replacement field"
+msgstr "Insert into replacement field"
+
 msgid "History"
 msgstr "History"
 
@@ -100,20 +197,14 @@ msgstr "New search pattern to add"
 msgid "pat"
 msgstr "pat"
 
-msgid "Pattern token mode"
-msgstr "Pattern token mode"
-
 msgid "RE"
 msgstr "RE"
-
-msgid "Regular expression mode"
-msgstr "Regular expression mode"
 
 msgid "txt"
 msgstr "txt"
 
-msgid "Plain text mode"
-msgstr "Plain text mode"
+msgid "Search mode: pattern tokens, regex, or plain text"
+msgstr "Search mode: pattern tokens, regex, or plain text"
 
 msgid "Add"
 msgstr "Add"
@@ -159,6 +250,49 @@ msgstr "Remove all replacement history entries"
 
 msgid "Delete the entire replacement pattern history"
 msgstr "Delete the entire replacement pattern history"
+
+msgid "Select folder"
+msgstr "Select folder"
+
+msgid "Original"
+msgstr "Original"
+
+msgid "Preview"
+msgstr "Preview"
+
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} item(s)"
+
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} unavailable"
+
+msgid "Search — Help"
+msgstr "Search — Help"
+
+msgid "Replace — Help"
+msgstr "Replace — Help"
+
+msgid "Rename errors"
+msgstr "Rename errors"
+
+#, python-format
+msgid "Undo (%d)"
+msgstr "Undo (%d)"
+
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Undo last rename batch (%d level(s) available)"
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "Undo last rename batch"
+msgstr "Undo last rename batch"
+
+msgid "Add as shortcut"
+msgstr "Add as shortcut"
 
 msgid "Open folder…"
 msgstr "Open folder…"
@@ -285,12 +419,6 @@ msgstr "Glob pattern to filter the file list"
 
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-
-msgid "Original"
-msgstr "Original"
-
-msgid "Preview"
-msgstr "Preview"
 
 msgid "Files to be renamed"
 msgstr "Files to be renamed"
@@ -467,21 +595,6 @@ msgstr ""
 "etc.)Convert accented characters to their ASCII equivalents (é→e, ü→u, "
 "etc.)"
 
-msgid "Remove duplicate separators"
-msgstr "Remove duplicate separators"
-
-msgid "Collapse consecutive separators"
-msgstr "Collapse consecutive separators"
-
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into oneCollapse runs of identical separator characters "
-"(spaces, dots, dashes, underscores) into oneCollapse runs of identical "
-"separator characters (spaces, dots, dashes, underscores) into one"
-
 msgid "Case:"
 msgstr "Case:"
 
@@ -502,6 +615,21 @@ msgstr "Capitalization mode"
 
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "Choose how to change the case of file names after applying the pattern"
+
+msgid "Remove duplicate separators"
+msgstr "Remove duplicate separators"
+
+msgid "Collapse consecutive separators"
+msgstr "Collapse consecutive separators"
+
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into oneCollapse runs of identical separator characters "
+"(spaces, dots, dashes, underscores) into oneCollapse runs of identical "
+"separator characters (spaces, dots, dashes, underscores) into one"
 
 msgid "Save:"
 msgstr "Save:"
@@ -559,12 +687,6 @@ msgstr "Clear the preview"
 msgid "Remove all preview values from the Preview column"
 msgstr "Remove all preview values from the Preview column"
 
-msgid "Undo"
-msgstr "Undo"
-
-msgid "Undo last rename batch"
-msgstr "Undo last rename batch"
-
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Reverse the last batch of renames performed on disk"
 
@@ -595,134 +717,6 @@ msgstr "Shortcuts"
 
 msgid "Help"
 msgstr "Help"
-
-msgid "Select folder"
-msgstr "Select folder"
-
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} item(s)"
-
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} unavailable"
-
-msgid "Search — Help"
-msgstr "Search — Help"
-
-msgid "Replace — Help"
-msgstr "Replace — Help"
-
-msgid "Rename errors"
-msgstr "Rename errors"
-
-#, python-format
-msgid "Undo (%d)"
-msgstr "Undo (%d)"
-
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Undo last rename batch (%d level(s) available)"
-
-msgid "Add as shortcut"
-msgstr "Add as shortcut"
-
-msgid "File information"
-msgstr "File information"
-
-msgid "Field"
-msgstr "Field"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Value"
-msgstr "Value"
-
-msgid "Image"
-msgstr "Image"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Video"
-msgstr "Video"
-
-msgid "Directory"
-msgstr "Directory"
-
-msgid "Other"
-msgstr "Other"
-
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "File information — {name}"
-
-msgid "File:"
-msgstr "File:"
-
-msgid "Type:"
-msgstr "Type:"
-
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Image metadata (EXIF / IPTC)"
-
-msgid "Audio metadata"
-msgstr "Audio metadata"
-
-msgid "Video metadata"
-msgstr "Video metadata"
-
-msgid "Select a single file to display its information."
-msgstr "Select a single file to display its information."
-
-msgid "Select a file to display its information."
-msgstr "Select a file to display its information."
-
-msgid "Universal fields"
-msgstr "Universal fields"
-
-msgid "Today's date"
-msgstr "Today's date"
-
-msgid "Current date and time"
-msgstr "Current date and time"
-
-msgid "File modification date/time"
-msgstr "File modification date/time"
-
-msgid "Missing"
-msgstr "Missing"
-
-msgid "File creation date/time"
-msgstr "File creation date/time"
-
-msgid "Parent folder name"
-msgstr "Parent folder name"
-
-msgid "Batch fields"
-msgstr "Batch fields"
-
-msgid "Computed"
-msgstr "Computed"
-
-msgid "Full matched text"
-msgstr "Full matched text"
-
-msgid "Capture groups"
-msgstr "Capture groups"
-
-msgid "Auto-incrementing counter"
-msgstr "Auto-incrementing counter"
-
-msgid "Conflict-free counter"
-msgstr "Conflict-free counter"
-
-msgid "Named regex group"
-msgstr "Named regex group"
-
-msgid "Insert into replacement field"
-msgstr "Insert into replacement field"
 
 #, python-brace-format
 msgid ""
@@ -805,6 +799,12 @@ msgstr "Search patterns"
 
 msgid "Pattern mode"
 msgstr "Pattern mode"
+
+msgid "Regular expression mode"
+msgstr "Regular expression mode"
+
+msgid "Plain text mode"
+msgstr "Plain text mode"
 
 #, python-brace-format
 msgid ""

@@ -95,6 +95,135 @@ msgid "A restart is required for the language change to take effect."
 msgstr "需要重启才能使语言更改生效。"
 
 # ==AUTO== Automatically translated
+msgid "File information"
+msgstr "文件信息"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "字段"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "描述"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "值"
+
+# ==AUTO== Automatically translated
+msgid "Image"
+msgstr "图像"
+
+# ==AUTO== Automatically translated
+msgid "Audio"
+msgstr "音频"
+
+# ==AUTO== Automatically translated
+msgid "Video"
+msgstr "视频"
+
+# ==AUTO== Automatically translated
+msgid "Directory"
+msgstr "目录"
+
+# ==AUTO== Automatically translated
+msgid "Other"
+msgstr "其他"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "文件信息 — {name}"
+
+# ==AUTO== Automatically translated
+msgid "File:"
+msgstr "文件："
+
+# ==AUTO== Automatically translated
+msgid "Type:"
+msgstr "类型："
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "图像元数据（EXIF / IPTC）"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "音频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "视频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Select a single file to display its information."
+msgstr "选择单个文件以显示其信息。"
+
+# ==AUTO== Automatically translated
+msgid "Select a file to display its information."
+msgstr "选择文件以显示其信息。"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "通用字段"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "今天日期"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "当前日期和时间"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "文件修改日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "缺失"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "文件创建日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "父文件夹名称"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "批量字段"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "计算值"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "完整匹配文本"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "捕获组"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "自动递增计数器"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "无冲突计数器"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "命名正则表达式组"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "插入到替换字段"
+
+# ==AUTO== Automatically translated
 msgid "History"
 msgstr "历史记录"
 
@@ -123,24 +252,15 @@ msgid "pat"
 msgstr "模式"
 
 # ==AUTO== Automatically translated
-msgid "Pattern token mode"
-msgstr "模式标记模式"
-
-# ==AUTO== Automatically translated
 msgid "RE"
 msgstr "RE"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression mode"
-msgstr "正则表达式模式"
 
 # ==AUTO== Automatically translated
 msgid "txt"
 msgstr "txt"
 
-# ==AUTO== Automatically translated
-msgid "Plain text mode"
-msgstr "纯文本模式"
+msgid "Search mode: pattern tokens, regex, or plain text"
+msgstr "搜索模式：模式令牌、正则表达式或纯文本"
 
 # ==AUTO== Automatically translated
 msgid "Add"
@@ -201,6 +321,62 @@ msgstr "删除所有替换历史记录条目"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "删除整个替换模式历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Select folder"
+msgstr "选择文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Original"
+msgstr "原始"
+
+# ==AUTO== Automatically translated
+msgid "Preview"
+msgstr "预览"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} 个项目"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} 不可用"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "搜索 — 帮助"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "替换 — 帮助"
+
+# ==AUTO== Automatically translated
+msgid "Rename errors"
+msgstr "重命名错误"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "撤销 (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "撤销上一次批量重命名（可用 %d 级）"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "撤销"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "撤销上一批重命名"
+
+# ==AUTO== Automatically translated
+msgid "Add as shortcut"
+msgstr "添加为快捷方式"
 
 # ==AUTO== Automatically translated
 msgid "Open folder…"
@@ -363,14 +539,6 @@ msgstr "用于过滤文件列表的 Glob 模式"
 # ==AUTO== Automatically translated
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "仅列出匹配此 Glob 模式的文件（例如 *.txt、image_*）"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "原始"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "预览"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -556,20 +724,6 @@ msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, e
 msgstr "将带重音字符转换为 ASCII 等价字符（é→e、ü→u 等）"
 
 # ==AUTO== Automatically translated
-msgid "Remove duplicate separators"
-msgstr "删除重复分隔符"
-
-# ==AUTO== Automatically translated
-msgid "Collapse consecutive separators"
-msgstr "合并连续分隔符"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr "将连续相同的分隔符（空格、点、连字符、下划线）合并为一个"
-
-# ==AUTO== Automatically translated
 msgid "Case:"
 msgstr "大小写："
 
@@ -596,6 +750,20 @@ msgstr "大小写模式"
 # ==AUTO== Automatically translated
 msgid "Choose how to change the case of file names after applying the pattern"
 msgstr "选择应用模式后如何更改文件名的大小写"
+
+# ==AUTO== Automatically translated
+msgid "Remove duplicate separators"
+msgstr "删除重复分隔符"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive separators"
+msgstr "合并连续分隔符"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr "将连续相同的分隔符（空格、点、连字符、下划线）合并为一个"
 
 # ==AUTO== Automatically translated
 msgid "Save:"
@@ -660,14 +828,6 @@ msgid "Remove all preview values from the Preview column"
 msgstr "从预览列中删除所有预览值"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "撤销"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "撤销上一批重命名"
-
-# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "撤销磁盘上执行的最后一批重命名"
 
@@ -700,175 +860,6 @@ msgstr "快捷方式"
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "帮助"
-
-# ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "选择文件夹"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} 个项目"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} 不可用"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "搜索 — 帮助"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "替换 — 帮助"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "重命名错误"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "撤销 (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "撤销上一次批量重命名（可用 %d 级）"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "添加为快捷方式"
-
-# ==AUTO== Automatically translated
-msgid "File information"
-msgstr "文件信息"
-
-# ==AUTO== Automatically translated
-msgid "Field"
-msgstr "字段"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "描述"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "值"
-
-# ==AUTO== Automatically translated
-msgid "Image"
-msgstr "图像"
-
-# ==AUTO== Automatically translated
-msgid "Audio"
-msgstr "音频"
-
-# ==AUTO== Automatically translated
-msgid "Video"
-msgstr "视频"
-
-# ==AUTO== Automatically translated
-msgid "Directory"
-msgstr "目录"
-
-# ==AUTO== Automatically translated
-msgid "Other"
-msgstr "其他"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "文件信息 — {name}"
-
-# ==AUTO== Automatically translated
-msgid "File:"
-msgstr "文件："
-
-# ==AUTO== Automatically translated
-msgid "Type:"
-msgstr "类型："
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "图像元数据（EXIF / IPTC）"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "音频元数据"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "视频元数据"
-
-# ==AUTO== Automatically translated
-msgid "Select a single file to display its information."
-msgstr "选择单个文件以显示其信息。"
-
-# ==AUTO== Automatically translated
-msgid "Select a file to display its information."
-msgstr "选择文件以显示其信息。"
-
-# ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "通用字段"
-
-# ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "今天日期"
-
-# ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "当前日期和时间"
-
-# ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "文件修改日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "缺失"
-
-# ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "文件创建日期/时间"
-
-# ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "父文件夹名称"
-
-# ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "批量字段"
-
-# ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "计算值"
-
-# ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "完整匹配文本"
-
-# ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "捕获组"
-
-# ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "自动递增计数器"
-
-# ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "无冲突计数器"
-
-# ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "命名正则表达式组"
-
-# ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "插入到替换字段"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -961,6 +952,14 @@ msgstr "搜索模式"
 # ==AUTO== Automatically translated
 msgid "Pattern mode"
 msgstr "模式模式"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "正则表达式模式"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "纯文本模式"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
