@@ -35,66 +35,6 @@ msgid "About PBRenamer"
 msgstr "关于 PBRenamer"
 
 # ==AUTO== Automatically translated
-msgid "Settings"
-msgstr "设置"
-
-# ==AUTO== Automatically translated
-msgid "Select the interface language"
-msgstr "选择界面语言"
-
-# ==AUTO== Automatically translated
-msgid "Language:"
-msgstr "语言："
-
-# ==AUTO== Automatically translated
-msgid "Set the application logging verbosity"
-msgstr "设置应用程序日志记录详细程度"
-
-# ==AUTO== Automatically translated
-msgid "Log level:"
-msgstr "日志级别："
-
-# ==AUTO== Automatically translated
-msgid "Behaviour"
-msgstr "行为"
-
-# ==AUTO== Automatically translated
-msgid "Restore last opened directory"
-msgstr "恢复上次打开的目录"
-
-# ==AUTO== Automatically translated
-msgid "On startup, reopen the directory that was active in the previous session"
-msgstr "启动时重新打开上次会话中活动的目录"
-
-# ==AUTO== Automatically translated
-msgid "Restore toolbar state"
-msgstr "恢复工具栏状态"
-
-# ==AUTO== Automatically translated
-msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
-msgstr "启动时恢复上次会话的工具栏设置（显示模式、递归、保留扩展名、自动预览、过滤器）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
-msgstr "搜索或替换模式更改后预览刷新前的防抖延迟（毫秒）"
-
-# ==AUTO== Automatically translated
-msgid "Auto-preview delay:"
-msgstr "自动预览延迟："
-
-# ==AUTO== Automatically translated
-msgid " ms"
-msgstr " ms"
-
-# ==AUTO== Automatically translated
-msgid "A restart is required for the language change to take effect."
-msgstr "需要重启才能使语言更改生效。"
-
-# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "文件信息"
 
@@ -379,489 +319,6 @@ msgid "Add as shortcut"
 msgstr "添加为快捷方式"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "打开文件夹…"
-
-# ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "打开文件夹"
-
-# ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "打开目录选择器并导航到所选文件夹"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "退出"
-
-# ==AUTO== Automatically translated
-msgid "Quit PBRenamer"
-msgstr "退出 PBRenamer"
-
-# ==AUTO== Automatically translated
-msgid "Exit the application"
-msgstr "关闭应用程序"
-
-# ==AUTO== Automatically translated
-msgid "History…"
-msgstr "历史记录…"
-
-# ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "管理模式历史记录"
-
-# ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "从搜索和替换模式历史记录中添加或删除条目"
-
-# ==AUTO== Automatically translated
-msgid "Settings…"
-msgstr "设置…"
-
-# ==AUTO== Automatically translated
-msgid "Open settings"
-msgstr "打开设置"
-
-# ==AUTO== Automatically translated
-msgid "Configure language and other preferences"
-msgstr "配置语言和其他首选项"
-
-# ==AUTO== Automatically translated
-msgid "About this application"
-msgstr "关于此应用程序"
-
-# ==AUTO== Automatically translated
-msgid "Show version and license information"
-msgstr "显示版本和许可证信息"
-
-# ==AUTO== Automatically translated
-msgid "Edit shortcuts…"
-msgstr "编辑快捷方式…"
-
-# ==AUTO== Automatically translated
-msgid "Manage directory shortcuts"
-msgstr "管理目录快捷方式"
-
-# ==AUTO== Automatically translated
-msgid "Add or remove entries from the shortcuts list"
-msgstr "从快捷方式列表中添加或删除条目"
-
-# ==AUTO== Automatically translated
-msgid "Information"
-msgstr "信息"
-
-# ==AUTO== Automatically translated
-msgid "Show file field values"
-msgstr "显示文件字段值"
-
-# ==AUTO== Automatically translated
-msgid "Open the file information window for the selected file"
-msgstr "打开所选文件的文件信息窗口"
-
-# ==AUTO== Automatically translated
-msgid "Browse the filesystem"
-msgstr "浏览文件系统"
-
-# ==AUTO== Automatically translated
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr "选择目录以在右侧面板中列出其内容"
-
-# ==AUTO== Automatically translated
-msgid "Show:"
-msgstr "显示："
-
-# ==AUTO== Automatically translated
-msgid "Files only"
-msgstr "仅文件"
-
-# ==AUTO== Automatically translated
-msgid "Directories only"
-msgstr "仅目录"
-
-# ==AUTO== Automatically translated
-msgid "Files and directories"
-msgstr "文件和目录"
-
-# ==AUTO== Automatically translated
-msgid "Choose which entries to list"
-msgstr "选择要列出的条目类型"
-
-# ==AUTO== Automatically translated
-msgid "List files only, directories only, or both"
-msgstr "仅列出文件、仅列出目录或两者都列出"
-
-# ==AUTO== Automatically translated
-msgid "Recursive"
-msgstr "递归"
-
-# ==AUTO== Automatically translated
-msgid "Include all subdirectories"
-msgstr "包含所有子目录"
-
-# ==AUTO== Automatically translated
-msgid "When checked, files from all subdirectories are listed"
-msgstr "勾选后，所有子目录中的文件都会被列出"
-
-# ==AUTO== Automatically translated
-msgid "Keep extension"
-msgstr "保留扩展名"
-
-# ==AUTO== Automatically translated
-msgid "Preserve the file extension"
-msgstr "保留文件扩展名"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply transformations to the file stem only, leaving the extension "
-"unchanged"
-msgstr "仅对文件名主干应用转换，保持扩展名不变"
-
-# ==AUTO== Automatically translated
-msgid "Auto-preview"
-msgstr "自动预览"
-
-# ==AUTO== Automatically translated
-msgid "Refresh the preview automatically"
-msgstr "自动刷新预览"
-
-# ==AUTO== Automatically translated
-msgid "Recompute the preview each time the pattern or options change"
-msgstr "每次模式或选项更改时重新计算预览"
-
-# ==AUTO== Automatically translated
-msgid "Filter:"
-msgstr "过滤器："
-
-# ==AUTO== Automatically translated
-msgid "Glob pattern to filter the file list"
-msgstr "用于过滤文件列表的 Glob 模式"
-
-# ==AUTO== Automatically translated
-msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-msgstr "仅列出匹配此 Glob 模式的文件（例如 *.txt、image_*）"
-
-# ==AUTO== Automatically translated
-msgid "Files to be renamed"
-msgstr "待重命名的文件"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Select rows to restrict operations to those files; leave unselected to "
-"apply to all"
-msgstr "选择行以将操作限制在这些文件上；不选则应用于所有文件"
-
-# ==AUTO== Automatically translated
-msgid "Search:"
-msgstr "搜索："
-
-# ==AUTO== Automatically translated
-msgid "Search pattern"
-msgstr "搜索模式"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Pattern to match against file names. Use tokens: {#} numbers, {L} "
-"letters, {C} non-space, {X} anything"
-msgstr "与文件名匹配的模式。使用标记：{#} 数字，{L} 字母，{C} 非空格，{X} 任意内容"
-
-# ==AUTO== Automatically translated
-msgid "Save to history"
-msgstr "保存到历史记录"
-
-# ==AUTO== Automatically translated
-msgid "Add the current search pattern and mode to the drop-down history"
-msgstr "将当前搜索模式和模式添加到下拉历史记录"
-
-# ==AUTO== Automatically translated
-msgid "Search pattern help"
-msgstr "搜索模式帮助"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Show help about search patterns (Pattern tokens, Regular expressions, "
-"Plain text)"
-msgstr "显示搜索模式帮助（模式标记、正则表达式、纯文本）"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "模式"
-
-# ==AUTO== Automatically translated
-msgid "Search using pattern tokens"
-msgstr "使用模式标记搜索"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
-msgstr "使用模式标记匹配文件名（{#}、{L}、{X}…）"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression"
-msgstr "正则表达式"
-
-# ==AUTO== Automatically translated
-msgid "Search using a Python regular expression"
-msgstr "使用 Python 正则表达式搜索"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Match file names using a Python regular expression; use \\1 \\2… for "
-"backreferences in the replacement"
-msgstr "使用 Python 正则表达式匹配文件名；在替换中使用 \\1 \\2… 进行反向引用"
-
-# ==AUTO== Automatically translated
-msgid "Plain text"
-msgstr "纯文本"
-
-# ==AUTO== Automatically translated
-msgid "Search for a literal string"
-msgstr "搜索字面字符串"
-
-# ==AUTO== Automatically translated
-msgid "Match file names by looking for the search text as a literal string"
-msgstr "通过将搜索文本作为字面字符串查找来匹配文件名"
-
-# ==AUTO== Automatically translated
-msgid "Case-insensitive"
-msgstr "不区分大小写"
-
-# ==AUTO== Automatically translated
-msgid "Ignore case when searching"
-msgstr "搜索时忽略大小写"
-
-# ==AUTO== Automatically translated
-msgid ""
-"When checked, the search pattern matches file names regardless of letter "
-"case"
-msgstr "勾选后，搜索模式将不区分大小写地匹配文件名"
-
-# ==AUTO== Automatically translated
-msgid "Replace:"
-msgstr "替换："
-
-# ==AUTO== Automatically translated
-msgid "Replacement pattern"
-msgstr "替换模式"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder name"
-msgstr "替换模式。使用 {1} {2}… 作为捕获组，{num} 作为计数器，{date} 作为今天日期，{dir} 作为父文件夹名"
-
-# ==AUTO== Automatically translated
-msgid "Add the current replacement pattern to the drop-down history"
-msgstr "将当前替换模式添加到下拉历史记录"
-
-# ==AUTO== Automatically translated
-msgid "Replacement pattern help"
-msgstr "替换模式帮助"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Show help about replacement patterns (capture groups, counter, date, "
-"directory tokens)"
-msgstr "显示替换模式帮助（捕获组、计数器、日期、目录标记）"
-
-# ==AUTO== Automatically translated
-msgid "Post-processing"
-msgstr "后处理"
-
-# ==AUTO== Automatically translated
-msgid "Separator:"
-msgstr "分隔符："
-
-# ==AUTO== Automatically translated
-msgid "No change"
-msgstr "不变"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → underscores"
-msgstr "空格 → 下划线"
-
-# ==AUTO== Automatically translated
-msgid "Underscores → spaces"
-msgstr "下划线 → 空格"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → dots"
-msgstr "空格 → 点"
-
-# ==AUTO== Automatically translated
-msgid "Dots → spaces"
-msgstr "点 → 空格"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → dashes"
-msgstr "空格 → 连字符"
-
-# ==AUTO== Automatically translated
-msgid "Dashes → spaces"
-msgstr "连字符 → 空格"
-
-# ==AUTO== Automatically translated
-msgid "Separator conversion"
-msgstr "分隔符转换"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply a separator conversion to each renamed file name after applying the"
-" pattern"
-msgstr "在应用模式后对每个重命名的文件名应用分隔符转换"
-
-# ==AUTO== Automatically translated
-msgid "Remove accents"
-msgstr "移除重音符号"
-
-# ==AUTO== Automatically translated
-msgid "Strip diacritical marks"
-msgstr "去除变音符号"
-
-# ==AUTO== Automatically translated
-msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
-msgstr "将带重音字符转换为 ASCII 等价字符（é→e、ü→u 等）"
-
-# ==AUTO== Automatically translated
-msgid "Case:"
-msgstr "大小写："
-
-# ==AUTO== Automatically translated
-msgid "UPPERCASE"
-msgstr "大写"
-
-# ==AUTO== Automatically translated
-msgid "lowercase"
-msgstr "小写"
-
-# ==AUTO== Automatically translated
-msgid "Capitalize first letter"
-msgstr "首字母大写"
-
-# ==AUTO== Automatically translated
-msgid "Title Case"
-msgstr "标题格式"
-
-# ==AUTO== Automatically translated
-msgid "Capitalization mode"
-msgstr "大小写模式"
-
-# ==AUTO== Automatically translated
-msgid "Choose how to change the case of file names after applying the pattern"
-msgstr "选择应用模式后如何更改文件名的大小写"
-
-# ==AUTO== Automatically translated
-msgid "Remove duplicate separators"
-msgstr "删除重复分隔符"
-
-# ==AUTO== Automatically translated
-msgid "Collapse consecutive separators"
-msgstr "合并连续分隔符"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr "将连续相同的分隔符（空格、点、连字符、下划线）合并为一个"
-
-# ==AUTO== Automatically translated
-msgid "Save:"
-msgstr "保存："
-
-# ==AUTO== Automatically translated
-msgid "Named save"
-msgstr "命名保存"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Type a name (letters, digits, _ and -) to save or load all search/replace"
-" parameters"
-msgstr "输入名称（字母、数字、_ 和 -）以保存或加载所有搜索/替换参数"
-
-# ==AUTO== Automatically translated
-msgid "Save"
-msgstr "保存"
-
-# ==AUTO== Automatically translated
-msgid "Save current settings under this name"
-msgstr "以此名称保存当前设置"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Save all search, replace and post-processing settings under the current "
-"name (overwrites any existing save with the same name)"
-msgstr "以当前名称保存所有搜索、替换和后处理设置（覆盖同名的任何现有保存）"
-
-# ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "删除"
-
-# ==AUTO== Automatically translated
-msgid "Delete this named save"
-msgstr "删除此命名保存"
-
-# ==AUTO== Automatically translated
-msgid "Permanently delete the named save matching the current name"
-msgstr "永久删除与当前名称匹配的命名保存"
-
-# ==AUTO== Automatically translated
-msgid "Compute rename preview"
-msgstr "计算重命名预览"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr "将当前模式应用于所有列出的文件，并在预览列中显示结果"
-
-# ==AUTO== Automatically translated
-msgid "Clear"
-msgstr "清除"
-
-# ==AUTO== Automatically translated
-msgid "Clear the preview"
-msgstr "清除预览"
-
-# ==AUTO== Automatically translated
-msgid "Remove all preview values from the Preview column"
-msgstr "从预览列中删除所有预览值"
-
-# ==AUTO== Automatically translated
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "撤销磁盘上执行的最后一批重命名"
-
-# ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "重命名"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "在磁盘上应用重命名"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
-msgstr "永久重命名预览列中显示的所有文件（仅在没有冲突时启用）"
-
-# ==AUTO== Automatically translated
-msgid "File"
-msgstr "文件"
-
-# ==AUTO== Automatically translated
-msgid "Edit"
-msgstr "编辑"
-
-# ==AUTO== Automatically translated
-msgid "Shortcuts"
-msgstr "快捷方式"
-
-# ==AUTO== Automatically translated
-msgid "Help"
-msgstr "帮助"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -897,6 +354,14 @@ msgstr "捕获组 — 匹配文本绑定到替换中的 {1}、{2}…"
 # ==AUTO== Automatically translated
 msgid "Example"
 msgstr "示例"
+
+# ==AUTO== Automatically translated
+msgid "Search:"
+msgstr "搜索："
+
+# ==AUTO== Automatically translated
+msgid "Replace:"
+msgstr "替换："
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1430,6 +895,541 @@ msgstr "下移"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "已保存的快捷方式："
+
+# ==AUTO== Automatically translated
+msgid "Open folder…"
+msgstr "打开文件夹…"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "打开文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr "打开目录选择器并导航到所选文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "退出"
+
+# ==AUTO== Automatically translated
+msgid "Quit PBRenamer"
+msgstr "退出 PBRenamer"
+
+# ==AUTO== Automatically translated
+msgid "Exit the application"
+msgstr "关闭应用程序"
+
+# ==AUTO== Automatically translated
+msgid "History…"
+msgstr "历史记录…"
+
+# ==AUTO== Automatically translated
+msgid "Manage pattern history"
+msgstr "管理模式历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr "从搜索和替换模式历史记录中添加或删除条目"
+
+# ==AUTO== Automatically translated
+msgid "Settings…"
+msgstr "设置…"
+
+# ==AUTO== Automatically translated
+msgid "Open settings"
+msgstr "打开设置"
+
+# ==AUTO== Automatically translated
+msgid "Configure language and other preferences"
+msgstr "配置语言和其他首选项"
+
+# ==AUTO== Automatically translated
+msgid "About this application"
+msgstr "关于此应用程序"
+
+# ==AUTO== Automatically translated
+msgid "Show version and license information"
+msgstr "显示版本和许可证信息"
+
+# ==AUTO== Automatically translated
+msgid "Edit shortcuts…"
+msgstr "编辑快捷方式…"
+
+# ==AUTO== Automatically translated
+msgid "Manage directory shortcuts"
+msgstr "管理目录快捷方式"
+
+# ==AUTO== Automatically translated
+msgid "Add or remove entries from the shortcuts list"
+msgstr "从快捷方式列表中添加或删除条目"
+
+# ==AUTO== Automatically translated
+msgid "Information"
+msgstr "信息"
+
+# ==AUTO== Automatically translated
+msgid "Show file field values"
+msgstr "显示文件字段值"
+
+# ==AUTO== Automatically translated
+msgid "Open the file information window for the selected file"
+msgstr "打开所选文件的文件信息窗口"
+
+# ==AUTO== Automatically translated
+msgid "Browse the filesystem"
+msgstr "浏览文件系统"
+
+# ==AUTO== Automatically translated
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "选择目录以在右侧面板中列出其内容"
+
+# ==AUTO== Automatically translated
+msgid "Show:"
+msgstr "显示："
+
+# ==AUTO== Automatically translated
+msgid "Files only"
+msgstr "仅文件"
+
+# ==AUTO== Automatically translated
+msgid "Directories only"
+msgstr "仅目录"
+
+# ==AUTO== Automatically translated
+msgid "Files and directories"
+msgstr "文件和目录"
+
+# ==AUTO== Automatically translated
+msgid "Choose which entries to list"
+msgstr "选择要列出的条目类型"
+
+# ==AUTO== Automatically translated
+msgid "List files only, directories only, or both"
+msgstr "仅列出文件、仅列出目录或两者都列出"
+
+# ==AUTO== Automatically translated
+msgid "Recursive"
+msgstr "递归"
+
+# ==AUTO== Automatically translated
+msgid "Include all subdirectories"
+msgstr "包含所有子目录"
+
+# ==AUTO== Automatically translated
+msgid "When checked, files from all subdirectories are listed"
+msgstr "勾选后，所有子目录中的文件都会被列出"
+
+# ==AUTO== Automatically translated
+msgid "Keep extension"
+msgstr "保留扩展名"
+
+# ==AUTO== Automatically translated
+msgid "Preserve the file extension"
+msgstr "保留文件扩展名"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply transformations to the file stem only, leaving the extension "
+"unchanged"
+msgstr "仅对文件名主干应用转换，保持扩展名不变"
+
+# ==AUTO== Automatically translated
+msgid "Auto-preview"
+msgstr "自动预览"
+
+# ==AUTO== Automatically translated
+msgid "Refresh the preview automatically"
+msgstr "自动刷新预览"
+
+# ==AUTO== Automatically translated
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "每次模式或选项更改时重新计算预览"
+
+# ==AUTO== Automatically translated
+msgid "Filter:"
+msgstr "过滤器："
+
+# ==AUTO== Automatically translated
+msgid "Glob pattern to filter the file list"
+msgstr "用于过滤文件列表的 Glob 模式"
+
+# ==AUTO== Automatically translated
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr "仅列出匹配此 Glob 模式的文件（例如 *.txt、image_*）"
+
+# ==AUTO== Automatically translated
+msgid "Files to be renamed"
+msgstr "待重命名的文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to "
+"apply to all"
+msgstr "选择行以将操作限制在这些文件上；不选则应用于所有文件"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern"
+msgstr "搜索模式"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} "
+"letters, {C} non-space, {X} anything"
+msgstr "与文件名匹配的模式。使用标记：{#} 数字，{L} 字母，{C} 非空格，{X} 任意内容"
+
+# ==AUTO== Automatically translated
+msgid "Save to history"
+msgstr "保存到历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "将当前搜索模式和模式添加到下拉历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern help"
+msgstr "搜索模式帮助"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, "
+"Plain text)"
+msgstr "显示搜索模式帮助（模式标记、正则表达式、纯文本）"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "模式"
+
+# ==AUTO== Automatically translated
+msgid "Search using pattern tokens"
+msgstr "使用模式标记搜索"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "使用模式标记匹配文件名（{#}、{L}、{X}…）"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression"
+msgstr "正则表达式"
+
+# ==AUTO== Automatically translated
+msgid "Search using a Python regular expression"
+msgstr "使用 Python 正则表达式搜索"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr "使用 Python 正则表达式匹配文件名；在替换中使用 \\1 \\2… 进行反向引用"
+
+# ==AUTO== Automatically translated
+msgid "Plain text"
+msgstr "纯文本"
+
+# ==AUTO== Automatically translated
+msgid "Search for a literal string"
+msgstr "搜索字面字符串"
+
+# ==AUTO== Automatically translated
+msgid "Match file names by looking for the search text as a literal string"
+msgstr "通过将搜索文本作为字面字符串查找来匹配文件名"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive"
+msgstr "不区分大小写"
+
+# ==AUTO== Automatically translated
+msgid "Ignore case when searching"
+msgstr "搜索时忽略大小写"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the search pattern matches file names regardless of letter "
+"case"
+msgstr "勾选后，搜索模式将不区分大小写地匹配文件名"
+
+# ==AUTO== Automatically translated
+msgid "Replacement pattern"
+msgstr "替换模式"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder name"
+msgstr "替换模式。使用 {1} {2}… 作为捕获组，{num} 作为计数器，{date} 作为今天日期，{dir} 作为父文件夹名"
+
+# ==AUTO== Automatically translated
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "将当前替换模式添加到下拉历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Replacement pattern help"
+msgstr "替换模式帮助"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr "显示替换模式帮助（捕获组、计数器、日期、目录标记）"
+
+# ==AUTO== Automatically translated
+msgid "Post-processing"
+msgstr "后处理"
+
+# ==AUTO== Automatically translated
+msgid "Separator:"
+msgstr "分隔符："
+
+# ==AUTO== Automatically translated
+msgid "No change"
+msgstr "不变"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → underscores"
+msgstr "空格 → 下划线"
+
+# ==AUTO== Automatically translated
+msgid "Underscores → spaces"
+msgstr "下划线 → 空格"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → dots"
+msgstr "空格 → 点"
+
+# ==AUTO== Automatically translated
+msgid "Dots → spaces"
+msgstr "点 → 空格"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → dashes"
+msgstr "空格 → 连字符"
+
+# ==AUTO== Automatically translated
+msgid "Dashes → spaces"
+msgstr "连字符 → 空格"
+
+# ==AUTO== Automatically translated
+msgid "Separator conversion"
+msgstr "分隔符转换"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the"
+" pattern"
+msgstr "在应用模式后对每个重命名的文件名应用分隔符转换"
+
+# ==AUTO== Automatically translated
+msgid "Remove accents"
+msgstr "移除重音符号"
+
+# ==AUTO== Automatically translated
+msgid "Strip diacritical marks"
+msgstr "去除变音符号"
+
+# ==AUTO== Automatically translated
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "将带重音字符转换为 ASCII 等价字符（é→e、ü→u 等）"
+
+# ==AUTO== Automatically translated
+msgid "Case:"
+msgstr "大小写："
+
+# ==AUTO== Automatically translated
+msgid "UPPERCASE"
+msgstr "大写"
+
+# ==AUTO== Automatically translated
+msgid "lowercase"
+msgstr "小写"
+
+# ==AUTO== Automatically translated
+msgid "Capitalize first letter"
+msgstr "首字母大写"
+
+# ==AUTO== Automatically translated
+msgid "Title Case"
+msgstr "标题格式"
+
+# ==AUTO== Automatically translated
+msgid "Capitalization mode"
+msgstr "大小写模式"
+
+# ==AUTO== Automatically translated
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr "选择应用模式后如何更改文件名的大小写"
+
+# ==AUTO== Automatically translated
+msgid "Remove duplicate separators"
+msgstr "删除重复分隔符"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive separators"
+msgstr "合并连续分隔符"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr "将连续相同的分隔符（空格、点、连字符、下划线）合并为一个"
+
+# ==AUTO== Automatically translated
+msgid "Save:"
+msgstr "保存："
+
+# ==AUTO== Automatically translated
+msgid "Named save"
+msgstr "命名保存"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace"
+" parameters"
+msgstr "输入名称（字母、数字、_ 和 -）以保存或加载所有搜索/替换参数"
+
+# ==AUTO== Automatically translated
+msgid "Save"
+msgstr "保存"
+
+# ==AUTO== Automatically translated
+msgid "Save current settings under this name"
+msgstr "以此名称保存当前设置"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Save all search, replace and post-processing settings under the current "
+"name (overwrites any existing save with the same name)"
+msgstr "以当前名称保存所有搜索、替换和后处理设置（覆盖同名的任何现有保存）"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "删除"
+
+# ==AUTO== Automatically translated
+msgid "Delete this named save"
+msgstr "删除此命名保存"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete the named save matching the current name"
+msgstr "永久删除与当前名称匹配的命名保存"
+
+# ==AUTO== Automatically translated
+msgid "Compute rename preview"
+msgstr "计算重命名预览"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr "将当前模式应用于所有列出的文件，并在预览列中显示结果"
+
+# ==AUTO== Automatically translated
+msgid "Clear"
+msgstr "清除"
+
+# ==AUTO== Automatically translated
+msgid "Clear the preview"
+msgstr "清除预览"
+
+# ==AUTO== Automatically translated
+msgid "Remove all preview values from the Preview column"
+msgstr "从预览列中删除所有预览值"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "撤销磁盘上执行的最后一批重命名"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "重命名"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk"
+msgstr "在磁盘上应用重命名"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled "
+"when there are no conflicts)"
+msgstr "永久重命名预览列中显示的所有文件（仅在没有冲突时启用）"
+
+# ==AUTO== Automatically translated
+msgid "File"
+msgstr "文件"
+
+# ==AUTO== Automatically translated
+msgid "Edit"
+msgstr "编辑"
+
+# ==AUTO== Automatically translated
+msgid "Shortcuts"
+msgstr "快捷方式"
+
+# ==AUTO== Automatically translated
+msgid "Help"
+msgstr "帮助"
+
+# ==AUTO== Automatically translated
+msgid "Settings"
+msgstr "设置"
+
+# ==AUTO== Automatically translated
+msgid "Select the interface language"
+msgstr "选择界面语言"
+
+# ==AUTO== Automatically translated
+msgid "Language:"
+msgstr "语言："
+
+# ==AUTO== Automatically translated
+msgid "Set the application logging verbosity"
+msgstr "设置应用程序日志记录详细程度"
+
+# ==AUTO== Automatically translated
+msgid "Log level:"
+msgstr "日志级别："
+
+# ==AUTO== Automatically translated
+msgid "Behaviour"
+msgstr "行为"
+
+# ==AUTO== Automatically translated
+msgid "Restore last opened directory"
+msgstr "恢复上次打开的目录"
+
+# ==AUTO== Automatically translated
+msgid "On startup, reopen the directory that was active in the previous session"
+msgstr "启动时重新打开上次会话中活动的目录"
+
+# ==AUTO== Automatically translated
+msgid "Restore toolbar state"
+msgstr "恢复工具栏状态"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr "启动时恢复上次会话的工具栏设置（显示模式、递归、保留扩展名、自动预览、过滤器）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr "搜索或替换模式更改后预览刷新前的防抖延迟（毫秒）"
+
+# ==AUTO== Automatically translated
+msgid "Auto-preview delay:"
+msgstr "自动预览延迟："
+
+# ==AUTO== Automatically translated
+msgid " ms"
+msgstr " ms"
+
+# ==AUTO== Automatically translated
+msgid "A restart is required for the language change to take effect."
+msgstr "需要重启才能使语言更改生效。"
 
 # ==AUTO== Automatically translated
 msgid "Home"

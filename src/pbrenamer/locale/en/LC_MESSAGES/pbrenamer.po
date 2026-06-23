@@ -29,56 +29,6 @@ msgstr "License: GPLv3"
 msgid "About PBRenamer"
 msgstr "About PBRenamer"
 
-msgid "Settings"
-msgstr "Settings"
-
-msgid "Select the interface language"
-msgstr "Select the interface language"
-
-msgid "Language:"
-msgstr "Language:"
-
-msgid "Set the application logging verbosity"
-msgstr "Set the application logging verbosity"
-
-msgid "Log level:"
-msgstr "Log level:"
-
-msgid "Behaviour"
-msgstr "Behaviour"
-
-msgid "Restore last opened directory"
-msgstr "Restore last opened directory"
-
-msgid "On startup, reopen the directory that was active in the previous session"
-msgstr "On startup, reopen the directory that was active in the previous session"
-
-msgid "Restore toolbar state"
-msgstr "Restore toolbar state"
-
-msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
-msgstr ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
-
-msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
-msgstr ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
-
-msgid "Auto-preview delay:"
-msgstr "Auto-preview delay:"
-
-msgid " ms"
-msgstr " ms"
-
-msgid "A restart is required for the language change to take effect."
-msgstr "A restart is required for the language change to take effect."
-
 msgid "File information"
 msgstr "File information"
 
@@ -294,430 +244,6 @@ msgstr "Undo last rename batch"
 msgid "Add as shortcut"
 msgstr "Add as shortcut"
 
-msgid "Open folder…"
-msgstr "Open folder…"
-
-msgid "Open a folder"
-msgstr "Open a folder"
-
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Open a directory chooser and navigate the tree to the selected folder"
-
-msgid "Quit"
-msgstr "Quit"
-
-msgid "Quit PBRenamer"
-msgstr "Quit PBRenamer"
-
-msgid "Exit the application"
-msgstr "Exit the application"
-
-msgid "History…"
-msgstr "History…"
-
-msgid "Manage pattern history"
-msgstr "Manage pattern history"
-
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "Add or remove entries from the search and replacement pattern history"
-
-msgid "Settings…"
-msgstr "Settings…"
-
-msgid "Open settings"
-msgstr "Open settings"
-
-msgid "Configure language and other preferences"
-msgstr "Configure language and other preferences"
-
-msgid "About this application"
-msgstr "About this application"
-
-msgid "Show version and license information"
-msgstr "Show version and license information"
-
-msgid "Edit shortcuts…"
-msgstr "Edit shortcuts…"
-
-msgid "Manage directory shortcuts"
-msgstr "Manage directory shortcuts"
-
-msgid "Add or remove entries from the shortcuts list"
-msgstr "Add or remove entries from the shortcuts list"
-
-msgid "Information"
-msgstr "Information"
-
-msgid "Show file field values"
-msgstr "Show file field values"
-
-msgid "Open the file information window for the selected file"
-msgstr "Open the file information window for the selected file"
-
-msgid "Browse the filesystem"
-msgstr "Browse the filesystem"
-
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr "Select a directory to list its contents in the panel on the right"
-
-msgid "Show:"
-msgstr "Show:"
-
-msgid "Files only"
-msgstr "Files only"
-
-msgid "Directories only"
-msgstr "Directories only"
-
-msgid "Files and directories"
-msgstr "Files and directories"
-
-msgid "Choose which entries to list"
-msgstr "Choose which entries to list"
-
-msgid "List files only, directories only, or both"
-msgstr "List files only, directories only, or both"
-
-msgid "Recursive"
-msgstr "Recursive"
-
-msgid "Include all subdirectories"
-msgstr "Include all subdirectories"
-
-msgid "When checked, files from all subdirectories are listed"
-msgstr "When checked, files from all subdirectories are listed"
-
-msgid "Keep extension"
-msgstr "Keep extension"
-
-msgid "Preserve the file extension"
-msgstr "Preserve the file extension"
-
-msgid ""
-"Apply transformations to the file stem only, leaving the extension "
-"unchanged"
-msgstr ""
-"Apply transformations to the file stem only, leaving the extension "
-"unchangedApply transformations to the file stem only, leaving the "
-"extension unchangedApply transformations to the file stem only, leaving "
-"the extension unchanged"
-
-msgid "Auto-preview"
-msgstr "Auto-preview"
-
-msgid "Refresh the preview automatically"
-msgstr "Refresh the preview automatically"
-
-msgid "Recompute the preview each time the pattern or options change"
-msgstr "Recompute the preview each time the pattern or options change"
-
-msgid "Filter:"
-msgstr "Filter:"
-
-msgid "Glob pattern to filter the file list"
-msgstr "Glob pattern to filter the file list"
-
-msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-
-msgid "Files to be renamed"
-msgstr "Files to be renamed"
-
-msgid ""
-"Select rows to restrict operations to those files; leave unselected to "
-"apply to all"
-msgstr ""
-"Select rows to restrict operations to those files; leave unselected to "
-"apply to allSelect rows to restrict operations to those files; leave "
-"unselected to apply to allSelect rows to restrict operations to those "
-"files; leave unselected to apply to all"
-
-msgid "Search:"
-msgstr "Search:"
-
-msgid "Search pattern"
-msgstr "Search pattern"
-
-#, python-brace-format
-msgid ""
-"Pattern to match against file names. Use tokens: {#} numbers, {L} "
-"letters, {C} non-space, {X} anything"
-msgstr ""
-"Pattern to match against file names. Use tokens: {#} numbers, {L} "
-"letters, {C} non-space, {X} anythingPattern to match against file names. "
-"Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anythingPattern "
-"to match against file names. Use tokens: {#} numbers, {L} letters, {C} "
-"non-space, {X} anything"
-
-msgid "Save to history"
-msgstr "Save to history"
-
-msgid "Add the current search pattern and mode to the drop-down history"
-msgstr "Add the current search pattern and mode to the drop-down history"
-
-msgid "Search pattern help"
-msgstr "Search pattern help"
-
-msgid ""
-"Show help about search patterns (Pattern tokens, Regular expressions, "
-"Plain text)"
-msgstr ""
-"Show help about search patterns (Pattern tokens, Regular expressions, "
-"Plain text)Show help about search patterns (Pattern tokens, Regular "
-"expressions, Plain text)Show help about search patterns (Pattern tokens, "
-"Regular expressions, Plain text)"
-
-msgid "Pattern"
-msgstr "Pattern"
-
-msgid "Search using pattern tokens"
-msgstr "Search using pattern tokens"
-
-#, python-brace-format
-msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
-msgstr "Match file names using pattern tokens ({#}, {L}, {X}…)"
-
-msgid "Regular expression"
-msgstr "Regular expression"
-
-msgid "Search using a Python regular expression"
-msgstr "Search using a Python regular expression"
-
-msgid ""
-"Match file names using a Python regular expression; use \\1 \\2… for "
-"backreferences in the replacement"
-msgstr ""
-"Match file names using a Python regular expression; use \\1 \\2… for "
-"backreferences in the replacement"
-
-msgid "Plain text"
-msgstr "Plain text"
-
-msgid "Search for a literal string"
-msgstr "Search for a literal string"
-
-msgid "Match file names by looking for the search text as a literal string"
-msgstr "Match file names by looking for the search text as a literal string"
-
-msgid "Case-insensitive"
-msgstr "Case-insensitive"
-
-msgid "Ignore case when searching"
-msgstr "Ignore case when searching"
-
-msgid ""
-"When checked, the search pattern matches file names regardless of letter "
-"case"
-msgstr ""
-"When checked, the search pattern matches file names regardless of letter "
-"case"
-
-msgid "Replace:"
-msgstr "Replace:"
-
-msgid "Replacement pattern"
-msgstr "Replacement pattern"
-
-#, python-brace-format
-msgid ""
-"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder name"
-msgstr ""
-"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder "
-"nameReplacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder "
-"nameReplacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder name"
-
-msgid "Add the current replacement pattern to the drop-down history"
-msgstr "Add the current replacement pattern to the drop-down history"
-
-msgid "Replacement pattern help"
-msgstr "Replacement pattern help"
-
-msgid ""
-"Show help about replacement patterns (capture groups, counter, date, "
-"directory tokens)"
-msgstr ""
-"Show help about replacement patterns (capture groups, counter, date, "
-"directory tokens)Show help about replacement patterns (capture groups, "
-"counter, date, directory tokens)Show help about replacement patterns "
-"(capture groups, counter, date, directory tokens)"
-
-msgid "Post-processing"
-msgstr "Post-processing"
-
-msgid "Separator:"
-msgstr "Separator:"
-
-msgid "No change"
-msgstr "No change"
-
-msgid "Spaces → underscores"
-msgstr "Spaces → underscores"
-
-msgid "Underscores → spaces"
-msgstr "Underscores → spaces"
-
-msgid "Spaces → dots"
-msgstr "Spaces → dots"
-
-msgid "Dots → spaces"
-msgstr "Dots → spaces"
-
-msgid "Spaces → dashes"
-msgstr "Spaces → dashes"
-
-msgid "Dashes → spaces"
-msgstr "Dashes → spaces"
-
-msgid "Separator conversion"
-msgstr "Separator conversion"
-
-msgid ""
-"Apply a separator conversion to each renamed file name after applying the"
-" pattern"
-msgstr ""
-"Apply a separator conversion to each renamed file name after applying the"
-" pattern"
-
-msgid "Remove accents"
-msgstr "Remove accents"
-
-msgid "Strip diacritical marks"
-msgstr "Strip diacritical marks"
-
-msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
-msgstr ""
-"Convert accented characters to their ASCII equivalents (é→e, ü→u, "
-"etc.)Convert accented characters to their ASCII equivalents (é→e, ü→u, "
-"etc.)Convert accented characters to their ASCII equivalents (é→e, ü→u, "
-"etc.)"
-
-msgid "Case:"
-msgstr "Case:"
-
-msgid "UPPERCASE"
-msgstr "UPPERCASE"
-
-msgid "lowercase"
-msgstr "lowercase"
-
-msgid "Capitalize first letter"
-msgstr "Capitalize first letter"
-
-msgid "Title Case"
-msgstr "Title Case"
-
-msgid "Capitalization mode"
-msgstr "Capitalization mode"
-
-msgid "Choose how to change the case of file names after applying the pattern"
-msgstr "Choose how to change the case of file names after applying the pattern"
-
-msgid "Remove duplicate separators"
-msgstr "Remove duplicate separators"
-
-msgid "Collapse consecutive separators"
-msgstr "Collapse consecutive separators"
-
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into oneCollapse runs of identical separator characters "
-"(spaces, dots, dashes, underscores) into oneCollapse runs of identical "
-"separator characters (spaces, dots, dashes, underscores) into one"
-
-msgid "Save:"
-msgstr "Save:"
-
-msgid "Named save"
-msgstr "Named save"
-
-msgid ""
-"Type a name (letters, digits, _ and -) to save or load all search/replace"
-" parameters"
-msgstr ""
-"Type a name (letters, digits, _ and -) to save or load all search/replace"
-" parameters"
-
-msgid "Save"
-msgstr "Save"
-
-msgid "Save current settings under this name"
-msgstr "Save current settings under this name"
-
-msgid ""
-"Save all search, replace and post-processing settings under the current "
-"name (overwrites any existing save with the same name)"
-msgstr ""
-"Save all search, replace and post-processing settings under the current "
-"name (overwrites any existing save with the same name)"
-
-msgid "Delete"
-msgstr "Delete"
-
-msgid "Delete this named save"
-msgstr "Delete this named save"
-
-msgid "Permanently delete the named save matching the current name"
-msgstr "Permanently delete the named save matching the current name"
-
-msgid "Compute rename preview"
-msgstr "Compute rename preview"
-
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview columnApply the current pattern to all listed files and show the "
-"result in the Preview columnApply the current pattern to all listed files"
-" and show the result in the Preview column"
-
-msgid "Clear"
-msgstr "Clear"
-
-msgid "Clear the preview"
-msgstr "Clear the preview"
-
-msgid "Remove all preview values from the Preview column"
-msgstr "Remove all preview values from the Preview column"
-
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Reverse the last batch of renames performed on disk"
-
-msgid "Rename"
-msgstr "Rename"
-
-msgid "Apply renames on disk"
-msgstr "Apply renames on disk"
-
-msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
-msgstr ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)Permanently rename all files shown in the "
-"Preview column (only enabled when there are no conflicts)Permanently "
-"rename all files shown in the Preview column (only enabled when there are"
-" no conflicts)"
-
-msgid "File"
-msgstr "File"
-
-msgid "Edit"
-msgstr "Edit"
-
-msgid "Shortcuts"
-msgstr "Shortcuts"
-
-msgid "Help"
-msgstr "Help"
-
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -749,6 +275,12 @@ msgstr "Capture group — the matched text is bound to {1}, {2}… in the replac
 
 msgid "Example"
 msgstr "Example"
+
+msgid "Search:"
+msgstr "Search:"
+
+msgid "Replace:"
+msgstr "Replace:"
 
 msgid ""
 "Full Python <code>re</code>-module syntax. The match is applied to the "
@@ -1201,6 +733,474 @@ msgstr "Move down"
 
 msgid "Saved shortcuts:"
 msgstr "Saved shortcuts:"
+
+msgid "Open folder…"
+msgstr "Open folder…"
+
+msgid "Open a folder"
+msgstr "Open a folder"
+
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr "Open a directory chooser and navigate the tree to the selected folder"
+
+msgid "Quit"
+msgstr "Quit"
+
+msgid "Quit PBRenamer"
+msgstr "Quit PBRenamer"
+
+msgid "Exit the application"
+msgstr "Exit the application"
+
+msgid "History…"
+msgstr "History…"
+
+msgid "Manage pattern history"
+msgstr "Manage pattern history"
+
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr "Add or remove entries from the search and replacement pattern history"
+
+msgid "Settings…"
+msgstr "Settings…"
+
+msgid "Open settings"
+msgstr "Open settings"
+
+msgid "Configure language and other preferences"
+msgstr "Configure language and other preferences"
+
+msgid "About this application"
+msgstr "About this application"
+
+msgid "Show version and license information"
+msgstr "Show version and license information"
+
+msgid "Edit shortcuts…"
+msgstr "Edit shortcuts…"
+
+msgid "Manage directory shortcuts"
+msgstr "Manage directory shortcuts"
+
+msgid "Add or remove entries from the shortcuts list"
+msgstr "Add or remove entries from the shortcuts list"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Show file field values"
+msgstr "Show file field values"
+
+msgid "Open the file information window for the selected file"
+msgstr "Open the file information window for the selected file"
+
+msgid "Browse the filesystem"
+msgstr "Browse the filesystem"
+
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr "Select a directory to list its contents in the panel on the right"
+
+msgid "Show:"
+msgstr "Show:"
+
+msgid "Files only"
+msgstr "Files only"
+
+msgid "Directories only"
+msgstr "Directories only"
+
+msgid "Files and directories"
+msgstr "Files and directories"
+
+msgid "Choose which entries to list"
+msgstr "Choose which entries to list"
+
+msgid "List files only, directories only, or both"
+msgstr "List files only, directories only, or both"
+
+msgid "Recursive"
+msgstr "Recursive"
+
+msgid "Include all subdirectories"
+msgstr "Include all subdirectories"
+
+msgid "When checked, files from all subdirectories are listed"
+msgstr "When checked, files from all subdirectories are listed"
+
+msgid "Keep extension"
+msgstr "Keep extension"
+
+msgid "Preserve the file extension"
+msgstr "Preserve the file extension"
+
+msgid ""
+"Apply transformations to the file stem only, leaving the extension "
+"unchanged"
+msgstr ""
+"Apply transformations to the file stem only, leaving the extension "
+"unchangedApply transformations to the file stem only, leaving the "
+"extension unchangedApply transformations to the file stem only, leaving "
+"the extension unchanged"
+
+msgid "Auto-preview"
+msgstr "Auto-preview"
+
+msgid "Refresh the preview automatically"
+msgstr "Refresh the preview automatically"
+
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Recompute the preview each time the pattern or options change"
+
+msgid "Filter:"
+msgstr "Filter:"
+
+msgid "Glob pattern to filter the file list"
+msgstr "Glob pattern to filter the file list"
+
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+
+msgid "Files to be renamed"
+msgstr "Files to be renamed"
+
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to "
+"apply to all"
+msgstr ""
+"Select rows to restrict operations to those files; leave unselected to "
+"apply to allSelect rows to restrict operations to those files; leave "
+"unselected to apply to allSelect rows to restrict operations to those "
+"files; leave unselected to apply to all"
+
+msgid "Search pattern"
+msgstr "Search pattern"
+
+#, python-brace-format
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} "
+"letters, {C} non-space, {X} anything"
+msgstr ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} "
+"letters, {C} non-space, {X} anythingPattern to match against file names. "
+"Use tokens: {#} numbers, {L} letters, {C} non-space, {X} anythingPattern "
+"to match against file names. Use tokens: {#} numbers, {L} letters, {C} "
+"non-space, {X} anything"
+
+msgid "Save to history"
+msgstr "Save to history"
+
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "Add the current search pattern and mode to the drop-down history"
+
+msgid "Search pattern help"
+msgstr "Search pattern help"
+
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, "
+"Plain text)"
+msgstr ""
+"Show help about search patterns (Pattern tokens, Regular expressions, "
+"Plain text)Show help about search patterns (Pattern tokens, Regular "
+"expressions, Plain text)Show help about search patterns (Pattern tokens, "
+"Regular expressions, Plain text)"
+
+msgid "Pattern"
+msgstr "Pattern"
+
+msgid "Search using pattern tokens"
+msgstr "Search using pattern tokens"
+
+#, python-brace-format
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "Match file names using pattern tokens ({#}, {L}, {X}…)"
+
+msgid "Regular expression"
+msgstr "Regular expression"
+
+msgid "Search using a Python regular expression"
+msgstr "Search using a Python regular expression"
+
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+
+msgid "Plain text"
+msgstr "Plain text"
+
+msgid "Search for a literal string"
+msgstr "Search for a literal string"
+
+msgid "Match file names by looking for the search text as a literal string"
+msgstr "Match file names by looking for the search text as a literal string"
+
+msgid "Case-insensitive"
+msgstr "Case-insensitive"
+
+msgid "Ignore case when searching"
+msgstr "Ignore case when searching"
+
+msgid ""
+"When checked, the search pattern matches file names regardless of letter "
+"case"
+msgstr ""
+"When checked, the search pattern matches file names regardless of letter "
+"case"
+
+msgid "Replacement pattern"
+msgstr "Replacement pattern"
+
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder "
+"nameReplacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder "
+"nameReplacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder name"
+
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "Add the current replacement pattern to the drop-down history"
+
+msgid "Replacement pattern help"
+msgstr "Replacement pattern help"
+
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)Show help about replacement patterns (capture groups, "
+"counter, date, directory tokens)Show help about replacement patterns "
+"(capture groups, counter, date, directory tokens)"
+
+msgid "Post-processing"
+msgstr "Post-processing"
+
+msgid "Separator:"
+msgstr "Separator:"
+
+msgid "No change"
+msgstr "No change"
+
+msgid "Spaces → underscores"
+msgstr "Spaces → underscores"
+
+msgid "Underscores → spaces"
+msgstr "Underscores → spaces"
+
+msgid "Spaces → dots"
+msgstr "Spaces → dots"
+
+msgid "Dots → spaces"
+msgstr "Dots → spaces"
+
+msgid "Spaces → dashes"
+msgstr "Spaces → dashes"
+
+msgid "Dashes → spaces"
+msgstr "Dashes → spaces"
+
+msgid "Separator conversion"
+msgstr "Separator conversion"
+
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the"
+" pattern"
+msgstr ""
+"Apply a separator conversion to each renamed file name after applying the"
+" pattern"
+
+msgid "Remove accents"
+msgstr "Remove accents"
+
+msgid "Strip diacritical marks"
+msgstr "Strip diacritical marks"
+
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr ""
+"Convert accented characters to their ASCII equivalents (é→e, ü→u, "
+"etc.)Convert accented characters to their ASCII equivalents (é→e, ü→u, "
+"etc.)Convert accented characters to their ASCII equivalents (é→e, ü→u, "
+"etc.)"
+
+msgid "Case:"
+msgstr "Case:"
+
+msgid "UPPERCASE"
+msgstr "UPPERCASE"
+
+msgid "lowercase"
+msgstr "lowercase"
+
+msgid "Capitalize first letter"
+msgstr "Capitalize first letter"
+
+msgid "Title Case"
+msgstr "Title Case"
+
+msgid "Capitalization mode"
+msgstr "Capitalization mode"
+
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr "Choose how to change the case of file names after applying the pattern"
+
+msgid "Remove duplicate separators"
+msgstr "Remove duplicate separators"
+
+msgid "Collapse consecutive separators"
+msgstr "Collapse consecutive separators"
+
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into oneCollapse runs of identical separator characters "
+"(spaces, dots, dashes, underscores) into oneCollapse runs of identical "
+"separator characters (spaces, dots, dashes, underscores) into one"
+
+msgid "Save:"
+msgstr "Save:"
+
+msgid "Named save"
+msgstr "Named save"
+
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace"
+" parameters"
+msgstr ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace"
+" parameters"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Save current settings under this name"
+msgstr "Save current settings under this name"
+
+msgid ""
+"Save all search, replace and post-processing settings under the current "
+"name (overwrites any existing save with the same name)"
+msgstr ""
+"Save all search, replace and post-processing settings under the current "
+"name (overwrites any existing save with the same name)"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete this named save"
+msgstr "Delete this named save"
+
+msgid "Permanently delete the named save matching the current name"
+msgstr "Permanently delete the named save matching the current name"
+
+msgid "Compute rename preview"
+msgstr "Compute rename preview"
+
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview columnApply the current pattern to all listed files and show the "
+"result in the Preview columnApply the current pattern to all listed files"
+" and show the result in the Preview column"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Clear the preview"
+msgstr "Clear the preview"
+
+msgid "Remove all preview values from the Preview column"
+msgstr "Remove all preview values from the Preview column"
+
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Reverse the last batch of renames performed on disk"
+
+msgid "Rename"
+msgstr "Rename"
+
+msgid "Apply renames on disk"
+msgstr "Apply renames on disk"
+
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled "
+"when there are no conflicts)"
+msgstr ""
+"Permanently rename all files shown in the Preview column (only enabled "
+"when there are no conflicts)Permanently rename all files shown in the "
+"Preview column (only enabled when there are no conflicts)Permanently "
+"rename all files shown in the Preview column (only enabled when there are"
+" no conflicts)"
+
+msgid "File"
+msgstr "File"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Shortcuts"
+msgstr "Shortcuts"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Select the interface language"
+msgstr "Select the interface language"
+
+msgid "Language:"
+msgstr "Language:"
+
+msgid "Set the application logging verbosity"
+msgstr "Set the application logging verbosity"
+
+msgid "Log level:"
+msgstr "Log level:"
+
+msgid "Behaviour"
+msgstr "Behaviour"
+
+msgid "Restore last opened directory"
+msgstr "Restore last opened directory"
+
+msgid "On startup, reopen the directory that was active in the previous session"
+msgstr "On startup, reopen the directory that was active in the previous session"
+
+msgid "Restore toolbar state"
+msgstr "Restore toolbar state"
+
+msgid ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+
+msgid ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+
+msgid "Auto-preview delay:"
+msgstr "Auto-preview delay:"
+
+msgid " ms"
+msgstr " ms"
+
+msgid "A restart is required for the language change to take effect."
+msgstr "A restart is required for the language change to take effect."
 
 msgid "Home"
 msgstr "Home"

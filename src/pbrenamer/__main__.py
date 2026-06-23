@@ -606,6 +606,40 @@ def main() -> None:
     _gui_main(_ns)  # pragma: no cover — GUI mode; not invoked by tests
 
 
+def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
+    """Register bundled fonts into Qt's font database (frozen builds only).
+
+    In a PyInstaller onefile build, fontconfig uses paths hardcoded at build
+    time that don't exist on the target machine.  QFontDatabase.addApplicationFont
+    bypasses fontconfig entirely and guarantees that the bundled fonts (Ubuntu,
+    DejaVu, …) are available regardless of the host fontconfig configuration.
+    """
+    if not getattr(sys, "frozen", False):
+        return
+    from pathlib import Path
+
+    from PySide6.QtGui import QFont, QFontDatabase
+
+    fonts_dir = Path(sys._MEIPASS) / "fonts"  # type: ignore[attr-defined]
+    if not fonts_dir.is_dir():
+        return
+
+    loaded: set[str] = set()
+    for ttf in sorted(fonts_dir.glob("*.ttf")):
+        fid = QFontDatabase.addApplicationFont(str(ttf))
+        if fid >= 0:
+            loaded.update(QFontDatabase.applicationFontFamilies(fid))
+
+    # If the desktop system font (from fontconfig/GTK theme) is not available
+    # in the bundle, fall back to Ubuntu which ships with fonts-conda-ecosystem.
+    if "Ubuntu" in loaded:
+        current = app.font()  # type: ignore[union-attr]
+        desired = QFont(
+            "Ubuntu", current.pointSize() if current.pointSize() > 0 else 10
+        )
+        app.setFont(desired)
+
+
 def _gui_main(_ns):  # pragma: no cover
     # GUI mode — only reached when neither --search nor --saved is given.
     # Tests never enter this path: they invoke _headless_run() directly
@@ -617,6 +651,7 @@ def _gui_main(_ns):  # pragma: no cover
     from pbrenamer.resources import path as _resource
 
     app = QApplication([sys.argv[0]] + _ns.qt_args)
+    _load_bundled_fonts(app)
     app.setApplicationName("PBRenamer")
     app.setApplicationVersion(__version__)
     app.setOrganizationName("ppoilbarbe")

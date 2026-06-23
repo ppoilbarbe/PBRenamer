@@ -35,73 +35,6 @@ msgid "About PBRenamer"
 msgstr "Acerca de PBRenamer"
 
 # ==AUTO== Automatically translated
-msgid "Settings"
-msgstr "Ajustes"
-
-# ==AUTO== Automatically translated
-msgid "Select the interface language"
-msgstr "Seleccionar el idioma de la interfaz"
-
-# ==AUTO== Automatically translated
-msgid "Language:"
-msgstr "Idioma:"
-
-# ==AUTO== Automatically translated
-msgid "Set the application logging verbosity"
-msgstr "Establecer el nivel de verbosidad del registro de la aplicación"
-
-# ==AUTO== Automatically translated
-msgid "Log level:"
-msgstr "Nivel de registro:"
-
-# ==AUTO== Automatically translated
-msgid "Behaviour"
-msgstr "Comportamiento"
-
-# ==AUTO== Automatically translated
-msgid "Restore last opened directory"
-msgstr "Restaurar el último directorio abierto"
-
-# ==AUTO== Automatically translated
-msgid "On startup, reopen the directory that was active in the previous session"
-msgstr ""
-"Al inicio, volver a abrir el directorio que estaba activo en la sesión "
-"anterior"
-
-# ==AUTO== Automatically translated
-msgid "Restore toolbar state"
-msgstr "Restaurar estado de la barra de herramientas"
-
-# ==AUTO== Automatically translated
-msgid ""
-"On startup, restore the toolbar settings from the previous session "
-"(display mode, recursive, keep extension, auto-preview, filter)"
-msgstr ""
-"Al inicio, restaurar los ajustes de la barra de herramientas de la sesión"
-" anterior (modo de visualización, recursivo, conservar extensión, vista "
-"previa automática, filtro)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Debounce delay before the preview refreshes after a search or replacement"
-" pattern change (ms)"
-msgstr ""
-"Retardo de antirrebote antes de que la vista previa se actualice tras un "
-"cambio en el patrón de búsqueda o reemplazo (ms)"
-
-# ==AUTO== Automatically translated
-msgid "Auto-preview delay:"
-msgstr "Retardo de vista previa automática:"
-
-# ==AUTO== Automatically translated
-msgid " ms"
-msgstr " ms"
-
-# ==AUTO== Automatically translated
-msgid "A restart is required for the language change to take effect."
-msgstr "Es necesario reiniciar para que el cambio de idioma surta efecto."
-
-# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Información del archivo"
 
@@ -386,531 +319,6 @@ msgid "Add as shortcut"
 msgstr "Añadir como atajo"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "Abrir carpeta…"
-
-# ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Abrir una carpeta"
-
-# ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Abrir un selector de directorio y navegar hasta la carpeta seleccionada"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "Salir"
-
-# ==AUTO== Automatically translated
-msgid "Quit PBRenamer"
-msgstr "Salir de PBRenamer"
-
-# ==AUTO== Automatically translated
-msgid "Exit the application"
-msgstr "Cerrar la aplicación"
-
-# ==AUTO== Automatically translated
-msgid "History…"
-msgstr "Historial…"
-
-# ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "Gestionar el historial de patrones"
-
-# ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr ""
-"Añadir o eliminar entradas del historial de patrones de búsqueda y "
-"reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Settings…"
-msgstr "Ajustes…"
-
-# ==AUTO== Automatically translated
-msgid "Open settings"
-msgstr "Abrir ajustes"
-
-# ==AUTO== Automatically translated
-msgid "Configure language and other preferences"
-msgstr "Configurar idioma y otras preferencias"
-
-# ==AUTO== Automatically translated
-msgid "About this application"
-msgstr "Acerca de esta aplicación"
-
-# ==AUTO== Automatically translated
-msgid "Show version and license information"
-msgstr "Mostrar información de versión y licencia"
-
-# ==AUTO== Automatically translated
-msgid "Edit shortcuts…"
-msgstr "Editar atajos…"
-
-# ==AUTO== Automatically translated
-msgid "Manage directory shortcuts"
-msgstr "Gestionar atajos de directorio"
-
-# ==AUTO== Automatically translated
-msgid "Add or remove entries from the shortcuts list"
-msgstr "Añadir o eliminar entradas de la lista de atajos"
-
-# ==AUTO== Automatically translated
-msgid "Information"
-msgstr "Información"
-
-# ==AUTO== Automatically translated
-msgid "Show file field values"
-msgstr "Mostrar valores de campos del archivo"
-
-# ==AUTO== Automatically translated
-msgid "Open the file information window for the selected file"
-msgstr "Abrir la ventana de información del archivo seleccionado"
-
-# ==AUTO== Automatically translated
-msgid "Browse the filesystem"
-msgstr "Explorar el sistema de archivos"
-
-# ==AUTO== Automatically translated
-msgid "Select a directory to list its contents in the panel on the right"
-msgstr ""
-"Seleccionar un directorio para listar su contenido en el panel de la "
-"derecha"
-
-# ==AUTO== Automatically translated
-msgid "Show:"
-msgstr "Mostrar:"
-
-# ==AUTO== Automatically translated
-msgid "Files only"
-msgstr "Solo archivos"
-
-# ==AUTO== Automatically translated
-msgid "Directories only"
-msgstr "Solo directorios"
-
-# ==AUTO== Automatically translated
-msgid "Files and directories"
-msgstr "Archivos y directorios"
-
-# ==AUTO== Automatically translated
-msgid "Choose which entries to list"
-msgstr "Elegir qué entradas listar"
-
-# ==AUTO== Automatically translated
-msgid "List files only, directories only, or both"
-msgstr "Listar solo archivos, solo directorios, o ambos"
-
-# ==AUTO== Automatically translated
-msgid "Recursive"
-msgstr "Recursivo"
-
-# ==AUTO== Automatically translated
-msgid "Include all subdirectories"
-msgstr "Incluir todos los subdirectorios"
-
-# ==AUTO== Automatically translated
-msgid "When checked, files from all subdirectories are listed"
-msgstr "Cuando está marcado, se listan los archivos de todos los subdirectorios"
-
-# ==AUTO== Automatically translated
-msgid "Keep extension"
-msgstr "Conservar extensión"
-
-# ==AUTO== Automatically translated
-msgid "Preserve the file extension"
-msgstr "Conservar la extensión del archivo"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply transformations to the file stem only, leaving the extension "
-"unchanged"
-msgstr ""
-"Aplicar transformaciones solo al nombre base del archivo, dejando la "
-"extensión sin cambios"
-
-# ==AUTO== Automatically translated
-msgid "Auto-preview"
-msgstr "Vista previa automática"
-
-# ==AUTO== Automatically translated
-msgid "Refresh the preview automatically"
-msgstr "Actualizar la vista previa automáticamente"
-
-# ==AUTO== Automatically translated
-msgid "Recompute the preview each time the pattern or options change"
-msgstr "Recalcular la vista previa cada vez que cambie el patrón o las opciones"
-
-# ==AUTO== Automatically translated
-msgid "Filter:"
-msgstr "Filtro:"
-
-# ==AUTO== Automatically translated
-msgid "Glob pattern to filter the file list"
-msgstr "Patrón glob para filtrar la lista de archivos"
-
-# ==AUTO== Automatically translated
-msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-msgstr ""
-"Solo se listan los archivos que coinciden con este patrón glob (p. ej. "
-"*.txt, image_*)"
-
-# ==AUTO== Automatically translated
-msgid "Files to be renamed"
-msgstr "Archivos a renombrar"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Select rows to restrict operations to those files; leave unselected to "
-"apply to all"
-msgstr ""
-"Seleccione filas para restringir las operaciones a esos archivos; deje "
-"sin seleccionar para aplicar a todos"
-
-# ==AUTO== Automatically translated
-msgid "Search:"
-msgstr "Buscar:"
-
-# ==AUTO== Automatically translated
-msgid "Search pattern"
-msgstr "Patrón de búsqueda"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Pattern to match against file names. Use tokens: {#} numbers, {L} "
-"letters, {C} non-space, {X} anything"
-msgstr ""
-"Patrón para coincidir con los nombres de archivo. Use tokens: {#} "
-"números, {L} letras, {C} sin espacio, {X} cualquier cosa"
-
-# ==AUTO== Automatically translated
-msgid "Save to history"
-msgstr "Guardar en el historial"
-
-# ==AUTO== Automatically translated
-msgid "Add the current search pattern and mode to the drop-down history"
-msgstr "Añadir el patrón de búsqueda actual y el modo al historial desplegable"
-
-# ==AUTO== Automatically translated
-msgid "Search pattern help"
-msgstr "Ayuda sobre patrones de búsqueda"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Show help about search patterns (Pattern tokens, Regular expressions, "
-"Plain text)"
-msgstr ""
-"Mostrar ayuda sobre patrones de búsqueda (tokens de patrón, expresiones "
-"regulares, texto plano)"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "Patrón"
-
-# ==AUTO== Automatically translated
-msgid "Search using pattern tokens"
-msgstr "Buscar usando tokens de patrón"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
-msgstr "Coincide con nombres de archivo usando tokens de patrón ({#}, {L}, {X}…)"
-
-# ==AUTO== Automatically translated
-msgid "Regular expression"
-msgstr "Expresión regular"
-
-# ==AUTO== Automatically translated
-msgid "Search using a Python regular expression"
-msgstr "Buscar usando una expresión regular de Python"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Match file names using a Python regular expression; use \\1 \\2… for "
-"backreferences in the replacement"
-msgstr ""
-"Coincide con nombres de archivo usando una expresión regular de Python; "
-"use \\1 \\2… para referencias inversas en el reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Plain text"
-msgstr "Texto plano"
-
-# ==AUTO== Automatically translated
-msgid "Search for a literal string"
-msgstr "Buscar una cadena literal"
-
-# ==AUTO== Automatically translated
-msgid "Match file names by looking for the search text as a literal string"
-msgstr ""
-"Coincide con los nombres de archivo buscando el texto de búsqueda como "
-"cadena literal"
-
-# ==AUTO== Automatically translated
-msgid "Case-insensitive"
-msgstr "Sin distinción de mayúsculas"
-
-# ==AUTO== Automatically translated
-msgid "Ignore case when searching"
-msgstr "Ignorar mayúsculas al buscar"
-
-# ==AUTO== Automatically translated
-msgid ""
-"When checked, the search pattern matches file names regardless of letter "
-"case"
-msgstr ""
-"Cuando está marcado, el patrón de búsqueda coincide con los nombres de "
-"archivo independientemente de las mayúsculas"
-
-# ==AUTO== Automatically translated
-msgid "Replace:"
-msgstr "Reemplazar:"
-
-# ==AUTO== Automatically translated
-msgid "Replacement pattern"
-msgstr "Patrón de reemplazo"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
-"counter, {date} for today's date, {dir} for the parent folder name"
-msgstr ""
-"Patrón de reemplazo. Use {1} {2}… para grupos de captura, {num} para un "
-"contador, {date} para la fecha de hoy, {dir} para el nombre de la carpeta"
-" padre"
-
-# ==AUTO== Automatically translated
-msgid "Add the current replacement pattern to the drop-down history"
-msgstr "Añadir el patrón de reemplazo actual al historial desplegable"
-
-# ==AUTO== Automatically translated
-msgid "Replacement pattern help"
-msgstr "Ayuda sobre patrones de reemplazo"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Show help about replacement patterns (capture groups, counter, date, "
-"directory tokens)"
-msgstr ""
-"Mostrar ayuda sobre patrones de reemplazo (grupos de captura, contador, "
-"fecha, tokens de directorio)"
-
-# ==AUTO== Automatically translated
-msgid "Post-processing"
-msgstr "Posprocesamiento"
-
-# ==AUTO== Automatically translated
-msgid "Separator:"
-msgstr "Separador:"
-
-# ==AUTO== Automatically translated
-msgid "No change"
-msgstr "Sin cambio"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → underscores"
-msgstr "Espacios → guiones bajos"
-
-# ==AUTO== Automatically translated
-msgid "Underscores → spaces"
-msgstr "Guiones bajos → espacios"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → dots"
-msgstr "Espacios → puntos"
-
-# ==AUTO== Automatically translated
-msgid "Dots → spaces"
-msgstr "Puntos → espacios"
-
-# ==AUTO== Automatically translated
-msgid "Spaces → dashes"
-msgstr "Espacios → guiones"
-
-# ==AUTO== Automatically translated
-msgid "Dashes → spaces"
-msgstr "Guiones → espacios"
-
-# ==AUTO== Automatically translated
-msgid "Separator conversion"
-msgstr "Conversión de separadores"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply a separator conversion to each renamed file name after applying the"
-" pattern"
-msgstr ""
-"Aplicar una conversión de separadores a cada nombre de archivo renombrado"
-" después de aplicar el patrón"
-
-# ==AUTO== Automatically translated
-msgid "Remove accents"
-msgstr "Eliminar acentos"
-
-# ==AUTO== Automatically translated
-msgid "Strip diacritical marks"
-msgstr "Eliminar marcas diacríticas"
-
-# ==AUTO== Automatically translated
-msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
-msgstr "Convertir caracteres acentuados a sus equivalentes ASCII (é→e, ü→u, etc.)"
-
-# ==AUTO== Automatically translated
-msgid "Case:"
-msgstr "Mayúsculas:"
-
-# ==AUTO== Automatically translated
-msgid "UPPERCASE"
-msgstr "MAYÚSCULAS"
-
-# ==AUTO== Automatically translated
-msgid "lowercase"
-msgstr "minúsculas"
-
-# ==AUTO== Automatically translated
-msgid "Capitalize first letter"
-msgstr "Capitalizar primera letra"
-
-# ==AUTO== Automatically translated
-msgid "Title Case"
-msgstr "Mayúsculas en Título"
-
-# ==AUTO== Automatically translated
-msgid "Capitalization mode"
-msgstr "Modo de capitalización"
-
-# ==AUTO== Automatically translated
-msgid "Choose how to change the case of file names after applying the pattern"
-msgstr ""
-"Elegir cómo cambiar las mayúsculas de los nombres de archivo después de "
-"aplicar el patrón"
-
-# ==AUTO== Automatically translated
-msgid "Remove duplicate separators"
-msgstr "Eliminar separadores duplicados"
-
-# ==AUTO== Automatically translated
-msgid "Collapse consecutive separators"
-msgstr "Colapsar separadores consecutivos"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Collapse runs of identical separator characters (spaces, dots, dashes, "
-"underscores) into one"
-msgstr ""
-"Colapsar secuencias de caracteres separadores idénticos (espacios, "
-"puntos, guiones, guiones bajos) en uno"
-
-# ==AUTO== Automatically translated
-msgid "Save:"
-msgstr "Guardar:"
-
-# ==AUTO== Automatically translated
-msgid "Named save"
-msgstr "Guardado con nombre"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Type a name (letters, digits, _ and -) to save or load all search/replace"
-" parameters"
-msgstr ""
-"Escriba un nombre (letras, dígitos, _ y -) para guardar o cargar todos "
-"los parámetros de búsqueda/reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Save"
-msgstr "Guardar"
-
-# ==AUTO== Automatically translated
-msgid "Save current settings under this name"
-msgstr "Guardar la configuración actual con este nombre"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Save all search, replace and post-processing settings under the current "
-"name (overwrites any existing save with the same name)"
-msgstr ""
-"Guardar todos los ajustes de búsqueda, reemplazo y posprocesamiento con "
-"el nombre actual (sobrescribe cualquier guardado existente con el mismo "
-"nombre)"
-
-# ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "Eliminar"
-
-# ==AUTO== Automatically translated
-msgid "Delete this named save"
-msgstr "Eliminar este guardado con nombre"
-
-# ==AUTO== Automatically translated
-msgid "Permanently delete the named save matching the current name"
-msgstr ""
-"Eliminar permanentemente el guardado con nombre que coincide con el "
-"nombre actual"
-
-# ==AUTO== Automatically translated
-msgid "Compute rename preview"
-msgstr "Calcular vista previa del renombrado"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Aplicar el patrón actual a todos los archivos listados y mostrar el "
-"resultado en la columna Vista previa"
-
-# ==AUTO== Automatically translated
-msgid "Clear"
-msgstr "Borrar"
-
-# ==AUTO== Automatically translated
-msgid "Clear the preview"
-msgstr "Borrar la vista previa"
-
-# ==AUTO== Automatically translated
-msgid "Remove all preview values from the Preview column"
-msgstr "Eliminar todos los valores de vista previa de la columna Vista previa"
-
-# ==AUTO== Automatically translated
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Revertir el último lote de renombrados realizados en el disco"
-
-# ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "Renombrar"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "Aplicar renombrados en el disco"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
-msgstr ""
-"Renombrar definitivamente todos los archivos mostrados en la columna "
-"Vista previa (solo habilitado cuando no hay conflictos)"
-
-# ==AUTO== Automatically translated
-msgid "File"
-msgstr "Archivo"
-
-# ==AUTO== Automatically translated
-msgid "Edit"
-msgstr "Editar"
-
-# ==AUTO== Automatically translated
-msgid "Shortcuts"
-msgstr "Atajos"
-
-# ==AUTO== Automatically translated
-msgid "Help"
-msgstr "Ayuda"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid ""
 "Tokens act as typed wildcards. Segments enclosed in <b>{1}</b>, "
@@ -951,6 +359,14 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Example"
 msgstr "Ejemplo"
+
+# ==AUTO== Automatically translated
+msgid "Search:"
+msgstr "Buscar:"
+
+# ==AUTO== Automatically translated
+msgid "Replace:"
+msgstr "Reemplazar:"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1531,6 +947,590 @@ msgstr "Bajar"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "Atajos guardados:"
+
+# ==AUTO== Automatically translated
+msgid "Open folder…"
+msgstr "Abrir carpeta…"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "Abrir una carpeta"
+
+# ==AUTO== Automatically translated
+msgid "Open a directory chooser and navigate the tree to the selected folder"
+msgstr "Abrir un selector de directorio y navegar hasta la carpeta seleccionada"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "Salir"
+
+# ==AUTO== Automatically translated
+msgid "Quit PBRenamer"
+msgstr "Salir de PBRenamer"
+
+# ==AUTO== Automatically translated
+msgid "Exit the application"
+msgstr "Cerrar la aplicación"
+
+# ==AUTO== Automatically translated
+msgid "History…"
+msgstr "Historial…"
+
+# ==AUTO== Automatically translated
+msgid "Manage pattern history"
+msgstr "Gestionar el historial de patrones"
+
+# ==AUTO== Automatically translated
+msgid "Add or remove entries from the search and replacement pattern history"
+msgstr ""
+"Añadir o eliminar entradas del historial de patrones de búsqueda y "
+"reemplazo"
+
+# ==AUTO== Automatically translated
+msgid "Settings…"
+msgstr "Ajustes…"
+
+# ==AUTO== Automatically translated
+msgid "Open settings"
+msgstr "Abrir ajustes"
+
+# ==AUTO== Automatically translated
+msgid "Configure language and other preferences"
+msgstr "Configurar idioma y otras preferencias"
+
+# ==AUTO== Automatically translated
+msgid "About this application"
+msgstr "Acerca de esta aplicación"
+
+# ==AUTO== Automatically translated
+msgid "Show version and license information"
+msgstr "Mostrar información de versión y licencia"
+
+# ==AUTO== Automatically translated
+msgid "Edit shortcuts…"
+msgstr "Editar atajos…"
+
+# ==AUTO== Automatically translated
+msgid "Manage directory shortcuts"
+msgstr "Gestionar atajos de directorio"
+
+# ==AUTO== Automatically translated
+msgid "Add or remove entries from the shortcuts list"
+msgstr "Añadir o eliminar entradas de la lista de atajos"
+
+# ==AUTO== Automatically translated
+msgid "Information"
+msgstr "Información"
+
+# ==AUTO== Automatically translated
+msgid "Show file field values"
+msgstr "Mostrar valores de campos del archivo"
+
+# ==AUTO== Automatically translated
+msgid "Open the file information window for the selected file"
+msgstr "Abrir la ventana de información del archivo seleccionado"
+
+# ==AUTO== Automatically translated
+msgid "Browse the filesystem"
+msgstr "Explorar el sistema de archivos"
+
+# ==AUTO== Automatically translated
+msgid "Select a directory to list its contents in the panel on the right"
+msgstr ""
+"Seleccionar un directorio para listar su contenido en el panel de la "
+"derecha"
+
+# ==AUTO== Automatically translated
+msgid "Show:"
+msgstr "Mostrar:"
+
+# ==AUTO== Automatically translated
+msgid "Files only"
+msgstr "Solo archivos"
+
+# ==AUTO== Automatically translated
+msgid "Directories only"
+msgstr "Solo directorios"
+
+# ==AUTO== Automatically translated
+msgid "Files and directories"
+msgstr "Archivos y directorios"
+
+# ==AUTO== Automatically translated
+msgid "Choose which entries to list"
+msgstr "Elegir qué entradas listar"
+
+# ==AUTO== Automatically translated
+msgid "List files only, directories only, or both"
+msgstr "Listar solo archivos, solo directorios, o ambos"
+
+# ==AUTO== Automatically translated
+msgid "Recursive"
+msgstr "Recursivo"
+
+# ==AUTO== Automatically translated
+msgid "Include all subdirectories"
+msgstr "Incluir todos los subdirectorios"
+
+# ==AUTO== Automatically translated
+msgid "When checked, files from all subdirectories are listed"
+msgstr "Cuando está marcado, se listan los archivos de todos los subdirectorios"
+
+# ==AUTO== Automatically translated
+msgid "Keep extension"
+msgstr "Conservar extensión"
+
+# ==AUTO== Automatically translated
+msgid "Preserve the file extension"
+msgstr "Conservar la extensión del archivo"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply transformations to the file stem only, leaving the extension "
+"unchanged"
+msgstr ""
+"Aplicar transformaciones solo al nombre base del archivo, dejando la "
+"extensión sin cambios"
+
+# ==AUTO== Automatically translated
+msgid "Auto-preview"
+msgstr "Vista previa automática"
+
+# ==AUTO== Automatically translated
+msgid "Refresh the preview automatically"
+msgstr "Actualizar la vista previa automáticamente"
+
+# ==AUTO== Automatically translated
+msgid "Recompute the preview each time the pattern or options change"
+msgstr "Recalcular la vista previa cada vez que cambie el patrón o las opciones"
+
+# ==AUTO== Automatically translated
+msgid "Filter:"
+msgstr "Filtro:"
+
+# ==AUTO== Automatically translated
+msgid "Glob pattern to filter the file list"
+msgstr "Patrón glob para filtrar la lista de archivos"
+
+# ==AUTO== Automatically translated
+msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
+msgstr ""
+"Solo se listan los archivos que coinciden con este patrón glob (p. ej. "
+"*.txt, image_*)"
+
+# ==AUTO== Automatically translated
+msgid "Files to be renamed"
+msgstr "Archivos a renombrar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Select rows to restrict operations to those files; leave unselected to "
+"apply to all"
+msgstr ""
+"Seleccione filas para restringir las operaciones a esos archivos; deje "
+"sin seleccionar para aplicar a todos"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern"
+msgstr "Patrón de búsqueda"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Pattern to match against file names. Use tokens: {#} numbers, {L} "
+"letters, {C} non-space, {X} anything"
+msgstr ""
+"Patrón para coincidir con los nombres de archivo. Use tokens: {#} "
+"números, {L} letras, {C} sin espacio, {X} cualquier cosa"
+
+# ==AUTO== Automatically translated
+msgid "Save to history"
+msgstr "Guardar en el historial"
+
+# ==AUTO== Automatically translated
+msgid "Add the current search pattern and mode to the drop-down history"
+msgstr "Añadir el patrón de búsqueda actual y el modo al historial desplegable"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern help"
+msgstr "Ayuda sobre patrones de búsqueda"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show help about search patterns (Pattern tokens, Regular expressions, "
+"Plain text)"
+msgstr ""
+"Mostrar ayuda sobre patrones de búsqueda (tokens de patrón, expresiones "
+"regulares, texto plano)"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Patrón"
+
+# ==AUTO== Automatically translated
+msgid "Search using pattern tokens"
+msgstr "Buscar usando tokens de patrón"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Match file names using pattern tokens ({#}, {L}, {X}…)"
+msgstr "Coincide con nombres de archivo usando tokens de patrón ({#}, {L}, {X}…)"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression"
+msgstr "Expresión regular"
+
+# ==AUTO== Automatically translated
+msgid "Search using a Python regular expression"
+msgstr "Buscar usando una expresión regular de Python"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Match file names using a Python regular expression; use \\1 \\2… for "
+"backreferences in the replacement"
+msgstr ""
+"Coincide con nombres de archivo usando una expresión regular de Python; "
+"use \\1 \\2… para referencias inversas en el reemplazo"
+
+# ==AUTO== Automatically translated
+msgid "Plain text"
+msgstr "Texto plano"
+
+# ==AUTO== Automatically translated
+msgid "Search for a literal string"
+msgstr "Buscar una cadena literal"
+
+# ==AUTO== Automatically translated
+msgid "Match file names by looking for the search text as a literal string"
+msgstr ""
+"Coincide con los nombres de archivo buscando el texto de búsqueda como "
+"cadena literal"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive"
+msgstr "Sin distinción de mayúsculas"
+
+# ==AUTO== Automatically translated
+msgid "Ignore case when searching"
+msgstr "Ignorar mayúsculas al buscar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the search pattern matches file names regardless of letter "
+"case"
+msgstr ""
+"Cuando está marcado, el patrón de búsqueda coincide con los nombres de "
+"archivo independientemente de las mayúsculas"
+
+# ==AUTO== Automatically translated
+msgid "Replacement pattern"
+msgstr "Patrón de reemplazo"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Replacement pattern. Use {1} {2}… for capture groups, {num} for a "
+"counter, {date} for today's date, {dir} for the parent folder name"
+msgstr ""
+"Patrón de reemplazo. Use {1} {2}… para grupos de captura, {num} para un "
+"contador, {date} para la fecha de hoy, {dir} para el nombre de la carpeta"
+" padre"
+
+# ==AUTO== Automatically translated
+msgid "Add the current replacement pattern to the drop-down history"
+msgstr "Añadir el patrón de reemplazo actual al historial desplegable"
+
+# ==AUTO== Automatically translated
+msgid "Replacement pattern help"
+msgstr "Ayuda sobre patrones de reemplazo"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show help about replacement patterns (capture groups, counter, date, "
+"directory tokens)"
+msgstr ""
+"Mostrar ayuda sobre patrones de reemplazo (grupos de captura, contador, "
+"fecha, tokens de directorio)"
+
+# ==AUTO== Automatically translated
+msgid "Post-processing"
+msgstr "Posprocesamiento"
+
+# ==AUTO== Automatically translated
+msgid "Separator:"
+msgstr "Separador:"
+
+# ==AUTO== Automatically translated
+msgid "No change"
+msgstr "Sin cambio"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → underscores"
+msgstr "Espacios → guiones bajos"
+
+# ==AUTO== Automatically translated
+msgid "Underscores → spaces"
+msgstr "Guiones bajos → espacios"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → dots"
+msgstr "Espacios → puntos"
+
+# ==AUTO== Automatically translated
+msgid "Dots → spaces"
+msgstr "Puntos → espacios"
+
+# ==AUTO== Automatically translated
+msgid "Spaces → dashes"
+msgstr "Espacios → guiones"
+
+# ==AUTO== Automatically translated
+msgid "Dashes → spaces"
+msgstr "Guiones → espacios"
+
+# ==AUTO== Automatically translated
+msgid "Separator conversion"
+msgstr "Conversión de separadores"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply a separator conversion to each renamed file name after applying the"
+" pattern"
+msgstr ""
+"Aplicar una conversión de separadores a cada nombre de archivo renombrado"
+" después de aplicar el patrón"
+
+# ==AUTO== Automatically translated
+msgid "Remove accents"
+msgstr "Eliminar acentos"
+
+# ==AUTO== Automatically translated
+msgid "Strip diacritical marks"
+msgstr "Eliminar marcas diacríticas"
+
+# ==AUTO== Automatically translated
+msgid "Convert accented characters to their ASCII equivalents (é→e, ü→u, etc.)"
+msgstr "Convertir caracteres acentuados a sus equivalentes ASCII (é→e, ü→u, etc.)"
+
+# ==AUTO== Automatically translated
+msgid "Case:"
+msgstr "Mayúsculas:"
+
+# ==AUTO== Automatically translated
+msgid "UPPERCASE"
+msgstr "MAYÚSCULAS"
+
+# ==AUTO== Automatically translated
+msgid "lowercase"
+msgstr "minúsculas"
+
+# ==AUTO== Automatically translated
+msgid "Capitalize first letter"
+msgstr "Capitalizar primera letra"
+
+# ==AUTO== Automatically translated
+msgid "Title Case"
+msgstr "Mayúsculas en Título"
+
+# ==AUTO== Automatically translated
+msgid "Capitalization mode"
+msgstr "Modo de capitalización"
+
+# ==AUTO== Automatically translated
+msgid "Choose how to change the case of file names after applying the pattern"
+msgstr ""
+"Elegir cómo cambiar las mayúsculas de los nombres de archivo después de "
+"aplicar el patrón"
+
+# ==AUTO== Automatically translated
+msgid "Remove duplicate separators"
+msgstr "Eliminar separadores duplicados"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive separators"
+msgstr "Colapsar separadores consecutivos"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse runs of identical separator characters (spaces, dots, dashes, "
+"underscores) into one"
+msgstr ""
+"Colapsar secuencias de caracteres separadores idénticos (espacios, "
+"puntos, guiones, guiones bajos) en uno"
+
+# ==AUTO== Automatically translated
+msgid "Save:"
+msgstr "Guardar:"
+
+# ==AUTO== Automatically translated
+msgid "Named save"
+msgstr "Guardado con nombre"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Type a name (letters, digits, _ and -) to save or load all search/replace"
+" parameters"
+msgstr ""
+"Escriba un nombre (letras, dígitos, _ y -) para guardar o cargar todos "
+"los parámetros de búsqueda/reemplazo"
+
+# ==AUTO== Automatically translated
+msgid "Save"
+msgstr "Guardar"
+
+# ==AUTO== Automatically translated
+msgid "Save current settings under this name"
+msgstr "Guardar la configuración actual con este nombre"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Save all search, replace and post-processing settings under the current "
+"name (overwrites any existing save with the same name)"
+msgstr ""
+"Guardar todos los ajustes de búsqueda, reemplazo y posprocesamiento con "
+"el nombre actual (sobrescribe cualquier guardado existente con el mismo "
+"nombre)"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "Eliminar"
+
+# ==AUTO== Automatically translated
+msgid "Delete this named save"
+msgstr "Eliminar este guardado con nombre"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete the named save matching the current name"
+msgstr ""
+"Eliminar permanentemente el guardado con nombre que coincide con el "
+"nombre actual"
+
+# ==AUTO== Automatically translated
+msgid "Compute rename preview"
+msgstr "Calcular vista previa del renombrado"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Aplicar el patrón actual a todos los archivos listados y mostrar el "
+"resultado en la columna Vista previa"
+
+# ==AUTO== Automatically translated
+msgid "Clear"
+msgstr "Borrar"
+
+# ==AUTO== Automatically translated
+msgid "Clear the preview"
+msgstr "Borrar la vista previa"
+
+# ==AUTO== Automatically translated
+msgid "Remove all preview values from the Preview column"
+msgstr "Eliminar todos los valores de vista previa de la columna Vista previa"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Revertir el último lote de renombrados realizados en el disco"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "Renombrar"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk"
+msgstr "Aplicar renombrados en el disco"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename all files shown in the Preview column (only enabled "
+"when there are no conflicts)"
+msgstr ""
+"Renombrar definitivamente todos los archivos mostrados en la columna "
+"Vista previa (solo habilitado cuando no hay conflictos)"
+
+# ==AUTO== Automatically translated
+msgid "File"
+msgstr "Archivo"
+
+# ==AUTO== Automatically translated
+msgid "Edit"
+msgstr "Editar"
+
+# ==AUTO== Automatically translated
+msgid "Shortcuts"
+msgstr "Atajos"
+
+# ==AUTO== Automatically translated
+msgid "Help"
+msgstr "Ayuda"
+
+# ==AUTO== Automatically translated
+msgid "Settings"
+msgstr "Ajustes"
+
+# ==AUTO== Automatically translated
+msgid "Select the interface language"
+msgstr "Seleccionar el idioma de la interfaz"
+
+# ==AUTO== Automatically translated
+msgid "Language:"
+msgstr "Idioma:"
+
+# ==AUTO== Automatically translated
+msgid "Set the application logging verbosity"
+msgstr "Establecer el nivel de verbosidad del registro de la aplicación"
+
+# ==AUTO== Automatically translated
+msgid "Log level:"
+msgstr "Nivel de registro:"
+
+# ==AUTO== Automatically translated
+msgid "Behaviour"
+msgstr "Comportamiento"
+
+# ==AUTO== Automatically translated
+msgid "Restore last opened directory"
+msgstr "Restaurar el último directorio abierto"
+
+# ==AUTO== Automatically translated
+msgid "On startup, reopen the directory that was active in the previous session"
+msgstr ""
+"Al inicio, volver a abrir el directorio que estaba activo en la sesión "
+"anterior"
+
+# ==AUTO== Automatically translated
+msgid "Restore toolbar state"
+msgstr "Restaurar estado de la barra de herramientas"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On startup, restore the toolbar settings from the previous session "
+"(display mode, recursive, keep extension, auto-preview, filter)"
+msgstr ""
+"Al inicio, restaurar los ajustes de la barra de herramientas de la sesión"
+" anterior (modo de visualización, recursivo, conservar extensión, vista "
+"previa automática, filtro)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Debounce delay before the preview refreshes after a search or replacement"
+" pattern change (ms)"
+msgstr ""
+"Retardo de antirrebote antes de que la vista previa se actualice tras un "
+"cambio en el patrón de búsqueda o reemplazo (ms)"
+
+# ==AUTO== Automatically translated
+msgid "Auto-preview delay:"
+msgstr "Retardo de vista previa automática:"
+
+# ==AUTO== Automatically translated
+msgid " ms"
+msgstr " ms"
+
+# ==AUTO== Automatically translated
+msgid "A restart is required for the language change to take effect."
+msgstr "Es necesario reiniciar para que el cambio de idioma surta efecto."
 
 # ==AUTO== Automatically translated
 msgid "Home"

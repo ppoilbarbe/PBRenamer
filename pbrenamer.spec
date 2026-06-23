@@ -69,6 +69,14 @@ _datas = [
 # Bundled resources (icons, …).
 _datas += [("src/pbrenamer/resources", "pbrenamer/resources")]
 
+# Conda fonts: bundled to guarantee identical rendering across machines.
+# On Linux, fontconfig resolves fonts via absolute paths written into fonts.conf
+# at build time; those paths do not exist on the target machine.
+# The runtime hook hooks/pyi_rth_fonts.py generates a portable fonts.conf at startup.
+_conda_fonts = Path(sys.prefix) / "fonts"
+if _conda_fonts.is_dir():
+    _datas += [(str(_conda_fonts), "fonts")]
+
 # ---------------------------------------------------------------------------
 # Analysis
 # ---------------------------------------------------------------------------
@@ -90,7 +98,7 @@ a = Analysis(
         "email.utils",
     ],
     hookspath=[],
-    runtime_hooks=[],
+    runtime_hooks=["hooks/pyi_rth_fonts.py"],
     # Exclude heavy stdlib modules that PBRenamer never uses.
     excludes=["tkinter", "unittest", "http", "xml", "numpy", "matplotlib"],
     noarchive=False,
