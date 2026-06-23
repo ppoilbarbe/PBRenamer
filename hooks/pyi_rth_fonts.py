@@ -21,9 +21,8 @@ else:
     if os.path.isdir(_fonts_dir):
         _conf_path = os.path.join(_meipass, "fonts.conf")
         # Include the system fonts.conf so that all rendering settings
-        # (anti-aliasing, hinting, subpixel, …) are inherited.  Only the
-        # bundled fonts directory needs to be added explicitly; system font
-        # directories and rendering rules come from the included system config.
+        # (anti-aliasing, hinting, subpixel, …) and system fonts are inherited.
+        # Only the bundled fonts directory needs to be added explicitly.
         _conf = f"""<?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>

@@ -618,7 +618,7 @@ def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
         return
     from pathlib import Path
 
-    from PySide6.QtGui import QFont, QFontDatabase
+    from PySide6.QtGui import QFontDatabase
 
     fonts_dir = Path(sys._MEIPASS) / "fonts"  # type: ignore[attr-defined]
     if not fonts_dir.is_dir():
@@ -630,14 +630,8 @@ def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
         if fid >= 0:
             loaded.update(QFontDatabase.applicationFontFamilies(fid))
 
-    # If the desktop system font (from fontconfig/GTK theme) is not available
-    # in the bundle, fall back to Ubuntu which ships with fonts-conda-ecosystem.
-    if "Ubuntu" in loaded:
-        current = app.font()  # type: ignore[union-attr]
-        desired = QFont(
-            "Ubuntu", current.pointSize() if current.pointSize() > 0 else 10
-        )
-        app.setFont(desired)
+    # Bundled fonts are registered for glyph coverage only; the system font
+    # (resolved via /etc/fonts/fonts.conf included above) is left as-is.
 
 
 def _gui_main(_ns):  # pragma: no cover
@@ -666,6 +660,17 @@ def _gui_main(_ns):  # pragma: no cover
     # CLI flag overrides the saved preference; None falls back to the preference.
     settings.apply_log_level(_ns.log_level)
 
+    f = app.font()
+    from PySide6.QtGui import QFontMetrics
+
+    fm = QFontMetrics(f)
+    _log.debug(
+        "Application font: %s %dpt — ascent %dpx height %dpx",
+        f.family(),
+        f.pointSize(),
+        fm.ascent(),
+        fm.height(),
+    )
     _log.info("PBRenamer %s starting", __version__)
     _log.debug(
         "Effective log level: %s", logging.getLevelName(logging.getLogger().level)

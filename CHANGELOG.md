@@ -8,16 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Linux bundle: fonts are now identical between local and CI builds. The
-  `fonts.conf` embedded by PyInstaller contained absolute paths to the build
-  machine's conda environment; on any other machine those paths are missing and
-  Qt fell back to system fonts only. Fix in three parts: conda fonts
-  (`fonts-conda-ecosystem`: Ubuntu, DejaVu, Inconsolata, SourceCodePro) are
-  included in the bundle via `pbrenamer.spec`; a runtime hook
-  (`hooks/pyi_rth_fonts.py`) generates a portable `fonts.conf` at startup and
-  calls `FcFini()`/`FcInit()` to force fontconfig re-initialisation;
-  `QFontDatabase.addApplicationFont()` loads the bundled fonts directly into Qt
-  (bypassing fontconfig) and sets Ubuntu as the application font.
+- Linux bundle: fonts and font size are now identical between local and CI
+  builds. The `fonts.conf` embedded by PyInstaller contained absolute paths to
+  the build machine's conda environment; on any other machine those paths are
+  missing and Qt fell back to system fonts only, at a different size. Fix: conda
+  fonts (`fonts-conda-ecosystem`: Ubuntu, DejaVu, Inconsolata, SourceCodePro)
+  are included in the bundle via `pbrenamer.spec` for glyph coverage; a runtime
+  hook (`hooks/pyi_rth_fonts.py`) generates a portable `fonts.conf` at startup
+  that includes the system `/etc/fonts/fonts.conf` and calls
+  `FcFini()`/`FcInit()` to force fontconfig re-initialisation with the correct
+  config — the system font is then resolved normally by Qt, with the same size
+  as in the local run.
   (Closes [#2](https://github.com/ppoilbarbe/PBRenamer/issues/2))
 
 ## [1.4.1] - 2026-06-18
