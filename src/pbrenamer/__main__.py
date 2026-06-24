@@ -618,7 +618,7 @@ def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
         return
     from pathlib import Path
 
-    from PySide6.QtGui import QFontDatabase
+    from PySide6.QtGui import QFont, QFontDatabase
 
     fonts_dir = Path(sys._MEIPASS) / "fonts"  # type: ignore[attr-defined]
     if not fonts_dir.is_dir():
@@ -630,8 +630,16 @@ def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
         if fid >= 0:
             loaded.update(QFontDatabase.applicationFontFamilies(fid))
 
-    # Bundled fonts are registered for glyph coverage only; the system font
-    # (resolved via /etc/fonts/fonts.conf included above) is left as-is.
+    # Set Ubuntu as the default application font so the bundle renders
+    # consistently on any machine, regardless of whether fontconfig finds
+    # the system config.  The bundled libfontconfig.so has its default config
+    # path hardcoded to the build machine's conda prefix, which does not exist
+    # on target machines, so font selection cannot rely on fontconfig.
+    if "Ubuntu" in loaded:
+        current = app.font()  # type: ignore[union-attr]
+        app.setFont(  # type: ignore[union-attr]
+            QFont("Ubuntu", current.pointSize() if current.pointSize() > 0 else 10)
+        )
 
 
 def _gui_main(_ns):  # pragma: no cover

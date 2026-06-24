@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Linux bundle — font selection**: `_load_bundled_fonts()` now explicitly sets
+  **Ubuntu** as the application font after registering the bundled `.ttf` files.
+  The `libfontconfig.so` bundled by PyInstaller has its default config path
+  hardcoded to the build machine's conda prefix; on any other machine that path
+  is absent and fontconfig fails silently, leaving Qt with no valid system font
+  and an unpredictable default.  Forcing Ubuntu bypasses fontconfig for font
+  selection while the runtime hook (`pyi_rth_fonts.py`) still provides a
+  portable `fonts.conf` so rendering settings (anti-aliasing, hinting…) are
+  inherited from the system `/etc/fonts/fonts.conf`.
+
 ## [1.4.2] - 2026-06-24
 
 ### Fixed
