@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-06-24
+
 ### Fixed
 
 - Linux bundle: fonts and font size are now identical between local and CI
@@ -20,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   config — the system font is then resolved normally by Qt, with the same size
   as in the local run.
   (Closes [#2](https://github.com/ppoilbarbe/PBRenamer/issues/2))
+- ReadTheDocs build: removed the `pre_build` step that attempted to run
+  `pyside6-uic` on `*.ui` files — no such files exist (`*_ui.py` are committed
+  hand-written sources); the stale step caused the RTD build to fail on every
+  tag since `1.4.1`
 
 ## [1.4.1] - 2026-06-18
 
