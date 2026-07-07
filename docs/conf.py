@@ -31,6 +31,8 @@ intersphinx_mapping = {
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+html_logo = "_static/pbrenamer.svg"
+html_favicon = "_static/pbrenamer.svg"
 html_theme_options = {
     "navigation_depth": 4,
     "titles_only": False,
@@ -135,3 +137,39 @@ _CHANGELOG_MD = _DOCS_DIR.parent / "CHANGELOG.md"
 _CHANGELOG_RST = _DOCS_DIR / "changelog.rst"
 
 _CHANGELOG_RST.write_text(_convert_changelog(_CHANGELOG_MD), encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# Logo / favicon — copied from the app's own icon at build time, so the
+# artwork has a single source of truth (src/pbrenamer/resources/pbrenamer.svg).
+# ---------------------------------------------------------------------------
+
+_SVG_ROOT_TAG = re.compile(r"<svg\b[^>]*>", re.DOTALL)
+_VIEWBOX = re.compile(r'viewBox="0 0 (\d+) (\d+)"')
+
+
+def _svg_with_explicit_size(svg_text: str) -> str:
+    """Add width/height attributes derived from the viewBox, if missing.
+
+    Guards against SVGs that rely on percentage sizing (fine for Qt's
+    fixed-size widget rendering) but leave the intrinsic size undefined for
+    a browser <img>, which some browsers (e.g. Firefox) then render as 0x0.
+    A no-op when the root already has explicit width/height attributes.
+    """
+    root_match = _SVG_ROOT_TAG.search(svg_text)
+    if not root_match or "width=" in root_match.group():
+        return svg_text
+    m = _VIEWBOX.search(root_match.group())
+    if not m:
+        return svg_text
+    width, height = m.groups()
+    start = root_match.start() + len("<svg")
+    return f'{svg_text[:start]} width="{width}" height="{height}"{svg_text[start:]}'
+
+
+_APP_ICON = _DOCS_DIR.parent / "src" / "pbrenamer" / "resources" / "pbrenamer.svg"
+_STATIC_ICON = _DOCS_DIR / "_static" / "pbrenamer.svg"
+
+_STATIC_ICON.write_text(
+    _svg_with_explicit_size(_APP_ICON.read_text(encoding="utf-8")), encoding="utf-8"
+)
