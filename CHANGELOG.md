@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   used as the Sphinx logo and favicon, copied to `docs/_static/pbrenamer.svg`
   at build time so the artwork has a single source of truth.
 
+### Fixed
+
+- `docs/conf.py`: the `## [Unreleased]` section of `CHANGELOG.md` was
+  dropped by the RST changelog generator except for its orphaned
+  `### Added`/`### Changed`/... subheadings, which were emitted without
+  content and at an incorrect nesting level. `[Unreleased]` is now
+  recognised like a dated release and included only when it has actual
+  content.
+
 ## [1.4.3] - 2026-06-24
 
 ### Fixed
