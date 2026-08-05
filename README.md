@@ -153,7 +153,7 @@ Full documentation is available at
 See [CODING.md](CODING.md) for developer setup, coding conventions, and the
 release process.
 
-The development environment is managed with conda, but all `make` targets can
+The development environment is managed with pixi, but all `make` targets can
 run against a plain Python environment by setting `NOCONDA=1` (see CODING.md).
 
 ## License

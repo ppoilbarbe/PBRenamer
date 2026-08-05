@@ -20,23 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up conda environment
-        uses: conda-incubator/setup-miniconda@v4
+      - name: Set up pixi environment
+        uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          miniforge-version: latest   # conda-forge channel by default
-          environment-file: environment.yml
-          activate-environment: pbrenamer
-          conda-remove-defaults: 'true'
+          pixi-version: latest
+          cache: true
 
       - name: Compile translation catalogues
-        shell: bash -el {0}
-        run: pybabel compile -d src/pbrenamer/locale -D pbrenamer
+        run: pixi run -- pybabel compile -d src/pbrenamer/locale -D pbrenamer
 
       - name: Run test suite
-        shell: bash -el {0}
         env:
           QT_QPA_PLATFORM: offscreen
-        run: make test NOCONDA=1
+        run: make test
 
   # ── Pre-commit hooks ─────────────────────────────────────────────────────────
   hooks:
@@ -45,13 +41,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up conda environment
-        uses: conda-incubator/setup-miniconda@v4
+      - name: Set up pixi environment
+        uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          miniforge-version: latest
-          environment-file: environment.yml
-          activate-environment: pbrenamer
-          conda-remove-defaults: 'true'
+          pixi-version: latest
+          cache: true
 
       - name: Cache pre-commit hook environments
         uses: actions/cache@v5
@@ -60,8 +54,7 @@ jobs:
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run hooks on all files
-        shell: bash -el {0}
-        run: make hooks NOCONDA=1
+        run: pixi run -- pre-commit run --all-files
 
   # ── Documentation ───────────────────────────────────────────────────────────
   docs:
@@ -71,17 +64,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up conda environment
-        uses: conda-incubator/setup-miniconda@v4
+      - name: Set up pixi environment
+        uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          miniforge-version: latest
-          environment-file: environment.yml
-          activate-environment: pbrenamer
-          conda-remove-defaults: 'true'
+          pixi-version: latest
+          cache: true
 
       - name: Build HTML documentation
-        shell: bash -el {0}
-        run: make docs NOCONDA=1
+        run: make docs
 
       - name: Upload documentation artifact
         uses: actions/upload-artifact@v7
@@ -103,25 +93,21 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up conda environment
-        uses: conda-incubator/setup-miniconda@v4
+      - name: Set up pixi environment
+        uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          miniforge-version: latest
-          environment-file: environment.yml
-          activate-environment: pbrenamer
-          conda-remove-defaults: 'true'
+          pixi-version: latest
+          cache: true
 
       - name: Compile translation catalogues
         # .mo files are gitignored generated artifacts; rebuild from .po sources.
-        shell: bash -el {0}
-        run: pybabel compile -d src/pbrenamer/locale -D pbrenamer
+        run: pixi run -- pybabel compile -d src/pbrenamer/locale -D pbrenamer
 
       - name: Build with PyInstaller
         # Call PyInstaller directly to avoid GNU Make portability issues
         # on Windows runners.
-        shell: bash -el {0}
         run: |
-          pyinstaller --clean --noconfirm \
+          pixi run -- pyinstaller --clean --noconfirm \
             --distpath dist --workpath build/pyinstaller \
             pbrenamer.spec
 

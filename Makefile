@@ -1,8 +1,8 @@
-CONDA_ENV  := pbrenamer
+PIXI := $(shell command -v pixi 2>/dev/null || echo "$(HOME)/.pixi/bin/pixi")
 ifdef NOCONDA
 CONDA_RUN  :=
 else
-CONDA_RUN  := conda run -n $(CONDA_ENV) --no-capture-output
+CONDA_RUN  := $(PIXI) run --
 endif
 SRC        := src
 DOCS       := docs
@@ -25,7 +25,7 @@ TRANSLATE_STAMP := .translate.stamp
 
 .DEFAULT_GOAL := help
 .PHONY: all help venv venv-update install translate new-lang run test coverage \
-        lint format docs docs-live dist srcdist clean force-translate \
+        hooks lint format docs docs-live dist srcdist clean force-translate \
         bump-major bump-minor bump-patch bump-set
 
 all: translate ## Build all generated artifacts (strings → .mo)
@@ -37,17 +37,21 @@ help: ## This help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS=":.*?## "}; {printf "  $(G)%-14s$(R) %s\n", $$1, $$2}'
 	@printf "\n$(Y)Variables:$(R)\n"
-	@printf "  $(G)NOCONDA$(R)        Bypass conda wrapping; tools must be on PATH\n"
+	@printf "  $(G)NOCONDA$(R)        Bypass pixi wrapping; tools must be on PATH\n"
 	@printf "                 e.g. $(C)make test NOCONDA=1$(R)  or  $(C)export NOCONDA=1$(R)\n"
 
-venv: ## Create conda env 'pbrenamer' from environment.yml
-	@printf "$(C)Creating conda environment '$(CONDA_ENV)'...$(R)\n"
-	conda env create -f environment.yml
-	@printf "$(G)Done! Activate with:$(R) conda activate $(CONDA_ENV)\n"
+venv: ## Create/update the pixi environment from pyproject.toml (installs pixi if missing)
+	@if ! command -v pixi >/dev/null 2>&1 && [ ! -x "$(PIXI)" ]; then \
+		printf "$(C)pixi not found — installing...$(R)\n"; \
+		curl -fsSL https://pixi.sh/install.sh | sh; \
+	fi
+	@printf "$(C)Installing pixi environment...$(R)\n"
+	$(PIXI) install
+	@printf "$(G)Done! Run tasks with:$(R) make <target>  (e.g. make run, make test)\n"
 
-venv-update: ## Update existing conda env from environment.yml
-	@printf "$(C)Updating conda environment '$(CONDA_ENV)'...$(R)\n"
-	conda env update -f environment.yml --prune
+venv-update: ## Update the pixi environment / lockfile from pyproject.toml
+	@printf "$(C)Updating pixi environment...$(R)\n"
+	$(PIXI) update
 	@printf "$(G)Done.$(R)\n"
 
 # ── i18n ──────────────────────────────────────────────────────────────────────
@@ -99,7 +103,7 @@ install: ## Install package in editable mode and register git hooks
 	$(CONDA_RUN) pip install -e ".[dev]"
 	$(CONDA_RUN) pre-commit install
 
-run: ## Launch PBRenamer from the conda env  (usage: make run ARGS="--debug /some/dir")
+run: ## Launch PBRenamer from the pixi env  (usage: make run ARGS="--debug /some/dir")
 	$(CONDA_RUN) python -m pbrenamer $(ARGS)
 
 test: ## Run test suite

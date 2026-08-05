@@ -10,7 +10,7 @@ Publisher: PBMou | Author: Marcel Spock <mrspock@cardolan.net> | License: GPLv3
 - Tests: pytest + pytest-qt (`qtbot`; never instantiate `QApplication` manually)
 - Docs: Sphinx + sphinx-rtd-theme (ReadTheDocs)
 - Lint: ruff (line-length 88, target py312)
-- Env: conda `pbrenamer`, **conda-forge only** — `make venv`
+- Env: pixi (conda-forge channel) — `make venv`; environments stored under `~/PIXI/` (global `detached-environments` config), not `.pixi/`
 - Packaging: PyInstaller (`pbrenamer.spec`) — `make dist`
 - CI/CD: `.github/workflows/ci.yml` — test → hooks → build (3 OS) → release on semver tag
 
@@ -42,7 +42,8 @@ tools/
 
 .github/workflows/ci.yml    CI pipeline
 pbrenamer.spec              PyInstaller spec
-environment.yml             conda env
+pyproject.toml              project metadata + [tool.pixi.*] env/deps (conda-forge channel)
+pixi.lock                   pinned lockfile — commit this
 ```
 
 ## Key conventions
@@ -67,13 +68,13 @@ Python strings: wrap with `_("…")`. UI strings (`text`, `toolTip`, `statusTip`
 New language: `make new-lang LOCALE=de`, translate all `msgstr`, then `make translate`.
 
 ## System constraints
-- Platform: linux-64
-- conda: 26.1.1 — channel **conda-forge only** (never use `defaults`)
+- Platform: linux-64 (also osx-64, osx-arm64, win-64 via the CI build matrix)
+- pixi: 0.76.1 — channel **conda-forge only** (never use `defaults`)
 - Python: 3.12.13
-- PySide6: 6.11.0
-- pytest: 9.0.3 | pytest-qt: 4.5.0 | pytest-cov: 7.1.0
-- Sphinx: 8.2.3 | sphinx-rtd-theme: 3.1.0 | sphinx-autobuild: 2025.8.25
-- ruff: 0.15.11
-- pre-commit: 4.5.1
-- gh (GitHub CLI): 2.90.0
-- pyinstaller: not yet installed locally — run `make venv-update`
+- PySide6: 6.11.1
+- pytest: 9.1.1 | pytest-qt: 4.5.0 | pytest-cov: 7.1.0
+- Sphinx: 9.1.0 | sphinx-rtd-theme: 3.1.0 | sphinx-autobuild: 2025.8.25
+- ruff: 0.16.1
+- pre-commit: 4.6.1
+- gh (GitHub CLI): 2.97.0
+- pyinstaller: 6.21.0

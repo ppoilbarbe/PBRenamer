@@ -13,7 +13,7 @@ For user-facing information see [README.md](README.md).
 | Tests          | pytest + pytest-qt                          |
 | Linter         | ruff (line-length 88, target py312)         |
 | Docs           | Sphinx + sphinx-rtd-theme (ReadTheDocs)     |
-| Package mgr    | conda — **conda-forge only** (`nodefaults`) |
+| Package mgr    | pixi — **conda-forge only**                 |
 | Build          | Hatchling (`pyproject.toml`)                |
 | Packaging      | PyInstaller (`pbrenamer.spec`)              |
 | CI/CD          | GitHub Actions                              |
@@ -83,24 +83,30 @@ PBRenamer/
 │   └── workflows/
 │       └── ci.yml               CI pipeline
 ├── pbrenamer.spec               PyInstaller build spec
-├── environment.yml              conda environment declaration
-├── pyproject.toml               project metadata + tool configuration
+├── pyproject.toml               project metadata + tool configuration + [tool.pixi.*] env/deps
+├── pixi.lock                    pinned lockfile (committed)
 ├── Makefile                     development task runner
 └── .readthedocs.yaml            ReadTheDocs build configuration
 ```
 
 ## Setup
 
-### 1. Create the conda environment
+### 1. Create the pixi environment
 
 ```bash
 make venv
-conda activate pbrenamer
 ```
 
-Installs Python 3.12, PySide6 (+ Qt Designer), pytest, Sphinx, ruff, PyInstaller,
-and the GitHub CLI in a self-contained conda environment sourced exclusively from
-**conda-forge** (`nodefaults`). Never add the `defaults` channel.
+Installs pixi itself if not already present, then resolves Python 3.12, PySide6
+(+ Qt Designer), pytest, Sphinx, ruff, PyInstaller, and the GitHub CLI from
+**conda-forge** only. No activation step is needed — `make <target>` runs every
+tool through `pixi run` automatically. For an interactive shell with the
+environment activated, use `pixi shell`.
+
+By default the environment lives under `<repo>/.pixi/` (gitignored). Pixi's
+global `detached-environments` config can relocate it elsewhere on a given
+machine (`pixi config set --global detached-environments <path>`) — a
+per-machine setup, not something `make venv` does for you.
 
 ### 2. Install the package in editable mode
 
@@ -108,9 +114,9 @@ and the GitHub CLI in a self-contained conda environment sourced exclusively fro
 make install   # pip install -e ".[dev]"  +  pre-commit install
 ```
 
-### Running without conda
+### Running without pixi
 
-Set `NOCONDA` to bypass conda wrapping entirely. Every tool (`python`, `pytest`,
+Set `NOCONDA` to bypass pixi wrapping entirely. Every tool (`python`, `pytest`,
 `ruff`, `sphinx-build`, …) must then be available on your `PATH`:
 
 ```bash
@@ -118,7 +124,7 @@ make test NOCONDA=1          # one-off override on the command line
 export NOCONDA=1 && make lint test   # for the whole shell session
 ```
 
-`make venv` and `make venv-update` always invoke `conda` directly and are
+`make venv` and `make venv-update` always invoke `pixi` directly and are
 unaffected by `NOCONDA`.
 
 ## Daily workflow

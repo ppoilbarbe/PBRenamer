@@ -43,3 +43,9 @@ tools/_ui_strings_tmp.py
 
 # Claude Code
 .claude/settings.local.json
+
+# pixi (defensive: environments should live in ~/PIXI/ via the global
+# `pixi config set --global detached-environments`, but this covers
+# machines/accounts where that global config isn't set, so .pixi/
+# never ends up committed)
+.pixi/

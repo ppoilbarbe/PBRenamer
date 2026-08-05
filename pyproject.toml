@@ -89,3 +89,29 @@ quote-style               = "double"
 indent-style              = "space"
 skip-magic-trailing-comma = false
 line-ending               = "lf"
+
+[tool.pixi.workspace]
+channels  = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+
+[tool.pixi.dependencies]
+python                 = "3.12.*"
+pyside6                = "*"
+fonts-conda-ecosystem  = "*"
+pytest                 = "*"
+pytest-qt              = "*"
+pytest-cov             = "*"
+sphinx                 = "*"
+sphinx-rtd-theme       = "*"
+sphinx-autobuild       = "*"
+ruff                   = "*"
+pre-commit             = "*"
+gh                     = "*"
+babel                  = "*"
+pillow                 = "*"
+mutagen                = "*"
+pymediainfo            = "*"
+pyinstaller            = "*"
+
+[tool.pixi.pypi-dependencies]
+pbrenamer = { path = ".", editable = true }
