@@ -6,11 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-08-05
+
 ### Added
 
 - Documentation: the app icon (`src/pbrenamer/resources/pbrenamer.svg`) is now
   used as the Sphinx logo and favicon, copied to `docs/_static/pbrenamer.svg`
   at build time so the artwork has a single source of truth.
+
+### Changed
+
+- Development environment management migrated from conda to
+  [pixi](https://pixi.sh): `environment.yml` is replaced by `[tool.pixi.*]`
+  sections in `pyproject.toml` and a committed `pixi.lock`. `make venv` now
+  bootstraps pixi itself if missing; the Makefile's `CONDA_RUN` wrapper now
+  resolves to `pixi run --` instead of `conda run -n pbrenamer`. CI
+  provisions pixi via `prefix-dev/setup-pixi` instead of
+  `conda-incubator/setup-miniconda` in the test, hooks, docs, and build jobs.
+  No application code changed.
 
 ### Fixed
 
@@ -20,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   content and at an incorrect nesting level. `[Unreleased]` is now
   recognised like a dated release and included only when it has actual
   content.
+- Makefile: the `hooks` target was missing from `.PHONY` and silently
+  shadowed by the `hooks/` directory (holding the PyInstaller runtime font
+  hook), so `make hooks` was a no-op instead of running pre-commit.
+- CI: the Windows build job's PyInstaller step used a bash-style multi-line
+  command with `\` line continuations, which is not valid under PowerShell
+  (the default shell on `windows-latest`); it now runs as a single line.
 
 ## [1.4.3] - 2026-06-24
 
