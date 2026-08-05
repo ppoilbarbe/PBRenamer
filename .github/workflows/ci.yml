@@ -105,11 +105,10 @@ jobs:
 
       - name: Build with PyInstaller
         # Call PyInstaller directly to avoid GNU Make portability issues
-        # on Windows runners.
-        run: |
-          pixi run -- pyinstaller --clean --noconfirm \
-            --distpath dist --workpath build/pyinstaller \
-            pbrenamer.spec
+        # on Windows runners. Single-line command: the `\` line-continuation
+        # used by bash is not valid PowerShell, the default shell on
+        # windows-latest runners.
+        run: pixi run -- pyinstaller --clean --noconfirm --distpath dist --workpath build/pyinstaller pbrenamer.spec
 
       - name: Zip .app bundle (macOS)
         # A .app bundle is a directory; zip it for upload and release attachment.
