@@ -69,6 +69,13 @@ _datas = [
 # Bundled resources (icons, …).
 _datas += [("src/pbrenamer/resources", "pbrenamer/resources")]
 
+# Native per-platform icon (synced from PBIcons via tools/update_icons.py).
+_icons = {
+    "win32": "src/pbrenamer/resources/pbrenamer.ico",
+    "darwin": "src/pbrenamer/resources/pbrenamer.icns",
+}
+icon = _icons.get(sys.platform)
+
 # Conda fonts: bundled to guarantee identical rendering across machines.
 # On Linux, fontconfig resolves fonts via absolute paths written into fonts.conf
 # at build time; those paths do not exist on the target machine.
@@ -119,6 +126,7 @@ if sys.platform == "darwin":
         exclude_binaries=True,
         name=_artifact_name,
         console=False,
+        icon=icon,
     )
     coll = COLLECT(
         exe,
@@ -129,6 +137,7 @@ if sys.platform == "darwin":
     BUNDLE(
         coll,
         name=f"{_artifact_name}.app",
+        icon=icon,
         bundle_identifier="net.cardolan.pbrenamer",
         info_plist={
             "NSHighResolutionCapable": True,
@@ -147,4 +156,5 @@ else:
         name=_artifact_name,
         # No console window on Windows; harmless on Linux.
         console=False,
+        icon=icon,
     )

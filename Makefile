@@ -26,7 +26,7 @@ TRANSLATE_STAMP := .translate.stamp
 .DEFAULT_GOAL := help
 .PHONY: all help venv venv-update install translate new-lang run test coverage \
         hooks lint format docs docs-live dist srcdist clean force-translate \
-        bump-major bump-minor bump-patch bump-set
+        bump-major bump-minor bump-patch bump-set update-icons
 
 all: translate ## Build all generated artifacts (strings → .mo)
 
@@ -130,6 +130,9 @@ docs: ## Build HTML documentation
 
 docs-live: ## Build docs and watch for changes (hot reload)
 	$(CONDA_RUN) sphinx-autobuild $(DOCS) $(DOCS)/_build/html
+
+update-icons: ## Sync app icon (.svg/.ico/.icns) from PBIcons
+	$(CONDA_RUN) python tools/update_icons.py
 
 # ── Distribution ──────────────────────────────────────────────────────────────
 
