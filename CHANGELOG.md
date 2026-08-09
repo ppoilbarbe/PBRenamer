@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `make update-icons` (new Makefile target, backed by the new `tools/update_icons.py`) syncs `pbrenamer.svg` and the new `pbrenamer.ico`/`pbrenamer.icns` byte-for-byte from the PBIcons reference project (local checkout or GitHub)
 - PyInstaller build now embeds a native icon (`pbrenamer.ico` on Windows, `pbrenamer.icns` on macOS via `BUNDLE`), synced from PBIcons
 
+### Fixed
+
+- Picking an entry from the search pattern history no longer overwrites the replace field with the first entry of the replace history (and vice versa); each history combo box now only refreshes its own list
+
 ## [1.4.4] - 2026-08-05
 
 ### Added

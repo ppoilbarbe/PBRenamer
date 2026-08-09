@@ -171,13 +171,20 @@ class MainWindow(QMainWindow):
         self._ui.cmbPatternDest.setLineEdit(WhitespaceLineEdit())
 
     def _populate_pattern_combos(self) -> None:
+        self._populate_search_combo()
+        self._populate_replace_combo()
+
+    def _populate_search_combo(self) -> None:
         self._ui.cmbPatternSearch.clear()
         for mode, pattern in self._presets.get_search():
             self._ui.cmbPatternSearch.addItem(pattern, mode)
+        self._update_search_add_button()
+
+    def _populate_replace_combo(self) -> None:
         self._ui.cmbPatternDest.clear()
         for pattern in self._presets.get_replace():
             self._ui.cmbPatternDest.addItem(pattern)
-        self._update_add_buttons()
+        self._update_replace_add_button()
 
     def _connect_signals(self) -> None:
         self._ui.actionOpenFolder.triggered.connect(self._on_open)
@@ -420,10 +427,6 @@ class MainWindow(QMainWindow):
         self._update_search_add_button()
         if self._ui.chkAutoPreview.isChecked():
             self._on_preview()
-
-    def _update_add_buttons(self) -> None:
-        self._update_search_add_button()
-        self._update_replace_add_button()
 
     def _update_search_add_button(self) -> None:
         pattern = self._ui.cmbPatternSearch.currentText()
@@ -765,7 +768,7 @@ class MainWindow(QMainWindow):
             return
         mode = self._current_search_mode()
         self._presets.add_search(mode, pattern)
-        self._populate_pattern_combos()
+        self._populate_search_combo()
         self._ui.cmbPatternSearch.setCurrentIndex(0)
 
     def _on_add_replace(self) -> None:
@@ -773,7 +776,7 @@ class MainWindow(QMainWindow):
         if not pattern:
             return
         self._presets.add_replace(pattern)
-        self._populate_pattern_combos()
+        self._populate_replace_combo()
         self._ui.cmbPatternDest.setCurrentIndex(0)
 
     def _on_search_preset_selected(self, index: int) -> None:
@@ -790,7 +793,7 @@ class MainWindow(QMainWindow):
         else:
             return  # unknown mode — do not promote
         self._presets.add_search(mode, pattern)
-        self._populate_pattern_combos()
+        self._populate_search_combo()
         self._ui.cmbPatternSearch.setCurrentIndex(0)
 
     def _on_replace_preset_selected(self, index: int) -> None:
@@ -800,7 +803,7 @@ class MainWindow(QMainWindow):
         if not pattern:
             return
         self._presets.add_replace(pattern)
-        self._populate_pattern_combos()
+        self._populate_replace_combo()
         self._ui.cmbPatternDest.setCurrentIndex(0)
 
     # ── Named saves ──────────────────────────────────────────────────────────

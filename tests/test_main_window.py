@@ -735,6 +735,24 @@ class TestPatternHistory:
         idx = window._ui.cmbPatternDest.count() - 1
         window._on_replace_preset_selected(idx)  # no crash
 
+    def test_on_search_preset_selected_does_not_touch_replace(self, window):
+        window._ui.cmbPatternDest.addItem("z_older_replace")
+        window._ui.cmbPatternDest.addItem("in_progress_replace")
+        window._ui.cmbPatternDest.setCurrentText("in_progress_replace")
+        window._ui.cmbPatternSearch.addItem("{L}", "pattern")
+        idx = window._ui.cmbPatternSearch.count() - 1
+        window._on_search_preset_selected(idx)
+        assert window._ui.cmbPatternDest.currentText() == "in_progress_replace"
+
+    def test_on_replace_preset_selected_does_not_touch_search(self, window):
+        window._ui.cmbPatternSearch.addItem("z_older_search", "plain")
+        window._ui.cmbPatternSearch.addItem("in_progress_search", "plain")
+        window._ui.cmbPatternSearch.setCurrentText("in_progress_search")
+        window._ui.cmbPatternDest.addItem("my_replace")
+        idx = window._ui.cmbPatternDest.count() - 1
+        window._on_replace_preset_selected(idx)
+        assert window._ui.cmbPatternSearch.currentText() == "in_progress_search"
+
 
 # ---------------------------------------------------------------------------
 # Named saves  (lines 765-855)
