@@ -578,6 +578,7 @@ class MainWindow(QMainWindow):
 
             field_error = False
             field_error_name = ""
+            field_error_namespaces: frozenset[str] | None = None
             newname = None
 
             if newnum_state is not None:
@@ -599,6 +600,7 @@ class MainWindow(QMainWindow):
                     except _repl.FieldResolutionError as err:
                         field_error = True
                         field_error_name = err.field
+                        field_error_namespaces = err.namespaces
                         break
                     if raw is None:
                         break
@@ -629,6 +631,7 @@ class MainWindow(QMainWindow):
                 except _repl.FieldResolutionError as err:
                     field_error = True
                     field_error_name = err.field
+                    field_error_namespaces = err.namespaces
                     raw = None
                 if raw is not None:
                     processed = self._apply_postproc(raw, stem_path)
@@ -639,10 +642,21 @@ class MainWindow(QMainWindow):
                 item.setText(1, newname)
                 item.setData(1, Qt.ItemDataRole.UserRole, False)
             elif field_error:
-                _log.debug("Preview: %r — field %r unavailable", name, field_error_name)
-                item.setText(
-                    1, _("⚠ {field} unavailable").format(field=field_error_name)
-                )
+                if field_error_namespaces:
+                    types = "/".join(
+                        ns.rstrip(":") for ns in sorted(field_error_namespaces)
+                    )
+                    _log.debug("Preview: %r — no matching type among %s", name, types)
+                    item.setText(
+                        1, _("⚠ no matching type ({types})").format(types=types)
+                    )
+                else:
+                    _log.debug(
+                        "Preview: %r — field %r unavailable", name, field_error_name
+                    )
+                    item.setText(
+                        1, _("⚠ {field} unavailable").format(field=field_error_name)
+                    )
                 item.setData(1, Qt.ItemDataRole.UserRole, True)
             else:
                 item.setText(1, "")

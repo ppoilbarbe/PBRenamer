@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-08-09
+
+### Added
+
+- `make verify-testpypi` / `make verify-pypi`: install the latest `pbrenamer` from TestPyPI / the real PyPI into a throwaway venv, run `pbrenamer $(ARGS)` (default `--version`, override e.g. `make verify-testpypi ARGS="--help-search"`) as a smoke test, then remove the venv — cleanup always runs even if the install or the smoke test fails, and the target still exits non-zero on failure
+
+### Fixed
+
+- Mixed-type replacement templates (e.g. `{im:…}{vi:…}`) on a file that matches *none* of the namespaces used in the template still flag the file as an error (unchanged), but the message is now explicit about which namespaces were tried instead of misleadingly naming only the first field — e.g. `⚠ no matching type (im/vi)` instead of `⚠ im:DateTimeDigitized unavailable`, which wrongly suggested only that one field was the problem.
+
 ## [1.5.0] - 2026-08-09
 
 ### Added

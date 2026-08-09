@@ -5,18 +5,19 @@ For user-facing information see [README.md](README.md).
 
 ## Tech stack
 
-| Layer          | Technology                                  |
-|----------------|---------------------------------------------|
-| Language       | Python 3.12+                                |
-| GUI            | PySide6 (Qt 6 official Python binding)      |
-| UI design      | Hand-written `*_ui.py` (no Qt Designer)     |
-| Tests          | pytest + pytest-qt                          |
-| Linter         | ruff (line-length 88, target py312)         |
-| Docs           | Sphinx + sphinx-rtd-theme (ReadTheDocs)     |
-| Package mgr    | pixi — **conda-forge only**                 |
-| Build          | Hatchling (`pyproject.toml`)                |
-| Packaging      | PyInstaller (`pbrenamer.spec`)              |
-| CI/CD          | GitHub Actions                              |
+| Layer        | Technology                                                                  |
+| ------------ | --------------------------------------------------------------------------- |
+| Language     | Python 3.12+                                                                |
+| GUI          | PySide6 (Qt 6 official Python binding)                                      |
+| UI design    | Hand-written `*_ui.py` (no Qt Designer)                                     |
+| Tests        | pytest + pytest-qt                                                          |
+| Linter       | ruff (line-length 88, target py312)                                         |
+| Docs         | Sphinx + sphinx-rtd-theme (ReadTheDocs)                                     |
+| Package mgr  | pixi — **conda-forge only**                                                 |
+| Build        | Hatchling (`pyproject.toml`, `hatch_build.py`)                              |
+| Packaging    | PyInstaller (`pbrenamer.spec`)                                              |
+| PyPI publish | `build` + `twine` (`make pypi-build` / `publish-pypi` / `publish-testpypi`) |
+| CI/CD        | GitHub Actions                                                              |
 
 ## Project layout
 
@@ -37,6 +38,7 @@ PBRenamer/
 │   │   ├── undo.py              batch undo stack
 │   │   └── video_meta.py        video metadata reading via pymediainfo ({vi:} fields)
 │   ├── platform/                all OS-specific abstractions
+│   │   ├── desktop.py           install/remove a Linux .desktop menu entry (--install-desktop-entry)
 │   │   ├── dirs.py              AppDirs(): XDG / macOS Library / Windows AppData
 │   │   ├── fs.py                filesystem case-sensitivity probe + helpers
 │   │   └── locale.py            cross-platform system language detection
@@ -82,6 +84,7 @@ PBRenamer/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               CI pipeline
+├── hatch_build.py               Hatchling build hook: compiles .po → .mo into the wheel (PyPI only)
 ├── pbrenamer.spec               PyInstaller build spec
 ├── pyproject.toml               project metadata + tool configuration + [tool.pixi.*] env/deps
 ├── pixi.lock                    pinned lockfile (committed)
@@ -98,7 +101,8 @@ make venv
 ```
 
 Installs pixi itself if not already present, then resolves Python 3.12, PySide6
-(+ Qt Designer), pytest, Sphinx, ruff, PyInstaller, and the GitHub CLI from
+(+ Qt Designer), pytest, Sphinx, ruff, PyInstaller, `build`/`twine` (PyPI),
+Babel/Pillow/mutagen/pymediainfo (metadata fields), and the GitHub CLI from
 **conda-forge** only. No activation step is needed — `make <target>` runs every
 tool through `pixi run` automatically. For an interactive shell with the
 environment activated, use `pixi shell`.
@@ -129,23 +133,30 @@ unaffected by `NOCONDA`.
 
 ## Daily workflow
 
-| Task                      | Command                                  |
-|---------------------------|------------------------------------------|
-| Run the application       | `make run`                               |
-| Run tests                 | `make test`                              |
-| HTML coverage report      | `make coverage`                          |
-| Lint & style check        | `make lint`                              |
-| Auto-format               | `make format`                            |
-| Run all pre-commit hooks  | `make hooks`                             |
-| Update translations       | `make translate`                         |
-| Build standalone binary   | `make dist`                              |
-| Build docs                | `make docs`                              |
-| Live-reload docs          | `make docs-live`                         |
-| Remove build artifacts    | `make clean`                             |
-| Bump patch version        | `make bump-patch`                        |
-| Bump minor version        | `make bump-minor`                        |
-| Bump major version        | `make bump-major`                        |
-| Force a specific version  | `make bump-set VERSION=x.y.z`            |
+| Task                           | Command                       |
+| ------------------------------ | ----------------------------- |
+| Run the application            | `make run`                    |
+| Run tests                      | `make test`                   |
+| HTML coverage report           | `make coverage`               |
+| Lint & style check             | `make lint`                   |
+| Auto-format                    | `make format`                 |
+| Run all pre-commit hooks       | `make hooks`                  |
+| Update translations            | `make translate`              |
+| Sync app icon                  | `make update-icons`           |
+| Build standalone binary        | `make dist`                   |
+| Build source archive           | `make srcdist`                |
+| Build docs                     | `make docs`                   |
+| Live-reload docs               | `make docs-live`              |
+| Build PyPI wheel + sdist       | `make pypi-build`             |
+| Publish to TestPyPI            | `make publish-testpypi`       |
+| Publish to PyPI                | `make publish-pypi`           |
+| Verify latest TestPyPI release | `make verify-testpypi`        |
+| Verify latest PyPI release     | `make verify-pypi`            |
+| Remove build artifacts         | `make clean`                  |
+| Bump patch version             | `make bump-patch`             |
+| Bump minor version             | `make bump-minor`             |
+| Bump major version             | `make bump-major`             |
+| Force a specific version       | `make bump-set VERSION=x.y.z` |
 
 Run `make` (or `make help`) to see all targets with descriptions.
 
@@ -190,10 +201,11 @@ business-logic files. There is no Qt Designer step.
 
 ## Platform abstraction (`pbrenamer/platform/`)
 
-All OS-specific code must live in this package. The three modules are:
+All OS-specific code must live in this package. The modules are:
 
 | Module | Responsibility |
 | --- | --- |
+| `desktop.py` | `install_desktop_entry()` / `uninstall_desktop_entry()` — Linux-only `.desktop` menu entry, backing `--install-desktop-entry`/`--uninstall-desktop-entry` |
 | `dirs.py` | `AppDirs(name)` factory → `config_home`, `data_home`, `cache_home` |
 | `fs.py` | `is_case_sensitive(dir)` — probes the filesystem at runtime; `conflict_key()`, `same_file_path()` |
 | `locale.py` | `system_language()` — env vars (Unix) + `locale.getlocale()` (Windows/macOS) |
@@ -223,8 +235,14 @@ Python source + *_ui.py
   locale/<lang>/LC_MESSAGES/pbrenamer.po   ← human-edited, committed
        │
        ▼ pybabel compile
-  locale/<lang>/LC_MESSAGES/pbrenamer.mo   ← binary catalogue, committed
+  locale/<lang>/LC_MESSAGES/pbrenamer.mo   ← binary catalogue, gitignored (rebuilt on demand)
 ```
+
+`.mo` files are **not** committed — they're rebuilt wherever they're needed:
+`make translate` compiles them locally, CI runs an explicit `pybabel compile`
+step before the `test` and `build` jobs (which don't go through Hatchling),
+and the `hatch_build.py` build hook compiles them into the wheel when
+building for PyPI (`make pypi-build`).
 
 To inspect `.po` files (statistics, untranslated entries, pattern search) use
 `tools/po_check.py` — never `grep` or `msgfmt`, both break on multi-line entries.
@@ -284,8 +302,9 @@ git add src/pbrenamer/locale/de/
 git commit -m "i18n: add German (de) translation"
 ```
 
-Only `.po` and `.mo` files go into version control — the `.pot` template is
-regenerated on demand and is excluded by `.gitignore`.
+Only `.po` files go into version control — both `.pot` and `.mo` are
+gitignored generated artifacts, rebuilt on demand (see the toolchain diagram
+above).
 
 ## Testing
 
@@ -350,12 +369,43 @@ coexist in the same directory:
 
 | Platform | Output |
 | --- | --- |
-| Linux | `dist/PBRenamer-<ver>-linux-x86_64` |
-| Windows | `dist/PBRenamer-<ver>-windows-x86_64.exe` |
-| macOS | `dist/PBRenamer-<ver>-macos-arm64.app` |
+| Linux | `dist/pbrenamer-<ver>-linux-x86_64` |
+| Windows | `dist/pbrenamer-<ver>-windows-x86_64.exe` |
+| macOS | `dist/pbrenamer-<ver>-macos-arm64.app` |
 
 The version is read from `pyproject.toml` at spec-evaluation time.
 PyInstaller cannot cross-compile; each platform must build natively.
+
+`make srcdist` builds a plain source archive instead
+(`dist/pbrenamer-<ver>-src.tar.gz`, via `git archive`) — both `dist` and
+`srcdist` derive `<ver>` from `tools/git_version.sh` (the exact Git tag when
+`HEAD` is tagged and the tree is clean, else `dev`).
+
+## Publishing to PyPI
+
+Unlike `dist`/`srcdist`, the PyPI targets always use the static
+`project.version` from `pyproject.toml` (via `make bump-*`) — never `dev`,
+since PyPI permanently reserves whatever version number is uploaded.
+
+| Target | Effect |
+| --- | --- |
+| `make pypi-build` | Builds wheel + sdist into `dist/pypi/` via `python -m build` (separate from `dist/` to avoid mixing with the PyInstaller executables and `srcdist`'s archive) |
+| `make publish-testpypi` | `pypi-build` then `twine upload --repository testpypi` |
+| `make publish-pypi` | `pypi-build` then `twine upload` to the real PyPI — asks for an explicit `yes` confirmation first (irreversible: PyPI never allows re-uploading the same version) |
+| `make verify-testpypi` / `make verify-pypi` | Install the latest published release into a throwaway venv, run `pbrenamer $(ARGS)` (default `--version`) as a smoke test, then remove the venv — cleanup always runs, even on failure |
+
+`twine` reads credentials from `~/.pypirc` (`chmod 600`, two sections —
+`[pypi]` and `[testpypi]`, both with `username = __token__` and a project API
+token as `password`) or the `TWINE_USERNAME`/`TWINE_PASSWORD` environment
+variables. TestPyPI and PyPI are separate accounts with separate tokens.
+
+Since `.mo` catalogues are gitignored (see [Internationalisation](#internationalisation-i18n)),
+the `hatch_build.py` Hatchling build hook compiles them from the committed
+`.po` sources at wheel-build time and force-includes the result — without
+it, a PyPI install would ship with no translations
+(`i18n.available_languages()` discovers languages by globbing `.mo` files).
+The hook only runs for the `wheel` target; `babel` is a `[build-system]
+requires` dependency so it's available in the isolated build environment.
 
 ## CI/CD (`.github/workflows/ci.yml`)
 
@@ -364,21 +414,26 @@ The pipeline runs on every push and pull request:
 ```text
 push / PR
   ├── test   (ubuntu) ──┐
-  └── hooks  (ubuntu) ──┴── build ──── release  ← semver tags only
+  ├── hooks  (ubuntu) ──┤
+  └── docs   (ubuntu, needs: test) ──build ──── release  ← semver tags only
                               ├── linux
                               ├── windows
                               └── macos
 ```
 
-The `build` jobs call PyInstaller directly (not `make dist`) — `.mo` files
-are committed and this avoids GNU Make / gettext portability issues on
-Windows runners. `*_ui.py` files are committed source and require no
-compilation step.
+`test` and `build` each run an explicit `pybabel compile` step before
+running the suite / calling PyInstaller — neither goes through Hatchling, so
+neither picks up `.mo` files any other way (they're gitignored, not
+committed). `build` calls PyInstaller directly (not `make dist`), which
+avoids GNU Make / gettext portability issues on Windows runners. `*_ui.py`
+files are committed source and require no compilation step.
 
 The `release` job runs only on tags matching `v[0-9]*.[0-9]*.[0-9]*`. It
 downloads all three build artifacts, extracts the corresponding entry from
 `CHANGELOG.md` (via `tools/extract_changelog.py`), and creates a GitHub
-release with the three binaries attached.
+release with the three binaries attached. It does **not** publish to
+PyPI — that's a manual step (`make publish-pypi`), not currently wired
+into CI.
 
 ## Releasing
 
@@ -398,6 +453,20 @@ release with the three binaries attached.
 
 The CI pipeline takes over: it runs tests, builds the three platform binaries,
 and creates the GitHub release automatically with the changelog text as body.
+
+### Publishing the release to PyPI
+
+Not automated — run manually, after the GitHub release above (see
+[Publishing to PyPI](#publishing-to-pypi) for what each target does and how
+`~/.pypirc` is set up):
+
+```bash
+make verify-testpypi      # optional dry run against the *previous* release, if any
+make publish-testpypi
+make verify-testpypi      # confirm the new version installs and runs
+make publish-pypi         # asks for explicit confirmation — irreversible
+make verify-pypi
+```
 
 ## License
 

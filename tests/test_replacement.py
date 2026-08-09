@@ -460,12 +460,18 @@ class TestMultiMetaMode:
                 result = _sub("{im:Make}{vi:encodeddate}", path="/x.jpg")
         assert result == "Canon"
 
-    def test_no_matching_ns_raises(self):
-        # Neither im: nor vi: match the file → error (not silent "").
+    def test_no_matching_ns_raises_with_namespaces_listed(self):
+        # Neither im: nor vi: match the file → error naming *both* namespaces,
+        # not just the first field (which would misleadingly suggest only
+        # that one field is the problem).
         with _patch_meta({"im:": lambda p, f: None, "vi:": lambda p, f: None}):
             with _patch_can_read({"im:": lambda p: False, "vi:": lambda p: False}):
-                with pytest.raises(FieldResolutionError):
-                    _sub("{im:Make}{vi:encodeddate}", path="/x.txt")
+                with pytest.raises(FieldResolutionError) as exc_info:
+                    _sub("{im:Make}{vi:encodeddate} - xxxx", path="/x.txt")
+        err = exc_info.value
+        assert err.namespaces == frozenset({"im:", "vi:"})
+        assert "im" in str(err)
+        assert "vi" in str(err)
 
     def test_all_three_ns_mixed(self):
         # Three namespaces; only au: matches → im: and vi: silently "".

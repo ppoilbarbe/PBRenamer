@@ -413,7 +413,7 @@ def _plan(
                         newnum=k,
                     )
                 except _repl.FieldResolutionError as err:
-                    _log.debug("Field %r unavailable for %r", err.field, name)
+                    _log.debug("%s (file: %r)", err, name)
                     break
                 if raw is None:
                     break
@@ -444,7 +444,7 @@ def _plan(
                     use_regex, use_plain, stem, path, ns.search, ns.replace, counter
                 )
             except _repl.FieldResolutionError as err:
-                _log.debug("Field %r unavailable for %r", err.field, name)
+                _log.debug("%s (file: %r)", err, name)
                 raw = None
             if raw is not None:
                 processed = _apply_postproc(

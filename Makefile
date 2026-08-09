@@ -27,7 +27,7 @@ TRANSLATE_STAMP := .translate.stamp
 .PHONY: all help venv venv-update install translate new-lang run test coverage \
         hooks lint format docs docs-live dist srcdist clean force-translate \
         bump-major bump-minor bump-patch bump-set update-icons \
-        pypi-build publish-testpypi publish-pypi
+        pypi-build publish-pypi verify-pypi publish-testpypi verify-testpypi
 
 all: translate ## Build all generated artifacts (strings → .mo)
 
@@ -173,17 +173,66 @@ pypi-build: ## Build wheel + sdist for PyPI (dist/pypi/*.whl, dist/pypi/*.tar.gz
 	$(CONDA_RUN) python -m build --outdir dist/pypi
 	@printf "$(G)Done.$(R) Artifacts in $(Y)dist/pypi/$(R)\n"
 
-publish-testpypi: pypi-build ## Upload wheel + sdist to TestPyPI (requires TestPyPI credentials)
-	@printf "$(C)Uploading to TestPyPI...$(R)\n"
-	$(CONDA_RUN) twine upload --repository testpypi dist/pypi/*
-	@printf "$(G)Done.$(R)\n"
-
 publish-pypi: pypi-build ## Upload wheel + sdist to the real PyPI — irreversible, asks for confirmation
 	@printf "$(Y)About to upload dist/pypi/* to the REAL PyPI. This cannot be undone.$(R)\n"
 	@read -p "Type 'yes' to continue: " confirm && [ "$$confirm" = "yes" ] || \
 	    { printf "$(Y)Aborted.$(R)\n"; exit 1; }
 	$(CONDA_RUN) twine upload dist/pypi/*
 	@printf "$(G)Done.$(R)\n"
+
+verify-pypi: ARGS ?= --version
+verify-pypi: ## Install the latest real-PyPI package into a throwaway venv, smoke-test, then remove the venv (usage: make verify-pypi ARGS="--help-search")
+	@venv_dir=$$(mktemp -d); \
+	status=0; \
+	printf "$(C)Creating throwaway venv: $$venv_dir$(R)\n"; \
+	$(CONDA_RUN) python -m venv "$$venv_dir" || status=$$?; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(C)Installing pbrenamer from PyPI...$(R)\n"; \
+	    "$$venv_dir/bin/pip" install pbrenamer || status=$$?; \
+	fi; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(C)Running pbrenamer $(ARGS)...$(R)\n"; \
+	    "$$venv_dir/bin/pbrenamer" $(ARGS) || status=$$?; \
+	fi; \
+	printf "$(C)Removing throwaway venv...$(R)\n"; \
+	rm -rf "$$venv_dir"; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(G)Done.$(R) PyPI package installs and runs.\n"; \
+	else \
+	    printf "$(Y)Failed$(R) (exit $$status) — see output above.\n"; \
+	    exit $$status; \
+	fi
+
+publish-testpypi: pypi-build ## Upload wheel + sdist to TestPyPI (requires TestPyPI credentials)
+	@printf "$(C)Uploading to TestPyPI...$(R)\n"
+	$(CONDA_RUN) twine upload --verbose --repository testpypi dist/pypi/*
+	@printf "$(G)Done.$(R)\n"
+
+verify-testpypi: ARGS ?= --version
+verify-testpypi: ## Install the latest TestPyPI package into a throwaway venv, smoke-test, then remove the venv (usage: make verify-testpypi ARGS="--help-search")
+	@venv_dir=$$(mktemp -d); \
+	status=0; \
+	printf "$(C)Creating throwaway venv: $$venv_dir$(R)\n"; \
+	$(CONDA_RUN) python -m venv "$$venv_dir" || status=$$?; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(C)Installing pbrenamer from TestPyPI...$(R)\n"; \
+	    "$$venv_dir/bin/pip" install \
+	        --index-url https://test.pypi.org/simple/ \
+	        --extra-index-url https://pypi.org/simple/ \
+	        pbrenamer || status=$$?; \
+	fi; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(C)Running pbrenamer $(ARGS)...$(R)\n"; \
+	    "$$venv_dir/bin/pbrenamer" $(ARGS) || status=$$?; \
+	fi; \
+	printf "$(C)Removing throwaway venv...$(R)\n"; \
+	rm -rf "$$venv_dir"; \
+	if [ $$status -eq 0 ]; then \
+	    printf "$(G)Done.$(R) TestPyPI package installs and runs.\n"; \
+	else \
+	    printf "$(Y)Failed$(R) (exit $$status) — see output above.\n"; \
+	    exit $$status; \
+	fi
 
 # ── Versioning ────────────────────────────────────────────────────────────────
 

@@ -1439,6 +1439,29 @@ class TestOnPreview:
         # The error flag is set so _refresh_conflicts colours it
         assert item.data(1, Qt.ItemDataRole.UserRole) is True
 
+    def test_field_error_no_matching_namespace(self, window, tmp_path, monkeypatch):
+        (tmp_path / "file.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.radPattern.setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("{L}")
+        window._ui.cmbPatternDest.setCurrentText("{im:Make}{vi:encodeddate}")
+
+        def _raise(*a, **kw):
+            raise _repl.FieldResolutionError(
+                "im:Make", namespaces=frozenset({"im:", "vi:"})
+            )
+
+        monkeypatch.setattr(window, "_do_rename", _raise)
+        window._on_preview()
+        item = window._ui.tblFiles.topLevelItem(0)
+        # The message names both namespaces, not just the first field —
+        # a single-field message would misleadingly point at "im:Make" alone.
+        assert "im" in item.text(1)
+        assert "vi" in item.text(1)
+        assert "Make" not in item.text(1)
+        assert item.data(1, Qt.ItemDataRole.UserRole) is True
+
     # ── newnum branch ────────────────────────────────────────────────────────
 
     def test_newnum_basic(self, window, tmp_path):

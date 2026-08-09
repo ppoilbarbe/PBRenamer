@@ -111,11 +111,25 @@ class ReplacementSyntaxError(ValueError):
 
 
 class FieldResolutionError(ValueError):
-    """A field has no value for this file and no default was specified."""
+    """A field has no value for this file and no default was specified.
 
-    def __init__(self, field: str) -> None:
-        super().__init__(f"Field {field!r} not available for this file")
+    When *namespaces* is set, the failure isn't about one absent field but
+    about none of the file-type namespaces (im:/vi:/au:) used in a mixed
+    template applying to this file at all.
+    """
+
+    def __init__(self, field: str, *, namespaces: frozenset[str] | None = None) -> None:
         self.field = field
+        self.namespaces = namespaces
+        if namespaces:
+            names = "/".join(ns.rstrip(":") for ns in sorted(namespaces))
+            message = (
+                f"None of the namespaces used in this template ({names}) "
+                "apply to this file"
+            )
+        else:
+            message = f"Field {field!r} not available for this file"
+        super().__init__(message)
 
 
 class NewNumState:
@@ -321,7 +335,9 @@ def substitute(
     # with can_read() to determine whether it applies to this file.
     # - Applicable namespace: strict behaviour — absent field + no default → error.
     # - Non-applicable namespace: silently contributes "".
-    # - No namespace applicable at all → FieldResolutionError on the first meta field.
+    # - No namespace applicable at all → FieldResolutionError, raised once with
+    #   the full set of namespaces so the message can explain that none of
+    #   them matched (rather than pointing at a single, arbitrary field).
     # With a single namespace the strict behaviour is always preserved.
     _active_ns = {
         seg.name[:3].lower()
@@ -339,7 +355,9 @@ def substitute(
                     isinstance(seg, FieldSegment)
                     and seg.name[:3].lower() in _FILE_META_PREFIXES
                 ):
-                    raise FieldResolutionError(seg.name)
+                    raise FieldResolutionError(
+                        seg.name, namespaces=frozenset(_active_ns)
+                    )
 
     parts: list[str] = []
     for seg in segments:

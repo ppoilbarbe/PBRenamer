@@ -213,8 +213,10 @@ def replace_html() -> str:
         "<b>Mixed file types</b> — when the replacement contains fields from "
         "more than one file-type namespace "
         "(<code>{im:…}</code>, <code>{vi:…}</code>, <code>{au:…}</code>), "
-        "a field that does not apply to the current file silently contributes "
-        "an empty string, even without a default. "
+        "a field whose namespace does not apply to the current file silently "
+        "contributes an empty string, even without a default — but if the "
+        "file matches <em>none</em> of the namespaces used in the template, "
+        "the file is flagged in red. "
         "With a <em>single</em> namespace only, the file is flagged in red "
         "if the field is absent and no default is set."
     )
