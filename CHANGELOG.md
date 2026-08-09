@@ -10,10 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `make update-icons` (new Makefile target, backed by the new `tools/update_icons.py`) syncs `pbrenamer.svg` and the new `pbrenamer.ico`/`pbrenamer.icns` byte-for-byte from the PBIcons reference project (local checkout or GitHub)
 - PyInstaller build now embeds a native icon (`pbrenamer.ico` on Windows, `pbrenamer.icns` on macOS via `BUNDLE`), synced from PBIcons
+- `--install-desktop-entry` / `--uninstall-desktop-entry` CLI flags (`platform/desktop.py`): install/remove a user-level `.desktop` menu entry and icon on Linux, working around pip's lack of a post-install hook for `pip install pbrenamer`
+- The generated `.desktop` entry's `Comment=` is now localized (`Comment[fr]=`, `Comment[de]=`, …) for every language with a compiled catalogue, reusing the existing translated "A graphical batch file renaming utility." string from the About dialog; `Name=PBRenamer` is intentionally left unlocalized
+- `make pypi-build` / `make publish-testpypi` / `make publish-pypi` (new Makefile targets): build the wheel + sdist into `dist/pypi/` and upload to TestPyPI or the real PyPI via `twine`; `publish-pypi` asks for an explicit `yes` confirmation before the irreversible upload. Adds `build`/`twine` as dev dependencies
 
 ### Fixed
 
 - Picking an entry from the search pattern history no longer overwrites the replace field with the first entry of the replace history (and vice versa); each history combo box now only refreshes its own list
+- PyPI wheel now ships compiled `.mo` translation catalogues: a new hatchling build hook (`hatch_build.py`) compiles the committed `.po` sources at wheel-build time and force-includes the result, since `.mo` files are gitignored generated artifacts and were previously silently dropped from the wheel — the installed app had no languages available (`i18n.available_languages()` globs for `.mo`)
+- `license` metadata switched from the legacy `{ file = "LICENSE" }` form (which duplicated the full GPLv3 text into the `License:` metadata field) to the SPDX expression `GPL-3.0-only` with `license-files = ["LICENSE"]`, and dropped the now-redundant `License ::` classifier
 
 ## [1.4.4] - 2026-08-05
 

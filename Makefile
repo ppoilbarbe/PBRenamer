@@ -26,7 +26,8 @@ TRANSLATE_STAMP := .translate.stamp
 .DEFAULT_GOAL := help
 .PHONY: all help venv venv-update install translate new-lang run test coverage \
         hooks lint format docs docs-live dist srcdist clean force-translate \
-        bump-major bump-minor bump-patch bump-set update-icons
+        bump-major bump-minor bump-patch bump-set update-icons \
+        pypi-build publish-testpypi publish-pypi
 
 all: translate ## Build all generated artifacts (strings → .mo)
 
@@ -158,6 +159,31 @@ srcdist: ## Build a source archive (dist/pbrenamer-<ver>-src.tar.gz) via git arc
 	mkdir -p dist; \
 	git archive --format=tar.gz --prefix="pbrenamer-$$ver/" HEAD -o "$$out"; \
 	printf "$(G)Done.$(R) Archive: $(Y)$$out$(R)\n"
+
+# ── PyPI ──────────────────────────────────────────────────────────────────────
+
+# Built into dist/pypi/ (not dist/) to avoid mixing with the PyInstaller
+# executables and the git-archive source tarball, which also live in dist/.
+# Version is the static `project.version` from pyproject.toml (via
+# `make bump-*`) — unlike `dist`/`srcdist`, this must never fall back to
+# "dev": PyPI permanently reserves whatever version number is uploaded.
+pypi-build: ## Build wheel + sdist for PyPI (dist/pypi/*.whl, dist/pypi/*.tar.gz)
+	@mkdir -p dist/pypi
+	@printf "$(C)Building wheel + sdist for PyPI...$(R)\n"
+	$(CONDA_RUN) python -m build --outdir dist/pypi
+	@printf "$(G)Done.$(R) Artifacts in $(Y)dist/pypi/$(R)\n"
+
+publish-testpypi: pypi-build ## Upload wheel + sdist to TestPyPI (requires TestPyPI credentials)
+	@printf "$(C)Uploading to TestPyPI...$(R)\n"
+	$(CONDA_RUN) twine upload --repository testpypi dist/pypi/*
+	@printf "$(G)Done.$(R)\n"
+
+publish-pypi: pypi-build ## Upload wheel + sdist to the real PyPI — irreversible, asks for confirmation
+	@printf "$(Y)About to upload dist/pypi/* to the REAL PyPI. This cannot be undone.$(R)\n"
+	@read -p "Type 'yes' to continue: " confirm && [ "$$confirm" = "yes" ] || \
+	    { printf "$(Y)Aborted.$(R)\n"; exit 1; }
+	$(CONDA_RUN) twine upload dist/pypi/*
+	@printf "$(G)Done.$(R)\n"
 
 # ── Versioning ────────────────────────────────────────────────────────────────
 

@@ -182,6 +182,28 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Print replacement-field help HTML and exit",
     )
 
+    # ── Desktop integration (Linux) ──────────────────────────────────────────
+    desktop_group = parser.add_argument_group(
+        "desktop integration",
+        "Install a .desktop menu entry + icon for the current user and exit "
+        "(Linux only — pip installs have no post-install hook to do this "
+        "automatically).",
+    )
+    desktop_target = desktop_group.add_mutually_exclusive_group()
+    desktop_target.add_argument(
+        "--install-desktop-entry",
+        action="store_true",
+        default=False,
+        help="Install a desktop menu entry + icon for the current user",
+    )
+    desktop_target.add_argument(
+        "--uninstall-desktop-entry",
+        action="store_true",
+        default=False,
+        help="Remove the desktop menu entry + icon installed by "
+        "--install-desktop-entry",
+    )
+
     # ── Developer / testing ───────────────────────────────────────────────────
     parser.add_argument(
         "--config-dir",
@@ -582,6 +604,19 @@ def main() -> None:
         from pbrenamer import settings as _settings
 
         _settings.configure(Path(_ns.config_dir))
+
+    if _ns.install_desktop_entry or _ns.uninstall_desktop_entry:
+        if _ns.install_desktop_entry:
+            from pbrenamer.platform.desktop import install_desktop_entry as _action
+        else:
+            from pbrenamer.platform.desktop import uninstall_desktop_entry as _action
+
+        ok, message = _action()
+        if ok:
+            print(message)
+        else:
+            print(message, file=sys.stderr)
+        sys.exit(0 if ok else 1)
 
     if _ns.help_search or _ns.help_replace:
         # Help export — no Qt needed; NullTranslations returns msgids as-is

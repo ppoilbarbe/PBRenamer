@@ -212,6 +212,14 @@ class TestReadEasyFields:
         with patch("mutagen.File", return_value=None):
             assert read_field(str(f), "title") is None
 
+    def test_easy_field_helper_returns_none_when_file_is_none(self, tmp_path):
+        # read_field() short-circuits on can_read() before ever calling this
+        # helper, so exercise it directly to cover its own "f is None" branch.
+        f = tmp_path / "doc.txt"
+        f.touch()
+        with patch("mutagen.File", return_value=None):
+            assert audio_meta._read_easy_field(str(f), "title") is None
+
     def test_mutagen_exception_returns_none(self, tmp_path):
         f = tmp_path / "broken.mp3"
         f.touch()
@@ -349,6 +357,14 @@ class TestReadInfoFieldEdgeCases:
             # Call internal helper directly with a key outside _INFO_FIELDS
             result = audio_meta._read_info_field(str(f), "unknown_key")
         assert result is None
+
+    def test_info_field_helper_returns_none_when_file_is_none(self, tmp_path):
+        # read_field() short-circuits on can_read() before ever calling this
+        # helper, so exercise it directly to cover its own "f is None" branch.
+        f = tmp_path / "doc.txt"
+        f.touch()
+        with patch("mutagen.File", return_value=None):
+            assert audio_meta._read_info_field(str(f), "duration") is None
 
 
 # ---------------------------------------------------------------------------

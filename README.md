@@ -64,11 +64,21 @@ No installation required — just download and run.
 - Python 3.12 or later
 - PySide6 6.6 or later (Qt 6)
 
-### From PyPI _(once published)_
+### From PyPI
 
 ```bash
 pip install pbrenamer
 ```
+
+On Linux, `pip install` cannot register an application menu entry by itself
+(pip has no post-install hook). Run this once after installing to add a
+menu entry and icon for the current user:
+
+```bash
+pbrenamer --install-desktop-entry
+```
+
+Remove it again with `pbrenamer --uninstall-desktop-entry`.
 
 ### From source
 
@@ -163,6 +173,15 @@ terms of the **GNU General Public License v3** as published by the Free Software
 Foundation. See the [LICENSE](LICENSE) file for details.
 
 Copyright © 2026 PBMou — Marcel Spock <mrspock@cardolan.net>
+
+## Author
+
+Marcel Spock <mrspock@cardolan.net>
+PBMou
+
+PBMou is a cross-language pun: "PB" stands for "Poilbarbe", and "Mou" is the
+French translation of "Soft" — so PBMou reads like "PBSoft" half-translated
+into French.
 
 ## Acknowledgements
 

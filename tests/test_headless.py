@@ -883,6 +883,86 @@ class TestHelpExport:
 
 
 # ---------------------------------------------------------------------------
+# --install-desktop-entry
+# ---------------------------------------------------------------------------
+
+
+class TestInstallDesktopEntryFlag:
+    def test_default_is_false(self):
+        ns = _build_parser().parse_args([])
+        assert ns.install_desktop_entry is False
+
+    def test_flag_sets_true(self):
+        ns = _build_parser().parse_args(["--install-desktop-entry"])
+        assert ns.install_desktop_entry is True
+
+    def test_main_prints_message_and_exits_zero_on_success(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--install-desktop-entry"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.desktop.install_desktop_entry",
+            lambda: (True, "Desktop entry installed: /fake/path.desktop"),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 0
+        assert "Desktop entry installed" in capsys.readouterr().out
+
+    def test_main_prints_error_and_exits_one_on_failure(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--install-desktop-entry"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.desktop.install_desktop_entry",
+            lambda: (False, "error: could not locate the 'pbrenamer' executable"),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 1
+        assert "could not locate" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------------
+# --uninstall-desktop-entry
+# ---------------------------------------------------------------------------
+
+
+class TestUninstallDesktopEntryFlag:
+    def test_default_is_false(self):
+        ns = _build_parser().parse_args([])
+        assert ns.uninstall_desktop_entry is False
+
+    def test_flag_sets_true(self):
+        ns = _build_parser().parse_args(["--uninstall-desktop-entry"])
+        assert ns.uninstall_desktop_entry is True
+
+    def test_mutually_exclusive_with_install(self):
+        with pytest.raises(SystemExit):
+            _build_parser().parse_args(
+                ["--install-desktop-entry", "--uninstall-desktop-entry"]
+            )
+
+    def test_main_prints_message_and_exits_zero_on_success(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--uninstall-desktop-entry"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.desktop.uninstall_desktop_entry",
+            lambda: (True, "Desktop entry removed: /fake/path.desktop"),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 0
+        assert "Desktop entry removed" in capsys.readouterr().out
+
+    def test_main_prints_error_and_exits_one_on_failure(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--uninstall-desktop-entry"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.desktop.uninstall_desktop_entry",
+            lambda: (False, "error: only supported on Linux"),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 1
+        assert "only supported on Linux" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------------
 # main() headless dispatch
 # ---------------------------------------------------------------------------
 

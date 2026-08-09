@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "babel>=2.9"]
 build-backend = "hatchling.build"
 
 [project]
@@ -7,12 +7,12 @@ name = "pbrenamer"
 version = "1.4.4"
 description = "A graphical batch file renaming utility"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
 authors = [{ name = "Marcel Spock", email = "mrspock@cardolan.net" }]
 keywords = ["renamer", "batch", "files", "gui", "qt"]
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Environment :: X11 Applications :: Qt",
@@ -33,6 +33,8 @@ dev = [
     "sphinx>=7",
     "sphinx-rtd-theme>=2",
     "sphinx-autobuild>=2024",
+    "build>=1.2",
+    "twine>=5",
 ]
 
 [project.scripts]
@@ -45,6 +47,8 @@ Issues     = "https://github.com/ppoilbarbe/PBRenamer/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pbrenamer"]
+
+[tool.hatch.build.hooks.custom]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -112,6 +116,8 @@ pillow                 = "*"
 mutagen                = "*"
 pymediainfo            = "*"
 pyinstaller            = "*"
+python-build           = "*"
+twine                  = "*"
 
 [tool.pixi.pypi-dependencies]
 pbrenamer = { path = ".", editable = true }
