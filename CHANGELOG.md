@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-09
+
 ### Added
 
 - `make update-icons` (new Makefile target, backed by the new `tools/update_icons.py`) syncs `pbrenamer.svg` and the new `pbrenamer.ico`/`pbrenamer.icns` byte-for-byte from the PBIcons reference project (local checkout or GitHub)
