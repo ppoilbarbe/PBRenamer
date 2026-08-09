@@ -168,6 +168,7 @@ srcdist: ## Build a source archive (dist/pbrenamer-<ver>-src.tar.gz) via git arc
 # `make bump-*`) — unlike `dist`/`srcdist`, this must never fall back to
 # "dev": PyPI permanently reserves whatever version number is uploaded.
 pypi-build: ## Build wheel + sdist for PyPI (dist/pypi/*.whl, dist/pypi/*.tar.gz)
+	@rm -rf dist/pypi
 	@mkdir -p dist/pypi
 	@printf "$(C)Building wheel + sdist for PyPI...$(R)\n"
 	$(CONDA_RUN) python -m build --outdir dist/pypi

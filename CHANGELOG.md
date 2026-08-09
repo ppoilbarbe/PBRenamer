@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` / `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions alongside the current one
+
 ## [1.5.1] - 2026-08-09
 
 ### Added
