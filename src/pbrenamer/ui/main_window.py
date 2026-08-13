@@ -275,15 +275,43 @@ class MainWindow(QMainWindow):
             return
         self._fs_change_timer.start(200)
 
+    def _listing_unchanged(self) -> bool:
+        """Return True if the on-disk listing still matches what's displayed.
+
+        QFileSystemWatcher notifications can be spurious — e.g. a desktop
+        indexer or thumbnailer touching directory metadata without actually
+        adding/removing/renaming any entry. Rebuilding the tree for those
+        causes a visible flicker (clear + repopulate) for no reason, so
+        _on_fs_change skips the reload entirely when nothing really changed.
+        """
+        mode = self._ui.cmbMode.currentIndex()
+        recursive = self._ui.chkRecursive.isChecked()
+        pattern = self._ui.edtFilter.text().strip() or None
+        if recursive:
+            entries = filetools.get_file_listing_recursive(
+                self._current_dir, mode, pattern
+            )
+        else:
+            entries = filetools.get_file_listing(self._current_dir, mode, pattern)
+        new_paths = [path for _, path in entries]
+        root = self._ui.tblFiles.invisibleRootItem()
+        current_paths = [
+            root.child(i).data(0, Qt.ItemDataRole.UserRole)
+            for i in range(root.childCount())
+        ]
+        return new_paths == current_paths
+
     def _on_fs_change(self) -> None:
         if not self._current_dir or not os.path.isdir(self._current_dir):
-            return  # pragma: no cover
+            return
+        if self._listing_unchanged():
+            return
         selected_paths = {
             item.data(0, Qt.ItemDataRole.UserRole)
             for item in self._ui.tblFiles.selectedItems()
         }
         self._reload_files()
-        if selected_paths:  # pragma: no cover
+        if selected_paths:
             root = self._ui.tblFiles.invisibleRootItem()
             self._ui.tblFiles.blockSignals(True)
             for i in range(root.childCount()):

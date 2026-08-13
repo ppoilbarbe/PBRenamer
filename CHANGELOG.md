@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-08-13
+
 ### Added
 
 - Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track: `performer`, `copyright`, `comment`, `description`, `genre`
@@ -21,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` / `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions alongside the current one
 - Navigating via a shortcut/bookmark (`_on_shortcut`) triggered `_reload_files()` twice — `_navigate_to()`'s `setCurrentIndex()` synchronously fired `_on_directory_selected()` before `_current_dir` had been updated, so its same-path guard did not catch the redundant call — causing the file list (and, with auto-preview on, the preview column) to be cleared and repopulated a second time right after the first; fixed by setting `_current_dir` before calling `_navigate_to()`, matching the pattern already used in `_on_open()`
+- Preview/file list still flickered once per directory change even after the above fix: `QFileSystemWatcher` can emit a spurious `directoryChanged` signal shortly after a directory starts being watched (e.g. a desktop indexer or thumbnailer touching directory metadata with no actual file added/removed/renamed), which `_on_fs_change` treated as a real change and rebuilt the whole file list for. `_on_fs_change` now compares the on-disk listing against what's currently displayed (`_listing_unchanged()`) and skips the reload when nothing actually changed.
 
 ## [1.5.1] - 2026-08-09
 
@@ -402,12 +405,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `make bump-patch / bump-minor / bump-major / bump-set` targets backed by
   `tools/bump_version.py` for atomic version increments
 - `NOCONDA=1` Makefile flag to bypass conda wrapping when tools are on `PATH`
-
-[1.2.0]: https://github.com/ppoilbarbe/PBRenamer/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/ppoilbarbe/PBRenamer/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v1.0.0
-[0.3.2]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.2
-[0.3.1]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.1
-[0.3.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.3.0
-[0.2.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.2.0
-[0.1.0]: https://github.com/ppoilbarbe/PBRenamer/releases/tag/v0.1.0

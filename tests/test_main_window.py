@@ -319,6 +319,87 @@ class TestReloadFiles:
 
 
 # ---------------------------------------------------------------------------
+# _listing_unchanged / _on_fs_change
+# ---------------------------------------------------------------------------
+
+
+class TestListingUnchanged:
+    def test_true_when_listing_matches(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        assert window._listing_unchanged() is True
+
+    def test_true_when_listing_matches_recursive(self, window, tmp_path):
+        sub = tmp_path / "sub"
+        sub.mkdir()
+        (sub / "nested.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkRecursive.setChecked(True)
+        window._reload_files()
+        assert window._listing_unchanged() is True
+        window._ui.chkRecursive.setChecked(False)
+
+    def test_false_when_file_added(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        (tmp_path / "b.txt").write_text("x")
+        assert window._listing_unchanged() is False
+
+    def test_false_when_file_removed(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        (tmp_path / "b.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        (tmp_path / "b.txt").unlink()
+        assert window._listing_unchanged() is False
+
+
+class TestOnFsChange:
+    def test_spurious_notification_does_not_reload(self, window, tmp_path, monkeypatch):
+        # Directory content on disk still matches what's displayed — a
+        # QFileSystemWatcher notification here is spurious (e.g. a desktop
+        # indexer touching directory metadata) and must not trigger a
+        # visible clear+repopulate of the file list.
+        (tmp_path / "a.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        called = []
+        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        window._on_fs_change()
+        assert not called
+
+    def test_real_change_triggers_reload(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        (tmp_path / "b.txt").write_text("x")
+        window._on_fs_change()
+        assert window._ui.tblFiles.topLevelItemCount() == 2
+
+    def test_no_current_dir_is_noop(self, window):
+        window._current_dir = None
+        window._on_fs_change()  # no crash
+
+    def test_nonexistent_dir_is_noop(self, window):
+        window._current_dir = "/nonexistent/path/xyz"
+        window._on_fs_change()  # no crash
+
+    def test_preserves_selection_across_real_change(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        (tmp_path / "b.txt").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        item_a = _find_item(window, str(tmp_path / "a.txt"))
+        item_a.setSelected(True)
+        (tmp_path / "c.txt").write_text("x")
+        window._on_fs_change()
+        item_a = _find_item(window, str(tmp_path / "a.txt"))
+        assert item_a.isSelected()
+
+
+# ---------------------------------------------------------------------------
 # _validate_search_input  (lines 319-338)
 # ---------------------------------------------------------------------------
 
