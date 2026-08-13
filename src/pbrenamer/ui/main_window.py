@@ -9,7 +9,7 @@ import time
 from collections import defaultdict
 
 from PySide6.QtCore import QDir, QFileSystemWatcher, Qt, QTimer, QUrl
-from PySide6.QtGui import QColor, QDesktopServices
+from PySide6.QtGui import QColor, QDesktopServices, QIcon
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
@@ -27,17 +27,12 @@ from pbrenamer.core import replacement as _repl
 from pbrenamer.core.undo import UndoManager
 from pbrenamer.platform import system_bookmarks
 from pbrenamer.platform.fs import conflict_key, same_file_path
+from pbrenamer.resources import path as _resource
 from pbrenamer.ui.about_dialog import AboutDialog
 from pbrenamer.ui.file_info_window import FileInfoWindow
 from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
-from pbrenamer.ui.pattern_help import (
-    PatternHelpDialog,
-    make_add_icon,
-    make_help_icon,
-    replace_html,
-    search_html,
-)
+from pbrenamer.ui.pattern_help import PatternHelpDialog, replace_html, search_html
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
@@ -158,10 +153,10 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.expand(idx)
 
     def _setup_help_buttons(self) -> None:
-        help_icon = make_help_icon()
+        help_icon = QIcon(_resource("question.svg"))
         self._ui.btnSearchHelp.setIcon(help_icon)
         self._ui.btnReplaceHelp.setIcon(help_icon)
-        add_icon = make_add_icon()
+        add_icon = QIcon(_resource("add.svg"))
         self._ui.btnSearchAdd.setIcon(add_icon)
         self._ui.btnReplaceAdd.setIcon(add_icon)
         self._ui.cmbPatternSearch.view().setItemDelegate(

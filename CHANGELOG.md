@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track: `performer`, `copyright`, `comment`, `description`, `genre`
 
+### Changed
+
+- Menu actions (Open folder, Information, History, Settings, Edit shortcuts, About, Quit) and the search/replace toolbar buttons (add-to-history "+", pattern help "?") now use bundled SVG icons (`resources/*.svg`) instead of plain text / programmatically-painted icons; `pattern_help.make_add_icon()`/`make_help_icon()` removed
+
 ### Fixed
 
 - `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` / `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions alongside the current one

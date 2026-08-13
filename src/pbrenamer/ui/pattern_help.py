@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QFont, QIcon, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QTextBrowser, QVBoxLayout
 
 from pbrenamer.ui.geometry_mixin import GeometryMixin
@@ -535,48 +534,6 @@ def replace_html() -> str:
         + "</table>\n"
         + _FOOT
     )
-
-
-# ── Icon ──────────────────────────────────────────────────────────────────────
-
-
-def make_add_icon(size: int = 18) -> QIcon:
-    """Orange '+' symbol."""
-    px = QPixmap(size, size)
-    px.fill(Qt.GlobalColor.transparent)
-    p = QPainter(px)
-    p.setRenderHint(QPainter.RenderHint.Antialiasing)
-    pen = QPen(QColor("#E65100"))
-    pen.setWidthF(2.5)
-    pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-    p.setPen(pen)
-    m = size // 4
-    cx = size // 2
-    p.drawLine(m, cx, size - m, cx)
-    p.drawLine(cx, m, cx, size - m)
-    p.end()
-    return QIcon(px)
-
-
-def make_help_icon(size: int = 18) -> QIcon:
-    """Blue '?' inside a thin black circle."""
-    px = QPixmap(size, size)
-    px.fill(Qt.GlobalColor.transparent)
-    p = QPainter(px)
-    p.setRenderHint(QPainter.RenderHint.Antialiasing)
-    pen = QPen(Qt.GlobalColor.black)
-    pen.setWidthF(1.0)
-    p.setPen(pen)
-    p.setBrush(Qt.BrushStyle.NoBrush)
-    p.drawEllipse(1, 1, size - 3, size - 3)
-    p.setPen(QColor("#1565C0"))
-    font = QFont()
-    font.setBold(True)
-    font.setPixelSize(size - 6)
-    p.setFont(font)
-    p.drawText(px.rect(), Qt.AlignmentFlag.AlignCenter, "?")
-    p.end()
-    return QIcon(px)
 
 
 # ── Dialog ────────────────────────────────────────────────────────────────────

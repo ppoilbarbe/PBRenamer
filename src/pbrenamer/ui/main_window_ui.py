@@ -1,7 +1,7 @@
 """UI layout for the main application window."""
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QAction, QKeySequence
+from PySide6.QtGui import QAction, QIcon, QKeySequence
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QCheckBox,
@@ -26,6 +26,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from pbrenamer.resources import path as _resource
+
 
 class Ui_MainWindow:
     def setupUi(self, window):
@@ -41,39 +43,51 @@ class Ui_MainWindow:
     # ── Actions ───────────────────────────────────────────────────────────────
 
     def _setup_actions(self, window):
-        self.actionOpenFolder = QAction(_("Open folder…"), window)
+        self.actionOpenFolder = QAction(
+            QIcon(_resource("open.svg")), _("Open folder…"), window
+        )
         self.actionOpenFolder.setShortcut(QKeySequence("Ctrl+O"))
         self.actionOpenFolder.setToolTip(_("Open a folder"))
         self.actionOpenFolder.setStatusTip(
             _("Open a directory chooser and navigate the tree to the selected folder")
         )
 
-        self.actionQuit = QAction(_("Quit"), window)
+        self.actionQuit = QAction(QIcon(_resource("quit.svg")), _("Quit"), window)
         self.actionQuit.setShortcut(QKeySequence("Ctrl+Q"))
         self.actionQuit.setToolTip(_("Quit PBRenamer"))
         self.actionQuit.setStatusTip(_("Exit the application"))
 
-        self.actionHistory = QAction(_("History…"), window)
+        self.actionHistory = QAction(
+            QIcon(_resource("history.svg")), _("History…"), window
+        )
         self.actionHistory.setToolTip(_("Manage pattern history"))
         self.actionHistory.setStatusTip(
             _("Add or remove entries from the search and replacement pattern history")
         )
 
-        self.actionSettings = QAction(_("Settings…"), window)
+        self.actionSettings = QAction(
+            QIcon(_resource("configure.svg")), _("Settings…"), window
+        )
         self.actionSettings.setToolTip(_("Open settings"))
         self.actionSettings.setStatusTip(_("Configure language and other preferences"))
 
-        self.actionAbout = QAction(_("About PBRenamer"), window)
+        self.actionAbout = QAction(
+            QIcon(_resource("help-about.svg")), _("About PBRenamer"), window
+        )
         self.actionAbout.setToolTip(_("About this application"))
         self.actionAbout.setStatusTip(_("Show version and license information"))
 
-        self.actionEditShortcuts = QAction(_("Edit shortcuts…"), window)
+        self.actionEditShortcuts = QAction(
+            QIcon(_resource("edit.svg")), _("Edit shortcuts…"), window
+        )
         self.actionEditShortcuts.setToolTip(_("Manage directory shortcuts"))
         self.actionEditShortcuts.setStatusTip(
             _("Add or remove entries from the shortcuts list")
         )
 
-        self.actionFileInfo = QAction(_("Information"), window)
+        self.actionFileInfo = QAction(
+            QIcon(_resource("question.svg")), _("Information"), window
+        )
         self.actionFileInfo.setShortcut(QKeySequence("Ctrl+I"))
         self.actionFileInfo.setToolTip(_("Show file field values"))
         self.actionFileInfo.setStatusTip(
