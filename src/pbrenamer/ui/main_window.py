@@ -1119,8 +1119,8 @@ class MainWindow(QMainWindow):
     def _on_shortcut(self, path: str) -> None:
         if not os.path.isdir(path):
             return
-        self._navigate_to(path)
         self._current_dir = path
+        self._navigate_to(path)
         self._reload_files()
 
     def _on_tree_context_menu(self, pos) -> None:

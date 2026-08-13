@@ -1139,6 +1139,9 @@ msgstr "Tag titre"
 msgid "Encoded date/time"
 msgstr "Date/heure d'encodage"
 
+msgid "Performer / artist"
+msgstr "Interprète / artiste"
+
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr ""
 "Groupe capturant 1 suivi d'un compteur à 4 chiffres complété par des "

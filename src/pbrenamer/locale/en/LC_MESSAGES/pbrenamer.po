@@ -1130,6 +1130,9 @@ msgstr "Title tag"
 msgid "Encoded date/time"
 msgstr "Encoded date/time"
 
+msgid "Performer / artist"
+msgstr "Performer / artist"
+
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 

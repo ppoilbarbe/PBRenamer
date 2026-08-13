@@ -1436,6 +1436,10 @@ msgid "Encoded date/time"
 msgstr "Data/ora di codifica"
 
 # ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "Interprete / artista"
+
+# ==AUTO== Automatically translated
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr ""
 "Gruppo di cattura 1 seguito da un contatore a 4 cifre con zeri iniziali "

@@ -1164,6 +1164,16 @@ class TestShortcutsMenu:
         assert window._current_dir == str(tmp_path)
         assert called
 
+    def test_on_shortcut_reloads_only_once(self, window, tmp_path, monkeypatch):
+        # _navigate_to()'s setCurrentIndex() synchronously fires
+        # selectionChanged -> _on_directory_selected(); _current_dir must
+        # already equal the target path at that point so its same-path guard
+        # swallows the redundant call, leaving only the explicit reload here.
+        called = []
+        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        window._on_shortcut(str(tmp_path))
+        assert len(called) == 1
+
     def test_on_shortcut_nonexistent_noop(self, window):
         original = window._current_dir
         window._on_shortcut("/nonexistent/xyz/abc")

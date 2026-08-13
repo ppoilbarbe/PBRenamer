@@ -1403,6 +1403,10 @@ msgid "Encoded date/time"
 msgstr "Ngày/giờ mã hóa"
 
 # ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "Người biểu diễn / nghệ sĩ"
+
+# ==AUTO== Automatically translated
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr "Nhóm chụp 1 theo sau bởi bộ đếm 4 chữ số có đệm số 0 (bắt đầu từ 1)"
 

@@ -33,6 +33,11 @@ FIELD_REGISTRY: dict[str, FieldInfo] = {
     "audiochannels": FieldInfo("Number of audio channels", FieldType.INTEGER),
     "title": FieldInfo("Title tag", FieldType.STRING),
     "encodeddate": FieldInfo("Encoded date/time", FieldType.DATETIME),
+    "performer": FieldInfo("Performer / artist", FieldType.STRING),
+    "copyright": FieldInfo("Copyright notice", FieldType.STRING),
+    "comment": FieldInfo("Comment", FieldType.STRING),
+    "description": FieldInfo("Description", FieldType.STRING),
+    "genre": FieldInfo("Genre", FieldType.STRING),
 }
 
 
@@ -140,6 +145,21 @@ def read_field(path: str, field: str) -> Any | None:
 
     if key == "title":
         return _str_attr(general, "title") if general is not None else None
+
+    if key == "performer":
+        return _str_attr(general, "performer") if general is not None else None
+
+    if key == "copyright":
+        return _str_attr(general, "copyright") if general is not None else None
+
+    if key == "comment":
+        return _str_attr(general, "comment") if general is not None else None
+
+    if key == "description":
+        return _str_attr(general, "description") if general is not None else None
+
+    if key == "genre":
+        return _str_attr(general, "genre") if general is not None else None
 
     if key == "encodeddate":
         if general is None:

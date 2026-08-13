@@ -1342,6 +1342,10 @@ msgid "Encoded date/time"
 msgstr "编码日期/时间"
 
 # ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "表演者/艺术家"
+
+# ==AUTO== Automatically translated
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr "捕获组 1 后跟 4 位零填充计数器（从 1 开始）"
 

@@ -1418,6 +1418,10 @@ msgid "Encoded date/time"
 msgstr "Дата/время кодирования"
 
 # ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "Исполнитель / артист"
+
+# ==AUTO== Automatically translated
 msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
 msgstr ""
 "Группа захвата 1, за которой следует 4-значный счётчик с нулевым "

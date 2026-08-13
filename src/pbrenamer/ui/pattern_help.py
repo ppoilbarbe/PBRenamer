@@ -413,6 +413,11 @@ def replace_html() -> str:
         + _row3("bitrate", "integer", _("Overall bitrate in kbps"))
         + _row3("title", "text", _("Title tag"), _BG1)
         + _row3("encodeddate", "datetime", _("Encoded date/time"))
+        + _row3("performer", "text", _("Performer / artist"), _BG1)
+        + _row3("copyright", "text", _("Copyright notice"))
+        + _row3("comment", "text", _("Comment"), _BG1)
+        + _row3("description", "text", _("Description"))
+        + _row3("genre", "text", _("Genre"), _BG1)
     )
 
     # ── Examples table ────────────────────────────────────────────────────────

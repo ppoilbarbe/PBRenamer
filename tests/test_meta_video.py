@@ -74,6 +74,10 @@ class TestFieldRegistry:
     def test_encodeddate_is_datetime(self):
         assert video_meta.FIELD_REGISTRY["encodeddate"].type == FieldType.DATETIME
 
+    def test_editorial_fields_are_string(self):
+        for key in ("performer", "copyright", "comment", "description", "genre"):
+            assert video_meta.FIELD_REGISTRY[key].type == FieldType.STRING
+
 
 # ---------------------------------------------------------------------------
 # _parse_encoded_date
@@ -173,6 +177,57 @@ class TestTitle:
 
     def test_none_when_absent(self):
         assert _read("title", general={"title": None}, video={}) is None
+
+
+class TestPerformer:
+    def test_returns_performer(self):
+        assert _read("performer", general={"performer": "Jane Doe"}, video={}) == (
+            "Jane Doe"
+        )
+
+    def test_none_when_absent(self):
+        assert _read("performer", general={"performer": None}, video={}) is None
+
+
+class TestCopyright:
+    def test_returns_copyright(self):
+        assert (
+            _read("copyright", general={"copyright": "(c) 2024 Jane Doe"}, video={})
+            == "(c) 2024 Jane Doe"
+        )
+
+    def test_none_when_absent(self):
+        assert _read("copyright", general={"copyright": None}, video={}) is None
+
+
+class TestComment:
+    def test_returns_comment(self):
+        assert _read("comment", general={"comment": "Family trip"}, video={}) == (
+            "Family trip"
+        )
+
+    def test_none_when_absent(self):
+        assert _read("comment", general={"comment": None}, video={}) is None
+
+
+class TestDescription:
+    def test_returns_description(self):
+        assert _read(
+            "description", general={"description": "Behind the scenes"}, video={}
+        ) == ("Behind the scenes")
+
+    def test_none_when_absent(self):
+        assert _read("description", general={"description": None}, video={}) is None
+
+
+class TestGenre:
+    def test_returns_genre(self):
+        assert _read("genre", general={"genre": "Documentary"}, video={}) == (
+            "Documentary"
+        )
+
+    def test_none_when_absent(self):
+        assert _read("genre", general={"genre": None}, video={}) is None
 
 
 class TestEncodedDate:
@@ -360,6 +415,21 @@ class TestNoVideoTrack:
 
     def test_title_none_for_image_file(self):
         assert _read("title", general={"title": "Photo"}) is None
+
+    def test_performer_none_for_image_file(self):
+        assert _read("performer", general={"performer": "Jane Doe"}) is None
+
+    def test_copyright_none_for_image_file(self):
+        assert _read("copyright", general={"copyright": "(c) 2024"}) is None
+
+    def test_comment_none_for_image_file(self):
+        assert _read("comment", general={"comment": "Note"}) is None
+
+    def test_description_none_for_image_file(self):
+        assert _read("description", general={"description": "Desc"}) is None
+
+    def test_genre_none_for_image_file(self):
+        assert _read("genre", general={"genre": "Documentary"}) is None
 
     def test_width_none_for_image_file(self):
         # width is already None without a Video track; still None after fix.

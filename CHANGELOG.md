@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track: `performer`, `copyright`, `comment`, `description`, `genre`
+
 ### Fixed
 
 - `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` / `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions alongside the current one
+- Navigating via a shortcut/bookmark (`_on_shortcut`) triggered `_reload_files()` twice — `_navigate_to()`'s `setCurrentIndex()` synchronously fired `_on_directory_selected()` before `_current_dir` had been updated, so its same-path guard did not catch the redundant call — causing the file list (and, with auto-preview on, the preview column) to be cleared and repopulated a second time right after the first; fixed by setting `_current_dir` before calling `_navigate_to()`, matching the pattern already used in `_on_open()`
 
 ## [1.5.1] - 2026-08-09
 
