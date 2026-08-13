@@ -29,7 +29,7 @@ def _ns(**kwargs) -> argparse.Namespace:
         mode="pattern",
         list="files",
         recurse=False,
-        keep_ext=True,
+        ext_mode="keep",
         filter_glob=None,
         sep="none",
         accent=False,
@@ -116,17 +116,18 @@ class TestParser:
         ns = _build_parser().parse_args(["-s", "x", "--no-recurse"])
         assert ns.recurse is False
 
-    def test_keep_ext_raw_default_is_none(self):
+    def test_ext_mode_raw_default_is_none(self):
         ns = _build_parser().parse_args(["-s", "x"])
-        assert ns.keep_ext is None
+        assert ns.ext_mode is None
 
-    def test_keep_ext_flag(self):
-        ns = _build_parser().parse_args(["-s", "x", "--keep-ext"])
-        assert ns.keep_ext is True
+    @pytest.mark.parametrize("mode", ["keep", "lower", "upper", "normalize", "modify"])
+    def test_ext_mode_flag(self, mode):
+        ns = _build_parser().parse_args(["-s", "x", "--ext-mode", mode])
+        assert ns.ext_mode == mode
 
-    def test_no_keep_ext_flag(self):
-        ns = _build_parser().parse_args(["-s", "x", "--no-keep-ext"])
-        assert ns.keep_ext is False
+    def test_ext_mode_invalid_choice_rejected(self):
+        with pytest.raises(SystemExit):
+            _build_parser().parse_args(["-s", "x", "--ext-mode", "bogus"])
 
     def test_filter_default_none(self):
         ns = _build_parser().parse_args(["-s", "x"])
@@ -325,7 +326,7 @@ class TestResolveNs:
             mode=None,
             list="files",
             recurse=False,
-            keep_ext=None,
+            ext_mode=None,
             filter_glob=None,
             sep=None,
             accent=None,
@@ -347,16 +348,16 @@ class TestResolveNs:
         assert ns.accent is False
         assert ns.dup is False
         assert ns.case == "none"
-        assert ns.keep_ext is True
+        assert ns.ext_mode == "keep"
 
     def test_explicit_cli_flags_preserved(self):
         ns = self._raw_ns(
-            search="foo", replace="bar", mode="regex", keep_ext=False, accent=True
+            search="foo", replace="bar", mode="regex", ext_mode="modify", accent=True
         )
         _resolve_ns(ns)
         assert ns.replace == "bar"
         assert ns.mode == "regex"
-        assert ns.keep_ext is False
+        assert ns.ext_mode == "modify"
         assert ns.accent is True
 
     def test_no_search_no_saved_exits(self):
@@ -395,7 +396,7 @@ class TestResolveNs:
                     "remove_accents": True,
                     "remove_duplicates": False,
                     "case": 2,  # lowercase
-                    "keep_extension": False,
+                    "keep_extension": False,  # legacy bool, migrated to "modify"
                 }
             },
         )
@@ -409,7 +410,24 @@ class TestResolveNs:
         assert ns.accent is True
         assert ns.dup is False
         assert ns.case == "lower"
-        assert ns.keep_ext is False
+        assert ns.ext_mode == "modify"
+
+    def test_saved_loads_extension_mode(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        p = self._make_presets(
+            tmp_path,
+            {
+                "mypreset": {
+                    "search_pattern": "{X}",
+                    "extension_mode": "normalize",
+                }
+            },
+        )
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: p)
+        ns = self._raw_ns(saved="mypreset")
+        _resolve_ns(ns)
+        assert ns.ext_mode == "normalize"
 
     def test_cli_overrides_saved_field(self, tmp_path, monkeypatch):
         from pbrenamer.ui import presets as _presets
@@ -488,18 +506,52 @@ class TestPlan:
     def test_keep_ext_preserves_extension(self, tmp_path):
         _make_files(tmp_path, "my_file.txt")
         entries = [("my_file.txt", str(tmp_path / "my_file.txt"))]
-        ns = _ns(search="_", replace="-", mode="plain", keep_ext=True)
+        ns = _ns(search="_", replace="-", mode="plain", ext_mode="keep")
         result = _plan(entries, ns)
         assert result[0][2] == "my-file.txt"
 
-    def test_no_keep_ext_includes_extension_in_search(self, tmp_path):
-        # With keep_ext=False the full filename (incl. extension) is the stem,
-        # so a search that touches the extension part works too.
+    def test_modify_mode_includes_extension_in_search(self, tmp_path):
+        # With ext_mode="modify" the full filename (incl. extension) is the
+        # stem, so a search that touches the extension part works too.
         _make_files(tmp_path, "report.docx")
         entries = [("report.docx", str(tmp_path / "report.docx"))]
-        ns = _ns(search=".docx", replace=".txt", mode="plain", keep_ext=False)
+        ns = _ns(search=".docx", replace=".txt", mode="plain", ext_mode="modify")
         result = _plan(entries, ns)
         assert result[0][2] == "report.txt"
+
+    def test_lower_mode_lowercases_extension(self, tmp_path):
+        _make_files(tmp_path, "my_file.TXT")
+        entries = [("my_file.TXT", str(tmp_path / "my_file.TXT"))]
+        ns = _ns(search="_", replace="-", mode="plain", ext_mode="lower")
+        result = _plan(entries, ns)
+        assert result[0][2] == "my-file.txt"
+
+    def test_upper_mode_uppercases_extension(self, tmp_path):
+        _make_files(tmp_path, "my_file.txt")
+        entries = [("my_file.txt", str(tmp_path / "my_file.txt"))]
+        ns = _ns(search="_", replace="-", mode="plain", ext_mode="upper")
+        result = _plan(entries, ns)
+        assert result[0][2] == "my-file.TXT"
+
+    def test_normalize_mode_maps_extension_via_table(self, tmp_path, monkeypatch):
+        _make_files(tmp_path, "my_file.jpeg")
+        entries = [("my_file.jpeg", str(tmp_path / "my_file.jpeg"))]
+        monkeypatch.setattr(
+            _settings, "get_extension_normalization_map", lambda: {"jpeg": "jpg"}
+        )
+        ns = _ns(search="_", replace="-", mode="plain", ext_mode="normalize")
+        result = _plan(entries, ns)
+        assert result[0][2] == "my-file.jpg"
+
+    def test_normalize_mode_unmapped_extension_unchanged(self, tmp_path, monkeypatch):
+        _make_files(tmp_path, "my_file.png")
+        entries = [("my_file.png", str(tmp_path / "my_file.png"))]
+        monkeypatch.setattr(
+            _settings, "get_extension_normalization_map", lambda: {"jpeg": "jpg"}
+        )
+        ns = _ns(search="_", replace="-", mode="plain", ext_mode="normalize")
+        result = _plan(entries, ns)
+        assert result[0][2] == "my-file.png"
 
     def test_postproc_applied(self, tmp_path):
         _make_files(tmp_path, "café.txt")
@@ -521,7 +573,7 @@ class TestPlan:
             ("alpha.txt", str(tmp_path / "alpha.txt")),
             ("beta.txt", str(tmp_path / "beta.txt")),
         ]
-        ns = _ns(search="{L}", replace="{newnum}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{L}", replace="{newnum}", mode="pattern")
         result = _plan(entries, ns)
         names = {orig: new for _, orig, new in result}
         assert names["alpha.txt"] == "1.txt"
@@ -531,7 +583,7 @@ class TestPlan:
         # {im:artist} cannot be resolved for a plain text file → new_name stays None
         _make_files(tmp_path, "doc.txt")
         entries = [("doc.txt", str(tmp_path / "doc.txt"))]
-        ns = _ns(search="{L}", replace="{im:artist}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{L}", replace="{im:artist}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] is None
 
@@ -542,7 +594,7 @@ class TestPlan:
             ("a.txt", str(tmp_path / "a.txt")),
             ("b.txt", str(tmp_path / "b.txt")),
         ]
-        ns = _ns(search="{L}", replace="{newnum::5}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{L}", replace="{newnum::5}", mode="pattern")
         result = _plan(entries, ns)
         names = {orig: new for _, orig, new in result}
         assert names["a.txt"] == "5.txt"
@@ -552,7 +604,7 @@ class TestPlan:
         # {newnum::abc} → int("abc") raises ValueError → start stays 1
         _make_files(tmp_path, "a.txt")
         entries = [("a.txt", str(tmp_path / "a.txt"))]
-        ns = _ns(search="{L}", replace="{newnum::abc}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{L}", replace="{newnum::abc}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] == "1.txt"
 
@@ -560,7 +612,7 @@ class TestPlan:
         # {D} matches digit sequences; "abc" has none → raw=None inside newnum loop
         _make_files(tmp_path, "abc.txt")
         entries = [("abc.txt", str(tmp_path / "abc.txt"))]
-        ns = _ns(search="{D}", replace="{newnum}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{D}", replace="{newnum}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] is None
 
@@ -568,9 +620,7 @@ class TestPlan:
         # {im:artist} inside newnum template → FieldResolutionError in the while loop
         _make_files(tmp_path, "doc.txt")
         entries = [("doc.txt", str(tmp_path / "doc.txt"))]
-        ns = _ns(
-            search="{L}", replace="{newnum}_{im:artist}", mode="pattern", keep_ext=True
-        )
+        ns = _ns(search="{L}", replace="{newnum}_{im:artist}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] is None
 
@@ -579,7 +629,7 @@ class TestPlan:
         _make_files(tmp_path, "abc.txt")
         (tmp_path / "1.txt").write_text("existing")
         entries = [("abc.txt", str(tmp_path / "abc.txt"))]
-        ns = _ns(search="{L}", replace="{newnum}", mode="pattern", keep_ext=True)
+        ns = _ns(search="{L}", replace="{newnum}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] == "2.txt"
 
@@ -787,13 +837,13 @@ class TestHeadlessRun:
         out = capsys.readouterr().out
         assert "CONFLICT" in out
 
-    def test_no_keep_ext_renames_full_filename(self, tmp_path, capsys):
+    def test_modify_mode_renames_full_filename(self, tmp_path, capsys):
         _make_files(tmp_path, "data_v1.csv")
         ns = _ns(
             search="_",
             replace="-",
             mode="plain",
-            keep_ext=False,
+            ext_mode="modify",
             directory=str(tmp_path),
         )
         _headless_run(ns)

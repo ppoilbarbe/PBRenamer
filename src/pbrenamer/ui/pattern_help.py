@@ -104,7 +104,7 @@ def search_html() -> str:
     # ── Regex mode ────────────────────────────────────────────────────────────
     re_intro = _(
         "Full Python <code>re</code>-module syntax. The match is applied to the file "
-        "stem (or full name if <em>Keep extension</em> is unchecked)."
+        "stem (or full name if the extension mode is <em>Modify extension</em>)."
     )
     re_table = (
         _TABLE

@@ -10,6 +10,8 @@ import pbrenamer.settings as settings
 from pbrenamer.settings import (
     LEVELS,
     apply_log_level,
+    get_extension_normalization,
+    get_extension_normalization_map,
     get_last_dir,
     get_log_level,
     get_preview_delay,
@@ -17,6 +19,7 @@ from pbrenamer.settings import (
     get_restore_toolbar_state,
     get_shortcuts,
     get_toolbar_state,
+    set_extension_normalization,
     set_last_dir,
     set_log_level,
     set_preview_delay,
@@ -108,6 +111,71 @@ class TestSetShortcuts:
         monkeypatch.setattr(settings, "_SHORTCUTS_FILE", sc_file)
         set_shortcuts([("Test", "/test")])
         assert sc_file.exists()
+
+
+class TestGetExtensionNormalization:
+    def test_returns_empty_when_file_absent(self):
+        assert get_extension_normalization() == []
+
+    def test_returns_empty_on_invalid_json(self, config_dir):
+        (config_dir / "extension_normalization.json").write_text(
+            "not json", encoding="utf-8"
+        )
+        assert get_extension_normalization() == []
+
+    def test_returns_empty_when_not_a_list(self, config_dir):
+        (config_dir / "extension_normalization.json").write_text(
+            '{"key": "val"}', encoding="utf-8"
+        )
+        assert get_extension_normalization() == []
+
+    def test_filters_invalid_entries(self, config_dir):
+        data = [
+            {"from": "jpeg", "to": "jpg"},
+            {"from": "", "to": "empty_from"},
+            {"from": "no_to"},
+            "not a dict",
+            {"from": "empty_to", "to": ""},
+        ]
+        (config_dir / "extension_normalization.json").write_text(
+            json.dumps(data), encoding="utf-8"
+        )
+        assert get_extension_normalization() == [("jpeg", "jpg")]
+
+
+class TestSetExtensionNormalization:
+    def test_round_trip(self):
+        pairs = [("jpeg", "jpg"), ("yml", "yaml")]
+        set_extension_normalization(pairs)
+        assert get_extension_normalization() == pairs
+
+    def test_empty_list_clears_table(self):
+        set_extension_normalization([("jpeg", "jpg")])
+        set_extension_normalization([])
+        assert get_extension_normalization() == []
+
+    def test_creates_parent_directory(self, tmp_path, monkeypatch):
+        nested = tmp_path / "a" / "b" / "c"
+        mock_dirs = MagicMock()
+        mock_dirs.config_home = nested
+        monkeypatch.setattr(settings, "_dirs", mock_dirs)
+        norm_file = nested / "extension_normalization.json"
+        monkeypatch.setattr(settings, "_EXTENSION_NORMALIZATION_FILE", norm_file)
+        set_extension_normalization([("jpeg", "jpg")])
+        assert norm_file.exists()
+
+
+class TestGetExtensionNormalizationMap:
+    def test_returns_empty_dict_when_no_table(self):
+        assert get_extension_normalization_map() == {}
+
+    def test_returns_lowercased_keys(self):
+        set_extension_normalization([("JPEG", "jpg")])
+        assert get_extension_normalization_map() == {"jpeg": "jpg"}
+
+    def test_preserves_to_value_case(self):
+        set_extension_normalization([("jpeg", "JPG")])
+        assert get_extension_normalization_map() == {"jpeg": "JPG"}
 
 
 class TestApplyLogLevel:

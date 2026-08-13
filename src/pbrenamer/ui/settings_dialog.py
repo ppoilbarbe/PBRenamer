@@ -1,8 +1,9 @@
-"""Settings dialog — language override and log level."""
+"""Settings dialog — language, log level, and extension normalization table."""
 
 from __future__ import annotations
 
-from PySide6.QtWidgets import QDialog
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDialog, QListWidgetItem
 
 from pbrenamer import i18n, settings
 from pbrenamer.ui.geometry_mixin import GeometryMixin
@@ -40,6 +41,13 @@ class SettingsDialog(GeometryMixin, QDialog):
 
         self._ui.buttonBox.accepted.connect(self._save_and_accept)
 
+        self._ui.btnExtensionAdd.clicked.connect(self._on_add_extension)
+        self._ui.edtExtensionFrom.returnPressed.connect(self._on_add_extension)
+        self._ui.edtExtensionTo.returnPressed.connect(self._on_add_extension)
+        self._ui.btnExtensionRemove.clicked.connect(self._on_remove_extension)
+        self._ui.btnExtensionClear.clicked.connect(self._on_clear_extension)
+        self._reload_extension_pairs()
+
     def _save_and_accept(self) -> None:
         i18n.set_language_override(self._ui.cmbLanguage.currentData())
         level = self._ui.cmbLogLevel.currentText()
@@ -49,3 +57,39 @@ class SettingsDialog(GeometryMixin, QDialog):
         settings.set_restore_toolbar_state(self._ui.chkRestoreToolbarState.isChecked())
         settings.set_preview_delay(self._ui.spnPreviewDelay.value())
         self.accept()
+
+    # ── Extension normalization tab ──────────────────────────────────────────
+
+    def _reload_extension_pairs(self) -> None:
+        self._ui.lstExtensionPairs.clear()
+        for from_ext, to_ext in settings.get_extension_normalization():
+            item = QListWidgetItem(f"{from_ext}  →  {to_ext}")
+            item.setData(Qt.ItemDataRole.UserRole, (from_ext, to_ext))
+            self._ui.lstExtensionPairs.addItem(item)
+
+    def _on_add_extension(self) -> None:
+        from_ext = self._ui.edtExtensionFrom.text().strip().lstrip(".")
+        to_ext = self._ui.edtExtensionTo.text().strip().lstrip(".")
+        if not from_ext or not to_ext:
+            return
+        pairs = settings.get_extension_normalization()
+        pairs.append((from_ext, to_ext))
+        settings.set_extension_normalization(pairs)
+        self._ui.edtExtensionFrom.clear()
+        self._ui.edtExtensionTo.clear()
+        self._reload_extension_pairs()
+
+    def _on_remove_extension(self) -> None:
+        selected_rows = {
+            self._ui.lstExtensionPairs.row(it)
+            for it in self._ui.lstExtensionPairs.selectedItems()
+        }
+        pairs = settings.get_extension_normalization()
+        settings.set_extension_normalization(
+            [p for i, p in enumerate(pairs) if i not in selected_rows]
+        )
+        self._reload_extension_pairs()
+
+    def _on_clear_extension(self) -> None:
+        settings.set_extension_normalization([])
+        self._reload_extension_pairs()

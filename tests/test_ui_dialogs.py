@@ -168,6 +168,88 @@ class TestSettingsDialog:
         dlg.reject()
         assert ws.load_geometry("settings_dialog") is not None
 
+    # ── Extension normalization tab ──────────────────────────────────────────
+
+    def test_extension_tab_empty_shows_no_items(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg._ui.lstExtensionPairs.count() == 0
+
+    def test_extension_tab_list_shows_saved_pairs(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        _cfg.set_extension_normalization([("jpeg", "jpg"), ("yml", "yaml")])
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg._ui.lstExtensionPairs.count() == 2
+
+    def test_extension_tab_add_pair(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtExtensionFrom.setText("jpeg")
+        dlg._ui.edtExtensionTo.setText("jpg")
+        dlg._on_add_extension()
+        assert _cfg.get_extension_normalization() == [("jpeg", "jpg")]
+        assert dlg._ui.edtExtensionFrom.text() == ""
+        assert dlg._ui.edtExtensionTo.text() == ""
+
+    def test_extension_tab_add_pair_strips_leading_dot(
+        self, qtbot: QtBot, window_state
+    ):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtExtensionFrom.setText(".jpeg")
+        dlg._ui.edtExtensionTo.setText(".jpg")
+        dlg._on_add_extension()
+        assert _cfg.get_extension_normalization() == [("jpeg", "jpg")]
+
+    def test_extension_tab_add_pair_empty_from_is_noop(
+        self, qtbot: QtBot, window_state
+    ):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtExtensionFrom.setText("")
+        dlg._ui.edtExtensionTo.setText("jpg")
+        dlg._on_add_extension()
+        assert _cfg.get_extension_normalization() == []
+
+    def test_extension_tab_add_pair_empty_to_is_noop(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtExtensionFrom.setText("jpeg")
+        dlg._ui.edtExtensionTo.setText("")
+        dlg._on_add_extension()
+        assert _cfg.get_extension_normalization() == []
+
+    def test_extension_tab_remove_selected(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        _cfg.set_extension_normalization([("jpeg", "jpg"), ("yml", "yaml")])
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.lstExtensionPairs.setCurrentRow(0)
+        dlg._on_remove_extension()
+        assert _cfg.get_extension_normalization() == [("yml", "yaml")]
+
+    def test_extension_tab_clear(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        _cfg.set_extension_normalization([("jpeg", "jpg")])
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._on_clear_extension()
+        assert _cfg.get_extension_normalization() == []
+
 
 # ---------------------------------------------------------------------------
 # HistoryDialog

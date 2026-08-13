@@ -26,6 +26,7 @@ from pbrenamer.settings import (
     get_last_dir,
     get_shortcuts,
     get_toolbar_state,
+    set_extension_normalization,
     set_last_dir,
     set_restore_last_dir,
     set_restore_toolbar_state,
@@ -864,16 +865,22 @@ class TestNamedSaves:
             "remove_accents": True,
             "remove_duplicates": True,
             "case": 1,
-            "keep_extension": True,
+            "extension_mode": "lower",
         }
         window._apply_save_config(cfg)
         assert window._ui.cmbPatternSearch.currentText() == "hello"
         assert window._ui.chkCaseInsensitive.isChecked()
         assert window._ui.chkRemoveAccents.isChecked()
         assert window._ui.chkRemoveDuplicates.isChecked()
-        assert window._ui.chkKeepExtension.isChecked()
+        assert window._ui.cmbExtensionMode.currentData() == "lower"
         assert window._ui.cmbSpaces.currentIndex() == 1
         assert window._ui.cmbCaps.currentIndex() == 1
+
+    def test_apply_save_config_migrates_legacy_keep_extension(self, window):
+        window._apply_save_config({"keep_extension": False})
+        assert window._ui.cmbExtensionMode.currentData() == "modify"
+        window._apply_save_config({"keep_extension": True})
+        assert window._ui.cmbExtensionMode.currentData() == "keep"
 
     def test_apply_save_config_filter_triggers_reload(
         self, window, tmp_path, monkeypatch
@@ -1043,7 +1050,7 @@ class TestWindowState:
 
     def test_collect_toolbar_state_keys(self, window):
         state = window._collect_toolbar_state()
-        for key in ("mode", "recursive", "keep_extension", "auto_preview", "filter"):
+        for key in ("mode", "recursive", "extension_mode", "auto_preview", "filter"):
             assert key in state
 
     def test_restore_toolbar_state_empty(self, window):
@@ -1054,7 +1061,7 @@ class TestWindowState:
             {
                 "mode": 1,
                 "recursive": True,
-                "keep_extension": True,
+                "extension_mode": "lower",
                 "auto_preview": False,
                 "filter": "*.jpg",
             }
@@ -1062,8 +1069,13 @@ class TestWindowState:
         window._restore_toolbar_state()
         assert window._ui.cmbMode.currentIndex() == 1
         assert window._ui.chkRecursive.isChecked()
-        assert window._ui.chkKeepExtension.isChecked()
+        assert window._ui.cmbExtensionMode.currentData() == "lower"
         assert window._ui.edtFilter.text() == "*.jpg"
+
+    def test_restore_toolbar_state_migrates_legacy_keep_extension(self, window):
+        set_toolbar_state({"keep_extension": False})
+        window._restore_toolbar_state()
+        assert window._ui.cmbExtensionMode.currentData() == "modify"
         # restore defaults
         window._ui.cmbMode.setCurrentIndex(0)
         window._ui.chkRecursive.setChecked(False)
@@ -1117,6 +1129,29 @@ class TestMenuHandlers:
 
         monkeypatch.setattr(SettingsDialog, "exec", lambda self: 0)
         window._on_settings()
+
+    def test_on_settings_refreshes_preview_when_normalize_mode(
+        self, window, monkeypatch, tmp_path
+    ):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        (tmp_path / "hello.jpeg").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.chkAutoPreview.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("hello")
+        window._ui.cmbPatternDest.setCurrentText("world")
+
+        def _add_mapping(self):
+            set_extension_normalization([("jpeg", "jpg")])
+
+        monkeypatch.setattr(SettingsDialog, "exec", _add_mapping)
+        window._on_settings()
+        assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.jpg"
 
     def test_on_about(self, window, monkeypatch):
         from pbrenamer.ui.about_dialog import AboutDialog
@@ -1403,18 +1438,22 @@ class TestOnPreview:
         window._current_dir = str(tmp_path)
         window._reload_files()
         window._ui.radPlainText.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
         window._ui.cmbPatternSearch.setCurrentText("nomatch")
         window._ui.cmbPatternDest.setCurrentText("world")
         window._on_preview()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == ""
 
-    def test_plain_rename_success_no_keep_ext(self, window, tmp_path):
+    def test_plain_rename_success_modify_extension(self, window, tmp_path):
         (tmp_path / "hello.txt").write_text("x")
         window._current_dir = str(tmp_path)
         window._reload_files()
         window._ui.radPlainText.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(False)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("modify")
+        )
         window._ui.cmbPatternSearch.setCurrentText("hello.txt")
         window._ui.cmbPatternDest.setCurrentText("world.txt")
         window._on_preview()
@@ -1425,11 +1464,67 @@ class TestOnPreview:
         window._current_dir = str(tmp_path)
         window._reload_files()
         window._ui.radPlainText.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
         window._ui.cmbPatternSearch.setCurrentText("hello")
         window._ui.cmbPatternDest.setCurrentText("world")
         window._on_preview()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.txt"
+
+    def test_plain_rename_lowercase_extension(self, window, tmp_path):
+        (tmp_path / "hello.JPG").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("lower")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("hello")
+        window._ui.cmbPatternDest.setCurrentText("world")
+        window._on_preview()
+        assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.jpg"
+
+    def test_plain_rename_uppercase_extension(self, window, tmp_path):
+        (tmp_path / "hello.jpg").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("upper")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("hello")
+        window._ui.cmbPatternDest.setCurrentText("world")
+        window._on_preview()
+        assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.JPG"
+
+    def test_plain_rename_normalize_extension_hit(self, window, tmp_path):
+        set_extension_normalization([("jpeg", "jpg")])
+        (tmp_path / "hello.jpeg").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("hello")
+        window._ui.cmbPatternDest.setCurrentText("world")
+        window._on_preview()
+        assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.jpg"
+
+    def test_plain_rename_normalize_extension_miss_unchanged(self, window, tmp_path):
+        set_extension_normalization([("jpeg", "jpg")])
+        (tmp_path / "hello.png").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("hello")
+        window._ui.cmbPatternDest.setCurrentText("world")
+        window._on_preview()
+        assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.png"
 
     def test_field_error_non_newnum(self, window, tmp_path, monkeypatch):
         (tmp_path / "file.txt").write_text("x")
@@ -1479,7 +1574,9 @@ class TestOnPreview:
         window._current_dir = str(tmp_path)
         window._reload_files()
         window._ui.radPattern.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{newnum}")
         window._on_preview()
@@ -1510,7 +1607,9 @@ class TestOnPreview:
         window._ui.tblFiles.clearSelection()
         item_a.setSelected(True)
         window._ui.radPattern.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{newnum}")
         window._on_preview()
@@ -1541,7 +1640,9 @@ class TestOnPreview:
         window._current_dir = str(tmp_path)
         window._reload_files()
         window._ui.radPattern.setChecked(True)
-        window._ui.chkKeepExtension.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{newnum}")
         window._on_preview()

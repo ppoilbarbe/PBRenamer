@@ -26,6 +26,7 @@ _PREVIEW_DELAY_DEFAULT = 500
 _PREVIEW_DELAY_MIN = 100
 _PREVIEW_DELAY_MAX = 1000
 _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
+_EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
 
 LEVELS: tuple[str, ...] = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 
@@ -35,7 +36,7 @@ def configure(config_dir: Path | None = None) -> None:
 
     Pass ``None`` to restore the platform default. Intended for testing.
     """
-    global _dirs, _SHORTCUTS_FILE
+    global _dirs, _SHORTCUTS_FILE, _EXTENSION_NORMALIZATION_FILE
     if config_dir is None:
         _dirs = AppDirs(_DOMAIN)
     else:
@@ -45,6 +46,7 @@ def configure(config_dir: Path | None = None) -> None:
             cache_home=config_dir,
         )
     _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
+    _EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
 
 
 def _settings() -> QSettings:
@@ -91,6 +93,47 @@ def set_shortcuts(shortcuts: list[tuple[str, str]]) -> None:
     _SHORTCUTS_FILE.write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+
+
+def get_extension_normalization() -> list[tuple[str, str]]:
+    """Return user-defined extension normalization pairs as (from_ext, to_ext).
+
+    Both sides exclude the leading dot, matching ``filetools.cut_extension``.
+    """
+    try:
+        data = json.loads(_EXTENSION_NORMALIZATION_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    if not isinstance(data, list):
+        return []
+    return [
+        (str(e["from"]), str(e["to"]))
+        for e in data
+        if isinstance(e, dict)
+        and isinstance(e.get("from"), str)
+        and isinstance(e.get("to"), str)
+        and e["from"]
+        and e["to"]
+    ]
+
+
+def set_extension_normalization(pairs: list[tuple[str, str]]) -> None:
+    """Persist user-defined extension normalization pairs."""
+    _EXTENSION_NORMALIZATION_FILE.parent.mkdir(parents=True, exist_ok=True)
+    data = [{"from": from_ext, "to": to_ext} for from_ext, to_ext in pairs]
+    _EXTENSION_NORMALIZATION_FILE.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
+def get_extension_normalization_map() -> dict[str, str]:
+    """Return the normalization table as {from_ext.lower(): to_ext}.
+
+    Ready to pass to ``filetools.apply_extension_mode``.
+    """
+    return {
+        from_ext.lower(): to_ext for from_ext, to_ext in get_extension_normalization()
+    }
 
 
 def get_restore_last_dir() -> bool:

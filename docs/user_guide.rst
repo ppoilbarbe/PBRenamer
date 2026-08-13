@@ -100,12 +100,29 @@ modes.  See :ref:`replacement-fields` for the complete field reference.
 Click the **?** button next to the replace field to open the non-modal
 Replacement Fields help dialog.
 
-Keep extension
+Extension mode
 ^^^^^^^^^^^^^^
 
-When checked (default), the search/replace pattern is applied to the file
-*stem* only; the extension is preserved unchanged.  Uncheck to apply the
-pattern to the full file name including the extension.
+Controls how the file extension is handled during rename.  Choices:
+
+* *Keep extension* (default) — the search/replace pattern is applied to the
+  file *stem* only; the extension is preserved unchanged.
+* *Extension in lowercase* — the extension is preserved but forced to
+  lowercase (e.g. ``.JPG`` → ``.jpg``).
+* *Extension in uppercase* — the extension is preserved but forced to
+  uppercase (e.g. ``.jpg`` → ``.JPG``).
+* *Normalize extension* — the extension is looked up (case-insensitively) in
+  the extension normalization table (**Edit → Settings… → Extension
+  Normalization** tab) and replaced accordingly (e.g. ``.jpeg`` → ``.jpg``);
+  left unchanged if not found in the table.
+* *Modify extension* — the search/replace pattern is applied to the full file
+  name, including the extension.
+
+The normalization table is managed from the **Extension Normalization** tab
+of the Settings dialog (**Edit → Settings…**): add, remove, or clear
+``from → to`` extension mappings (both sides without the leading dot).
+Changes to the table apply immediately and are kept even if the dialog is
+later cancelled.
 
 Post-processing options
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -264,7 +281,7 @@ Regular expression mode
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Full Python ``re``-module syntax.  The match is applied to the file stem (or
-full name if *Keep extension* is unchecked).
+full name if the extension mode is *Modify extension*).
 
 .. list-table::
    :header-rows: 1
@@ -628,7 +645,7 @@ window is opened; renames are performed and the process exits.
               [--mode {pattern,regex,plain}]
               [--list {files,dirs,all}]
               [--recurse | --no-recurse]
-              [--keep-ext | --no-keep-ext]
+              [--ext-mode {keep,lower,upper,normalize,modify}]
               [--filter GLOB]
               [--sep {none,space-underscore,underscore-space,
                       space-dot,dot-space,space-dash,dash-space}]
@@ -665,8 +682,12 @@ Rename options
 ``--recurse`` / ``--no-recurse``
     Recurse into sub-directories (default: ``--no-recurse``).
 
-``--keep-ext`` / ``--no-keep-ext``
-    Preserve the file extension during rename (default: ``--keep-ext``).
+``--ext-mode {keep,lower,upper,normalize,modify}``
+    How to handle the extension during rename (default: ``keep``).  ``lower``
+    / ``upper`` case-fold the extension; ``normalize`` maps it through the
+    extension normalization table (managed from the GUI, **Edit → Settings…
+    → Extension Normalization** tab); ``modify`` includes the extension in
+    the search/replace pattern, same as *Modify extension* in the GUI.
 
 ``--filter GLOB``
     Glob pattern to restrict the file listing (e.g. ``'*.jpg'``).

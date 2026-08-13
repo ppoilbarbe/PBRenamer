@@ -149,16 +149,23 @@ class Ui_MainWindow:
         )
         bar.addWidget(self.chkRecursive)
 
-        self.chkKeepExtension = QCheckBox(_("Keep extension"), parent)
-        self.chkKeepExtension.setChecked(True)
-        self.chkKeepExtension.setToolTip(_("Preserve the file extension"))
-        self.chkKeepExtension.setStatusTip(
+        self.cmbExtensionMode = QComboBox(parent)
+        self.cmbExtensionMode.addItem(_("Keep extension"), userData="keep")
+        self.cmbExtensionMode.addItem(_("Extension in lowercase"), userData="lower")
+        self.cmbExtensionMode.addItem(_("Extension in uppercase"), userData="upper")
+        self.cmbExtensionMode.addItem(_("Normalize extension"), userData="normalize")
+        self.cmbExtensionMode.addItem(_("Modify extension"), userData="modify")
+        self.cmbExtensionMode.setToolTip(_("How to handle the file extension"))
+        self.cmbExtensionMode.setStatusTip(
             _(
-                "Apply transformations to the file stem only,"
-                " leaving the extension unchanged"
+                "Keep: extension untouched. Lowercase/Uppercase: extension"
+                " case-folded. Normalize: extension mapped via the"
+                " normalization table (Edit menu). Modify: the extension is"
+                " included in the search/replace pattern like the rest of"
+                " the name"
             )
         )
-        bar.addWidget(self.chkKeepExtension)
+        bar.addWidget(self.cmbExtensionMode)
 
         self.chkAutoPreview = QCheckBox(_("Auto-preview"), parent)
         self.chkAutoPreview.setToolTip(_("Refresh the preview automatically"))

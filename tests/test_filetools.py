@@ -150,6 +150,40 @@ class TestAddExtension:
         assert name == ""
 
 
+class TestApplyExtensionMode:
+    def test_keep_unchanged(self):
+        assert filetools.apply_extension_mode("JPG", "keep") == "JPG"
+
+    def test_lower(self):
+        assert filetools.apply_extension_mode("JPG", "lower") == "jpg"
+
+    def test_upper(self):
+        assert filetools.apply_extension_mode("jpg", "upper") == "JPG"
+
+    def test_normalize_hit(self):
+        result = filetools.apply_extension_mode("jpeg", "normalize", {"jpeg": "jpg"})
+        assert result == "jpg"
+
+    def test_normalize_hit_case_insensitive(self):
+        result = filetools.apply_extension_mode("JPEG", "normalize", {"jpeg": "jpg"})
+        assert result == "jpg"
+
+    def test_normalize_miss_unchanged(self):
+        result = filetools.apply_extension_mode("png", "normalize", {"jpeg": "jpg"})
+        assert result == "png"
+
+    def test_normalize_no_table_unchanged(self):
+        assert filetools.apply_extension_mode("jpeg", "normalize", None) == "jpeg"
+
+    def test_normalize_empty_table_unchanged(self):
+        assert filetools.apply_extension_mode("jpeg", "normalize", {}) == "jpeg"
+
+    def test_modify_mode_unchanged(self):
+        # "modify" is handled upstream by callers (extension not cut at
+        # all); apply_extension_mode itself leaves ext untouched for it.
+        assert filetools.apply_extension_mode("JPG", "modify") == "JPG"
+
+
 # ---------------------------------------------------------------------------
 # Pattern-based rename engine (pure — no disk I/O)
 # ---------------------------------------------------------------------------

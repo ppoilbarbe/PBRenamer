@@ -43,6 +43,20 @@ _log = logging.getLogger(__name__)
 _SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
 
+def _resolve_extension_mode(cfg: dict) -> str | None:
+    """Return the extension mode from *cfg*, or None if absent.
+
+    Reads the current ``"extension_mode"`` key if present, else migrates the
+    legacy ``"keep_extension"`` bool (``True`` -> "keep", ``False`` ->
+    "modify") from configs saved before the enum was introduced.
+    """
+    if "extension_mode" in cfg:
+        return str(cfg["extension_mode"])
+    if "keep_extension" in cfg:
+        return "keep" if cfg["keep_extension"] else "modify"
+    return None
+
+
 class _SearchModeDelegate(QStyledItemDelegate):
     """Appends a dimmed mode label on the right of each search history item."""
 
@@ -196,6 +210,9 @@ class MainWindow(QMainWindow):
         self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
         self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
         self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
+        self._ui.cmbExtensionMode.currentIndexChanged.connect(
+            self._on_post_process_changed
+        )
 
         # Pattern add/help buttons
         self._ui.btnSearchAdd.clicked.connect(self._on_add_search)
@@ -547,7 +564,8 @@ class MainWindow(QMainWindow):
             return
 
         mode_label = "regex" if use_regex else ("plain" if use_plain else "pattern")
-        keep_ext = self._ui.chkKeepExtension.isChecked()
+        ext_mode = self._ui.cmbExtensionMode.currentData()
+        normalization_table = _cfg.get_extension_normalization_map()
         items = self._active_items()
         _log.info(
             "Preview: %d item(s), mode=%s, search=%r, replace=%r",
@@ -566,10 +584,11 @@ class MainWindow(QMainWindow):
             path = item.data(0, Qt.ItemDataRole.UserRole)
             name = os.path.basename(path)
 
-            if keep_ext:
-                stem, stem_path, ext = filetools.cut_extension(name, path)
-            else:
+            if ext_mode == "modify":
                 stem, stem_path, ext = name, path, ""
+            else:
+                stem, stem_path, ext = filetools.cut_extension(name, path)
+                ext = filetools.apply_extension_mode(ext, ext_mode, normalization_table)
 
             field_error = False
             field_error_name = ""
@@ -871,7 +890,7 @@ class MainWindow(QMainWindow):
             "remove_accents": self._ui.chkRemoveAccents.isChecked(),
             "remove_duplicates": self._ui.chkRemoveDuplicates.isChecked(),
             "case": self._ui.cmbCaps.currentIndex(),
-            "keep_extension": self._ui.chkKeepExtension.isChecked(),
+            "extension_mode": self._ui.cmbExtensionMode.currentData(),
         }
         f = self._ui.edtFilter.text()
         if f:
@@ -900,8 +919,11 @@ class MainWindow(QMainWindow):
             self._ui.chkRemoveDuplicates.setChecked(bool(cfg["remove_duplicates"]))
         if "case" in cfg:
             self._ui.cmbCaps.setCurrentIndex(int(cfg["case"]))
-        if "keep_extension" in cfg:
-            self._ui.chkKeepExtension.setChecked(bool(cfg["keep_extension"]))
+        ext_mode = _resolve_extension_mode(cfg)
+        if ext_mode is not None:
+            idx = self._ui.cmbExtensionMode.findData(ext_mode)
+            if idx >= 0:
+                self._ui.cmbExtensionMode.setCurrentIndex(idx)
         current_filter = self._ui.edtFilter.text()
         new_filter = cfg.get("filter", "")
         self._ui.edtFilter.setText(new_filter)
@@ -1043,7 +1065,7 @@ class MainWindow(QMainWindow):
         return {
             "mode": self._ui.cmbMode.currentIndex(),
             "recursive": self._ui.chkRecursive.isChecked(),
-            "keep_extension": self._ui.chkKeepExtension.isChecked(),
+            "extension_mode": self._ui.cmbExtensionMode.currentData(),
             "auto_preview": self._ui.chkAutoPreview.isChecked(),
             "filter": self._ui.edtFilter.text(),
         }
@@ -1058,8 +1080,11 @@ class MainWindow(QMainWindow):
                 self._ui.cmbMode.setCurrentIndex(idx)
         if "recursive" in state:
             self._ui.chkRecursive.setChecked(bool(state["recursive"]))
-        if "keep_extension" in state:
-            self._ui.chkKeepExtension.setChecked(bool(state["keep_extension"]))
+        ext_mode = _resolve_extension_mode(state)
+        if ext_mode is not None:
+            idx = self._ui.cmbExtensionMode.findData(ext_mode)
+            if idx >= 0:
+                self._ui.cmbExtensionMode.setCurrentIndex(idx)
         if "auto_preview" in state:
             self._ui.chkAutoPreview.setChecked(bool(state["auto_preview"]))
         if "filter" in state:
@@ -1084,6 +1109,11 @@ class MainWindow(QMainWindow):
 
     def _on_settings(self) -> None:
         SettingsDialog(self._window_state, self).exec()
+        if (
+            self._ui.chkAutoPreview.isChecked()
+            and self._ui.cmbExtensionMode.currentData() == "normalize"
+        ):
+            self._on_preview()
 
     def _on_about(self) -> None:
         AboutDialog(self).exec()

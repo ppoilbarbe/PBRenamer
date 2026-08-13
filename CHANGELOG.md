@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track: `performer`, `copyright`, `comment`, `description`, `genre`
+- Extension normalization table, managed from its own tab in the Settings dialog (**Edit → Settings… → Extension Normalization**): user-editable `from → to` extension mappings (e.g. `jpeg → jpg`, `yml → yaml`), persisted to `extension_normalization.json`, used by the new "Normalize extension" mode; changes apply immediately regardless of whether the dialog is later confirmed or cancelled
 
 ### Changed
 
 - Menu actions (Open folder, Information, History, Settings, Edit shortcuts, About, Quit) and the search/replace toolbar buttons (add-to-history "+", pattern help "?") now use bundled SVG icons (`resources/*.svg`) instead of plain text / programmatically-painted icons; `pattern_help.make_add_icon()`/`make_help_icon()` removed
+- The "Keep extension" checkbox is now a 5-way combobox: *Keep extension* (unchanged behaviour), *Extension in lowercase*, *Extension in uppercase*, *Normalize extension* (via the new normalization table), *Modify extension* (unchanged behaviour of the former unchecked state). Existing saved preferences (`keep_extension: true/false`, in toolbar state and named saves) are migrated transparently to `keep`/`modify`.
+- CLI: `--keep-ext`/`--no-keep-ext` replaced by `--ext-mode {keep,lower,upper,normalize,modify}` (default `keep`), consistent with the existing string-`choices` style of `--case`/`--sep`. This is a breaking change for scripts invoking `--keep-ext` directly.
 
 ### Fixed
 

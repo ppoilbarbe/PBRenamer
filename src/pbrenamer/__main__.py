@@ -119,10 +119,11 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Recurse into sub-directories (default: --no-recurse)",
     )
     rename_group.add_argument(
-        "--keep-ext",
-        action=argparse.BooleanOptionalAction,
+        "--ext-mode",
+        choices=["keep", "lower", "upper", "normalize", "modify"],
         default=None,
-        help="Preserve file extension during rename (default: --keep-ext)",
+        metavar="{keep,lower,upper,normalize,modify}",
+        help="How to handle the extension during rename (default: keep)",
     )
     rename_group.add_argument(
         "--filter",
@@ -283,8 +284,11 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
         if ns.case is None and "case" in cfg:
             idx = int(cfg["case"])
             ns.case = _CASE_IDX[idx] if 0 <= idx < len(_CASE_IDX) else "none"
-        if ns.keep_ext is None and "keep_extension" in cfg:
-            ns.keep_ext = bool(cfg["keep_extension"])
+        if ns.ext_mode is None:
+            if "extension_mode" in cfg:
+                ns.ext_mode = str(cfg["extension_mode"])
+            elif "keep_extension" in cfg:
+                ns.ext_mode = "keep" if cfg["keep_extension"] else "modify"
 
     if ns.search is None:
         print(
@@ -306,8 +310,8 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
         ns.dup = False
     if ns.case is None:
         ns.case = "none"
-    if ns.keep_ext is None:
-        ns.keep_ext = True
+    if ns.ext_mode is None:
+        ns.ext_mode = "keep"
 
 
 def _apply_postproc(
@@ -363,11 +367,13 @@ def _plan(
     ns: argparse.Namespace,
 ) -> list[tuple[str, str, str | None]]:
     """Return [(original_path, original_name, new_name_or_None), ...]."""
+    from pbrenamer import settings as _settings
     from pbrenamer.core import filetools
     from pbrenamer.core import replacement as _repl
 
     use_regex = ns.mode == "regex"
     use_plain = ns.mode == "plain"
+    normalization_table = _settings.get_extension_normalization_map()
 
     # Pre-scan for {newnum} in the replacement template
     newnum_state: _repl.NewNumState | None = None
@@ -390,10 +396,11 @@ def _plan(
     results: list[tuple[str, str, str | None]] = []
 
     for counter, (name, path) in enumerate(entries, start=1):
-        if ns.keep_ext:
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-        else:
+        if ns.ext_mode == "modify":
             stem, stem_path, ext = name, path, ""
+        else:
+            stem, stem_path, ext = filetools.cut_extension(name, path)
+            ext = filetools.apply_extension_mode(ext, ns.ext_mode, normalization_table)
 
         new_name: str | None = None
 

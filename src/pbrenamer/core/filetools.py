@@ -364,6 +364,26 @@ def add_extension(name: str, path: str, ext: str) -> tuple[str, str]:
     return name, path
 
 
+def apply_extension_mode(
+    ext: str, mode: str, normalization: dict[str, str] | None = None
+) -> str:
+    """Transform *ext* (no leading dot) according to *mode*.
+
+    "keep": unchanged. "lower"/"upper": case-folded. "normalize": looked up
+    case-insensitively in *normalization*, unchanged if absent from the
+    table or if no table is given. Any other mode (e.g. "modify", which
+    callers handle upstream by not cutting the extension at all) leaves
+    *ext* unchanged.
+    """
+    if mode == "lower":
+        return ext.lower()
+    if mode == "upper":
+        return ext.upper()
+    if mode == "normalize" and normalization:
+        return normalization.get(ext.lower(), ext)
+    return ext
+
+
 # ---------------------------------------------------------------------------
 # File rename
 # ---------------------------------------------------------------------------
