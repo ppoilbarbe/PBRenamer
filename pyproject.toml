@@ -52,7 +52,7 @@ packages = ["src/pbrenamer"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts   = ["--cov=pbrenamer", "--cov-report=term-missing"]
+addopts   = ["--cov=pbrenamer", "--cov-report=term-missing", "--cov-report=xml"]
 
 [tool.coverage.run]
 source = ["src"]

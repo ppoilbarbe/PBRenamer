@@ -1,5 +1,10 @@
 # PBRenamer
 
+[![Release](https://img.shields.io/github/v/release/ppoilbarbe/PBRenamer)](https://github.com/ppoilbarbe/PBRenamer/releases/latest)
+[![CI](https://github.com/ppoilbarbe/PBRenamer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ppoilbarbe/PBRenamer/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/ppoilbarbe/PBRenamer/branch/main/graph/badge.svg)](https://codecov.io/gh/ppoilbarbe/PBRenamer)
+[![PyPI](https://img.shields.io/pypi/v/pbrenamer)](https://pypi.org/project/pbrenamer/)
+
 A cross-platform graphical batch file renaming utility built with Qt 6 (PySide6).
 
 PBRenamer lets you rename hundreds of files at once using patterns, substitutions,

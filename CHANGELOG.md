@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Drag'n'drop of files and directories between PBRenamer and external applications, and between the directory tree and the file list: copy or move (negotiated via the OS/Qt drag modifier keys), with a batched Overwrite/Skip/Cancel confirmation when a destination already exists. New `core/filetools.copy_path()`/`move_path()` functions back the operation; only moves are recorded to the undo history (copies are not undoable). Implemented by the new `ui/dnd_widgets.py` (`DirectoryTreeView`, `FileListWidget`)
+- Custom, HiDPI-aware drag cursors (copy / move / alias / not-allowed), sourced from PBIcons' new `cursors/` icon set and synced via `tools/update_icons.py` (now also covers the fixed `_CURSOR_FILES` list and searches the `cursors` PBIcons subdirectory); implemented by the new `ui/dnd_cursors.py`
+- README badges: latest GitHub release, CI status, test coverage (Codecov), and PyPI version
+- CI now uploads `coverage.xml` to Codecov (`codecov/codecov-action`) after the test suite runs; pytest gained a `--cov-report=xml` output alongside the existing terminal report
+
 ## [1.6.0] - 2026-08-13
 
 ### Added
