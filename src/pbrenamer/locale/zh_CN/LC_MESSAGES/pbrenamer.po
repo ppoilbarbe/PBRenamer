@@ -1494,6 +1494,35 @@ msgid "Rename errors"
 msgstr "重命名错误"
 
 # ==AUTO== Automatically translated
+msgid "cannot move/copy a folder into itself"
+msgstr "无法将文件夹移动/复制到其自身内部"
+
+# ==AUTO== Automatically translated
+msgid "Move errors"
+msgstr "移动错误"
+
+# ==AUTO== Automatically translated
+msgid "Copy errors"
+msgstr "复制错误"
+
+# ==AUTO== Automatically translated
+msgid "Confirm overwrite"
+msgstr "确认覆盖"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} 个项目已存在于 {dir} 中，将被覆盖。"
+
+# ==AUTO== Automatically translated
+msgid "Overwrite"
+msgstr "覆盖"
+
+# ==AUTO== Automatically translated
+msgid "Skip"
+msgstr "跳过"
+
+# ==AUTO== Automatically translated
 #, python-format
 msgid "Undo (%d)"
 msgstr "撤销 (%d)"

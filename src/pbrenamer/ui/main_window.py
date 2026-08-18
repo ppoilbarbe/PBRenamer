@@ -205,6 +205,11 @@ class MainWindow(QMainWindow):
         sel_model = self._ui.treeDirectory.selectionModel()
         sel_model.selectionChanged.connect(lambda *_: self._on_directory_selected())
 
+        # Drag'n'drop
+        self._ui.treeDirectory.files_dropped.connect(self._on_files_dropped)
+        self._ui.tblFiles.files_dropped.connect(self._on_files_dropped)
+        self._ui.tblFiles.current_dir_getter = lambda: self._current_dir
+
         # Patterns tab — post-processing
         self._ui.cmbSpaces.currentIndexChanged.connect(self._on_post_process_changed)
         self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
@@ -1024,6 +1029,95 @@ class MainWindow(QMainWindow):
 
         self._on_clear_preview()
         self._reload_files()
+
+    def _on_files_dropped(self, paths: list[str], target_dir: str, move: bool) -> None:
+        if not paths or not os.path.isdir(target_dir):
+            return
+
+        pending: list[tuple[str, str]] = []
+        errors: list[str] = []
+        for src in paths:
+            if not os.path.exists(src):
+                continue
+            dest = os.path.join(target_dir, os.path.basename(src.rstrip(os.sep)))
+            if same_file_path(dest, src, target_dir):
+                continue
+            if os.path.isdir(src):
+                src_abs = os.path.abspath(src)
+                target_abs = os.path.abspath(target_dir)
+                if target_abs == src_abs or target_abs.startswith(src_abs + os.sep):
+                    errors.append(
+                        f"{os.path.basename(src)}: "
+                        + _("cannot move/copy a folder into itself")
+                    )
+                    continue
+            pending.append((src, dest))
+
+        if not pending:
+            if errors:
+                QMessageBox.warning(
+                    self,
+                    _("Move errors") if move else _("Copy errors"),
+                    "\n".join(errors),
+                    QMessageBox.StandardButton.Ok,
+                )
+            return
+
+        conflicts = [(s, d) for s, d in pending if os.path.exists(d)]
+        overwrite_all = False
+        if conflicts:
+            box = QMessageBox(self)
+            box.setIcon(QMessageBox.Icon.Warning)
+            box.setWindowTitle(_("Confirm overwrite"))
+            msg = _("{n} item(s) already exist in {dir} and would be overwritten.")
+            box.setText(msg.format(n=len(conflicts), dir=target_dir))
+            overwrite_btn = box.addButton(
+                _("Overwrite"), QMessageBox.ButtonRole.YesRole
+            )
+            skip_btn = box.addButton(_("Skip"), QMessageBox.ButtonRole.NoRole)
+            cancel_btn = box.addButton(QMessageBox.StandardButton.Cancel)
+            box.setDefaultButton(cancel_btn)
+            box.exec()
+            clicked = box.clickedButton()
+            if clicked is cancel_btn:
+                return
+            overwrite_all = clicked is overwrite_btn
+            if clicked is skip_btn:
+                conflict_set = set(conflicts)
+                pending = [p for p in pending if p not in conflict_set]
+
+        _log.info(
+            "%s %d file(s) into %s",
+            "Moving" if move else "Copying",
+            len(pending),
+            target_dir,
+        )
+        done: list[tuple[str, str]] = []
+        any_success = False
+        for src, dest in pending:
+            op = filetools.move_path if move else filetools.copy_path
+            ok, err = op(src, dest, overwrite=overwrite_all)
+            if ok:
+                any_success = True
+                if move:
+                    done.append((src, dest))
+            else:
+                errors.append(f"{os.path.basename(src)}: {err}")
+
+        if done:
+            self._undo.add_batch(done)
+            self._refresh_undo_button()
+
+        if errors:
+            QMessageBox.warning(
+                self,
+                _("Move errors") if move else _("Copy errors"),
+                "\n".join(errors),
+                QMessageBox.StandardButton.Ok,
+            )
+
+        if any_success:
+            self._reload_files()
 
     def _on_undo(self) -> None:
         _log.info("Undoing last rename batch")

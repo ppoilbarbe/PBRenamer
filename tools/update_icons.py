@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """Sync icons in src/pbrenamer/resources/ from the PBIcons project.
 
-Two kinds of files live in that directory, both sourced from PBIcons:
+Three kinds of files live in that directory, all sourced from PBIcons:
 
 - The app icon files used by PyInstaller packaging: `pbrenamer.ico` and
   `pbrenamer.icns` (`_APP_ICON_FILES` below). The app's own GUI icon
   (window icon) is `pbrenamer.svg`, already covered by the SVG sync below.
-- Every `*.svg` already present in the resources directory (currently just
-  `pbrenamer.svg` — PBRenamer has no separate toolbar icon set).
+- Every `*.svg` already present in the resources directory (toolbar/menu
+  action icons plus `pbrenamer.svg`).
+- The drag'n'drop cursor pixmaps (`_CURSOR_FILES` below): one PNG per DnD
+  state — copy, move, alias (link), not-allowed — each with `@2x`/`@3x`
+  HiDPI variants (Qt's `QPixmap.setDevicePixelRatio()` convention), synced
+  from PBIcons' `cursors/` subdirectory. Listed explicitly rather than
+  glob-matched like the SVGs above, since they don't exist locally before
+  the first sync.
 
 Icons are looked up by filename (case-insensitive) within a fixed list of
 PBIcons subdirectories, `_ICON_DIRS`, tried in order — not a recursive search
@@ -64,8 +70,17 @@ _APP_ICON_FILES = (
     "pbrenamer.icns",
 )
 
+# Drag'n'drop cursor pixmaps: one PNG per DnD state, at 1x/2x/3x, always
+# synced regardless of what's already on disk (same reasoning as
+# _APP_ICON_FILES — they can't be glob-discovered before their first sync).
+_CURSOR_STATES = ("copy", "move", "alias", "not-allowed")
+_CURSOR_SCALES = ("", "@2x", "@3x")
+_CURSOR_FILES = tuple(
+    f"{state}{scale}.png" for state in _CURSOR_STATES for scale in _CURSOR_SCALES
+)
+
 # PBIcons subdirectories to search for an icon, in priority order.
-_ICON_DIRS = ("programs", "actions", "media")
+_ICON_DIRS = ("programs", "actions", "media", "cursors")
 
 _GITHUB_REPO = "ppoilbarbe/PBIcons"
 _GITHUB_BRANCH = "main"
@@ -159,7 +174,7 @@ def resolve_icon(
 
 def default_names() -> list[str]:
     svgs = sorted(p.name for p in RESOURCES_DIR.glob("*.svg"))
-    return svgs + list(_APP_ICON_FILES)
+    return svgs + list(_APP_ICON_FILES) + list(_CURSOR_FILES)
 
 
 def main() -> None:

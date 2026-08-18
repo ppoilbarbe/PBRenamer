@@ -20,13 +20,12 @@ from PySide6.QtWidgets import (
     QSplitter,
     QStatusBar,
     QToolButton,
-    QTreeView,
-    QTreeWidget,
     QVBoxLayout,
     QWidget,
 )
 
 from pbrenamer.resources import path as _resource
+from pbrenamer.ui.dnd_widgets import DirectoryTreeView, FileListWidget
 
 
 class Ui_MainWindow:
@@ -105,7 +104,7 @@ class Ui_MainWindow:
         # Main horizontal splitter: directory tree | right pane
         self.splitterMain = QSplitter(Qt.Horizontal, central)
 
-        self.treeDirectory = QTreeView(self.splitterMain)
+        self.treeDirectory = DirectoryTreeView(self.splitterMain)
         self.treeDirectory.setMinimumWidth(180)
         self.treeDirectory.setHeaderHidden(True)
         self.treeDirectory.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -194,7 +193,7 @@ class Ui_MainWindow:
 
     def _make_file_list(self, parent):
         """Two-column tree: Original | Preview."""
-        self.tblFiles = QTreeWidget(parent)
+        self.tblFiles = FileListWidget(parent)
         self.tblFiles.setHeaderLabels([_("Original"), _("Preview")])
         self.tblFiles.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tblFiles.setSelectionMode(QAbstractItemView.ExtendedSelection)

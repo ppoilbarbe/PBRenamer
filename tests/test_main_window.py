@@ -1105,6 +1105,176 @@ class TestRenameUndo:
 
 
 # ---------------------------------------------------------------------------
+# _on_files_dropped (drag'n'drop)
+# ---------------------------------------------------------------------------
+
+
+def _mock_conflict_choice(monkeypatch, role):
+    """Force the aggregated overwrite QMessageBox to resolve as *role*."""
+
+    def fake_exec(self):
+        return 0
+
+    def fake_clicked(self):
+        for b in self.buttons():
+            if self.buttonRole(b) == role:
+                return b
+        return None
+
+    monkeypatch.setattr(QMessageBox, "exec", fake_exec)
+    monkeypatch.setattr(QMessageBox, "clickedButton", fake_clicked)
+
+
+class TestFilesDropped:
+    def test_move_success(self, window, tmp_path):
+        src_dir = tmp_path / "src"
+        dst_dir = tmp_path / "dst"
+        src_dir.mkdir()
+        dst_dir.mkdir()
+        f = src_dir / "a.txt"
+        f.write_text("x")
+
+        window._on_files_dropped([str(f)], str(dst_dir), True)
+
+        assert not f.exists()
+        assert (dst_dir / "a.txt").exists()
+        assert len(window._undo) == 1
+
+    def test_copy_success_not_undoable(self, window, tmp_path):
+        src_dir = tmp_path / "src"
+        dst_dir = tmp_path / "dst"
+        src_dir.mkdir()
+        dst_dir.mkdir()
+        f = src_dir / "a.txt"
+        f.write_text("x")
+
+        window._on_files_dropped([str(f)], str(dst_dir), False)
+
+        assert f.exists()  # original untouched
+        assert (dst_dir / "a.txt").exists()
+        assert len(window._undo) == 0
+
+    def test_move_directory(self, window, tmp_path):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        src_sub = tmp_path / "sub"
+        src_sub.mkdir()
+        (src_sub / "inner.txt").write_text("x")
+
+        window._on_files_dropped([str(src_sub)], str(dst_dir), True)
+
+        assert not src_sub.exists()
+        assert (dst_dir / "sub" / "inner.txt").exists()
+
+    def test_noop_when_dropped_onto_own_parent(self, window, tmp_path):
+        f = tmp_path / "a.txt"
+        f.write_text("x")
+
+        window._on_files_dropped([str(f)], str(tmp_path), True)
+
+        assert f.exists()
+        assert len(window._undo) == 0
+
+    def test_directory_into_itself_reports_error(self, window, tmp_path, monkeypatch):
+        src_dir = tmp_path / "parent"
+        child = src_dir / "child"
+        child.mkdir(parents=True)
+
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            window._on_files_dropped([str(src_dir)], str(child), True)
+
+        mock_warn.assert_called_once()
+        assert src_dir.exists()
+
+    def test_stale_source_path_ignored(self, window, tmp_path):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        missing = tmp_path / "gone.txt"
+
+        window._on_files_dropped([str(missing)], str(dst_dir), True)
+
+        assert list(dst_dir.iterdir()) == []
+
+    def test_invalid_target_dir_noop(self, window, tmp_path):
+        f = tmp_path / "a.txt"
+        f.write_text("x")
+
+        window._on_files_dropped([str(f)], str(tmp_path / "does-not-exist"), True)
+
+        assert f.exists()
+
+    def test_conflict_cancel_aborts_everything(self, window, tmp_path, monkeypatch):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        src = tmp_path / "a.txt"
+        src.write_text("source")
+        (dst_dir / "a.txt").write_text("existing")
+
+        _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.RejectRole)
+        window._on_files_dropped([str(src)], str(dst_dir), True)
+
+        assert src.exists()
+        assert (dst_dir / "a.txt").read_text() == "existing"
+
+    def test_conflict_skip_keeps_existing(self, window, tmp_path, monkeypatch):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        conflicting = tmp_path / "a.txt"
+        conflicting.write_text("source")
+        clean = tmp_path / "b.txt"
+        clean.write_text("clean")
+        (dst_dir / "a.txt").write_text("existing")
+
+        _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.NoRole)
+        window._on_files_dropped([str(conflicting), str(clean)], str(dst_dir), True)
+
+        assert conflicting.exists()  # skipped, move never happened
+        assert (dst_dir / "a.txt").read_text() == "existing"
+        assert not clean.exists()  # non-conflicting entry still moved
+        assert (dst_dir / "b.txt").exists()
+
+    def test_conflict_overwrite_replaces_existing(self, window, tmp_path, monkeypatch):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        src = tmp_path / "a.txt"
+        src.write_text("source")
+        (dst_dir / "a.txt").write_text("existing")
+
+        _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.YesRole)
+        window._on_files_dropped([str(src)], str(dst_dir), True)
+
+        assert not src.exists()
+        assert (dst_dir / "a.txt").read_text() == "source"
+
+    def test_move_error_shows_warning(self, window, tmp_path, monkeypatch):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        src = tmp_path / "a.txt"
+        src.write_text("x")
+
+        monkeypatch.setattr(
+            _mwmod.filetools, "move_path", lambda *a, **kw: (False, "boom")
+        )
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            window._on_files_dropped([str(src)], str(dst_dir), True)
+
+        mock_warn.assert_called_once()
+
+    def test_reloads_file_list_on_success(self, window, tmp_path, monkeypatch):
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        src = tmp_path / "a.txt"
+        src.write_text("x")
+        window._current_dir = str(dst_dir)
+
+        called = []
+        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        window._on_files_dropped([str(src)], str(dst_dir), True)
+
+        assert called
+
+
+# ---------------------------------------------------------------------------
 # Window / toolbar state  (lines 919-964)
 # ---------------------------------------------------------------------------
 

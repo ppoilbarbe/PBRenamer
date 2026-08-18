@@ -680,6 +680,196 @@ class TestRenameFile:
         assert dst.exists()
 
 
+class TestCopyPath:
+    def test_copy_file(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("content")
+
+        ok, err = filetools.copy_path(str(src), str(dst))
+        assert ok is True
+        assert err is None
+        assert src.exists()
+        assert dst.read_text() == "content"
+
+    def test_copy_directory(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        (src / "inner.txt").write_text("x")
+        dst = tmp_path / "dst"
+
+        ok, err = filetools.copy_path(str(src), str(dst))
+        assert ok is True
+        assert err is None
+        assert (dst / "inner.txt").exists()
+        assert (src / "inner.txt").exists()
+
+    def test_same_path_is_noop(self, tmp_path):
+        f = tmp_path / "file.txt"
+        f.touch()
+
+        ok, err = filetools.copy_path(str(f), str(f))
+        assert ok is True
+        assert err is None
+
+    def test_target_exists_without_overwrite_returns_error(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        ok, err = filetools.copy_path(str(src), str(dst))
+        assert ok is False
+        assert err is not None
+        assert dst.read_text() == "old"
+
+    def test_target_file_overwritten(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        ok, err = filetools.copy_path(str(src), str(dst), overwrite=True)
+        assert ok is True
+        assert err is None
+        assert dst.read_text() == "new"
+
+    def test_target_directory_overwritten(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        (src / "new.txt").write_text("new")
+        dst = tmp_path / "dst"
+        dst.mkdir()
+        (dst / "old.txt").write_text("old")
+
+        ok, err = filetools.copy_path(str(src), str(dst), overwrite=True)
+        assert ok is True
+        assert err is None
+        assert (dst / "new.txt").exists()
+        assert not (dst / "old.txt").exists()
+
+    def test_copy_failure_returns_error(self, tmp_path):
+        src = tmp_path / "ghost.txt"
+        dst = tmp_path / "target.txt"
+
+        ok, err = filetools.copy_path(str(src), str(dst))
+        assert ok is False
+        assert err is not None
+
+    def test_clear_existing_target_removal_failure_returns_error(
+        self, tmp_path, monkeypatch
+    ):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        def fail_remove(path):
+            raise OSError("permission denied")
+
+        monkeypatch.setattr(filetools.os, "remove", fail_remove)
+        ok, err = filetools.copy_path(str(src), str(dst), overwrite=True)
+        assert ok is False
+        assert err is not None
+
+
+class TestMovePath:
+    def test_move_file(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("content")
+
+        ok, err = filetools.move_path(str(src), str(dst))
+        assert ok is True
+        assert err is None
+        assert not src.exists()
+        assert dst.read_text() == "content"
+
+    def test_move_directory(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        (src / "inner.txt").write_text("x")
+        dst = tmp_path / "dst"
+
+        ok, err = filetools.move_path(str(src), str(dst))
+        assert ok is True
+        assert err is None
+        assert not src.exists()
+        assert (dst / "inner.txt").exists()
+
+    def test_same_path_is_noop(self, tmp_path):
+        f = tmp_path / "file.txt"
+        f.touch()
+
+        ok, err = filetools.move_path(str(f), str(f))
+        assert ok is True
+        assert err is None
+        assert f.exists()
+
+    def test_target_exists_without_overwrite_returns_error(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        ok, err = filetools.move_path(str(src), str(dst))
+        assert ok is False
+        assert err is not None
+        assert src.exists()
+        assert dst.read_text() == "old"
+
+    def test_target_file_overwritten(self, tmp_path):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        ok, err = filetools.move_path(str(src), str(dst), overwrite=True)
+        assert ok is True
+        assert err is None
+        assert not src.exists()
+        assert dst.read_text() == "new"
+
+    def test_target_directory_overwritten(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        (src / "new.txt").write_text("new")
+        dst = tmp_path / "dst"
+        dst.mkdir()
+        (dst / "old.txt").write_text("old")
+
+        ok, err = filetools.move_path(str(src), str(dst), overwrite=True)
+        assert ok is True
+        assert err is None
+        assert not src.exists()
+        assert (dst / "new.txt").exists()
+        assert not (dst / "old.txt").exists()
+
+    def test_move_failure_returns_error(self, tmp_path):
+        src = tmp_path / "ghost.txt"
+        dst = tmp_path / "target.txt"
+
+        ok, err = filetools.move_path(str(src), str(dst))
+        assert ok is False
+        assert err is not None
+
+    def test_clear_existing_target_removal_failure_returns_error(
+        self, tmp_path, monkeypatch
+    ):
+        src = tmp_path / "a.txt"
+        dst = tmp_path / "b.txt"
+        src.write_text("new")
+        dst.write_text("old")
+
+        def fail_remove(path):
+            raise OSError("permission denied")
+
+        monkeypatch.setattr(filetools.os, "remove", fail_remove)
+        ok, err = filetools.move_path(str(src), str(dst), overwrite=True)
+        assert ok is False
+        assert err is not None
+
+
 # ---------------------------------------------------------------------------
 # Full workflow — no extension
 # ---------------------------------------------------------------------------

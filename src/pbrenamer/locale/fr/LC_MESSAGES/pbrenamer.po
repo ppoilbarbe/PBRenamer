@@ -1267,6 +1267,28 @@ msgstr "Remplacement — Aide"
 msgid "Rename errors"
 msgstr "Erreurs de renommage"
 
+msgid "cannot move/copy a folder into itself"
+msgstr "impossible de déplacer/copier un dossier dans lui-même"
+
+msgid "Move errors"
+msgstr "Erreurs de déplacement"
+
+msgid "Copy errors"
+msgstr "Erreurs de copie"
+
+msgid "Confirm overwrite"
+msgstr "Confirmer l'écrasement"
+
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} élément(s) existent déjà dans {dir} et seraient écrasés."
+
+msgid "Overwrite"
+msgstr "Écraser"
+
+msgid "Skip"
+msgstr "Ignorer"
+
 #, python-format
 msgid "Undo (%d)"
 msgstr "Annuler (%d)"

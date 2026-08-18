@@ -1252,6 +1252,28 @@ msgstr "Replace — Help"
 msgid "Rename errors"
 msgstr "Rename errors"
 
+msgid "cannot move/copy a folder into itself"
+msgstr "cannot move/copy a folder into itself"
+
+msgid "Move errors"
+msgstr "Move errors"
+
+msgid "Copy errors"
+msgstr "Copy errors"
+
+msgid "Confirm overwrite"
+msgstr "Confirm overwrite"
+
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} item(s) already exist in {dir} and would be overwritten."
+
+msgid "Overwrite"
+msgstr "Overwrite"
+
+msgid "Skip"
+msgstr "Skip"
+
 #, python-format
 msgid "Undo (%d)"
 msgstr "Undo (%d)"

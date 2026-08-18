@@ -4,6 +4,7 @@ import glob as _glob
 import logging
 import os
 import re
+import shutil
 import unicodedata
 from datetime import datetime
 
@@ -403,4 +404,67 @@ def rename_file(original: str, new: str) -> tuple[bool, str | None]:
         return True, None
     except OSError as exc:
         _log.warning("Rename failed: %s → %s: %s", original, new, exc)
+        return False, str(exc)
+
+
+def _clear_existing_target(dst: str) -> tuple[bool, str | None]:
+    try:
+        if os.path.isdir(dst) and not os.path.islink(dst):
+            shutil.rmtree(dst)
+        else:
+            os.remove(dst)
+        return True, None
+    except OSError as exc:
+        return False, str(exc)
+
+
+def copy_path(
+    src: str, dst: str, *, overwrite: bool = False
+) -> tuple[bool, str | None]:
+    """Copy a file or directory tree. Returns (success, error_message)."""
+    if src == dst:
+        return True, None
+    if os.path.exists(dst):
+        if not overwrite:
+            err = f"[Errno 17] {os.strerror(17)}: {dst!r} already exists"
+            _log.warning("Copy skipped (target exists): %s → %s", src, dst)
+            return False, err
+        ok, err = _clear_existing_target(dst)
+        if not ok:
+            return False, err
+    _log.debug("Copying: %r → %r", src, dst)
+    try:
+        if os.path.isdir(src) and not os.path.islink(src):
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy2(src, dst)
+        return True, None
+    except OSError as exc:
+        _log.warning("Copy failed: %s → %s: %s", src, dst, exc)
+        return False, str(exc)
+
+
+def move_path(
+    src: str, dst: str, *, overwrite: bool = False
+) -> tuple[bool, str | None]:
+    """Move a file or directory tree, across filesystems if needed.
+
+    Returns (success, error_message).
+    """
+    if src == dst:
+        return True, None
+    if os.path.exists(dst):
+        if not overwrite:
+            err = f"[Errno 17] {os.strerror(17)}: {dst!r} already exists"
+            _log.warning("Move skipped (target exists): %s → %s", src, dst)
+            return False, err
+        ok, err = _clear_existing_target(dst)
+        if not ok:
+            return False, err
+    _log.debug("Moving: %r → %r", src, dst)
+    try:
+        shutil.move(src, dst)
+        return True, None
+    except OSError as exc:
+        _log.warning("Move failed: %s → %s: %s", src, dst, exc)
         return False, str(exc)

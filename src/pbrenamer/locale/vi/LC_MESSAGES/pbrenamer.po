@@ -1565,6 +1565,35 @@ msgid "Rename errors"
 msgstr "Lỗi đổi tên"
 
 # ==AUTO== Automatically translated
+msgid "cannot move/copy a folder into itself"
+msgstr "không thể di chuyển/sao chép một thư mục vào chính nó"
+
+# ==AUTO== Automatically translated
+msgid "Move errors"
+msgstr "Lỗi di chuyển"
+
+# ==AUTO== Automatically translated
+msgid "Copy errors"
+msgstr "Lỗi sao chép"
+
+# ==AUTO== Automatically translated
+msgid "Confirm overwrite"
+msgstr "Xác nhận ghi đè"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} mục đã tồn tại trong {dir} và sẽ bị ghi đè."
+
+# ==AUTO== Automatically translated
+msgid "Overwrite"
+msgstr "Ghi đè"
+
+# ==AUTO== Automatically translated
+msgid "Skip"
+msgstr "Bỏ qua"
+
+# ==AUTO== Automatically translated
 #, python-format
 msgid "Undo (%d)"
 msgstr "Hoàn tác (%d)"

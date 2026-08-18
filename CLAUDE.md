@@ -51,6 +51,7 @@ pixi.lock                   pinned lockfile — commit this
 - `*_ui.py` are **committed source files** — hand-written UI layouts; edit directly.
 - Conflict detection in `_refresh_conflicts()` uses `platform.fs.conflict_key()` and `platform.fs.same_file_path()` for case-insensitive filesystem support.
 - `make dist` calls `translate` first; CI compiles `.mo` then runs PyInstaller directly.
+- **Never run/test PBRenamer against the real user config.** Always pass `--config-dir <scratch-dir>` (see `__main__.py`, wired to `_settings.configure(Path(...))`) for any manual CLI/GUI run — a prior session overwrote the real config this way.
 
 ## Translations
 

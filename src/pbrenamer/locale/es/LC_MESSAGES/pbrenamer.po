@@ -1598,6 +1598,35 @@ msgid "Rename errors"
 msgstr "Errores de renombrado"
 
 # ==AUTO== Automatically translated
+msgid "cannot move/copy a folder into itself"
+msgstr "no se puede mover/copiar una carpeta dentro de sí misma"
+
+# ==AUTO== Automatically translated
+msgid "Move errors"
+msgstr "Errores al mover"
+
+# ==AUTO== Automatically translated
+msgid "Copy errors"
+msgstr "Errores al copiar"
+
+# ==AUTO== Automatically translated
+msgid "Confirm overwrite"
+msgstr "Confirmar sobrescritura"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} elemento(s) ya existen en {dir} y se sobrescribirían."
+
+# ==AUTO== Automatically translated
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+# ==AUTO== Automatically translated
+msgid "Skip"
+msgstr "Omitir"
+
+# ==AUTO== Automatically translated
 #, python-format
 msgid "Undo (%d)"
 msgstr "Deshacer (%d)"
