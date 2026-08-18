@@ -29,7 +29,16 @@ counters, date stamps, and metadata — all previewed live before any change is 
     produce nothing (e.g. `{im:DateTimeOriginal:%Y-%m-%d:}{vi:encodeddate:%Y-%m-%d:}`
     uses the EXIF date for images and the encoded date for videos)
 - **Directory colouring** — directories are shown in a distinct colour in the file list
-- **Keep extension** option — transformations apply to the stem only
+- **Extension mode** — *Keep*, *Lowercase*, *Uppercase*, *Normalize* (via a
+  user-editable extension mapping table), or *Modify* (extension included in
+  the search/replace pattern)
+- **Sidecar files** — a file associated with a base file by a name suffix
+  (e.g. `img.jpg` + `img.xmp`) can be grouped, coloured, selected, and renamed
+  together with its base file; an ambiguous sidecar (matching more than one
+  candidate base file) is flagged as an explicit, unrenamable error
+- **Drag'n'drop** — copy or move files and directories between the directory
+  tree, the file list, and external applications, with a batched
+  Overwrite/Skip/Cancel confirmation on collisions
 - **Recursive** directory traversal
 - **Undo** — revert the last rename batch in one click; the button shows the
   number of batches available for undo
@@ -120,21 +129,22 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `-s`, `--search TEXT` | _(required¹)_ | Search pattern — activates headless mode |
-| `--saved NAME` | _(required¹)_ | Load a named preset — activates headless mode; CLI options override preset values |
+| `-s`, `--search TEXT` | *(required¹)* | Search pattern — activates headless mode |
+| `--saved NAME` | *(required¹)* | Load a named preset — activates headless mode; CLI options override preset values |
 | `-r`, `--replace TEXT` | `""` | Replacement string |
 | `--mode {pattern,regex,plain}` | `pattern` | Search mode |
 | `--list {files,dirs,all}` | `files` | Entry types to process |
 | `--recurse` / `--no-recurse` | `--no-recurse` | Recurse into sub-directories |
-| `--keep-ext` / `--no-keep-ext` | `--keep-ext` | Preserve the file extension |
-| `--filter GLOB` | _(none)_ | Restrict listing to matching entries |
+| `--ext-mode {keep,lower,upper,normalize,modify}` | `keep` | How to handle the extension during rename |
+| `--sidecar-mode` / `--no-sidecar-mode` | `--no-sidecar-mode` | Group sidecar files with their base file (requires `--ext-mode keep`, `lower`, or `upper`) |
+| `--filter GLOB` | *(none)* | Restrict listing to matching entries |
 | `--accent` / `--no-accent` | `--no-accent` | Strip diacritics from result names |
 | `--dup` / `--no-dup` | `--no-dup` | Collapse consecutive duplicate separators |
 | `--sep {none,space-underscore,…}` | `none` | Separator conversion applied after rename |
 | `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
 | `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
-| `--debug` / `--verbose` / `--quiet` | _(saved pref)_ | Override the saved log-level preference |
-| `--config-dir DIR` | _(platform default)_ | Override the configuration directory (intended for testing) |
+| `--debug` / `--verbose` / `--quiet` | *(saved pref)* | Override the saved log-level preference |
+| `--config-dir DIR` | *(platform default)* | Override the configuration directory (intended for testing) |
 
 ¹ Exactly one of `--search` or `--saved` is required.
 

@@ -68,6 +68,29 @@ disabled until all conflicts are resolved.
 You can select a subset of rows with the usual keyboard/mouse modifiers
 (Shift+click, Ctrl+click).  Renaming then applies only to the selected files.
 
+Drag and drop
+~~~~~~~~~~~~~~
+
+Files and directories can be dragged:
+
+* between the directory tree and the file list,
+* between PBRenamer and external applications (a file manager, another
+  window),
+
+to copy or move them.  The action taken (copy or move) follows the standard
+OS/Qt drag modifier keys — the default action is a move; hold the platform's
+copy modifier (e.g. **Ctrl** on Linux/Windows) to force a copy instead.
+Custom cursors indicate the resulting action while dragging.
+
+If any dropped item would overwrite an existing file or directory, a single
+confirmation dialog lists how many collide and offers **Overwrite**, **Skip**
+(collisions only — everything else still proceeds), or **Cancel** (nothing is
+copied/moved). Dropping a folder into itself or one of its own
+sub-directories is rejected with an error.
+
+Only **moves** are recorded on the undo stack; copies are not undoable, since
+the original file is left in place.
+
 Configuring the rename rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -123,6 +146,110 @@ of the Settings dialog (**Edit → Settings…**): add, remove, or clear
 ``from → to`` extension mappings (both sides without the leading dot).
 Changes to the table apply immediately and are kept even if the dialog is
 later cancelled.
+
+.. _sidecar-files:
+
+Sidecar files
+^^^^^^^^^^^^^
+
+A **sidecar file** is a file associated with a *base file* by a name suffix —
+for example ``photo.jpg`` (base file) and ``photo.xmp`` or
+``photo.info.json`` (sidecars). PBRenamer can detect these relationships,
+group the files together in the list, and rename an entire group in one
+operation.
+
+Enabling sidecar mode
+""""""""""""""""""""""
+
+The **Sidecar mode** checkbox, next to the Extension mode combo, turns the
+feature on.  It is only selectable when Extension mode is *Keep extension*,
+*Extension in lowercase*, or *Extension in uppercase* — sidecar suffixes are
+never re-derived, so a mode that rewrites the extension (*Normalize
+extension*, *Modify extension*) would make the relationship ambiguous.  The
+checkbox is greyed out (and treated as unchecked) for those two modes; its
+checked/unchecked state is otherwise remembered like the Extension mode
+itself, both in the toolbar state and in named presets.
+
+How grouping works
+"""""""""""""""""""
+
+Each file is classified into one of four categories based on its own
+extension: **Images**, **Video**, **Audio**, or **Other** (anything not
+recognised as an image/video/audio base extension — this also includes
+sidecar-only files such as a bare ``.xmp``). Each category has its own
+configurable list of:
+
+* **base extensions** — which extensions make a file a candidate *base* for
+  that category (not applicable to *Other*, which is the catch-all);
+* **sidecar suffixes** — which name suffixes, when found at the end of a
+  file name, mark it as that category's sidecar.
+
+A fifth, **Common** list of sidecar suffixes applies to every category in
+addition to its own list.
+
+For a candidate sidecar file, PBRenamer looks — within the same directory
+only — for base files whose stem (the part before the matched suffix) and
+category match. A sidecar suffix is only searched among *its own potential
+base file's category* (plus the common list); it is never matched against
+unrelated categories.
+
+* **Exactly one** matching base file → the sidecar joins that base's group.
+* **No** matching base file → the file is left ungrouped, exactly as if
+  sidecar mode were off.
+* **More than one** matching base file — whether all candidates are in the
+  same category (e.g. ``clip.xml`` matching both ``clip.jpg`` and
+  ``clip.png``, both images) or in different categories (e.g. ``clip.xml``
+  matching an image ``clip.jpg`` *and* a video ``clip.avi``, because
+  ``.xml`` is a sidecar suffix for both) — this is an explicit,
+  **unrenamable ambiguity**. The sidecar and *every* candidate base file
+  involved are flagged with an error explaining the conflict; none of them
+  can be renamed until the ambiguity is resolved (e.g. by removing or
+  renaming one of the conflicting files, or by adjusting the category
+  configuration).
+
+If a suffix is only configured as a sidecar suffix for one category, a file
+of another category with the same stem never causes ambiguity: with
+``.xml`` configured as an image-only sidecar suffix, ``clip.xml`` +
+``clip.jpg`` (image) + ``clip.avi`` (video) has a single candidate
+(``clip.jpg``) — ``clip.xml`` joins its group, and ``clip.avi`` stays an
+independent, ungrouped file.
+
+Selection, preview, and renaming
+"""""""""""""""""""""""""""""""""
+
+While sidecar mode is active:
+
+* Sidecar rows are shown in a distinct colour in the file list; ambiguous
+  rows are shown as errors (like any other conflict), disabling the
+  **Rename** button until resolved.
+* Selecting any file in a group — the base or any of its sidecars —
+  automatically selects the whole group.
+* The rename pattern is applied to the base file's *stem* only, exactly as
+  under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same
+  transformed stem, followed verbatim by its own sidecar suffix (case
+  preserved as found on disk) — the suffix itself is never altered.
+* Renaming a group is a single operation: the base file and all its
+  sidecars are renamed together, recorded as one batch on the undo stack, so
+  **Undo** restores the whole group at once.
+
+Configuring categories
+"""""""""""""""""""""""
+
+Open **Edit → Sidecar Files…** to configure the base extensions and sidecar
+suffixes for each category. The dialog has one tab per base category
+(*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:
+
+* Each *base extensions* list (Images/Video/Audio only — *Other* has no such
+  list, it is the catch-all) and each *sidecar suffixes* list can be edited
+  with add/remove controls; an extension already assigned to a different
+  category is rejected with a warning naming the conflicting category.
+* Each list has its own **Restore defaults** button.
+* Changes apply immediately and persist across sessions
+  (``sidecar_config.json`` in the configuration directory), independently of
+  whether the dialog is later closed or cancelled.
+
+Sidecar grouping is also available in :ref:`headless mode <cli-reference>`
+via ``--sidecar-mode`` / ``--no-sidecar-mode``.
 
 Post-processing options
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -596,6 +723,21 @@ names are case-insensitive.
    * - ``encodeddate``
      - datetime
      - Encoded date/time
+   * - ``performer``
+     - text
+     - Performer / artist
+   * - ``copyright``
+     - text
+     - Copyright notice
+   * - ``comment``
+     - text
+     - Comment
+   * - ``description``
+     - text
+     - Description
+   * - ``genre``
+     - text
+     - Genre
 
 Replacement examples
 ~~~~~~~~~~~~~~~~~~~~
@@ -646,6 +788,7 @@ window is opened; renames are performed and the process exits.
               [--list {files,dirs,all}]
               [--recurse | --no-recurse]
               [--ext-mode {keep,lower,upper,normalize,modify}]
+              [--sidecar-mode | --no-sidecar-mode]
               [--filter GLOB]
               [--sep {none,space-underscore,underscore-space,
                       space-dot,dot-space,space-dash,dash-space}]
@@ -688,6 +831,13 @@ Rename options
     extension normalization table (managed from the GUI, **Edit → Settings…
     → Extension Normalization** tab); ``modify`` includes the extension in
     the search/replace pattern, same as *Modify extension* in the GUI.
+
+``--sidecar-mode`` / ``--no-sidecar-mode``
+    Group :ref:`sidecar files <sidecar-files>` with their base file when
+    renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,
+    ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` is
+    an error.  Category configuration (base extensions, sidecar suffixes) is
+    shared with the GUI's **Edit → Sidecar Files…** dialog.
 
 ``--filter GLOB``
     Glob pattern to restrict the file listing (e.g. ``'*.jpg'``).

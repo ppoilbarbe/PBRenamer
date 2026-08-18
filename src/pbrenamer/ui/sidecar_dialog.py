@@ -100,6 +100,20 @@ class SidecarDialog(GeometryMixin, QDialog):
                 return category
         return None
 
+    def _warn_if_base_ext(self, suffix: str) -> bool:
+        """Warn and return True if *suffix* is already a base extension."""
+        existing_category = self._base_ext_category(suffix.lower())
+        if existing_category is None:
+            return False
+        QMessageBox.warning(
+            self,
+            _("Duplicate extension"),
+            _("{ext!r} is already assigned to the {category} category.").format(
+                ext=suffix, category=_category_label(existing_category)
+            ),
+        )
+        return True
+
     def _reload_base_extensions(self) -> None:
         for category in BASE_CATEGORIES:
             lst = self._ui.lstBaseExt[category]
@@ -156,6 +170,8 @@ class SidecarDialog(GeometryMixin, QDialog):
         suffix = self._ui.edtSidecarSuffix[category].text().strip().lstrip(".")
         if not suffix:
             return
+        if self._warn_if_base_ext(suffix):
+            return
         suffixes = settings.get_sidecar_suffixes(category)
         suffixes.append(suffix)
         settings.set_sidecar_suffixes(category, suffixes)
@@ -178,6 +194,8 @@ class SidecarDialog(GeometryMixin, QDialog):
     def _on_add_sidecar_common(self) -> None:
         suffix = self._ui.edtSidecarCommon.text().strip().lstrip(".")
         if not suffix:
+            return
+        if self._warn_if_base_ext(suffix):
             return
         suffixes = settings.get_sidecar_common_suffixes()
         suffixes.append(suffix)

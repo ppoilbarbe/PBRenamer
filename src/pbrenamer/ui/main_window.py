@@ -105,6 +105,7 @@ class MainWindow(QMainWindow):
         self._current_dir: str | None = None
         self._sidecar_result: sidecar.SidecarGroupResult | None = None
         self._linking_selection = False
+        self._prev_group_selection: set[str] = set()
         self._undo = UndoManager()
         self._presets = PatternPresets()
         self._window_state = WindowState()
@@ -869,6 +870,7 @@ class MainWindow(QMainWindow):
         self._ui.chkSidecarMode.setEnabled(allowed)
 
     def _recompute_sidecar_grouping(self, entries: list[tuple[str, str]]) -> None:
+        self._prev_group_selection = set()
         if not self._sidecar_mode_active():
             self._sidecar_result = None
             return
@@ -905,36 +907,52 @@ class MainWindow(QMainWindow):
                 item.setText(1, self._sidecar_result.errors[path])
                 item.setData(1, Qt.ItemDataRole.UserRole, True)
 
+    def _group_of(self, path: str) -> set[str]:
+        """Return {base, *sidecars} for the group *path* belongs to, or
+        {path} if it belongs to no group."""
+        base = self._sidecar_result.sidecar_of.get(path, path)
+        return {base, *self._sidecar_result.groups.get(base, [])}
+
     def _link_group_selection(self) -> None:
-        """Extend the current selection to every member (base + sidecars)
-        of each selected file's sidecar group."""
+        """Keep whole sidecar groups selected/deselected together.
+
+        Compared against the selection left by the previous call
+        (``self._prev_group_selection``): every newly *selected* file pulls
+        its whole group in, and every newly *deselected* file — a plain
+        Ctrl+click toggle off — pushes its whole group back out, even
+        though other members of that group are still individually
+        selected. Without tracking what changed, a Ctrl+click meant to
+        deselect one member of an already-fully-selected group would be
+        immediately undone: the remaining selected siblings would still
+        resolve to the same group and re-select it whole.
+        """
         if self._sidecar_result is None:
-            return
-        selected = self._ui.tblFiles.selectedItems()
-        if not selected:
             return
         root = self._ui.tblFiles.invisibleRootItem()
         path_to_item = {
             root.child(i).data(0, Qt.ItemDataRole.UserRole): root.child(i)
             for i in range(root.childCount())
         }
-        to_select: set[str] = set()
-        for item in selected:
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            base = self._sidecar_result.sidecar_of.get(path, path)
-            to_select.add(base)
-            to_select.update(self._sidecar_result.groups.get(base, []))
+        new_selected = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in self._ui.tblFiles.selectedItems()
+        }
 
-        currently_selected = {i.data(0, Qt.ItemDataRole.UserRole) for i in selected}
-        if to_select == currently_selected:
-            return
+        to_select = set(new_selected)
+        for path in self._prev_group_selection - new_selected:
+            to_select -= self._group_of(path)
+        for path in new_selected - self._prev_group_selection:
+            to_select |= self._group_of(path)
 
-        self._linking_selection = True
-        self._ui.tblFiles.blockSignals(True)
-        for path, item in path_to_item.items():
-            item.setSelected(path in to_select)
-        self._ui.tblFiles.blockSignals(False)
-        self._linking_selection = False
+        if to_select != new_selected:
+            self._linking_selection = True
+            self._ui.tblFiles.blockSignals(True)
+            for path, item in path_to_item.items():
+                item.setSelected(path in to_select)
+            self._ui.tblFiles.blockSignals(False)
+            self._linking_selection = False
+
+        self._prev_group_selection = to_select
 
     # ── Pattern history ───────────────────────────────────────────────────────
 

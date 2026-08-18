@@ -442,6 +442,39 @@ class TestSidecarDialog:
         dlg._on_add_sidecar_suffix("other")
         assert "bak" in _cfg.get_sidecar_suffixes("other")
 
+    def test_suffix_add_duplicate_of_base_ext_rejected(
+        self, qtbot: QtBot, window_state
+    ):
+        from PySide6.QtWidgets import QMessageBox
+
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        # "jpg" is already a default image base extension.
+        dlg._ui.edtSidecarSuffix["video"].setText("jpg")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            dlg._on_add_sidecar_suffix("video")
+        mock_warn.assert_called_once()
+        assert "jpg" not in _cfg.get_sidecar_suffixes("video")
+        assert dlg._ui.edtSidecarSuffix["video"].text() == "jpg"
+
+    def test_suffix_add_duplicate_of_base_ext_case_insensitive(
+        self, qtbot: QtBot, window_state
+    ):
+        from PySide6.QtWidgets import QMessageBox
+
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtSidecarSuffix["video"].setText("JPG")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            dlg._on_add_sidecar_suffix("video")
+        mock_warn.assert_called_once()
+        assert "JPG" not in _cfg.get_sidecar_suffixes("video")
+        assert "jpg" not in _cfg.get_sidecar_suffixes("video")
+
     def test_suffix_add_empty_is_noop(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.sidecar_dialog import SidecarDialog
 
@@ -484,6 +517,23 @@ class TestSidecarDialog:
         dlg._on_add_sidecar_common()
         assert _cfg.get_sidecar_common_suffixes() == ["meta"]
         assert dlg._ui.lstSidecarCommon.count() == 1
+
+    def test_suffix_common_add_duplicate_of_base_ext_rejected(
+        self, qtbot: QtBot, window_state
+    ):
+        from PySide6.QtWidgets import QMessageBox
+
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        # "jpg" is already a default image base extension.
+        dlg._ui.edtSidecarCommon.setText("jpg")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            dlg._on_add_sidecar_common()
+        mock_warn.assert_called_once()
+        assert _cfg.get_sidecar_common_suffixes() == []
+        assert dlg._ui.edtSidecarCommon.text() == "jpg"
 
     def test_suffix_common_add_empty_is_noop(self, qtbot: QtBot, window_state):
         from pbrenamer.ui.sidecar_dialog import SidecarDialog

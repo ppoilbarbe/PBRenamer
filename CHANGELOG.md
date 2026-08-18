@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `_on_rename()` could use a row's raw error text (e.g. an ambiguous-sidecar message) as a literal rename target if invoked while the Rename button's disabled state was bypassed; it now skips any row flagged with a field/grouping error
 - Adding a base-file extension already assigned to a different category (e.g. `jpg` to both Images and Video) silently created a duplicate that made category lookup ambiguous; the Sidecar Files dialog now rejects it with an explicit warning naming the conflicting category
+- The Sidecar Files dialog let a sidecar suffix (per-category or Common) be added even when it was already a base extension in one of the categories (e.g. adding `jpg` as a Video sidecar suffix while it is an Images base extension), creating the same category-lookup ambiguity as the base-extension case; it is now rejected with the same warning
+- In sidecar mode, Ctrl+click-toggling off one member (base or sidecar) of an already-fully-selected group left the whole group selected instead of deselecting it: `_link_group_selection()` only ever looked at the current selection to decide which groups to *expand*, so the group's other still-selected members immediately re-pulled the toggled-off file back in. It now also tracks the previous selection and, when part of a group is toggled off, deselects the whole group — mirroring the existing behaviour where selecting any member selects the whole group. Toggling off an unrelated file (outside any group, or the sole selected member of a solo file) is unaffected
 
 ## [1.6.0] - 2026-08-13
 

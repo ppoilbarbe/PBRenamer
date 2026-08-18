@@ -2180,6 +2180,69 @@ class TestSidecarSelectionLinking:
         }
         assert len(selected_paths) == 3
 
+    def test_ctrl_click_toggling_off_sidecar_deselects_whole_group(
+        self, window, tmp_path
+    ):
+        self._setup_group(window, tmp_path)
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()  # whole group gets selected
+
+        # Simulate a Ctrl+click toggling one already-selected sidecar off.
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        side_item.setSelected(False)
+        window._on_file_selection_changed()
+
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == set()
+
+    def test_ctrl_click_toggling_off_base_deselects_whole_group(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        side_item.setSelected(True)
+        window._on_file_selection_changed()  # whole group gets selected
+
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(False)
+        window._on_file_selection_changed()
+
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == set()
+
+    def test_ctrl_click_toggling_off_unrelated_file_only_deselects_it(
+        self, window, tmp_path
+    ):
+        self._setup_group(window, tmp_path)
+        (tmp_path / "solo.txt").write_text("x")
+        window._reload_files()
+
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()  # whole group selected
+        solo_item = _find_item(window, str(tmp_path / "solo.txt"))
+        solo_item.setSelected(True)
+        window._on_file_selection_changed()  # solo file added on top
+
+        # Ctrl+click toggling the unrelated solo file back off.
+        solo_item.setSelected(False)
+        window._on_file_selection_changed()
+
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
     def test_active_before_any_reload_is_noop(self, window):
         # Sidecar mode checked but no directory has been loaded yet, so
         # self._sidecar_result is still None.
