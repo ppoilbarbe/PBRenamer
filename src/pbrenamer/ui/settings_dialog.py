@@ -1,4 +1,4 @@
-"""Settings dialog — language, log level, and extension normalization table."""
+"""Settings dialog — language, log level, and extension normalization."""
 
 from __future__ import annotations
 

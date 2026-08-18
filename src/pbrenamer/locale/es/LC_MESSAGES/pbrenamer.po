@@ -19,22 +19,6 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-msgid "Application version"
-msgstr "Versión de la aplicación"
-
-# ==AUTO== Automatically translated
-msgid "A graphical batch file renaming utility."
-msgstr "Una utilidad gráfica para renombrar archivos por lotes."
-
-# ==AUTO== Automatically translated
-msgid "License: GPLv3"
-msgstr "Licencia: GPLv3"
-
-# ==AUTO== Automatically translated
-msgid "About PBRenamer"
-msgstr "Acerca de PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Información del archivo"
 
@@ -898,6 +882,102 @@ msgid "Examples"
 msgstr "Ejemplos"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar Files"
+msgstr "Archivos sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A sidecar file is associated with a base file by a name suffix (e.g. "
+"\"img.jpg\" + \"img.xmp\"). Each tab configures one base-file category: "
+"which extensions count as its base files, and which suffixes identify its"
+" sidecars."
+msgstr ""
+"Un archivo sidecar está asociado a un archivo base mediante un sufijo de "
+"nombre (p. ej. «img.jpg» + «img.xmp»). Cada pestaña configura una "
+"categoría de archivo base: qué extensiones cuentan como sus archivos "
+"base, y qué sufijos identifican sus archivos sidecar."
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "Imágenes"
+
+# ==AUTO== Automatically translated
+msgid "Common"
+msgstr "Común"
+
+# ==AUTO== Automatically translated
+msgid "Base file extensions"
+msgstr "Extensiones de archivos base"
+
+# ==AUTO== Automatically translated
+msgid "Add this extension"
+msgstr "Añadir esta extensión"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected extensions"
+msgstr "Eliminar las extensiones seleccionadas"
+
+# ==AUTO== Automatically translated
+msgid "Restore default extensions for this category"
+msgstr "Restaurar las extensiones predeterminadas de esta categoría"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Other: any file whose extension doesn't match the Images, Video, or Audio"
+" categories. No editable extension list — it is the catch-all category."
+msgstr ""
+"Otros: cualquier archivo cuya extensión no coincida con las categorías "
+"Imágenes, Vídeo o Audio. Sin lista de extensiones editable — es la "
+"categoría general."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar suffixes"
+msgstr "Sufijos sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Add this sidecar suffix"
+msgstr "Añadir este sufijo sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected sidecar suffixes"
+msgstr "Eliminar los sufijos sidecar seleccionados"
+
+# ==AUTO== Automatically translated
+msgid "Restore default sidecar suffixes for this category"
+msgstr "Restaurar los sufijos sidecar predeterminados de esta categoría"
+
+# ==AUTO== Automatically translated
+msgid "These suffixes are added to every category's own sidecar suffix list."
+msgstr ""
+"Estos sufijos se añaden a la lista propia de sufijos sidecar de cada "
+"categoría."
+
+# ==AUTO== Automatically translated
+msgid "Common sidecar suffixes"
+msgstr "Sufijos sidecar comunes"
+
+# ==AUTO== Automatically translated
+msgid "Add this common sidecar suffix"
+msgstr "Añadir este sufijo sidecar común"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected common sidecar suffixes"
+msgstr "Eliminar los sufijos sidecar comunes seleccionados"
+
+# ==AUTO== Automatically translated
+msgid "Restore default common sidecar suffixes"
+msgstr "Restaurar los sufijos sidecar comunes predeterminados"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate extension"
+msgstr "Extensión duplicada"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{ext!r} is already assigned to the {category} category."
+msgstr "{ext!r} ya está asignada a la categoría {category}."
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -1014,6 +1094,96 @@ msgid "System default"
 msgstr "Predeterminado del sistema"
 
 # ==AUTO== Automatically translated
+msgid "Select folder"
+msgstr "Seleccionar carpeta"
+
+# ==AUTO== Automatically translated
+msgid "Original"
+msgstr "Original"
+
+# ==AUTO== Automatically translated
+msgid "Preview"
+msgstr "Vista previa"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} elemento(s)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ ningún tipo coincide ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} no disponible"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Búsqueda — Ayuda"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Reemplazar — Ayuda"
+
+# ==AUTO== Automatically translated
+msgid "Rename errors"
+msgstr "Errores de renombrado"
+
+# ==AUTO== Automatically translated
+msgid "cannot move/copy a folder into itself"
+msgstr "no se puede mover/copiar una carpeta dentro de sí misma"
+
+# ==AUTO== Automatically translated
+msgid "Move errors"
+msgstr "Errores al mover"
+
+# ==AUTO== Automatically translated
+msgid "Copy errors"
+msgstr "Errores al copiar"
+
+# ==AUTO== Automatically translated
+msgid "Confirm overwrite"
+msgstr "Confirmar sobrescritura"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} elemento(s) ya existen en {dir} y se sobrescribirían."
+
+# ==AUTO== Automatically translated
+msgid "Overwrite"
+msgstr "Sobrescribir"
+
+# ==AUTO== Automatically translated
+msgid "Skip"
+msgstr "Omitir"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Deshacer (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Deshacer el último lote de renombrado (%d nivel(es) disponible(s))"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Deshacer"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Deshacer el último lote de renombrado"
+
+# ==AUTO== Automatically translated
+msgid "Add as shortcut"
+msgstr "Añadir como atajo"
+
+# ==AUTO== Automatically translated
 msgid "Open folder…"
 msgstr "Abrir carpeta…"
 
@@ -1062,6 +1232,24 @@ msgstr "Abrir ajustes"
 # ==AUTO== Automatically translated
 msgid "Configure language and other preferences"
 msgstr "Configurar idioma y otras preferencias"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar Files…"
+msgstr "Archivos sidecar…"
+
+# ==AUTO== Automatically translated
+msgid "Configure sidecar file categories"
+msgstr "Configurar categorías de archivos sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Configure base-file extensions and sidecar suffixes for each category"
+msgstr ""
+"Configurar extensiones de archivos base y sufijos sidecar para cada "
+"categoría"
+
+# ==AUTO== Automatically translated
+msgid "About PBRenamer"
+msgstr "Acerca de PBRenamer"
 
 # ==AUTO== Automatically translated
 msgid "About this application"
@@ -1178,6 +1366,28 @@ msgstr ""
 "incluye en el patrón de búsqueda/reemplazo como el resto del nombre"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar mode"
+msgstr "Modo sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Group sidecar files (e.g. img.xmp) with their base file when renaming"
+msgstr ""
+"Agrupar los archivos sidecar (p. ej. img.xmp) con su archivo base al "
+"renombrar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, sidecar files are colored, selected together with their "
+"base file, and renamed using the base file's new name plus their own "
+"original suffix, unchanged. Only available with the "
+"Keep/Lowercase/Uppercase extension modes"
+msgstr ""
+"Cuando está activado, los archivos sidecar se colorean, se seleccionan "
+"junto con su archivo base y se renombran usando el nuevo nombre del "
+"archivo base más su propio sufijo original, sin cambios. Solo disponible "
+"con los modos de extensión Mantener/Minúsculas/Mayúsculas"
+
+# ==AUTO== Automatically translated
 msgid "Auto-preview"
 msgstr "Vista previa automática"
 
@@ -1202,14 +1412,6 @@ msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr ""
 "Solo se listan los archivos que coinciden con este patrón glob (p. ej. "
 "*.txt, image_*)"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Original"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Vista previa"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -1523,14 +1725,6 @@ msgid "Remove all preview values from the Preview column"
 msgstr "Eliminar todos los valores de vista previa de la columna Vista previa"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Deshacer"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Deshacer el último lote de renombrado"
-
-# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Revertir el último lote de renombrados realizados en el disco"
 
@@ -1567,78 +1761,33 @@ msgid "Help"
 msgstr "Ayuda"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Seleccionar carpeta"
+msgid "Application version"
+msgstr "Versión de la aplicación"
+
+# ==AUTO== Automatically translated
+msgid "A graphical batch file renaming utility."
+msgstr "Una utilidad gráfica para renombrar archivos por lotes."
+
+# ==AUTO== Automatically translated
+msgid "GPLv3"
+msgstr "GPLv3"
+
+# ==AUTO== Automatically translated
+msgid "License:"
+msgstr "Licencia:"
+
+# ==AUTO== Automatically translated
+msgid "Python version:"
+msgstr "Versión de Python:"
+
+# ==AUTO== Automatically translated
+msgid "PySide6 version:"
+msgstr "Versión de PySide6:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} elemento(s)"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ ningún tipo coincide ({types})"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} no disponible"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Búsqueda — Ayuda"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Reemplazar — Ayuda"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "Errores de renombrado"
-
-# ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "no se puede mover/copiar una carpeta dentro de sí misma"
-
-# ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "Errores al mover"
-
-# ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "Errores al copiar"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "Confirmar sobrescritura"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} elemento(s) ya existen en {dir} y se sobrescribirían."
-
-# ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "Sobrescribir"
-
-# ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "Omitir"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Deshacer (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Deshacer el último lote de renombrado (%d nivel(es) disponible(s))"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "Añadir como atajo"
+msgid "{name!r} could be a sidecar of multiple base files: {owners}"
+msgstr "{name!r} podría ser sidecar de varios archivos base: {owners}"
 
 # ==AUTO== Automatically translated
 msgid "Home"

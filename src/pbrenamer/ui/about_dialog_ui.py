@@ -3,6 +3,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QDialogButtonBox,
+    QFormLayout,
     QFrame,
     QHBoxLayout,
     QLabel,
@@ -14,63 +15,90 @@ from PySide6.QtWidgets import (
 
 class Ui_AboutDialog:
     def setupUi(self, dialog):
-        dialog.setMinimumWidth(360)
-        dialog.resize(400, 290)
+        dialog.setMinimumWidth(380)
+        dialog.resize(420, 320)
+        dialog.setWindowTitle(_("About PBRenamer"))
 
         layout = QVBoxLayout(dialog)
 
-        # ── Header: 64×64 icon on the left, app name + version on the right ──
-        header = QHBoxLayout()
+        content = QHBoxLayout()
 
+        # ── Icon column (left) — icon pinned to the top, rest is spacer ────────
+        icon_col = QVBoxLayout()
         self.lblIcon = QLabel(dialog)
         self.lblIcon.setFixedSize(64, 64)
-        self.lblIcon.setAlignment(Qt.AlignCenter)
-        header.addWidget(self.lblIcon)
+        self.lblIcon.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        self.lblIcon.setScaledContents(True)
+        icon_col.addWidget(self.lblIcon)
+        icon_col.addItem(
+            QSpacerItem(
+                20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+            )
+        )
+        content.addLayout(icon_col)
 
-        name_col = QVBoxLayout()
-        self.lblAppName = QLabel('<b style="font-size: 16pt;">PBRenamer</b>', dialog)
-        name_col.addWidget(self.lblAppName)
-        self.lblVersion = QLabel(dialog)
+        # ── Framed info panel (right) ───────────────────────────────────────────
+        frame = QFrame(dialog)
+        frame.setFrameShape(QFrame.Panel)
+        frame.setFrameShadow(QFrame.Raised)
+        frame.setLineWidth(3)
+        frame_layout = QVBoxLayout(frame)
+
+        frame_layout.addItem(
+            QSpacerItem(
+                20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+            )
+        )
+
+        self.lblAppName = QLabel('<b style="font-size: 14pt;">PBRenamer</b>', frame)
+        self.lblAppName.setAlignment(Qt.AlignCenter)
+        frame_layout.addWidget(self.lblAppName)
+
+        self.lblVersion = QLabel(frame)
         self.lblVersion.setToolTip(_("Application version"))
-        name_col.addWidget(self.lblVersion)
-        name_col.addItem(
-            QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-        )
-        header.addLayout(name_col)
+        self.lblVersion.setAlignment(Qt.AlignCenter)
+        frame_layout.addWidget(self.lblVersion)
 
-        layout.addLayout(header)
-
-        # ── Visual separator ───────────────────────────────────────────────────
-        separator = QFrame(dialog)
-        separator.setFrameShape(QFrame.HLine)
-        separator.setFrameShadow(QFrame.Sunken)
-        layout.addWidget(separator)
-
-        # ── Informational labels ───────────────────────────────────────────────
-        self.lblDescription = QLabel(
-            _("A graphical batch file renaming utility."), dialog
-        )
-        self.lblDescription.setWordWrap(True)
-        layout.addWidget(self.lblDescription)
-
-        self.lblAuthors = QLabel(dialog)
+        self.lblAuthors = QLabel(frame)
         self.lblAuthors.setTextFormat(Qt.RichText)
         self.lblAuthors.setOpenExternalLinks(True)
         self.lblAuthors.setWordWrap(True)
-        layout.addWidget(self.lblAuthors)
+        self.lblAuthors.setAlignment(Qt.AlignCenter)
+        frame_layout.addWidget(self.lblAuthors)
 
-        self.lblLicense = QLabel(_("License: GPLv3"), dialog)
-        layout.addWidget(self.lblLicense)
+        self.lblDescription = QLabel(
+            _("A graphical batch file renaming utility."), frame
+        )
+        self.lblDescription.setWordWrap(True)
+        self.lblDescription.setAlignment(Qt.AlignCenter)
+        frame_layout.addWidget(self.lblDescription)
 
-        self.lblPythonVersion = QLabel(dialog)
-        layout.addWidget(self.lblPythonVersion)
+        form = QFormLayout()
+        form.setLabelAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
 
-        self.lblPySideVersion = QLabel(dialog)
-        layout.addWidget(self.lblPySideVersion)
+        self.lblLicense = QLabel(_("GPLv3"), frame)
+        form.addRow(_("License:"), self.lblLicense)
 
-        # ── Close button ───────────────────────────────────────────────────────
+        self.lblPythonVersion = QLabel(frame)
+        form.addRow(_("Python version:"), self.lblPythonVersion)
+
+        self.lblPySideVersion = QLabel(frame)
+        form.addRow(_("PySide6 version:"), self.lblPySideVersion)
+
+        frame_layout.addLayout(form)
+
+        frame_layout.addItem(
+            QSpacerItem(
+                20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
+            )
+        )
+
+        content.addWidget(frame)
+
+        layout.addLayout(content)
+
+        # ── Close button, centered ──────────────────────────────────────────────
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Close, dialog)
+        self.buttonBox.setCenterButtons(True)
         self.buttonBox.rejected.connect(dialog.reject)
         layout.addWidget(self.buttonBox)
-
-        dialog.setWindowTitle(_("About PBRenamer"))

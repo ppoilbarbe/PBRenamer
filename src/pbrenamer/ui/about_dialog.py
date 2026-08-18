@@ -24,8 +24,8 @@ class AboutDialog(QDialog):
         self._ui.lblVersion.setText(__version__)
         self._ui.lblAuthors.setText(_authors_html())
         py = sys.version_info
-        self._ui.lblPythonVersion.setText(f"Python {py.major}.{py.minor}.{py.micro}")
-        self._ui.lblPySideVersion.setText(f"PySide6 {_pyside_version}")
+        self._ui.lblPythonVersion.setText(f"{py.major}.{py.minor}.{py.micro}")
+        self._ui.lblPySideVersion.setText(_pyside_version)
 
         icon = QApplication.windowIcon()
         if not icon.isNull():

@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom, HiDPI-aware drag cursors (copy / move / alias / not-allowed), sourced from PBIcons' new `cursors/` icon set and synced via `tools/update_icons.py` (now also covers the fixed `_CURSOR_FILES` list and searches the `cursors` PBIcons subdirectory); implemented by the new `ui/dnd_cursors.py`
 - README badges: latest GitHub release, CI status, test coverage (Codecov), and PyPI version
 - CI now uploads `coverage.xml` to Codecov (`codecov/codecov-action`) after the test suite runs; pytest gained a `--cov-report=xml` output alongside the existing terminal report
+- Sidecar file support: a file associated with a base file by a name suffix (e.g. `img.jpg` + `img.xmp`) can now be grouped, colored, selected, and renamed together with its base file. New **Edit → Sidecar Files…** dialog (`ui/sidecar_dialog.py`), with one tab per base-file category (Images / Video / Audio / Other) plus a Common tab, configures which extensions count as that category's base files and which suffixes identify its sidecars, each list independently restorable to its default; persisted to `sidecar_config.json`. A new toolbar "Sidecar mode" checkbox (enabled only for the Keep/Lowercase/Uppercase extension modes) drives the behaviour: sidecar rows are colored distinctly in the file list, selecting a base or sidecar auto-selects the whole group, a sidecar with more than one candidate base file is flagged as an explicit, unrenamable ambiguity error, and renaming a group applies the pattern to the base file's stem only, reusing it verbatim (own suffix unchanged) for every sidecar. New pure grouping algorithm in `core/sidecar.py` (`SidecarConfig`, `build_sidecar_groups()`). Mirrored in headless mode via `--sidecar-mode`/`--no-sidecar-mode` (`__main__.py`)
+
+### Changed
+
+- About dialog restyled to match the PBIcons-family apps (e.g. PBRegisterActivity): icon in its own column on the left, application name/version/author/description/details framed in a raised panel on the right, centered Close button
+
+### Fixed
+
+- `_on_rename()` could use a row's raw error text (e.g. an ambiguous-sidecar message) as a literal rename target if invoked while the Rename button's disabled state was bypassed; it now skips any row flagged with a field/grouping error
+- Adding a base-file extension already assigned to a different category (e.g. `jpg` to both Images and Video) silently created a duplicate that made category lookup ambiguous; the Sidecar Files dialog now rejects it with an explicit warning naming the conflicting category
 
 ## [1.6.0] - 2026-08-13
 

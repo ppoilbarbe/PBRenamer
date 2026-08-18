@@ -9,6 +9,7 @@ from types import SimpleNamespace
 
 from PySide6.QtCore import QSettings
 
+from pbrenamer.core import sidecar
 from pbrenamer.platform import AppDirs
 
 _log = logging.getLogger(__name__)
@@ -27,8 +28,21 @@ _PREVIEW_DELAY_MIN = 100
 _PREVIEW_DELAY_MAX = 1000
 _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
 _EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
+_SIDECAR_CONFIG_FILE = _dirs.config_home / "sidecar_config.json"
 
 LEVELS: tuple[str, ...] = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
+
+_DEFAULT_BASE_EXTENSION_LISTS = {
+    "image": sidecar.DEFAULT_IMAGE_EXTENSIONS,
+    "video": sidecar.DEFAULT_VIDEO_EXTENSIONS,
+    "audio": sidecar.DEFAULT_AUDIO_EXTENSIONS,
+}
+_DEFAULT_OWN_SUFFIX_LISTS = {
+    "image": sidecar.DEFAULT_IMAGE_SIDECAR_SUFFIXES,
+    "video": sidecar.DEFAULT_VIDEO_SIDECAR_SUFFIXES,
+    "audio": sidecar.DEFAULT_AUDIO_SIDECAR_SUFFIXES,
+    "other": sidecar.DEFAULT_OTHER_SIDECAR_SUFFIXES,
+}
 
 
 def configure(config_dir: Path | None = None) -> None:
@@ -36,7 +50,7 @@ def configure(config_dir: Path | None = None) -> None:
 
     Pass ``None`` to restore the platform default. Intended for testing.
     """
-    global _dirs, _SHORTCUTS_FILE, _EXTENSION_NORMALIZATION_FILE
+    global _dirs, _SHORTCUTS_FILE, _EXTENSION_NORMALIZATION_FILE, _SIDECAR_CONFIG_FILE
     if config_dir is None:
         _dirs = AppDirs(_DOMAIN)
     else:
@@ -47,6 +61,7 @@ def configure(config_dir: Path | None = None) -> None:
         )
     _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
     _EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
+    _SIDECAR_CONFIG_FILE = _dirs.config_home / "sidecar_config.json"
 
 
 def _settings() -> QSettings:
@@ -134,6 +149,141 @@ def get_extension_normalization_map() -> dict[str, str]:
     return {
         from_ext.lower(): to_ext for from_ext, to_ext in get_extension_normalization()
     }
+
+
+def get_sidecar_settings() -> dict:
+    """Return the raw persisted sidecar config dict, defensively validated.
+
+    A missing/corrupt file, or a malformed individual key, drops just that
+    key rather than rejecting the whole file — callers fall back to
+    ``core.sidecar``'s defaults for whatever is missing.
+    """
+    try:
+        data = json.loads(_SIDECAR_CONFIG_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+
+    result: dict = {}
+    base_extensions = data.get("base_extensions")
+    if isinstance(base_extensions, dict):
+        result["base_extensions"] = {
+            category: [e for e in exts if isinstance(e, str) and e]
+            for category, exts in base_extensions.items()
+            if category in sidecar.BASE_CATEGORIES and isinstance(exts, list)
+        }
+    own_suffixes = data.get("own_suffixes")
+    if isinstance(own_suffixes, dict):
+        result["own_suffixes"] = {
+            category: [s for s in sufs if isinstance(s, str) and s]
+            for category, sufs in own_suffixes.items()
+            if category in sidecar.CATEGORIES and isinstance(sufs, list)
+        }
+    common_suffixes = data.get("common_suffixes")
+    if isinstance(common_suffixes, list):
+        result["common_suffixes"] = [
+            s for s in common_suffixes if isinstance(s, str) and s
+        ]
+    return result
+
+
+def set_sidecar_settings(data: dict) -> None:
+    """Persist the full sidecar config dict as-is."""
+    _SIDECAR_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+    _SIDECAR_CONFIG_FILE.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
+def get_sidecar_base_extensions(category: str) -> list[str]:
+    """Return the base extensions for *category* ("image"/"video"/"audio")."""
+    saved = get_sidecar_settings().get("base_extensions", {})
+    if category in saved:
+        return list(saved[category])
+    return list(_DEFAULT_BASE_EXTENSION_LISTS.get(category, ()))
+
+
+def set_sidecar_base_extensions(category: str, extensions: list[str]) -> None:
+    """Persist the base extensions for *category*."""
+    data = get_sidecar_settings()
+    base_extensions = dict(data.get("base_extensions", {}))
+    base_extensions[category] = list(extensions)
+    data["base_extensions"] = base_extensions
+    set_sidecar_settings(data)
+
+
+def get_sidecar_suffixes(category: str) -> list[str]:
+    """Return *category*'s own sidecar suffixes (not including the common list)."""
+    saved = get_sidecar_settings().get("own_suffixes", {})
+    if category in saved:
+        return list(saved[category])
+    return list(_DEFAULT_OWN_SUFFIX_LISTS.get(category, ()))
+
+
+def set_sidecar_suffixes(category: str, suffixes: list[str]) -> None:
+    """Persist *category*'s own sidecar suffixes."""
+    data = get_sidecar_settings()
+    own_suffixes = dict(data.get("own_suffixes", {}))
+    own_suffixes[category] = list(suffixes)
+    data["own_suffixes"] = own_suffixes
+    set_sidecar_settings(data)
+
+
+def get_sidecar_common_suffixes() -> list[str]:
+    """Return the sidecar suffixes common to every category."""
+    saved = get_sidecar_settings()
+    if "common_suffixes" in saved:
+        return list(saved["common_suffixes"])
+    return list(sidecar.DEFAULT_COMMON_SIDECAR_SUFFIXES)
+
+
+def set_sidecar_common_suffixes(suffixes: list[str]) -> None:
+    """Persist the sidecar suffixes common to every category."""
+    data = get_sidecar_settings()
+    data["common_suffixes"] = list(suffixes)
+    set_sidecar_settings(data)
+
+
+def restore_sidecar_base_extensions_defaults(category: str) -> None:
+    """Reset *category*'s base-extension list to its default."""
+    data = get_sidecar_settings()
+    base_extensions = dict(data.get("base_extensions", {}))
+    base_extensions.pop(category, None)
+    data["base_extensions"] = base_extensions
+    set_sidecar_settings(data)
+
+
+def restore_sidecar_suffixes_defaults(category: str) -> None:
+    """Reset *category*'s own sidecar-suffix list to its default."""
+    data = get_sidecar_settings()
+    own_suffixes = dict(data.get("own_suffixes", {}))
+    own_suffixes.pop(category, None)
+    data["own_suffixes"] = own_suffixes
+    set_sidecar_settings(data)
+
+
+def restore_sidecar_common_suffixes_defaults() -> None:
+    """Reset the common sidecar-suffix list to its default (empty)."""
+    data = get_sidecar_settings()
+    data.pop("common_suffixes", None)
+    set_sidecar_settings(data)
+
+
+def get_sidecar_config() -> sidecar.SidecarConfig:
+    """Return the effective sidecar configuration (persisted, falling back
+    to ``core.sidecar``'s defaults for anything not customized)."""
+    return sidecar.SidecarConfig(
+        base_extensions={
+            category: frozenset(get_sidecar_base_extensions(category))
+            for category in sidecar.BASE_CATEGORIES
+        },
+        own_suffixes={
+            category: frozenset(get_sidecar_suffixes(category))
+            for category in sidecar.CATEGORIES
+        },
+        common_suffixes=frozenset(get_sidecar_common_suffixes()),
+    )
 
 
 def get_restore_last_dir() -> bool:

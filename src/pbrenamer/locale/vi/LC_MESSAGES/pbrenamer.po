@@ -19,22 +19,6 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
-msgid "Application version"
-msgstr "Phiên bản ứng dụng"
-
-# ==AUTO== Automatically translated
-msgid "A graphical batch file renaming utility."
-msgstr "Tiện ích đồ họa đổi tên tệp hàng loạt."
-
-# ==AUTO== Automatically translated
-msgid "License: GPLv3"
-msgstr "Giấy phép: GPLv3"
-
-# ==AUTO== Automatically translated
-msgid "About PBRenamer"
-msgstr "Giới thiệu về PBRenamer"
-
-# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Thông tin tệp"
 
@@ -882,6 +866,102 @@ msgid "Examples"
 msgstr "Ví dụ"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar Files"
+msgstr "Tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A sidecar file is associated with a base file by a name suffix (e.g. "
+"\"img.jpg\" + \"img.xmp\"). Each tab configures one base-file category: "
+"which extensions count as its base files, and which suffixes identify its"
+" sidecars."
+msgstr ""
+"Tệp sidecar được liên kết với tệp gốc bằng hậu tố tên (ví dụ: “img.jpg” +"
+" “img.xmp”). Mỗi tab cấu hình một danh mục tệp gốc: những phần mở rộng "
+"nào được coi là tệp gốc của danh mục đó, và những hậu tố nào xác định các"
+" tệp sidecar của nó."
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "Ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Common"
+msgstr "Chung"
+
+# ==AUTO== Automatically translated
+msgid "Base file extensions"
+msgstr "Phần mở rộng của tệp gốc"
+
+# ==AUTO== Automatically translated
+msgid "Add this extension"
+msgstr "Thêm phần mở rộng này"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected extensions"
+msgstr "Xóa các phần mở rộng đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "Restore default extensions for this category"
+msgstr "Khôi phục phần mở rộng mặc định cho danh mục này"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Other: any file whose extension doesn't match the Images, Video, or Audio"
+" categories. No editable extension list — it is the catch-all category."
+msgstr ""
+"Khác: mọi tệp có phần mở rộng không khớp với danh mục Ảnh, Video hoặc Âm "
+"thanh. Không có danh sách phần mở rộng có thể chỉnh sửa — đây là danh mục"
+" tổng quát."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar suffixes"
+msgstr "Hậu tố sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Add this sidecar suffix"
+msgstr "Thêm hậu tố sidecar này"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected sidecar suffixes"
+msgstr "Xóa các hậu tố sidecar đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "Restore default sidecar suffixes for this category"
+msgstr "Khôi phục hậu tố sidecar mặc định cho danh mục này"
+
+# ==AUTO== Automatically translated
+msgid "These suffixes are added to every category's own sidecar suffix list."
+msgstr ""
+"Các hậu tố này được thêm vào danh sách hậu tố sidecar riêng của mỗi danh "
+"mục."
+
+# ==AUTO== Automatically translated
+msgid "Common sidecar suffixes"
+msgstr "Hậu tố sidecar chung"
+
+# ==AUTO== Automatically translated
+msgid "Add this common sidecar suffix"
+msgstr "Thêm hậu tố sidecar chung này"
+
+# ==AUTO== Automatically translated
+msgid "Remove selected common sidecar suffixes"
+msgstr "Xóa các hậu tố sidecar chung đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "Restore default common sidecar suffixes"
+msgstr "Khôi phục hậu tố sidecar chung mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate extension"
+msgstr "Phần mở rộng trùng lặp"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{ext!r} is already assigned to the {category} category."
+msgstr "{ext!r} đã được gán cho danh mục {category}."
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Cài đặt"
 
@@ -995,6 +1075,96 @@ msgid "System default"
 msgstr "Mặc định hệ thống"
 
 # ==AUTO== Automatically translated
+msgid "Select folder"
+msgstr "Chọn thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Original"
+msgstr "Gốc"
+
+# ==AUTO== Automatically translated
+msgid "Preview"
+msgstr "Xem trước"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} mục"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ không loại nào phù hợp ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} không có sẵn"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Tìm kiếm — Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Thay thế — Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Rename errors"
+msgstr "Lỗi đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "cannot move/copy a folder into itself"
+msgstr "không thể di chuyển/sao chép một thư mục vào chính nó"
+
+# ==AUTO== Automatically translated
+msgid "Move errors"
+msgstr "Lỗi di chuyển"
+
+# ==AUTO== Automatically translated
+msgid "Copy errors"
+msgstr "Lỗi sao chép"
+
+# ==AUTO== Automatically translated
+msgid "Confirm overwrite"
+msgstr "Xác nhận ghi đè"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} mục đã tồn tại trong {dir} và sẽ bị ghi đè."
+
+# ==AUTO== Automatically translated
+msgid "Overwrite"
+msgstr "Ghi đè"
+
+# ==AUTO== Automatically translated
+msgid "Skip"
+msgstr "Bỏ qua"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Hoàn tác (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Hoàn tác lô đổi tên cuối cùng"
+
+# ==AUTO== Automatically translated
+msgid "Add as shortcut"
+msgstr "Thêm làm phím tắt"
+
+# ==AUTO== Automatically translated
 msgid "Open folder…"
 msgstr "Mở thư mục…"
 
@@ -1041,6 +1211,22 @@ msgstr "Mở cài đặt"
 # ==AUTO== Automatically translated
 msgid "Configure language and other preferences"
 msgstr "Cấu hình ngôn ngữ và các tùy chọn khác"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar Files…"
+msgstr "Tệp sidecar…"
+
+# ==AUTO== Automatically translated
+msgid "Configure sidecar file categories"
+msgstr "Cấu hình danh mục tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Configure base-file extensions and sidecar suffixes for each category"
+msgstr "Cấu hình phần mở rộng tệp gốc và hậu tố sidecar cho mỗi danh mục"
+
+# ==AUTO== Automatically translated
+msgid "About PBRenamer"
+msgstr "Giới thiệu về PBRenamer"
 
 # ==AUTO== Automatically translated
 msgid "About this application"
@@ -1155,6 +1341,26 @@ msgstr ""
 "kiếm/thay thế như phần còn lại của tên"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar mode"
+msgstr "Chế độ sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Group sidecar files (e.g. img.xmp) with their base file when renaming"
+msgstr "Nhóm các tệp sidecar (ví dụ: img.xmp) với tệp gốc của chúng khi đổi tên"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, sidecar files are colored, selected together with their "
+"base file, and renamed using the base file's new name plus their own "
+"original suffix, unchanged. Only available with the "
+"Keep/Lowercase/Uppercase extension modes"
+msgstr ""
+"Khi được bật, các tệp sidecar được tô màu, được chọn cùng với tệp gốc, và"
+" được đổi tên bằng tên mới của tệp gốc cộng với hậu tố gốc riêng của "
+"chúng, không thay đổi. Chỉ khả dụng với các chế độ phần mở rộng Giữ "
+"nguyên/Chữ thường/Chữ hoa"
+
+# ==AUTO== Automatically translated
 msgid "Auto-preview"
 msgstr "Xem trước tự động"
 
@@ -1177,14 +1383,6 @@ msgstr "Mẫu glob để lọc danh sách tệp"
 # ==AUTO== Automatically translated
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Chỉ liệt kê các tệp khớp với mẫu glob này (vd. *.txt, image_*)"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Gốc"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Xem trước"
 
 # ==AUTO== Automatically translated
 msgid "Files to be renamed"
@@ -1490,14 +1688,6 @@ msgid "Remove all preview values from the Preview column"
 msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Hoàn tác"
-
-# ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Hoàn tác lô đổi tên cuối cùng"
-
-# ==AUTO== Automatically translated
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Đảo ngược lô đổi tên cuối cùng được thực hiện trên đĩa"
 
@@ -1534,78 +1724,33 @@ msgid "Help"
 msgstr "Trợ giúp"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Chọn thư mục"
+msgid "Application version"
+msgstr "Phiên bản ứng dụng"
+
+# ==AUTO== Automatically translated
+msgid "A graphical batch file renaming utility."
+msgstr "Tiện ích đồ họa đổi tên tệp hàng loạt."
+
+# ==AUTO== Automatically translated
+msgid "GPLv3"
+msgstr "GPLv3"
+
+# ==AUTO== Automatically translated
+msgid "License:"
+msgstr "Giấy phép:"
+
+# ==AUTO== Automatically translated
+msgid "Python version:"
+msgstr "Phiên bản Python:"
+
+# ==AUTO== Automatically translated
+msgid "PySide6 version:"
+msgstr "Phiên bản PySide6:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} mục"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ không loại nào phù hợp ({types})"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} không có sẵn"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Tìm kiếm — Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Thay thế — Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Rename errors"
-msgstr "Lỗi đổi tên"
-
-# ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "không thể di chuyển/sao chép một thư mục vào chính nó"
-
-# ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "Lỗi di chuyển"
-
-# ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "Lỗi sao chép"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "Xác nhận ghi đè"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} mục đã tồn tại trong {dir} và sẽ bị ghi đè."
-
-# ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "Ghi đè"
-
-# ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "Bỏ qua"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Hoàn tác (%d)"
-
-# ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
-
-# ==AUTO== Automatically translated
-msgid "Add as shortcut"
-msgstr "Thêm làm phím tắt"
+msgid "{name!r} could be a sidecar of multiple base files: {owners}"
+msgstr "{name!r} có thể là sidecar của nhiều tệp gốc: {owners}"
 
 # ==AUTO== Automatically translated
 msgid "Home"

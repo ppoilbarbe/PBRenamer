@@ -30,19 +30,23 @@ class TestAboutDialog:
         qtbot.addWidget(dlg)
         assert dlg._ui.lblVersion.text() != ""
 
-    def test_python_version_label_starts_with_python(self, qtbot: QtBot):
+    def test_python_version_label_matches_runtime(self, qtbot: QtBot):
+        import platform
+
         from pbrenamer.ui.about_dialog import AboutDialog
 
         dlg = AboutDialog()
         qtbot.addWidget(dlg)
-        assert dlg._ui.lblPythonVersion.text().startswith("Python ")
+        assert dlg._ui.lblPythonVersion.text() == platform.python_version()
 
-    def test_pyside_version_label_starts_with_pyside6(self, qtbot: QtBot):
+    def test_pyside_version_label_matches_runtime(self, qtbot: QtBot):
+        from PySide6 import __version__ as pyside_version
+
         from pbrenamer.ui.about_dialog import AboutDialog
 
         dlg = AboutDialog()
         qtbot.addWidget(dlg)
-        assert dlg._ui.lblPySideVersion.text().startswith("PySide6 ")
+        assert dlg._ui.lblPySideVersion.text() == pyside_version
 
 
 class TestAuthorsHtml:
@@ -249,6 +253,265 @@ class TestSettingsDialog:
         qtbot.addWidget(dlg)
         dlg._on_clear_extension()
         assert _cfg.get_extension_normalization() == []
+
+
+# ---------------------------------------------------------------------------
+# SidecarDialog
+# ---------------------------------------------------------------------------
+
+
+class TestSidecarDialog:
+    @pytest.fixture
+    def window_state(self):
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        return ws
+
+    def test_dialog_opens(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg is not None
+
+    def test_has_one_tab_per_category_plus_common(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        # image, video, audio, other, common
+        assert dlg._ui.tabs.count() == 5
+
+    def test_reject_saves_geometry(self, qtbot: QtBot, tmp_path):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+        from pbrenamer.ui.window_state import WindowState
+
+        ws = WindowState(tmp_path / "state.json")
+        dlg = SidecarDialog(ws)
+        qtbot.addWidget(dlg)
+        dlg.show()
+        qtbot.waitExposed(dlg)
+        dlg.reject()
+        assert ws.load_geometry("sidecar_dialog") is not None
+
+    # ── Base extensions ───────────────────────────────────────────────────────
+
+    def test_base_ext_shows_defaults_not_empty(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg._ui.lstBaseExt["image"].count() > 0
+
+    def test_base_ext_other_category_has_no_widgets(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert "other" not in dlg._ui.lstBaseExt
+
+    def test_base_ext_add(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtBaseExt["image"].setText("qtestimg")
+        dlg._on_add_base_ext("image")
+        assert "qtestimg" in _cfg.get_sidecar_base_extensions("image")
+        assert dlg._ui.edtBaseExt["image"].text() == ""
+
+    def test_base_ext_add_strips_leading_dot(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtBaseExt["image"].setText(".qtestimg")
+        dlg._on_add_base_ext("image")
+        assert "qtestimg" in _cfg.get_sidecar_base_extensions("image")
+
+    def test_base_ext_add_lowercases(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtBaseExt["image"].setText("QTESTIMG")
+        dlg._on_add_base_ext("image")
+        assert "qtestimg" in _cfg.get_sidecar_base_extensions("image")
+        assert "QTESTIMG" not in _cfg.get_sidecar_base_extensions("image")
+
+    def test_base_ext_add_duplicate_in_other_category_rejected(
+        self, qtbot: QtBot, window_state
+    ):
+        from PySide6.QtWidgets import QMessageBox
+
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        # "jpg" is already a default image extension.
+        dlg._ui.edtBaseExt["video"].setText("jpg")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            dlg._on_add_base_ext("video")
+        mock_warn.assert_called_once()
+        assert "jpg" not in _cfg.get_sidecar_base_extensions("video")
+        assert "jpg" in _cfg.get_sidecar_base_extensions("image")
+        assert dlg._ui.edtBaseExt["video"].text() == "jpg"
+
+    def test_base_ext_add_duplicate_in_other_category_case_insensitive(
+        self, qtbot: QtBot, window_state
+    ):
+        from PySide6.QtWidgets import QMessageBox
+
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtBaseExt["video"].setText("JPG")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            dlg._on_add_base_ext("video")
+        mock_warn.assert_called_once()
+        assert "jpg" not in _cfg.get_sidecar_base_extensions("video")
+
+    def test_base_ext_add_same_category_reentry_allowed(
+        self, qtbot: QtBot, window_state
+    ):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtBaseExt["image"].setText("jpg")
+        dlg._on_add_base_ext("image")
+        assert _cfg.get_sidecar_base_extensions("image").count("jpg") == 2
+
+    def test_base_ext_add_empty_is_noop(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        before = _cfg.get_sidecar_base_extensions("image")
+        dlg._ui.edtBaseExt["image"].setText("")
+        dlg._on_add_base_ext("image")
+        assert _cfg.get_sidecar_base_extensions("image") == before
+
+    def test_base_ext_remove_selected(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_base_extensions("image", ["jpg", "png"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.lstBaseExt["image"].setCurrentRow(0)
+        dlg._on_remove_base_ext("image")
+        assert _cfg.get_sidecar_base_extensions("image") == ["png"]
+
+    def test_base_ext_restore_defaults_only_this_category(
+        self, qtbot: QtBot, window_state
+    ):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_base_extensions("image", ["custom"])
+        _cfg.set_sidecar_base_extensions("video", ["custom2"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._on_restore_base_ext("image")
+        assert _cfg.get_sidecar_base_extensions("image") != ["custom"]
+        assert _cfg.get_sidecar_base_extensions("video") == ["custom2"]
+        assert dlg._ui.lstBaseExt["image"].count() > 0
+
+    # ── Sidecar suffixes ──────────────────────────────────────────────────────
+
+    def test_suffix_shows_defaults_not_empty(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg._ui.lstSidecarSuffix["image"].count() > 0
+
+    def test_suffix_other_category_has_widgets(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert "other" in dlg._ui.lstSidecarSuffix
+
+    def test_suffix_add(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtSidecarSuffix["other"].setText("bak")
+        dlg._on_add_sidecar_suffix("other")
+        assert "bak" in _cfg.get_sidecar_suffixes("other")
+
+    def test_suffix_add_empty_is_noop(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        before = _cfg.get_sidecar_suffixes("other")
+        dlg._ui.edtSidecarSuffix["other"].setText("")
+        dlg._on_add_sidecar_suffix("other")
+        assert _cfg.get_sidecar_suffixes("other") == before
+
+    def test_suffix_remove_selected(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_suffixes("other", ["a", "b"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.lstSidecarSuffix["other"].setCurrentRow(0)
+        dlg._on_remove_sidecar_suffix("other")
+        assert _cfg.get_sidecar_suffixes("other") == ["b"]
+
+    def test_suffix_restore_defaults_only_this_category(
+        self, qtbot: QtBot, window_state
+    ):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_suffixes("image", ["custom"])
+        _cfg.set_sidecar_suffixes("video", ["custom2"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._on_restore_sidecar_suffix("image")
+        assert _cfg.get_sidecar_suffixes("image") != ["custom"]
+        assert _cfg.get_sidecar_suffixes("video") == ["custom2"]
+
+    def test_suffix_common_add(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtSidecarCommon.setText("meta")
+        dlg._on_add_sidecar_common()
+        assert _cfg.get_sidecar_common_suffixes() == ["meta"]
+        assert dlg._ui.lstSidecarCommon.count() == 1
+
+    def test_suffix_common_add_empty_is_noop(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.edtSidecarCommon.setText("")
+        dlg._on_add_sidecar_common()
+        assert _cfg.get_sidecar_common_suffixes() == []
+
+    def test_suffix_common_remove_selected(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_common_suffixes(["meta", "extra"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.lstSidecarCommon.setCurrentRow(0)
+        dlg._on_remove_sidecar_common()
+        assert _cfg.get_sidecar_common_suffixes() == ["extra"]
+
+    def test_suffix_common_restore_defaults(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        _cfg.set_sidecar_common_suffixes(["meta"])
+        dlg = SidecarDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._on_restore_sidecar_common()
+        assert _cfg.get_sidecar_common_suffixes() == []
 
 
 # ---------------------------------------------------------------------------

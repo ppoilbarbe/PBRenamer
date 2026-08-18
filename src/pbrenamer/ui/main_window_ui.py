@@ -70,6 +70,14 @@ class Ui_MainWindow:
         self.actionSettings.setToolTip(_("Open settings"))
         self.actionSettings.setStatusTip(_("Configure language and other preferences"))
 
+        self.actionSidecarFiles = QAction(
+            QIcon(_resource("sidecars.svg")), _("Sidecar Files…"), window
+        )
+        self.actionSidecarFiles.setToolTip(_("Configure sidecar file categories"))
+        self.actionSidecarFiles.setStatusTip(
+            _("Configure base-file extensions and sidecar suffixes for each category")
+        )
+
         self.actionAbout = QAction(
             QIcon(_resource("help-about.svg")), _("About PBRenamer"), window
         )
@@ -165,6 +173,21 @@ class Ui_MainWindow:
             )
         )
         bar.addWidget(self.cmbExtensionMode)
+
+        self.chkSidecarMode = QCheckBox(_("Sidecar mode"), parent)
+        self.chkSidecarMode.setToolTip(
+            _("Group sidecar files (e.g. img.xmp) with their base file when renaming")
+        )
+        self.chkSidecarMode.setStatusTip(
+            _(
+                "When enabled, sidecar files are colored, selected together"
+                " with their base file, and renamed using the base file's"
+                " new name plus their own original suffix, unchanged."
+                " Only available with the Keep/Lowercase/Uppercase"
+                " extension modes"
+            )
+        )
+        bar.addWidget(self.chkSidecarMode)
 
         self.chkAutoPreview = QCheckBox(_("Auto-preview"), parent)
         self.chkAutoPreview.setToolTip(_("Refresh the preview automatically"))
@@ -565,6 +588,7 @@ class Ui_MainWindow:
         menu_edit = menubar.addMenu(_("Edit"))
         menu_edit.addAction(self.actionHistory)
         menu_edit.addSeparator()
+        menu_edit.addAction(self.actionSidecarFiles)
         menu_edit.addAction(self.actionSettings)
 
         # Shortcuts menu (populated dynamically by MainWindow._build_shortcuts_menu)

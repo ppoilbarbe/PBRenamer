@@ -126,6 +126,17 @@ def _build_parser() -> argparse.ArgumentParser:
         help="How to handle the extension during rename (default: keep)",
     )
     rename_group.add_argument(
+        "--sidecar-mode",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help=(
+            "Group sidecar files (e.g. img.xmp) with their base file when"
+            " renaming: the sidecar is renamed using the base file's new"
+            " stem plus its own original suffix, unchanged. Requires"
+            " --ext-mode keep, lower, or upper (default: --no-sidecar-mode)"
+        ),
+    )
+    rename_group.add_argument(
         "--filter",
         metavar="GLOB",
         default=None,
@@ -289,6 +300,8 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
                 ns.ext_mode = str(cfg["extension_mode"])
             elif "keep_extension" in cfg:
                 ns.ext_mode = "keep" if cfg["keep_extension"] else "modify"
+        if ns.sidecar_mode is None and "sidecar_mode" in cfg:
+            ns.sidecar_mode = bool(cfg["sidecar_mode"])
 
     if ns.search is None:
         print(
@@ -312,6 +325,14 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
         ns.case = "none"
     if ns.ext_mode is None:
         ns.ext_mode = "keep"
+    if ns.sidecar_mode is None:
+        ns.sidecar_mode = False
+    if ns.sidecar_mode and ns.ext_mode not in ("keep", "lower", "upper"):
+        print(
+            "error: --sidecar-mode requires --ext-mode keep, lower, or upper",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 def _apply_postproc(
@@ -469,6 +490,47 @@ def _plan(
     return results
 
 
+def _apply_sidecar_grouping(
+    plan: list[tuple[str, str, str | None]],
+    entries: list[tuple[str, str]],
+) -> list[tuple[str, str, str | None]]:
+    """Override sidecar rows in *plan* to follow their base file's new stem
+    (own suffix unchanged), and drop ambiguous rows (printing a warning).
+
+    Mirrors the GUI's sidecar-mode preview derivation
+    (MainWindow._on_preview): each base file's own computed name is left
+    untouched; a sidecar's new name is
+    ``<base's new stem>.<sidecar's own verbatim suffix>``.
+    """
+    from pbrenamer import settings as _settings
+    from pbrenamer.core import filetools
+    from pbrenamer.core import sidecar as _sidecar
+
+    config = _settings.get_sidecar_config()
+    result = _sidecar.build_sidecar_groups(entries, config)
+    path_to_index = {path: i for i, (path, _name, _new) in enumerate(plan)}
+
+    for sidecar_path, base_path in result.sidecar_of.items():
+        s_idx = path_to_index[sidecar_path]
+        b_idx = path_to_index[base_path]
+        s_path, s_name, _s_new = plan[s_idx]
+        _b_path, _b_name, base_new = plan[b_idx]
+        if not base_new:
+            plan[s_idx] = (s_path, s_name, None)
+            continue
+        base_stem, _stem_path, _ext = filetools.cut_extension(base_new, base_path)
+        suffix = result.sidecar_suffix[sidecar_path]
+        plan[s_idx] = (s_path, s_name, f"{base_stem}.{suffix}")
+
+    for path, msg in result.errors.items():
+        idx = path_to_index[path]
+        p, name, _new = plan[idx]
+        plan[idx] = (p, name, None)
+        print(f"warning: {name}: {msg}", file=sys.stderr)
+
+    return plan
+
+
 def _detect_conflicts(
     plan: list[tuple[str, str, str | None]],
 ) -> set[int]:
@@ -517,6 +579,8 @@ def _headless_run(ns: argparse.Namespace) -> None:
         return
 
     plan = _plan(entries, ns)
+    if ns.sidecar_mode:
+        plan = _apply_sidecar_grouping(plan, entries)
     changes = [
         (path, name, new) for path, name, new in plan if new is not None and new != name
     ]

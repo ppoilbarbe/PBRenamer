@@ -17,18 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-msgid "Application version"
-msgstr "Application version"
-
-msgid "A graphical batch file renaming utility."
-msgstr "A graphical batch file renaming utility."
-
-msgid "License: GPLv3"
-msgstr "License: GPLv3"
-
-msgid "About PBRenamer"
-msgstr "About PBRenamer"
-
 msgid "File information"
 msgstr "File information"
 
@@ -697,6 +685,79 @@ msgstr "Video metadata fields for <code>{vi:…}</code>"
 msgid "Examples"
 msgstr "Examples"
 
+msgid "Sidecar Files"
+msgstr "Sidecar Files"
+
+msgid ""
+"A sidecar file is associated with a base file by a name suffix (e.g. "
+"\"img.jpg\" + \"img.xmp\"). Each tab configures one base-file category: "
+"which extensions count as its base files, and which suffixes identify its"
+" sidecars."
+msgstr ""
+"A sidecar file is associated with a base file by a name suffix (e.g. "
+"\"img.jpg\" + \"img.xmp\"). Each tab configures one base-file category: "
+"which extensions count as its base files, and which suffixes identify its"
+" sidecars."
+
+msgid "Images"
+msgstr "Images"
+
+msgid "Common"
+msgstr "Common"
+
+msgid "Base file extensions"
+msgstr "Base file extensions"
+
+msgid "Add this extension"
+msgstr "Add this extension"
+
+msgid "Remove selected extensions"
+msgstr "Remove selected extensions"
+
+msgid "Restore default extensions for this category"
+msgstr "Restore default extensions for this category"
+
+msgid ""
+"Other: any file whose extension doesn't match the Images, Video, or Audio"
+" categories. No editable extension list — it is the catch-all category."
+msgstr ""
+"Other: any file whose extension doesn't match the Images, Video, or Audio"
+" categories. No editable extension list — it is the catch-all category."
+
+msgid "Sidecar suffixes"
+msgstr "Sidecar suffixes"
+
+msgid "Add this sidecar suffix"
+msgstr "Add this sidecar suffix"
+
+msgid "Remove selected sidecar suffixes"
+msgstr "Remove selected sidecar suffixes"
+
+msgid "Restore default sidecar suffixes for this category"
+msgstr "Restore default sidecar suffixes for this category"
+
+msgid "These suffixes are added to every category's own sidecar suffix list."
+msgstr "These suffixes are added to every category's own sidecar suffix list."
+
+msgid "Common sidecar suffixes"
+msgstr "Common sidecar suffixes"
+
+msgid "Add this common sidecar suffix"
+msgstr "Add this common sidecar suffix"
+
+msgid "Remove selected common sidecar suffixes"
+msgstr "Remove selected common sidecar suffixes"
+
+msgid "Restore default common sidecar suffixes"
+msgstr "Restore default common sidecar suffixes"
+
+msgid "Duplicate extension"
+msgstr "Duplicate extension"
+
+#, python-brace-format
+msgid "{ext!r} is already assigned to the {category} category."
+msgstr "{ext!r} is already assigned to the {category} category."
+
 msgid "Settings"
 msgstr "Settings"
 
@@ -784,6 +845,75 @@ msgstr "Delete the entire normalization table"
 msgid "System default"
 msgstr "System default"
 
+msgid "Select folder"
+msgstr "Select folder"
+
+msgid "Original"
+msgstr "Original"
+
+msgid "Preview"
+msgstr "Preview"
+
+#, python-brace-format
+msgid "{path} — {n} item(s)"
+msgstr "{path} — {n} item(s)"
+
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ no matching type ({types})"
+
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} unavailable"
+
+msgid "Search — Help"
+msgstr "Search — Help"
+
+msgid "Replace — Help"
+msgstr "Replace — Help"
+
+msgid "Rename errors"
+msgstr "Rename errors"
+
+msgid "cannot move/copy a folder into itself"
+msgstr "cannot move/copy a folder into itself"
+
+msgid "Move errors"
+msgstr "Move errors"
+
+msgid "Copy errors"
+msgstr "Copy errors"
+
+msgid "Confirm overwrite"
+msgstr "Confirm overwrite"
+
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} item(s) already exist in {dir} and would be overwritten."
+
+msgid "Overwrite"
+msgstr "Overwrite"
+
+msgid "Skip"
+msgstr "Skip"
+
+#, python-format
+msgid "Undo (%d)"
+msgstr "Undo (%d)"
+
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Undo last rename batch (%d level(s) available)"
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "Undo last rename batch"
+msgstr "Undo last rename batch"
+
+msgid "Add as shortcut"
+msgstr "Add as shortcut"
+
 msgid "Open folder…"
 msgstr "Open folder…"
 
@@ -819,6 +949,18 @@ msgstr "Open settings"
 
 msgid "Configure language and other preferences"
 msgstr "Configure language and other preferences"
+
+msgid "Sidecar Files…"
+msgstr "Sidecar Files…"
+
+msgid "Configure sidecar file categories"
+msgstr "Configure sidecar file categories"
+
+msgid "Configure base-file extensions and sidecar suffixes for each category"
+msgstr "Configure base-file extensions and sidecar suffixes for each category"
+
+msgid "About PBRenamer"
+msgstr "About PBRenamer"
 
 msgid "About this application"
 msgstr "About this application"
@@ -906,6 +1048,23 @@ msgstr ""
 "Modify: the extension is included in the search/replace pattern like the "
 "rest of the name"
 
+msgid "Sidecar mode"
+msgstr "Sidecar mode"
+
+msgid "Group sidecar files (e.g. img.xmp) with their base file when renaming"
+msgstr "Group sidecar files (e.g. img.xmp) with their base file when renaming"
+
+msgid ""
+"When enabled, sidecar files are colored, selected together with their "
+"base file, and renamed using the base file's new name plus their own "
+"original suffix, unchanged. Only available with the "
+"Keep/Lowercase/Uppercase extension modes"
+msgstr ""
+"When enabled, sidecar files are colored, selected together with their "
+"base file, and renamed using the base file's new name plus their own "
+"original suffix, unchanged. Only available with the "
+"Keep/Lowercase/Uppercase extension modes"
+
 msgid "Auto-preview"
 msgstr "Auto-preview"
 
@@ -923,12 +1082,6 @@ msgstr "Glob pattern to filter the file list"
 
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
-
-msgid "Original"
-msgstr "Original"
-
-msgid "Preview"
-msgstr "Preview"
 
 msgid "Files to be renamed"
 msgstr "Files to be renamed"
@@ -1191,12 +1344,6 @@ msgstr "Clear the preview"
 msgid "Remove all preview values from the Preview column"
 msgstr "Remove all preview values from the Preview column"
 
-msgid "Undo"
-msgstr "Undo"
-
-msgid "Undo last rename batch"
-msgstr "Undo last rename batch"
-
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Reverse the last batch of renames performed on disk"
 
@@ -1228,62 +1375,27 @@ msgstr "Shortcuts"
 msgid "Help"
 msgstr "Help"
 
-msgid "Select folder"
-msgstr "Select folder"
+msgid "Application version"
+msgstr "Application version"
+
+msgid "A graphical batch file renaming utility."
+msgstr "A graphical batch file renaming utility."
+
+msgid "GPLv3"
+msgstr "GPLv3"
+
+msgid "License:"
+msgstr "License:"
+
+msgid "Python version:"
+msgstr "Python version:"
+
+msgid "PySide6 version:"
+msgstr "PySide6 version:"
 
 #, python-brace-format
-msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} item(s)"
-
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ no matching type ({types})"
-
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} unavailable"
-
-msgid "Search — Help"
-msgstr "Search — Help"
-
-msgid "Replace — Help"
-msgstr "Replace — Help"
-
-msgid "Rename errors"
-msgstr "Rename errors"
-
-msgid "cannot move/copy a folder into itself"
-msgstr "cannot move/copy a folder into itself"
-
-msgid "Move errors"
-msgstr "Move errors"
-
-msgid "Copy errors"
-msgstr "Copy errors"
-
-msgid "Confirm overwrite"
-msgstr "Confirm overwrite"
-
-#, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} item(s) already exist in {dir} and would be overwritten."
-
-msgid "Overwrite"
-msgstr "Overwrite"
-
-msgid "Skip"
-msgstr "Skip"
-
-#, python-format
-msgid "Undo (%d)"
-msgstr "Undo (%d)"
-
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Undo last rename batch (%d level(s) available)"
-
-msgid "Add as shortcut"
-msgstr "Add as shortcut"
+msgid "{name!r} could be a sidecar of multiple base files: {owners}"
+msgstr "{name!r} could be a sidecar of multiple base files: {owners}"
 
 msgid "Home"
 msgstr "Home"

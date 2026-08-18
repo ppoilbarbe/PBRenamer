@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (
 )
 
 import pbrenamer.settings as _cfg
-from pbrenamer.core import filetools
+from pbrenamer.core import filetools, sidecar
 from pbrenamer.core import replacement as _repl
 from pbrenamer.core.undo import UndoManager
 from pbrenamer.platform import system_bookmarks
@@ -36,6 +36,7 @@ from pbrenamer.ui.pattern_help import PatternHelpDialog, replace_html, search_ht
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
+from pbrenamer.ui.sidecar_dialog import SidecarDialog
 from pbrenamer.ui.widgets import WhitespaceLineEdit
 from pbrenamer.ui.window_state import WindowState
 
@@ -88,7 +89,9 @@ _UNCHANGED_COLOR = QColor("#888888")
 _DIR_COLOR = QColor("#aa6600")
 _CONFLICT_COLOR = QColor("#cc0000")
 _ERROR_COLOR = QColor("#cc0000")
+_SIDECAR_COLOR = QColor("#0099aa")
 _INVALID_STYLE = "QLineEdit { background-color: #ffaaaa; }"
+_SIDECAR_ACTIVE_EXT_MODES = ("keep", "lower", "upper")
 
 
 class MainWindow(QMainWindow):
@@ -100,6 +103,8 @@ class MainWindow(QMainWindow):
         self._ui.setupUi(self)
 
         self._current_dir: str | None = None
+        self._sidecar_result: sidecar.SidecarGroupResult | None = None
+        self._linking_selection = False
         self._undo = UndoManager()
         self._presets = PatternPresets()
         self._window_state = WindowState()
@@ -124,6 +129,7 @@ class MainWindow(QMainWindow):
         self._populate_named_saves()
         self._setup_help_buttons()
         self._connect_signals()
+        self._update_sidecar_checkbox_state()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
         if _cfg.get_restore_toolbar_state():
@@ -216,8 +222,9 @@ class MainWindow(QMainWindow):
         self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
         self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
         self._ui.cmbExtensionMode.currentIndexChanged.connect(
-            self._on_post_process_changed
+            self._on_extension_mode_changed
         )
+        self._ui.chkSidecarMode.toggled.connect(self._reload_files)
 
         # Pattern add/help buttons
         self._ui.btnSearchAdd.clicked.connect(self._on_add_search)
@@ -255,6 +262,7 @@ class MainWindow(QMainWindow):
         # Menu bar
         self._ui.actionQuit.triggered.connect(self._on_quit)
         self._ui.actionHistory.triggered.connect(self._on_history)
+        self._ui.actionSidecarFiles.triggered.connect(self._on_sidecar_files)
         self._ui.actionSettings.triggered.connect(self._on_settings)
         self._ui.actionAbout.triggered.connect(self._on_about)
         self._ui.actionEditShortcuts.triggered.connect(self._on_edit_shortcuts)
@@ -389,6 +397,8 @@ class MainWindow(QMainWindow):
             if os.path.isdir(path):
                 item.setForeground(0, _DIR_COLOR)
             self._ui.tblFiles.addTopLevelItem(item)
+        self._recompute_sidecar_grouping(entries)
+        self._apply_sidecar_coloring()
         self._ui.tblFiles.resizeColumnToContents(0)
 
         count = self._ui.tblFiles.topLevelItemCount()
@@ -709,6 +719,28 @@ class MainWindow(QMainWindow):
                 item.setText(1, "")
                 item.setData(1, Qt.ItemDataRole.UserRole, False)
 
+        if self._sidecar_mode_active() and self._sidecar_result:
+            path_to_item = {
+                root.child(i).data(0, Qt.ItemDataRole.UserRole): root.child(i)
+                for i in range(root.childCount())
+            }
+            for sidecar_path, base_path in self._sidecar_result.sidecar_of.items():
+                sidecar_item = path_to_item[sidecar_path]
+                base_item = path_to_item[base_path]
+                base_new_name = base_item.text(1)
+                base_had_error = bool(base_item.data(1, Qt.ItemDataRole.UserRole))
+                if not base_new_name or base_had_error:
+                    sidecar_item.setText(1, "")
+                    sidecar_item.setData(1, Qt.ItemDataRole.UserRole, False)
+                    continue
+                base_stem, _stem_path, _ext = filetools.cut_extension(
+                    base_new_name, base_path
+                )
+                suffix = self._sidecar_result.sidecar_suffix[sidecar_path]
+                sidecar_item.setText(1, f"{base_stem}.{suffix}")
+                sidecar_item.setData(1, Qt.ItemDataRole.UserRole, False)
+        self._apply_sidecar_coloring()
+
         self._ui.tblFiles.resizeColumnToContents(1)
         self._refresh_conflicts()
 
@@ -813,6 +845,96 @@ class MainWindow(QMainWindow):
     def _on_post_process_changed(self) -> None:
         if self._ui.chkAutoPreview.isChecked():
             self._on_preview()
+
+    def _on_extension_mode_changed(self) -> None:
+        self._update_sidecar_checkbox_state()
+        if self._ui.chkSidecarMode.isChecked():
+            self._reload_files()
+        elif self._ui.chkAutoPreview.isChecked():
+            self._on_preview()
+
+    # ── Sidecar files ─────────────────────────────────────────────────────────
+
+    def _sidecar_mode_active(self) -> bool:
+        """True if sidecar grouping should be applied: the checkbox is
+        checked and the current extension mode is compatible with it
+        (Keep/Lowercase/Uppercase — Normalize/Modify rewrite the extension,
+        which is incompatible with leaving sidecar suffixes untouched)."""
+        if not self._ui.chkSidecarMode.isChecked():
+            return False
+        return self._ui.cmbExtensionMode.currentData() in _SIDECAR_ACTIVE_EXT_MODES
+
+    def _update_sidecar_checkbox_state(self) -> None:
+        allowed = self._ui.cmbExtensionMode.currentData() in _SIDECAR_ACTIVE_EXT_MODES
+        self._ui.chkSidecarMode.setEnabled(allowed)
+
+    def _recompute_sidecar_grouping(self, entries: list[tuple[str, str]]) -> None:
+        if not self._sidecar_mode_active():
+            self._sidecar_result = None
+            return
+        config = _cfg.get_sidecar_config()
+        self._sidecar_result = sidecar.build_sidecar_groups(entries, config)
+
+    def _apply_sidecar_coloring(self) -> None:
+        """Tint sidecar rows (column 0) and surface ambiguity errors for
+        the current self._sidecar_result. No-op when sidecar mode is
+        inactive (self._sidecar_result is None)."""
+        if self._sidecar_result is None:
+            return
+        root = self._ui.tblFiles.invisibleRootItem()
+        for i in range(root.childCount()):
+            item = root.child(i)
+            path = item.data(0, Qt.ItemDataRole.UserRole)
+            if path in self._sidecar_result.sidecar_of:
+                item.setForeground(0, _SIDECAR_COLOR)
+        self._apply_sidecar_errors()
+
+    def _apply_sidecar_errors(self) -> None:
+        """Set the ambiguity-error text/color for every sidecar_result.errors
+        row. Called right after listing (so errors are visible even before
+        Preview is run) and again at the tail of _on_preview, which clears
+        column 1 for every row before recomputing it — errors always win
+        over a computed preview. Only called from _apply_sidecar_coloring,
+        which already guarantees self._sidecar_result is not None."""
+        root = self._ui.tblFiles.invisibleRootItem()
+        for i in range(root.childCount()):
+            item = root.child(i)
+            path = item.data(0, Qt.ItemDataRole.UserRole)
+            if path in self._sidecar_result.errors:
+                item.setForeground(0, _ERROR_COLOR)
+                item.setText(1, self._sidecar_result.errors[path])
+                item.setData(1, Qt.ItemDataRole.UserRole, True)
+
+    def _link_group_selection(self) -> None:
+        """Extend the current selection to every member (base + sidecars)
+        of each selected file's sidecar group."""
+        if self._sidecar_result is None:
+            return
+        selected = self._ui.tblFiles.selectedItems()
+        if not selected:
+            return
+        root = self._ui.tblFiles.invisibleRootItem()
+        path_to_item = {
+            root.child(i).data(0, Qt.ItemDataRole.UserRole): root.child(i)
+            for i in range(root.childCount())
+        }
+        to_select: set[str] = set()
+        for item in selected:
+            path = item.data(0, Qt.ItemDataRole.UserRole)
+            base = self._sidecar_result.sidecar_of.get(path, path)
+            to_select.add(base)
+            to_select.update(self._sidecar_result.groups.get(base, []))
+
+        currently_selected = {i.data(0, Qt.ItemDataRole.UserRole) for i in selected}
+        if to_select == currently_selected:
+            return
+
+        self._linking_selection = True
+        self._ui.tblFiles.blockSignals(True)
+        for path, item in path_to_item.items():
+            item.setSelected(path in to_select)
+        self._ui.tblFiles.blockSignals(False)
+        self._linking_selection = False
 
     # ── Pattern history ───────────────────────────────────────────────────────
 
@@ -924,6 +1046,7 @@ class MainWindow(QMainWindow):
             "remove_duplicates": self._ui.chkRemoveDuplicates.isChecked(),
             "case": self._ui.cmbCaps.currentIndex(),
             "extension_mode": self._ui.cmbExtensionMode.currentData(),
+            "sidecar_mode": self._ui.chkSidecarMode.isChecked(),
         }
         f = self._ui.edtFilter.text()
         if f:
@@ -957,6 +1080,9 @@ class MainWindow(QMainWindow):
             idx = self._ui.cmbExtensionMode.findData(ext_mode)
             if idx >= 0:
                 self._ui.cmbExtensionMode.setCurrentIndex(idx)
+        if "sidecar_mode" in cfg:
+            self._ui.chkSidecarMode.setChecked(bool(cfg["sidecar_mode"]))
+        self._update_sidecar_checkbox_state()
         current_filter = self._ui.edtFilter.text()
         new_filter = cfg.get("filter", "")
         self._ui.edtFilter.setText(new_filter)
@@ -985,7 +1111,7 @@ class MainWindow(QMainWindow):
         renames: list[tuple[str, str]] = []
         for item in self._active_items():
             preview = item.text(1)
-            if not preview:
+            if not preview or item.data(1, Qt.ItemDataRole.UserRole):
                 continue
             original_path: str = item.data(0, Qt.ItemDataRole.UserRole)
             new_path = os.path.join(os.path.dirname(original_path), preview)
@@ -1188,6 +1314,7 @@ class MainWindow(QMainWindow):
             "mode": self._ui.cmbMode.currentIndex(),
             "recursive": self._ui.chkRecursive.isChecked(),
             "extension_mode": self._ui.cmbExtensionMode.currentData(),
+            "sidecar_mode": self._ui.chkSidecarMode.isChecked(),
             "auto_preview": self._ui.chkAutoPreview.isChecked(),
             "filter": self._ui.edtFilter.text(),
         }
@@ -1207,6 +1334,9 @@ class MainWindow(QMainWindow):
             idx = self._ui.cmbExtensionMode.findData(ext_mode)
             if idx >= 0:
                 self._ui.cmbExtensionMode.setCurrentIndex(idx)
+        if "sidecar_mode" in state:
+            self._ui.chkSidecarMode.setChecked(bool(state["sidecar_mode"]))
+        self._update_sidecar_checkbox_state()
         if "auto_preview" in state:
             self._ui.chkAutoPreview.setChecked(bool(state["auto_preview"]))
         if "filter" in state:
@@ -1236,6 +1366,11 @@ class MainWindow(QMainWindow):
             and self._ui.cmbExtensionMode.currentData() == "normalize"
         ):
             self._on_preview()
+
+    def _on_sidecar_files(self) -> None:
+        SidecarDialog(self._window_state, self).exec()
+        if self._sidecar_mode_active():
+            self._reload_files()
 
     def _on_about(self) -> None:
         AboutDialog(self).exec()
@@ -1306,6 +1441,8 @@ class MainWindow(QMainWindow):
         self._file_info.activateWindow()
 
     def _on_file_selection_changed(self) -> None:
+        if self._sidecar_mode_active() and not self._linking_selection:
+            self._link_group_selection()
         if self._file_info is not None and self._file_info.isVisible():
             self._refresh_file_info()
 

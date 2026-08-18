@@ -9,6 +9,7 @@ import pbrenamer.__main__ as _main_mod
 import pbrenamer.settings as _settings
 from pbrenamer.__main__ import (
     _apply_postproc,
+    _apply_sidecar_grouping,
     _build_parser,
     _detect_conflicts,
     _headless_run,
@@ -30,6 +31,7 @@ def _ns(**kwargs) -> argparse.Namespace:
         list="files",
         recurse=False,
         ext_mode="keep",
+        sidecar_mode=False,
         filter_glob=None,
         sep="none",
         accent=False,
@@ -128,6 +130,18 @@ class TestParser:
     def test_ext_mode_invalid_choice_rejected(self):
         with pytest.raises(SystemExit):
             _build_parser().parse_args(["-s", "x", "--ext-mode", "bogus"])
+
+    def test_sidecar_mode_raw_default_is_none(self):
+        ns = _build_parser().parse_args(["-s", "x"])
+        assert ns.sidecar_mode is None
+
+    def test_sidecar_mode_flag(self):
+        ns = _build_parser().parse_args(["-s", "x", "--sidecar-mode"])
+        assert ns.sidecar_mode is True
+
+    def test_no_sidecar_mode_flag(self):
+        ns = _build_parser().parse_args(["-s", "x", "--no-sidecar-mode"])
+        assert ns.sidecar_mode is False
 
     def test_filter_default_none(self):
         ns = _build_parser().parse_args(["-s", "x"])
@@ -327,6 +341,7 @@ class TestResolveNs:
             list="files",
             recurse=False,
             ext_mode=None,
+            sidecar_mode=None,
             filter_glob=None,
             sep=None,
             accent=None,
@@ -428,6 +443,39 @@ class TestResolveNs:
         ns = self._raw_ns(saved="mypreset")
         _resolve_ns(ns)
         assert ns.ext_mode == "normalize"
+
+    def test_saved_loads_sidecar_mode(self, tmp_path, monkeypatch):
+        from pbrenamer.ui import presets as _presets
+
+        p = self._make_presets(
+            tmp_path,
+            {"mypreset": {"search_pattern": "{X}", "sidecar_mode": True}},
+        )
+        monkeypatch.setattr(_presets, "PatternPresets", lambda: p)
+        ns = self._raw_ns(saved="mypreset")
+        _resolve_ns(ns)
+        assert ns.sidecar_mode is True
+
+    def test_sidecar_mode_defaults_to_false(self):
+        ns = self._raw_ns(search="foo")
+        _resolve_ns(ns)
+        assert ns.sidecar_mode is False
+
+    def test_sidecar_mode_rejects_normalize_ext_mode(self):
+        ns = self._raw_ns(search="foo", ext_mode="normalize", sidecar_mode=True)
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+
+    def test_sidecar_mode_rejects_modify_ext_mode(self):
+        ns = self._raw_ns(search="foo", ext_mode="modify", sidecar_mode=True)
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+
+    @pytest.mark.parametrize("mode", ["keep", "lower", "upper"])
+    def test_sidecar_mode_allowed_with_compatible_ext_mode(self, mode):
+        ns = self._raw_ns(search="foo", ext_mode=mode, sidecar_mode=True)
+        _resolve_ns(ns)
+        assert ns.sidecar_mode is True
 
     def test_cli_overrides_saved_field(self, tmp_path, monkeypatch):
         from pbrenamer.ui import presets as _presets
@@ -632,6 +680,55 @@ class TestPlan:
         ns = _ns(search="{L}", replace="{newnum}", mode="pattern")
         result = _plan(entries, ns)
         assert result[0][2] == "2.txt"
+
+
+# ---------------------------------------------------------------------------
+# _apply_sidecar_grouping
+# ---------------------------------------------------------------------------
+
+
+class TestApplySidecarGrouping:
+    def test_sidecar_follows_base_new_stem(self, tmp_path):
+        _make_files(tmp_path, "img.jpg", "img.xmp")
+        entries = [
+            ("img.jpg", str(tmp_path / "img.jpg")),
+            ("img.xmp", str(tmp_path / "img.xmp")),
+        ]
+        ns = _ns(search="img", replace="photo", mode="plain", sidecar_mode=True)
+        plan = _apply_sidecar_grouping(_plan(entries, ns), entries)
+        names = {name: new for _, name, new in plan}
+        assert names["img.jpg"] == "photo.jpg"
+        assert names["img.xmp"] == "photo.xmp"
+
+    def test_sidecar_blank_when_base_has_no_new_name(self, tmp_path):
+        _make_files(tmp_path, "img.jpg", "img.xmp")
+        entries = [
+            ("img.jpg", str(tmp_path / "img.jpg")),
+            ("img.xmp", str(tmp_path / "img.xmp")),
+        ]
+        ns = _ns(search="nomatch", replace="x", mode="plain", sidecar_mode=True)
+        plan = _apply_sidecar_grouping(_plan(entries, ns), entries)
+        names = {name: new for _, name, new in plan}
+        assert names["img.jpg"] is None
+        assert names["img.xmp"] is None
+
+    def test_ambiguous_group_dropped_with_warning(self, tmp_path, capsys):
+        _settings.set_sidecar_suffixes("image", ["xmp", "info.json", "xml"])
+        _make_files(tmp_path, "xxx.jpg", "xxx.png", "xxx.xml")
+        entries = [
+            ("xxx.jpg", str(tmp_path / "xxx.jpg")),
+            ("xxx.png", str(tmp_path / "xxx.png")),
+            ("xxx.xml", str(tmp_path / "xxx.xml")),
+        ]
+        ns = _ns(search="xxx", replace="yyy", mode="plain", sidecar_mode=True)
+        plan = _apply_sidecar_grouping(_plan(entries, ns), entries)
+        names = {name: new for _, name, new in plan}
+        assert names["xxx.jpg"] is None
+        assert names["xxx.png"] is None
+        assert names["xxx.xml"] is None
+        captured = capsys.readouterr()
+        assert "warning" in captured.err
+        assert "xxx.xml" in captured.err
 
 
 # ---------------------------------------------------------------------------
@@ -878,6 +975,21 @@ class TestHeadlessRun:
             _headless_run(ns)
         assert exc_info.value.code == 1
         assert "permission denied" in capsys.readouterr().err
+
+    def test_sidecar_mode_renames_base_and_sidecar_together(self, tmp_path, capsys):
+        _make_files(tmp_path, "img.jpg", "img.xmp")
+        ns = _ns(
+            search="img",
+            replace="photo",
+            mode="plain",
+            sidecar_mode=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "photo.jpg").exists()
+        assert (tmp_path / "photo.xmp").exists()
+        assert not (tmp_path / "img.jpg").exists()
+        assert not (tmp_path / "img.xmp").exists()
 
 
 # ---------------------------------------------------------------------------

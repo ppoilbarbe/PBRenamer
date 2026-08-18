@@ -31,6 +31,7 @@ from pbrenamer.settings import (
     set_restore_last_dir,
     set_restore_toolbar_state,
     set_shortcuts,
+    set_sidecar_suffixes,
     set_toolbar_state,
 )
 from pbrenamer.ui.main_window import MainWindow, _SearchModeDelegate
@@ -910,6 +911,7 @@ class TestNamedSaves:
             "replace_pattern",
             "search_mode",
             "case_insensitive",
+            "sidecar_mode",
         ):
             assert key in cfg
 
@@ -947,6 +949,7 @@ class TestNamedSaves:
             "remove_duplicates": True,
             "case": 1,
             "extension_mode": "lower",
+            "sidecar_mode": True,
         }
         window._apply_save_config(cfg)
         assert window._ui.cmbPatternSearch.currentText() == "hello"
@@ -956,6 +959,7 @@ class TestNamedSaves:
         assert window._ui.cmbExtensionMode.currentData() == "lower"
         assert window._ui.cmbSpaces.currentIndex() == 1
         assert window._ui.cmbCaps.currentIndex() == 1
+        assert window._ui.chkSidecarMode.isChecked()
 
     def test_apply_save_config_migrates_legacy_keep_extension(self, window):
         window._apply_save_config({"keep_extension": False})
@@ -1037,6 +1041,22 @@ class TestRenameUndo:
         item = window._ui.tblFiles.topLevelItem(0)
         item.setText(1, "file.txt")  # same name → no rename needed
         window._on_rename()
+
+    def test_on_rename_skips_error_flagged_rows(self, window, tmp_path):
+        # A row with non-empty column-1 text but the field-error flag set
+        # (Qt.ItemDataRole.UserRole on column 1) must never be used as a
+        # rename target, even if _on_rename() is invoked directly bypassing
+        # btnRename's disabled state (the only other guard against this).
+        f = tmp_path / "file.txt"
+        f.write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        item = _find_item(window, str(f))
+        item.setText(1, "⚠ some error text")
+        item.setData(1, Qt.ItemDataRole.UserRole, True)
+        window._on_rename()
+        assert (tmp_path / "file.txt").exists()
+        assert not (tmp_path / "⚠ some error text").exists()
 
     def test_on_rename_success(self, window, tmp_path):
         f = tmp_path / "original.txt"
@@ -1301,7 +1321,14 @@ class TestWindowState:
 
     def test_collect_toolbar_state_keys(self, window):
         state = window._collect_toolbar_state()
-        for key in ("mode", "recursive", "extension_mode", "auto_preview", "filter"):
+        for key in (
+            "mode",
+            "recursive",
+            "extension_mode",
+            "sidecar_mode",
+            "auto_preview",
+            "filter",
+        ):
             assert key in state
 
     def test_restore_toolbar_state_empty(self, window):
@@ -1313,6 +1340,7 @@ class TestWindowState:
                 "mode": 1,
                 "recursive": True,
                 "extension_mode": "lower",
+                "sidecar_mode": True,
                 "auto_preview": False,
                 "filter": "*.jpg",
             }
@@ -1321,6 +1349,7 @@ class TestWindowState:
         assert window._ui.cmbMode.currentIndex() == 1
         assert window._ui.chkRecursive.isChecked()
         assert window._ui.cmbExtensionMode.currentData() == "lower"
+        assert window._ui.chkSidecarMode.isChecked()
         assert window._ui.edtFilter.text() == "*.jpg"
 
     def test_restore_toolbar_state_migrates_legacy_keep_extension(self, window):
@@ -1403,6 +1432,27 @@ class TestMenuHandlers:
         monkeypatch.setattr(SettingsDialog, "exec", _add_mapping)
         window._on_settings()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == "world.jpg"
+
+    def test_on_sidecar_files(self, window, monkeypatch):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        monkeypatch.setattr(SidecarDialog, "exec", lambda self: 0)
+        window._on_sidecar_files()
+
+    def test_on_sidecar_files_reloads_when_sidecar_mode_active(
+        self, window, monkeypatch, tmp_path
+    ):
+        from pbrenamer.ui.sidecar_dialog import SidecarDialog
+
+        (tmp_path / "img.jpg").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        monkeypatch.setattr(SidecarDialog, "exec", lambda self: 0)
+        called = []
+        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        window._on_sidecar_files()
+        assert called
 
     def test_on_about(self, window, monkeypatch):
         from pbrenamer.ui.about_dialog import AboutDialog
@@ -1902,6 +1952,331 @@ class TestOnPreview:
             for i in range(window._ui.tblFiles.topLevelItemCount())
         }
         assert {"1.txt", "2.txt"} == previews
+
+
+# ---------------------------------------------------------------------------
+# Sidecar files
+# ---------------------------------------------------------------------------
+
+
+class TestSidecarModeGating:
+    def test_disabled_under_normalize_mode(self, window):
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        assert not window._ui.chkSidecarMode.isEnabled()
+
+    def test_disabled_under_modify_mode(self, window):
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("modify")
+        )
+        assert not window._ui.chkSidecarMode.isEnabled()
+
+    def test_enabled_under_keep_lower_upper(self, window):
+        for mode in ("keep", "lower", "upper"):
+            window._ui.cmbExtensionMode.setCurrentIndex(
+                window._ui.cmbExtensionMode.findData(mode)
+            )
+            assert window._ui.chkSidecarMode.isEnabled()
+
+    def test_checked_but_disabled_is_inactive(self, window):
+        window._ui.chkSidecarMode.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        assert window._ui.chkSidecarMode.isChecked()
+        assert not window._ui.chkSidecarMode.isEnabled()
+        assert window._sidecar_mode_active() is False
+
+    def test_reenabling_keeps_checked_state_active(self, window):
+        window._ui.chkSidecarMode.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("normalize")
+        )
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("lower")
+        )
+        assert window._ui.chkSidecarMode.isEnabled()
+        assert window._sidecar_mode_active() is True
+
+    def test_extension_mode_change_reloads_when_checkbox_checked(
+        self, window, tmp_path, monkeypatch
+    ):
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        called = []
+        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("lower")
+        )
+        assert called
+
+    def test_extension_mode_change_previews_when_unchecked_and_auto_preview(
+        self, window, monkeypatch
+    ):
+        window._ui.chkAutoPreview.setChecked(True)
+        called = []
+        monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("lower")
+        )
+        assert called
+        window._ui.chkAutoPreview.setChecked(False)
+
+
+class TestSidecarGroupingAndColoring:
+    def test_sidecar_row_colored_and_grouped(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        sidecar_item = _find_item(window, str(tmp_path / "img.xmp"))
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        assert sidecar_item.foreground(0).color() == _mwmod._SIDECAR_COLOR
+        assert base_item.foreground(0).color() != _mwmod._SIDECAR_COLOR
+        assert window._sidecar_result.sidecar_of[str(tmp_path / "img.xmp")] == str(
+            tmp_path / "img.jpg"
+        )
+
+    def test_ambiguous_same_category_shows_error_and_disables_rename(
+        self, window, tmp_path
+    ):
+        set_sidecar_suffixes("image", ["xml"])
+        (tmp_path / "xxx.xml").write_text("x")
+        (tmp_path / "xxx.jpg").write_text("x")
+        (tmp_path / "xxx.png").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        for name in ("xxx.xml", "xxx.jpg", "xxx.png"):
+            item = _find_item(window, str(tmp_path / name))
+            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+            assert item.text(1) != ""
+            assert item.data(1, Qt.ItemDataRole.UserRole) is True
+        assert not window._ui.btnRename.isEnabled()
+
+    def test_ambiguous_cross_category_shows_error(self, window, tmp_path):
+        set_sidecar_suffixes("image", ["xml"])
+        set_sidecar_suffixes("video", ["xml"])
+        (tmp_path / "xxx.xml").write_text("x")
+        (tmp_path / "xxx.png").write_text("x")
+        (tmp_path / "xxx.avi").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        for name in ("xxx.xml", "xxx.png", "xxx.avi"):
+            item = _find_item(window, str(tmp_path / name))
+            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+
+    def test_suffix_scoped_to_one_category_is_not_ambiguous(self, window, tmp_path):
+        set_sidecar_suffixes("image", ["xml"])
+        (tmp_path / "xxx.xml").write_text("x")
+        (tmp_path / "xxx.png").write_text("x")
+        (tmp_path / "xxx.avi").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        xml_item = _find_item(window, str(tmp_path / "xxx.xml"))
+        avi_item = _find_item(window, str(tmp_path / "xxx.avi"))
+        assert xml_item.foreground(0).color() == _mwmod._SIDECAR_COLOR
+        assert avi_item.foreground(0).color() != _mwmod._ERROR_COLOR
+        assert window._sidecar_result.sidecar_of[str(tmp_path / "xxx.xml")] == str(
+            tmp_path / "xxx.png"
+        )
+
+    def test_errors_visible_before_preview_is_run(self, window, tmp_path):
+        set_sidecar_suffixes("image", ["xml"])
+        (tmp_path / "xxx.xml").write_text("x")
+        (tmp_path / "xxx.jpg").write_text("x")
+        (tmp_path / "xxx.png").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        item = _find_item(window, str(tmp_path / "xxx.xml"))
+        assert item.text(1) != ""
+
+    def test_mode_off_no_coloring_no_grouping(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        assert window._sidecar_result is None
+        item = _find_item(window, str(tmp_path / "img.xmp"))
+        assert item.foreground(0).color() != _mwmod._SIDECAR_COLOR
+
+
+class TestSidecarSelectionLinking:
+    def _setup_group(self, window, tmp_path):
+        # Explicit suffixes, independent of whatever the current defaults
+        # are, so this test doesn't break if the default lists change.
+        set_sidecar_suffixes("image", ["xmp", "info.json"])
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        (tmp_path / "img.info.json").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+
+    def test_selecting_base_selects_sidecars(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
+    def test_selecting_sidecar_selects_base_and_siblings(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        side_item.setSelected(True)
+        window._on_file_selection_changed()
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
+    def test_mode_off_no_selection_linking(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._reload_files()
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {str(tmp_path / "img.jpg")}
+
+    def test_linking_flag_reset_after_call(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()
+        assert window._linking_selection is False
+
+    def test_already_full_selection_is_noop(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        for name in ("img.jpg", "img.xmp", "img.info.json"):
+            _find_item(window, str(tmp_path / name)).setSelected(True)
+        window._on_file_selection_changed()
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert len(selected_paths) == 3
+
+    def test_active_before_any_reload_is_noop(self, window):
+        # Sidecar mode checked but no directory has been loaded yet, so
+        # self._sidecar_result is still None.
+        window._current_dir = None
+        window._ui.chkSidecarMode.setChecked(True)
+        window._on_file_selection_changed()  # no crash, nothing to link
+
+    def test_empty_selection_is_noop(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        window._ui.tblFiles.clearSelection()
+        window._on_file_selection_changed()  # no crash, nothing to link
+
+
+class TestSidecarPreview:
+    def test_sidecar_preview_follows_base_stem(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("img")
+        window._ui.cmbPatternDest.setCurrentText("photo")
+        window._on_preview()
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        assert base_item.text(1) == "photo.jpg"
+        assert side_item.text(1) == "photo.xmp"
+
+    def test_sidecar_preview_preserves_verbatim_suffix_case(
+        self, window, tmp_path, monkeypatch
+    ):
+        real_build = _mwmod.sidecar.build_sidecar_groups
+
+        def fake_build(files, config, **kwargs):
+            return real_build(files, config, is_case_sensitive=lambda _d: False)
+
+        monkeypatch.setattr(_mwmod.sidecar, "build_sidecar_groups", fake_build)
+
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.XMP").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("img")
+        window._ui.cmbPatternDest.setCurrentText("photo")
+        window._on_preview()
+        side_item = _find_item(window, str(tmp_path / "img.XMP"))
+        assert side_item.text(1) == "photo.XMP"
+
+    def test_sidecar_preview_blank_when_base_has_no_preview(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("nomatch")
+        window._ui.cmbPatternDest.setCurrentText("x")
+        window._on_preview()
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        assert side_item.text(1) == ""
+
+
+class TestSidecarRenameEndToEnd:
+    def test_group_rename_on_disk_single_undo_batch(self, window, tmp_path):
+        (tmp_path / "img.jpg").write_text("x")
+        (tmp_path / "img.xmp").write_text("y")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("img")
+        window._ui.cmbPatternDest.setCurrentText("photo")
+        window._on_preview()
+        window._on_rename()
+        assert (tmp_path / "photo.jpg").exists()
+        assert (tmp_path / "photo.xmp").exists()
+        assert not (tmp_path / "img.jpg").exists()
+        assert not (tmp_path / "img.xmp").exists()
+        assert len(window._undo) == 1
+        window._on_undo()
+        assert (tmp_path / "img.jpg").exists()
+        assert (tmp_path / "img.xmp").exists()
 
 
 # ---------------------------------------------------------------------------
