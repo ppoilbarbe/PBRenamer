@@ -2,7 +2,7 @@
 
 import builtins
 
-__version__ = "1.6.0"
+__version__ = "1.7.0"
 __author__ = "Marcel Spock"
 __email__ = "mrspock@cardolan.net"
 __license__ = "GPLv3"

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-08-18
+
 ### Added
 
 - Drag'n'drop of files and directories between PBRenamer and external applications, and between the directory tree and the file list: copy or move (negotiated via the OS/Qt drag modifier keys), with a batched Overwrite/Skip/Cancel confirmation when a destination already exists. New `core/filetools.copy_path()`/`move_path()` functions back the operation; only moves are recorded to the undo history (copies are not undoable). Implemented by the new `ui/dnd_widgets.py` (`DirectoryTreeView`, `FileListWidget`)
