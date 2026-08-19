@@ -54,8 +54,9 @@ counters, date stamps, and metadata — all previewed live before any change is 
   saved and restored between sessions
 - **Case-aware conflict detection** — honours the case sensitivity of the
   underlying filesystem (case-insensitive on Windows/macOS by default)
-- **Internationalised** — English and French included; additional languages can
-  be added via gettext `.po` files
+- **Internationalised** — 8 languages included (English, German, Spanish,
+  French, Italian, Russian, Vietnamese, Chinese); additional languages can be
+  added via gettext `.po` files
 - **Cross-platform** — Linux, macOS, Windows
 
 ## Download
