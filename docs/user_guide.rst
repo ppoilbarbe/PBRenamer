@@ -361,6 +361,65 @@ Open **Edit → Settings** to configure:
     previous session.  A directory passed on the command line always takes
     priority.  Default: disabled (current working directory is used).
 
+.. _config-files:
+
+Configuration Files
+--------------------
+
+Everything the Settings dialog and other panels persist — preferences,
+presets, and per-feature configuration — is stored as plain-text files (Qt
+INI and JSON) under a single per-user configuration directory.  No system
+directories or registry keys are touched.
+
+Default location
+~~~~~~~~~~~~~~~~~
+
+============ =================================================
+Platform     Default directory
+============ =================================================
+Linux        ``$XDG_CONFIG_HOME/pbrenamer`` (usually ``~/.config/pbrenamer``)
+macOS        ``~/Library/Preferences/pbrenamer``
+Windows      ``%APPDATA%\pbrenamer``
+============ =================================================
+
+Override with ``--config-dir DIR`` (see :ref:`cli-reference`) to point at
+a different directory — useful for testing or for running several isolated
+profiles side by side.
+
+Files
+~~~~~
+
+``pbrenamer.conf``
+    Qt INI settings: log level, language override, "restore last
+    directory" preference and last directory, toolbar state, preview
+    delay.
+
+``shortcuts.json``
+    User-defined directory shortcuts (**Go → Shortcuts** menu).
+
+``extension_normalization.json``
+    Per-extension normalization table used by extension mode ``normalize``.
+
+``sidecar_config.json``
+    :ref:`Sidecar file <sidecar-files>` category configuration (base
+    extensions / sidecar suffixes per category), managed from
+    **Edit → Sidecar Files…**.
+
+``window_state.json``
+    Main window geometry, position, and splitter ratios.
+
+``patterns/search.json`` / ``patterns/replace.json``
+    Most-recently-used search and replacement patterns (field dropdown
+    history).
+
+``patterns/saves.json``
+    Named presets saved from the Presets panel, also loadable headlessly
+    with ``--saved NAME``.
+
+None of these files are required to exist — deleting any one of them (or
+the whole directory) simply resets that piece of state to its default the
+next time PBRenamer starts.
+
 .. _search-patterns:
 
 Search Patterns
@@ -894,9 +953,21 @@ Advanced
 ~~~~~~~~
 
 ``--config-dir DIR``
-    Override the configuration directory (default: ``~/.config/pbrenamer`` on
-    Linux, ``~/Library/Application Support/pbrenamer`` on macOS,
-    ``%APPDATA%\pbrenamer`` on Windows).  Intended for testing.
+    Override the configuration directory — see :ref:`config-files` for the
+    platform defaults.  Intended for testing.
+
+Self-update
+~~~~~~~~~~~
+
+``--auto-update``
+    Download the latest release matching the running platform and
+    architecture from `GitHub Releases
+    <https://github.com/ppoilbarbe/PBRenamer/releases>`_ and replace the
+    running executable with it, then exit.  Only available when running a
+    pre-built (PyInstaller) executable — rejected with an error for a
+    source checkout or a ``pip``/PyPI install, neither of which has a
+    single running binary to replace.  Restart PBRenamer to use the new
+    build; the update does not relaunch it automatically.
 
 Help export
 ~~~~~~~~~~~

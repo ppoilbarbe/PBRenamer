@@ -6,8 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-08-19
+
+### Added
+
+- `docs/user_guide.rst`: document `--auto-update`, and add a new "Configuration Files" section listing every persisted config file and its default location per platform
+
 ### Fixed
 
+- `docs/user_guide.rst`: `--config-dir`'s documented macOS default was wrong (`~/Library/Application Support/pbrenamer`); it's actually `~/Library/Preferences/pbrenamer` (matches `platform/dirs.py:_MacDirs.config_home`)
+- `--auto-update` crashed the PyInstaller executable with `ModuleNotFoundError: No module named 'http'` — the Linux/Windows build excluded the stdlib `http` package, which `urllib.request` needs. Removed `http` from `pbrenamer.spec`'s excludes
+- `--auto-update` then failed every HTTPS request with `unknown url type: https` on the Linux build — PyInstaller's binary scan resolved `libssl.so.3`/`libcrypto.so.3` to the system copy (missing symbols the bundled `_ssl`/`_hashlib` extensions need) instead of the conda env's own matching copy. `pbrenamer.spec` now forces the env's own OpenSSL libraries back into the bundle, and adds `ssl` to `hiddenimports` since `urllib.request` only imports it inside a try/except that PyInstaller's static analysis misses
 - README: "Internationalised" feature bullet claimed only English and French were included; it now lists all 8 bundled languages (English, German, Spanish, French, Italian, Russian, Vietnamese, Chinese)
 
 ## [1.8.0] - 2026-08-19

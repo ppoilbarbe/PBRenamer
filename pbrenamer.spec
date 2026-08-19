@@ -103,13 +103,38 @@ a = Analysis(
         "pbrenamer.platform.locale",
         # email.utils is used by about_dialog.py — do not add to excludes
         "email.utils",
+        # urllib.request (used by --auto-update) imports ssl lazily inside a
+        # try/except, so PyInstaller's static analysis misses it and the
+        # frozen build fails HTTPS requests with "unknown url type: https"
+        "ssl",
     ],
     hookspath=[],
     runtime_hooks=["hooks/pyi_rth_fonts.py"],
     # Exclude heavy stdlib modules that PBRenamer never uses.
-    excludes=["tkinter", "unittest", "http", "xml", "numpy", "matplotlib"],
+    # http is not excluded: urllib.request (used by --auto-update) imports
+    # http.client at module load time.
+    excludes=["tkinter", "unittest", "xml", "numpy", "matplotlib"],
     noarchive=False,
 )
+
+# ---------------------------------------------------------------------------
+# OpenSSL binary resolution (Linux)
+# ---------------------------------------------------------------------------
+
+# PyInstaller's binary dependency scan can resolve libssl.so.3 / libcrypto.so.3
+# to the system copy (found via the default ld.so.cache search path) instead
+# of the conda env's own copy that _ssl/_hashlib were actually linked
+# against, silently swapping in an older OpenSSL missing symbols the bundled
+# extensions need — this breaks --auto-update's HTTPS request at runtime with
+# "unknown url type: https". Force the env's own copies back in.
+if sys.platform == "linux":
+    _conda_lib = Path(sys.prefix) / "lib"
+    for _lib_name in ("libssl.so.3", "libcrypto.so.3"):
+        _lib_path = _conda_lib / _lib_name
+        if _lib_path.is_file():
+            a.binaries = [
+                entry for entry in a.binaries if entry[0] != _lib_name
+            ] + [(_lib_name, str(_lib_path), "BINARY")]
 
 pyz = PYZ(a.pure)
 
