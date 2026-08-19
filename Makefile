@@ -16,9 +16,13 @@ G  := \033[32m
 Y  := \033[33m
 C  := \033[36m
 
-# All Python sources (including *_ui.py which are now hand-written)
+# All Python sources (including *_ui.py which are now hand-written).
+# Sorted: `find` order is filesystem-dependent, and pybabel's extraction
+# order follows file processing order — an unsorted list makes `make
+# translate` reorder .po entries on every run even with no string changes,
+# dirtying the tree and breaking release version detection (git_version.sh).
 PY_SOURCES := $(shell find $(SRC)/pbrenamer -name "*.py" \
-                ! -path "*/__pycache__/*")
+                ! -path "*/__pycache__/*" | sort)
 
 PO_FILES        := $(foreach lang,$(PO_LOCALES),$(LOCALE_DIR)/$(lang)/LC_MESSAGES/pbrenamer.po)
 TRANSLATE_STAMP := .translate.stamp
