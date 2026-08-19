@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Headless mode: `--dry-run`/`--no-dry-run` flag prints the equivalent `mv` commands to stdout instead of renaming files. Output is a valid POSIX shell script (paths quoted with `shlex.quote`, conflicts reported as `#` comments) that can be piped to `sh` to actually perform the rename. Takes precedence over `--confirm` — no interactive prompt is shown
+- Headless mode: `--select GLOB` restricts the rename to entries matching `GLOB`, mirroring GUI row selection (clicking a file). Repeatable to accumulate matches (equivalent of Ctrl+click). With `--sidecar-mode`, selecting a base file also selects its sidecars and vice versa, using the same grouping and ambiguity handling as the GUI (`core/sidecar.build_sidecar_groups()`). New `__main__._resolve_selection()`
+
+### Fixed
+
+- `make dist` always resolved the release version to `dev`, even on a clean, exactly-tagged commit — `PY_SOURCES` in the Makefile was built from unsorted `find` output, so `pybabel extract` (via `make translate`, a `dist` prerequisite) reordered `.po` catalogue entries on every run despite no actual string changes, dirtying the working tree right before `tools/git_version.sh` checked it. `find` output is now sorted, making `make translate` idempotent
+- Sidecar mode: a sidecar file ambiguous between multiple base files (e.g. two candidate base files sharing a suffix) no longer disables the Rename button for the whole file list — the error now only blocks rename when one of the files involved in the ambiguity is actually selected, matching how every other field-resolution error is already scoped to the current selection
+- Sidecar mode: re-clicking (plain click, no modifier) any file belonging to an already fully-selected sidecar group no longer deselects the whole group. Only a genuine Ctrl+click now toggles a single item against the existing selection; a plain click or Shift range-select always replaces the selection with the clicked file's whole group, consistent with clicking an ungrouped file staying selected
+
 ## [1.7.0] - 2026-08-18
 
 ### Added

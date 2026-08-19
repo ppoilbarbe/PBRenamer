@@ -2056,6 +2056,37 @@ class TestSidecarGroupingAndColoring:
             assert item.data(1, Qt.ItemDataRole.UserRole) is True
         assert not window._ui.btnRename.isEnabled()
 
+    def test_ambiguous_error_does_not_block_unrelated_selection(self, window, tmp_path):
+        # A sidecar ambiguous between xxx.jpg/xxx.png must not disable Rename
+        # for an unrelated file the user actually selected.
+        set_sidecar_suffixes("image", ["xml"])
+        (tmp_path / "xxx.xml").write_text("x")
+        (tmp_path / "xxx.jpg").write_text("x")
+        (tmp_path / "xxx.png").write_text("x")
+        (tmp_path / "yyy.jpg").write_text("x")
+        window._current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._reload_files()
+
+        yyy_item = _find_item(window, str(tmp_path / "yyy.jpg"))
+        yyy_item.setSelected(True)
+        window._on_file_selection_changed()
+
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData("keep")
+        )
+        window._ui.cmbPatternSearch.setCurrentText("yyy")
+        window._ui.cmbPatternDest.setCurrentText("zzz")
+        window._on_preview()
+
+        assert yyy_item.text(1) == "zzz.jpg"
+        for name in ("xxx.xml", "xxx.jpg", "xxx.png"):
+            item = _find_item(window, str(tmp_path / name))
+            assert item.text(1) == ""
+            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+        assert window._ui.btnRename.isEnabled()
+
     def test_ambiguous_cross_category_shows_error(self, window, tmp_path):
         set_sidecar_suffixes("image", ["xml"])
         set_sidecar_suffixes("video", ["xml"])
@@ -2180,8 +2211,19 @@ class TestSidecarSelectionLinking:
         }
         assert len(selected_paths) == 3
 
+    @staticmethod
+    def _simulate_ctrl_held(monkeypatch):
+        # _link_group_selection reads the live modifier state to tell a
+        # Ctrl+click toggle apart from a plain click/Shift range-select,
+        # which always replaces the whole selection.
+        monkeypatch.setattr(
+            _mwmod.QApplication,
+            "keyboardModifiers",
+            staticmethod(lambda: Qt.KeyboardModifier.ControlModifier),
+        )
+
     def test_ctrl_click_toggling_off_sidecar_deselects_whole_group(
-        self, window, tmp_path
+        self, window, tmp_path, monkeypatch
     ):
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
@@ -2189,6 +2231,7 @@ class TestSidecarSelectionLinking:
         window._on_file_selection_changed()  # whole group gets selected
 
         # Simulate a Ctrl+click toggling one already-selected sidecar off.
+        self._simulate_ctrl_held(monkeypatch)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(False)
         window._on_file_selection_changed()
@@ -2199,12 +2242,15 @@ class TestSidecarSelectionLinking:
         }
         assert selected_paths == set()
 
-    def test_ctrl_click_toggling_off_base_deselects_whole_group(self, window, tmp_path):
+    def test_ctrl_click_toggling_off_base_deselects_whole_group(
+        self, window, tmp_path, monkeypatch
+    ):
         self._setup_group(window, tmp_path)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(True)
         window._on_file_selection_changed()  # whole group gets selected
 
+        self._simulate_ctrl_held(monkeypatch)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(False)
         window._on_file_selection_changed()
@@ -2216,7 +2262,7 @@ class TestSidecarSelectionLinking:
         assert selected_paths == set()
 
     def test_ctrl_click_toggling_off_unrelated_file_only_deselects_it(
-        self, window, tmp_path
+        self, window, tmp_path, monkeypatch
     ):
         self._setup_group(window, tmp_path)
         (tmp_path / "solo.txt").write_text("x")
@@ -2230,7 +2276,66 @@ class TestSidecarSelectionLinking:
         window._on_file_selection_changed()  # solo file added on top
 
         # Ctrl+click toggling the unrelated solo file back off.
+        self._simulate_ctrl_held(monkeypatch)
         solo_item.setSelected(False)
+        window._on_file_selection_changed()
+
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
+    def test_ctrl_click_selecting_new_group_member_adds_whole_group(
+        self, window, tmp_path, monkeypatch
+    ):
+        self._setup_group(window, tmp_path)
+        (tmp_path / "solo.txt").write_text("x")
+        window._reload_files()
+
+        solo_item = _find_item(window, str(tmp_path / "solo.txt"))
+        solo_item.setSelected(True)
+        window._on_file_selection_changed()  # solo alone selected
+
+        # Ctrl+click adding a group member on top of the existing selection.
+        self._simulate_ctrl_held(monkeypatch)
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        side_item.setSelected(True)
+        window._on_file_selection_changed()
+
+        selected_paths = {
+            i.data(0, Qt.ItemDataRole.UserRole)
+            for i in window._ui.tblFiles.selectedItems()
+        }
+        assert selected_paths == {
+            str(tmp_path / "solo.txt"),
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
+    def test_reclicking_selected_group_member_keeps_group_selected(
+        self, window, tmp_path
+    ):
+        # The reported bug: re-clicking (plain click, no modifier) any file
+        # of an already fully-selected group used to deselect the whole
+        # group, unlike re-clicking an ungrouped file which just stays
+        # selected.
+        self._setup_group(window, tmp_path)
+        base_item = _find_item(window, str(tmp_path / "img.jpg"))
+        base_item.setSelected(True)
+        window._on_file_selection_changed()  # whole group selected
+
+        # A plain click on any single member of the group (Qt's own
+        # single-click behaviour already replaces the selection with just
+        # that one item before our handler ever runs).
+        side_item = _find_item(window, str(tmp_path / "img.xmp"))
+        window._ui.tblFiles.clearSelection()
+        side_item.setSelected(True)
         window._on_file_selection_changed()
 
         selected_paths = {

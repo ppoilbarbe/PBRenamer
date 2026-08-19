@@ -138,11 +138,13 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 | `--ext-mode {keep,lower,upper,normalize,modify}` | `keep` | How to handle the extension during rename |
 | `--sidecar-mode` / `--no-sidecar-mode` | `--no-sidecar-mode` | Group sidecar files with their base file (requires `--ext-mode keep`, `lower`, or `upper`) |
 | `--filter GLOB` | *(none)* | Restrict listing to matching entries |
+| `--select GLOB` | *(none — all entries)* | Restrict the rename to matching entries, as if clicked in the GUI; repeatable (accumulates, like Ctrl+click); with `--sidecar-mode`, also selects the matched entry's sidecar group |
 | `--accent` / `--no-accent` | `--no-accent` | Strip diacritics from result names |
 | `--dup` / `--no-dup` | `--no-dup` | Collapse consecutive duplicate separators |
 | `--sep {none,space-underscore,…}` | `none` | Separator conversion applied after rename |
 | `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
 | `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
+| `--dry-run` / `--no-dry-run` | `--no-dry-run` | Print the equivalent `mv` commands instead of renaming |
 | `--debug` / `--verbose` / `--quiet` | *(saved pref)* | Override the saved log-level preference |
 | `--config-dir DIR` | *(platform default)* | Override the configuration directory (intended for testing) |
 
@@ -154,6 +156,9 @@ pbrenamer [DIR] --search TEXT [--replace TEXT] [OPTIONS]
 # Replace underscores with hyphens, preview first
 pbrenamer ~/Photos --search "_" --replace "-" --mode plain --confirm
 
+# Print the mv commands without renaming anything
+pbrenamer ~/Photos --search "_" --replace "-" --mode plain --dry-run
+
 # Number all JPEG files: photo_001.jpg, photo_002.jpg, …
 pbrenamer ~/Photos --search "{L}" --replace "photo_{num:03}" --filter "*.jpg"
 
@@ -162,6 +167,10 @@ pbrenamer ~/docs --search "{X}" --replace "{1}" --recurse --accent --case upper
 
 # Rename using a regex capture group
 pbrenamer . --search "img(\d+)" --replace "photo_{1}" --mode regex
+
+# Only rename img1.jpg and img2.jpg (plus their sidecars) out of the whole directory
+pbrenamer ~/Photos --search "img" --replace "photo" --sidecar-mode \
+    --select "img1.jpg" --select "img2.jpg"
 ```
 
 Conflicting renames (two files mapping to the same target, or target already

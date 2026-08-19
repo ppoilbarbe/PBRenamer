@@ -790,12 +790,14 @@ window is opened; renames are performed and the process exits.
               [--ext-mode {keep,lower,upper,normalize,modify}]
               [--sidecar-mode | --no-sidecar-mode]
               [--filter GLOB]
+              [--select GLOB [--select GLOB ...]]
               [--sep {none,space-underscore,underscore-space,
                       space-dot,dot-space,space-dash,dash-space}]
               [--case {none,upper,lower,capitalize,title}]
               [--accent | --no-accent]
               [--dup | --no-dup]
               [--confirm | --no-confirm]
+              [--dry-run | --no-dry-run]
               [-d | -v | -q]
               [--config-dir DIR]
               [DIR]
@@ -842,6 +844,17 @@ Rename options
 ``--filter GLOB``
     Glob pattern to restrict the file listing (e.g. ``'*.jpg'``).
 
+``--select GLOB``
+    Restrict the rename to entries matching ``GLOB`` (basename match), as if
+    selecting them by clicking in the GUI file list. May be given multiple
+    times to accumulate (equivalent of Ctrl+click). With ``--sidecar-mode``,
+    selecting a base file also selects its sidecars, and selecting a sidecar
+    also selects its base file and every sibling sidecar — the same
+    grouping the GUI applies when you click a row, including the same
+    ambiguity handling (a sidecar matching more than one base file is still
+    flagged and skipped, whether or not it was selected). Omit to act on
+    every listed entry (default).
+
 ``--sep``
     Separator conversion applied after rename.  Default: ``none``.
 
@@ -857,6 +870,13 @@ Rename options
 ``--confirm`` / ``--no-confirm``
     Preview changes and ask for confirmation before renaming
     (default: ``--no-confirm``).
+
+``--dry-run`` / ``--no-dry-run``
+    Print the equivalent ``mv`` commands to stdout instead of renaming
+    anything (default: ``--no-dry-run``).  The output is a valid POSIX shell
+    script — quoted with ``shlex.quote``, conflicts reported as ``#``
+    comments — that can be piped to ``sh`` to actually perform the rename.
+    Takes precedence over ``--confirm``: no interactive prompt is shown.
 
 Logging
 ~~~~~~~
@@ -914,3 +934,12 @@ Load a saved preset and override its separator setting::
 Preview changes before applying::
 
     pbrenamer --search "({L})_({#})" --replace "{2}_{1}" --confirm .
+
+Print the equivalent ``mv`` commands without renaming anything::
+
+    pbrenamer --search "({L})_({#})" --replace "{2}_{1}" --dry-run .
+
+Only rename two specific files (and their sidecars) out of the directory::
+
+    pbrenamer --search "img" --replace "photo" --sidecar-mode \
+              --select "img1.jpg" --select "img2.jpg" ~/Photos

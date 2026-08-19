@@ -144,6 +144,20 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Glob pattern to restrict the file listing (e.g. '*.jpg')",
     )
     rename_group.add_argument(
+        "--select",
+        metavar="GLOB",
+        action="append",
+        default=None,
+        help=(
+            "Restrict the rename to entries matching GLOB (basename match), "
+            "as if selecting them by clicking in the GUI file list. May be "
+            "given multiple times to accumulate (like Ctrl+click). With "
+            "--sidecar-mode, selecting a base file also selects its "
+            "sidecars, and selecting a sidecar also selects its base file "
+            "and siblings. Omit to act on every listed entry (default)"
+        ),
+    )
+    rename_group.add_argument(
         "--accent",
         action=argparse.BooleanOptionalAction,
         default=None,
@@ -174,6 +188,13 @@ def _build_parser() -> argparse.ArgumentParser:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="Preview changes and ask for confirmation (default: --no-confirm)",
+    )
+    rename_group.add_argument(
+        "--dry-run",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Print the mv commands that would run, without renaming anything "
+        "(default: --no-dry-run)",
     )
 
     # ── Help export ───────────────────────────────────────────────────────────
@@ -561,6 +582,75 @@ def _detect_conflicts(
     return conflicts
 
 
+def _print_dry_run(
+    plan: list[tuple[str, str, str | None]],
+    changes: list[tuple[str, str, str | None]],
+    conflicts: set[int],
+) -> None:
+    """Print the shell-equivalent `mv` commands, without touching disk."""
+    import shlex
+
+    conflict_paths = {plan[i][0] for i in conflicts}
+    done = 0
+    skipped = 0
+    for path, name, new in changes:
+        if path in conflict_paths:
+            _log.warning("Skipping conflict: %s", name)
+            print(f"# CONFLICT — skipped: {name}")
+            skipped += 1
+            continue
+        new_path = os.path.join(os.path.dirname(path), new)
+        print(f"mv -- {shlex.quote(path)} {shlex.quote(new_path)}")
+        done += 1
+
+    print(f"# {done} file(s) would be renamed.", end="")
+    if skipped:
+        print(f" {skipped} conflict(s) skipped.", end="")
+    print()
+
+
+def _resolve_selection(
+    entries: list[tuple[str, str]],
+    ns: argparse.Namespace,
+) -> set[str] | None:
+    """Return the set of selected paths, or None if --select was not given
+    (meaning: no restriction, act on every entry).
+
+    Mirrors the GUI's selection: a glob may match several entries at once,
+    and --select may be repeated (equivalent of Ctrl+click, additive). With
+    --sidecar-mode active, matching a base file also selects its sidecars,
+    and matching a sidecar also selects its base file and every sibling
+    sidecar (MainWindow._group_of), using the full directory listing so
+    ambiguity detection is unaffected by the selection itself.
+    """
+    import fnmatch
+
+    if not ns.select:
+        return None
+
+    selected: set[str] = set()
+    for pattern in ns.select:
+        matched = [path for name, path in entries if fnmatch.fnmatch(name, pattern)]
+        if not matched:
+            print(f"warning: --select {pattern!r} matched no entry", file=sys.stderr)
+        selected.update(matched)
+
+    if ns.sidecar_mode and selected:
+        from pbrenamer import settings as _settings
+        from pbrenamer.core import sidecar as _sidecar
+
+        config = _settings.get_sidecar_config()
+        result = _sidecar.build_sidecar_groups(entries, config)
+        expanded = set(selected)
+        for path in selected:
+            base = result.sidecar_of.get(path, path)
+            expanded.add(base)
+            expanded.update(result.groups.get(base, []))
+        selected = expanded
+
+    return selected
+
+
 def _headless_run(ns: argparse.Namespace) -> None:
     directory = os.path.abspath(ns.directory) if ns.directory else os.getcwd()
     list_mode = _LIST_MAP[ns.list]
@@ -581,6 +671,13 @@ def _headless_run(ns: argparse.Namespace) -> None:
     plan = _plan(entries, ns)
     if ns.sidecar_mode:
         plan = _apply_sidecar_grouping(plan, entries)
+
+    selection = _resolve_selection(entries, ns)
+    if selection is not None:
+        plan = [
+            (path, name, new if path in selection else None) for path, name, new in plan
+        ]
+
     changes = [
         (path, name, new) for path, name, new in plan if new is not None and new != name
     ]
@@ -590,6 +687,10 @@ def _headless_run(ns: argparse.Namespace) -> None:
         return
 
     conflicts = _detect_conflicts(plan)
+
+    if ns.dry_run:
+        _print_dry_run(plan, changes, conflicts)
+        return
 
     if ns.confirm:
         # Determine column widths

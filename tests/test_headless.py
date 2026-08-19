@@ -15,6 +15,7 @@ from pbrenamer.__main__ import (
     _headless_run,
     _plan,
     _resolve_ns,
+    _resolve_selection,
 )
 
 # ---------------------------------------------------------------------------
@@ -38,6 +39,8 @@ def _ns(**kwargs) -> argparse.Namespace:
         dup=False,
         case="none",
         confirm=False,
+        dry_run=False,
+        select=None,
         directory=None,
         log_level=None,
         saved=None,
@@ -207,6 +210,28 @@ class TestParser:
     def test_confirm_flag(self):
         ns = _build_parser().parse_args(["-s", "x", "--confirm"])
         assert ns.confirm is True
+
+    def test_dry_run_default_false(self):
+        ns = _build_parser().parse_args(["-s", "x"])
+        assert ns.dry_run is False
+
+    def test_dry_run_flag(self):
+        ns = _build_parser().parse_args(["-s", "x", "--dry-run"])
+        assert ns.dry_run is True
+
+    def test_no_dry_run_flag(self):
+        ns = _build_parser().parse_args(["-s", "x", "--no-dry-run"])
+        assert ns.dry_run is False
+
+    def test_select_default_none(self):
+        ns = _build_parser().parse_args(["-s", "x"])
+        assert ns.select is None
+
+    def test_select_flag_appends(self):
+        ns = _build_parser().parse_args(
+            ["-s", "x", "--select", "a.jpg", "--select", "b.jpg"]
+        )
+        assert ns.select == ["a.jpg", "b.jpg"]
 
     def test_mode_invalid_rejected(self):
         with pytest.raises(SystemExit):
@@ -775,6 +800,69 @@ class TestDetectConflicts:
 
 
 # ---------------------------------------------------------------------------
+# _resolve_selection
+# ---------------------------------------------------------------------------
+
+
+class TestResolveSelection:
+    def test_no_select_returns_none(self, tmp_path):
+        _make_files(tmp_path, "a.txt")
+        entries = [("a.txt", str(tmp_path / "a.txt"))]
+        ns = _ns(select=None)
+        assert _resolve_selection(entries, ns) is None
+
+    def test_select_matches_single_file(self, tmp_path):
+        a, b = _make_files(tmp_path, "a.txt", "b.txt")
+        entries = [("a.txt", a), ("b.txt", b)]
+        ns = _ns(select=["a.txt"])
+        assert _resolve_selection(entries, ns) == {a}
+
+    def test_select_glob_matches_multiple(self, tmp_path):
+        a, b, c = _make_files(tmp_path, "a.jpg", "b.jpg", "c.png")
+        entries = [("a.jpg", a), ("b.jpg", b), ("c.png", c)]
+        ns = _ns(select=["*.jpg"])
+        assert _resolve_selection(entries, ns) == {a, b}
+
+    def test_select_flags_accumulate(self, tmp_path):
+        a, b, c = _make_files(tmp_path, "a.txt", "b.txt", "c.txt")
+        entries = [("a.txt", a), ("b.txt", b), ("c.txt", c)]
+        ns = _ns(select=["a.txt", "b.txt"])
+        assert _resolve_selection(entries, ns) == {a, b}
+
+    def test_select_no_match_warns_and_returns_empty(self, tmp_path, capsys):
+        a = _make_files(tmp_path, "a.txt")[0]
+        entries = [("a.txt", a)]
+        ns = _ns(select=["nope.txt"])
+        assert _resolve_selection(entries, ns) == set()
+        assert "matched no entry" in capsys.readouterr().err
+
+    def test_select_base_expands_to_sidecar(self, tmp_path):
+        jpg, xmp = _make_files(tmp_path, "img.jpg", "img.xmp")
+        entries = [("img.jpg", jpg), ("img.xmp", xmp)]
+        ns = _ns(select=["img.jpg"], sidecar_mode=True)
+        assert _resolve_selection(entries, ns) == {jpg, xmp}
+
+    def test_select_sidecar_expands_to_base(self, tmp_path):
+        jpg, xmp = _make_files(tmp_path, "img.jpg", "img.xmp")
+        entries = [("img.jpg", jpg), ("img.xmp", xmp)]
+        ns = _ns(select=["img.xmp"], sidecar_mode=True)
+        assert _resolve_selection(entries, ns) == {jpg, xmp}
+
+    def test_select_no_expansion_without_sidecar_mode(self, tmp_path):
+        jpg, xmp = _make_files(tmp_path, "img.jpg", "img.xmp")
+        entries = [("img.jpg", jpg), ("img.xmp", xmp)]
+        ns = _ns(select=["img.jpg"], sidecar_mode=False)
+        assert _resolve_selection(entries, ns) == {jpg}
+
+    def test_select_ambiguous_sidecar_selects_itself_only(self, tmp_path):
+        _settings.set_sidecar_suffixes("image", ["xmp", "info.json", "xml"])
+        jpg, png, xml = _make_files(tmp_path, "xxx.jpg", "xxx.png", "xxx.xml")
+        entries = [("xxx.jpg", jpg), ("xxx.png", png), ("xxx.xml", xml)]
+        ns = _ns(select=["xxx.xml"], sidecar_mode=True)
+        assert _resolve_selection(entries, ns) == {xml}
+
+
+# ---------------------------------------------------------------------------
 # _headless_run (integration)
 # ---------------------------------------------------------------------------
 
@@ -990,6 +1078,193 @@ class TestHeadlessRun:
         assert (tmp_path / "photo.xmp").exists()
         assert not (tmp_path / "img.jpg").exists()
         assert not (tmp_path / "img.xmp").exists()
+
+
+# ---------------------------------------------------------------------------
+# --dry-run
+# ---------------------------------------------------------------------------
+
+
+class TestDryRun:
+    def test_dry_run_does_not_rename(self, tmp_path, capsys):
+        _make_files(tmp_path, "foo_bar.txt")
+        ns = _ns(
+            search="_", replace="-", mode="plain", dry_run=True, directory=str(tmp_path)
+        )
+        _headless_run(ns)
+        assert (tmp_path / "foo_bar.txt").exists()
+        assert not (tmp_path / "foo-bar.txt").exists()
+
+    def test_dry_run_prints_mv_command(self, tmp_path, capsys):
+        import shlex
+
+        _make_files(tmp_path, "foo bar.txt")
+        ns = _ns(
+            search=" ", replace="-", mode="plain", dry_run=True, directory=str(tmp_path)
+        )
+        _headless_run(ns)
+        out = capsys.readouterr().out
+        old_path = tmp_path / "foo bar.txt"
+        new_path = tmp_path / "foo-bar.txt"
+        assert f"mv -- {shlex.quote(str(old_path))} {shlex.quote(str(new_path))}" in out
+
+    def test_dry_run_ignores_confirm_prompt(self, tmp_path, capsys, monkeypatch):
+        _make_files(tmp_path, "foo_bar.txt")
+
+        def _fail_if_called(_):
+            raise AssertionError("input() should not be called in --dry-run")
+
+        monkeypatch.setattr("builtins.input", _fail_if_called)
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            dry_run=True,
+            confirm=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "foo_bar.txt").exists()
+
+    def test_dry_run_flags_conflicts(self, tmp_path, capsys):
+        _make_files(tmp_path, "a_x.txt", "b_x.txt")
+        # Both would rename to "x.txt" — conflict
+        ns = _ns(
+            search=r"^[ab]_",
+            replace="",
+            mode="regex",
+            dry_run=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        out = capsys.readouterr().out
+        assert "CONFLICT" in out
+        assert (tmp_path / "a_x.txt").exists()
+        assert (tmp_path / "b_x.txt").exists()
+
+    def test_dry_run_no_changes(self, tmp_path, capsys):
+        _make_files(tmp_path, "hello.txt")
+        ns = _ns(
+            search="xyz",
+            replace="abc",
+            mode="plain",
+            dry_run=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert "No files" in capsys.readouterr().out
+
+
+# ---------------------------------------------------------------------------
+# --select
+# ---------------------------------------------------------------------------
+
+
+class TestSelect:
+    def test_select_restricts_rename_to_matched_file(self, tmp_path, capsys):
+        _make_files(tmp_path, "foo_bar.txt", "baz_qux.txt")
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            select=["foo_bar.txt"],
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "foo-bar.txt").exists()
+        assert (tmp_path / "baz_qux.txt").exists()
+        assert not (tmp_path / "baz-qux.txt").exists()
+
+    def test_select_glob_matches_multiple_files(self, tmp_path, capsys):
+        _make_files(tmp_path, "a_1.jpg", "b_2.jpg", "c_3.png")
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            select=["*.jpg"],
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "a-1.jpg").exists()
+        assert (tmp_path / "b-2.jpg").exists()
+        assert (tmp_path / "c_3.png").exists()
+
+    def test_select_flags_accumulate(self, tmp_path, capsys):
+        _make_files(tmp_path, "a_1.txt", "b_2.txt", "c_3.txt")
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            select=["a_1.txt", "b_2.txt"],
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "a-1.txt").exists()
+        assert (tmp_path / "b-2.txt").exists()
+        assert (tmp_path / "c_3.txt").exists()
+
+    def test_select_expands_sidecar_group(self, tmp_path, capsys):
+        _make_files(tmp_path, "img_1.jpg", "img_1.xmp", "other_2.jpg")
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            select=["img_1.jpg"],
+            sidecar_mode=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "img-1.jpg").exists()
+        assert (tmp_path / "img-1.xmp").exists()
+        assert (tmp_path / "other_2.jpg").exists()
+
+    def test_select_no_match_renames_nothing(self, tmp_path, capsys):
+        _make_files(tmp_path, "foo_bar.txt")
+        ns = _ns(
+            search="_",
+            replace="-",
+            mode="plain",
+            select=["nope.txt"],
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert "No files" in capsys.readouterr().out
+        assert (tmp_path / "foo_bar.txt").exists()
+
+    def test_select_ambiguous_sidecar_still_flagged(self, tmp_path, capsys):
+        _settings.set_sidecar_suffixes("image", ["xmp", "info.json", "xml"])
+        _make_files(tmp_path, "xxx.jpg", "xxx.png", "xxx.xml")
+        ns = _ns(
+            search="xxx",
+            replace="yyy",
+            mode="plain",
+            select=["xxx.xml"],
+            sidecar_mode=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert "warning" in capsys.readouterr().err
+        assert (tmp_path / "xxx.xml").exists()
+        assert not (tmp_path / "yyy.xml").exists()
+
+    def test_select_unrelated_file_unaffected_by_ambiguous_group(
+        self, tmp_path, capsys
+    ):
+        _settings.set_sidecar_suffixes("image", ["xmp", "info.json", "xml"])
+        _make_files(tmp_path, "xxx.jpg", "xxx.png", "xxx.xml", "yyy.jpg")
+        ns = _ns(
+            search="yyy",
+            replace="zzz",
+            mode="plain",
+            select=["yyy.jpg"],
+            sidecar_mode=True,
+            directory=str(tmp_path),
+        )
+        _headless_run(ns)
+        assert (tmp_path / "zzz.jpg").exists()
+        assert (tmp_path / "xxx.jpg").exists()
+        assert (tmp_path / "xxx.png").exists()
+        assert (tmp_path / "xxx.xml").exists()
 
 
 # ---------------------------------------------------------------------------

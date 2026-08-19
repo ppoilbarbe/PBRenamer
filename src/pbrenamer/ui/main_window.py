@@ -892,20 +892,33 @@ class MainWindow(QMainWindow):
         self._apply_sidecar_errors()
 
     def _apply_sidecar_errors(self) -> None:
-        """Set the ambiguity-error text/color for every sidecar_result.errors
-        row. Called right after listing (so errors are visible even before
-        Preview is run) and again at the tail of _on_preview, which clears
-        column 1 for every row before recomputing it — errors always win
-        over a computed preview. Only called from _apply_sidecar_coloring,
-        which already guarantees self._sidecar_result is not None."""
+        """Tint every sidecar_result.errors row's filename (column 0), and
+        additionally set the ambiguity-error text/color on column 1 — which
+        _refresh_conflicts treats as a field error blocking Rename — only
+        for rows that are part of the current selection (_active_items()).
+        An ambiguous file the user hasn't selected must not block renaming
+        an unrelated selection, same as any other field-resolution error is
+        already scoped to _active_items() in _on_preview.
+
+        Called right after listing (so the tint/error is visible even
+        before Preview is run — at that point nothing is selected yet, so
+        _active_items() returns every row) and again at the tail of
+        _on_preview, which clears column 1 for every row before
+        recomputing it — errors always win over a computed preview for
+        selected rows. Only called from _apply_sidecar_coloring, which
+        already guarantees self._sidecar_result is not None."""
+        active_paths = {
+            item.data(0, Qt.ItemDataRole.UserRole) for item in self._active_items()
+        }
         root = self._ui.tblFiles.invisibleRootItem()
         for i in range(root.childCount()):
             item = root.child(i)
             path = item.data(0, Qt.ItemDataRole.UserRole)
             if path in self._sidecar_result.errors:
                 item.setForeground(0, _ERROR_COLOR)
-                item.setText(1, self._sidecar_result.errors[path])
-                item.setData(1, Qt.ItemDataRole.UserRole, True)
+                if path in active_paths:
+                    item.setText(1, self._sidecar_result.errors[path])
+                    item.setData(1, Qt.ItemDataRole.UserRole, True)
 
     def _group_of(self, path: str) -> set[str]:
         """Return {base, *sidecars} for the group *path* belongs to, or
@@ -916,11 +929,20 @@ class MainWindow(QMainWindow):
     def _link_group_selection(self) -> None:
         """Keep whole sidecar groups selected/deselected together.
 
-        Compared against the selection left by the previous call
-        (``self._prev_group_selection``): every newly *selected* file pulls
-        its whole group in, and every newly *deselected* file — a plain
-        Ctrl+click toggle off — pushes its whole group back out, even
-        though other members of that group are still individually
+        A plain click (no modifier) or Shift range-select *replaces* the
+        whole selection with whatever Qt just computed — it is never a
+        per-item toggle, even when the click lands on a file that was
+        already selected as part of a group (re-clicking any member of an
+        already-selected group must keep the whole group selected, just
+        like re-clicking a lone, ungrouped file leaves it selected). In
+        that case every newly selected file simply pulls its whole group
+        in, with no reference to what was selected before.
+
+        Only a genuine Ctrl+click is a toggle of a single item against the
+        existing selection. There, comparing against the selection left by
+        the previous call (``self._prev_group_selection``) is required:
+        every newly *deselected* file pushes its whole group back out,
+        even though other members of that group are still individually
         selected. Without tracking what changed, a Ctrl+click meant to
         deselect one member of an already-fully-selected group would be
         immediately undone: the remaining selected siblings would still
@@ -938,11 +960,19 @@ class MainWindow(QMainWindow):
             for i in self._ui.tblFiles.selectedItems()
         }
 
-        to_select = set(new_selected)
-        for path in self._prev_group_selection - new_selected:
-            to_select -= self._group_of(path)
-        for path in new_selected - self._prev_group_selection:
-            to_select |= self._group_of(path)
+        toggling = bool(
+            QApplication.keyboardModifiers() & Qt.KeyboardModifier.ControlModifier
+        )
+        if toggling:
+            to_select = set(new_selected)
+            for path in self._prev_group_selection - new_selected:
+                to_select -= self._group_of(path)
+            for path in new_selected - self._prev_group_selection:
+                to_select |= self._group_of(path)
+        else:
+            to_select = set()
+            for path in new_selected:
+                to_select |= self._group_of(path)
 
         if to_select != new_selected:
             self._linking_selection = True
