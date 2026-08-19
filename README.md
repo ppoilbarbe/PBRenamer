@@ -4,6 +4,7 @@
 [![CI](https://github.com/ppoilbarbe/PBRenamer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ppoilbarbe/PBRenamer/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/ppoilbarbe/PBRenamer/branch/main/graph/badge.svg)](https://codecov.io/gh/ppoilbarbe/PBRenamer)
 [![PyPI](https://img.shields.io/pypi/v/pbrenamer)](https://pypi.org/project/pbrenamer/)
+[![Documentation Status](https://readthedocs.org/projects/pbrenamer/badge/?version=latest)](https://pbrenamer.readthedocs.io/en/latest/?badge=latest)
 
 A cross-platform graphical batch file renaming utility built with Qt 6 (PySide6).
 
