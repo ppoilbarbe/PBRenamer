@@ -201,7 +201,7 @@ class TestPerformAutoUpdateGuards:
 
 class TestPerformAutoUpdateLinux:
     def test_success_replaces_executable_preserving_mode(self, monkeypatch, tmp_path):
-        current = tmp_path / "pbrenamer-1.7.0-linux-x86_64"
+        current = tmp_path / f"pbrenamer-{__version__}-linux-x86_64"
         current.write_bytes(b"OLD BINARY")
         os.chmod(current, 0o755)
 
@@ -213,10 +213,10 @@ class TestPerformAutoUpdateLinux:
             auto_update,
             "_fetch_latest_release",
             lambda: {
-                "tag_name": "v1.8.0",
+                "tag_name": "v9.9.9",
                 "assets": [
                     {
-                        "name": "pbrenamer-1.8.0-linux-x86_64",
+                        "name": "pbrenamer-9.9.9-linux-x86_64",
                         "browser_download_url": "https://example.invalid/asset",
                     }
                 ],
@@ -229,14 +229,14 @@ class TestPerformAutoUpdateLinux:
         ok, message = auto_update.perform_auto_update()
 
         assert ok is True
-        assert "Updated to version 1.8.0" in message
+        assert "Updated to version 9.9.9" in message
         assert current.read_bytes() == b"NEW BINARY"
         assert (os.stat(current).st_mode & 0o777) == 0o755
 
     def test_download_failure_leaves_original_and_cleans_tmp(
         self, monkeypatch, tmp_path
     ):
-        current = tmp_path / "pbrenamer-1.7.0-linux-x86_64"
+        current = tmp_path / f"pbrenamer-{__version__}-linux-x86_64"
         current.write_bytes(b"OLD BINARY")
 
         monkeypatch.setattr(sys, "frozen", True, raising=False)
@@ -247,10 +247,10 @@ class TestPerformAutoUpdateLinux:
             auto_update,
             "_fetch_latest_release",
             lambda: {
-                "tag_name": "v1.8.0",
+                "tag_name": "v9.9.9",
                 "assets": [
                     {
-                        "name": "pbrenamer-1.8.0-linux-x86_64",
+                        "name": "pbrenamer-9.9.9-linux-x86_64",
                         "browser_download_url": "https://example.invalid/asset",
                     }
                 ],
@@ -366,7 +366,7 @@ class TestMacUpdaterReplace:
 
 class TestPerformAutoUpdateMacos:
     def test_missing_app_bundle_is_reported(self, monkeypatch, tmp_path):
-        current = tmp_path / "bin" / "pbrenamer-1.7.0-macos-arm64"
+        current = tmp_path / "bin" / f"pbrenamer-{__version__}-macos-arm64"
         current.parent.mkdir(parents=True)
         current.touch()
 
@@ -378,10 +378,10 @@ class TestPerformAutoUpdateMacos:
             auto_update,
             "_fetch_latest_release",
             lambda: {
-                "tag_name": "v1.8.0",
+                "tag_name": "v9.9.9",
                 "assets": [
                     {
-                        "name": "pbrenamer-1.8.0-macos-arm64.zip",
+                        "name": "pbrenamer-9.9.9-macos-arm64.zip",
                         "browser_download_url": "https://example.invalid/asset",
                     }
                 ],
@@ -394,7 +394,13 @@ class TestPerformAutoUpdateMacos:
         assert "could not locate the enclosing .app bundle" in message
 
     def test_success_replaces_app_bundle(self, monkeypatch, tmp_path):
-        current = tmp_path / "PBRenamer.app" / "Contents" / "MacOS" / "pbrenamer-1.7.0"
+        current = (
+            tmp_path
+            / "PBRenamer.app"
+            / "Contents"
+            / "MacOS"
+            / f"pbrenamer-{__version__}"
+        )
         current.parent.mkdir(parents=True)
         current.write_bytes(b"OLD")
 
@@ -406,10 +412,10 @@ class TestPerformAutoUpdateMacos:
             auto_update,
             "_fetch_latest_release",
             lambda: {
-                "tag_name": "v1.8.0",
+                "tag_name": "v9.9.9",
                 "assets": [
                     {
-                        "name": "pbrenamer-1.8.0-macos-arm64.zip",
+                        "name": "pbrenamer-9.9.9-macos-arm64.zip",
                         "browser_download_url": "https://example.invalid/asset",
                     }
                 ],
@@ -418,15 +424,15 @@ class TestPerformAutoUpdateMacos:
 
         def fake_download(url, dest):
             with zipfile.ZipFile(dest, "w") as zf:
-                zf.writestr("PBRenamer.app/Contents/MacOS/pbrenamer-1.8.0", b"NEW")
+                zf.writestr("PBRenamer.app/Contents/MacOS/pbrenamer-9.9.9", b"NEW")
 
         monkeypatch.setattr(auto_update, "_download", fake_download)
 
         ok, message = auto_update.perform_auto_update()
 
         assert ok is True
-        assert "Updated to version 1.8.0" in message
+        assert "Updated to version 9.9.9" in message
         new_binary = (
-            tmp_path / "PBRenamer.app" / "Contents" / "MacOS" / "pbrenamer-1.8.0"
+            tmp_path / "PBRenamer.app" / "Contents" / "MacOS" / "pbrenamer-9.9.9"
         )
         assert new_binary.read_bytes() == b"NEW"

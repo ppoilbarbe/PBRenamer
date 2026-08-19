@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-08-19
+
 ### Added
 
 - `--auto-update` downloads the latest GitHub release matching the running platform/architecture and replaces the current executable with it, then exits. Only available in PyInstaller-built executables (`sys.frozen`) — rejected with an error for source checkouts and pip/PyPI installs, which have no single running binary to replace. New `platform/auto_update.py`
