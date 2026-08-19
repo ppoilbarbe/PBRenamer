@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--auto-update` downloads the latest GitHub release matching the running platform/architecture and replaces the current executable with it, then exits. Only available in PyInstaller-built executables (`sys.frozen`) — rejected with an error for source checkouts and pip/PyPI installs, which have no single running binary to replace. New `platform/auto_update.py`
 - Headless mode: `--dry-run`/`--no-dry-run` flag prints the equivalent `mv` commands to stdout instead of renaming files. Output is a valid POSIX shell script (paths quoted with `shlex.quote`, conflicts reported as `#` comments) that can be piped to `sh` to actually perform the rename. Takes precedence over `--confirm` — no interactive prompt is shown
 - Headless mode: `--select GLOB` restricts the rename to entries matching `GLOB`, mirroring GUI row selection (clicking a file). Repeatable to accumulate matches (equivalent of Ctrl+click). With `--sidecar-mode`, selecting a base file also selects its sidecars and vice versa, using the same grouping and ambiguity handling as the GUI (`core/sidecar.build_sidecar_groups()`). New `__main__._resolve_selection()`
 

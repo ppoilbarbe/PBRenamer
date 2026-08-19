@@ -1450,3 +1450,40 @@ class TestMainDispatch:
         main()
         assert (tmp_path / "new.txt").exists()
         assert logging.getLogger().level == logging.INFO
+
+
+# ---------------------------------------------------------------------------
+# --auto-update
+# ---------------------------------------------------------------------------
+
+
+class TestAutoUpdateFlag:
+    def test_default_is_false(self):
+        ns = _build_parser().parse_args([])
+        assert ns.auto_update is False
+
+    def test_flag_sets_true(self):
+        ns = _build_parser().parse_args(["--auto-update"])
+        assert ns.auto_update is True
+
+    def test_main_prints_message_and_exits_zero_on_success(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--auto-update"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.auto_update.perform_auto_update",
+            lambda: (True, "Updated to version 1.8.0. Restart PBRenamer to use it."),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 0
+        assert "Updated to version 1.8.0" in capsys.readouterr().out
+
+    def test_main_prints_error_and_exits_one_on_failure(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--auto-update"])
+        monkeypatch.setattr(
+            "pbrenamer.platform.auto_update.perform_auto_update",
+            lambda: (False, "error: --auto-update is only available in ..."),
+        )
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 1
+        assert "only available in" in capsys.readouterr().err

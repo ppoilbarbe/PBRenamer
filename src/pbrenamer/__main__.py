@@ -237,6 +237,22 @@ def _build_parser() -> argparse.ArgumentParser:
         "--install-desktop-entry",
     )
 
+    # ── Self-update (PyInstaller executables only) ───────────────────────────
+    update_group = parser.add_argument_group(
+        "self-update",
+        "Available only in PyInstaller-built executables — a source or "
+        "pip/PyPI install has no single running binary to replace.",
+    )
+    update_group.add_argument(
+        "--auto-update",
+        action="store_true",
+        default=False,
+        help=(
+            "Download the latest release from GitHub and replace the "
+            "running executable, then exit"
+        ),
+    )
+
     # ── Developer / testing ───────────────────────────────────────────────────
     parser.add_argument(
         "--config-dir",
@@ -776,6 +792,16 @@ def main() -> None:
         from pbrenamer import settings as _settings
 
         _settings.configure(Path(_ns.config_dir))
+
+    if _ns.auto_update:
+        from pbrenamer.platform.auto_update import perform_auto_update
+
+        ok, message = perform_auto_update()
+        if ok:
+            print(message)
+        else:
+            print(message, file=sys.stderr)
+        sys.exit(0 if ok else 1)
 
     if _ns.install_desktop_entry or _ns.uninstall_desktop_entry:
         if _ns.install_desktop_entry:
