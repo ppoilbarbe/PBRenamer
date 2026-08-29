@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - README: ReadTheDocs "Documentation Status" badge
 
+### Fixed
+
+- Auto-preview mode: changing the file selection didn't refresh the preview, even though preview scopes to the current selection (`_active_items()`) — the preview stayed stale until another trigger (typing in the search/replace fields, etc.) fired it
+
 ## [1.8.1] - 2026-08-19
 
 ### Added

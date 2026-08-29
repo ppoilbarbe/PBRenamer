@@ -1602,6 +1602,24 @@ class TestFileInfoWindow:
         window._on_file_selection_changed()
         assert called
 
+    def test_on_file_selection_changed_auto_preview_refreshes(
+        self, window, monkeypatch
+    ):
+        window._ui.chkAutoPreview.setChecked(True)
+        called = []
+        monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
+        window._on_file_selection_changed()
+        assert called
+
+    def test_on_file_selection_changed_no_auto_preview_no_refresh(
+        self, window, monkeypatch
+    ):
+        window._ui.chkAutoPreview.setChecked(False)
+        called = []
+        monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
+        window._on_file_selection_changed()
+        assert not called
+
     def test_refresh_file_info_no_window_noop(self, window):
         window._refresh_file_info()  # no crash
 

@@ -1493,6 +1493,8 @@ class MainWindow(QMainWindow):
             self._link_group_selection()
         if self._file_info is not None and self._file_info.isVisible():
             self._refresh_file_info()
+        if self._ui.chkAutoPreview.isChecked():
+            self._on_preview()
 
     def _refresh_file_info(self) -> None:
         if self._file_info is None:
