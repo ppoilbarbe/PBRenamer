@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - README: ReadTheDocs "Documentation Status" badge
 
+### Changed
+
+- `--auto-update` is now only registered as a CLI option when running the PyInstaller-built executable (`sys.frozen`). A source checkout or a `pip`/PyPI install no longer lists it in `--help` and rejects it as an unknown argument, instead of accepting it and then failing with a runtime error. `_build_parser()` gained a `frozen` keyword for testing
+
 ### Fixed
 
 - Auto-preview mode: changing the file selection didn't refresh the preview, even though preview scopes to the current selection (`_active_items()`) — the preview stayed stale until another trigger (typing in the search/replace fields, etc.) fired it

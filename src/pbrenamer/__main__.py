@@ -41,8 +41,14 @@ _CASE_IDX = ["none", "upper", "lower", "capitalize", "title"]
 _SEP_CHOICES = ["none"] + list(_SEP_MAP)
 
 
-def _build_parser() -> argparse.ArgumentParser:
+def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
     from pbrenamer import __version__
+
+    # --auto-update is only meaningful for the single-file PyInstaller
+    # executable; a source checkout or a pip/PyPI install has no running
+    # binary to replace, so the option is not even offered there.
+    if frozen is None:
+        frozen = bool(getattr(sys, "frozen", False))
 
     parser = argparse.ArgumentParser(
         prog="pbrenamer",
@@ -238,20 +244,21 @@ def _build_parser() -> argparse.ArgumentParser:
     )
 
     # ── Self-update (PyInstaller executables only) ───────────────────────────
-    update_group = parser.add_argument_group(
-        "self-update",
-        "Available only in PyInstaller-built executables — a source or "
-        "pip/PyPI install has no single running binary to replace.",
-    )
-    update_group.add_argument(
-        "--auto-update",
-        action="store_true",
-        default=False,
-        help=(
-            "Download the latest release from GitHub and replace the "
-            "running executable, then exit"
-        ),
-    )
+    if frozen:
+        update_group = parser.add_argument_group(
+            "self-update",
+            "Available only in PyInstaller-built executables — a source or "
+            "pip/PyPI install has no single running binary to replace.",
+        )
+        update_group.add_argument(
+            "--auto-update",
+            action="store_true",
+            default=False,
+            help=(
+                "Download the latest release from GitHub and replace the "
+                "running executable, then exit"
+            ),
+        )
 
     # ── Developer / testing ───────────────────────────────────────────────────
     parser.add_argument(
@@ -793,7 +800,7 @@ def main() -> None:
 
         _settings.configure(Path(_ns.config_dir))
 
-    if _ns.auto_update:
+    if getattr(_ns, "auto_update", False):
         from pbrenamer.platform.auto_update import perform_auto_update
 
         ok, message = perform_auto_update()

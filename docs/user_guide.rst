@@ -963,11 +963,12 @@ Self-update
     Download the latest release matching the running platform and
     architecture from `GitHub Releases
     <https://github.com/ppoilbarbe/PBRenamer/releases>`_ and replace the
-    running executable with it, then exit.  Only available when running a
-    pre-built (PyInstaller) executable — rejected with an error for a
-    source checkout or a ``pip``/PyPI install, neither of which has a
-    single running binary to replace.  Restart PBRenamer to use the new
-    build; the update does not relaunch it automatically.
+    running executable with it, then exit.  This option is only offered
+    when running a pre-built (PyInstaller) executable; a source checkout
+    or a ``pip``/PyPI install has no single running binary to replace, so
+    the option is absent from ``--help`` and rejected as an unknown
+    argument there.  Restart PBRenamer to use the new build; the update
+    does not relaunch it automatically.
 
 Help export
 ~~~~~~~~~~~

@@ -1458,15 +1458,30 @@ class TestMainDispatch:
 
 
 class TestAutoUpdateFlag:
-    def test_default_is_false(self):
-        ns = _build_parser().parse_args([])
+    def test_not_offered_when_not_frozen(self):
+        parser = _build_parser(frozen=False)
+        assert not hasattr(parser.parse_args([]), "auto_update")
+        with pytest.raises(SystemExit):
+            parser.parse_args(["--auto-update"])
+
+    def test_default_is_false_when_frozen(self):
+        ns = _build_parser(frozen=True).parse_args([])
         assert ns.auto_update is False
 
-    def test_flag_sets_true(self):
-        ns = _build_parser().parse_args(["--auto-update"])
+    def test_flag_sets_true_when_frozen(self):
+        ns = _build_parser(frozen=True).parse_args(["--auto-update"])
         assert ns.auto_update is True
 
+    def test_main_rejects_flag_when_not_frozen(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "frozen", False, raising=False)
+        monkeypatch.setattr(sys, "argv", ["pbrenamer", "--auto-update"])
+        with pytest.raises(SystemExit) as exc_info:
+            _main_mod.main()
+        assert exc_info.value.code == 2
+        assert "unrecognized arguments" in capsys.readouterr().err
+
     def test_main_prints_message_and_exits_zero_on_success(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "frozen", True, raising=False)
         monkeypatch.setattr(sys, "argv", ["pbrenamer", "--auto-update"])
         monkeypatch.setattr(
             "pbrenamer.platform.auto_update.perform_auto_update",
@@ -1478,6 +1493,7 @@ class TestAutoUpdateFlag:
         assert "Updated to version 1.8.0" in capsys.readouterr().out
 
     def test_main_prints_error_and_exits_one_on_failure(self, capsys, monkeypatch):
+        monkeypatch.setattr(sys, "frozen", True, raising=False)
         monkeypatch.setattr(sys, "argv", ["pbrenamer", "--auto-update"])
         monkeypatch.setattr(
             "pbrenamer.platform.auto_update.perform_auto_update",
