@@ -68,6 +68,16 @@ Python strings: wrap with `_("…")`. UI strings (`text`, `toolTip`, `statusTip`
 
 New language: `make new-lang LOCALE=de`, translate all `msgstr`, then `make translate`.
 
+### User guide translations
+
+Only the narrative pages (`docs/index.rst`, `docs/user_guide.rst`) are translated, into the same 7 languages as the app; `api.rst` and `changelog.rst` stay English. Catalogs: `docs/locale/<lang>/LC_MESSAGES/{index,user_guide}.po` (sphinx-intl, one per page; `.mo` built by Sphinx, not committed).
+
+**After any change to a narrative page:**
+1. `make docs-translate` — extracts the pages and merges every `docs/locale/*/…/*.po`
+2. Translate every new or changed `msgstr`; non-fr entries get the `# ==AUTO== Automatically translated` comment; reuse the UI labels of the app catalogs for menu and button names
+3. Keep inline markup intact (``` `` ```, `**`, `:ref:`, URLs, trailing `::`); in `zh_CN`, separate markup from adjacent CJK text or `（` with an escaped space `\ `
+4. Verify: `make docs-stats` (all translated), then `make docs LANG=<lang>` with no warning on the narrative pages
+
 ## System constraints
 - Platform: linux-64 (also osx-64, osx-arm64, win-64 via the CI build matrix)
 - pixi: 0.76.1 — channel **conda-forge only** (never use `defaults`)

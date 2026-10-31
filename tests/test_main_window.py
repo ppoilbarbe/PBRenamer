@@ -16,10 +16,13 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
+    QMenu,
     QMessageBox,
     QStyleOptionViewItem,
 )
 
+import pbrenamer.core.planner as _planmod
+import pbrenamer.ui.file_list as _flmod
 import pbrenamer.ui.main_window as _mwmod
 from pbrenamer.core import replacement as _repl
 from pbrenamer.settings import (
@@ -34,7 +37,8 @@ from pbrenamer.settings import (
     set_sidecar_suffixes,
     set_toolbar_state,
 )
-from pbrenamer.ui.main_window import MainWindow, _SearchModeDelegate
+from pbrenamer.ui.main_window import MainWindow
+from pbrenamer.ui.rule_panel_pattern import _SearchModeDelegate
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -43,7 +47,7 @@ from pbrenamer.ui.main_window import MainWindow, _SearchModeDelegate
 
 @pytest.fixture(autouse=True)
 def mock_qmenu(monkeypatch):
-    """Patch QMenu in main_window so menu.exec() never blocks in any test.
+    """Patch QMenu in main_window and file_list so menu.exec() never blocks in any test.
 
     By default exec() returns None (cancel).  Tests that need a specific return
     value can configure the mock, e.g. to simulate choosing the first action:
@@ -52,6 +56,7 @@ def mock_qmenu(monkeypatch):
     mock = MagicMock()
     mock.exec.return_value = None
     monkeypatch.setattr(_mwmod, "QMenu", lambda *a, **kw: mock)
+    monkeypatch.setattr(_flmod, "QMenu", lambda *a, **kw: mock)
     return mock
 
 
@@ -154,33 +159,33 @@ class TestInit:
 
 class TestNavigation:
     def test_startup_navigate_loads_new_dir(self, window, tmp_path):
-        window._current_dir = None
+        window._files.current_dir = None
         window._startup_navigate(str(tmp_path))
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
 
     def test_startup_navigate_same_dir_no_extra_reload(self, window, tmp_path):
         # When _current_dir == path, the explicit reload branch (lines 140-141)
         # is not taken (the signal path may still fire from _navigate_to).
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._startup_navigate(str(tmp_path))
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
 
     def test_startup_navigate_reload_branch(self, window, tmp_path, monkeypatch):
         # Lines 140-141: explicit reload when QFileSystemModel hasn't loaded the
         # index yet (lazy load); simulate by making _navigate_to a no-op so the
         # selectionChanged signal never fires and _current_dir is not updated.
-        window._current_dir = None
+        window._files.current_dir = None
         monkeypatch.setattr(window, "_navigate_to", lambda path: None)
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
         window._startup_navigate(str(tmp_path))
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
         assert called
 
     def test_startup_navigate_nonexistent(self, window):
-        window._current_dir = None
+        window._files.current_dir = None
         window._startup_navigate("/nonexistent/path/xyz")
-        assert window._current_dir is None
+        assert window._files.current_dir is None
 
     def test_navigate_to_nonexistent(self, window):
         window._navigate_to("/nonexistent/path/xyz")  # returns early, no crash
@@ -202,17 +207,17 @@ class TestOnOpen:
             staticmethod(lambda *a, **kw: str(tmp_path)),
         )
         window._on_open()
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
 
     def test_cancel_noop(self, window, monkeypatch):
-        original = window._current_dir
+        original = window._files.current_dir
         monkeypatch.setattr(
             QFileDialog,
             "getExistingDirectory",
             staticmethod(lambda *a, **kw: ""),
         )
         window._on_open()
-        assert window._current_dir == original
+        assert window._files.current_dir == original
 
 
 # ---------------------------------------------------------------------------
@@ -235,7 +240,7 @@ class TestOnDirectorySelected:
         )
         monkeypatch.setattr(window._fs_model, "filePath", lambda idx: str(tmp_path))
         window._on_directory_selected()
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
 
     def test_non_directory_path_ignored(self, window, tmp_path, monkeypatch):
         f = tmp_path / "file.txt"
@@ -247,9 +252,9 @@ class TestOnDirectorySelected:
             lambda: [mock_idx],
         )
         monkeypatch.setattr(window._fs_model, "filePath", lambda idx: str(f))
-        prev = window._current_dir
+        prev = window._files.current_dir
         window._on_directory_selected()
-        assert window._current_dir == prev  # unchanged
+        assert window._files.current_dir == prev  # unchanged
 
 
 # ---------------------------------------------------------------------------
@@ -259,18 +264,18 @@ class TestOnDirectorySelected:
 
 class TestReloadFiles:
     def test_no_current_dir(self, window):
-        window._current_dir = None
-        window._reload_files()  # early return, no crash
+        window._files.current_dir = None
+        window._files.reload()  # early return, no crash
 
     def test_nonexistent_dir(self, window):
-        window._current_dir = "/nonexistent/path/xyz"
-        window._reload_files()  # early return, no crash
+        window._files.current_dir = "/nonexistent/path/xyz"
+        window._files.reload()  # early return, no crash
 
     def test_loads_files(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         assert window._ui.tblFiles.topLevelItemCount() == 2
 
     def test_loads_with_subdir(self, window, tmp_path):
@@ -278,44 +283,66 @@ class TestReloadFiles:
         work.mkdir()
         (work / "file.txt").write_text("x")
         (work / "sub").mkdir()
-        window._current_dir = str(work)
+        window._files.current_dir = str(work)
         window._ui.cmbMode.setCurrentIndex(2)  # files + dirs
-        window._reload_files()
+        window._files.reload()
         assert window._ui.tblFiles.topLevelItemCount() == 2
 
     def test_recursive_mode(self, window, tmp_path):
         sub = tmp_path / "sub"
         sub.mkdir()
         (sub / "nested.txt").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkRecursive.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         assert window._ui.tblFiles.topLevelItemCount() >= 1
         window._ui.chkRecursive.setChecked(False)
 
     def test_filter_pattern(self, window, tmp_path):
         (tmp_path / "abc.txt").write_text("x")
         (tmp_path / "xyz.txt").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.edtFilter.setText("abc*")
-        window._reload_files()
+        window._files.reload()
         assert window._ui.tblFiles.topLevelItemCount() == 1
         window._ui.edtFilter.setText("")
 
     def test_auto_preview_triggered(self, window, tmp_path, monkeypatch):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkAutoPreview.setChecked(True)
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._reload_files()
+        window._files.reload()
         assert called
+        window._ui.chkAutoPreview.setChecked(False)
+
+    def test_no_auto_preview_after_rename(self, window, tmp_path, monkeypatch):
+        """The reload following a rename leaves the preview empty (7.2 #12)."""
+        from pbrenamer.core import filetools
+
+        src = tmp_path / "f.txt"
+        src.write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._ui.chkAutoPreview.setChecked(True)
+        called = []
+        monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
+        monkeypatch.setattr(
+            filetools,
+            "execute_renames",
+            lambda pairs, **_k: filetools.RenameResult(list(pairs)),
+        )
+        assert window._execute([(str(src), str(tmp_path / "g.txt"))], "t")
+        assert called == []
+        window._files.reload()
+        assert called == [1]
         window._ui.chkAutoPreview.setChecked(False)
 
     def test_rename_button_disabled_after_reload(self, window, tmp_path):
         (tmp_path / "f.txt").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.btnRename.setEnabled(True)
-        window._reload_files()
+        window._files.reload()
         assert not window._ui.btnRename.isEnabled()
 
 
@@ -327,34 +354,34 @@ class TestReloadFiles:
 class TestListingUnchanged:
     def test_true_when_listing_matches(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
-        assert window._listing_unchanged() is True
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        assert window._files._listing_unchanged() is True
 
     def test_true_when_listing_matches_recursive(self, window, tmp_path):
         sub = tmp_path / "sub"
         sub.mkdir()
         (sub / "nested.txt").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkRecursive.setChecked(True)
-        window._reload_files()
-        assert window._listing_unchanged() is True
+        window._files.reload()
+        assert window._files._listing_unchanged() is True
         window._ui.chkRecursive.setChecked(False)
 
     def test_false_when_file_added(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         (tmp_path / "b.txt").write_text("x")
-        assert window._listing_unchanged() is False
+        assert window._files._listing_unchanged() is False
 
     def test_false_when_file_removed(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         (tmp_path / "b.txt").unlink()
-        assert window._listing_unchanged() is False
+        assert window._files._listing_unchanged() is False
 
 
 class TestOnFsChange:
@@ -364,38 +391,38 @@ class TestOnFsChange:
         # indexer touching directory metadata) and must not trigger a
         # visible clear+repopulate of the file list.
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
-        window._on_fs_change()
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
+        window._files._on_fs_change()
         assert not called
 
     def test_real_change_triggers_reload(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         (tmp_path / "b.txt").write_text("x")
-        window._on_fs_change()
+        window._files._on_fs_change()
         assert window._ui.tblFiles.topLevelItemCount() == 2
 
     def test_no_current_dir_is_noop(self, window):
-        window._current_dir = None
-        window._on_fs_change()  # no crash
+        window._files.current_dir = None
+        window._files._on_fs_change()  # no crash
 
     def test_nonexistent_dir_is_noop(self, window):
-        window._current_dir = "/nonexistent/path/xyz"
-        window._on_fs_change()  # no crash
+        window._files.current_dir = "/nonexistent/path/xyz"
+        window._files._on_fs_change()  # no crash
 
     def test_preserves_selection_across_real_change(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         item_a.setSelected(True)
         (tmp_path / "c.txt").write_text("x")
-        window._on_fs_change()
+        window._files._on_fs_change()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         assert item_a.isSelected()
 
@@ -409,24 +436,24 @@ class TestValidateSearchInput:
     def test_pattern_mode_always_valid(self, window):
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("[{#}]")
-        assert window._validate_search_input() is True
+        assert window._pattern._validate_search_input() is True
         assert window._ui.cmbPatternSearch.lineEdit().styleSheet() == ""
 
     def test_regex_mode_empty_is_valid(self, window):
         window._ui.radRegex.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("")
-        assert window._validate_search_input() is True
+        assert window._pattern._validate_search_input() is True
 
     def test_regex_mode_valid_pattern(self, window):
         window._ui.radRegex.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("^foo.*")
-        assert window._validate_search_input() is True
+        assert window._pattern._validate_search_input() is True
         assert window._ui.cmbPatternSearch.lineEdit().styleSheet() == ""
 
     def test_regex_mode_invalid_pattern(self, window):
         window._ui.radRegex.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("[invalid")
-        assert window._validate_search_input() is False
+        assert window._pattern._validate_search_input() is False
         assert window._ui.cmbPatternSearch.lineEdit().styleSheet() != ""
 
 
@@ -438,24 +465,24 @@ class TestValidateSearchInput:
 class TestValidateReplaceInput:
     def test_empty_is_valid(self, window):
         window._ui.cmbPatternDest.setCurrentText("")
-        assert window._validate_replace_input() is True
+        assert window._pattern._validate_replace_input() is True
         assert window._ui.cmbPatternDest.lineEdit().styleSheet() == ""
 
     def test_valid_template(self, window):
         window._ui.cmbPatternDest.setCurrentText("{0}")
-        assert window._validate_replace_input() is True
+        assert window._pattern._validate_replace_input() is True
         assert window._ui.cmbPatternDest.lineEdit().styleSheet() == ""
 
     def test_syntax_error(self, window):
         window._ui.cmbPatternDest.setCurrentText("{bad{nested}}")
-        assert window._validate_replace_input() is False
+        assert window._pattern._validate_replace_input() is False
         assert window._ui.cmbPatternDest.lineEdit().styleSheet() != ""
 
     def test_mode_incompatibility(self, window):
         # {1} (group reference) is invalid in plain-text mode
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbPatternDest.setCurrentText("{1}")
-        assert window._validate_replace_input() is False
+        assert window._pattern._validate_replace_input() is False
         assert window._ui.cmbPatternDest.lineEdit().styleSheet() != ""
 
 
@@ -473,8 +500,8 @@ class TestSignalHandlers:
     def test_on_search_text_changed_with_auto(self, window):
         window._ui.chkAutoPreview.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("test")
-        assert window._preview_timer.isActive()
-        window._preview_timer.stop()
+        assert window._actions._preview_timer.isActive()
+        window._actions._preview_timer.stop()
         window._ui.chkAutoPreview.setChecked(False)
 
     def test_on_replace_text_changed_no_auto(self, window):
@@ -484,20 +511,20 @@ class TestSignalHandlers:
     def test_on_replace_text_changed_with_auto(self, window):
         window._ui.chkAutoPreview.setChecked(True)
         window._ui.cmbPatternDest.setCurrentText("{0}")
-        assert window._preview_timer.isActive()
-        window._preview_timer.stop()
+        assert window._actions._preview_timer.isActive()
+        window._actions._preview_timer.stop()
         window._ui.chkAutoPreview.setChecked(False)
 
     def test_on_mode_changed_no_auto(self, window):
         window._ui.chkAutoPreview.setChecked(False)
         window._ui.radRegex.setChecked(True)
-        window._on_mode_changed()
+        window._pattern._on_mode_changed()
 
     def test_on_mode_changed_with_auto(self, window, monkeypatch):
         window._ui.chkAutoPreview.setChecked(True)
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._on_mode_changed()
+        window._pattern._on_mode_changed()
         assert called
         window._ui.chkAutoPreview.setChecked(False)
 
@@ -510,149 +537,104 @@ class TestSignalHandlers:
 class TestUpdateAddButtons:
     def test_search_empty_pattern_disabled(self, window):
         window._ui.cmbPatternSearch.setCurrentText("")
-        window._update_search_add_button()
+        window._pattern._update_search_add_button()
         assert not window._ui.btnSearchAdd.isEnabled()
 
     def test_search_invalid_regex_disabled(self, window):
         window._ui.radRegex.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("[invalid")
-        window._update_search_add_button()
+        window._pattern._update_search_add_button()
         assert not window._ui.btnSearchAdd.isEnabled()
 
     def test_search_already_in_combo_disabled(self, window):
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.addItem("existing", "pattern")
         window._ui.cmbPatternSearch.setCurrentText("existing")
-        window._update_search_add_button()
+        window._pattern._update_search_add_button()
         assert not window._ui.btnSearchAdd.isEnabled()
 
     def test_search_new_pattern_enabled(self, window):
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("brand_new_xyz_pattern")
-        window._update_search_add_button()
+        window._pattern._update_search_add_button()
         assert window._ui.btnSearchAdd.isEnabled()
 
     def test_replace_empty_disabled(self, window):
         window._ui.cmbPatternDest.setCurrentText("")
-        window._update_replace_add_button()
+        window._pattern._update_replace_add_button()
         assert not window._ui.btnReplaceAdd.isEnabled()
 
     def test_replace_invalid_syntax_disabled(self, window):
         window._ui.cmbPatternDest.setCurrentText("{bad{")
-        window._update_replace_add_button()
+        window._pattern._update_replace_add_button()
         assert not window._ui.btnReplaceAdd.isEnabled()
 
     def test_replace_already_in_combo_disabled(self, window):
         window._ui.cmbPatternDest.addItem("existing_repl")
         window._ui.cmbPatternDest.setCurrentText("existing_repl")
-        window._update_replace_add_button()
+        window._pattern._update_replace_add_button()
         assert not window._ui.btnReplaceAdd.isEnabled()
 
     def test_replace_new_pattern_enabled(self, window):
         window._ui.cmbPatternDest.setCurrentText("brand_new_xyz_replace")
-        window._update_replace_add_button()
+        window._pattern._update_replace_add_button()
         assert window._ui.btnReplaceAdd.isEnabled()
 
 
 # ---------------------------------------------------------------------------
-# _do_rename  (lines 415-459)
+# rule() — widgets → planner.Rule
 # ---------------------------------------------------------------------------
 
 
-class TestDoRename:
-    def test_pattern_mode(self, window, tmp_path):
-        path = str(tmp_path / "MyFile.txt")
-        result = window._do_rename(False, False, "MyFile", path, "{L}", "kept", 1)
-        assert result[0] == "kept"
+class TestRule:
+    def test_none_without_search(self, window):
+        window._ui.cmbPatternSearch.setCurrentText("")
+        assert window._pattern.rule() is None
 
-    def test_regex_mode(self, window, tmp_path):
-        path = str(tmp_path / "old.txt")
-        result = window._do_rename(True, False, "old", path, "old", "new", 1)
-        assert result[0] == "new"
+    def test_none_with_invalid_regex(self, window):
+        window._ui.radRegex.setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("(")
+        assert window._pattern.rule() is None
 
-    def test_plain_mode(self, window, tmp_path):
-        path = str(tmp_path / "old.txt")
-        result = window._do_rename(False, True, "old", path, "old", "new", 1)
-        assert result[0] == "new"
+    def test_none_with_invalid_replacement(self, window):
+        window._ui.cmbPatternSearch.setCurrentText("{X}")
+        window._ui.cmbPatternDest.setCurrentText("{bad{")
+        assert window._pattern.rule() is None
 
-    def test_no_match_returns_none(self, window, tmp_path):
-        path = str(tmp_path / "file.txt")
-        result = window._do_rename(False, False, "file", path, "nomatch{#}", "x", 1)
-        assert result == (None, None)
+    @pytest.mark.parametrize(
+        ("radio", "mode"),
+        [("radPattern", "pattern"), ("radRegex", "regex"), ("radPlainText", "plain")],
+    )
+    def test_search_mode(self, window, radio, mode):
+        getattr(window._ui, radio).setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("a")
+        window._ui.cmbPatternDest.setCurrentText("b")
+        rule = window._pattern.rule()
+        assert (rule.search, rule.replace, rule.mode) == ("a", "b", mode)
 
-
-# ---------------------------------------------------------------------------
-# _apply_postproc  (lines 461-473)
-# ---------------------------------------------------------------------------
-
-
-class TestApplyPostproc:
-    def test_no_processing(self, window, tmp_path):
+    def test_no_post_processing(self, window):
+        window._ui.cmbPatternSearch.setCurrentText("a")
         window._ui.cmbSpaces.setCurrentIndex(0)
+        window._ui.cmbCaps.setCurrentIndex(0)
         window._ui.chkRemoveAccents.setChecked(False)
         window._ui.chkRemoveDuplicates.setChecked(False)
-        window._ui.cmbCaps.setCurrentIndex(0)
-        assert (
-            window._apply_postproc("file name", str(tmp_path / "file name"))
-            == "file name"
-        )
+        rule = window._pattern.rule()
+        assert rule.spaces is None
+        assert rule.capitalization is None
+        assert not rule.remove_accents
+        assert not rule.remove_duplicates
 
-    def test_space_replacement(self, window, tmp_path):
+    def test_post_processing(self, window):
+        window._ui.cmbPatternSearch.setCurrentText("a")
         window._ui.cmbSpaces.setCurrentIndex(1)  # index 1 = mode 0 = space→underscore
-        result = window._apply_postproc("file name", str(tmp_path / "file name"))
-        assert result == "file_name"
-        window._ui.cmbSpaces.setCurrentIndex(0)
-
-    def test_remove_accents(self, window, tmp_path):
-        window._ui.chkRemoveAccents.setChecked(True)
-        result = window._apply_postproc("café", str(tmp_path / "café"))
-        assert result == "cafe"
-        window._ui.chkRemoveAccents.setChecked(False)
-
-    def test_remove_duplicates(self, window, tmp_path):
-        window._ui.chkRemoveDuplicates.setChecked(True)
-        result = window._apply_postproc("file..txt", str(tmp_path / "file..txt"))
-        assert result == "file.txt"
-        window._ui.chkRemoveDuplicates.setChecked(False)
-
-    def test_capitalize(self, window, tmp_path):
         window._ui.cmbCaps.setCurrentIndex(1)  # index 1 = mode 0 = UPPERCASE
-        result = window._apply_postproc("hello", str(tmp_path / "hello"))
-        assert result == "HELLO"
-        window._ui.cmbCaps.setCurrentIndex(0)
-
-
-# ---------------------------------------------------------------------------
-# _make_newnum_state  (lines 475-490)
-# ---------------------------------------------------------------------------
-
-
-class TestMakeNewnumState:
-    def test_no_newnum_token(self, window):
-        assert window._make_newnum_state("{0}") is None
-
-    def test_plain_literal_no_token(self, window):
-        assert window._make_newnum_state("prefix") is None
-
-    def test_with_newnum_default_start(self, window):
-        state = window._make_newnum_state("{newnum}")
-        assert state is not None
-        assert state.current == 1
-
-    def test_with_newnum_custom_start(self, window):
-        # {newnum::5} → default="5" → start=5
-        state = window._make_newnum_state("{newnum::5}")
-        assert state is not None
-        assert state.current == 5
-
-    def test_with_newnum_invalid_start_falls_back(self, window):
-        # {newnum::abc} → int("abc") raises ValueError → start=1
-        state = window._make_newnum_state("{newnum::abc}")
-        assert state is not None
-        assert state.current == 1
-
-    def test_syntax_error_returns_none(self, window):
-        assert window._make_newnum_state("{bad{") is None
+        window._ui.chkRemoveAccents.setChecked(True)
+        window._ui.chkRemoveDuplicates.setChecked(True)
+        window._ui.chkCaseInsensitive.setChecked(True)
+        rule = window._pattern.rule()
+        assert (rule.spaces, rule.capitalization) == (0, 0)
+        assert rule.remove_accents and rule.remove_duplicates
+        assert rule.case_insensitive
 
 
 # ---------------------------------------------------------------------------
@@ -663,17 +645,17 @@ class TestMakeNewnumState:
 class TestOnClearPreview:
     def test_clears_column_and_disables_button(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = window._ui.tblFiles.topLevelItem(0)
         item.setText(1, "preview")
         window._ui.btnRename.setEnabled(True)
-        window._on_clear_preview()
+        window._files.clear_preview()
         assert not window._ui.btnRename.isEnabled()
         assert item.text(1) == ""
 
     def test_noop_when_empty(self, window):
-        window._on_clear_preview()  # no crash when no items
+        window._files.clear_preview()  # no crash when no items
 
 
 # ---------------------------------------------------------------------------
@@ -683,38 +665,38 @@ class TestOnClearPreview:
 
 class TestPatternHelp:
     def test_search_help_created_on_first_call(self, window):
-        window._on_search_help()
-        assert window._search_help is not None
+        window._pattern._on_search_help()
+        assert window._pattern._search_help is not None
 
     def test_search_help_raised_if_visible(self, window, monkeypatch):
-        window._on_search_help()
-        dlg = window._search_help
+        window._pattern._on_search_help()
+        dlg = window._pattern._search_help
         monkeypatch.setattr(dlg, "isVisible", lambda: True)
         raised = []
         monkeypatch.setattr(dlg, "raise_", lambda: raised.append(1))
-        window._on_search_help()
+        window._pattern._on_search_help()
         assert raised
 
     def test_search_help_shown_if_hidden(self, window, monkeypatch):
-        window._on_search_help()
-        dlg = window._search_help
+        window._pattern._on_search_help()
+        dlg = window._pattern._search_help
         monkeypatch.setattr(dlg, "isVisible", lambda: False)
         shown = []
         monkeypatch.setattr(dlg, "show", lambda: shown.append(1))
-        window._on_search_help()
+        window._pattern._on_search_help()
         assert shown
 
     def test_replace_help_created_on_first_call(self, window):
-        window._on_replace_help()
-        assert window._replace_help is not None
+        window._pattern._on_replace_help()
+        assert window._pattern._replace_help is not None
 
     def test_replace_help_raised_if_visible(self, window, monkeypatch):
-        window._on_replace_help()
-        dlg = window._replace_help
+        window._pattern._on_replace_help()
+        dlg = window._pattern._replace_help
         monkeypatch.setattr(dlg, "isVisible", lambda: True)
         raised = []
         monkeypatch.setattr(dlg, "raise_", lambda: raised.append(1))
-        window._on_replace_help()
+        window._pattern._on_replace_help()
         assert raised
 
 
@@ -726,27 +708,27 @@ class TestPatternHelp:
 class TestPostProcessAndMode:
     def test_post_process_no_auto(self, window):
         window._ui.chkAutoPreview.setChecked(False)
-        window._on_post_process_changed()  # no crash
+        window._pattern._on_post_process_changed()  # no crash
 
     def test_post_process_with_auto(self, window, monkeypatch):
         window._ui.chkAutoPreview.setChecked(True)
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._on_post_process_changed()
+        window._pattern._on_post_process_changed()
         assert called
         window._ui.chkAutoPreview.setChecked(False)
 
     def test_current_mode_regex(self, window):
         window._ui.radRegex.setChecked(True)
-        assert window._current_search_mode() == "regex"
+        assert window._pattern._current_search_mode() == "regex"
 
     def test_current_mode_plain(self, window):
         window._ui.radPlainText.setChecked(True)
-        assert window._current_search_mode() == "plain"
+        assert window._pattern._current_search_mode() == "plain"
 
     def test_current_mode_pattern(self, window):
         window._ui.radPattern.setChecked(True)
-        assert window._current_search_mode() == "pattern"
+        assert window._pattern._current_search_mode() == "pattern"
 
 
 # ---------------------------------------------------------------------------
@@ -758,65 +740,65 @@ class TestPatternHistory:
     def test_on_add_search(self, window):
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("unique_test_pattern_xyz")
-        window._on_add_search()
+        window._pattern._on_add_search()
         assert window._ui.cmbPatternSearch.itemText(0) == "unique_test_pattern_xyz"
 
     def test_on_add_search_empty_noop(self, window):
         count_before = window._ui.cmbPatternSearch.count()
         window._ui.cmbPatternSearch.setCurrentText("")
-        window._on_add_search()
+        window._pattern._on_add_search()
         assert window._ui.cmbPatternSearch.count() == count_before
 
     def test_on_add_replace(self, window):
         window._ui.cmbPatternDest.setCurrentText("unique_replace_xyz")
-        window._on_add_replace()
+        window._pattern._on_add_replace()
         assert window._ui.cmbPatternDest.itemText(0) == "unique_replace_xyz"
 
     def test_on_add_replace_empty_noop(self, window):
         count_before = window._ui.cmbPatternDest.count()
         window._ui.cmbPatternDest.setCurrentText("")
-        window._on_add_replace()
+        window._pattern._on_add_replace()
         assert window._ui.cmbPatternDest.count() == count_before
 
     def test_on_search_preset_selected_negative_noop(self, window):
-        window._on_search_preset_selected(-1)  # no crash
+        window._pattern._on_search_preset_selected(-1)  # no crash
 
     def test_on_search_preset_selected_regex(self, window):
         window._ui.cmbPatternSearch.addItem("^test$", "regex")
         idx = window._ui.cmbPatternSearch.count() - 1
-        window._on_search_preset_selected(idx)
+        window._pattern._on_search_preset_selected(idx)
         assert window._ui.radRegex.isChecked()
 
     def test_on_search_preset_selected_plain(self, window):
         window._ui.cmbPatternSearch.addItem("hello", "plain")
         idx = window._ui.cmbPatternSearch.count() - 1
-        window._on_search_preset_selected(idx)
+        window._pattern._on_search_preset_selected(idx)
         assert window._ui.radPlainText.isChecked()
 
     def test_on_search_preset_selected_pattern(self, window):
         window._ui.cmbPatternSearch.addItem("{L}", "pattern")
         idx = window._ui.cmbPatternSearch.count() - 1
-        window._on_search_preset_selected(idx)
+        window._pattern._on_search_preset_selected(idx)
         assert window._ui.radPattern.isChecked()
 
     def test_on_search_preset_selected_unknown_mode_noop(self, window):
         window._ui.cmbPatternSearch.addItem("test", "unknown_mode")
         idx = window._ui.cmbPatternSearch.count() - 1
-        window._on_search_preset_selected(idx)  # no crash
+        window._pattern._on_search_preset_selected(idx)  # no crash
 
     def test_on_replace_preset_selected_negative_noop(self, window):
-        window._on_replace_preset_selected(-1)  # no crash
+        window._pattern._on_replace_preset_selected(-1)  # no crash
 
     def test_on_replace_preset_selected(self, window):
         window._ui.cmbPatternDest.addItem("my_replace")
         idx = window._ui.cmbPatternDest.count() - 1
-        window._on_replace_preset_selected(idx)
+        window._pattern._on_replace_preset_selected(idx)
         assert window._ui.cmbPatternDest.currentIndex() == 0
 
     def test_on_replace_preset_selected_empty_noop(self, window):
         window._ui.cmbPatternDest.addItem("")
         idx = window._ui.cmbPatternDest.count() - 1
-        window._on_replace_preset_selected(idx)  # no crash
+        window._pattern._on_replace_preset_selected(idx)  # no crash
 
     def test_on_search_preset_selected_does_not_touch_replace(self, window):
         window._ui.cmbPatternDest.addItem("z_older_replace")
@@ -824,7 +806,7 @@ class TestPatternHistory:
         window._ui.cmbPatternDest.setCurrentText("in_progress_replace")
         window._ui.cmbPatternSearch.addItem("{L}", "pattern")
         idx = window._ui.cmbPatternSearch.count() - 1
-        window._on_search_preset_selected(idx)
+        window._pattern._on_search_preset_selected(idx)
         assert window._ui.cmbPatternDest.currentText() == "in_progress_replace"
 
     def test_on_replace_preset_selected_does_not_touch_search(self, window):
@@ -833,7 +815,7 @@ class TestPatternHistory:
         window._ui.cmbPatternSearch.setCurrentText("in_progress_search")
         window._ui.cmbPatternDest.addItem("my_replace")
         idx = window._ui.cmbPatternDest.count() - 1
-        window._on_replace_preset_selected(idx)
+        window._pattern._on_replace_preset_selected(idx)
         assert window._ui.cmbPatternSearch.currentText() == "in_progress_search"
 
 
@@ -844,11 +826,11 @@ class TestPatternHistory:
 
 class TestNamedSaves:
     def test_populate_named_saves_empty(self, window):
-        window._populate_named_saves()  # no crash
+        window._pattern._populate_named_saves()  # no crash
 
     def test_populate_named_saves_with_entries(self, window):
         window._presets.set_save("preset_a", {"search_pattern": "x"})
-        window._populate_named_saves()
+        window._pattern._populate_named_saves()
         texts = [
             window._ui.cmbNamedSaves.itemText(i)
             for i in range(window._ui.cmbNamedSaves.count())
@@ -857,55 +839,55 @@ class TestNamedSaves:
 
     def test_update_save_buttons_empty_name(self, window):
         window._ui.cmbNamedSaves.setCurrentText("")
-        window._update_save_buttons()
+        window._pattern._update_save_buttons()
         assert not window._ui.btnSaveSave.isEnabled()
         assert not window._ui.btnSaveDelete.isEnabled()
 
     def test_update_save_buttons_invalid_name(self, window):
         window._ui.cmbNamedSaves.setCurrentText("invalid name!")
-        window._update_save_buttons()
+        window._pattern._update_save_buttons()
         assert not window._ui.btnSaveSave.isEnabled()
 
     def test_update_save_buttons_valid_new_name(self, window):
         window._ui.cmbNamedSaves.setCurrentText("valid_name")
-        window._update_save_buttons()
+        window._pattern._update_save_buttons()
         assert window._ui.btnSaveSave.isEnabled()
         assert not window._ui.btnSaveDelete.isEnabled()
 
     def test_update_save_buttons_existing_name(self, window):
         window._presets.set_save("exists", {"search_pattern": "x"})
-        window._populate_named_saves()
+        window._pattern._populate_named_saves()
         window._ui.cmbNamedSaves.setCurrentText("exists")
-        window._update_save_buttons()
+        window._pattern._update_save_buttons()
         assert window._ui.btnSaveDelete.isEnabled()
 
     def test_on_save_name_changed(self, window):
         window._ui.cmbNamedSaves.setCurrentText("test")
-        window._on_save_name_changed()  # no crash
+        window._pattern._on_save_name_changed()  # no crash
 
     def test_on_named_save_selected_negative_noop(self, window):
-        window._on_named_save_selected(-1)  # no crash
+        window._pattern._on_named_save_selected(-1)  # no crash
 
     def test_on_named_save_selected_missing_noop(self, window):
         window._ui.cmbNamedSaves.addItem("ghost")
-        window._on_named_save_selected(window._ui.cmbNamedSaves.count() - 1)
+        window._pattern._on_named_save_selected(window._ui.cmbNamedSaves.count() - 1)
 
     def test_on_named_save_selected_applies_config(self, window):
         window._presets.set_save(
             "saved", {"search_pattern": "hello", "search_mode": "plain"}
         )
-        window._populate_named_saves()
+        window._pattern._populate_named_saves()
         idx = next(
             i
             for i in range(window._ui.cmbNamedSaves.count())
             if window._ui.cmbNamedSaves.itemText(i) == "saved"
         )
-        window._on_named_save_selected(idx)
+        window._pattern._on_named_save_selected(idx)
         assert window._ui.cmbPatternSearch.currentText() == "hello"
         assert window._ui.radPlainText.isChecked()
 
     def test_collect_save_config_keys(self, window):
-        cfg = window._collect_save_config()
+        cfg = window._pattern._collect_save_config()
         for key in (
             "search_pattern",
             "replace_pattern",
@@ -917,25 +899,25 @@ class TestNamedSaves:
 
     def test_collect_save_config_with_filter(self, window):
         window._ui.edtFilter.setText("*.jpg")
-        cfg = window._collect_save_config()
+        cfg = window._pattern._collect_save_config()
         assert cfg.get("filter") == "*.jpg"
         window._ui.edtFilter.setText("")
 
     def test_collect_save_config_no_filter_when_empty(self, window):
         window._ui.edtFilter.setText("")
-        cfg = window._collect_save_config()
+        cfg = window._pattern._collect_save_config()
         assert "filter" not in cfg
 
     def test_apply_save_config_regex(self, window):
-        window._apply_save_config({"search_mode": "regex"})
+        window._pattern._apply_save_config({"search_mode": "regex"})
         assert window._ui.radRegex.isChecked()
 
     def test_apply_save_config_plain(self, window):
-        window._apply_save_config({"search_mode": "plain"})
+        window._pattern._apply_save_config({"search_mode": "plain"})
         assert window._ui.radPlainText.isChecked()
 
     def test_apply_save_config_pattern(self, window):
-        window._apply_save_config({"search_mode": "pattern"})
+        window._pattern._apply_save_config({"search_mode": "pattern"})
         assert window._ui.radPattern.isChecked()
 
     def test_apply_save_config_full(self, window):
@@ -951,7 +933,7 @@ class TestNamedSaves:
             "extension_mode": "lower",
             "sidecar_mode": True,
         }
-        window._apply_save_config(cfg)
+        window._pattern._apply_save_config(cfg)
         assert window._ui.cmbPatternSearch.currentText() == "hello"
         assert window._ui.chkCaseInsensitive.isChecked()
         assert window._ui.chkRemoveAccents.isChecked()
@@ -962,49 +944,49 @@ class TestNamedSaves:
         assert window._ui.chkSidecarMode.isChecked()
 
     def test_apply_save_config_migrates_legacy_keep_extension(self, window):
-        window._apply_save_config({"keep_extension": False})
+        window._pattern._apply_save_config({"keep_extension": False})
         assert window._ui.cmbExtensionMode.currentData() == "modify"
-        window._apply_save_config({"keep_extension": True})
+        window._pattern._apply_save_config({"keep_extension": True})
         assert window._ui.cmbExtensionMode.currentData() == "keep"
 
     def test_apply_save_config_filter_triggers_reload(
         self, window, tmp_path, monkeypatch
     ):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
-        window._apply_save_config({"filter": "*.txt"})
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
+        window._pattern._apply_save_config({"filter": "*.txt"})
         assert called
 
     def test_apply_save_config_filter_unchanged_no_reload(
         self, window, tmp_path, monkeypatch
     ):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.edtFilter.setText("*.txt")
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
-        window._apply_save_config({"filter": "*.txt"})
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
+        window._pattern._apply_save_config({"filter": "*.txt"})
         assert not called
 
     def test_on_save_save(self, window):
         window._ui.cmbNamedSaves.setCurrentText("mypreset")
-        window._on_save_save()
+        window._pattern._on_save_save()
         assert "mypreset" in window._presets.get_saves()
 
     def test_on_save_save_invalid_name_noop(self, window):
         window._ui.cmbNamedSaves.setCurrentText("invalid!")
-        window._on_save_save()  # no crash
+        window._pattern._on_save_save()  # no crash
 
     def test_on_save_delete(self, window):
         window._presets.set_save("to_del", {"search_pattern": "x"})
-        window._populate_named_saves()
+        window._pattern._populate_named_saves()
         window._ui.cmbNamedSaves.setCurrentText("to_del")
-        window._on_save_delete()
+        window._pattern._on_save_delete()
         assert "to_del" not in window._presets.get_saves()
 
     def test_on_save_delete_missing_noop(self, window):
         window._ui.cmbNamedSaves.setCurrentText("ghost")
-        window._on_save_delete()  # no crash
+        window._pattern._on_save_delete()  # no crash
 
 
 # ---------------------------------------------------------------------------
@@ -1017,27 +999,27 @@ class TestRenameUndo:
         # Line 315: _active_items() returns selected items when a selection exists.
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         # Select only the first item
         item0 = window._ui.tblFiles.topLevelItem(0)
         item1 = window._ui.tblFiles.topLevelItem(1)
         window._ui.tblFiles.setCurrentItem(item0)
         item0.setSelected(True)
         item1.setSelected(False)
-        assert len(window._active_items()) == 1
-        assert window._active_items()[0] is item0
+        assert len(window._files.active_items()) == 1
+        assert window._files.active_items()[0] is item0
 
     def test_on_rename_no_preview_noop(self, window, tmp_path):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._on_rename()  # all items have empty preview → early return
 
     def test_on_rename_same_name_noop(self, window, tmp_path):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = window._ui.tblFiles.topLevelItem(0)
         item.setText(1, "file.txt")  # same name → no rename needed
         window._on_rename()
@@ -1049,8 +1031,8 @@ class TestRenameUndo:
         # btnRename's disabled state (the only other guard against this).
         f = tmp_path / "file.txt"
         f.write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(f))
         item.setText(1, "⚠ some error text")
         item.setData(1, Qt.ItemDataRole.UserRole, True)
@@ -1061,8 +1043,8 @@ class TestRenameUndo:
     def test_on_rename_success(self, window, tmp_path):
         f = tmp_path / "original.txt"
         f.write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(f))
         assert item is not None
         item.setText(1, "renamed.txt")
@@ -1073,8 +1055,8 @@ class TestRenameUndo:
     def test_on_rename_adds_to_undo(self, window, tmp_path):
         f = tmp_path / "orig.txt"
         f.write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(f))
         item.setText(1, "new.txt")
         assert len(window._undo) == 0
@@ -1084,8 +1066,8 @@ class TestRenameUndo:
     def test_on_rename_error_shows_warning(self, window, tmp_path, monkeypatch):
         (tmp_path / "source.txt").write_text("x")
         (tmp_path / "conflict.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(tmp_path / "source.txt"))
         assert item is not None
         item.setText(1, "conflict.txt")
@@ -1095,14 +1077,75 @@ class TestRenameUndo:
         assert (tmp_path / "source.txt").exists()
 
     def test_on_undo(self, window, tmp_path, monkeypatch):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         called = []
         monkeypatch.setattr(window._undo, "undo", lambda: called.append(1))
         window._on_undo()
         assert called
 
+    def test_on_rename_conflict_lists_targets(self, window, tmp_path):
+        (tmp_path / "source.txt").write_text("x")
+        (tmp_path / "conflict.txt").write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        _find_item(window, str(tmp_path / "source.txt")).setText(1, "conflict.txt")
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            window._on_rename()
+        text = mock_warn.call_args[0][2]
+        assert "Nothing was renamed." in text
+        assert "source.txt → " in text
+        assert len(window._undo) == 0
+
+    def test_on_rename_rollback_shows_os_error(self, window, tmp_path, monkeypatch):
+        (tmp_path / "a.txt").write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        _find_item(window, str(tmp_path / "a.txt")).setText(1, "b.txt")
+
+        def _fail(*_a):
+            raise OSError("disk full")
+
+        monkeypatch.setattr(_mwmod.filetools.shutil, "move", _fail)
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            window._on_rename()
+        assert "disk full" in mock_warn.call_args[0][2]
+        assert (tmp_path / "a.txt").exists()
+
+    def test_on_rename_swap(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("A")
+        (tmp_path / "b.txt").write_text("B")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        _find_item(window, str(tmp_path / "a.txt")).setText(1, "b.txt")
+        _find_item(window, str(tmp_path / "b.txt")).setText(1, "a.txt")
+        window._files.refresh_conflicts()
+        assert window._ui.btnRename.isEnabled()
+        window._on_rename()
+        assert (tmp_path / "a.txt").read_text() == "B"
+
+    def test_on_rename_into_sub_directory_and_undo(self, window, tmp_path):
+        (tmp_path / "a.txt").write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        _find_item(window, str(tmp_path / "a.txt")).setText(1, "sub/a.txt")
+        window._on_rename()
+        assert (tmp_path / "sub" / "a.txt").exists()
+        window._on_undo()
+        assert sorted(os.listdir(tmp_path)) == ["a.txt"]
+
+    def test_on_undo_error_shows_warning(self, window, tmp_path, monkeypatch):
+        window._files.current_dir = str(tmp_path)
+
+        def _fail():
+            raise _mwmod.UndoError("gone")
+
+        monkeypatch.setattr(window._undo, "undo", _fail)
+        with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
+            window._on_undo()
+        assert mock_warn.call_args[0][2] == "gone"
+
     def test_refresh_undo_button_empty(self, window):
-        window._refresh_undo_button()
+        window._actions.refresh_undo()
         assert not window._ui.btnUndo.isEnabled()
 
     def test_refresh_undo_button_with_entry(self, window, tmp_path):
@@ -1111,7 +1154,7 @@ class TestRenameUndo:
         f1.write_text("x")
         f1.rename(f2)
         window._undo.add_batch([(str(f1), str(f2))])
-        window._refresh_undo_button()
+        window._actions.refresh_undo()
         assert window._ui.btnUndo.isEnabled()
         assert "1" in window._ui.btnUndo.text()
 
@@ -1120,7 +1163,7 @@ class TestRenameUndo:
             f = tmp_path / f"f{i}.txt"
             f.write_text("x")
             window._undo.add_batch([(str(f), str(tmp_path / f"g{i}.txt"))])
-        window._refresh_undo_button()
+        window._actions.refresh_undo()
         assert "3" in window._ui.btnUndo.text()
 
 
@@ -1154,13 +1197,13 @@ class TestFilesDropped:
         f = src_dir / "a.txt"
         f.write_text("x")
 
-        window._on_files_dropped([str(f)], str(dst_dir), True)
+        window._files._on_files_dropped([str(f)], str(dst_dir), True)
 
         assert not f.exists()
         assert (dst_dir / "a.txt").exists()
         assert len(window._undo) == 1
 
-    def test_copy_success_not_undoable(self, window, tmp_path):
+    def test_copy_success_undoable(self, window, tmp_path):
         src_dir = tmp_path / "src"
         dst_dir = tmp_path / "dst"
         src_dir.mkdir()
@@ -1168,11 +1211,14 @@ class TestFilesDropped:
         f = src_dir / "a.txt"
         f.write_text("x")
 
-        window._on_files_dropped([str(f)], str(dst_dir), False)
+        window._files._on_files_dropped([str(f)], str(dst_dir), False)
 
         assert f.exists()  # original untouched
         assert (dst_dir / "a.txt").exists()
-        assert len(window._undo) == 0
+        assert len(window._undo) == 1
+        window._on_undo()
+        assert f.exists()
+        assert not (dst_dir / "a.txt").exists()
 
     def test_move_directory(self, window, tmp_path):
         dst_dir = tmp_path / "dst"
@@ -1181,7 +1227,7 @@ class TestFilesDropped:
         src_sub.mkdir()
         (src_sub / "inner.txt").write_text("x")
 
-        window._on_files_dropped([str(src_sub)], str(dst_dir), True)
+        window._files._on_files_dropped([str(src_sub)], str(dst_dir), True)
 
         assert not src_sub.exists()
         assert (dst_dir / "sub" / "inner.txt").exists()
@@ -1190,7 +1236,7 @@ class TestFilesDropped:
         f = tmp_path / "a.txt"
         f.write_text("x")
 
-        window._on_files_dropped([str(f)], str(tmp_path), True)
+        window._files._on_files_dropped([str(f)], str(tmp_path), True)
 
         assert f.exists()
         assert len(window._undo) == 0
@@ -1201,7 +1247,7 @@ class TestFilesDropped:
         child.mkdir(parents=True)
 
         with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
-            window._on_files_dropped([str(src_dir)], str(child), True)
+            window._files._on_files_dropped([str(src_dir)], str(child), True)
 
         mock_warn.assert_called_once()
         assert src_dir.exists()
@@ -1211,7 +1257,7 @@ class TestFilesDropped:
         dst_dir.mkdir()
         missing = tmp_path / "gone.txt"
 
-        window._on_files_dropped([str(missing)], str(dst_dir), True)
+        window._files._on_files_dropped([str(missing)], str(dst_dir), True)
 
         assert list(dst_dir.iterdir()) == []
 
@@ -1219,7 +1265,9 @@ class TestFilesDropped:
         f = tmp_path / "a.txt"
         f.write_text("x")
 
-        window._on_files_dropped([str(f)], str(tmp_path / "does-not-exist"), True)
+        window._files._on_files_dropped(
+            [str(f)], str(tmp_path / "does-not-exist"), True
+        )
 
         assert f.exists()
 
@@ -1231,7 +1279,7 @@ class TestFilesDropped:
         (dst_dir / "a.txt").write_text("existing")
 
         _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.RejectRole)
-        window._on_files_dropped([str(src)], str(dst_dir), True)
+        window._files._on_files_dropped([str(src)], str(dst_dir), True)
 
         assert src.exists()
         assert (dst_dir / "a.txt").read_text() == "existing"
@@ -1246,7 +1294,9 @@ class TestFilesDropped:
         (dst_dir / "a.txt").write_text("existing")
 
         _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.NoRole)
-        window._on_files_dropped([str(conflicting), str(clean)], str(dst_dir), True)
+        window._files._on_files_dropped(
+            [str(conflicting), str(clean)], str(dst_dir), True
+        )
 
         assert conflicting.exists()  # skipped, move never happened
         assert (dst_dir / "a.txt").read_text() == "existing"
@@ -1261,7 +1311,7 @@ class TestFilesDropped:
         (dst_dir / "a.txt").write_text("existing")
 
         _mock_conflict_choice(monkeypatch, QMessageBox.ButtonRole.YesRole)
-        window._on_files_dropped([str(src)], str(dst_dir), True)
+        window._files._on_files_dropped([str(src)], str(dst_dir), True)
 
         assert not src.exists()
         assert (dst_dir / "a.txt").read_text() == "source"
@@ -1273,10 +1323,10 @@ class TestFilesDropped:
         src.write_text("x")
 
         monkeypatch.setattr(
-            _mwmod.filetools, "move_path", lambda *a, **kw: (False, "boom")
+            _flmod.filetools, "move_path", lambda *a, **kw: (False, "boom")
         )
         with patch.object(QMessageBox, "warning", return_value=None) as mock_warn:
-            window._on_files_dropped([str(src)], str(dst_dir), True)
+            window._files._on_files_dropped([str(src)], str(dst_dir), True)
 
         mock_warn.assert_called_once()
 
@@ -1285,11 +1335,11 @@ class TestFilesDropped:
         dst_dir.mkdir()
         src = tmp_path / "a.txt"
         src.write_text("x")
-        window._current_dir = str(dst_dir)
+        window._files.current_dir = str(dst_dir)
 
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
-        window._on_files_dropped([str(src)], str(dst_dir), True)
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
+        window._files._on_files_dropped([str(src)], str(dst_dir), True)
 
         assert called
 
@@ -1304,12 +1354,12 @@ class TestWindowState:
         window._restore_window_state()  # no crash when nothing saved
 
     def test_close_event_saves_last_dir(self, window, tmp_path):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window.close()
         assert get_last_dir() == str(tmp_path)
 
     def test_close_event_no_dir_does_not_crash(self, window):
-        window._current_dir = None
+        window._files.current_dir = None
         window.close()  # no crash
 
     def test_close_event_saves_toolbar_when_enabled(self, window):
@@ -1375,13 +1425,13 @@ class TestAutoPreviewToggle:
     def test_toggled_on_calls_preview(self, window, monkeypatch):
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._on_auto_preview_toggled(True)
+        window._actions._on_auto_preview_toggled(True)
         assert called
 
     def test_toggled_off_stops_timer(self, window):
-        window._preview_timer.start(10000)
-        window._on_auto_preview_toggled(False)
-        assert not window._preview_timer.isActive()
+        window._actions._preview_timer.start(10000)
+        window._actions._on_auto_preview_toggled(False)
+        assert not window._actions._preview_timer.isActive()
 
 
 # ---------------------------------------------------------------------------
@@ -1416,8 +1466,8 @@ class TestMenuHandlers:
         from pbrenamer.ui.settings_dialog import SettingsDialog
 
         (tmp_path / "hello.jpeg").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.chkAutoPreview.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("normalize")
@@ -1445,12 +1495,12 @@ class TestMenuHandlers:
         from pbrenamer.ui.sidecar_dialog import SidecarDialog
 
         (tmp_path / "img.jpg").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         monkeypatch.setattr(SidecarDialog, "exec", lambda self: 0)
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
         window._on_sidecar_files()
         assert called
 
@@ -1459,6 +1509,56 @@ class TestMenuHandlers:
 
         monkeypatch.setattr(AboutDialog, "exec", lambda self: 0)
         window._on_about()
+
+
+class TestUserGuide:
+    def test_opens_url_in_interface_language(self, window, monkeypatch):
+        opened = []
+        monkeypatch.setattr(_mwmod.i18n, "current_language", lambda: "fr")
+        monkeypatch.setattr(
+            _mwmod.QDesktopServices, "openUrl", lambda url: opened.append(url)
+        )
+        window._ui.actionUserGuide.trigger()
+        assert [u.toString() for u in opened] == [
+            "https://pbrenamer.readthedocs.io/fr/latest/user_guide.html"
+        ]
+
+
+class TestKeyboardHelp:
+    def test_f1_in_help_menu(self, window):
+        action = window._ui.actionKeyboardHelp
+        assert action.shortcut().toString() == "F1"
+        menus = window.menuBar().findChildren(QMenu)
+        assert any(action in m.actions() for m in menus if m.title() == "Help")
+
+    def test_opens_non_modal_and_is_reused(self, window, qtbot):
+        window._ui.actionKeyboardHelp.trigger()
+        dlg = window._keyboard_help
+        qtbot.waitUntil(dlg.isVisible)
+        assert not dlg.isModal()
+        dlg.close()
+        window._ui.actionKeyboardHelp.trigger()
+        assert window._keyboard_help is dlg
+        assert dlg.isVisible()
+        dlg.close()
+
+    def test_content_lists_both_windows(self):
+        from pbrenamer.ui.keyboard_help import keyboard_html
+
+        html = keyboard_html()
+        for text in (
+            "Main window",
+            "Image viewer",
+            "F1",
+            "F2",
+            "Rename as shown in the Preview column",
+            "Fit window",
+            "Show / hide the metadata",
+            "Open the sidecar file",
+            "Copy the files and their sidecars",
+            "Zoom out centered on point",
+        ):
+            assert text in html
 
 
 # ---------------------------------------------------------------------------
@@ -1495,9 +1595,9 @@ class TestShortcutsMenu:
 
     def test_on_shortcut_valid_dir(self, window, tmp_path, monkeypatch):
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
         window._on_shortcut(str(tmp_path))
-        assert window._current_dir == str(tmp_path)
+        assert window._files.current_dir == str(tmp_path)
         assert called
 
     def test_on_shortcut_reloads_only_once(self, window, tmp_path, monkeypatch):
@@ -1506,14 +1606,14 @@ class TestShortcutsMenu:
         # already equal the target path at that point so its same-path guard
         # swallows the redundant call, leaving only the explicit reload here.
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
         window._on_shortcut(str(tmp_path))
         assert len(called) == 1
 
     def test_on_shortcut_nonexistent_noop(self, window):
-        original = window._current_dir
+        original = window._files.current_dir
         window._on_shortcut("/nonexistent/xyz/abc")
-        assert window._current_dir == original
+        assert window._files.current_dir == original
 
     def test_on_tree_context_menu_early_return(self, window, monkeypatch):
         # Line 1023: path is not a directory → early return before menu is shown.
@@ -1522,15 +1622,15 @@ class TestShortcutsMenu:
         monkeypatch.setattr(
             window._ui.treeDirectory, "indexAt", lambda pos: QModelIndex()
         )
-        window._current_dir = "/nonexistent/not_a_dir_xyz"
+        window._files.current_dir = "/nonexistent/not_a_dir_xyz"
         window._on_tree_context_menu(QPoint(0, 0))  # early return, no menu
 
     def test_on_tree_context_menu_no_current_dir(self, window):
-        window._current_dir = None
+        window._files.current_dir = None
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
 
     def test_on_tree_context_menu_shows_menu(self, window, tmp_path):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
 
     def test_on_tree_context_menu_add_chosen(
@@ -1539,7 +1639,7 @@ class TestShortcutsMenu:
         # Simulate the user choosing "Add as shortcut": exec returns the action
         # so that (chosen is add_action) is True → _add_shortcut is called.
         mock_qmenu.exec.return_value = mock_qmenu.addAction.return_value
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         called = []
         monkeypatch.setattr(window, "_add_shortcut", lambda path: called.append(path))
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
@@ -1573,33 +1673,37 @@ class TestShortcutsMenu:
 
 class TestFileInfoWindow:
     def test_on_file_info_creates_window(self, window):
-        window._on_file_info()
-        assert window._file_info is not None
+        window._files.show_file_info()
+        assert window._files._file_info is not None
 
     def test_on_file_info_reuses_existing(self, window):
-        window._on_file_info()
-        first = window._file_info
-        window._on_file_info()
-        assert window._file_info is first
+        window._files.show_file_info()
+        first = window._files._file_info
+        window._files.show_file_info()
+        assert window._files._file_info is first
 
     def test_on_file_selection_changed_no_info(self, window):
-        assert window._file_info is None
-        window._on_file_selection_changed()  # no crash
+        assert window._files._file_info is None
+        window._files._on_selection_changed()  # no crash
 
     def test_on_file_selection_changed_hidden_no_refresh(self, window, monkeypatch):
-        window._on_file_info()
-        window._file_info.hide()
+        window._files.show_file_info()
+        window._files._file_info.hide()
         called = []
-        monkeypatch.setattr(window, "_refresh_file_info", lambda: called.append(1))
-        window._on_file_selection_changed()
+        monkeypatch.setattr(
+            window._files, "_refresh_file_info", lambda: called.append(1)
+        )
+        window._files._on_selection_changed()
         assert not called
 
     def test_on_file_selection_changed_visible_refreshes(self, window, monkeypatch):
-        window._on_file_info()
-        monkeypatch.setattr(window._file_info, "isVisible", lambda: True)
+        window._files.show_file_info()
+        monkeypatch.setattr(window._files._file_info, "isVisible", lambda: True)
         called = []
-        monkeypatch.setattr(window, "_refresh_file_info", lambda: called.append(1))
-        window._on_file_selection_changed()
+        monkeypatch.setattr(
+            window._files, "_refresh_file_info", lambda: called.append(1)
+        )
+        window._files._on_selection_changed()
         assert called
 
     def test_on_file_selection_changed_auto_preview_refreshes(
@@ -1608,7 +1712,7 @@ class TestFileInfoWindow:
         window._ui.chkAutoPreview.setChecked(True)
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         assert called
 
     def test_on_file_selection_changed_no_auto_preview_no_refresh(
@@ -1617,35 +1721,35 @@ class TestFileInfoWindow:
         window._ui.chkAutoPreview.setChecked(False)
         called = []
         monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         assert not called
 
     def test_refresh_file_info_no_window_noop(self, window):
-        window._refresh_file_info()  # no crash
+        window._files._refresh_file_info()  # no crash
 
     def test_refresh_file_info_no_selection(self, window, tmp_path):
         (tmp_path / "f.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
-        window._on_file_info()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._files.show_file_info()
         window._ui.tblFiles.clearSelection()
-        window._refresh_file_info()
+        window._files._refresh_file_info()
 
     def test_refresh_file_info_single_selection(self, window, tmp_path):
         f = tmp_path / "file.txt"
         f.write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
-        window._on_file_info()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._files.show_file_info()
         window._ui.tblFiles.setCurrentItem(window._ui.tblFiles.topLevelItem(0))
-        window._refresh_file_info()
+        window._files._refresh_file_info()
 
     def test_refresh_file_info_multi_selection(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
-        window._on_file_info()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._files.show_file_info()
         from PySide6.QtWidgets import QAbstractItemView
 
         window._ui.tblFiles.setSelectionMode(
@@ -1653,7 +1757,7 @@ class TestFileInfoWindow:
         )
         for i in range(window._ui.tblFiles.topLevelItemCount()):
             window._ui.tblFiles.topLevelItem(i).setSelected(True)
-        window._refresh_file_info()
+        window._files._refresh_file_info()
         window._ui.tblFiles.setSelectionMode(
             QAbstractItemView.SelectionMode.SingleSelection
         )
@@ -1663,22 +1767,22 @@ class TestFileInfoWindow:
 
         f = tmp_path / "file.txt"
         f.write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = window._ui.tblFiles.topLevelItem(0)
         called = []
         monkeypatch.setattr(
             QDesktopServices, "openUrl", staticmethod(lambda url: called.append(url))
         )
-        window._on_file_double_clicked(item)
+        window._files._on_item_double_clicked(item, 0)
         assert called
 
     def test_refresh_file_info_item_without_path(self, window, tmp_path):
         # Line 1068: selected item exists but its UserRole data is None/empty
         # → show_empty() is called.
-        window._on_file_info()
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.show_file_info()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         # Manually add an item whose UserRole data is None
         from PySide6.QtWidgets import QTreeWidgetItem
 
@@ -1686,10 +1790,15 @@ class TestFileInfoWindow:
         ghost_item.setData(0, Qt.ItemDataRole.UserRole, None)
         window._ui.tblFiles.addTopLevelItem(ghost_item)
         window._ui.tblFiles.setCurrentItem(ghost_item)
-        window._refresh_file_info()  # path is None → show_empty()
+        window._files._refresh_file_info()  # path is None → show_empty()
 
-    def test_on_files_context_menu(self, window):
-        window._on_files_context_menu(window._ui.tblFiles.pos())
+    def test_on_files_context_menu(self, window, monkeypatch):
+        from pbrenamer.ui import file_list
+
+        shown = []
+        monkeypatch.setattr(file_list, "_exec_menu", lambda m, p: shown.append(m))
+        window._files._on_context_menu(window._ui.tblFiles.pos())
+        assert shown == [window._ui.menuImages]
 
 
 # ---------------------------------------------------------------------------
@@ -1718,22 +1827,22 @@ class TestOnPreview:
 
     def test_guard_no_current_dir(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = None
+        window._files.current_dir = None
         window._ui.cmbPatternSearch.setCurrentText("a")
         window._on_preview()  # returns before accessing tblFiles
 
     def test_guard_no_search(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.cmbPatternSearch.setCurrentText("")
         window._on_preview()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == ""
 
     def test_guard_invalid_regex(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radRegex.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("[invalid")
         window._ui.cmbPatternDest.setCurrentText("x")
@@ -1742,8 +1851,8 @@ class TestOnPreview:
 
     def test_guard_invalid_replace(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{bad{")
@@ -1754,8 +1863,8 @@ class TestOnPreview:
 
     def test_plain_rename_no_match_empty_preview(self, window, tmp_path):
         (tmp_path / "hello.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -1767,8 +1876,8 @@ class TestOnPreview:
 
     def test_plain_rename_success_modify_extension(self, window, tmp_path):
         (tmp_path / "hello.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("modify")
@@ -1780,8 +1889,8 @@ class TestOnPreview:
 
     def test_plain_rename_success_keep_ext(self, window, tmp_path):
         (tmp_path / "hello.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -1793,8 +1902,8 @@ class TestOnPreview:
 
     def test_plain_rename_lowercase_extension(self, window, tmp_path):
         (tmp_path / "hello.JPG").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("lower")
@@ -1806,8 +1915,8 @@ class TestOnPreview:
 
     def test_plain_rename_uppercase_extension(self, window, tmp_path):
         (tmp_path / "hello.jpg").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("upper")
@@ -1820,8 +1929,8 @@ class TestOnPreview:
     def test_plain_rename_normalize_extension_hit(self, window, tmp_path):
         set_extension_normalization([("jpeg", "jpg")])
         (tmp_path / "hello.jpeg").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("normalize")
@@ -1834,8 +1943,8 @@ class TestOnPreview:
     def test_plain_rename_normalize_extension_miss_unchanged(self, window, tmp_path):
         set_extension_normalization([("jpeg", "jpg")])
         (tmp_path / "hello.png").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("normalize")
@@ -1847,8 +1956,8 @@ class TestOnPreview:
 
     def test_field_error_non_newnum(self, window, tmp_path, monkeypatch):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{0}")
@@ -1856,7 +1965,7 @@ class TestOnPreview:
         def _raise(*a, **kw):
             raise _repl.FieldResolutionError("artist")
 
-        monkeypatch.setattr(window, "_do_rename", _raise)
+        monkeypatch.setattr(_planmod, "_apply_rule", _raise)
         window._on_preview()
         item = window._ui.tblFiles.topLevelItem(0)
         assert "artist" in item.text(1)
@@ -1865,8 +1974,8 @@ class TestOnPreview:
 
     def test_field_error_no_matching_namespace(self, window, tmp_path, monkeypatch):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{im:Make}{vi:encodeddate}")
@@ -1876,7 +1985,7 @@ class TestOnPreview:
                 "im:Make", namespaces=frozenset({"im:", "vi:"})
             )
 
-        monkeypatch.setattr(window, "_do_rename", _raise)
+        monkeypatch.setattr(_planmod, "_apply_rule", _raise)
         window._on_preview()
         item = window._ui.tblFiles.topLevelItem(0)
         # The message names both namespaces, not just the first field —
@@ -1890,8 +1999,8 @@ class TestOnPreview:
 
     def test_newnum_basic(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -1901,15 +2010,45 @@ class TestOnPreview:
         window._on_preview()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == "1.txt"
 
-    def test_newnum_raw_is_none(self, window, tmp_path, monkeypatch):
-        # _do_rename returns (None, None) inside the newnum loop → break → no preview
+    @pytest.mark.parametrize(
+        ("replace", "expected"),
+        [
+            ("{dest}/{0}", "no destination"),
+            ("x{dest}/{0}", "must start"),
+            ("../{0}", "invalid path"),
+        ],
+    )
+    def test_target_path_errors(self, window, tmp_path, replace, expected):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._ui.radPattern.setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("{X}")
+        window._ui.cmbPatternDest.setCurrentText(replace)
+        window._on_preview()
+        item = window._ui.tblFiles.topLevelItem(0)
+        assert expected in item.text(1)
+        assert item.data(1, Qt.ItemDataRole.UserRole) is True
+
+    def test_absolute_path_error(self, window, tmp_path):
+        (tmp_path / "file.txt").write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbPatternSearch.setCurrentText("file")
+        window._ui.cmbPatternDest.setCurrentText("/abs")
+        window._on_preview()
+        assert "absolute" in window._ui.tblFiles.topLevelItem(0).text(1)
+
+    def test_newnum_raw_is_none(self, window, tmp_path, monkeypatch):
+        # the rule does not apply (no match) → no preview
+        (tmp_path / "file.txt").write_text("x")
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{newnum}")
-        monkeypatch.setattr(window, "_do_rename", lambda *a, **kw: (None, None))
+        monkeypatch.setattr(_planmod, "_apply_rule", lambda *a, **kw: None)
         window._on_preview()
         assert window._ui.tblFiles.topLevelItem(0).text(1) == ""
 
@@ -1918,8 +2057,8 @@ class TestOnPreview:
         # loop increments k → a.txt gets "2.txt"
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "1.txt").write_text("existing")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         item_1 = _find_item(window, str(tmp_path / "1.txt"))
         # Select only a.txt so 1.txt is not in active_items
@@ -1937,8 +2076,8 @@ class TestOnPreview:
 
     def test_newnum_field_error(self, window, tmp_path, monkeypatch):
         (tmp_path / "file.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbPatternSearch.setCurrentText("{L}")
         window._ui.cmbPatternDest.setCurrentText("{newnum}")
@@ -1946,7 +2085,7 @@ class TestOnPreview:
         def _raise(*a, **kw):
             raise _repl.FieldResolutionError("artist")
 
-        monkeypatch.setattr(window, "_do_rename", _raise)
+        monkeypatch.setattr(_planmod, "_apply_rule", _raise)
         window._on_preview()
         item = window._ui.tblFiles.topLevelItem(0)
         assert "artist" in item.text(1)
@@ -1956,8 +2095,8 @@ class TestOnPreview:
         # Two files → 1.txt and 2.txt
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         window._ui.radPattern.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -2004,7 +2143,7 @@ class TestSidecarModeGating:
         )
         assert window._ui.chkSidecarMode.isChecked()
         assert not window._ui.chkSidecarMode.isEnabled()
-        assert window._sidecar_mode_active() is False
+        assert window._files.sidecar_mode_active() is False
 
     def test_reenabling_keeps_checked_state_active(self, window):
         window._ui.chkSidecarMode.setChecked(True)
@@ -2015,15 +2154,15 @@ class TestSidecarModeGating:
             window._ui.cmbExtensionMode.findData("lower")
         )
         assert window._ui.chkSidecarMode.isEnabled()
-        assert window._sidecar_mode_active() is True
+        assert window._files.sidecar_mode_active() is True
 
     def test_extension_mode_change_reloads_when_checkbox_checked(
         self, window, tmp_path, monkeypatch
     ):
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
         called = []
-        monkeypatch.setattr(window, "_reload_files", lambda: called.append(1))
+        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("lower")
         )
@@ -2046,16 +2185,16 @@ class TestSidecarGroupingAndColoring:
     def test_sidecar_row_colored_and_grouped(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         sidecar_item = _find_item(window, str(tmp_path / "img.xmp"))
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
-        assert sidecar_item.foreground(0).color() == _mwmod._SIDECAR_COLOR
-        assert base_item.foreground(0).color() != _mwmod._SIDECAR_COLOR
-        assert window._sidecar_result.sidecar_of[str(tmp_path / "img.xmp")] == str(
-            tmp_path / "img.jpg"
-        )
+        assert sidecar_item.foreground(0).color() == _flmod._SIDECAR_COLOR
+        assert base_item.foreground(0).color() != _flmod._SIDECAR_COLOR
+        assert window._files._sidecar_result.sidecar_of[
+            str(tmp_path / "img.xmp")
+        ] == str(tmp_path / "img.jpg")
 
     def test_ambiguous_same_category_shows_error_and_disables_rename(
         self, window, tmp_path
@@ -2064,12 +2203,12 @@ class TestSidecarGroupingAndColoring:
         (tmp_path / "xxx.xml").write_text("x")
         (tmp_path / "xxx.jpg").write_text("x")
         (tmp_path / "xxx.png").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         for name in ("xxx.xml", "xxx.jpg", "xxx.png"):
             item = _find_item(window, str(tmp_path / name))
-            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+            assert item.foreground(0).color() == _flmod._ERROR_COLOR
             assert item.text(1) != ""
             assert item.data(1, Qt.ItemDataRole.UserRole) is True
         assert not window._ui.btnRename.isEnabled()
@@ -2082,13 +2221,13 @@ class TestSidecarGroupingAndColoring:
         (tmp_path / "xxx.jpg").write_text("x")
         (tmp_path / "xxx.png").write_text("x")
         (tmp_path / "yyy.jpg").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
 
         yyy_item = _find_item(window, str(tmp_path / "yyy.jpg"))
         yyy_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
@@ -2102,7 +2241,7 @@ class TestSidecarGroupingAndColoring:
         for name in ("xxx.xml", "xxx.jpg", "xxx.png"):
             item = _find_item(window, str(tmp_path / name))
             assert item.text(1) == ""
-            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+            assert item.foreground(0).color() == _flmod._ERROR_COLOR
         assert window._ui.btnRename.isEnabled()
 
     def test_ambiguous_cross_category_shows_error(self, window, tmp_path):
@@ -2111,48 +2250,48 @@ class TestSidecarGroupingAndColoring:
         (tmp_path / "xxx.xml").write_text("x")
         (tmp_path / "xxx.png").write_text("x")
         (tmp_path / "xxx.avi").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         for name in ("xxx.xml", "xxx.png", "xxx.avi"):
             item = _find_item(window, str(tmp_path / name))
-            assert item.foreground(0).color() == _mwmod._ERROR_COLOR
+            assert item.foreground(0).color() == _flmod._ERROR_COLOR
 
     def test_suffix_scoped_to_one_category_is_not_ambiguous(self, window, tmp_path):
         set_sidecar_suffixes("image", ["xml"])
         (tmp_path / "xxx.xml").write_text("x")
         (tmp_path / "xxx.png").write_text("x")
         (tmp_path / "xxx.avi").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         xml_item = _find_item(window, str(tmp_path / "xxx.xml"))
         avi_item = _find_item(window, str(tmp_path / "xxx.avi"))
-        assert xml_item.foreground(0).color() == _mwmod._SIDECAR_COLOR
-        assert avi_item.foreground(0).color() != _mwmod._ERROR_COLOR
-        assert window._sidecar_result.sidecar_of[str(tmp_path / "xxx.xml")] == str(
-            tmp_path / "xxx.png"
-        )
+        assert xml_item.foreground(0).color() == _flmod._SIDECAR_COLOR
+        assert avi_item.foreground(0).color() != _flmod._ERROR_COLOR
+        assert window._files._sidecar_result.sidecar_of[
+            str(tmp_path / "xxx.xml")
+        ] == str(tmp_path / "xxx.png")
 
     def test_errors_visible_before_preview_is_run(self, window, tmp_path):
         set_sidecar_suffixes("image", ["xml"])
         (tmp_path / "xxx.xml").write_text("x")
         (tmp_path / "xxx.jpg").write_text("x")
         (tmp_path / "xxx.png").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         item = _find_item(window, str(tmp_path / "xxx.xml"))
         assert item.text(1) != ""
 
     def test_mode_off_no_coloring_no_grouping(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
-        assert window._sidecar_result is None
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
+        assert window._files._sidecar_result is None
         item = _find_item(window, str(tmp_path / "img.xmp"))
-        assert item.foreground(0).color() != _mwmod._SIDECAR_COLOR
+        assert item.foreground(0).color() != _flmod._SIDECAR_COLOR
 
 
 class TestSidecarSelectionLinking:
@@ -2163,15 +2302,15 @@ class TestSidecarSelectionLinking:
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
         (tmp_path / "img.info.json").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
 
     def test_selecting_base_selects_sidecars(self, window, tmp_path):
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
             for i in window._ui.tblFiles.selectedItems()
@@ -2186,7 +2325,7 @@ class TestSidecarSelectionLinking:
         self._setup_group(window, tmp_path)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
             for i in window._ui.tblFiles.selectedItems()
@@ -2200,11 +2339,11 @@ class TestSidecarSelectionLinking:
     def test_mode_off_no_selection_linking(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
             for i in window._ui.tblFiles.selectedItems()
@@ -2215,14 +2354,14 @@ class TestSidecarSelectionLinking:
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()
-        assert window._linking_selection is False
+        window._files._on_selection_changed()
+        assert window._files._linking_selection is False
 
     def test_already_full_selection_is_noop(self, window, tmp_path):
         self._setup_group(window, tmp_path)
         for name in ("img.jpg", "img.xmp", "img.info.json"):
             _find_item(window, str(tmp_path / name)).setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
             for i in window._ui.tblFiles.selectedItems()
@@ -2235,7 +2374,7 @@ class TestSidecarSelectionLinking:
         # Ctrl+click toggle apart from a plain click/Shift range-select,
         # which always replaces the whole selection.
         monkeypatch.setattr(
-            _mwmod.QApplication,
+            _flmod.QApplication,
             "keyboardModifiers",
             staticmethod(lambda: Qt.KeyboardModifier.ControlModifier),
         )
@@ -2246,13 +2385,13 @@ class TestSidecarSelectionLinking:
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()  # whole group gets selected
+        window._files._on_selection_changed()  # whole group gets selected
 
         # Simulate a Ctrl+click toggling one already-selected sidecar off.
         self._simulate_ctrl_held(monkeypatch)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(False)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
@@ -2266,12 +2405,12 @@ class TestSidecarSelectionLinking:
         self._setup_group(window, tmp_path)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(True)
-        window._on_file_selection_changed()  # whole group gets selected
+        window._files._on_selection_changed()  # whole group gets selected
 
         self._simulate_ctrl_held(monkeypatch)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(False)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
@@ -2284,19 +2423,19 @@ class TestSidecarSelectionLinking:
     ):
         self._setup_group(window, tmp_path)
         (tmp_path / "solo.txt").write_text("x")
-        window._reload_files()
+        window._files.reload()
 
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()  # whole group selected
+        window._files._on_selection_changed()  # whole group selected
         solo_item = _find_item(window, str(tmp_path / "solo.txt"))
         solo_item.setSelected(True)
-        window._on_file_selection_changed()  # solo file added on top
+        window._files._on_selection_changed()  # solo file added on top
 
         # Ctrl+click toggling the unrelated solo file back off.
         self._simulate_ctrl_held(monkeypatch)
         solo_item.setSelected(False)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
@@ -2313,17 +2452,17 @@ class TestSidecarSelectionLinking:
     ):
         self._setup_group(window, tmp_path)
         (tmp_path / "solo.txt").write_text("x")
-        window._reload_files()
+        window._files.reload()
 
         solo_item = _find_item(window, str(tmp_path / "solo.txt"))
         solo_item.setSelected(True)
-        window._on_file_selection_changed()  # solo alone selected
+        window._files._on_selection_changed()  # solo alone selected
 
         # Ctrl+click adding a group member on top of the existing selection.
         self._simulate_ctrl_held(monkeypatch)
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         side_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
@@ -2346,7 +2485,7 @@ class TestSidecarSelectionLinking:
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))
         base_item.setSelected(True)
-        window._on_file_selection_changed()  # whole group selected
+        window._files._on_selection_changed()  # whole group selected
 
         # A plain click on any single member of the group (Qt's own
         # single-click behaviour already replaces the selection with just
@@ -2354,7 +2493,7 @@ class TestSidecarSelectionLinking:
         side_item = _find_item(window, str(tmp_path / "img.xmp"))
         window._ui.tblFiles.clearSelection()
         side_item.setSelected(True)
-        window._on_file_selection_changed()
+        window._files._on_selection_changed()
 
         selected_paths = {
             i.data(0, Qt.ItemDataRole.UserRole)
@@ -2369,23 +2508,23 @@ class TestSidecarSelectionLinking:
     def test_active_before_any_reload_is_noop(self, window):
         # Sidecar mode checked but no directory has been loaded yet, so
         # self._sidecar_result is still None.
-        window._current_dir = None
+        window._files.current_dir = None
         window._ui.chkSidecarMode.setChecked(True)
-        window._on_file_selection_changed()  # no crash, nothing to link
+        window._files._on_selection_changed()  # no crash, nothing to link
 
     def test_empty_selection_is_noop(self, window, tmp_path):
         self._setup_group(window, tmp_path)
         window._ui.tblFiles.clearSelection()
-        window._on_file_selection_changed()  # no crash, nothing to link
+        window._files._on_selection_changed()  # no crash, nothing to link
 
 
 class TestSidecarPreview:
     def test_sidecar_preview_follows_base_stem(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -2401,18 +2540,18 @@ class TestSidecarPreview:
     def test_sidecar_preview_preserves_verbatim_suffix_case(
         self, window, tmp_path, monkeypatch
     ):
-        real_build = _mwmod.sidecar.build_sidecar_groups
+        real_build = _flmod.sidecar.build_sidecar_groups
 
         def fake_build(files, config, **kwargs):
             return real_build(files, config, is_case_sensitive=lambda _d: False)
 
-        monkeypatch.setattr(_mwmod.sidecar, "build_sidecar_groups", fake_build)
+        monkeypatch.setattr(_flmod.sidecar, "build_sidecar_groups", fake_build)
 
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.XMP").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -2426,9 +2565,9 @@ class TestSidecarPreview:
     def test_sidecar_preview_blank_when_base_has_no_preview(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("x")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -2444,9 +2583,9 @@ class TestSidecarRenameEndToEnd:
     def test_group_rename_on_disk_single_undo_batch(self, window, tmp_path):
         (tmp_path / "img.jpg").write_text("x")
         (tmp_path / "img.xmp").write_text("y")
-        window._current_dir = str(tmp_path)
+        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
-        window._reload_files()
+        window._files.reload()
         window._ui.radPlainText.setChecked(True)
         window._ui.cmbExtensionMode.setCurrentIndex(
             window._ui.cmbExtensionMode.findData("keep")
@@ -2473,31 +2612,31 @@ class TestSidecarRenameEndToEnd:
 class TestRefreshConflicts:
     def test_no_previews_disables_rename(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         # Leave column 1 empty → no previews
         window._ui.btnRename.setEnabled(True)
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
 
     def test_all_errors_disables_rename_and_sets_error_color(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = window._ui.tblFiles.topLevelItem(0)
         _set_preview(item, "⚠ artist unavailable", is_error=True)
         window._ui.btnRename.setEnabled(True)
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item) == "#cc0000"
 
     def test_no_conflict_enables_rename_with_preview_color(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(tmp_path / "a.txt"))
         _set_preview(item, "renamed.txt")  # doesn't exist on disk → no conflict
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert window._ui.btnRename.isEnabled()
         assert _item_color(item) == "#0066cc"
 
@@ -2505,25 +2644,25 @@ class TestRefreshConflicts:
         self, window, tmp_path
     ):
         (tmp_path / "a.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item = _find_item(window, str(tmp_path / "a.txt"))
         _set_preview(item, "a.txt")  # same as original → unchanged
         window._ui.btnRename.setEnabled(True)
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item) == "#888888"
 
     def test_duplicate_target_gives_conflict_color(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         item_b = _find_item(window, str(tmp_path / "b.txt"))
         _set_preview(item_a, "same.txt")
         _set_preview(item_b, "same.txt")
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item_a) == "#cc0000"
         assert _item_color(item_b) == "#cc0000"
@@ -2532,13 +2671,13 @@ class TestRefreshConflicts:
         # a.txt preview is b.txt, which already exists on disk and is not a.txt
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("existing")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         item_b = _find_item(window, str(tmp_path / "b.txt"))
         _set_preview(item_a, "b.txt")  # target already exists
         # b.txt has no preview → not in active set
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item_a) == "#cc0000"
         _ = item_b
@@ -2547,13 +2686,13 @@ class TestRefreshConflicts:
         # has_field_error=True blocks rename even when other items have valid previews
         (tmp_path / "a.txt").write_text("x")
         (tmp_path / "b.txt").write_text("x")
-        window._current_dir = str(tmp_path)
-        window._reload_files()
+        window._files.current_dir = str(tmp_path)
+        window._files.reload()
         item_a = _find_item(window, str(tmp_path / "a.txt"))
         item_b = _find_item(window, str(tmp_path / "b.txt"))
         _set_preview(item_a, "⚠ artist unavailable", is_error=True)
         _set_preview(item_b, "renamed.txt")
-        window._refresh_conflicts()
+        window._files.refresh_conflicts()
         assert not window._ui.btnRename.isEnabled()
         assert _item_color(item_a) == "#cc0000"  # error color
         assert _item_color(item_b) == "#0066cc"  # preview color
@@ -2602,8 +2741,46 @@ class TestWindowStateRestore:
         qtbot.addWidget(w)
         w._restore_splitters(None, None)  # covers both "no saved splitter" branches
 
+    def test_restore_window_state_applies_saved_data(self, qtbot, monkeypatch):
+        w = MainWindow()
+        qtbot.addWidget(w)
+        ws = MagicMock()
+        ws.load.return_value = ((10, 20, 1000, 700), [200, 800], [300, 400])
+        w._window_state = ws
+        calls = []
+        monkeypatch.setattr(w, "move", lambda x, y: calls.append(("move", x, y)))
+        monkeypatch.setattr(w, "resize", lambda cw, ch: calls.append(("size", cw, ch)))
+        for name in ("splitterMain", "splitterRight"):
+            splitter = getattr(w._ui, name)
+            monkeypatch.setattr(
+                splitter, "setSizes", lambda s, n=name: calls.append((n, s))
+            )
+        w._restore_window_state()
+        assert calls == [
+            ("move", 10, 20),
+            ("size", 1000, 700),
+            ("splitterMain", [200, 800]),
+            ("splitterRight", [300, 400]),
+        ]
+
+    def test_close_then_reopen_round_trip(self, qtbot):
+        """What closeEvent saves, the next window restores."""
+        w = MainWindow()
+        qtbot.addWidget(w)
+        w.resize(1234, 765)
+        w.close()
+        geo, sm, sr = w._window_state.load()
+        assert geo[2:] == (1234, 765)
+        assert sm == list(w._ui.splitterMain.sizes())
+        assert sr == list(w._ui.splitterRight.sizes())
+
+        w2 = MainWindow()
+        qtbot.addWidget(w2)
+        w2._restore_window_state()
+        assert (w2.width(), w2.height()) == (1234, 765)
+
     def test_on_field_requested_inserts_into_dest(self, window):
         w = window
         w._ui.cmbPatternDest.lineEdit().clear()
-        w._on_field_requested("{X}")
+        w._pattern.insert_field("{X}")
         assert "{X}" in w._ui.cmbPatternDest.lineEdit().text()

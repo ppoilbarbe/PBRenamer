@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "Contents"
+msgstr "Inhalt"
+
+# ==AUTO== Automatically translated
+msgid "Project"
+msgstr "Projekt"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**PBRenamer** is a graphical batch file renaming utility for Linux, "
+"macOS, and Windows.  It combines a live-preview rename table with a "
+"flexible pattern engine that supports wildcards, regular expressions, "
+"plain-text substitution, metadata fields (EXIF/IPTC, audio tags, video "
+"properties), and a headless (no-GUI) CLI mode for scripting."
+msgstr ""
+"**PBRenamer** ist ein grafisches Werkzeug zum stapelweisen Umbenennen von"
+" Dateien für Linux, macOS und Windows.  Es verbindet eine "
+"Umbenennungstabelle mit Live-Vorschau mit einer flexiblen Muster-Engine, "
+"die Platzhalter, reguläre Ausdrücke, einfache Textersetzung, "
+"Metadatenfelder (EXIF/IPTC, Audio-Tags, Videoeigenschaften) und einen "
+"Kommandozeilenmodus ohne Oberfläche für Skripte unterstützt."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Its **schema mode** sorts photos and videos into a folder tree built from"
+" a few fields, with numbering, sidecar files and an image viewer; "
+"**profiles** keep the settings of each way of working.  See the "
+":doc:`user_guide`."
+msgstr ""
+"Sein **Schemamodus** sortiert Fotos und Videos in einen Ordnerbaum, der "
+"aus wenigen Feldern gebildet wird, mit Nummerierung, Sidecar-Dateien und "
+"Bildbetrachter; **Profile** bewahren die Einstellungen jeder "
+"Arbeitsweise.  Siehe das :doc:`user_guide`."

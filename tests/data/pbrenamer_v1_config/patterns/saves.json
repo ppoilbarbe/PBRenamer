@@ -1,0 +1,26 @@
+[
+  {
+    "name": "multi_french",
+    "search_pattern": "multi",
+    "search_mode": "pattern",
+    "case_insensitive": true,
+    "replace_pattern": "FRENCH",
+    "separator": 0,
+    "remove_accents": false,
+    "remove_duplicates": false,
+    "case": 0,
+    "extension_mode": "keep"
+  },
+  {
+    "name": "photos",
+    "search_pattern": "IMG_{#}",
+    "search_mode": "pattern",
+    "case_insensitive": false,
+    "replace_pattern": "Photo_{1}",
+    "separator": 0,
+    "remove_accents": true,
+    "remove_duplicates": false,
+    "case": 2,
+    "extension_mode": "lower"
+  }
+]

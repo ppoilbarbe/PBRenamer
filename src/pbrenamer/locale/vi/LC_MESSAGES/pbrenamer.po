@@ -19,6 +19,77 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
+msgid "EXIF"
+msgstr "EXIF"
+
+# ==AUTO== Automatically translated
+msgid "IPTC"
+msgstr "IPTC"
+
+# ==AUTO== Automatically translated
+msgid "XMP"
+msgstr "XMP"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar file"
+msgstr "Tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid "XMP (sidecar)"
+msgstr "XMP (sidecar)"
+
+# ==AUTO== Automatically translated
+msgid "No EXIF orientation tag to apply."
+msgstr "Không có thẻ định hướng EXIF để áp dụng."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "Giá trị định hướng EXIF không được hỗ trợ: {v}"
+
+# ==AUTO== Automatically translated
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr ""
+"Tệp này có vẻ bị cắt cụt (thiếu dữ liệu ở cuối), có thể do máy ảnh ghi "
+"không hoàn chỉnh. Không thể xoay không mất dữ liệu nếu không bỏ các hàng "
+"bị ảnh hưởng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran không khả dụng.\n"
+"Xoay JPEG không mất dữ liệu yêu cầu jpegtran.\n"
+"Cài đặt libjpeg-turbo để bật tính năng này."
+
+# ==AUTO== Automatically translated
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "Lược đồ chứa nhiều trường số (chỉ cho phép một)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "Trường “{field}” chứa ký tự bị cấm “{char}”."
+
+# ==AUTO== Automatically translated
+msgid "The schema is empty: fill in at least one field."
+msgstr "Lược đồ trống: hãy điền ít nhất một trường."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "Dấu đánh dấu video chứa ký tự bị cấm “{char}”."
+
+# ==AUTO== Automatically translated
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr "Lược đồ không có trường số nào (dùng “#” để định nghĩa bộ đếm)."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
 msgstr "{name!r} có thể là sidecar của nhiều tệp gốc: {owners}"
@@ -56,6 +127,49 @@ msgid "Videos"
 msgstr "Video"
 
 # ==AUTO== Automatically translated
+msgid "Open with"
+msgstr "Mở bằng"
+
+# ==AUTO== Automatically translated
+msgid "Choose an application:"
+msgstr "Chọn ứng dụng:"
+
+# ==AUTO== Automatically translated
+msgid "Application name:"
+msgstr "Tên ứng dụng:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr ""
+"Tên hồ sơ “{name}” không hợp lệ: dùng chữ cái, chữ số, “-” và “_” (dấu "
+"“.” ở đầu sẽ ẩn hồ sơ)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr "Tên hồ sơ “{name}” không hợp lệ: dùng chữ cái, chữ số, “-” và “_”."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "Không tìm thấy hồ sơ “{name}”."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "Hồ sơ “{name}” đã tồn tại."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr "Hồ sơ “{name}” là hồ sơ hiển thị cuối cùng: không thể xóa hoặc ẩn."
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "Giới thiệu về PBRenamer"
 
@@ -84,20 +198,40 @@ msgid "PySide6 version:"
 msgstr "Phiên bản PySide6:"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "Đổi tên ({n})"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "Đổi tên"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Hoàn tác (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Hoàn tác lô đổi tên cuối cùng"
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Thông tin tệp"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Trường"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Mô tả"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Giá trị"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Thông tin tệp — {name}"
 
 # ==AUTO== Automatically translated
 msgid "Image"
@@ -120,29 +254,12 @@ msgid "Other"
 msgstr "Khác"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Thông tin tệp — {name}"
-
-# ==AUTO== Automatically translated
 msgid "File:"
 msgstr "Tệp:"
 
 # ==AUTO== Automatically translated
 msgid "Type:"
 msgstr "Loại:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Siêu dữ liệu hình ảnh (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Siêu dữ liệu âm thanh"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Siêu dữ liệu video"
 
 # ==AUTO== Automatically translated
 msgid "Select a single file to display its information."
@@ -153,68 +270,110 @@ msgid "Select a file to display its information."
 msgstr "Chọn một tệp để hiển thị thông tin của nó."
 
 # ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Trường phổ quát"
+msgid "Original"
+msgstr "Gốc"
 
 # ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Ngày hôm nay"
+msgid "Preview"
+msgstr "Xem trước"
 
 # ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Ngày và giờ hiện tại"
+msgid "Thumbnail"
+msgstr "Hình thu nhỏ"
 
 # ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Ngày/giờ sửa đổi tệp"
+msgid "Sidecar"
+msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "Không có"
+msgid "No sidecar: double-click to create one"
+msgstr "Không có sidecar: nhấp đúp để tạo"
 
 # ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Ngày/giờ tạo tệp"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "Không thể tạo {name}: {error}"
 
 # ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Tên thư mục cha"
+msgid "cannot move/copy a folder into itself"
+msgstr "không thể di chuyển/sao chép một thư mục vào chính nó"
 
 # ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Trường hàng loạt"
+msgid "Move errors"
+msgstr "Lỗi di chuyển"
 
 # ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Tính toán"
+msgid "Copy errors"
+msgstr "Lỗi sao chép"
 
 # ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Toàn bộ văn bản khớp"
+msgid "Confirm overwrite"
+msgstr "Xác nhận ghi đè"
 
 # ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Nhóm chụp"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} mục đã tồn tại trong {dir} và sẽ bị ghi đè."
 
 # ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Bộ đếm tự tăng"
+msgid "Overwrite"
+msgstr "Ghi đè"
 
 # ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Bộ đếm không xung đột"
+msgid "Skip"
+msgstr "Bỏ qua"
 
 # ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Nhóm regex có tên"
+msgid "▲ Move up"
+msgstr "▲ Di chuyển lên"
 
 # ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "Chèn vào trường thay thế"
+msgid "▼ Move down"
+msgstr "▼ Di chuyển xuống"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↓"
+msgstr "Sắp xếp ↓"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in ascending order"
+msgstr "Sắp xếp danh sách theo thứ tự tăng dần"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↑"
+msgstr "Sắp xếp ↑"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in descending order"
+msgstr "Sắp xếp danh sách theo thứ tự giảm dần"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "Xóa"
+
+# ==AUTO== Automatically translated
+msgid "Clear all"
+msgstr "Xóa tất cả"
+
+# ==AUTO== Automatically translated
+msgid "Clear history"
+msgstr "Xóa lịch sử"
+
+# ==AUTO== Automatically translated
+msgid "Clear all values from this history?"
+msgstr "Xóa tất cả các giá trị trong lịch sử này?"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Bộ lọc sidecar"
 
 # ==AUTO== Automatically translated
 msgid "History"
 msgstr "Lịch sử"
+
+# ==AUTO== Automatically translated
+msgid "Patterns"
+msgstr "Mẫu"
 
 # ==AUTO== Automatically translated
 msgid "Search"
@@ -272,10 +431,6 @@ msgid "Delete the selected search history entries"
 msgstr "Xóa các mục lịch sử tìm kiếm đã chọn"
 
 # ==AUTO== Automatically translated
-msgid "Clear all"
-msgstr "Xóa tất cả"
-
-# ==AUTO== Automatically translated
 msgid "Remove all search history entries"
 msgstr "Xóa tất cả mục lịch sử tìm kiếm"
 
@@ -312,16 +467,409 @@ msgid "Delete the entire replacement pattern history"
 msgstr "Xóa toàn bộ lịch sử mẫu thay thế"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Mẫu"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Không xác định được mẫu cho “{name}”.\n"
+"Không phần nào của tên tệp khớp với lịch sử của trường."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Xác nhận xóa"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Không thể chuyển vào thùng rác: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Lỗi xóa"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Chuyển {count} tệp vào thùng rác?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Chuyển vào thùng rác:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Xóa vĩnh viễn {count} tệp?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Xóa vĩnh viễn:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Không thể xoay"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Không thể xoay {n} tệp."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} tệp đã được xoay."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} thẻ hướng EXIF đã được đặt lại."
+
+# ==AUTO== Automatically translated
+msgid "Fit window  0 / X"
+msgstr "Vừa cửa sổ  0 / X"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)  1 / Z"
+msgstr "Kích thước thực (1:1)  1 / Z"
+
+# ==AUTO== Automatically translated
+msgid "Fit width  W"
+msgstr "Vừa chiều rộng  W"
+
+# ==AUTO== Automatically translated
+msgid "Fit height  H"
+msgstr "Vừa chiều cao  H"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in  +"
+msgstr "Phóng to  +"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out  −"
+msgstr "Thu nhỏ  −"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left  F6"
+msgstr "Xoay trái 90°  F6"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°  F7"
+msgstr "Xoay 180°  F7"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right  F8"
+msgstr "Xoay phải 90°  F8"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation  F9"
+msgstr "Áp dụng hướng EXIF  F9"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "Đặt hướng EXIF về 0°  F10"
+
+# ==AUTO== Automatically translated
+msgid "Open"
+msgstr "Mở"
+
+# ==AUTO== Automatically translated
+msgid "Show metadata panel"
+msgstr "Hiển thị bảng siêu dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Cannot load image."
+msgstr "Không thể tải hình ảnh."
+
+# ==AUTO== Automatically translated
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "Chuyển sang điều hướng tuyến tính (dừng ở hai đầu danh sách)"
+
+# ==AUTO== Automatically translated
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr "Chuyển sang điều hướng vòng tròn (quay vòng ở hai đầu danh sách)"
+
+# ==AUTO== Automatically translated
+msgid " (max)"
+msgstr " (tối đa)"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard"
+msgstr "Bàn phím"
+
+# ==AUTO== Automatically translated
+msgid "Mouse"
+msgstr "Chuột"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left, without loss"
+msgstr "Xoay trái 90°, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°, without loss"
+msgstr "Xoay 180°, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right, without loss"
+msgstr "Xoay phải 90°, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation"
+msgstr "Áp dụng định hướng EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°"
+msgstr "Buộc hướng EXIF về 0°"
+
+# ==AUTO== Automatically translated
+msgid "directory tree"
+msgstr "cây thư mục"
+
+# ==AUTO== Automatically translated
+msgid "file list"
+msgstr "danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "Mở một thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "Thoát"
+
+# ==AUTO== Automatically translated
+msgid "New profile"
+msgstr "Hồ sơ mới"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile"
+msgstr "Nhân bản hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "Cấu hình hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "Phím tắt bàn phím và chuột (cửa sổ này)"
+
+# ==AUTO== Automatically translated
+msgid "Rename as shown in the Preview column"
+msgstr "Đổi tên như hiển thị trong cột Xem trước"
+
+# ==AUTO== Automatically translated
+msgid "Reload the file list"
+msgstr "Tải lại danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Switch focus between directory tree and file list"
+msgstr "Chuyển tiêu điểm giữa cây thư mục và danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Navigate directories"
+msgstr "Duyệt các thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Select previous / next file"
+msgstr "Chọn tệp trước / tiếp theo"
+
+# ==AUTO== Automatically translated
+msgid "Jump to first / last entry"
+msgstr "Đến mục đầu tiên / cuối cùng"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images in the viewer"
+msgstr "Hiển thị các ảnh đã chọn trong trình xem"
+
+# ==AUTO== Automatically translated
+msgid "Open the selected files with their default application"
+msgstr "Mở các tệp đã chọn bằng ứng dụng mặc định của chúng"
+
+# ==AUTO== Automatically translated
+msgid "Open with…"
+msgstr "Mở bằng…"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected file(s) and their sidecars"
+msgstr "Xóa các tệp đã chọn và sidecar của chúng"
+
+# ==AUTO== Automatically translated
+msgid "click"
+msgstr "nhấp"
+
+# ==AUTO== Automatically translated
+msgid "Add to the selection / select a range"
+msgstr "Thêm vào vùng chọn / chọn một dải"
+
+# ==AUTO== Automatically translated
+msgid "No selection"
+msgstr "Không chọn gì"
+
+# ==AUTO== Automatically translated
+msgid "Rename, renumber and preview act on all listed files"
+msgstr "Đổi tên, đánh số lại và xem trước áp dụng cho mọi tệp trong danh sách"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a thumbnail"
+msgstr "Nhấp đúp vào ảnh thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Show the image in the viewer"
+msgstr "Hiển thị ảnh trong trình xem"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a name"
+msgstr "Nhấp đúp vào tên"
+
+# ==AUTO== Automatically translated
+msgid "Open the file with its default application"
+msgstr "Mở tệp bằng ứng dụng mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a sidecar"
+msgstr "Nhấp đúp vào sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Open the sidecar file"
+msgstr "Mở tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the file list"
+msgstr "Nhấp chuột phải vào danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Images menu"
+msgstr "Menu Ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the directory tree"
+msgstr "Nhấp chuột phải vào cây thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder as a shortcut"
+msgstr "Thêm thư mục làm phím tắt"
+
+# ==AUTO== Automatically translated
+msgid "Drag onto a folder"
+msgstr "Kéo vào một thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Move the files and their sidecars"
+msgstr "Di chuyển các tệp và sidecar của chúng"
+
+# ==AUTO== Automatically translated
+msgid "drag onto a folder"
+msgstr "kéo vào một thư mục"
+
+# ==AUTO== Automatically translated
+msgid "Copy the files and their sidecars"
+msgstr "Sao chép các tệp và sidecar của chúng"
+
+# ==AUTO== Automatically translated
+msgid "Fit window"
+msgstr "Vừa cửa sổ"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)"
+msgstr "Kích thước thực (1:1)"
+
+# ==AUTO== Automatically translated
+msgid "Fit width"
+msgstr "Vừa chiều rộng"
+
+# ==AUTO== Automatically translated
+msgid "Fit height"
+msgstr "Vừa chiều cao"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in / Zoom out"
+msgstr "Phóng to / Thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Previous / next image of the selection, or of the list"
+msgstr "Ảnh trước / tiếp theo của vùng chọn hoặc của danh sách"
+
+# ==AUTO== Automatically translated
+msgid "Show / hide the metadata"
+msgstr "Hiện / ẩn siêu dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Open with the default application"
+msgstr "Mở bằng ứng dụng mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Delete current image and its sidecars"
+msgstr "Xóa ảnh hiện tại và sidecar của nó"
+
+# ==AUTO== Automatically translated
+msgid "Close image viewer"
+msgstr "Đóng trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Left-click + drag"
+msgstr "Nhấp trái + kéo"
+
+# ==AUTO== Automatically translated
+msgid "Pan image"
+msgstr "Di chuyển ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Double left-click"
+msgstr "Nhấp đúp chuột trái"
+
+# ==AUTO== Automatically translated
+msgid "Center on clicked point"
+msgstr "Căn giữa tại điểm đã nhấp"
+
+# ==AUTO== Automatically translated
+msgid "left-click"
+msgstr "nhấp trái"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in centered on point"
+msgstr "Phóng to tại điểm"
+
+# ==AUTO== Automatically translated
+msgid "right-click"
+msgstr "nhấp phải"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out centered on point"
+msgstr "Thu nhỏ tại điểm"
+
+# ==AUTO== Automatically translated
+msgid "Click on a thumbnail of the strip"
+msgstr "Nhấp vào ảnh thu nhỏ trên dải"
+
+# ==AUTO== Automatically translated
+msgid "Show this image"
+msgstr "Hiển thị ảnh này"
+
+# ==AUTO== Automatically translated
+msgid "Main window"
+msgstr "Cửa sổ chính"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "Trình xem ảnh"
+
+# ==AUTO== Automatically translated
 msgid "Select folder"
 msgstr "Chọn thư mục"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Gốc"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Xem trước"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -329,73 +877,111 @@ msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} mục"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ không loại nào phù hợp ({types})"
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ sidecar mồ côi, không được đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "Target(s) already taken:"
+msgstr "Đích đã bị chiếm:"
+
+# ==AUTO== Automatically translated
+msgid "Nothing was renamed."
+msgstr "Không có gì được đổi tên."
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} không có sẵn"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Tìm kiếm — Trợ giúp"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Thay thế — Trợ giúp"
+msgid "{n} file(s) renamed."
+msgstr "Đã đổi tên {n} tệp."
 
 # ==AUTO== Automatically translated
 msgid "Rename errors"
 msgstr "Lỗi đổi tên"
 
 # ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "không thể di chuyển/sao chép một thư mục vào chính nó"
+msgid "Renumber"
+msgstr "Đánh số lại"
 
 # ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "Lỗi di chuyển"
+msgid "Files are already correctly numbered."
+msgstr "Các tệp đã được đánh số đúng."
 
 # ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "Lỗi sao chép"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "Xác nhận ghi đè"
+msgid "Confirm renumber"
+msgstr "Xác nhận đánh số lại"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} mục đã tồn tại trong {dir} và sẽ bị ghi đè."
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "Đánh số lại {n} tệp bắt đầu từ 1?"
 
 # ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "Ghi đè"
+msgid "Renumber errors"
+msgstr "Lỗi đánh số lại"
 
 # ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "Bỏ qua"
+msgid "Undo errors"
+msgstr "Lỗi hoàn tác"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Hoàn tác (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "Phím tắt bàn phím và chuột"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Hoàn tác lô đổi tên cuối cùng (%d cấp độ có sẵn)"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "Chuyển sang hồ sơ “{name}”"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Hoàn tác"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "Tên hồ sơ (chữ cái, chữ số, “-” và “_”):"
 
 # ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Hoàn tác lô đổi tên cuối cùng"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "Tên hồ sơ mới (bản sao của “{source}”):"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile"
+msgstr "Đổi tên hồ sơ"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "Tên mới của hồ sơ “{name}” (chữ cái, chữ số, “-” và “_”):"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "Đã đổi tên hồ sơ “{old}” thành “{name}”."
+
+# ==AUTO== Automatically translated
+msgid "Delete profile"
+msgstr "Xóa hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "Không có hồ sơ nào để xóa: phải còn ít nhất một hồ sơ hiển thị."
+
+# ==AUTO== Automatically translated
+msgid "Profile to delete:"
+msgstr "Hồ sơ cần xóa:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr ""
+"Xóa hồ sơ “{name}” và mọi thiết lập của nó? Không thể hoàn tác thao tác "
+"này."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Đã xóa hồ sơ “{name}”."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "Đã tải hồ sơ “{name}”."
 
 # ==AUTO== Automatically translated
 msgid "Add as shortcut"
@@ -406,16 +992,8 @@ msgid "Open folder…"
 msgstr "Mở thư mục…"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Mở một thư mục"
-
-# ==AUTO== Automatically translated
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Mở hộp thoại chọn thư mục và điều hướng đến thư mục đã chọn"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "Thoát"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -470,6 +1048,30 @@ msgid "Show version and license information"
 msgstr "Hiển thị thông tin phiên bản và giấy phép"
 
 # ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts…"
+msgstr "Phím tắt bàn phím và chuột…"
+
+# ==AUTO== Automatically translated
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "Hiển thị phím tắt bàn phím và chuột"
+
+# ==AUTO== Automatically translated
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr "Liệt kê phím tắt bàn phím và chuột của cửa sổ chính và trình xem"
+
+# ==AUTO== Automatically translated
+msgid "User guide"
+msgstr "Hướng dẫn sử dụng"
+
+# ==AUTO== Automatically translated
+msgid "Open the online user guide"
+msgstr "Mở hướng dẫn sử dụng trực tuyến"
+
+# ==AUTO== Automatically translated
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr "Mở hướng dẫn sử dụng, bằng ngôn ngữ giao diện, trong trình duyệt web"
+
+# ==AUTO== Automatically translated
 msgid "Edit shortcuts…"
 msgstr "Chỉnh sửa phím tắt…"
 
@@ -492,6 +1094,170 @@ msgstr "Hiển thị giá trị trường tệp"
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "Mở cửa sổ thông tin tệp cho tệp đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "New profile…"
+msgstr "Hồ sơ mới…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new profile"
+msgstr "Tạo hồ sơ mới"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with default settings and switch to it"
+msgstr "Tạo hồ sơ với thiết lập mặc định và chuyển sang hồ sơ đó"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile…"
+msgstr "Nhân bản hồ sơ…"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate the current profile"
+msgstr "Nhân bản hồ sơ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "Sao chép hồ sơ hiện tại với tên mới và chuyển sang bản sao"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile…"
+msgstr "Đổi tên hồ sơ…"
+
+# ==AUTO== Automatically translated
+msgid "Rename the current profile"
+msgstr "Đổi tên hồ sơ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "Đặt tên mới cho hồ sơ hiện tại (chữ cái, chữ số, “-” và “_”)"
+
+# ==AUTO== Automatically translated
+msgid "Delete profile…"
+msgstr "Xóa hồ sơ…"
+
+# ==AUTO== Automatically translated
+msgid "Delete a profile"
+msgstr "Xóa một hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings"
+msgstr "Xóa vĩnh viễn một hồ sơ và mọi thiết lập của nó"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration…"
+msgstr "Cấu hình hồ sơ…"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile"
+msgstr "Cấu hình hồ sơ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Configure the schema fields and options of the current profile"
+msgstr "Cấu hình các trường lược đồ và tùy chọn của hồ sơ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Open with a chosen application"
+msgstr "Mở bằng ứng dụng được chọn"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the selected file"
+msgstr "Chọn ứng dụng để mở tệp đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "View"
+msgstr "Xem"
+
+# ==AUTO== Automatically translated
+msgid "Show in the image viewer"
+msgstr "Hiển thị trong trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer"
+msgstr "Hiển thị ảnh và video đã chọn trong trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name"
+msgstr "Điền lược đồ từ tên tệp"
+
+# ==AUTO== Automatically translated
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr "Suy ra các trường lược đồ từ tên tệp đã chọn và các thư mục của nó"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files"
+msgstr "Xóa các tệp đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr "Xóa các tệp đã chọn và sidecar của chúng (vào thùng rác nếu được bật)"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars…"
+msgstr "Sidecar mồ côi…"
+
+# ==AUTO== Automatically translated
+msgid "List the sidecars without a base file"
+msgstr "Liệt kê các sidecar không có tệp gốc"
+
+# ==AUTO== Automatically translated
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr "Liệt kê rồi xóa các tệp sidecar của thư mục không có tệp gốc"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left"
+msgstr "Xoay trái 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate counter-clockwise, without loss"
+msgstr "Xoay ngược chiều kim đồng hồ, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr "Xoay các ảnh đã chọn 90° ngược chiều kim đồng hồ, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°"
+msgstr "Xoay 180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 180°, without loss"
+msgstr "Xoay các ảnh đã chọn 180°, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right"
+msgstr "Xoay phải 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate clockwise, without loss"
+msgstr "Xoay theo chiều kim đồng hồ, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr "Xoay các ảnh đã chọn 90° theo chiều kim đồng hồ, không mất dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "Xoay điểm ảnh theo hướng EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "Xoay điểm ảnh theo hướng EXIF, rồi đặt lại hướng"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation to normal"
+msgstr "Đặt hướng EXIF về bình thường"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "Đặt thẻ hướng EXIF thành 1 (0°) mà không xoay điểm ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Refresh"
+msgstr "Làm mới"
+
+# ==AUTO== Automatically translated
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "Đọc lại thư mục và làm mới hình thu nhỏ"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -536,6 +1302,42 @@ msgstr "Bao gồm tất cả thư mục con"
 # ==AUTO== Automatically translated
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Khi được chọn, các tệp từ tất cả thư mục con đều được liệt kê"
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "Hình thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Show image thumbnails in the file list"
+msgstr "Hiển thị hình thu nhỏ của ảnh trong danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr "Hiển thị cột hình thu nhỏ; thiết lập này thuộc về hồ sơ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "By date"
+msgstr "Theo ngày"
+
+# ==AUTO== Automatically translated
+msgid "Sort the files by modification date"
+msgstr "Sắp xếp tệp theo ngày sửa đổi"
+
+# ==AUTO== Automatically translated
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr "Sắp xếp theo ngày sửa đổi thay vì theo tên; thư mục luôn ở đầu"
+
+# ==AUTO== Automatically translated
+msgid "Reversed"
+msgstr "Đảo ngược"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the sort order"
+msgstr "Đảo ngược thứ tự sắp xếp"
+
+# ==AUTO== Automatically translated
+msgid "List the files in reverse order; folders stay first"
+msgstr "Liệt kê tệp theo thứ tự ngược; thư mục luôn ở đầu"
 
 # ==AUTO== Automatically translated
 msgid "Keep extension"
@@ -618,6 +1420,28 @@ msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Chỉ liệt kê các tệp khớp với mẫu glob này (vd. *.txt, image_*)"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar filter…"
+msgstr "Bộ lọc sidecar…"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Bộ lọc nội dung sidecar</b><br>Biểu thức chính quy Python áp dụng cho "
+"<i>nội dung</i> của các tệp sidecar.<br>Chỉ hiển thị các tệp có ít nhất "
+"một sidecar có nội dung khớp, cùng với các sidecar của chúng.<br>Các tệp "
+"không có sidecar luôn bị ẩn khi bộ lọc đang hoạt động.<br><tt>.*</tt> "
+"khớp qua các dấu xuống dòng (re.DOTALL).<br>Không phân biệt hoa thường "
+"(re.IGNORECASE), kể cả ký tự có dấu.<br>Nhấn Enter để lưu bộ lọc vào lịch"
+" sử; để trống để hiển thị mọi tệp."
+
+# ==AUTO== Automatically translated
 msgid "Files to be renamed"
 msgstr "Các tệp cần đổi tên"
 
@@ -628,6 +1452,22 @@ msgid ""
 msgstr ""
 "Chọn hàng để giới hạn thao tác cho những tệp đó; để trống để áp dụng cho "
 "tất cả"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Mẫu"
+
+# ==AUTO== Automatically translated
+msgid "Rename in place with search/replace patterns"
+msgstr "Đổi tên tại chỗ bằng mẫu tìm kiếm/thay thế"
+
+# ==AUTO== Automatically translated
+msgid "Schema"
+msgstr "Lược đồ"
+
+# ==AUTO== Automatically translated
+msgid "Sort files into a destination tree built from schema fields"
+msgstr "Sắp xếp tệp vào cây đích được dựng từ các trường lược đồ"
 
 # ==AUTO== Automatically translated
 msgid "Search:"
@@ -665,10 +1505,6 @@ msgid ""
 msgstr ""
 "Hiển thị trợ giúp về mẫu tìm kiếm (token mẫu, biểu thức chính quy, văn "
 "bản thuần túy)"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "Mẫu"
 
 # ==AUTO== Automatically translated
 msgid "Search using pattern tokens"
@@ -893,10 +1729,6 @@ msgstr ""
 "(ghi đè mọi bản lưu có cùng tên)"
 
 # ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "Xóa"
-
-# ==AUTO== Automatically translated
 msgid "Delete this named save"
 msgstr "Xóa bản lưu có tên này"
 
@@ -933,20 +1765,30 @@ msgid "Reverse the last batch of renames performed on disk"
 msgstr "Đảo ngược lô đổi tên cuối cùng được thực hiện trên đĩa"
 
 # ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "Đổi tên"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "Áp dụng đổi tên trên đĩa"
+msgid "Renumber from 1 in place"
+msgstr "Đánh số lại từ 1 tại chỗ"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
 msgstr ""
-"Đổi tên vĩnh viễn tất cả tệp hiển thị trong cột Xem trước (chỉ bật khi "
-"không có xung đột)"
+"Đánh số lại các tệp đã chọn (mọi tệp trong danh sách nếu không chọn tệp "
+"nào) từ 1, tại chỗ, theo lược đồ"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "Áp dụng đổi tên trên đĩa (F2)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Đổi tên vĩnh viễn các tệp đã chọn (mọi tệp trong danh sách nếu không chọn"
+" tệp nào) như hiển thị trong cột Xem trước (chỉ bật khi không có xung "
+"đột)"
 
 # ==AUTO== Automatically translated
 msgid "File"
@@ -957,12 +1799,129 @@ msgid "Edit"
 msgstr "Chỉnh sửa"
 
 # ==AUTO== Automatically translated
+msgid "Profile"
+msgstr "Hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "Ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Mở sidecar"
+
+# ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Phím tắt"
 
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Trường"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Mô tả"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Giá trị"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Siêu dữ liệu hình ảnh (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Siêu dữ liệu âm thanh"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Siêu dữ liệu video"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Trường phổ quát"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Ngày hôm nay"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Ngày và giờ hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "Không có"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Ngày/giờ sửa đổi tệp"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Ngày/giờ tạo tệp"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Tên thư mục cha"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Trường hàng loạt"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Tính toán"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Toàn bộ văn bản khớp"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Nhóm chụp"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Bộ đếm tự tăng"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Bộ đếm không xung đột"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Nhóm regex có tên"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "Chèn vào trường thay thế"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars"
+msgstr "Sidecar mồ côi"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected"
+msgstr "Xóa mục đã chọn"
+
+# ==AUTO== Automatically translated
+msgid "Delete all"
+msgstr "Xóa tất cả"
+
+# ==AUTO== Automatically translated
+msgid "Close"
+msgstr "Đóng"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} tệp sidecar mồ côi:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1560,6 +2519,300 @@ msgid "Examples"
 msgstr "Ví dụ"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "Cấu hình hồ sơ “{name}”"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}"
+msgstr "Trường {n}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "Trường {n}:"
+
+# ==AUTO== Automatically translated
+msgid "Display"
+msgstr "Hiển thị"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields of the rename schema"
+msgstr "Số trường của lược đồ đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields:"
+msgstr "Số trường:"
+
+# ==AUTO== Automatically translated
+msgid "Text inserted in the name of video files"
+msgstr "Văn bản chèn vào tên tệp video"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr ""
+"Được chèn tại vị trí chọn bằng các nút radio của thẻ Lược đồ; để trống "
+"nếu không muốn dấu đánh dấu"
+
+# ==AUTO== Automatically translated
+msgid "Video marker:"
+msgstr "Dấu đánh dấu video:"
+
+# ==AUTO== Automatically translated
+msgid "Field titles:"
+msgstr "Tiêu đề trường:"
+
+# ==AUTO== Automatically translated
+msgid "Show thumbnails"
+msgstr "Hiển thị hình thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column in the file list"
+msgstr "Hiển thị cột hình thu nhỏ trong danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Maximum width:"
+msgstr "Chiều rộng tối đa:"
+
+# ==AUTO== Automatically translated
+msgid "Maximum height:"
+msgstr "Chiều cao tối đa:"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "Tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar column"
+msgstr "Hiển thị cột sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr "Cho biết tệp nào có sidecar; nhấp đúp vào cột để mở hoặc tạo sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar content filter"
+msgstr "Hiển thị bộ lọc nội dung sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "Lọc danh sách tệp theo nội dung của các tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "Phần mở rộng của sidecar tạo bằng nhấp đúp, không có dấu chấm"
+
+# ==AUTO== Automatically translated
+msgid "New sidecar extension:"
+msgstr "Phần mở rộng sidecar mới:"
+
+# ==AUTO== Automatically translated
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "Xóa các tệp sidecar trống khi tải thư mục"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr ""
+"Các tệp rỗng có tên như sidecar sẽ bị xóa khi liệt kê thư mục, trừ "
+"sidecar vừa được tạo"
+
+# ==AUTO== Automatically translated
+msgid "Maximum number of values kept in each field history"
+msgstr "Số giá trị tối đa giữ lại trong lịch sử mỗi trường"
+
+# ==AUTO== Automatically translated
+msgid "Max history entries:"
+msgstr "Số mục lịch sử tối đa:"
+
+# ==AUTO== Automatically translated
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "Mức thay đổi thu phóng mỗi lần phóng to hoặc thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Zoom step:"
+msgstr "Bước thu phóng:"
+
+# ==AUTO== Automatically translated
+msgid "Largest zoom of the image viewer"
+msgstr "Mức thu phóng lớn nhất của trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Maximum zoom:"
+msgstr "Thu phóng tối đa:"
+
+# ==AUTO== Automatically translated
+msgid "Right"
+msgstr "Phải"
+
+# ==AUTO== Automatically translated
+msgid "Left"
+msgstr "Trái"
+
+# ==AUTO== Automatically translated
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr "Phía của trình xem ảnh hiển thị bảng siêu dữ liệu"
+
+# ==AUTO== Automatically translated
+msgid "Metadata panel:"
+msgstr "Bảng siêu dữ liệu:"
+
+# ==AUTO== Automatically translated
+msgid "Show images turned as their EXIF orientation says"
+msgstr "Hiển thị ảnh đã xoay theo hướng EXIF của chúng"
+
+# ==AUTO== Automatically translated
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "Áp dụng cho hình thu nhỏ và trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "Deletion"
+msgstr "Xóa"
+
+# ==AUTO== Automatically translated
+msgid "Move deleted files to the trash"
+msgstr "Chuyển tệp đã xóa vào thùng rác"
+
+# ==AUTO== Automatically translated
+msgid "When unchecked, deleted files are removed permanently"
+msgstr "Khi bỏ chọn, tệp đã xóa bị xóa vĩnh viễn"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletions"
+msgstr "Xác nhận xóa"
+
+# ==AUTO== Automatically translated
+msgid "Ask for a confirmation before deleting files"
+msgstr "Yêu cầu xác nhận trước khi xóa tệp"
+
+# ==AUTO== Automatically translated
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr "Vượt quá số tệp này, hộp xác nhận chỉ hiển thị số lượng"
+
+# ==AUTO== Automatically translated
+msgid "Files listed in the confirmation:"
+msgstr "Số tệp liệt kê trong hộp xác nhận:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ không có đích cho {dest}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} phải ở đầu tên"
+
+# ==AUTO== Automatically translated
+msgid "⚠ absolute path"
+msgstr "⚠ đường dẫn tuyệt đối"
+
+# ==AUTO== Automatically translated
+msgid "⚠ extension separator removed"
+msgstr "⚠ dấu phân cách phần mở rộng đã bị xóa"
+
+# ==AUTO== Automatically translated
+msgid "⚠ invalid path"
+msgstr "⚠ đường dẫn không hợp lệ"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ không loại nào phù hợp ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} không có sẵn"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Tìm kiếm — Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Thay thế — Trợ giúp"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr ""
+"Trường lược đồ “{title}”: một cấp thư mục và một phần của tên; “###” là "
+"bộ đếm, trường trống sẽ bị bỏ qua"
+
+# ==AUTO== Automatically translated
+msgid "Destination:"
+msgstr "Đích:"
+
+# ==AUTO== Automatically translated
+msgid "Destination root directory…"
+msgstr "Thư mục gốc đích…"
+
+# ==AUTO== Automatically translated
+msgid "Root of the destination tree"
+msgstr "Gốc của cây đích"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr ""
+"Tệp được chuyển vào thư mục này, trong các thư mục con đặt tên theo các "
+"trường"
+
+# ==AUTO== Automatically translated
+msgid "Browse…"
+msgstr "Duyệt…"
+
+# ==AUTO== Automatically translated
+msgid "Choose the destination directory"
+msgstr "Chọn thư mục đích"
+
+# ==AUTO== Automatically translated
+msgid "Fill gaps"
+msgstr "Lấp khoảng trống"
+
+# ==AUTO== Automatically translated
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr "Lấp khoảng trống trong đánh số thay vì tiếp tục sau số lớn nhất"
+
+# ==AUTO== Automatically translated
+msgid "Video marker position"
+msgstr "Vị trí đánh dấu video"
+
+# ==AUTO== Automatically translated
+msgid "Choose destination directory"
+msgstr "Chọn thư mục đích"
+
+# ==AUTO== Automatically translated
+msgid "Choose a destination directory."
+msgstr "Hãy chọn một thư mục đích."
+
+# ==AUTO== Automatically translated
+msgid "The destination must be an absolute path."
+msgstr "Đích phải là đường dẫn tuyệt đối."
+
+# ==AUTO== Automatically translated
+msgid "Proposed template"
+msgstr "Mẫu đề xuất"
+
+# ==AUTO== Automatically translated
+msgid "Detected template, confirm to fill the fields:"
+msgstr "Đã phát hiện mẫu, xác nhận để điền các trường:"
+
+# ==AUTO== Automatically translated
+msgid "(empty)"
+msgstr "(trống)"
+
+# ==AUTO== Automatically translated
 msgid "System default"
 msgstr "Mặc định hệ thống"
 
@@ -1687,10 +2940,6 @@ msgstr "Di chuyển xuống"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "Phím tắt đã lưu:"
-
-# ==AUTO== Automatically translated
-msgid "Images"
-msgstr "Ảnh"
 
 # ==AUTO== Automatically translated
 msgid "Duplicate extension"

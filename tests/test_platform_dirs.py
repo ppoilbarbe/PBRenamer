@@ -8,7 +8,14 @@ from unittest.mock import patch
 
 import pytest
 
-from pbrenamer.platform.dirs import AppDirs, XdgDirs, _BaseDirs, _MacDirs, _WindowsDirs
+from pbrenamer.platform.dirs import (
+    AppDirs,
+    XdgDirs,
+    _BaseDirs,
+    _MacDirs,
+    _WindowsDirs,
+    pbpicat_config_dir,
+)
 
 
 class TestBaseDirs:
@@ -142,3 +149,21 @@ class TestAppDirsFactory:
     def test_darwin_returns_mac(self):
         with patch.object(sys, "platform", "darwin"):
             assert isinstance(AppDirs("app"), _MacDirs)
+
+
+class TestPbpicatConfigDir:
+    def test_linux(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+        with patch.object(sys, "platform", "linux"):
+            assert pbpicat_config_dir() == tmp_path / "pbpicat"
+
+    def test_windows(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("APPDATA", str(tmp_path))
+        with patch.object(sys, "platform", "win32"):
+            assert pbpicat_config_dir() == tmp_path / "pbpicat"
+
+    def test_macos(self):
+        with patch.object(sys, "platform", "darwin"):
+            assert pbpicat_config_dir() == (
+                Path.home() / "Library" / "Application Support" / "pbpicat"
+            )

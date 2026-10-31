@@ -21,6 +21,7 @@ from pbrenamer.platform import system_language
 _DOMAIN = "pbrenamer"
 _LOCALE_DIR = Path(__file__).parent / "locale"
 _SETTINGS_KEY = "language/override"
+_USER_GUIDE_URL = "https://pbrenamer.readthedocs.io/{lang}/latest/user_guide.html"
 
 
 class _GettextTranslator(QTranslator):
@@ -87,13 +88,32 @@ def set_language_override(code: str) -> None:
     _settings().setValue(_SETTINGS_KEY, code)
 
 
+def current_language() -> str:
+    """Return the active language code: the override, else the system one."""
+    return get_language_override() or _system_language()
+
+
+def ui_language() -> str:
+    """Return the code of the catalogue the interface uses ("fr", "zh_CN"),
+    "en" when none matches (gettext also tries "fr" for "fr_FR")."""
+    found = gettext.find(
+        _DOMAIN, localedir=str(_LOCALE_DIR), languages=[current_language()]
+    )
+    return Path(found).parents[1].name if found else "en"
+
+
+def user_guide_url() -> str:
+    """The online user guide in the interface language; Read the Docs
+    spells language codes in lower case with a dash ("zh-cn")."""
+    return _USER_GUIDE_URL.format(lang=ui_language().lower().replace("_", "-"))
+
+
 def setup(app: QApplication) -> None:
     """Install translations for *app*.
 
     Safe to call multiple times (each call replaces the previous translator).
     """
-    override = get_language_override()
-    lang = override if override else _system_language()
+    lang = current_language()
 
     try:
         t: gettext.NullTranslations = gettext.translation(

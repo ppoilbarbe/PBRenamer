@@ -6,6 +6,8 @@ from unittest.mock import patch
 import pytest
 
 from pbrenamer.core.replacement import (
+    DEST_MARKER,
+    NEWNUM_MARKER,
     SEARCH_PATTERN,
     SEARCH_PLAIN,
     SEARCH_REGEX,
@@ -602,3 +604,58 @@ class TestResolveUnknownField:
             now=_NOW,
         )
         assert result is None
+
+
+# ---------------------------------------------------------------------------
+# {dest}, {if:category:text} and the {newnum} probe
+# ---------------------------------------------------------------------------
+
+
+class TestDestField:
+    def test_parsed_as_simple_field(self):
+        (seg,) = parse("{dest}")
+        assert isinstance(seg, FieldSegment)
+        assert seg.name == "dest"
+
+    def test_substituted_by_marker(self):
+        assert _sub("{dest}/a/b") == DEST_MARKER + "/a/b"
+
+    def test_options_ignored(self):
+        assert _sub("{dest:+5}") == DEST_MARKER
+
+
+class TestIfField:
+    def test_parse_keeps_text_verbatim(self):
+        (seg,) = parse("{if:video:-x:<y}")
+        assert seg.name == "if:video"
+        assert (seg.case, seg.align, seg.fmt) == ("", "", "")
+        assert seg.default == "-x:<y"
+
+    def test_parse_without_text(self):
+        (seg,) = parse("{if:image}")
+        assert seg.default == ""
+
+    def test_unknown_category(self):
+        with pytest.raises(ReplacementSyntaxError, match="category"):
+            parse("{if:movie:_m}")
+
+    def test_inserted_for_matching_category(self):
+        assert _sub("a{if:video:_vid}_b", category="video") == "a_vid_b"
+
+    def test_omitted_for_other_category(self):
+        assert _sub("a{if:video:_vid}_b", category="image") == "a_b"
+
+    def test_omitted_without_category(self):
+        assert _sub("a{if:video:_vid}_b") == "a_b"
+
+    @pytest.mark.parametrize("mode", [SEARCH_PATTERN, SEARCH_REGEX, SEARCH_PLAIN])
+    def test_valid_in_every_mode(self, mode):
+        assert validate(parse("{if:audio:x}"), mode) == []
+
+
+class TestNewNumProbe:
+    def test_probe_yields_marker(self):
+        assert _sub("p_{newnum:03}", newnum_probe=True) == "p_" + NEWNUM_MARKER
+
+    def test_value_used_without_probe(self):
+        assert _sub("p_{newnum:03}", newnum=7) == "p_007"

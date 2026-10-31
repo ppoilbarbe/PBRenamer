@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "Contents"
+msgstr "目录"
+
+# ==AUTO== Automatically translated
+msgid "Project"
+msgstr "项目"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**PBRenamer** is a graphical batch file renaming utility for Linux, "
+"macOS, and Windows.  It combines a live-preview rename table with a "
+"flexible pattern engine that supports wildcards, regular expressions, "
+"plain-text substitution, metadata fields (EXIF/IPTC, audio tags, video "
+"properties), and a headless (no-GUI) CLI mode for scripting."
+msgstr ""
+"**PBRenamer** 是适用于 Linux、macOS 和 Windows "
+"的图形化批量文件重命名工具。它将带实时预览的重命名表格与灵活的模式引擎结合在一起，支持通配符、正则表达式、纯文本替换、元数据字段（EXIF/IPTC、音频标签、视频属性），并提供用于脚本的无界面命令行模式。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Its **schema mode** sorts photos and videos into a folder tree built from"
+" a few fields, with numbering, sidecar files and an image viewer; "
+"**profiles** keep the settings of each way of working.  See the "
+":doc:`user_guide`."
+msgstr ""
+"其 **模式结构** 模式可根据几个字段构建文件夹树，把照片和视频归类到其中，并支持编号、Sidecar 文件和图片查看器；**配置文件** "
+"为每种工作方式保存各自的设置。请参阅 :doc:`user_guide`。"

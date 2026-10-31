@@ -1,5 +1,7 @@
 """Tests for pbrenamer.core.sidecar — sidecar file detection and grouping."""
 
+import pytest
+
 from pbrenamer.core import sidecar
 
 
@@ -239,3 +241,230 @@ class TestCaseSensitivity:
         )
         assert result.sidecar_of == {}
         assert result.errors == {}
+
+
+# ---------------------------------------------------------------------------
+# Helpers for the file list: empty sidecars, sidecars on disk, content filter
+# ---------------------------------------------------------------------------
+
+
+def _listing(directory):
+    return sorted((p.name, str(p)) for p in directory.iterdir() if p.is_file())
+
+
+class TestAllSuffixes:
+    def test_union(self):
+        config = sidecar.SidecarConfig(
+            base_extensions={},
+            own_suffixes={"image": frozenset({"xmp"}), "video": frozenset({"srt"})},
+            common_suffixes=frozenset({"txt"}),
+        )
+        assert sidecar.all_suffixes(config) == {"xmp", "srt", "txt"}
+
+
+class TestEmptySidecars:
+    def test_only_empty_sidecar_names(self, tmp_path):
+        config = sidecar.SidecarConfig.defaults()
+        (tmp_path / "a.jpg").write_bytes(b"")
+        (tmp_path / "a.xmp").write_bytes(b"")
+        (tmp_path / "b.XMP").write_bytes(b"")
+        (tmp_path / "c.xmp").write_text("x")
+        (tmp_path / ".xmp").write_bytes(b"")
+        (tmp_path / "d.xmp").mkdir()
+        paths = [str(p) for p in tmp_path.iterdir()] + [str(tmp_path / "gone.xmp")]
+        assert sorted(sidecar.empty_sidecars(paths, config)) == [
+            str(tmp_path / "a.xmp"),
+            str(tmp_path / "b.XMP"),
+        ]
+
+    def test_stat_error_skipped(self, tmp_path, monkeypatch):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(b"")
+
+        def boom(_path):
+            raise OSError("denied")
+
+        monkeypatch.setattr(sidecar.os.path, "getsize", boom)
+        config = sidecar.SidecarConfig.defaults()
+        assert sidecar.empty_sidecars([str(f)], config) == []
+
+
+class TestOrphanSidecars:
+    def test_orphans(self):
+        config = _config()
+        files = [
+            (n, _p(n))
+            for n in ["a.jpg", "a.xmp", "b.XMP", "c.xml", "x.png.xmp", "notes.txt"]
+        ]
+        files += [("d.png", _p("d.png")), ("d.jpg", _p("d.jpg"))]
+        files += [("d.xmp", _p("d.xmp")), (".xmp", _p(".xmp")), ("e", _p("e"))]
+        result = sidecar.build_sidecar_groups(
+            files, config, is_case_sensitive=_sensitive
+        )
+        assert sidecar.orphan_sidecars(files, result, config) == [
+            _p("b.XMP"),
+            _p("c.xml"),
+            _p("x.png.xmp"),
+        ]
+
+    def test_media_file_is_never_orphan(self):
+        config = _config(image_suf=("jpg",))
+        files = [("a.jpg", _p("a.jpg"))]
+        result = sidecar.build_sidecar_groups(files, config)
+        assert sidecar.orphan_sidecars(files, result, config) == []
+
+
+class TestSidecarsOnDisk:
+    def test_found_per_directory(self, tmp_path):
+        config = sidecar.SidecarConfig.defaults()
+        d1, d2 = tmp_path / "d1", tmp_path / "d2"
+        d1.mkdir()
+        d2.mkdir()
+        for f in ("a.jpg", "a.xmp", "a.info", "b.jpg"):
+            (d1 / f).write_text("x")
+        (d2 / "c.jpg").write_text("x")
+        (d2 / "c.xmp").write_text("x")
+        (d1 / "sub.xmp").mkdir()
+        result = sidecar.sidecars_on_disk(
+            [str(d1 / "a.jpg"), str(d1 / "b.jpg"), str(d2 / "c.jpg"), str(d1)],
+            config,
+        )
+        assert result == {
+            str(d1 / "a.jpg"): [str(d1 / "a.info"), str(d1 / "a.xmp")],
+            str(d2 / "c.jpg"): [str(d2 / "c.xmp")],
+        }
+
+    def test_unreadable_directory(self, tmp_path, monkeypatch):
+        f = tmp_path / "a.jpg"
+        f.write_text("x")
+
+        def boom(_path):
+            raise OSError("denied")
+
+        monkeypatch.setattr(sidecar.os, "listdir", boom)
+        config = sidecar.SidecarConfig.defaults()
+        assert sidecar.sidecars_on_disk([str(f)], config) == {}
+
+
+class TestContentCache:
+    def test_reads_and_caches(self, tmp_path, monkeypatch):
+        f = tmp_path / "a.xmp"
+        f.write_text("Hello")
+        cache = sidecar.ContentCache()
+        assert cache.text(str(f)) == "Hello"
+        opened = []
+        real_open = open
+        monkeypatch.setattr(
+            "builtins.open", lambda *a, **k: opened.append(a) or real_open(*a, **k)
+        )
+        assert cache.text(str(f)) == "Hello"
+        assert opened == []
+
+    def test_reread_when_modified(self, tmp_path):
+        import os
+
+        f = tmp_path / "a.xmp"
+        f.write_text("old")
+        cache = sidecar.ContentCache()
+        cache.text(str(f))
+        f.write_text("new")
+        os.utime(f, (1, 1))
+        assert cache.text(str(f)) == "new"
+
+    def test_invalid_utf8_replaced(self, tmp_path):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(b"caf\xe9")
+        assert sidecar.ContentCache().text(str(f)) == "caf�"
+
+    def test_missing(self, tmp_path):
+        cache = sidecar.ContentCache()
+        assert cache.text(str(tmp_path / "gone.xmp")) is None
+
+    def test_unreadable(self, tmp_path):
+        d = tmp_path / "dir.xmp"
+        d.mkdir()
+        assert sidecar.ContentCache().text(str(d)) is None
+
+
+class TestFilterByContent:
+    @pytest.fixture
+    def listing(self, tmp_path):
+        (tmp_path / "a.jpg").write_text("x")
+        (tmp_path / "a.xmp").write_text("<dc:subject>\n  Été à Paris\n</dc:subject>")
+        (tmp_path / "b.jpg").write_text("x")
+        (tmp_path / "b.xmp").write_text("Lyon")
+        (tmp_path / "b.info").write_text("rating=5")
+        (tmp_path / "c.jpg").write_text("x")
+        (tmp_path / "notes.txt").write_text("Paris")
+        entries = _listing(tmp_path)
+        groups = sidecar.build_sidecar_groups(entries, sidecar.SidecarConfig.defaults())
+        return entries, groups
+
+    def _names(self, entries):
+        return [name for name, _ in entries]
+
+    def test_matching_groups_kept(self, listing):
+        entries, groups = listing
+        regex = sidecar.compile_content_filter("paris")
+        kept = sidecar.filter_by_content(entries, groups, regex)
+        assert self._names(kept) == ["a.jpg", "a.xmp"]
+
+    def test_any_sidecar_of_group(self, listing):
+        entries, groups = listing
+        regex = sidecar.compile_content_filter("rating=5")
+        kept = sidecar.filter_by_content(entries, groups, regex)
+        assert self._names(kept) == ["b.info", "b.jpg", "b.xmp"]
+
+    def test_dotall_and_accents(self, listing):
+        entries, groups = listing
+        regex = sidecar.compile_content_filter("subject>.*ÉTÉ")
+        kept = sidecar.filter_by_content(entries, groups, regex)
+        assert self._names(kept) == ["a.jpg", "a.xmp"]
+
+    def test_no_match(self, listing):
+        entries, groups = listing
+        regex = sidecar.compile_content_filter("Marseille")
+        assert sidecar.filter_by_content(entries, groups, regex) == []
+
+    def test_unreadable_sidecar_skipped(self, listing, tmp_path):
+        entries, groups = listing
+        (tmp_path / "a.xmp").unlink()
+        regex = sidecar.compile_content_filter(".")
+        kept = sidecar.filter_by_content(entries, groups, regex)
+        assert self._names(kept) == ["b.info", "b.jpg", "b.xmp"]
+
+    def test_invalid_pattern(self):
+        import re
+
+        with pytest.raises(re.error):
+            sidecar.compile_content_filter("(")
+
+
+class TestSidecarNamedOtherFiles:
+    """An "other" file named like a sidecar is never a base (anomaly 5.2)."""
+
+    def test_common_suffixes_do_not_make_xmp_a_competing_base(self) -> None:
+        names = ["c_0001.jpg", "c_0001.xmp", "c_0001.info.json", "c_0001.prompt.txt"]
+        files = [(n, _p(n)) for n in names]
+        config = _config(image_suf=("xmp",), common_suf=("info.json", "prompt.txt"))
+        result = sidecar.build_sidecar_groups(files, config)
+        assert result.errors == {}
+        assert sorted(result.groups[_p("c_0001.jpg")]) == sorted(
+            _p(n) for n in names[1:]
+        )
+
+    def test_case_insensitive_directory(self) -> None:
+        names = ["c.jpg", "C.XMP", "c.info.json"]
+        files = [(n, _p(n)) for n in names]
+        config = _config(image_suf=("xmp",), common_suf=("info.json",))
+        result = sidecar.build_sidecar_groups(
+            files, config, is_case_sensitive=_insensitive
+        )
+        assert result.errors == {}
+        assert len(result.groups[_p("c.jpg")]) == 2
+
+    def test_other_file_not_named_like_sidecar_stays_a_base(self) -> None:
+        files = [("doc.pdf", _p("doc.pdf")), ("doc.note", _p("doc.note"))]
+        config = _config(other_suf=("note",))
+        result = sidecar.build_sidecar_groups(files, config)
+        assert result.sidecar_of == {_p("doc.note"): _p("doc.pdf")}

@@ -11,6 +11,7 @@ suffixes, plus a common sidecar-suffix set applying to every category.
 from __future__ import annotations
 
 import os
+import re
 from collections import defaultdict
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -194,6 +195,11 @@ def _ambiguous_message(name: str, owners: list[str]) -> str:
     )
 
 
+def _named_like_sidecar(name: str, markers: list[str]) -> bool:
+    """True if *name* is ``stem.suffix`` for one of the ``.suffix`` *markers*."""
+    return any(name.endswith(m) and len(name) > len(m) for m in markers)
+
+
 def build_sidecar_groups(
     files: list[tuple[str, str]],
     config: SidecarConfig,
@@ -213,6 +219,9 @@ def build_sidecar_groups(
     the same directory — whether in the same category or different
     categories — this is an ambiguity error, reported on the sidecar and on
     every candidate base file involved (no silent resolution).
+
+    A file of the "other" category named like a sidecar (``stem.suffix`` for
+    any known suffix) is never a base file.
     """
     by_dir: dict[str, list[tuple[str, str]]] = defaultdict(list)
     for name, path in files:
@@ -220,13 +229,22 @@ def build_sidecar_groups(
 
     result = SidecarGroupResult()
     conflicts: dict[str, list[str]] = defaultdict(list)
+    suffixes = all_suffixes(config)
 
     for directory, entries in by_dir.items():
         case_sensitive = is_case_sensitive(directory)
+        markers = ["." + _fold(s, case_sensitive) for s in suffixes]
 
         bases: dict[tuple[str, str], list[str]] = defaultdict(list)
         for name, path in entries:
             category, stem = _own_category_and_stem(name, config)
+            if category == "other" and _named_like_sidecar(
+                _fold(name, case_sensitive), markers
+            ):
+                # "img.xmp" is never an "other" base: with a common suffix
+                # such as "info.json", it would compete with "img.jpg" for
+                # "img.info.json" and make the whole group ambiguous.
+                continue
             bases[(_fold(stem, case_sensitive), category)].append(path)
 
         for name, path in entries:
@@ -265,3 +283,130 @@ def build_sidecar_groups(
         path: " / ".join(dict.fromkeys(msgs)) for path, msgs in conflicts.items()
     }
     return result
+
+
+def followers(result: SidecarGroupResult) -> dict[str, list[tuple[str, str]]]:
+    """Map each base path of *result* to the (path, suffix) of its sidecars."""
+    mapping: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    for sidecar_path, base_path in result.sidecar_of.items():
+        mapping[base_path].append((sidecar_path, result.sidecar_suffix[sidecar_path]))
+    return dict(mapping)
+
+
+def all_suffixes(config: SidecarConfig) -> frozenset[str]:
+    """Every sidecar suffix of *config*, whatever the category."""
+    suffixes = set(config.common_suffixes)
+    for values in config.own_suffixes.values():
+        suffixes |= values
+    return frozenset(suffixes)
+
+
+def empty_sidecars(paths: list[str], config: SidecarConfig) -> list[str]:
+    """Return the paths of *paths* that are empty files named like a sidecar
+    (``stem.suffix`` for any known suffix), orphans included."""
+    markers = ["." + s.lower() for s in all_suffixes(config)]
+    result: list[str] = []
+    for path in paths:
+        name = os.path.basename(path).lower()
+        if not _named_like_sidecar(name, markers):
+            continue
+        try:
+            if os.path.isfile(path) and os.path.getsize(path) == 0:
+                result.append(path)
+        except OSError:
+            continue
+    return result
+
+
+def orphan_sidecars(
+    files: list[tuple[str, str]], result: SidecarGroupResult, config: SidecarConfig
+) -> list[str]:
+    """Return the paths of *files* named like a sidecar (``stem.suffix`` for
+    any known suffix, the file's own extension not being a media one) that
+    *result* attached to no base file, sorted by name.  Ambiguous sidecars
+    are not orphans: they have several bases."""
+    markers = ["." + s.lower() for s in all_suffixes(config)]
+    orphans: list[tuple[str, str]] = []
+    for name, path in files:
+        if path in result.sidecar_of or path in result.groups or path in result.errors:
+            continue
+        lower = name.lower()
+        if config.category_of_extension(lower.rsplit(".", 1)[-1]) != "other":
+            continue
+        if _named_like_sidecar(lower, markers):
+            orphans.append((lower, path))
+    return [path for _key, path in sorted(orphans)]
+
+
+def sidecars_on_disk(paths: list[str], config: SidecarConfig) -> dict[str, list[str]]:
+    """Map each file of *paths* to its sidecars found on disk, reading each
+    directory once (used for files dropped from another application)."""
+    by_dir: dict[str, set[str]] = defaultdict(set)
+    for path in paths:
+        if os.path.isfile(path):
+            by_dir[os.path.dirname(path)].add(path)
+    result: dict[str, list[str]] = {}
+    for directory, wanted in by_dir.items():
+        try:
+            names = os.listdir(directory)
+        except OSError:
+            continue
+        entries = [
+            (n, p) for n in names if os.path.isfile(p := os.path.join(directory, n))
+        ]
+        groups = build_sidecar_groups(entries, config).groups
+        for path in wanted:
+            if groups.get(path):
+                result[path] = sorted(groups[path])
+    return result
+
+
+class ContentCache:
+    """Text of sidecar files, re-read only when their mtime changes."""
+
+    def __init__(self) -> None:
+        self._data: dict[str, tuple[float, str]] = {}
+
+    def text(self, path: str) -> str | None:
+        """Return the content of *path*, or None if it cannot be read."""
+        try:
+            mtime = os.path.getmtime(path)
+        except OSError:
+            self._data.pop(path, None)
+            return None
+        cached = self._data.get(path)
+        if cached is not None and cached[0] == mtime:
+            return cached[1]
+        try:
+            with open(path, encoding="utf-8", errors="replace") as f:
+                text = f.read()
+        except OSError:
+            return None
+        self._data[path] = (mtime, text)
+        return text
+
+
+def compile_content_filter(pattern: str) -> re.Pattern[str]:
+    """Compile a sidecar content filter: matches across lines, ignores case.
+    Raise re.error when *pattern* is invalid."""
+    return re.compile(pattern, re.DOTALL | re.IGNORECASE)
+
+
+def filter_by_content(
+    entries: list[tuple[str, str]],
+    result: SidecarGroupResult,
+    regex: re.Pattern[str],
+    cache: ContentCache | None = None,
+) -> list[tuple[str, str]]:
+    """Keep the base files of *entries* having at least one sidecar whose
+    content matches *regex*, together with their sidecars; drop the rest."""
+    cache = cache or ContentCache()
+    kept: set[str] = set()
+    for base, sidecars in result.groups.items():
+        for path in sidecars:
+            text = cache.text(path)
+            if text is not None and regex.search(text):
+                kept.add(base)
+                kept.update(sidecars)
+                break
+    return [(name, path) for name, path in entries if path in kept]

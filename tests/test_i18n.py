@@ -136,3 +136,23 @@ class TestAvailableLanguagesEdgeCases:
         langs = available_languages()
         mapping = dict(langs)
         assert mapping.get("zz") == "zz"
+
+
+class TestUserGuideUrl:
+    def _url(self, monkeypatch, lang: str) -> str:
+        monkeypatch.setattr(i18n, "current_language", lambda: lang)
+        return i18n.user_guide_url()
+
+    def test_french(self, monkeypatch):
+        assert self._url(monkeypatch, "fr") == (
+            "https://pbrenamer.readthedocs.io/fr/latest/user_guide.html"
+        )
+
+    def test_region_falls_back_to_language(self, monkeypatch):
+        assert "/de/latest/" in self._url(monkeypatch, "de_AT")
+
+    def test_chinese_uses_read_the_docs_spelling(self, monkeypatch):
+        assert "/zh-cn/latest/" in self._url(monkeypatch, "zh_CN")
+
+    def test_unknown_language_is_english(self, monkeypatch):
+        assert "/en/latest/" in self._url(monkeypatch, "xx")

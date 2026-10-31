@@ -20,6 +20,77 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
+msgid "EXIF"
+msgstr "EXIF"
+
+# ==AUTO== Automatically translated
+msgid "IPTC"
+msgstr "IPTC"
+
+# ==AUTO== Automatically translated
+msgid "XMP"
+msgstr "XMP"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar file"
+msgstr "Файл sidecar"
+
+# ==AUTO== Automatically translated
+msgid "XMP (sidecar)"
+msgstr "XMP (sidecar)"
+
+# ==AUTO== Automatically translated
+msgid "No EXIF orientation tag to apply."
+msgstr "Тег ориентации EXIF отсутствует."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "Неподдерживаемое значение ориентации EXIF: {v}"
+
+# ==AUTO== Automatically translated
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr ""
+"Похоже, этот файл обрезан (в конце отсутствуют данные), вероятно из-за "
+"незавершённой записи камерой. Поворот без потерь невозможен без удаления "
+"затронутых строк."
+
+# ==AUTO== Automatically translated
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran недоступен.\n"
+"Безпотерьный поворот JPEG требует jpegtran.\n"
+"Установите libjpeg-turbo для активации этой функции."
+
+# ==AUTO== Automatically translated
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "Схема содержит несколько числовых полей (допускается только одно)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "Поле «{field}» содержит запрещённый символ «{char}»."
+
+# ==AUTO== Automatically translated
+msgid "The schema is empty: fill in at least one field."
+msgstr "Схема пуста: заполните хотя бы одно поле."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "Видеомаркер содержит запрещённый символ «{char}»."
+
+# ==AUTO== Automatically translated
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr "В схеме нет числового поля (используйте «#» для счётчика)."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
 msgstr "{name!r} может относиться к нескольким основным файлам: {owners}"
@@ -57,6 +128,51 @@ msgid "Videos"
 msgstr "Видео"
 
 # ==AUTO== Automatically translated
+msgid "Open with"
+msgstr "Открыть с помощью"
+
+# ==AUTO== Automatically translated
+msgid "Choose an application:"
+msgstr "Выберите приложение:"
+
+# ==AUTO== Automatically translated
+msgid "Application name:"
+msgstr "Название приложения:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr ""
+"Недопустимое имя профиля «{name}»: используйте буквы, цифры, «-» и «_» "
+"(начальная «.» скрывает профиль)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr "Недопустимое имя профиля «{name}»: используйте буквы, цифры, «-» и «_»."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "Профиль «{name}» не найден."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "Профиль «{name}» уже существует."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr ""
+"Профиль «{name}» — последний видимый профиль: его нельзя удалить или "
+"скрыть."
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "О PBRenamer"
 
@@ -85,20 +201,40 @@ msgid "PySide6 version:"
 msgstr "Версия PySide6:"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "Переименовать ({n})"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "Переименовать"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Отменить (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Отменить последний пакет переименований (%d уровень(ей) доступно)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Отменить"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Отменить последний пакет переименований"
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Информация о файле"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Поле"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Описание"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Значение"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Информация о файле — {name}"
 
 # ==AUTO== Automatically translated
 msgid "Image"
@@ -121,29 +257,12 @@ msgid "Other"
 msgstr "Прочее"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Информация о файле — {name}"
-
-# ==AUTO== Automatically translated
 msgid "File:"
 msgstr "Файл:"
 
 # ==AUTO== Automatically translated
 msgid "Type:"
 msgstr "Тип:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Метаданные изображения (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Метаданные аудио"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Метаданные видео"
 
 # ==AUTO== Automatically translated
 msgid "Select a single file to display its information."
@@ -154,68 +273,110 @@ msgid "Select a file to display its information."
 msgstr "Выберите файл для отображения информации."
 
 # ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Универсальные поля"
+msgid "Original"
+msgstr "Оригинал"
 
 # ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Сегодняшняя дата"
+msgid "Preview"
+msgstr "Предпросмотр"
 
 # ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Текущая дата и время"
+msgid "Thumbnail"
+msgstr "Миниатюра"
 
 # ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Дата/время изменения файла"
+msgid "Sidecar"
+msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "Отсутствует"
+msgid "No sidecar: double-click to create one"
+msgstr "Нет sidecar-файла: дважды щёлкните, чтобы создать"
 
 # ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Дата/время создания файла"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "Не удалось создать {name}: {error}"
 
 # ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Имя родительской папки"
+msgid "cannot move/copy a folder into itself"
+msgstr "нельзя переместить/скопировать папку в саму себя"
 
 # ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Поля пакетной обработки"
+msgid "Move errors"
+msgstr "Ошибки перемещения"
 
 # ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Вычисляется"
+msgid "Copy errors"
+msgstr "Ошибки копирования"
 
 # ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Полный совпавший текст"
+msgid "Confirm overwrite"
+msgstr "Подтвердите перезапись"
 
 # ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Группы захвата"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} элемент(ов) уже существует в {dir} и будет перезаписано."
 
 # ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Автоинкрементный счётчик"
+msgid "Overwrite"
+msgstr "Перезаписать"
 
 # ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Счётчик без конфликтов"
+msgid "Skip"
+msgstr "Пропустить"
 
 # ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Именованная группа regex"
+msgid "▲ Move up"
+msgstr "▲ Переместить вверх"
 
 # ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "Вставить в поле замены"
+msgid "▼ Move down"
+msgstr "▼ Переместить вниз"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↓"
+msgstr "Сортировка ↓"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in ascending order"
+msgstr "Сортировать список по возрастанию"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↑"
+msgstr "Сортировка ↑"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in descending order"
+msgstr "Сортировать список по убыванию"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "Удалить"
+
+# ==AUTO== Automatically translated
+msgid "Clear all"
+msgstr "Очистить всё"
+
+# ==AUTO== Automatically translated
+msgid "Clear history"
+msgstr "Очистить историю"
+
+# ==AUTO== Automatically translated
+msgid "Clear all values from this history?"
+msgstr "Очистить все значения из этой истории?"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Фильтр sidecar"
 
 # ==AUTO== Automatically translated
 msgid "History"
 msgstr "История"
+
+# ==AUTO== Automatically translated
+msgid "Patterns"
+msgstr "Шаблоны"
 
 # ==AUTO== Automatically translated
 msgid "Search"
@@ -273,10 +434,6 @@ msgid "Delete the selected search history entries"
 msgstr "Удалить выбранные записи истории поиска"
 
 # ==AUTO== Automatically translated
-msgid "Clear all"
-msgstr "Очистить всё"
-
-# ==AUTO== Automatically translated
 msgid "Remove all search history entries"
 msgstr "Удалить все записи истории поиска"
 
@@ -313,16 +470,411 @@ msgid "Delete the entire replacement pattern history"
 msgstr "Удалить весь журнал шаблонов замены"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Шаблон"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Не удалось определить шаблон для «{name}».\n"
+"Ни одна часть имени файла не совпадает с историей полей."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Подтвердить удаление"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Не удалось переместить в корзину: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Ошибка удаления"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Переместить {count} файлов в корзину?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Переместить в корзину:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Удалить {count} файлов безвозвратно?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Удалить безвозвратно:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Поворот недоступен"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Не удалось повернуть файлов: {n}."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} файл(ов) повернуто."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} тег(ов) ориентации EXIF сброшено."
+
+# ==AUTO== Automatically translated
+msgid "Fit window  0 / X"
+msgstr "По размеру окна  0 / X"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)  1 / Z"
+msgstr "Реальный размер (1:1)  1 / Z"
+
+# ==AUTO== Automatically translated
+msgid "Fit width  W"
+msgstr "По ширине  W"
+
+# ==AUTO== Automatically translated
+msgid "Fit height  H"
+msgstr "По высоте  H"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in  +"
+msgstr "Увеличить  +"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out  −"
+msgstr "Уменьшить  −"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left  F6"
+msgstr "Повернуть на 90° влево  F6"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°  F7"
+msgstr "Повернуть на 180°  F7"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right  F8"
+msgstr "Повернуть на 90° вправо  F8"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation  F9"
+msgstr "Применить EXIF-ориентацию  F9"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "Сбросить EXIF-ориентацию на 0°  F10"
+
+# ==AUTO== Automatically translated
+msgid "Open"
+msgstr "Открыть"
+
+# ==AUTO== Automatically translated
+msgid "Show metadata panel"
+msgstr "Показать панель метаданных"
+
+# ==AUTO== Automatically translated
+msgid "Cannot load image."
+msgstr "Не удаётся загрузить изображение."
+
+# ==AUTO== Automatically translated
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "Перейти к линейной навигации (остановка на концах списка)"
+
+# ==AUTO== Automatically translated
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr "Перейти к циклической навигации (переход с конца списка на начало)"
+
+# ==AUTO== Automatically translated
+msgid " (max)"
+msgstr " (макс)"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard"
+msgstr "Клавиатура"
+
+# ==AUTO== Automatically translated
+msgid "Mouse"
+msgstr "Мышь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left, without loss"
+msgstr "Повернуть на 90° влево без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°, without loss"
+msgstr "Повернуть на 180° без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right, without loss"
+msgstr "Повернуть на 90° вправо без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation"
+msgstr "Применить ориентацию EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°"
+msgstr "Принудительно установить ориентацию EXIF на 0°"
+
+# ==AUTO== Automatically translated
+msgid "directory tree"
+msgstr "дерево папок"
+
+# ==AUTO== Automatically translated
+msgid "file list"
+msgstr "список файлов"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "Открыть папку"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "Выход"
+
+# ==AUTO== Automatically translated
+msgid "New profile"
+msgstr "Новый профиль"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile"
+msgstr "Дублировать профиль"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "Настройка профиля"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "Сочетания клавиш и действия мыши (это окно)"
+
+# ==AUTO== Automatically translated
+msgid "Rename as shown in the Preview column"
+msgstr "Переименовать, как показано в столбце «Предпросмотр»"
+
+# ==AUTO== Automatically translated
+msgid "Reload the file list"
+msgstr "Перезагрузить список файлов"
+
+# ==AUTO== Automatically translated
+msgid "Switch focus between directory tree and file list"
+msgstr "Переключить фокус между деревом папок и списком файлов"
+
+# ==AUTO== Automatically translated
+msgid "Navigate directories"
+msgstr "Перемещаться по папкам"
+
+# ==AUTO== Automatically translated
+msgid "Select previous / next file"
+msgstr "Выбрать предыдущий / следующий файл"
+
+# ==AUTO== Automatically translated
+msgid "Jump to first / last entry"
+msgstr "Перейти к первому / последнему элементу"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images in the viewer"
+msgstr "Показать выбранные изображения в просмотрщике"
+
+# ==AUTO== Automatically translated
+msgid "Open the selected files with their default application"
+msgstr "Открыть выбранные файлы в приложении по умолчанию"
+
+# ==AUTO== Automatically translated
+msgid "Open with…"
+msgstr "Открыть с помощью…"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected file(s) and their sidecars"
+msgstr "Удалить выбранные файлы и их sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "click"
+msgstr "щелчок"
+
+# ==AUTO== Automatically translated
+msgid "Add to the selection / select a range"
+msgstr "Добавить к выделению / выделить диапазон"
+
+# ==AUTO== Automatically translated
+msgid "No selection"
+msgstr "Нет выделения"
+
+# ==AUTO== Automatically translated
+msgid "Rename, renumber and preview act on all listed files"
+msgstr ""
+"Переименование, перенумерация и предпросмотр применяются ко всем файлам "
+"списка"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a thumbnail"
+msgstr "Двойной щелчок по миниатюре"
+
+# ==AUTO== Automatically translated
+msgid "Show the image in the viewer"
+msgstr "Показать изображение в просмотрщике"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a name"
+msgstr "Двойной щелчок по имени"
+
+# ==AUTO== Automatically translated
+msgid "Open the file with its default application"
+msgstr "Открыть файл в приложении по умолчанию"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a sidecar"
+msgstr "Двойной щелчок по sidecar-файлу"
+
+# ==AUTO== Automatically translated
+msgid "Open the sidecar file"
+msgstr "Открыть sidecar-файл"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the file list"
+msgstr "Щелчок правой кнопкой по списку файлов"
+
+# ==AUTO== Automatically translated
+msgid "Images menu"
+msgstr "Меню «Изображения»"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the directory tree"
+msgstr "Щелчок правой кнопкой по дереву папок"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder as a shortcut"
+msgstr "Добавить папку в ярлыки"
+
+# ==AUTO== Automatically translated
+msgid "Drag onto a folder"
+msgstr "Перетащить на папку"
+
+# ==AUTO== Automatically translated
+msgid "Move the files and their sidecars"
+msgstr "Переместить файлы и их sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "drag onto a folder"
+msgstr "перетащить на папку"
+
+# ==AUTO== Automatically translated
+msgid "Copy the files and their sidecars"
+msgstr "Скопировать файлы и их sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "Fit window"
+msgstr "Вписать в окно"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)"
+msgstr "Реальный размер (1:1)"
+
+# ==AUTO== Automatically translated
+msgid "Fit width"
+msgstr "По ширине"
+
+# ==AUTO== Automatically translated
+msgid "Fit height"
+msgstr "По высоте"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in / Zoom out"
+msgstr "Увеличить / Уменьшить"
+
+# ==AUTO== Automatically translated
+msgid "Previous / next image of the selection, or of the list"
+msgstr "Предыдущее / следующее изображение выделения или списка"
+
+# ==AUTO== Automatically translated
+msgid "Show / hide the metadata"
+msgstr "Показать / скрыть метаданные"
+
+# ==AUTO== Automatically translated
+msgid "Open with the default application"
+msgstr "Открыть в приложении по умолчанию"
+
+# ==AUTO== Automatically translated
+msgid "Delete current image and its sidecars"
+msgstr "Удалить текущее изображение и его sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "Close image viewer"
+msgstr "Закрыть просмотрщик изображений"
+
+# ==AUTO== Automatically translated
+msgid "Left-click + drag"
+msgstr "Левый щелчок + перетаскивание"
+
+# ==AUTO== Automatically translated
+msgid "Pan image"
+msgstr "Перемещать изображение"
+
+# ==AUTO== Automatically translated
+msgid "Double left-click"
+msgstr "Двойной левый щелчок"
+
+# ==AUTO== Automatically translated
+msgid "Center on clicked point"
+msgstr "Центрировать на точке щелчка"
+
+# ==AUTO== Automatically translated
+msgid "left-click"
+msgstr "левый щелчок"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in centered on point"
+msgstr "Увеличить с центром в точке"
+
+# ==AUTO== Automatically translated
+msgid "right-click"
+msgstr "правый щелчок"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out centered on point"
+msgstr "Уменьшить с центром в точке"
+
+# ==AUTO== Automatically translated
+msgid "Click on a thumbnail of the strip"
+msgstr "Щелчок по миниатюре на ленте"
+
+# ==AUTO== Automatically translated
+msgid "Show this image"
+msgstr "Показать это изображение"
+
+# ==AUTO== Automatically translated
+msgid "Main window"
+msgstr "Главное окно"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "Просмотрщик изображений"
+
+# ==AUTO== Automatically translated
 msgid "Select folder"
 msgstr "Выбрать папку"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Оригинал"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Предпросмотр"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -330,73 +882,111 @@ msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} элемент(а/ов)"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ нет подходящего типа ({types})"
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ sidecar-файл без основного файла, не переименован"
+
+# ==AUTO== Automatically translated
+msgid "Target(s) already taken:"
+msgstr "Цели уже заняты:"
+
+# ==AUTO== Automatically translated
+msgid "Nothing was renamed."
+msgstr "Ничего не переименовано."
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} недоступно"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Поиск — Справка"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Замена — Справка"
+msgid "{n} file(s) renamed."
+msgstr "Переименовано файлов: {n}."
 
 # ==AUTO== Automatically translated
 msgid "Rename errors"
 msgstr "Ошибки переименования"
 
 # ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "нельзя переместить/скопировать папку в саму себя"
+msgid "Renumber"
+msgstr "Перенумеровать"
 
 # ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "Ошибки перемещения"
+msgid "Files are already correctly numbered."
+msgstr "Файлы уже пронумерованы правильно."
 
 # ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "Ошибки копирования"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "Подтвердите перезапись"
+msgid "Confirm renumber"
+msgstr "Подтвердить перенумерацию"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} элемент(ов) уже существует в {dir} и будет перезаписано."
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "Перенумеровать {n} файл(ов) начиная с 1?"
 
 # ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "Перезаписать"
+msgid "Renumber errors"
+msgstr "Ошибки перенумерации"
 
 # ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "Пропустить"
+msgid "Undo errors"
+msgstr "Ошибки отмены"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Отменить (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "Сочетания клавиш и действия мыши"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Отменить последний пакет переименований (%d уровень(ей) доступно)"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "Переключиться на профиль «{name}»"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Отменить"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "Имя профиля (буквы, цифры, «-» и «_»):"
 
 # ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Отменить последний пакет переименований"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "Имя нового профиля (копия «{source}»):"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile"
+msgstr "Переименовать профиль"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "Новое имя профиля «{name}» (буквы, цифры, «-» и «_»):"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "Профиль «{old}» переименован в «{name}»."
+
+# ==AUTO== Automatically translated
+msgid "Delete profile"
+msgstr "Удалить профиль"
+
+# ==AUTO== Automatically translated
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "Нет профиля для удаления: должен остаться хотя бы один видимый профиль."
+
+# ==AUTO== Automatically translated
+msgid "Profile to delete:"
+msgstr "Профиль для удаления:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr ""
+"Удалить профиль «{name}» и все его настройки? Это действие нельзя "
+"отменить."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Профиль «{name}» удалён."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "Профиль «{name}» загружен."
 
 # ==AUTO== Automatically translated
 msgid "Add as shortcut"
@@ -407,16 +997,8 @@ msgid "Open folder…"
 msgstr "Открыть папку…"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Открыть папку"
-
-# ==AUTO== Automatically translated
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Открыть диалог выбора папки и перейти к выбранной папке"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "Выход"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -473,6 +1055,30 @@ msgid "Show version and license information"
 msgstr "Показать информацию о версии и лицензии"
 
 # ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts…"
+msgstr "Сочетания клавиш и действия мыши…"
+
+# ==AUTO== Automatically translated
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "Показать сочетания клавиш и действия мыши"
+
+# ==AUTO== Automatically translated
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr "Перечислить сочетания клавиш и действия мыши главного окна и просмотрщика"
+
+# ==AUTO== Automatically translated
+msgid "User guide"
+msgstr "Руководство пользователя"
+
+# ==AUTO== Automatically translated
+msgid "Open the online user guide"
+msgstr "Открыть руководство пользователя в интернете"
+
+# ==AUTO== Automatically translated
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr "Открыть руководство пользователя на языке интерфейса в веб-браузере"
+
+# ==AUTO== Automatically translated
 msgid "Edit shortcuts…"
 msgstr "Редактировать ярлыки…"
 
@@ -495,6 +1101,170 @@ msgstr "Показать значения полей файла"
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "Открыть окно информации для выбранного файла"
+
+# ==AUTO== Automatically translated
+msgid "New profile…"
+msgstr "Новый профиль…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new profile"
+msgstr "Создать новый профиль"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with default settings and switch to it"
+msgstr "Создать профиль с настройками по умолчанию и переключиться на него"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile…"
+msgstr "Дублировать профиль…"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate the current profile"
+msgstr "Дублировать текущий профиль"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "Скопировать текущий профиль под новым именем и переключиться на копию"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile…"
+msgstr "Переименовать профиль…"
+
+# ==AUTO== Automatically translated
+msgid "Rename the current profile"
+msgstr "Переименовать текущий профиль"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "Дать текущему профилю новое имя (буквы, цифры, «-» и «_»)"
+
+# ==AUTO== Automatically translated
+msgid "Delete profile…"
+msgstr "Удалить профиль…"
+
+# ==AUTO== Automatically translated
+msgid "Delete a profile"
+msgstr "Удалить профиль"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings"
+msgstr "Окончательно удалить профиль и все его настройки"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration…"
+msgstr "Настройка профиля…"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile"
+msgstr "Настроить текущий профиль"
+
+# ==AUTO== Automatically translated
+msgid "Configure the schema fields and options of the current profile"
+msgstr "Настроить поля схемы и параметры текущего профиля"
+
+# ==AUTO== Automatically translated
+msgid "Open with a chosen application"
+msgstr "Открыть в выбранном приложении"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the selected file"
+msgstr "Выбрать приложение, которое откроет выбранный файл"
+
+# ==AUTO== Automatically translated
+msgid "View"
+msgstr "Просмотр"
+
+# ==AUTO== Automatically translated
+msgid "Show in the image viewer"
+msgstr "Показать в просмотрщике изображений"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer"
+msgstr "Показать выбранные изображения и видео в просмотрщике изображений"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name"
+msgstr "Заполнить схему по имени файла"
+
+# ==AUTO== Automatically translated
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr "Определить поля схемы по имени выбранного файла и его папкам"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files"
+msgstr "Удалить выбранные файлы"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr "Удалить выбранные файлы и их sidecar-файлы (в корзину, если она включена)"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars…"
+msgstr "Осиротевшие sidecar-файлы…"
+
+# ==AUTO== Automatically translated
+msgid "List the sidecars without a base file"
+msgstr "Показать sidecar-файлы без основного файла"
+
+# ==AUTO== Automatically translated
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr "Показать, а затем удалить sidecar-файлы папки без основного файла"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left"
+msgstr "Повернуть на 90° влево"
+
+# ==AUTO== Automatically translated
+msgid "Rotate counter-clockwise, without loss"
+msgstr "Повернуть против часовой стрелки без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr "Повернуть выбранные изображения на 90° против часовой стрелки без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°"
+msgstr "Повернуть на 180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 180°, without loss"
+msgstr "Повернуть выбранные изображения на 180° без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right"
+msgstr "Повернуть на 90° вправо"
+
+# ==AUTO== Automatically translated
+msgid "Rotate clockwise, without loss"
+msgstr "Повернуть по часовой стрелке без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr "Повернуть выбранные изображения на 90° по часовой стрелке без потерь"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "Повернуть пиксели согласно EXIF-ориентации"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "Повернуть пиксели согласно EXIF-ориентации, затем сбросить её"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation to normal"
+msgstr "Установить нормальную EXIF-ориентацию"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "Установить тег EXIF-ориентации в 1 (0°) без поворота пикселей"
+
+# ==AUTO== Automatically translated
+msgid "Refresh"
+msgstr "Обновить"
+
+# ==AUTO== Automatically translated
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "Перечитать папку и обновить миниатюры"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -539,6 +1309,42 @@ msgstr "Включить все подпапки"
 # ==AUTO== Automatically translated
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Если установлено, файлы из всех подпапок включаются в список"
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "Миниатюры"
+
+# ==AUTO== Automatically translated
+msgid "Show image thumbnails in the file list"
+msgstr "Показывать миниатюры изображений в списке файлов"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr "Показывать столбец миниатюр; этот параметр относится к текущему профилю"
+
+# ==AUTO== Automatically translated
+msgid "By date"
+msgstr "По дате"
+
+# ==AUTO== Automatically translated
+msgid "Sort the files by modification date"
+msgstr "Сортировать файлы по дате изменения"
+
+# ==AUTO== Automatically translated
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr "Сортировать по дате изменения вместо имени; папки остаются первыми"
+
+# ==AUTO== Automatically translated
+msgid "Reversed"
+msgstr "Обратный"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the sort order"
+msgstr "Изменить порядок сортировки на обратный"
+
+# ==AUTO== Automatically translated
+msgid "List the files in reverse order; folders stay first"
+msgstr "Показывать файлы в обратном порядке; папки остаются первыми"
 
 # ==AUTO== Automatically translated
 msgid "Keep extension"
@@ -626,6 +1432,29 @@ msgstr ""
 "(напр. *.txt, image_*)"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar filter…"
+msgstr "Фильтр sidecar…"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Фильтр по содержимому sidecar-файлов</b><br>Регулярное выражение "
+"Python, применяемое к <i>содержимому</i> sidecar-файлов.<br>Показываются "
+"только файлы, у которых есть хотя бы один sidecar-файл с совпадающим "
+"содержимым, вместе с их sidecar-файлами.<br>Файлы без sidecar-файлов "
+"всегда скрываются при активном фильтре.<br><tt>.*</tt> захватывает "
+"переводы строк (re.DOTALL).<br>Без учёта регистра (re.IGNORECASE), "
+"включая символы с диакритикой.<br>Нажмите Enter, чтобы сохранить фильтр в"
+" истории; оставьте пустым, чтобы показать все файлы."
+
+# ==AUTO== Automatically translated
 msgid "Files to be renamed"
 msgstr "Файлы для переименования"
 
@@ -636,6 +1465,22 @@ msgid ""
 msgstr ""
 "Выберите строки для ограничения операций этими файлами; оставьте без "
 "выбора для применения ко всем"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Шаблон"
+
+# ==AUTO== Automatically translated
+msgid "Rename in place with search/replace patterns"
+msgstr "Переименовать на месте с помощью шаблонов поиска и замены"
+
+# ==AUTO== Automatically translated
+msgid "Schema"
+msgstr "Схема"
+
+# ==AUTO== Automatically translated
+msgid "Sort files into a destination tree built from schema fields"
+msgstr "Разложить файлы по дереву назначения, построенному из полей схемы"
 
 # ==AUTO== Automatically translated
 msgid "Search:"
@@ -673,10 +1518,6 @@ msgid ""
 msgstr ""
 "Показать справку по шаблонам поиска (токены шаблона, регулярные "
 "выражения, обычный текст)"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "Шаблон"
 
 # ==AUTO== Automatically translated
 msgid "Search using pattern tokens"
@@ -905,10 +1746,6 @@ msgstr ""
 " (перезаписывает существующее сохранение с тем же именем)"
 
 # ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "Удалить"
-
-# ==AUTO== Automatically translated
 msgid "Delete this named save"
 msgstr "Удалить это именованное сохранение"
 
@@ -945,20 +1782,30 @@ msgid "Reverse the last batch of renames performed on disk"
 msgstr "Обратить последний пакет переименований, выполненных на диске"
 
 # ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "Переименовать"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "Применить переименования на диске"
+msgid "Renumber from 1 in place"
+msgstr "Перенумеровать с 1 на месте"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
 msgstr ""
-"Навсегда переименовать все файлы в столбце «Предпросмотр» (доступно "
-"только при отсутствии конфликтов)"
+"Перенумеровать выбранные файлы (все файлы списка, если ничего не выбрано)"
+" с 1, на месте, согласно схеме"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "Применить переименования на диске (F2)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Окончательно переименовать выбранные файлы (все файлы списка, если ничего"
+" не выбрано), как показано в столбце «Предпросмотр» (доступно только при "
+"отсутствии конфликтов)"
 
 # ==AUTO== Automatically translated
 msgid "File"
@@ -969,12 +1816,129 @@ msgid "Edit"
 msgstr "Правка"
 
 # ==AUTO== Automatically translated
+msgid "Profile"
+msgstr "Профиль"
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "Изображения"
+
+# ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Открыть sidecar-файл"
+
+# ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Ярлыки"
 
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Справка"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Поле"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Описание"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Значение"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Метаданные изображения (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Метаданные аудио"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Метаданные видео"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Универсальные поля"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Сегодняшняя дата"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Текущая дата и время"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "Отсутствует"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Дата/время изменения файла"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Дата/время создания файла"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Имя родительской папки"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Поля пакетной обработки"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Вычисляется"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Полный совпавший текст"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Группы захвата"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Автоинкрементный счётчик"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Счётчик без конфликтов"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Именованная группа regex"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "Вставить в поле замены"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars"
+msgstr "Осиротевшие sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected"
+msgstr "Удалить выбранное"
+
+# ==AUTO== Automatically translated
+msgid "Delete all"
+msgstr "Удалить все"
+
+# ==AUTO== Automatically translated
+msgid "Close"
+msgstr "Закрыть"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} осиротевший(-их) sidecar-файл(ов):"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1576,6 +2540,300 @@ msgid "Examples"
 msgstr "Примеры"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "Настройка профиля «{name}»"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}"
+msgstr "Поле {n}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "Поле {n}:"
+
+# ==AUTO== Automatically translated
+msgid "Display"
+msgstr "Отображение"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields of the rename schema"
+msgstr "Число полей схемы переименования"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields:"
+msgstr "Количество полей:"
+
+# ==AUTO== Automatically translated
+msgid "Text inserted in the name of video files"
+msgstr "Текст, вставляемый в имя видеофайлов"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr ""
+"Вставляется в позицию, выбранную переключателями вкладки «Схема»; "
+"оставьте пустым, чтобы не вставлять маркер"
+
+# ==AUTO== Automatically translated
+msgid "Video marker:"
+msgstr "Видеомаркер:"
+
+# ==AUTO== Automatically translated
+msgid "Field titles:"
+msgstr "Названия полей:"
+
+# ==AUTO== Automatically translated
+msgid "Show thumbnails"
+msgstr "Показывать миниатюры"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column in the file list"
+msgstr "Показывать столбец миниатюр в списке файлов"
+
+# ==AUTO== Automatically translated
+msgid "Maximum width:"
+msgstr "Максимальная ширина:"
+
+# ==AUTO== Automatically translated
+msgid "Maximum height:"
+msgstr "Максимальная высота:"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "Sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar column"
+msgstr "Показывать столбец sidecar-файлов"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr ""
+"Показывать, у каких файлов есть sidecar-файлы; двойной щелчок по столбцу "
+"открывает sidecar-файл или создаёт его"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar content filter"
+msgstr "Показывать фильтр по содержимому sidecar-файлов"
+
+# ==AUTO== Automatically translated
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "Фильтровать список файлов по содержимому sidecar-файлов"
+
+# ==AUTO== Automatically translated
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "Расширение sidecar-файла, создаваемого двойным щелчком, без точки"
+
+# ==AUTO== Automatically translated
+msgid "New sidecar extension:"
+msgstr "Расширение новых sidecar-файлов:"
+
+# ==AUTO== Automatically translated
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "Удалять пустые файлы sidecar при загрузке каталога"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr ""
+"Пустые файлы с именем sidecar-файла удаляются при чтении папки, кроме "
+"только что созданного sidecar-файла"
+
+# ==AUTO== Automatically translated
+msgid "Maximum number of values kept in each field history"
+msgstr "Максимальное число значений в истории каждого поля"
+
+# ==AUTO== Automatically translated
+msgid "Max history entries:"
+msgstr "Макс. записей истории:"
+
+# ==AUTO== Automatically translated
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "Изменение масштаба при каждом увеличении или уменьшении"
+
+# ==AUTO== Automatically translated
+msgid "Zoom step:"
+msgstr "Шаг масштаба:"
+
+# ==AUTO== Automatically translated
+msgid "Largest zoom of the image viewer"
+msgstr "Наибольший масштаб просмотрщика изображений"
+
+# ==AUTO== Automatically translated
+msgid "Maximum zoom:"
+msgstr "Максимальный масштаб:"
+
+# ==AUTO== Automatically translated
+msgid "Right"
+msgstr "Справа"
+
+# ==AUTO== Automatically translated
+msgid "Left"
+msgstr "Слева"
+
+# ==AUTO== Automatically translated
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr "Сторона просмотрщика изображений, где показывается панель метаданных"
+
+# ==AUTO== Automatically translated
+msgid "Metadata panel:"
+msgstr "Панель метаданных:"
+
+# ==AUTO== Automatically translated
+msgid "Show images turned as their EXIF orientation says"
+msgstr "Показывать изображения повёрнутыми согласно их EXIF-ориентации"
+
+# ==AUTO== Automatically translated
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "Применяется к миниатюрам и просмотрщику изображений"
+
+# ==AUTO== Automatically translated
+msgid "Deletion"
+msgstr "Удаление"
+
+# ==AUTO== Automatically translated
+msgid "Move deleted files to the trash"
+msgstr "Перемещать удалённые файлы в корзину"
+
+# ==AUTO== Automatically translated
+msgid "When unchecked, deleted files are removed permanently"
+msgstr "Если флажок снят, удалённые файлы стираются безвозвратно"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletions"
+msgstr "Подтверждение удаления"
+
+# ==AUTO== Automatically translated
+msgid "Ask for a confirmation before deleting files"
+msgstr "Запрашивать подтверждение перед удалением файлов"
+
+# ==AUTO== Automatically translated
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr "При большем числе файлов подтверждение указывает только их количество"
+
+# ==AUTO== Automatically translated
+msgid "Files listed in the confirmation:"
+msgstr "Файлов в списке подтверждения:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ нет назначения для {dest}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} должно начинать имя"
+
+# ==AUTO== Automatically translated
+msgid "⚠ absolute path"
+msgstr "⚠ абсолютный путь"
+
+# ==AUTO== Automatically translated
+msgid "⚠ extension separator removed"
+msgstr "⚠ разделитель расширения удалён"
+
+# ==AUTO== Automatically translated
+msgid "⚠ invalid path"
+msgstr "⚠ недопустимый путь"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ нет подходящего типа ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} недоступно"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Поиск — Справка"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Замена — Справка"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr ""
+"Поле схемы «{title}»: уровень каталога и часть имени; «###» — счётчик, "
+"пустое поле пропускается"
+
+# ==AUTO== Automatically translated
+msgid "Destination:"
+msgstr "Назначение:"
+
+# ==AUTO== Automatically translated
+msgid "Destination root directory…"
+msgstr "Корневой каталог назначения…"
+
+# ==AUTO== Automatically translated
+msgid "Root of the destination tree"
+msgstr "Корень дерева назначения"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr "Файлы перемещаются в этот каталог, в подкаталоги с именами полей"
+
+# ==AUTO== Automatically translated
+msgid "Browse…"
+msgstr "Обзор…"
+
+# ==AUTO== Automatically translated
+msgid "Choose the destination directory"
+msgstr "Выбрать каталог назначения"
+
+# ==AUTO== Automatically translated
+msgid "Fill gaps"
+msgstr "Заполнять пропуски"
+
+# ==AUTO== Automatically translated
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr "Заполнять пропуски в нумерации вместо продолжения после наибольшего номера"
+
+# ==AUTO== Automatically translated
+msgid "Video marker position"
+msgstr "Позиция видеомаркера"
+
+# ==AUTO== Automatically translated
+msgid "Choose destination directory"
+msgstr "Выбрать каталог назначения"
+
+# ==AUTO== Automatically translated
+msgid "Choose a destination directory."
+msgstr "Выберите каталог назначения."
+
+# ==AUTO== Automatically translated
+msgid "The destination must be an absolute path."
+msgstr "Назначение должно быть абсолютным путём."
+
+# ==AUTO== Automatically translated
+msgid "Proposed template"
+msgstr "Предложенный шаблон"
+
+# ==AUTO== Automatically translated
+msgid "Detected template, confirm to fill the fields:"
+msgstr "Обнаружен шаблон, подтвердите, чтобы заполнить поля:"
+
+# ==AUTO== Automatically translated
+msgid "(empty)"
+msgstr "(пусто)"
+
+# ==AUTO== Automatically translated
 msgid "System default"
 msgstr "Системный язык"
 
@@ -1706,10 +2964,6 @@ msgstr "Вниз"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "Сохранённые ярлыки:"
-
-# ==AUTO== Automatically translated
-msgid "Images"
-msgstr "Изображения"
 
 # ==AUTO== Automatically translated
 msgid "Duplicate extension"

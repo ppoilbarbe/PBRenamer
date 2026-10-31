@@ -4,7 +4,6 @@ import argparse
 import logging
 import os
 import sys
-from collections import defaultdict
 
 from pbrenamer.argparse_qt import add_qt_arguments
 
@@ -54,8 +53,10 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         prog="pbrenamer",
         description="PBRenamer — graphical batch file renaming utility.",
         epilog=(
-            "Headless mode is activated when --search or --saved is provided; "
-            "the two options are mutually exclusive. "
+            "Headless mode is activated when --search, --saved or --schema is "
+            "provided; the three options are mutually exclusive. "
+            "Settings come from the profile chosen with --profile, or from "
+            "the last profile used in the GUI. "
             "Qt platform options (--style, --platform, …) are forwarded to Qt "
             "in GUI mode."
         ),
@@ -78,7 +79,7 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
     rename_group = parser.add_argument_group(
         "headless rename",
         "These options activate headless (no GUI) mode"
-        " when --search or --saved is given.",
+        " when --search, --saved or --schema is given.",
     )
     headless_source = rename_group.add_mutually_exclusive_group()
     headless_source.add_argument(
@@ -95,6 +96,66 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         help=(
             "Load a named save — activates headless mode; "
             "other options override values from the save"
+        ),
+    )
+    headless_source.add_argument(
+        "--schema",
+        metavar="LIST",
+        default=None,
+        help=(
+            "Rename schema: comma-separated fields, e.g. 'Trip,,Paris,###' "
+            "— activates headless mode. Non-empty fields form both the "
+            "directory tree under --dest and the name (joined with '_'); a "
+            "field of '#' only is the counter, padded to the number of '#'; "
+            "empty fields are skipped. Sidecar mode is always on"
+        ),
+    )
+    rename_group.add_argument(
+        "--dest",
+        metavar="DIR",
+        default=None,
+        help=(
+            "Destination root: with --schema, defaults to the profile's "
+            "destination and is required if it has none (except with "
+            "--renumber); value of the {dest} field in --replace"
+        ),
+    )
+    rename_group.add_argument(
+        "--fill-gaps",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help=(
+            "{newnum} takes the smallest free number instead of continuing "
+            "after the highest one (default: the profile's setting with "
+            "--schema, --no-fill-gaps otherwise)"
+        ),
+    )
+    rename_group.add_argument(
+        "--renumber",
+        action="store_true",
+        default=False,
+        help=(
+            "{newnum} runs from its start value, ignoring the numbers already "
+            "used on disk; with --schema, renumber the files in place"
+        ),
+    )
+    rename_group.add_argument(
+        "--video-marker",
+        metavar="TEXT",
+        default=None,
+        help=(
+            "With --schema: text added to the name of video files "
+            "(default: the profile's marker)"
+        ),
+    )
+    rename_group.add_argument(
+        "--video-marker-pos",
+        metavar="N",
+        type=int,
+        default=None,
+        help=(
+            "With --schema: position of the video marker between the fields "
+            "(0 = before the first field, default: the profile's position)"
         ),
     )
     rename_group.add_argument(
@@ -260,6 +321,16 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
             ),
         )
 
+    parser.add_argument(
+        "--profile",
+        metavar="NAME",
+        default=None,
+        help=(
+            "Use the profile NAME (settings, presets, sidecar configuration, "
+            "schema defaults) instead of the last one used in the GUI"
+        ),
+    )
+
     # ── Developer / testing ───────────────────────────────────────────────────
     parser.add_argument(
         "--config-dir",
@@ -315,6 +386,21 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
 
     Precedence: explicit CLI flag > saved config > hardcoded default.
     """
+    if ns.dest is not None:
+        ns.dest = os.path.abspath(ns.dest)
+    if ns.schema is not None:
+        _resolve_schema_ns(ns)
+        return
+    for flag, value in (
+        ("--video-marker", ns.video_marker),
+        ("--video-marker-pos", ns.video_marker_pos),
+    ):
+        if value is not None:
+            print(f"error: {flag} requires --schema", file=sys.stderr)
+            sys.exit(1)
+    if ns.fill_gaps is None:
+        ns.fill_gaps = False
+
     if ns.saved is not None:
         from pbrenamer.ui.presets import PatternPresets
 
@@ -379,158 +465,133 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
         sys.exit(1)
 
 
-def _apply_postproc(
-    name: str,
-    path: str,
-    *,
-    sep: str = "none",
-    accent: bool,
-    dup: bool,
-    case: str,
-) -> str:
-    from pbrenamer.core import filetools
-
-    if sep != "none":
-        name, _ = filetools.replace_spaces(name, path, _SEP_MAP[sep])
-    if accent:
-        name, _ = filetools.replace_accents(name, path)
-    if dup:
-        name, _ = filetools.replace_duplicated(name, path)
-    if case != "none":
-        name, _ = filetools.replace_capitalization(name, path, _CASE_MAP[case])
-    return name
+# Pattern-mode options that have no meaning with --schema.
+_PATTERN_ONLY = {
+    "replace": "--replace",
+    "mode": "--mode",
+    "ext_mode": "--ext-mode",
+    "sep": "--sep",
+    "case": "--case",
+    "accent": "--accent",
+    "dup": "--dup",
+}
 
 
-def _do_rename(
-    use_regex: bool,
-    use_plain: bool,
-    stem: str,
-    orig_path: str,
-    search: str,
-    replace: str,
-    counter: int,
-    *,
-    newnum: int | None = None,
-) -> tuple[str | None, str | None]:
-    from pbrenamer.core import filetools
-
-    if use_regex:
-        return filetools.rename_using_regex(
-            stem, orig_path, search, replace, newnum=newnum
+def _resolve_schema_ns(ns: argparse.Namespace) -> None:
+    """Check and complete the options of the schema mode (--schema)."""
+    for attr, flag in _PATTERN_ONLY.items():
+        if getattr(ns, attr) is not None:
+            print(f"error: {flag} cannot be used with --schema", file=sys.stderr)
+            sys.exit(1)
+    if ns.sidecar_mode is False:
+        print(
+            "error: --no-sidecar-mode cannot be used with --schema",
+            file=sys.stderr,
         )
-    if use_plain:
-        return filetools.rename_using_plain_text(
-            stem, orig_path, search, replace, newnum=newnum
-        )
-    return filetools.rename_using_patterns(
-        stem, orig_path, search, replace, counter, newnum=newnum
+        sys.exit(1)
+    from pbrenamer import profiles
+
+    defaults = profiles.get_schema()
+    if ns.renumber:
+        if ns.dest is not None:
+            print(
+                "warning: --dest is ignored with --renumber (files are "
+                "renumbered in place)",
+                file=sys.stderr,
+            )
+    elif ns.dest is None:
+        if not defaults["dest"]:
+            print(
+                f"error: --schema requires --dest (profile "
+                f"'{profiles.current()}' has no destination)",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        ns.dest = os.path.abspath(defaults["dest"])
+    ns.sidecar_mode = True
+    ns.ext_mode = "lower"
+    if ns.video_marker is None:
+        ns.video_marker = defaults["video_marker"]
+    if ns.video_marker_pos is None:
+        ns.video_marker_pos = defaults["video_marker_pos"]
+    if ns.fill_gaps is None:
+        ns.fill_gaps = defaults["fill_gaps"]
+    _rule(ns)  # report an invalid schema before listing the directory
+
+
+def _rule(ns: argparse.Namespace):
+    """Return the planner Rule described by the resolved options *ns*.
+
+    Exits with an error message when the schema (--schema) is invalid.
+    """
+    from pbrenamer import settings as _settings
+    from pbrenamer.core import planner
+
+    if ns.schema is not None:
+        from pbrenamer.core import schema
+
+        try:
+            return schema.compile_rule(
+                ns.schema.split(","),
+                dest_root=ns.dest,
+                video_marker=ns.video_marker,
+                video_marker_pos=ns.video_marker_pos,
+                fill_gaps=ns.fill_gaps,
+                renumber=ns.renumber,
+                sidecar_config=_settings.get_sidecar_config(),
+            )
+        except schema.SchemaError as exc:
+            print(f"error: invalid schema: {exc}", file=sys.stderr)
+            sys.exit(1)
+
+    return planner.Rule(
+        search=ns.search,
+        replace=ns.replace,
+        mode=ns.mode,
+        ext_mode=ns.ext_mode,
+        normalization=_settings.get_extension_normalization_map(),
+        spaces=_SEP_MAP[ns.sep] if ns.sep != "none" else None,
+        remove_accents=ns.accent,
+        remove_duplicates=ns.dup,
+        capitalization=_CASE_MAP[ns.case] if ns.case != "none" else None,
+        dest_root=ns.dest,
+        fill_gaps=ns.fill_gaps,
+        renumber=ns.renumber,
+        sidecar_config=_settings.get_sidecar_config(),
     )
 
 
 def _plan(
     entries: list[tuple[str, str]],
     ns: argparse.Namespace,
+    followers: dict[str, list[tuple[str, str]]] | None = None,
 ) -> list[tuple[str, str, str | None]]:
-    """Return [(original_path, original_name, new_name_or_None), ...]."""
-    from pbrenamer import settings as _settings
-    from pbrenamer.core import filetools
+    """Return [(original_path, original_name, new_name_or_None), ...].
+
+    *followers* maps base paths to their sidecars (see
+    planner.compute_names); those sidecars get no new name.
+    """
+    from pbrenamer.core import planner
     from pbrenamer.core import replacement as _repl
 
-    use_regex = ns.mode == "regex"
-    use_plain = ns.mode == "plain"
-    normalization_table = _settings.get_extension_normalization_map()
+    if ns.schema is None:
+        try:
+            _repl.parse(ns.replace)
+        except _repl.ReplacementSyntaxError as exc:
+            print(f"error: invalid replacement pattern: {exc}", file=sys.stderr)
+            sys.exit(1)
 
-    # Pre-scan for {newnum} in the replacement template
-    newnum_state: _repl.NewNumState | None = None
-    try:
-        segments = _repl.parse(ns.replace)
-        for seg in segments:
-            if isinstance(seg, _repl.FieldSegment) and seg.name == "newnum":
-                start = 1
-                if seg.default is not None:
-                    try:
-                        start = int(seg.default)
-                    except ValueError:
-                        pass
-                newnum_state = _repl.NewNumState(start)
-                break
-    except _repl.ReplacementSyntaxError as exc:
-        print(f"error: invalid replacement pattern: {exc}", file=sys.stderr)
-        sys.exit(1)
-
+    rule = _rule(ns)
+    paths = [path for _name, path in entries]
     results: list[tuple[str, str, str | None]] = []
-
-    for counter, (name, path) in enumerate(entries, start=1):
-        if ns.ext_mode == "modify":
-            stem, stem_path, ext = name, path, ""
-        else:
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-            ext = filetools.apply_extension_mode(ext, ns.ext_mode, normalization_table)
-
-        new_name: str | None = None
-
-        if newnum_state is not None:
-            dir_path = os.path.dirname(path)
-            k = newnum_state.current
-            while True:
-                try:
-                    raw, _ = _do_rename(
-                        use_regex,
-                        use_plain,
-                        stem,
-                        path,
-                        ns.search,
-                        ns.replace,
-                        counter,
-                        newnum=k,
-                    )
-                except _repl.FieldResolutionError as err:
-                    _log.debug("%s (file: %r)", err, name)
-                    break
-                if raw is None:
-                    break
-                processed = _apply_postproc(
-                    raw,
-                    stem_path,
-                    sep=ns.sep,
-                    accent=ns.accent,
-                    dup=ns.dup,
-                    case=ns.case,
-                )
-                candidate = filetools.add_extension(processed, stem_path, ext)[0]
-                cand_path = os.path.join(dir_path, candidate)
-                from pbrenamer.platform.fs import same_file_path
-
-                if candidate not in newnum_state.reserved and (
-                    not os.path.exists(cand_path)
-                    or same_file_path(cand_path, path, dir_path)
-                ):
-                    newnum_state.reserved.add(candidate)
-                    newnum_state.current = k + 1
-                    new_name = candidate
-                    break
-                k += 1
-        else:
-            try:
-                raw, _ = _do_rename(
-                    use_regex, use_plain, stem, path, ns.search, ns.replace, counter
-                )
-            except _repl.FieldResolutionError as err:
-                _log.debug("%s (file: %r)", err, name)
-                raw = None
-            if raw is not None:
-                processed = _apply_postproc(
-                    raw,
-                    stem_path,
-                    sep=ns.sep,
-                    accent=ns.accent,
-                    dup=ns.dup,
-                    case=ns.case,
-                )
-                new_name = filetools.add_extension(processed, stem_path, ext)[0]
-
-        results.append((path, name, new_name))
-
+    for (name, path), entry in zip(
+        entries,
+        planner.compute_names(rule, paths, followers=followers),
+        strict=True,
+    ):
+        if entry.error is not None:
+            _log.debug("%s (file: %r)", entry.error, name)
+        results.append((path, name, entry.new_name))
     return results
 
 
@@ -578,58 +639,46 @@ def _apply_sidecar_grouping(
 def _detect_conflicts(
     plan: list[tuple[str, str, str | None]],
 ) -> set[int]:
-    from pbrenamer.platform.fs import conflict_key, same_file_path
+    """Return the indices of *plan* whose target is shared or already taken."""
+    from pbrenamer.core import filetools
 
-    conflicts: set[int] = set()
-    target_map: dict[str, list[int]] = defaultdict(list)
-
-    for idx, (path, _name, new_name) in enumerate(plan):
-        if new_name is None or new_name == os.path.basename(path):
-            continue
-        parent = os.path.dirname(path)
-        target = os.path.join(parent, new_name)
-        target_map[conflict_key(target, parent)].append(idx)
-
-    for indices in target_map.values():
-        if len(indices) > 1:
-            conflicts.update(indices)
-
-    for idx, (path, _name, new_name) in enumerate(plan):
-        if new_name is None:
-            continue
-        parent = os.path.dirname(path)
-        target = os.path.join(parent, new_name)
-        if not same_file_path(target, path, parent) and os.path.exists(target):
-            conflicts.add(idx)
-
-    return conflicts
+    pairs = {
+        idx: (path, os.path.join(os.path.dirname(path), new_name))
+        for idx, (path, _name, new_name) in enumerate(plan)
+        if new_name is not None and new_name != os.path.basename(path)
+    }
+    conflicting = set(filetools.find_rename_conflicts(list(pairs.values())))
+    return {idx for idx, pair in pairs.items() if pair in conflicting}
 
 
 def _print_dry_run(
-    plan: list[tuple[str, str, str | None]],
     changes: list[tuple[str, str, str | None]],
-    conflicts: set[int],
+    conflict_paths: set[str],
 ) -> None:
     """Print the shell-equivalent `mv` commands, without touching disk."""
     import shlex
 
-    conflict_paths = {plan[i][0] for i in conflicts}
-    done = 0
-    skipped = 0
     for path, name, new in changes:
         if path in conflict_paths:
-            _log.warning("Skipping conflict: %s", name)
-            print(f"# CONFLICT — skipped: {name}")
-            skipped += 1
+            print(f"# CONFLICT: {name}")
             continue
         new_path = os.path.join(os.path.dirname(path), new)
         print(f"mv -- {shlex.quote(path)} {shlex.quote(new_path)}")
-        done += 1
 
-    print(f"# {done} file(s) would be renamed.", end="")
-    if skipped:
-        print(f" {skipped} conflict(s) skipped.", end="")
-    print()
+    if conflict_paths:
+        print(f"# {len(conflict_paths)} conflict(s): nothing would be renamed.")
+    else:
+        print(f"# {len(changes)} file(s) would be renamed.")
+
+
+def _report_conflicts(changes, conflict_paths: set[str]) -> None:
+    for _path, name, new in changes:
+        if _path in conflict_paths:
+            print(f"error: conflict: {name} → {new}", file=sys.stderr)
+    print(
+        f"error: {len(conflict_paths)} conflict(s): nothing renamed.",
+        file=sys.stderr,
+    )
 
 
 def _resolve_selection(
@@ -691,7 +740,14 @@ def _headless_run(ns: argparse.Namespace) -> None:
         print("No entries found.")
         return
 
-    plan = _plan(entries, ns)
+    followers: dict[str, list[tuple[str, str]]] = {}
+    if ns.sidecar_mode:
+        from pbrenamer import settings as _settings
+        from pbrenamer.core import sidecar as _sidecar
+
+        groups = _sidecar.build_sidecar_groups(entries, _settings.get_sidecar_config())
+        followers = _sidecar.followers(groups)
+    plan = _plan(entries, ns, followers)
     if ns.sidecar_mode:
         plan = _apply_sidecar_grouping(plan, entries)
 
@@ -710,10 +766,17 @@ def _headless_run(ns: argparse.Namespace) -> None:
         return
 
     conflicts = _detect_conflicts(plan)
+    conflict_paths = {plan[i][0] for i in conflicts}
 
     if ns.dry_run:
-        _print_dry_run(plan, changes, conflicts)
+        _print_dry_run(changes, conflict_paths)
+        if conflict_paths:
+            sys.exit(1)
         return
+
+    if conflict_paths:
+        _report_conflicts(changes, conflict_paths)
+        sys.exit(1)
 
     if ns.confirm:
         # Determine column widths
@@ -724,18 +787,10 @@ def _headless_run(ns: argparse.Namespace) -> None:
         sep = f"  {'─' * col_orig}  {'─' * col_new}"
         print(f"  {'Original':<{col_orig}}  {'Renamed':<{col_new}}")
         print(sep)
-        for path, name, new in changes:
-            idx = next(i for i, (p, _, _) in enumerate(plan) if p == path)
-            flag = " [CONFLICT]" if idx in conflicts else ""
-            print(f"  {name:<{col_orig}}  {new:<{col_new}}{flag}")
+        for _path, name, new in changes:
+            print(f"  {name:<{col_orig}}  {new:<{col_new}}")
         print(sep)
-        print(f"{len(changes)} file(s) would be renamed.", end="")
-        if conflicts:
-            print(
-                f"  {len(conflicts)} conflict(s) detected — those will be skipped.",
-                end="",
-            )
-        print()
+        print(f"{len(changes)} file(s) would be renamed.")
 
         try:
             answer = input("Proceed? [y/N] ").strip().lower()
@@ -749,30 +804,24 @@ def _headless_run(ns: argparse.Namespace) -> None:
             print("Aborted.")
             return
 
-    conflict_paths = {plan[i][0] for i in conflicts}
-    done = 0
-    errors: list[str] = []
-
-    for path, name, new in changes:
-        if path in conflict_paths:
-            _log.warning("Skipping conflict: %s", name)
-            continue
-        new_path = os.path.join(os.path.dirname(path), new)
-        ok, err = filetools.rename_file(path, new_path)
-        if ok:
-            done += 1
-            _log.info("%s → %s", name, new)
-            if not ns.confirm:
-                print(f"{name} → {new}")
+    pairs = [
+        (path, os.path.join(os.path.dirname(path), new)) for path, _name, new in changes
+    ]
+    try:
+        filetools.execute_renames(pairs, prune_root=directory)
+    except filetools.RenameError as exc:
+        if exc.conflicts:  # pragma: no cover — disk changed since the check
+            _report_conflicts(changes, {src for src, _dst in exc.conflicts})
         else:
-            errors.append(f"{name}: {err}")
-
-    if done:
-        print(f"{done} file(s) renamed.")
-    for err in errors:
-        print(f"error: {err}", file=sys.stderr)
-    if errors:
+            print(f"error: {exc}", file=sys.stderr)
+            print("error: nothing renamed.", file=sys.stderr)
         sys.exit(1)
+
+    for _path, name, new in changes:
+        _log.info("%s → %s", name, new)
+        if not ns.confirm:
+            print(f"{name} → {new}")
+    print(f"{len(changes)} file(s) renamed.")
 
 
 # ---------------------------------------------------------------------------
@@ -799,6 +848,16 @@ def main() -> None:
         from pbrenamer import settings as _settings
 
         _settings.configure(Path(_ns.config_dir))
+
+    headless = _ns.search is not None or _ns.saved is not None or _ns.schema is not None
+    if _ns.profile is not None:
+        from pbrenamer import profiles
+
+        if not profiles.exists(_ns.profile):
+            print(f"error: profile '{_ns.profile}' not found", file=sys.stderr)
+            sys.exit(2)
+        # A headless run never changes the profile the GUI opens next.
+        profiles.use(_ns.profile, remember=not headless)
 
     if getattr(_ns, "auto_update", False):
         from pbrenamer.platform.auto_update import perform_auto_update
@@ -836,9 +895,14 @@ def main() -> None:
             sys.stdout.write(replace_html())
         return
 
-    if _ns.search is not None or _ns.saved is not None:
+    if headless:
         if _ns.log_level:
             logging.getLogger().setLevel(_ns.log_level)
+        # Core messages (schema errors, sidecar ambiguities) use _(); the
+        # headless output is in English.
+        import gettext
+
+        gettext.NullTranslations().install()
         _resolve_ns(_ns)
         _headless_run(_ns)
         return
@@ -883,7 +947,8 @@ def _load_bundled_fonts(app: object) -> None:  # pragma: no cover
 
 
 def _gui_main(_ns):  # pragma: no cover
-    # GUI mode — only reached when neither --search nor --saved is given.
+    # GUI mode — only reached when none of --search, --saved and --schema
+    # is given.
     # Tests never enter this path: they invoke _headless_run() directly
     # and rely on pytest-qt for the QApplication instance.
     from PySide6.QtGui import QIcon

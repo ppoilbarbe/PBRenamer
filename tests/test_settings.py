@@ -7,6 +7,7 @@ import logging
 from unittest.mock import MagicMock
 
 import pbrenamer.settings as settings
+from pbrenamer import profiles
 from pbrenamer.settings import (
     LEVELS,
     apply_log_level,
@@ -255,6 +256,15 @@ class TestLastDir:
         set_last_dir("/b")
         assert get_last_dir() == "/b"
 
+    def test_per_profile(self):
+        set_last_dir("/a")
+        profiles.create("other")
+        profiles.use("other")
+        assert get_last_dir() == ""
+        set_last_dir("/b")
+        profiles.use("default")
+        assert get_last_dir() == "/a"
+
 
 class TestRestoreToolbarState:
     def test_default_is_false(self):
@@ -298,29 +308,9 @@ class TestToolbarState:
         set_toolbar_state(state)
         assert get_toolbar_state() == state
 
-    def test_empty_raw_value_returns_empty_dict(self, config_dir):
-        from PySide6.QtCore import QSettings
-
-        qs = QSettings(str(config_dir / "pbrenamer.conf"), QSettings.Format.IniFormat)
-        qs.setValue("behaviour/toolbar_state", "")
-        qs.sync()
-        assert get_toolbar_state() == {}
-
-    def test_invalid_json_returns_empty_dict(self, config_dir):
-        from PySide6.QtCore import QSettings
-
-        qs = QSettings(str(config_dir / "pbrenamer.conf"), QSettings.Format.IniFormat)
-        qs.setValue("behaviour/toolbar_state", "not-json")
-        qs.sync()
-        assert get_toolbar_state() == {}
-
-    def test_non_dict_json_returns_empty_dict(self, config_dir):
-        from PySide6.QtCore import QSettings
-
-        qs = QSettings(str(config_dir / "pbrenamer.conf"), QSettings.Format.IniFormat)
-        qs.setValue("behaviour/toolbar_state", '["a","b"]')
-        qs.sync()
-        assert get_toolbar_state() == {}
+    def test_stored_in_current_profile(self):
+        set_toolbar_state({"mode": 1})
+        assert profiles.load()["toolbar_state"] == {"mode": 1}
 
 
 class TestPreviewDelay:
@@ -361,11 +351,11 @@ class TestGetSidecarSettings:
         assert get_sidecar_settings() == {}
 
     def test_returns_empty_on_invalid_json(self, config_dir):
-        (config_dir / "sidecar_config.json").write_text("not json", encoding="utf-8")
+        settings._sidecar_config_file().write_text("not json", encoding="utf-8")
         assert get_sidecar_settings() == {}
 
     def test_returns_empty_when_not_a_dict(self, config_dir):
-        (config_dir / "sidecar_config.json").write_text("[1, 2]", encoding="utf-8")
+        settings._sidecar_config_file().write_text("[1, 2]", encoding="utf-8")
         assert get_sidecar_settings() == {}
 
     def test_filters_unknown_category_and_non_string_entries(self, config_dir):
@@ -378,9 +368,7 @@ class TestGetSidecarSettings:
             "own_suffixes": {"image": ["xmp"], "bogus": ["x"]},
             "common_suffixes": ["meta", "", 1],
         }
-        (config_dir / "sidecar_config.json").write_text(
-            json.dumps(data), encoding="utf-8"
-        )
+        settings._sidecar_config_file().write_text(json.dumps(data), encoding="utf-8")
         result = get_sidecar_settings()
         assert result["base_extensions"] == {"image": ["jpg", "png"]}
         assert result["own_suffixes"] == {"image": ["xmp"]}
@@ -388,9 +376,7 @@ class TestGetSidecarSettings:
 
     def test_ignores_non_dict_own_suffixes_and_non_list_common(self, config_dir):
         data = {"own_suffixes": "nope", "common_suffixes": "nope"}
-        (config_dir / "sidecar_config.json").write_text(
-            json.dumps(data), encoding="utf-8"
-        )
+        settings._sidecar_config_file().write_text(json.dumps(data), encoding="utf-8")
         assert get_sidecar_settings() == {}
 
 
@@ -405,10 +391,9 @@ class TestSetSidecarSettings:
         mock_dirs = MagicMock()
         mock_dirs.config_home = nested
         monkeypatch.setattr(settings, "_dirs", mock_dirs)
-        sidecar_file = nested / "sidecar_config.json"
-        monkeypatch.setattr(settings, "_SIDECAR_CONFIG_FILE", sidecar_file)
+        profiles.reset(None)
         set_sidecar_settings({"common_suffixes": []})
-        assert sidecar_file.exists()
+        assert (nested / "profiles" / "default" / "sidecar_config.json").exists()
 
 
 class TestSidecarBaseExtensions:
@@ -496,9 +481,15 @@ class TestConfigureSidecarIsolation:
         settings.configure(tmp_path)
         try:
             set_sidecar_common_suffixes(["meta"])
-            assert (tmp_path / "sidecar_config.json").exists()
+            assert (tmp_path / "profiles/default/sidecar_config.json").exists()
         finally:
             settings.configure()
+
+    def test_sidecar_config_per_profile(self):
+        set_sidecar_common_suffixes(["meta"])
+        profiles.create("other")
+        profiles.use("other")
+        assert get_sidecar_common_suffixes() == []
 
     def test_extension_normalization_file_follows_configure(self, tmp_path):
         settings.configure(tmp_path)
@@ -507,3 +498,29 @@ class TestConfigureSidecarIsolation:
             assert (tmp_path / "extension_normalization.json").exists()
         finally:
             settings.configure()
+
+
+class TestViewerAndOpenWith:
+    def test_viewer_flags(self):
+        assert settings.get_viewer_circular() is False
+        assert settings.get_viewer_metadata_visible() is False
+        settings.set_viewer_circular(True)
+        settings.set_viewer_metadata_visible(True)
+        assert settings.get_viewer_circular() is True
+        assert settings.get_viewer_metadata_visible() is True
+
+    def test_flag_read_from_text(self):
+        # Values migrated from PBPicat's app.conf are strings.
+        settings._settings().setValue("viewer/circular_navigation", "true")
+        assert settings.get_viewer_circular() is True
+
+    def test_open_with_lru(self, config_dir):
+        assert settings.get_open_with_lru() == {}
+        settings.set_open_with_lru({"image/png": ["gimp.desktop"]})
+        assert settings.get_open_with_lru() == {"image/png": ["gimp.desktop"]}
+        (config_dir / "open_with.json").write_text(
+            json.dumps({"image/png": ["a", 1], "x": "y", "1": []})
+        )
+        assert settings.get_open_with_lru() == {"image/png": ["a"], "1": []}
+        (config_dir / "open_with.json").write_text("[]")
+        assert settings.get_open_with_lru() == {}

@@ -7,6 +7,10 @@ that supports wildcards, regular expressions, plain-text substitution, metadata
 fields (EXIF/IPTC, audio tags, video properties), and a headless (no-GUI) CLI
 mode for scripting.
 
+Its **schema mode** sorts photos and videos into a folder tree built from a few
+fields, with numbering, sidecar files and an image viewer; **profiles** keep the
+settings of each way of working.  See the :doc:`user_guide`.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents

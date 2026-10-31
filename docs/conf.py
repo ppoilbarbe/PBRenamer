@@ -1,5 +1,6 @@
 """Sphinx configuration for PBRenamer."""
 
+import os
 import re
 import sys
 from pathlib import Path
@@ -7,7 +8,9 @@ from pathlib import Path
 # Make the src layout importable by autodoc without installing the package.
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from pbrenamer import __version__
+from sphinx.ext.autodoc.mock import _MockObject, mock  # noqa: E402
+
+from pbrenamer import __version__  # noqa: E402
 
 project = "PBRenamer"
 author = "Marcel Spock"
@@ -53,10 +56,43 @@ autodoc_mock_imports = [
     "pbrenamer.ui.settings_dialog_ui",
 ]
 
+# autodoc only mocks PySide6 while it imports a documented module.  When it
+# then looks for the source of a member that the mock says comes from
+# PySide6, it imports the *real* PySide6, whose shibokensupport import hook
+# makes every later import of a mocked module fail ("wrapper loop when
+# unwrapping").  Keeping the PySide6 mock active for the whole build means
+# the real library is never loaded.
+_pyside_mock = mock(["PySide6"])
+_pyside_mock.__enter__()
+
+# Some modules compute Qt data roles at import time
+# (``Qt.ItemDataRole.UserRole + 1``): let mocked objects be added to.
+_MockObject.__add__ = lambda self, other: self
+_MockObject.__radd__ = lambda self, other: self
+
 napoleon_google_docstring = False
 napoleon_numpy_docstring = False
 
 autosummary_generate = True
+
+# ---------------------------------------------------------------------------
+# Internationalisation — the narrative pages (index.rst, user_guide.rst) are
+# translated with sphinx-intl (docs/locale/<lang>/LC_MESSAGES/, one catalog
+# per page); api.rst and changelog.rst stay in English.
+# ---------------------------------------------------------------------------
+
+locale_dirs = ["locale/"]
+gettext_compact = False
+
+# Read the Docs sets READTHEDOCS_LANGUAGE in each language project (one
+# project per language, declared as a translation of the main one); local
+# builds get it from `make docs LANG=xx`.  English is the source language.
+language = os.environ.get("READTHEDOCS_LANGUAGE", "en")
+# Read the Docs may spell a regional code in lower case with a dash ("zh-cn");
+# the catalogs are in docs/locale/zh_CN/, the spelling Sphinx looks up as is.
+if "-" in language or "_" in language:
+    _lang, _region = re.split(r"[-_]", language, maxsplit=1)
+    language = f"{_lang.lower()}_{_region.upper()}"
 
 
 # ---------------------------------------------------------------------------

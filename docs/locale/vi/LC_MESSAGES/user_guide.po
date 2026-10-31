@@ -1,0 +1,3444 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: vi\n"
+"Language-Team: vi <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "User Guide"
+msgstr "Hướng dẫn sử dụng"
+
+# ==AUTO== Automatically translated
+msgid "On this page"
+msgstr "Trên trang này"
+
+# ==AUTO== Automatically translated
+msgid "Installation"
+msgstr "Cài đặt"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer is distributed as a standalone executable.  Download the "
+"archive for your platform from the `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ page, extract it, "
+"and run the binary directly — no Python installation required."
+msgstr ""
+"PBRenamer được phân phối dưới dạng tệp thực thi độc lập.  Tải tệp nén cho"
+" nền tảng của bạn từ trang `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_, giải nén và chạy "
+"trực tiếp tệp thực thi, không cần cài Python."
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "Phụ thuộc tùy chọn"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The executables include everything.  When PBRenamer is installed with "
+"``pip``, some features need optional extras:"
+msgstr ""
+"Các tệp thực thi đã có sẵn mọi thứ.  Khi PBRenamer được cài bằng ``pip``,"
+" một số tính năng cần các gói bổ sung tùy chọn:"
+
+msgid "``pip install pbrenamer[meta]``"
+msgstr "``pip install pbrenamer[meta]``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Pillow, mutagen and pymediainfo: the ``{im:…}``, ``{au:…}`` and "
+"``{vi:…}`` metadata fields."
+msgstr ""
+"Pillow, mutagen và pymediainfo: các trường siêu dữ liệu ``{im:…}``, "
+"``{au:…}`` và ``{vi:…}``."
+
+msgid "``pip install pbrenamer[images]``"
+msgstr "``pip install pbrenamer[images]``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"pyexiv2, pillow-heif and Pillow: thumbnails of HEIC files, rotation, EXIF"
+" orientation, and the metadata panel of the image viewer."
+msgstr ""
+"pyexiv2, pillow-heif và Pillow: hình thu nhỏ của tệp HEIC, xoay ảnh, định"
+" hướng EXIF và bảng siêu dữ liệu của trình xem ảnh."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Lossless rotation of JPEG files also needs the ``jpegtran`` program (from"
+" libjpeg-turbo) on the ``PATH``."
+msgstr ""
+"Việc xoay tệp JPEG không mất dữ liệu còn cần chương trình ``jpegtran`` "
+"(từ libjpeg-turbo) trong ``PATH``."
+
+# ==AUTO== Automatically translated
+msgid "Launching"
+msgstr "Khởi chạy"
+
+# ==AUTO== Automatically translated
+msgid "GUI mode"
+msgstr "Chế độ đồ họa"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Run the binary (or ``python -m pbrenamer`` from a development "
+"environment)::"
+msgstr ""
+"Chạy tệp thực thi (hoặc ``python -m pbrenamer`` từ môi trường phát "
+"triển)::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"If *DIR* is omitted the current working directory is used as the starting"
+" folder.  ``--profile NAME`` opens the window on a given :ref:`profile "
+"<profiles>` instead of the last one used.  Qt platform options such as "
+"``--style`` and ``--platform`` are forwarded to Qt and can be appended "
+"after the positional argument."
+msgstr ""
+"Nếu bỏ qua *DIR*, thư mục làm việc hiện tại được dùng làm thư mục khởi "
+"đầu.  ``--profile NAME`` mở cửa sổ với một :ref:`hồ sơ <profiles>` cho "
+"trước thay vì hồ sơ dùng lần cuối.  Các tùy chọn nền tảng của Qt như "
+"``--style`` và ``--platform`` được chuyển cho Qt và có thể thêm sau đối "
+"số vị trí."
+
+# ==AUTO== Automatically translated
+msgid "Headless (no-GUI) mode"
+msgstr "Chế độ không giao diện"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Pass ``--search``, ``--saved`` or ``--schema`` to activate headless mode."
+" PBRenamer will list, rename, and exit without opening any window::"
+msgstr ""
+"Truyền ``--search``, ``--saved`` hoặc ``--schema`` để bật chế độ không "
+"giao diện.  PBRenamer sẽ liệt kê, đổi tên rồi thoát mà không mở cửa sổ "
+"nào::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"See :ref:`cli-reference` for the full flag list and :ref:`cli-examples` "
+"for worked examples."
+msgstr ""
+"Xem :ref:`cli-reference` để có danh sách tùy chọn đầy đủ và :ref:`cli-"
+"examples` để có ví dụ chi tiết."
+
+# ==AUTO== Automatically translated
+msgid "The GUI"
+msgstr "Giao diện đồ họa"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The window has a directory tree on the left, the file list on the right, "
+"and below them the rule panel with two tabs, **Pattern** (search and "
+"replace, described in this chapter) and **Schema** (see :ref:`schema-"
+"mode`).  The action bar at the bottom holds the **Undo**, **Preview**, "
+"**Clear**, **Renumber** and **Rename** buttons.  The menus are **File**, "
+"**Edit**, **Profile**, **Images**, **Shortcuts** and **Help**; the name "
+"of the current :ref:`profile <profiles>` is shown in the window title."
+msgstr ""
+"Cửa sổ có cây thư mục ở bên trái, danh sách tệp ở bên phải và bên dưới là"
+" bảng quy tắc với hai thẻ, **Mẫu** (tìm và thay thế, mô tả trong chương "
+"này) và **Lược đồ** (xem :ref:`schema-mode`).  Thanh thao tác ở dưới cùng"
+" chứa các nút **Hoàn tác**, **Xem trước**, **Xóa**, **Đánh số lại** và "
+"**Đổi tên**.  Các menu là **Tệp**, **Chỉnh sửa**, **Hồ sơ**, **Ảnh**, "
+"**Phím tắt** và **Trợ giúp**; tên :ref:`hồ sơ <profiles>` hiện tại hiển "
+"thị trên thanh tiêu đề."
+
+# ==AUTO== Automatically translated
+msgid "Opening a folder"
+msgstr "Mở một thư mục"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
+"directory tree, or drag a directory onto the window to load its contents."
+"  Use the **Recursive** checkbox to include sub-directories.  The "
+"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
+"listing."
+msgstr ""
+"Chọn **Tệp → Mở thư mục…** (**Ctrl+O**), chọn một thư mục trong cây thư "
+"mục, hoặc kéo một thư mục vào cửa sổ để tải nội dung của nó.  Hộp kiểm "
+"**Đệ quy** bao gồm cả các thư mục con.  Trường **Bộ lọc** nhận một mẫu "
+"glob (ví dụ ``*.jpg``) để giới hạn danh sách."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the **Show** combo to display *Files only*, *Directories only*, or "
+"*Files and directories*.  The **By date** checkbox sorts the files by "
+"modification date instead of by name, and **Reversed** reverses the "
+"order; folders always stay first.  The list follows changes made on disk "
+"by other programs."
+msgstr ""
+"Danh sách **Hiển thị** cho phép chọn *Chỉ tệp*, *Chỉ thư mục* hoặc *Tệp "
+"và thư mục*.  Hộp kiểm **Theo ngày** sắp xếp tệp theo ngày sửa đổi thay "
+"vì theo tên, và **Đảo ngược** đảo thứ tự; thư mục luôn đứng đầu.  Danh "
+"sách theo dõi các thay đổi mà chương trình khác thực hiện trên đĩa."
+
+# ==AUTO== Automatically translated
+msgid "The file list"
+msgstr "Danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "The main table shows:"
+msgstr "Bảng chính hiển thị:"
+
+# ==AUTO== Automatically translated
+msgid "**Thumbnail** — optional, see :ref:`thumbnails`."
+msgstr "**Hình thu nhỏ**: tùy chọn, xem :ref:`thumbnails`."
+
+# ==AUTO== Automatically translated
+msgid "**Original** — the current file name on disk."
+msgstr "**Gốc**: tên hiện tại của tệp trên đĩa."
+
+# ==AUTO== Automatically translated
+msgid "**Sidecar** — optional, see :ref:`sidecar-column`."
+msgstr "**Sidecar**: tùy chọn, xem :ref:`sidecar-column`."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Preview** — the name after renaming.  The cell is empty when the "
+"current pattern does not match the file.  Rows shown in a distinct colour"
+" are directories."
+msgstr ""
+"**Xem trước**: tên sau khi đổi.  Ô để trống khi mẫu hiện tại không khớp "
+"với tệp.  Các hàng có màu riêng là thư mục."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Preview** to compute the Preview column, or check **Auto-"
+"preview** to recompute it whenever the pattern or an option changes (the "
+"delay is set in :ref:`settings`).  **Clear** empties the column."
+msgstr ""
+"Nhấp **Xem trước** để tính cột Xem trước, hoặc đánh dấu **Xem trước tự "
+"động** để tính lại mỗi khi mẫu hoặc một tùy chọn thay đổi (độ trễ được "
+"đặt trong :ref:`settings`).  **Xóa** làm trống cột."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rows with a naming conflict are highlighted in red.  The **Rename** "
+"button is disabled until all conflicts are resolved."
+msgstr ""
+"Các hàng có xung đột tên được tô đỏ.  Nút **Đổi tên** bị tắt cho đến khi "
+"mọi xung đột được giải quyết."
+
+# ==AUTO== Automatically translated
+msgid ""
+"You can select a subset of rows with the usual keyboard/mouse modifiers "
+"(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
+"files; with no selection it applies to every listed file.  **Tab** moves "
+"the focus between the directory tree and the file list."
+msgstr ""
+"Bạn có thể chọn một phần các hàng bằng các phím bổ trợ thông thường của "
+"bàn phím và chuột (Shift+nhấp, Ctrl+nhấp).  Khi đó việc đổi tên chỉ áp "
+"dụng cho các tệp được chọn; nếu không chọn gì, nó áp dụng cho mọi tệp "
+"trong danh sách.  **Tab** chuyển tiêu điểm giữa cây thư mục và danh sách "
+"tệp."
+
+# ==AUTO== Automatically translated
+msgid "Drag and drop"
+msgstr "Kéo và thả"
+
+# ==AUTO== Automatically translated
+msgid "Files and directories can be dragged:"
+msgstr "Có thể kéo tệp và thư mục:"
+
+# ==AUTO== Automatically translated
+msgid "between the directory tree and the file list,"
+msgstr "giữa cây thư mục và danh sách tệp,"
+
+# ==AUTO== Automatically translated
+msgid ""
+"between PBRenamer and external applications (a file manager, another "
+"window),"
+msgstr "giữa PBRenamer và ứng dụng khác (trình quản lý tệp, cửa sổ khác),"
+
+# ==AUTO== Automatically translated
+msgid ""
+"to copy or move them.  The action taken (copy or move) follows the "
+"standard OS/Qt drag modifier keys — the default action is a move; hold "
+"the platform's copy modifier (e.g. **Ctrl** on Linux/Windows) to force a "
+"copy instead. Custom cursors indicate the resulting action while "
+"dragging."
+msgstr ""
+"để sao chép hoặc di chuyển chúng.  Hành động thực hiện (sao chép hay di "
+"chuyển) theo các phím bổ trợ kéo chuẩn của hệ thống và Qt: mặc định là di"
+" chuyển; giữ phím sao chép của nền tảng (ví dụ **Ctrl** trên Linux và "
+"Windows) để buộc sao chép.  Con trỏ riêng cho biết hành động khi đang "
+"kéo."
+
+# ==AUTO== Automatically translated
+msgid ""
+"If any dropped item would overwrite an existing file or directory, a "
+"single confirmation dialog lists how many collide and offers "
+"**Overwrite**, **Skip** (collisions only — everything else still "
+"proceeds), or **Cancel** (nothing is copied/moved). Dropping a folder "
+"into itself or one of its own sub-directories is rejected with an error."
+msgstr ""
+"Nếu một mục được thả sẽ ghi đè lên tệp hoặc thư mục có sẵn, một hộp thoại"
+" xác nhận duy nhất cho biết số mục trùng và đề xuất **Ghi đè**, **Bỏ "
+"qua** (chỉ các mục trùng, mọi thứ khác vẫn được thực hiện) hoặc **Hủy** "
+"(không sao chép hay di chuyển gì).  Việc thả một thư mục vào chính nó "
+"hoặc vào một thư mục con của nó bị từ chối kèm thông báo lỗi."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only **moves** are recorded on the undo stack; copies are not undoable, "
+"since the original file is left in place."
+msgstr ""
+"Chỉ các thao tác **di chuyển** được ghi vào ngăn xếp hoàn tác; sao chép "
+"không thể hoàn tác, vì tệp gốc vẫn ở nguyên chỗ."
+
+# ==AUTO== Automatically translated
+msgid "Configuring the rename rules"
+msgstr "Cấu hình quy tắc đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "The right-hand panel contains all renaming controls."
+msgstr "Bảng bên phải chứa mọi điều khiển đổi tên."
+
+# ==AUTO== Automatically translated
+msgid "Search field"
+msgstr "Trường tìm kiếm"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the search expression in the **Search** combo.  Three modes are "
+"available via the adjacent selector:"
+msgstr ""
+"Nhập biểu thức tìm kiếm vào danh sách **Tìm kiếm**.  Bộ chọn bên cạnh có "
+"ba chế độ:"
+
+msgid "``Pattern``"
+msgstr "``Pattern``"
+
+# ==AUTO== Automatically translated
+msgid "Wildcard-based matching.  See :ref:`pattern-mode`."
+msgstr "So khớp bằng ký tự đại diện.  Xem :ref:`pattern-mode`."
+
+msgid "``Regex``"
+msgstr "``Regex``"
+
+# ==AUTO== Automatically translated
+msgid "Full Python ``re``-module syntax.  See :ref:`regex-mode`."
+msgstr "Cú pháp đầy đủ của mô-đun ``re`` của Python.  Xem :ref:`regex-mode`."
+
+msgid "``Plain``"
+msgstr "``Plain``"
+
+# ==AUTO== Automatically translated
+msgid "Literal string matching.  See :ref:`plain-mode`."
+msgstr "So khớp chuỗi văn bản nguyên văn.  Xem :ref:`plain-mode`."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the search field to open the non-modal "
+"Search Patterns help dialog."
+msgstr "Nút **?** cạnh trường tìm kiếm mở trợ giúp không chặn về các mẫu tìm kiếm."
+
+# ==AUTO== Automatically translated
+msgid "Replace field"
+msgstr "Trường thay thế"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the replacement expression.  The syntax is the same for all three "
+"search modes.  See :ref:`replacement-fields` for the complete field "
+"reference."
+msgstr ""
+"Nhập biểu thức thay thế.  Cú pháp giống nhau cho cả ba chế độ tìm kiếm.  "
+"Xem :ref:`replacement-fields` để có tài liệu tham khảo đầy đủ về các "
+"trường."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the replace field to open the non-modal "
+"Replacement Fields help dialog."
+msgstr ""
+"Nút **?** cạnh trường thay thế mở trợ giúp không chặn về các trường thay "
+"thế."
+
+# ==AUTO== Automatically translated
+msgid "Extension mode"
+msgstr "Chế độ phần mở rộng"
+
+# ==AUTO== Automatically translated
+msgid "Controls how the file extension is handled during rename.  Choices:"
+msgstr "Quyết định cách xử lý phần mở rộng của tệp khi đổi tên.  Các lựa chọn:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Keep extension* (default) — the search/replace pattern is applied to the"
+" file *stem* only; the extension is preserved unchanged."
+msgstr ""
+"*Giữ phần mở rộng* (mặc định): mẫu tìm và thay thế chỉ áp dụng cho *phần "
+"thân* của tên tệp; phần mở rộng giữ nguyên."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in lowercase* — the extension is preserved but forced to "
+"lowercase (e.g. ``.JPG`` → ``.jpg``)."
+msgstr ""
+"*Phần mở rộng viết thường*: phần mở rộng được giữ nhưng chuyển thành chữ "
+"thường (ví dụ ``.JPG`` → ``.jpg``)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in uppercase* — the extension is preserved but forced to "
+"uppercase (e.g. ``.jpg`` → ``.JPG``)."
+msgstr ""
+"*Phần mở rộng viết hoa*: phần mở rộng được giữ nhưng chuyển thành chữ hoa"
+" (ví dụ ``.jpg`` → ``.JPG``)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Normalize extension* — the extension is looked up (case-insensitively) "
+"in the extension normalization table (**Edit → Settings… → Extension "
+"Normalization** tab) and replaced accordingly (e.g. ``.jpeg`` → "
+"``.jpg``); left unchanged if not found in the table."
+msgstr ""
+"*Chuẩn hóa phần mở rộng*: phần mở rộng được tra (không phân biệt hoa "
+"thường) trong bảng chuẩn hóa phần mở rộng (thẻ **Chỉnh sửa → Cài đặt… → "
+"Chuẩn hóa phần mở rộng**) và được thay thế tương ứng (ví dụ ``.jpeg`` → "
+"``.jpg``); giữ nguyên nếu không có trong bảng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Modify extension* — the search/replace pattern is applied to the full "
+"file name, including the extension."
+msgstr ""
+"*Sửa đổi phần mở rộng*: mẫu tìm và thay thế áp dụng cho toàn bộ tên tệp, "
+"kể cả phần mở rộng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The normalization table is managed from the **Extension Normalization** "
+"tab of the Settings dialog (**Edit → Settings…**): add, remove, or clear "
+"``from → to`` extension mappings (both sides without the leading dot). "
+"Changes to the table apply immediately and are kept even if the dialog is"
+" later cancelled."
+msgstr ""
+"Bảng chuẩn hóa được quản lý trong thẻ **Chuẩn hóa phần mở rộng** của hộp "
+"thoại cài đặt (**Chỉnh sửa → Cài đặt…**): thêm, xóa hoặc xóa hết các ánh "
+"xạ phần mở rộng ``from → to`` (cả hai bên không có dấu chấm đầu).  Thay "
+"đổi trong bảng có hiệu lực ngay và được giữ lại ngay cả khi sau đó hộp "
+"thoại bị hủy."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "Tệp sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **sidecar file** is a file associated with a *base file* by a name "
+"suffix — for example ``photo.jpg`` (base file) and ``photo.xmp`` or "
+"``photo.info.json`` (sidecars). PBRenamer can detect these relationships,"
+" group the files together in the list, and rename an entire group in one "
+"operation."
+msgstr ""
+"**Tệp sidecar** là tệp gắn với một *tệp chính* qua hậu tố tên, ví dụ "
+"``photo.jpg`` (tệp chính) và ``photo.xmp`` hoặc ``photo.info.json`` (các "
+"sidecar).  PBRenamer phát hiện các quan hệ này, nhóm các tệp trong danh "
+"sách và đổi tên cả nhóm trong một thao tác."
+
+# ==AUTO== Automatically translated
+msgid "Enabling sidecar mode"
+msgstr "Bật chế độ sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Sidecar mode** checkbox, next to the Extension mode combo, turns "
+"the feature on.  It is only selectable when Extension mode is *Keep "
+"extension*, *Extension in lowercase*, or *Extension in uppercase* — "
+"sidecar suffixes are never re-derived, so a mode that rewrites the "
+"extension (*Normalize extension*, *Modify extension*) would make the "
+"relationship ambiguous.  The checkbox is greyed out (and treated as "
+"unchecked) for those two modes; its checked/unchecked state is otherwise "
+"remembered like the Extension mode itself, both in the toolbar state and "
+"in named presets."
+msgstr ""
+"Hộp kiểm **Chế độ sidecar**, cạnh danh sách chế độ phần mở rộng, bật tính"
+" năng này.  Chỉ có thể chọn khi chế độ phần mở rộng là *Giữ phần mở "
+"rộng*, *Phần mở rộng viết thường* hoặc *Phần mở rộng viết hoa*: hậu tố "
+"sidecar không bao giờ được tính lại, nên một chế độ viết lại phần mở rộng"
+" (*Chuẩn hóa phần mở rộng*, *Sửa đổi phần mở rộng*) sẽ làm quan hệ trở "
+"nên mơ hồ.  Với hai chế độ đó, hộp kiểm bị làm mờ (và coi như không đánh "
+"dấu); ngoài ra trạng thái của nó được ghi nhớ như chính chế độ phần mở "
+"rộng, cả trong trạng thái thanh công cụ lẫn trong các bản lưu có tên."
+
+# ==AUTO== Automatically translated
+msgid "How grouping works"
+msgstr "Cách nhóm hoạt động"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each file is classified into one of four categories based on its own "
+"extension: **Images**, **Video**, **Audio**, or **Other** (anything not "
+"recognised as an image/video/audio base extension — this also includes "
+"sidecar-only files such as a bare ``.xmp``). Each category has its own "
+"configurable list of:"
+msgstr ""
+"Mỗi tệp được xếp vào một trong bốn loại theo phần mở rộng của chính nó: "
+"**Ảnh**, **Video**, **Âm thanh** hoặc **Khác** (mọi thứ không được nhận "
+"là phần mở rộng chính của ảnh, video hoặc âm thanh, kể cả các tệp chỉ là "
+"sidecar như một ``.xmp`` đứng riêng).  Mỗi loại có danh sách cấu hình "
+"riêng gồm:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**base extensions** — which extensions make a file a candidate *base* for"
+" that category (not applicable to *Other*, which is the catch-all);"
+msgstr ""
+"**phần mở rộng chính**: những phần mở rộng khiến tệp trở thành *tệp "
+"chính* ứng viên của loại đó (không áp dụng cho *Khác*, loại chứa mọi thứ "
+"còn lại);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**sidecar suffixes** — which name suffixes, when found at the end of a "
+"file name, mark it as that category's sidecar."
+msgstr ""
+"**hậu tố sidecar**: những hậu tố tên mà khi nằm ở cuối tên tệp sẽ đánh "
+"dấu tệp là sidecar của loại đó."
+
+# ==AUTO== Automatically translated
+msgid ""
+"A fifth, **Common** list of sidecar suffixes applies to every category in"
+" addition to its own list."
+msgstr ""
+"Danh sách thứ năm, **Chung**, gồm các hậu tố sidecar áp dụng cho mọi "
+"loại, ngoài danh sách riêng của từng loại."
+
+# ==AUTO== Automatically translated
+msgid ""
+"For a candidate sidecar file, PBRenamer looks — within the same directory"
+" only — for base files whose stem (the part before the matched suffix) "
+"and category match. A sidecar suffix is only searched among *its own "
+"potential base file's category* (plus the common list); it is never "
+"matched against unrelated categories."
+msgstr ""
+"Với một tệp sidecar ứng viên, PBRenamer tìm, chỉ trong cùng thư mục, các "
+"tệp chính có phần thân (phần trước hậu tố tìm thấy) và loại khớp.  Một "
+"hậu tố sidecar chỉ được tìm trong *loại của tệp chính tiềm năng của nó* "
+"(cộng danh sách chung); nó không bao giờ được so với các loại khác."
+
+# ==AUTO== Automatically translated
+msgid "**Exactly one** matching base file → the sidecar joins that base's group."
+msgstr "**Đúng một** tệp chính khớp → sidecar gia nhập nhóm của tệp đó."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**No** matching base file → the file is left ungrouped, exactly as if "
+"sidecar mode were off."
+msgstr ""
+"**Không có** tệp chính khớp → tệp không thuộc nhóm nào, đúng như khi chế "
+"độ sidecar tắt."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**More than one** matching base file — whether all candidates are in the "
+"same category (e.g. ``clip.xml`` matching both ``clip.jpg`` and "
+"``clip.png``, both images) or in different categories (e.g. ``clip.xml`` "
+"matching an image ``clip.jpg`` *and* a video ``clip.avi``, because "
+"``.xml`` is a sidecar suffix for both) — this is an explicit, "
+"**unrenamable ambiguity**. The sidecar and *every* candidate base file "
+"involved are flagged with an error explaining the conflict; none of them "
+"can be renamed until the ambiguity is resolved (e.g. by removing or "
+"renaming one of the conflicting files, or by adjusting the category "
+"configuration)."
+msgstr ""
+"**Nhiều hơn một** tệp chính khớp, dù các ứng viên cùng một loại (ví dụ "
+"``clip.xml`` khớp cả ``clip.jpg`` và ``clip.png``, đều là ảnh) hay khác "
+"loại (ví dụ ``clip.xml`` khớp ảnh ``clip.jpg`` *và* video ``clip.avi``, "
+"vì ``.xml`` là hậu tố sidecar cho cả hai): đây là **sự mơ hồ ngăn việc "
+"đổi tên**.  Tệp sidecar và *mọi* tệp chính ứng viên liên quan bị đánh dấu"
+" lỗi giải thích xung đột; không tệp nào được đổi tên cho đến khi sự mơ hồ"
+" được giải quyết (ví dụ xóa hoặc đổi tên một trong các tệp xung đột, hoặc"
+" điều chỉnh cấu hình loại)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"If a suffix is only configured as a sidecar suffix for one category, a "
+"file of another category with the same stem never causes ambiguity: with "
+"``.xml`` configured as an image-only sidecar suffix, ``clip.xml`` + "
+"``clip.jpg`` (image) + ``clip.avi`` (video) has a single candidate "
+"(``clip.jpg``) — ``clip.xml`` joins its group, and ``clip.avi`` stays an "
+"independent, ungrouped file."
+msgstr ""
+"Nếu một hậu tố chỉ được cấu hình làm hậu tố sidecar cho một loại, tệp "
+"thuộc loại khác có cùng phần thân không bao giờ gây mơ hồ: với ``.xml`` "
+"được cấu hình làm hậu tố sidecar chỉ cho ảnh, ``clip.xml`` + ``clip.jpg``"
+" (ảnh) + ``clip.avi`` (video) chỉ có một ứng viên (``clip.jpg``); "
+"``clip.xml`` gia nhập nhóm của nó, còn ``clip.avi`` vẫn là tệp độc lập, "
+"không thuộc nhóm."
+
+# ==AUTO== Automatically translated
+msgid "Selection, preview, and renaming"
+msgstr "Chọn, xem trước và đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "While sidecar mode is active:"
+msgstr "Khi chế độ sidecar đang bật:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar rows are shown in a distinct colour in the file list; ambiguous "
+"rows are shown as errors (like any other conflict), disabling the "
+"**Rename** button until resolved."
+msgstr ""
+"Các hàng sidecar hiển thị bằng màu riêng trong danh sách tệp; các hàng mơ"
+" hồ hiển thị như lỗi (như mọi xung đột khác) và tắt nút **Đổi tên** cho "
+"đến khi được giải quyết."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selecting any file in a group — the base or any of its sidecars — "
+"automatically selects the whole group."
+msgstr ""
+"Chọn bất kỳ tệp nào trong nhóm, tệp chính hay một sidecar của nó, sẽ tự "
+"động chọn cả nhóm."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The rename pattern is applied to the base file's *stem* only, exactly as "
+"under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same"
+" transformed stem, followed verbatim by its own sidecar suffix (case "
+"preserved as found on disk) — the suffix itself is never altered."
+msgstr ""
+"Mẫu đổi tên chỉ áp dụng cho *phần thân* của tệp chính, đúng như với *Giữ "
+"phần mở rộng*, *Phần mở rộng viết thường* hoặc *Phần mở rộng viết hoa*; "
+"mỗi sidecar dùng lại chính phần thân đã biến đổi đó, theo sau là hậu tố "
+"sidecar của nó giữ nguyên (giữ hoa thường như trên đĩa): bản thân hậu tố "
+"không bao giờ bị thay đổi."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming a group is a single operation: the base file and all its "
+"sidecars are renamed together, recorded as one batch on the undo stack, "
+"so **Undo** restores the whole group at once."
+msgstr ""
+"Đổi tên một nhóm là một thao tác duy nhất: tệp chính và mọi sidecar của "
+"nó được đổi tên cùng lúc và ghi vào ngăn xếp hoàn tác thành một lô, nên "
+"**Hoàn tác** khôi phục cả nhóm một lần."
+
+# ==AUTO== Automatically translated
+msgid "Configuring categories"
+msgstr "Cấu hình các loại"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open **Edit → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category. The dialog has one tab per base "
+"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+msgstr ""
+"Mở **Chỉnh sửa → Tệp sidecar…** để cấu hình phần mở rộng chính và hậu tố "
+"sidecar của từng loại.  Hộp thoại có một thẻ cho mỗi loại chính (*Ảnh*, "
+"*Video*, *Âm thanh*, *Khác*) cùng một thẻ *Chung*:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each *base extensions* list (Images/Video/Audio only — *Other* has no "
+"such list, it is the catch-all) and each *sidecar suffixes* list can be "
+"edited with add/remove controls; an extension already assigned to a "
+"different category is rejected with a warning naming the conflicting "
+"category."
+msgstr ""
+"Mỗi danh sách *phần mở rộng chính* (chỉ Ảnh, Video và Âm thanh: *Khác* "
+"không có, nó chứa mọi thứ còn lại) và mỗi danh sách *hậu tố sidecar* được"
+" chỉnh bằng các nút thêm và xóa; một phần mở rộng đã gán cho loại khác bị"
+" từ chối kèm cảnh báo nêu tên loại đó."
+
+# ==AUTO== Automatically translated
+msgid "Each list has its own **Restore defaults** button."
+msgstr "Mỗi danh sách có nút **Khôi phục mặc định** riêng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Changes apply immediately and persist across sessions "
+"(``sidecar_config.json`` in the folder of the current profile), "
+"independently of whether the dialog is later closed or cancelled."
+msgstr ""
+"Thay đổi có hiệu lực ngay và được giữ giữa các phiên "
+"(``sidecar_config.json`` trong thư mục của hồ sơ hiện tại), bất kể sau đó"
+" hộp thoại được đóng hay bị hủy."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar grouping is also available in :ref:`headless mode <cli-"
+"reference>` via ``--sidecar-mode`` / ``--no-sidecar-mode``."
+msgstr ""
+"Việc nhóm sidecar cũng có trong :ref:`chế độ không giao diện <cli-"
+"reference>` qua ``--sidecar-mode`` / ``--no-sidecar-mode``."
+
+# ==AUTO== Automatically translated
+msgid "Post-processing options"
+msgstr "Tùy chọn hậu xử lý"
+
+# ==AUTO== Automatically translated
+msgid ""
+"These transforms are applied *after* the search/replace step, in the "
+"order listed:"
+msgstr ""
+"Các biến đổi này được áp dụng *sau* bước tìm và thay thế, theo thứ tự "
+"liệt kê:"
+
+# ==AUTO== Automatically translated
+msgid "**Separator**"
+msgstr "**Dấu phân cách**"
+
+# ==AUTO== Automatically translated
+msgid "Convert between space-like delimiters.  Choices:"
+msgstr "Chuyển đổi giữa các dấu phân cách kiểu khoảng trắng.  Các lựa chọn:"
+
+# ==AUTO== Automatically translated
+msgid "*None* — no conversion (default)"
+msgstr "*Không*: không chuyển đổi (mặc định)"
+
+# ==AUTO== Automatically translated
+msgid "*Space → underscore*"
+msgstr "*Khoảng trắng → gạch dưới*"
+
+# ==AUTO== Automatically translated
+msgid "*Underscore → space*"
+msgstr "*Gạch dưới → khoảng trắng*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dot*"
+msgstr "*Khoảng trắng → dấu chấm*"
+
+# ==AUTO== Automatically translated
+msgid "*Dot → space*"
+msgstr "*Dấu chấm → khoảng trắng*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dash*"
+msgstr "*Khoảng trắng → gạch nối*"
+
+# ==AUTO== Automatically translated
+msgid "*Dash → space*"
+msgstr "*Gạch nối → khoảng trắng*"
+
+# ==AUTO== Automatically translated
+msgid "**Case**"
+msgstr "**Hoa/Thường**"
+
+# ==AUTO== Automatically translated
+msgid "Apply a case transform to the result:"
+msgstr "Áp dụng một biến đổi chữ hoa/thường cho kết quả:"
+
+# ==AUTO== Automatically translated
+msgid "*None* — no change (default)"
+msgstr "*Không*: không thay đổi (mặc định)"
+
+# ==AUTO== Automatically translated
+msgid "*UPPER CASE*"
+msgstr "*CHỮ HOA*"
+
+# ==AUTO== Automatically translated
+msgid "*lower case*"
+msgstr "*chữ thường*"
+
+# ==AUTO== Automatically translated
+msgid "*Capitalize* (first character upper, rest lower)"
+msgstr "*Viết hoa chữ cái đầu* (ký tự đầu viết hoa, phần còn lại viết thường)"
+
+# ==AUTO== Automatically translated
+msgid "*Title Case* (each word capitalised)"
+msgstr "*Mỗi Từ Viết Hoa* (mỗi từ bắt đầu bằng chữ hoa)"
+
+# ==AUTO== Automatically translated
+msgid "**Strip accents**"
+msgstr "**Bỏ dấu**"
+
+# ==AUTO== Automatically translated
+msgid "Remove diacritics via Unicode NFD normalisation (``á → a``, ``ü → u``)."
+msgstr "Xóa dấu phụ bằng chuẩn hóa Unicode NFD (``á → a``, ``ü → u``)."
+
+# ==AUTO== Automatically translated
+msgid "**Collapse duplicates**"
+msgstr "**Xóa dấu phân cách trùng lặp**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse consecutive identical separator characters (``.``, ``-``, ``_``,"
+" space) into one."
+msgstr ""
+"Gộp các ký tự phân cách giống nhau liên tiếp (``.``, ``-``, ``_``, khoảng"
+" trắng) thành một."
+
+# ==AUTO== Automatically translated
+msgid "Presets"
+msgstr "Bản lưu"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search and replace combos keep a history of the patterns used (most "
+"recent first); the button next to each combo adds the current pattern to "
+"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
+"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+msgstr ""
+"Các danh sách tìm kiếm và thay thế giữ lịch sử các mẫu đã dùng (mới nhất "
+"trước); nút cạnh mỗi danh sách thêm mẫu hiện tại vào đó.  **Chỉnh sửa → "
+"Lịch sử…** chỉnh sửa lịch sử tìm kiếm, thay thế và :ref:`bộ lọc sidecar "
+"<sidecar-filter>`: thêm, xóa, sắp xếp lại, sắp thứ tự hoặc xóa hết."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Save** field gives the current settings a name: type a name and "
+"click **Save**, pick it later from the same drop-down to restore it, or "
+"click **Delete** to remove it.  Named saves can also be loaded with "
+"``--saved`` in headless mode.  Histories and named saves belong to the "
+"current :ref:`profile <profiles>`."
+msgstr ""
+"Trường **Lưu** đặt tên cho cài đặt hiện tại: nhập tên và nhấp **Lưu**, "
+"sau đó chọn lại trong cùng danh sách để khôi phục, hoặc nhấp **Xóa** để "
+"xóa nó.  Các bản lưu có tên cũng có thể tải bằng ``--saved`` ở chế độ "
+"không giao diện.  Lịch sử và các bản lưu có tên thuộc về :ref:`hồ sơ "
+"<profiles>` hiện tại."
+
+# ==AUTO== Automatically translated
+msgid "Applying renames"
+msgstr "Áp dụng đổi tên"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Rename** (**F2**) to apply the renames shown in the Preview "
+"column. The button shows how many files will be renamed, e.g. **Rename "
+"(12)**, and is only enabled when a preview is displayed and has no "
+"conflict.  The status bar reports how many files were renamed."
+msgstr ""
+"Nhấp **Đổi tên** (**F2**) để áp dụng các thao tác đổi tên hiển thị trong "
+"cột Xem trước.  Nút cho biết số tệp sẽ được đổi tên, ví dụ **Đổi tên "
+"(12)**, và chỉ bật khi có bản xem trước không xung đột.  Thanh trạng thái"
+" báo số tệp đã đổi tên."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Renaming is atomic: every target is checked first, and if one of them "
+"fails during the operation, the renames already done are rolled back.  "
+"When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
+"``{dest}`` template), missing folders are created, and source folders "
+"left empty below the listed folder are removed.  After a rename the "
+"Preview column is cleared."
+msgstr ""
+"Việc đổi tên là nguyên tử: mọi đích được kiểm tra trước, và nếu một đích "
+"thất bại giữa chừng, các thao tác đổi tên đã làm sẽ được hoàn lại.  Khi "
+"tên mới chứa một thư mục (một :ref:`lược đồ <schema-mode>` hoặc một mẫu "
+"có ``{dest}``), các thư mục còn thiếu được tạo, và các thư mục nguồn bị "
+"bỏ trống bên dưới thư mục đang liệt kê sẽ bị xóa.  Sau khi đổi tên, cột "
+"Xem trước được làm trống."
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Undo** to revert the most recent batch.  Each rename batch is "
+"recorded on an undo stack; the button label shows the number of available"
+" batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
+" drag and drop, :ref:`rotations and EXIF orientation resets <image-"
+"rotation>` are recorded on the same stack."
+msgstr ""
+"Nhấp **Hoàn tác** để hoàn lại lô gần nhất.  Mỗi lô đổi tên được ghi vào "
+"ngăn xếp hoàn tác; nhãn nút hiển thị số lô có sẵn (ví dụ **Hoàn tác "
+"(3)**) khi có nhiều hơn một.  Các thao tác di chuyển bằng kéo và thả, "
+":ref:`xoay ảnh và đặt lại định hướng EXIF <image-rotation>` được ghi vào "
+"cùng ngăn xếp."
+
+# ==AUTO== Automatically translated
+msgid "Shortcuts"
+msgstr "Phím tắt"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Shortcuts** menu provides one-click navigation to common "
+"directories."
+msgstr ""
+"Menu **Phím tắt** cho phép đến các thư mục thường dùng chỉ bằng một cú "
+"nhấp."
+
+# ==AUTO== Automatically translated
+msgid "**System directories**"
+msgstr "**Thư mục hệ thống**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The top of the menu lists platform directories (Home, Desktop, Documents,"
+" Downloads, Pictures, Music, Videos).  On Linux, GTK bookmarks are shown "
+"instead when the file ``~/.config/gtk-3.0/bookmarks`` (or ``~/.gtk-"
+"bookmarks``) exists."
+msgstr ""
+"Phần đầu menu liệt kê các thư mục của nền tảng (Thư mục chính, Màn hình "
+"nền, Tài liệu, Tải xuống, Ảnh, Nhạc, Video).  Trên Linux, các dấu trang "
+"GTK được hiển thị thay thế khi tệp ``~/.config/gtk-3.0/bookmarks`` (hoặc "
+"``~/.gtk-bookmarks``) tồn tại."
+
+# ==AUTO== Automatically translated
+msgid "**User-defined shortcuts**"
+msgstr "**Phím tắt tự tạo**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Right-click any directory in the left-hand tree and choose **Add as "
+"shortcut**.  The entry is appended to the shortcuts list and persisted "
+"between sessions."
+msgstr ""
+"Nhấp chuột phải vào một thư mục trong cây bên trái và chọn **Thêm làm "
+"phím tắt**.  Mục được thêm vào danh sách phím tắt và được giữ giữa các "
+"phiên."
+
+# ==AUTO== Automatically translated
+msgid "**Editing shortcuts**"
+msgstr "**Chỉnh sửa phím tắt**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **Shortcuts → Edit shortcuts…** to open the *Edit Shortcuts* "
+"dialog, where shortcuts can be reordered with *Move up* / *Move down* or "
+"removed."
+msgstr ""
+"Chọn **Phím tắt → Chỉnh sửa phím tắt…** để mở hộp thoại *Chỉnh sửa phím "
+"tắt*, nơi các phím tắt có thể được sắp xếp lại bằng *Di chuyển lên* / *Di"
+" chuyển xuống* hoặc bị xóa."
+
+# ==AUTO== Automatically translated
+msgid "File information"
+msgstr "Thông tin tệp"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) "
+"to display a non-modal window listing the actual values of every "
+"replacement field for the selected file.  Double-click a field to insert "
+"it into the replacement pattern."
+msgstr ""
+"Chọn **Tệp → Thông tin** (**Ctrl+I**, cũng có trong menu **Ảnh**) để mở "
+"một cửa sổ không chặn liệt kê giá trị thực của mọi trường thay thế cho "
+"tệp được chọn.  Nhấp đúp vào một trường để chèn nó vào mẫu thay thế."
+
+# ==AUTO== Automatically translated
+msgid "The window has three groups:"
+msgstr "Cửa sổ có ba nhóm:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Universal fields** — ``{date}``, ``{datetime}``, ``{mdatetime}``, "
+"``{cdatetime}``, ``{dir}``; values are read from the file system."
+msgstr ""
+"**Trường phổ quát**: ``{date}``, ``{datetime}``, ``{mdatetime}``, "
+"``{cdatetime}``, ``{dir}``; giá trị được đọc từ hệ thống tệp."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Batch fields** — ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``, "
+"``{re:name}``; labelled *Computed* (they depend on the active pattern)."
+msgstr ""
+"**Trường hàng loạt**: ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``,"
+" ``{re:name}``; được ghi là *Tính toán* (phụ thuộc vào mẫu đang dùng)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Metadata fields** — ``{im:…}``, ``{au:…}``, or ``{vi:…}`` depending on "
+"the file type; values are read from the file's embedded metadata."
+msgstr ""
+"**Trường siêu dữ liệu**: ``{im:…}``, ``{au:…}`` hoặc ``{vi:…}`` tùy loại "
+"tệp; giá trị được đọc từ siêu dữ liệu nhúng trong tệp."
+
+# ==AUTO== Automatically translated
+msgid "The window updates live whenever the selection changes."
+msgstr "Cửa sổ cập nhật trực tiếp mỗi khi vùng chọn thay đổi."
+
+# ==AUTO== Automatically translated
+msgid "Help"
+msgstr "Trợ giúp"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Help** menu opens this **User guide** in the web browser, in the "
+"language of the interface, and the **Keyboard and mouse shortcuts…** "
+"window (**F1**), which lists every shortcut of the main window and of the"
+" image viewer."
+msgstr ""
+"Menu **Trợ giúp** mở **Hướng dẫn sử dụng** này trong trình duyệt web, "
+"bằng ngôn ngữ của giao diện, cùng cửa sổ **Phím tắt bàn phím và chuột…** "
+"(**F1**), liệt kê mọi phím tắt của cửa sổ chính và trình xem ảnh."
+
+# ==AUTO== Automatically translated
+msgid "Profiles"
+msgstr "Hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **profile** is a named set of settings for one way of working: for "
+"instance a ``default`` profile that renames documents in place with the "
+"Pattern tab, and a ``photos`` profile that sorts pictures into a folder "
+"tree with the Schema tab, thumbnails and the sidecar column.  Switching "
+"profiles switches all of this at once."
+msgstr ""
+"**Hồ sơ** là một bộ cài đặt có tên cho một cách làm việc: ví dụ hồ sơ "
+"``default`` đổi tên tài liệu tại chỗ với thẻ Mẫu, và hồ sơ ``photos`` sắp"
+" xếp ảnh vào cây thư mục với thẻ Lược đồ, hình thu nhỏ và cột sidecar.  "
+"Đổi hồ sơ sẽ đổi tất cả những điều đó cùng lúc."
+
+# ==AUTO== Automatically translated
+msgid "A profile holds:"
+msgstr "Một hồ sơ chứa:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the tab shown at start-up (Pattern or Schema) and the Schema tab settings"
+" (number and titles of the fields, destination, video marker and its "
+"position, fill gaps);"
+msgstr ""
+"thẻ hiển thị khi khởi động (Mẫu hoặc Lược đồ) và cài đặt của thẻ Lược đồ "
+"(số lượng và tiêu đề các trường, đích, dấu đánh dấu video và vị trí của "
+"nó, lấp khoảng trống);"
+
+# ==AUTO== Automatically translated
+msgid "the :ref:`sidecar <sidecar-files>` categories and suffixes;"
+msgstr "các loại và hậu tố :ref:`sidecar <sidecar-files>`;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the display options (thumbnails and their size, sidecar column, sidecar "
+"filter, sort by date, history length) and the image options (viewer zoom,"
+" EXIF orientation, metadata panel, deletion);"
+msgstr ""
+"các tùy chọn hiển thị (hình thu nhỏ và kích thước, cột sidecar, bộ lọc "
+"sidecar, sắp xếp theo ngày, độ dài lịch sử) và tùy chọn ảnh (thu phóng "
+"của trình xem, định hướng EXIF, bảng siêu dữ liệu, xóa);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the histories (search, replacement, schema fields, sidecar filter) and "
+"the named saves;"
+msgstr ""
+"các lịch sử (tìm kiếm, thay thế, trường lược đồ, bộ lọc sidecar) và các "
+"bản lưu có tên;"
+
+# ==AUTO== Automatically translated
+msgid "the last folder and the state of the option bar."
+msgstr "thư mục cuối cùng và trạng thái thanh tùy chọn."
+
+# ==AUTO== Automatically translated
+msgid "Managing profiles"
+msgstr "Quản lý hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Profile** menu lists the profiles: choose one to switch to it.  It "
+"also offers:"
+msgstr ""
+"Menu **Hồ sơ** liệt kê các hồ sơ: chọn một hồ sơ để chuyển sang.  Menu "
+"còn có:"
+
+# ==AUTO== Automatically translated
+msgid "**New profile…** (**Ctrl+N**)"
+msgstr "**Hồ sơ mới…** (**Ctrl+N**)"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with the default settings and switch to it."
+msgstr "Tạo hồ sơ với cài đặt mặc định và chuyển sang hồ sơ đó."
+
+# ==AUTO== Automatically translated
+msgid "**Duplicate profile…** (**Ctrl+Shift+D**)"
+msgstr "**Nhân bản hồ sơ…** (**Ctrl+Shift+D**)"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy."
+msgstr "Sao chép hồ sơ hiện tại với tên mới và chuyển sang bản sao."
+
+# ==AUTO== Automatically translated
+msgid "**Rename profile…**"
+msgstr "**Đổi tên hồ sơ…**"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name."
+msgstr "Đặt tên mới cho hồ sơ hiện tại."
+
+# ==AUTO== Automatically translated
+msgid "**Delete profile…**"
+msgstr "**Xóa hồ sơ…**"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings."
+msgstr "Xóa vĩnh viễn một hồ sơ cùng mọi cài đặt của nó."
+
+# ==AUTO== Automatically translated
+msgid "**Profile configuration…** (**Ctrl+,**)"
+msgstr "**Cấu hình hồ sơ…** (**Ctrl+,**)"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile (see below)."
+msgstr "Cấu hình hồ sơ hiện tại (xem bên dưới)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
+"whose name starts with ``-`` is **hidden**: it is not listed in the menu "
+"and is never reopened at start-up, but it can be used with ``--profile``."
+"  At least one visible profile always exists: the last one can be neither"
+" deleted nor hidden, and ``default`` is created again if none is left.  "
+"Apart from that, ``default`` is a profile like any other."
+msgstr ""
+"Tên hồ sơ có thể chứa chữ cái, chữ số, ``-`` và ``_``.  Hồ sơ có tên bắt "
+"đầu bằng ``-`` là **ẩn**: không hiện trong menu và không bao giờ được mở "
+"lại khi khởi động, nhưng vẫn dùng được với ``--profile``.  Luôn có ít "
+"nhất một hồ sơ hiển thị: hồ sơ cuối cùng không thể bị xóa hay bị ẩn, và "
+"``default`` được tạo lại nếu không còn hồ sơ nào.  Ngoài ra, ``default`` "
+"là một hồ sơ như mọi hồ sơ khác."
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer reopens the last profile used.  ``--profile NAME`` selects "
+"another one, in the GUI as in headless mode."
+msgstr ""
+"PBRenamer mở lại hồ sơ dùng lần cuối.  ``--profile NAME`` chọn hồ sơ "
+"khác, ở giao diện đồ họa cũng như ở chế độ không giao diện."
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "Cấu hình hồ sơ"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…** has three tabs."
+msgstr "**Hồ sơ → Cấu hình hồ sơ…** có ba thẻ."
+
+# ==AUTO== Automatically translated
+msgid "**Schema**"
+msgstr "**Lược đồ**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Number of fields of the schema, the title of each field (shown above it "
+"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+msgstr ""
+"Số trường của lược đồ, tiêu đề của từng trường (hiển thị phía trên trường"
+" trong thẻ Lược đồ) và dấu đánh dấu video (xem :ref:`schema-mode`)."
+
+# ==AUTO== Automatically translated
+msgid "**Display**"
+msgstr "**Hiển thị**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Thumbnails (shown or not, maximum width and height), the sidecar column "
+"and the sidecar content filter (shown or not), the extension of the "
+"sidecar created by a double-click, whether empty sidecar files are "
+"deleted when a folder is loaded, and the maximum number of entries kept "
+"in each history."
+msgstr ""
+"Hình thu nhỏ (hiển thị hay không, chiều rộng và chiều cao tối đa), cột "
+"sidecar và bộ lọc theo nội dung sidecar (hiển thị hay không), phần mở "
+"rộng của sidecar được tạo bằng nhấp đúp, có xóa các tệp sidecar rỗng khi "
+"tải thư mục hay không, và số mục tối đa giữ trong mỗi lịch sử."
+
+# ==AUTO== Automatically translated
+msgid "**Images**"
+msgstr "**Ảnh**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
+"whether images are shown turned as their EXIF orientation says (also "
+"applies to the thumbnails).  Deletion: move deleted files to the trash "
+"instead of removing them permanently, ask for a confirmation, and the "
+"number of files above which the confirmation only gives their count."
+msgstr ""
+"Trình xem ảnh: bước thu phóng, mức thu phóng tối đa, phía của bảng siêu "
+"dữ liệu, và có hiển thị ảnh đã xoay theo định hướng EXIF hay không (cũng "
+"áp dụng cho hình thu nhỏ).  Xóa: chuyển tệp bị xóa vào thùng rác thay vì "
+"xóa vĩnh viễn, yêu cầu xác nhận, và số tệp mà từ đó hộp xác nhận chỉ nêu "
+"số lượng."
+
+# ==AUTO== Automatically translated
+msgid "Schema Mode"
+msgstr "Chế độ lược đồ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Schema** tab sorts files into a folder tree built from a few "
+"fields, for instance a place, a year and a subject.  With the fields "
+"``Paris``, ``2024``, *(empty)*, ``Street``, *(empty)*, ``###`` and the "
+"destination ``~/Photos``, the file ``IMG_0012.jpg`` becomes::"
+msgstr ""
+"Thẻ **Lược đồ** sắp xếp tệp vào một cây thư mục được dựng từ vài trường, "
+"ví dụ địa điểm, năm và chủ đề.  Với các trường ``Paris``, ``2024``, "
+"*(trống)*, ``Street``, *(trống)*, ``###`` và đích ``~/Photos``, tệp "
+"``IMG_0012.jpg`` trở thành::"
+
+# ==AUTO== Automatically translated
+msgid "The rules are:"
+msgstr "Các quy tắc là:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"every non-empty field, in order, is both a folder level under the "
+"destination and a part of the name, joined with ``_``;"
+msgstr ""
+"mỗi trường không trống, theo thứ tự, vừa là một cấp thư mục dưới đích vừa"
+" là một phần của tên, nối với nhau bằng ``_``;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a field made only of ``#`` is the **counter**, padded to the number of "
+"``#``; at most one field may be a counter, and it is always placed at the"
+" end of the name;"
+msgstr ""
+"một trường chỉ gồm ``#`` là **bộ đếm**, được thêm số không cho đủ số "
+"``#``; nhiều nhất một trường được là bộ đếm, và nó luôn đặt ở cuối tên;"
+
+# ==AUTO== Automatically translated
+msgid "empty fields are skipped;"
+msgstr "các trường trống bị bỏ qua;"
+
+# ==AUTO== Automatically translated
+msgid "a field may not contain ``_``, ``.``, ``/`` or ``\\``;"
+msgstr "một trường không được chứa ``_``, ``.``, ``/`` hoặc ``\\``;"
+
+# ==AUTO== Automatically translated
+msgid "the extension is kept, in lower case."
+msgstr "phần mở rộng được giữ, ở dạng chữ thường."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The counter continues after the highest number already used in the target"
+" folder by files of the same name, so that a new batch never overwrites "
+"earlier ones.  With **Fill gaps** checked, it takes the smallest free "
+"numbers first.  Images and videos are numbered separately."
+msgstr ""
+"Bộ đếm tiếp tục sau số lớn nhất mà các tệp cùng tên đã dùng trong thư mục"
+" đích, để lô mới không bao giờ ghi đè lô trước.  Khi đánh dấu **Lấp "
+"khoảng trống**, nó dùng các số trống nhỏ nhất trước.  Ảnh và video được "
+"đánh số riêng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each field keeps a history of its values (most recent first) in its drop-"
+"down list.  The history is updated when a rename or a renumbering "
+"succeeds."
+msgstr ""
+"Mỗi trường giữ lịch sử các giá trị của nó (mới nhất trước) trong danh "
+"sách thả xuống.  Lịch sử được cập nhật khi việc đổi tên hoặc đánh số lại "
+"thành công."
+
+# ==AUTO== Automatically translated
+msgid "Destination"
+msgstr "Đích"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Destination** field is the root of the folder tree.  It must be an "
+"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"renaming, and source folders left empty are removed."
+msgstr ""
+"Trường **Đích** là gốc của cây thư mục.  Nó phải là đường dẫn tuyệt đối; "
+"**Duyệt…** cho phép chọn.  Các thư mục còn thiếu được tạo khi đổi tên, và"
+" các thư mục nguồn bị bỏ trống sẽ bị xóa."
+
+# ==AUTO== Automatically translated
+msgid "Video marker"
+msgstr "Dấu đánh dấu video"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **video marker** (set in **Profile configuration…**, *Schema* tab) is a"
+" text added to the name of video files only, so that they are easy to "
+"tell apart: with the marker ``vid``, a video becomes "
+"``Paris_2024_Street_vid_001.mp4``. The small radio buttons between the "
+"fields choose where the marker goes, from before the first field to after"
+" the last one."
+msgstr ""
+"**Dấu đánh dấu video** (đặt trong **Cấu hình hồ sơ…**, thẻ *Lược đồ*) là "
+"văn bản chỉ được thêm vào tên tệp video, để dễ phân biệt: với dấu "
+"``vid``, một video trở thành ``Paris_2024_Street_vid_001.mp4``.  Các nút "
+"chọn nhỏ giữa các trường quyết định vị trí của dấu, từ trước trường đầu "
+"tiên đến sau trường cuối cùng."
+
+# ==AUTO== Automatically translated
+msgid "Sidecars in schema mode"
+msgstr "Sidecar trong chế độ lược đồ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar mode is always on in the Schema tab: each sidecar follows its "
+"base file and takes its new name.  A sidecar without a base file (an "
+"*orphan*) is neither renamed nor renumbered; its preview reads *orphan "
+"sidecar, not renamed*.  **Images → Orphan sidecars…** lists them (see "
+":ref:`image-tools`)."
+msgstr ""
+"Trong thẻ Lược đồ, chế độ sidecar luôn bật: mỗi sidecar đi theo tệp chính"
+" và nhận tên mới của nó.  Một sidecar không có tệp chính (sidecar *mồ "
+"côi*) không được đổi tên hay đánh số lại; bản xem trước của nó ghi "
+"*sidecar mồ côi, không được đổi tên*.  **Ảnh → Sidecar mồ côi…** liệt kê "
+"chúng (xem :ref:`image-tools`)."
+
+# ==AUTO== Automatically translated
+msgid "Renumber"
+msgstr "Đánh số lại"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the schema has a counter, the **Renumber** button renumbers the "
+"selected files (every listed file if none is selected) from 1, in place, "
+"without moving them.  Like **Rename**, it is only enabled when a preview "
+"is displayed.  Files are renamed through temporary names, so swapping "
+"numbers is safe."
+msgstr ""
+"Khi lược đồ có bộ đếm, nút **Đánh số lại** đánh số lại từ 1, tại chỗ và "
+"không di chuyển, các tệp được chọn (mọi tệp trong danh sách nếu không "
+"chọn gì).  Giống **Đổi tên**, nút chỉ bật khi có bản xem trước.  Các tệp "
+"được đổi tên qua tên tạm, nên việc hoán đổi số là an toàn."
+
+# ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Mẫu"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → Template** fills the schema from the name of the selected file"
+" and up to three of its parent folders: the parts of the name found in a "
+"field's history go to that field, and a trailing number goes to the "
+"counter field.  A dialog shows the proposed fields before they are filled"
+" in."
+msgstr ""
+"**Ảnh → Mẫu** điền lược đồ từ tên của tệp được chọn và tối đa ba thư mục "
+"cha của nó: các phần của tên có trong lịch sử của một trường sẽ vào "
+"trường đó, và số ở cuối sẽ vào trường bộ đếm.  Một hộp thoại hiển thị các"
+" trường đề xuất trước khi điền."
+
+# ==AUTO== Automatically translated
+msgid ""
+"In headless mode, the same schema is given with ``--schema``, for "
+"instance ``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (see :ref"
+":`cli-reference`)."
+msgstr ""
+"Ở chế độ không giao diện, cùng lược đồ đó được đưa bằng ``--schema``, ví "
+"dụ ``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (xem :ref:`cli-"
+"reference`)."
+
+# ==AUTO== Automatically translated
+msgid "Image Tools"
+msgstr "Công cụ ảnh"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer includes tools to look at and tidy up photos and videos before "
+"sorting them.  Some depend on optional libraries (see :ref:`optional-"
+"dependencies`); an action that cannot work is disabled."
+msgstr ""
+"PBRenamer có các công cụ để xem và dọn dẹp ảnh và video trước khi sắp "
+"xếp.  Một số phụ thuộc vào thư viện tùy chọn (xem :ref:`optional-"
+"dependencies`); thao tác nào không thể hoạt động sẽ bị tắt."
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "Hình thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Thumbnails** checkbox of the option bar adds a thumbnail column to "
+"the file list.  Thumbnails are loaded in the background, visible rows "
+"first. Their maximum size is set in **Profile configuration…**, *Display*"
+" tab. Double-clicking a thumbnail opens the image in the viewer; double-"
+"clicking a name opens the file with its default application."
+msgstr ""
+"Hộp kiểm **Hình thu nhỏ** trên thanh tùy chọn thêm một cột hình thu nhỏ "
+"vào danh sách tệp.  Hình thu nhỏ được tải ở nền, các hàng đang hiển thị "
+"trước.  Kích thước tối đa được đặt trong **Cấu hình hồ sơ…**, thẻ *Hiển "
+"thị*.  Nhấp đúp vào hình thu nhỏ mở ảnh trong trình xem; nhấp đúp vào tên"
+" mở tệp bằng ứng dụng mặc định."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar column"
+msgstr "Cột sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, the **Sidecar** column shows "
+"whether a file has sidecars: ``●`` followed by their suffixes, or ``○`` "
+"for an image, video or audio file without any.  Double-clicking it opens "
+"the sidecar (a menu lets you choose when there are several).  On a file "
+"without a sidecar, it creates an empty one with the extension set in the "
+"profile (for instance ``xmp``) and opens it."
+msgstr ""
+"Khi được bật trong **Cấu hình hồ sơ…**, cột **Sidecar** cho biết tệp có "
+"sidecar hay không: ``●`` kèm các hậu tố của chúng, hoặc ``○`` cho ảnh, "
+"video hay tệp âm thanh không có sidecar.  Nhấp đúp vào cột này mở sidecar"
+" (một menu cho phép chọn nếu có nhiều).  Với tệp chưa có sidecar, nó tạo "
+"một sidecar rỗng với phần mở rộng đặt trong hồ sơ (ví dụ ``xmp``) và mở "
+"ra."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Bộ lọc sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, a **Sidecar filter…** field "
+"appears in the action bar.  Type a regular expression: only the files "
+"having a sidecar whose content matches it remain listed (case-"
+"insensitive, across lines), together with their sidecars.  The list is "
+"filtered as you type; **Enter** also adds the expression to the filter's "
+"own history.  Empty the field to list every file again."
+msgstr ""
+"Khi được bật trong **Cấu hình hồ sơ…**, trường **Bộ lọc sidecar…** xuất "
+"hiện trên thanh thao tác.  Nhập một biểu thức chính quy: chỉ những tệp có"
+" sidecar với nội dung khớp mới còn trong danh sách (không phân biệt hoa "
+"thường, khớp qua nhiều dòng), cùng các sidecar của chúng.  Danh sách được"
+" lọc ngay khi gõ; **Enter** còn thêm biểu thức vào lịch sử riêng của bộ "
+"lọc.  Xóa trống trường để liệt kê lại mọi tệp."
+
+# ==AUTO== Automatically translated
+msgid "The Images menu"
+msgstr "Menu Ảnh"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Images** menu is also the context menu of the file list.  Its "
+"actions apply to the selected files:"
+msgstr ""
+"Menu **Ảnh** cũng là menu ngữ cảnh của danh sách tệp.  Các thao tác của "
+"nó áp dụng cho các tệp được chọn:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Mở** (**Ctrl+Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Open the files with their default application."
+msgstr "Mở các tệp bằng ứng dụng mặc định."
+
+# ==AUTO== Automatically translated
+msgid "**Open with…** (**Ctrl+Shift+O**)"
+msgstr "**Mở bằng…** (**Ctrl+Shift+O**)"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the file."
+msgstr "Chọn ứng dụng để mở tệp."
+
+# ==AUTO== Automatically translated
+msgid "**Open sidecar**"
+msgstr "**Mở sidecar**"
+
+# ==AUTO== Automatically translated
+msgid "Open one of the sidecars of the file."
+msgstr "Mở một trong các sidecar của tệp."
+
+# ==AUTO== Automatically translated
+msgid "**View** (**Enter**)"
+msgstr "**Xem** (**Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer."
+msgstr "Hiển thị ảnh và video được chọn trong trình xem ảnh."
+
+# ==AUTO== Automatically translated
+msgid "**Template**"
+msgstr "**Mẫu**"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name (see :ref:`schema-mode`)."
+msgstr "Điền lược đồ từ tên tệp (xem :ref:`schema-mode`)."
+
+# ==AUTO== Automatically translated
+msgid "**Delete** (**Del**)"
+msgstr "**Xóa** (**Del**)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delete the files and their sidecars, to the trash or permanently, after a"
+" confirmation, as set in the profile."
+msgstr ""
+"Xóa các tệp và sidecar của chúng, vào thùng rác hoặc vĩnh viễn, sau khi "
+"xác nhận, theo cài đặt của hồ sơ."
+
+# ==AUTO== Automatically translated
+msgid "**Orphan sidecars…**"
+msgstr "**Sidecar mồ côi…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"List the sidecar files of the folder that have no base file, then delete "
+"the selected ones or all of them."
+msgstr ""
+"Liệt kê các tệp sidecar trong thư mục không có tệp chính, rồi xóa những "
+"tệp được chọn hoặc tất cả."
+
+# ==AUTO== Automatically translated
+msgid "**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)"
+msgstr "**Xoay trái 90° / 180° / phải 90°** (**F6** / **F7** / **F8**)"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the images without loss."
+msgstr "Xoay ảnh không mất dữ liệu."
+
+# ==AUTO== Automatically translated
+msgid "**Apply EXIF orientation** (**F9**)"
+msgstr "**Áp dụng định hướng EXIF** (**F9**)"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation tag says, then reset the tag."
+msgstr "Xoay các điểm ảnh theo thẻ định hướng EXIF, rồi đặt lại thẻ."
+
+# ==AUTO== Automatically translated
+msgid "**Force EXIF orientation to 0°** (**F10**)"
+msgstr "**Buộc hướng EXIF về 0°** (**F10**)"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to normal without rotating the pixels."
+msgstr "Đặt thẻ định hướng EXIF về bình thường mà không xoay điểm ảnh."
+
+# ==AUTO== Automatically translated
+msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
+msgstr "**Thông tin** (**Ctrl+I**) và **Làm mới** (**F5**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the file information window; read the folder again."
+msgstr "Hiển thị cửa sổ thông tin tệp; đọc lại thư mục."
+
+# ==AUTO== Automatically translated
+msgid "Rotation and EXIF orientation"
+msgstr "Xoay ảnh và định hướng EXIF"
+
+# ==AUTO== Automatically translated
+msgid ""
+"JPEG files are rotated with ``jpegtran`` (from libjpeg-turbo), which "
+"turns them without recompressing; other formats are saved by Pillow, "
+"without loss where the format allows it.  Rotations and EXIF resets can "
+"be undone with **Undo**."
+msgstr ""
+"Tệp JPEG được xoay bằng ``jpegtran`` (từ libjpeg-turbo), công cụ xoay mà "
+"không nén lại; các định dạng khác được Pillow lưu, không mất dữ liệu khi "
+"định dạng cho phép.  Các thao tác xoay và đặt lại định hướng EXIF có thể "
+"hoàn tác bằng **Hoàn tác**."
+
+# ==AUTO== Automatically translated
+msgid "The image viewer"
+msgstr "Trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → View** opens the image viewer on the selected images and "
+"videos (a video is shown as a placeholder).  The viewer follows the "
+"selection of the file list.  It offers:"
+msgstr ""
+"**Ảnh → Xem** mở trình xem ảnh với các ảnh và video được chọn (video được"
+" hiển thị bằng hình giữ chỗ).  Trình xem đi theo vùng chọn của danh sách "
+"tệp.  Nó cung cấp:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"zoom modes in the toolbar: fit window (**0** or **X**), actual size "
+"(**1** or **Z**), fit width (**W**), fit height (**H**), and zoom in and "
+"out (**+** and **−**); drag to pan, double-click to centre on a point, "
+"**Ctrl+click** and **Ctrl+right-click** to zoom on a point;"
+msgstr ""
+"các chế độ thu phóng trên thanh công cụ: vừa cửa sổ (**0** hoặc **X**), "
+"kích thước thực (**1** hoặc **Z**), vừa chiều rộng (**W**), vừa chiều cao"
+" (**H**), phóng to và thu nhỏ (**+** và **−**); kéo để di chuyển ảnh, "
+"nhấp đúp để căn giữa tại một điểm, **Ctrl+nhấp** và **Ctrl+nhấp phải** để"
+" thu phóng tại một điểm;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"navigation with the arrow keys: within the selection when several files "
+"are selected, otherwise to the previous or next file of the list; a "
+"toolbar button switches between linear navigation (stop at the ends) and "
+"circular navigation (wrap around);"
+msgstr ""
+"điều hướng bằng phím mũi tên: trong vùng chọn khi có nhiều tệp được chọn,"
+" nếu không thì đến tệp trước hoặc tiếp theo trong danh sách; một nút trên"
+" thanh công cụ chuyển giữa điều hướng tuyến tính (dừng ở hai đầu) và điều"
+" hướng vòng (quay lại từ đầu);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a strip of thumbnails of the selection, when several files are selected: "
+"click one to show it;"
+msgstr ""
+"một dải hình thu nhỏ của vùng chọn khi có nhiều tệp được chọn: nhấp vào "
+"một hình để hiển thị;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the "
+"image; double-click a field to insert it into the replacement pattern;"
+msgstr ""
+"bảng siêu dữ liệu (**I**) hiển thị dữ liệu EXIF, IPTC và XMP của ảnh; "
+"nhấp đúp vào một trường để chèn nó vào mẫu thay thế;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the image actions: open, open with, delete, rotations and EXIF "
+"orientation, with the same shortcuts as in the main window; **Esc** "
+"closes the viewer."
+msgstr ""
+"các thao tác ảnh: mở, mở bằng, xóa, xoay và định hướng EXIF, với cùng "
+"phím tắt như ở cửa sổ chính; **Esc** đóng trình xem."
+
+# ==AUTO== Automatically translated
+msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."
+msgstr ""
+"Danh sách đầy đủ có trong **Trợ giúp → Phím tắt bàn phím và chuột…** "
+"(**F1**)."
+
+# ==AUTO== Automatically translated
+msgid "Settings"
+msgstr "Cài đặt"
+
+# ==AUTO== Automatically translated
+msgid "**Edit → Settings…** holds the options shared by every profile."
+msgstr "**Chỉnh sửa → Cài đặt…** chứa các tùy chọn dùng chung cho mọi hồ sơ."
+
+# ==AUTO== Automatically translated
+msgid "*General* tab:"
+msgstr "Thẻ *Chung*:"
+
+# ==AUTO== Automatically translated
+msgid "**Language**"
+msgstr "**Ngôn ngữ**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Select the UI language.  Several languages are bundled; the change takes "
+"effect at the next start."
+msgstr ""
+"Chọn ngôn ngữ giao diện.  Có sẵn nhiều ngôn ngữ; thay đổi có hiệu lực ở "
+"lần khởi động sau."
+
+# ==AUTO== Automatically translated
+msgid "**Log level**"
+msgstr "**Mức nhật ký**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Controls diagnostic output written to the console.  Choices: ``DEBUG``, "
+"``INFO`` (default), ``WARNING``, ``ERROR``, ``CRITICAL``.  Can be "
+"overridden at launch with ``--debug``, ``--verbose``, or ``--quiet``."
+msgstr ""
+"Điều khiển thông báo chẩn đoán ghi ra bảng điều khiển.  Các lựa chọn: "
+"``DEBUG``, ``INFO`` (mặc định), ``WARNING``, ``ERROR``, ``CRITICAL``.  Có"
+" thể ghi đè khi khởi chạy bằng ``--debug``, ``--verbose`` hoặc "
+"``--quiet``."
+
+# ==AUTO== Automatically translated
+msgid "**Restore last opened directory** *(Behaviour group)*"
+msgstr "**Khôi phục thư mục đã mở lần cuối** *(nhóm Hành vi)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the app reopens the directory that was active in the "
+"previous session of the profile.  A directory passed on the command line "
+"always takes priority.  Default: disabled (current working directory is "
+"used)."
+msgstr ""
+"Khi bật, ứng dụng mở lại thư mục đang hoạt động trong phiên trước của hồ "
+"sơ.  Thư mục truyền trên dòng lệnh luôn được ưu tiên.  Mặc định: tắt "
+"(dùng thư mục làm việc hiện tại)."
+
+# ==AUTO== Automatically translated
+msgid "**Restore toolbar state** *(Behaviour group)*"
+msgstr "**Khôi phục trạng thái thanh công cụ** *(nhóm Hành vi)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the options of the option bar and of the Pattern tab are "
+"restored as they were left."
+msgstr ""
+"Khi bật, các tùy chọn của thanh tùy chọn và của thẻ Mẫu được khôi phục "
+"như lúc rời đi."
+
+# ==AUTO== Automatically translated
+msgid "**Auto-preview delay** *(Behaviour group)*"
+msgstr "**Độ trễ xem trước tự động** *(nhóm Hành vi)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delay, in milliseconds, before the preview is recomputed when **Auto-"
+"preview** is checked."
+msgstr ""
+"Độ trễ, tính bằng mili giây, trước khi tính lại bản xem trước khi **Xem "
+"trước tự động** được đánh dấu."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension Normalization* tab: the table used by the *Normalize "
+"extension* mode (see :ref:`extension-mode`)."
+msgstr ""
+"Thẻ *Chuẩn hóa phần mở rộng*: bảng được chế độ *Chuẩn hóa phần mở rộng* "
+"sử dụng (xem :ref:`extension-mode`)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The settings of a profile are in **Profile → Profile configuration…** "
+"(see :ref:`profiles`)."
+msgstr ""
+"Cài đặt của một hồ sơ nằm trong **Hồ sơ → Cấu hình hồ sơ…** (xem "
+":ref:`profiles`)."
+
+# ==AUTO== Automatically translated
+msgid "Configuration Files"
+msgstr "Tệp cấu hình"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Everything the Settings dialog and other panels persist — preferences, "
+"profiles, presets, and per-feature configuration — is stored as plain-"
+"text files (Qt INI and JSON) under a single per-user configuration "
+"directory.  No system directories or registry keys are touched."
+msgstr ""
+"Mọi thứ mà hộp thoại cài đặt và các bảng khác lưu lại (tùy chọn, hồ sơ, "
+"bản lưu và cấu hình của từng tính năng) được lưu thành tệp văn bản (Qt "
+"INI và JSON) trong một thư mục cấu hình duy nhất cho mỗi người dùng.  "
+"Không có thư mục hệ thống hay khóa registry nào bị động đến."
+
+# ==AUTO== Automatically translated
+msgid "Default location"
+msgstr "Vị trí mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Platform"
+msgstr "Nền tảng"
+
+# ==AUTO== Automatically translated
+msgid "Default directory"
+msgstr "Thư mục mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Linux"
+msgstr "Linux"
+
+# ==AUTO== Automatically translated
+msgid "``$XDG_CONFIG_HOME/pbrenamer`` (usually ``~/.config/pbrenamer``)"
+msgstr "``$XDG_CONFIG_HOME/pbrenamer`` (thường là ``~/.config/pbrenamer``)"
+
+# ==AUTO== Automatically translated
+msgid "macOS"
+msgstr "macOS"
+
+msgid "``~/Library/Preferences/pbrenamer``"
+msgstr "``~/Library/Preferences/pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid "Windows"
+msgstr "Windows"
+
+msgid "``%APPDATA%\\pbrenamer``"
+msgstr "``%APPDATA%\\pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override with ``--config-dir DIR`` (see :ref:`cli-reference`) to point at"
+" a different directory — useful for testing or for running several "
+"isolated configurations side by side."
+msgstr ""
+"``--config-dir DIR`` (xem :ref:`cli-reference`) trỏ tới một thư mục khác,"
+" hữu ích khi kiểm thử hoặc khi chạy song song nhiều cấu hình tách biệt."
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "Tệp"
+
+# ==AUTO== Automatically translated
+msgid "Shared by every profile:"
+msgstr "Dùng chung cho mọi hồ sơ:"
+
+msgid "``pbrenamer.conf``"
+msgstr "``pbrenamer.conf``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Qt INI settings: log level, language override, behaviour options, preview"
+" delay, last profile, image viewer options."
+msgstr ""
+"Cài đặt Qt INI: mức nhật ký, ngôn ngữ đã chọn, tùy chọn hành vi, độ trễ "
+"xem trước, hồ sơ cuối cùng, tùy chọn trình xem ảnh."
+
+msgid "``shortcuts.json``"
+msgstr "``shortcuts.json``"
+
+# ==AUTO== Automatically translated
+msgid "User-defined directory shortcuts (**Shortcuts** menu)."
+msgstr "Phím tắt thư mục tự tạo (menu **Phím tắt**)."
+
+msgid "``extension_normalization.json``"
+msgstr "``extension_normalization.json``"
+
+# ==AUTO== Automatically translated
+msgid "Per-extension normalization table used by extension mode ``normalize``."
+msgstr "Bảng chuẩn hóa phần mở rộng dùng cho chế độ phần mở rộng ``normalize``."
+
+msgid "``open_with.json``"
+msgstr "``open_with.json``"
+
+# ==AUTO== Automatically translated
+msgid "Applications recently chosen with **Open with…**."
+msgstr "Các ứng dụng được chọn gần đây bằng **Mở bằng…**."
+
+msgid "``window_state.json``"
+msgstr "``window_state.json``"
+
+# ==AUTO== Automatically translated
+msgid "Main window geometry, position, and splitter ratios."
+msgstr "Kích thước, vị trí và tỉ lệ các thanh chia của cửa sổ chính."
+
+# ==AUTO== Automatically translated
+msgid "One folder per profile, ``profiles/NAME/``:"
+msgstr "Mỗi hồ sơ một thư mục, ``profiles/NAME/``:"
+
+msgid "``profile.json``"
+msgstr "``profile.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Tab shown at start-up, Schema tab settings, display and image options, "
+"last directory, option bar state."
+msgstr ""
+"Thẻ hiển thị khi khởi động, cài đặt thẻ Lược đồ, tùy chọn hiển thị và "
+"ảnh, thư mục cuối cùng, trạng thái thanh tùy chọn."
+
+msgid "``history.json``"
+msgstr "``history.json``"
+
+# ==AUTO== Automatically translated
+msgid "Histories of the schema fields and of the sidecar filter."
+msgstr "Lịch sử của các trường lược đồ và của bộ lọc sidecar."
+
+msgid "``sidecar_config.json``"
+msgstr "``sidecar_config.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+":ref:`Sidecar file <sidecar-files>` category configuration (base "
+"extensions / sidecar suffixes per category), managed from **Edit → "
+"Sidecar Files…**."
+msgstr ""
+"Cấu hình các loại :ref:`tệp sidecar <sidecar-files>` (phần mở rộng chính "
+"và hậu tố sidecar theo loại), quản lý từ **Chỉnh sửa → Tệp sidecar…**."
+
+msgid "``patterns/search.json`` / ``patterns/replace.json``"
+msgstr "``patterns/search.json`` / ``patterns/replace.json``"
+
+# ==AUTO== Automatically translated
+msgid "Most-recently-used search and replacement patterns."
+msgstr "Các mẫu tìm kiếm và thay thế dùng gần đây nhất."
+
+msgid "``patterns/saves.json``"
+msgstr "``patterns/saves.json``"
+
+# ==AUTO== Automatically translated
+msgid "Named saves, also loadable headlessly with ``--saved NAME``."
+msgstr ""
+"Các bản lưu có tên, cũng có thể tải không cần giao diện bằng ``--saved "
+"NAME``."
+
+# ==AUTO== Automatically translated
+msgid ""
+"None of these files are required to exist — deleting any one of them "
+"simply resets that piece of state to its default the next time PBRenamer "
+"starts. Deleting the ``profiles`` folder recreates the profiles from the "
+"1.x configuration and PBPicat's catalogues, as on the first start of "
+"version 2."
+msgstr ""
+"Không tệp nào trong số này là bắt buộc: xóa bất kỳ tệp nào chỉ đơn giản "
+"đưa phần trạng thái tương ứng về mặc định ở lần khởi động PBRenamer tiếp "
+"theo.  Xóa thư mục ``profiles`` sẽ tạo lại các hồ sơ từ cấu hình 1.x và "
+"các danh mục của PBPicat, như ở lần khởi động đầu tiên của phiên bản 2."
+
+# ==AUTO== Automatically translated
+msgid "Migrating from PBPicat"
+msgstr "Chuyển từ PBPicat"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer 2 includes every function of PBPicat, which it replaces: the "
+"schema, the destination tree, renumbering, the video marker, the image "
+"viewer, rotations, the sidecar tools and the catalogues."
+msgstr ""
+"PBRenamer 2 có mọi tính năng của PBPicat, chương trình mà nó thay thế: "
+"lược đồ, cây đích, đánh số lại, dấu đánh dấu video, trình xem ảnh, xoay "
+"ảnh, công cụ sidecar và các danh mục."
+
+# ==AUTO== Automatically translated
+msgid "Automatic import"
+msgstr "Nhập tự động"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On its first start, PBRenamer 2 reads PBPicat's configuration (without "
+"modifying it) and turns each **catalogue** into a **profile** of the same"
+" name, or ``pbpicat-NAME`` if a profile already has that name.  The "
+"imported profile opens on the Schema tab with thumbnails, the sidecar "
+"column and the sidecar filter, and keeps:"
+msgstr ""
+"Ở lần khởi động đầu tiên, PBRenamer 2 đọc cấu hình của PBPicat (không sửa"
+" đổi) và biến mỗi **danh mục** thành một **hồ sơ** cùng tên, hoặc "
+"``pbpicat-NAME`` nếu đã có hồ sơ mang tên đó.  Hồ sơ được nhập mở ở thẻ "
+"Lược đồ với hình thu nhỏ, cột sidecar và bộ lọc sidecar, và giữ lại:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the number and titles of the schema fields, the destination, the video "
+"marker and its position, fill gaps;"
+msgstr ""
+"số lượng và tiêu đề các trường lược đồ, đích, dấu đánh dấu video và vị "
+"trí của nó, lấp khoảng trống;"
+
+# ==AUTO== Automatically translated
+msgid "the image and video extensions and the sidecar extensions;"
+msgstr "phần mở rộng ảnh và video cùng phần mở rộng sidecar;"
+
+# ==AUTO== Automatically translated
+msgid "the display, viewer and deletion options;"
+msgstr "các tùy chọn hiển thị, trình xem và xóa;"
+
+# ==AUTO== Automatically translated
+msgid "the field histories and the last folder."
+msgstr "lịch sử các trường và thư mục cuối cùng."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Open with** application lists and the viewer's navigation and "
+"metadata panel options are imported too.  Window sizes, the language and "
+"PBPicat's defaults for new catalogues are not.  The settings of PBRenamer"
+" 1.x go to the ``default`` profile."
+msgstr ""
+"Danh sách ứng dụng của **Mở bằng** và các tùy chọn điều hướng và bảng "
+"siêu dữ liệu của trình xem cũng được nhập.  Kích thước cửa sổ, ngôn ngữ "
+"và các giá trị mặc định của PBPicat cho danh mục mới thì không.  Cài đặt "
+"của PBRenamer 1.x được đưa vào hồ sơ ``default``."
+
+# ==AUTO== Automatically translated
+msgid "Where things are now"
+msgstr "Các tính năng giờ nằm ở đâu"
+
+# ==AUTO== Automatically translated
+msgid "PBPicat"
+msgstr "PBPicat"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer 2"
+msgstr "PBRenamer 2"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue, catalogue menu"
+msgstr "Danh mục, menu danh mục"
+
+# ==AUTO== Automatically translated
+msgid "Profile, **Profile** menu"
+msgstr "Hồ sơ, menu **Hồ sơ**"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue settings, program settings"
+msgstr "Cài đặt danh mục, cài đặt chương trình"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…**, **Edit → Settings…**"
+msgstr "**Hồ sơ → Cấu hình hồ sơ…**, **Chỉnh sửa → Cài đặt…**"
+
+# ==AUTO== Automatically translated
+msgid "Schema fields, destination, video marker buttons"
+msgstr "Các trường lược đồ, đích, nút dấu đánh dấu video"
+
+# ==AUTO== Automatically translated
+msgid "**Schema** tab"
+msgstr "Thẻ **Lược đồ**"
+
+# ==AUTO== Automatically translated
+msgid "*Rename All* / *Rename selection*"
+msgstr "*Rename All* / *Rename selection*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** (the selection, or every listed file when none is selected), "
+"after a preview"
+msgstr ""
+"**Đổi tên** (vùng chọn, hoặc mọi tệp trong danh sách nếu không chọn gì), "
+"sau khi xem trước"
+
+# ==AUTO== Automatically translated
+msgid "*Renumber from 1*"
+msgstr "*Renumber from 1*"
+
+# ==AUTO== Automatically translated
+msgid "**Renumber** (Schema tab with a counter field)"
+msgstr "**Đánh số lại** (thẻ Lược đồ có trường bộ đếm)"
+
+# ==AUTO== Automatically translated
+msgid "Tooltip preview of the new name"
+msgstr "Xem trước tên mới trong chú giải công cụ"
+
+# ==AUTO== Automatically translated
+msgid "**Preview** column"
+msgstr "Cột **Xem trước**"
+
+# ==AUTO== Automatically translated
+msgid "Rotations, EXIF, open, open with, delete, template, orphan sidecars"
+msgstr "Xoay, EXIF, mở, mở bằng, xóa, mẫu, sidecar mồ côi"
+
+# ==AUTO== Automatically translated
+msgid "**Images** menu and context menu of the file list"
+msgstr "Menu **Ảnh** và menu ngữ cảnh của danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "Trình xem ảnh"
+
+# ==AUTO== Automatically translated
+msgid "**Images → View** (**Enter**)"
+msgstr "**Ảnh → Xem** (**Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue on the command line"
+msgstr "Danh mục trên dòng lệnh"
+
+msgid "``pbrenamer --profile NAME``"
+msgstr "``pbrenamer --profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid "What changes"
+msgstr "Những gì thay đổi"
+
+# ==AUTO== Automatically translated
+msgid ""
+"There is no ``pbpicat`` command: start ``pbrenamer``, or ``pbrenamer "
+"--profile NAME`` for a given profile."
+msgstr ""
+"Không có lệnh ``pbpicat``: hãy chạy ``pbrenamer``, hoặc ``pbrenamer "
+"--profile NAME`` cho một hồ sơ cụ thể."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** and **Renumber** apply what the Preview column shows: compute "
+"the preview first (or check **Auto-preview**)."
+msgstr ""
+"**Đổi tên** và **Đánh số lại** áp dụng những gì cột Xem trước hiển thị: "
+"hãy tính bản xem trước trước (hoặc đánh dấu **Xem trước tự động**)."
+
+# ==AUTO== Automatically translated
+msgid "A sidecar without a base file is not renamed in schema mode."
+msgstr "Trong chế độ lược đồ, sidecar không có tệp chính sẽ không được đổi tên."
+
+# ==AUTO== Automatically translated
+msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgstr ""
+"Mọi thao tác đổi tên đều có thể hoàn tác bằng **Hoàn tác**, cũng như xoay"
+" ảnh và đặt lại EXIF."
+
+# ==AUTO== Automatically translated
+msgid "Schemas can also be applied without the GUI, with ``--schema``."
+msgstr "Lược đồ cũng có thể áp dụng không cần giao diện, bằng ``--schema``."
+
+# ==AUTO== Automatically translated
+msgid "Search Patterns"
+msgstr "Mẫu tìm kiếm"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "Chế độ mẫu"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards.  Segments matched by numbered tokens are "
+"*captured* and available in the replacement as ``{1}``, ``{2}``, etc."
+msgstr ""
+"Các token hoạt động như ký tự đại diện có kiểu.  Các đoạn khớp với token "
+"được đánh số sẽ được *bắt giữ* và có thể dùng trong phần thay thế dưới "
+"dạng ``{1}``, ``{2}``, v.v."
+
+# ==AUTO== Automatically translated
+msgid "Token"
+msgstr "Token"
+
+# ==AUTO== Automatically translated
+msgid "Matches"
+msgstr "Khớp với"
+
+#, python-brace-format
+msgid "``{#}``"
+msgstr "``{#}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits (0–9)"
+msgstr "Một hoặc nhiều chữ số (0–9)"
+
+#, python-brace-format
+msgid "``{L}``"
+msgstr "``{L}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z)"
+msgstr "Một hoặc nhiều chữ cái (a–z, A–Z)"
+
+#, python-brace-format
+msgid "``{C}``"
+msgstr "``{C}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "Một hoặc nhiều ký tự không phải khoảng trắng"
+
+#, python-brace-format
+msgid "``{X}``"
+msgstr "``{X}``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "Bất kỳ chuỗi ký tự nào, kể cả rỗng"
+
+#, python-brace-format
+msgid "``{@}``"
+msgstr "``{@}``"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Thùng rác: khớp và bỏ đi một đoạn (không bắt giữ)"
+
+#, python-brace-format
+msgid "``{1}``, ``{2}``…"
+msgstr "``{1}``, ``{2}``…"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to ``{1}``, ``{2}``… in the "
+"replacement"
+msgstr ""
+"Nhóm bắt giữ: văn bản khớp được gán cho ``{1}``, ``{2}``… trong phần thay"
+" thế"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — swap two parts separated by an ignored middle segment:"
+msgstr "**Ví dụ**: hoán đổi hai phần được ngăn cách bởi một đoạn giữa bị bỏ qua:"
+
+# ==AUTO== Automatically translated
+msgid "Search"
+msgstr "Tìm kiếm"
+
+# ==AUTO== Automatically translated
+msgid "Replace"
+msgstr "Thay thế"
+
+# ==AUTO== Automatically translated
+msgid "Result"
+msgstr "Kết quả"
+
+#, python-brace-format
+msgid "``{1}_{@}_{2}``"
+msgstr "``{1}_{@}_{2}``"
+
+#, python-brace-format
+msgid "``{2}_{1}``"
+msgstr "``{2}_{1}``"
+
+# ==AUTO== Automatically translated
+msgid "photo_trash_holiday → holiday_photo"
+msgstr "photo_trash_holiday → holiday_photo"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Chế độ biểu thức chính quy"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Full Python ``re``-module syntax.  The match is applied to the file stem "
+"(or full name if the extension mode is *Modify extension*)."
+msgstr ""
+"Cú pháp đầy đủ của mô-đun ``re`` của Python.  Việc so khớp áp dụng cho "
+"phần thân của tệp (hoặc toàn bộ tên nếu chế độ phần mở rộng là *Sửa đổi "
+"phần mở rộng*)."
+
+# ==AUTO== Automatically translated
+msgid "Syntax"
+msgstr "Cú pháp"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Mô tả"
+
+msgid "``.``"
+msgstr "``.``"
+
+# ==AUTO== Automatically translated
+msgid "Any single character"
+msgstr "Một ký tự bất kỳ"
+
+msgid "``.*`` / ``.+``"
+msgstr "``.*`` / ``.+``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy); non-empty variant"
+msgstr "Một chuỗi bất kỳ (tham lam); biến thể không rỗng"
+
+msgid "``\\\\d+``"
+msgstr "``\\\\d+``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "Một hoặc nhiều chữ số"
+
+msgid "``\\\\w+``"
+msgstr "``\\\\w+``"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, ``_``)"
+msgstr "Ký tự từ (chữ cái, chữ số, ``_``)"
+
+msgid "``(…)``"
+msgstr "``(…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Numbered capture group → ``{1}``, ``{2}``… in replacement"
+msgstr "Nhóm bắt giữ được đánh số → ``{1}``, ``{2}``… trong phần thay thế"
+
+msgid "``(?P<name>…)``"
+msgstr "``(?P<name>…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Named capture group → ``{re:name}`` in replacement"
+msgstr "Nhóm bắt giữ có tên → ``{re:name}`` trong phần thay thế"
+
+msgid "``(?i)``"
+msgstr "``(?i)``"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive flag"
+msgstr "Cờ không phân biệt hoa thường"
+
+msgid "``^`` / ``$``"
+msgstr "``^`` / ``$``"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "Đầu / cuối của tên"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — reformat an ISO date:"
+msgstr "**Ví dụ**: định dạng lại một ngày ISO:"
+
+#, python-brace-format
+msgid "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+msgstr "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+
+#, python-brace-format
+msgid "``{3}/{2}/{1}``"
+msgstr "``{3}/{2}/{1}``"
+
+msgid "2024-06-15 → 15/06/2024"
+msgstr "2024-06-15 → 15/06/2024"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Chế độ văn bản thuần"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters.  Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr ""
+"Trường tìm kiếm được so khớp như một chuỗi nguyên văn, không có ký tự đại"
+" diện hay ký tự đặc biệt.  Mọi lần xuất hiện của đúng văn bản đó trong "
+"tên tệp đều được thay thế."
+
+# ==AUTO== Automatically translated
+msgid "**Example:**"
+msgstr "**Ví dụ:**"
+
+msgid "``IMG_``"
+msgstr "``IMG_``"
+
+msgid "``photo_``"
+msgstr "``photo_``"
+
+# ==AUTO== Automatically translated
+msgid "IMG_0042 → photo_0042"
+msgstr "IMG_0042 → photo_0042"
+
+# ==AUTO== Automatically translated
+msgid "Replacement Fields"
+msgstr "Trường thay thế"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string syntax is the same regardless of the search mode. "
+"Fields are written ``{name}`` and accept optional formatting options::"
+msgstr ""
+"Cú pháp chuỗi thay thế giống nhau bất kể chế độ tìm kiếm.  Các trường "
+"được viết ``{name}`` và nhận các tùy chọn định dạng::"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The case character comes first, before the alignment, e.g. ``{1:+<10}``."
+msgstr "Ký tự hoa/thường đứng trước, trước phần căn lề, ví dụ ``{1:+<10}``."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**fmt** is a minimum width (digit) for text/numbers, or a ``strftime`` "
+"format string for dates and datetimes."
+msgstr ""
+"**fmt** là độ rộng tối thiểu (chữ số) cho văn bản và số, hoặc một chuỗi "
+"định dạng ``strftime`` cho ngày và ngày giờ."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**default** is used when the field is absent.  Omitting it makes the "
+"field's absence an error (the row is shown in red in the preview)."
+msgstr ""
+"**default** được dùng khi trường không có.  Nếu bỏ qua, việc thiếu trường"
+" là lỗi (hàng hiển thị màu đỏ trong bản xem trước)."
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "Các trường có sẵn"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Trường"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "Có trong"
+
+#, python-brace-format
+msgid "``{0}``"
+msgstr "``{0}``"
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "mọi chế độ"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or the search literal in plain-text mode)"
+msgstr "Toàn bộ văn bản khớp (hoặc chuỗi tìm kiếm trong chế độ văn bản thuần)"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "mẫu, regex"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "Các nhóm bắt giữ được đánh số (bắt đầu từ 1)"
+
+#, python-brace-format
+msgid "``{re:name}``"
+msgstr "``{re:name}``"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "chỉ regex"
+
+# ==AUTO== Automatically translated
+msgid "Named group ``(?P<name>…)`` from the search regex"
+msgstr "Nhóm có tên ``(?P<name>…)`` từ biểu thức tìm kiếm"
+
+#, python-brace-format
+msgid "``{num}``"
+msgstr "``{num}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter.  *fmt* is a minimum width; *default* sets the "
+"starting value (e.g. ``{num:02:10}`` starts at 10, zero-padded to 2 "
+"digits)"
+msgstr ""
+"Bộ đếm tự tăng.  *fmt* là độ rộng tối thiểu; *default* đặt giá trị bắt "
+"đầu (ví dụ ``{num:02:10}`` bắt đầu từ 10, thêm số không cho đủ 2 chữ số)"
+
+#, python-brace-format
+msgid "``{newnum}``"
+msgstr "``{newnum}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Counter that continues after the highest number already used on disk by "
+"names of the same form in the target folder (``backup_007`` → next is "
+"``backup_008``), so that numbering never conflicts.  With ``--fill-gaps``"
+" it takes the smallest free numbers first; with ``--renumber`` it ignores"
+" the disk and starts from its start value"
+msgstr ""
+"Bộ đếm tiếp tục sau số lớn nhất mà các tên cùng dạng đã dùng trên đĩa "
+"trong thư mục đích (``backup_007`` → tiếp theo là ``backup_008``), để "
+"việc đánh số không bao giờ xung đột.  Với ``--fill-gaps`` nó dùng các số "
+"trống nhỏ nhất trước; với ``--renumber`` nó bỏ qua đĩa và bắt đầu từ giá "
+"trị bắt đầu của nó"
+
+#, python-brace-format
+msgid "``{dest}``"
+msgstr "``{dest}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root (``--dest`` in headless mode).  Only valid at the very "
+"start of the template, which may then contain ``/`` to place the file in "
+"sub-folders, created as needed: ``{dest}/{im:Make::}/{0}``"
+msgstr ""
+"Gốc đích (``--dest`` ở chế độ không giao diện).  Chỉ hợp lệ ở ngay đầu "
+"mẫu, khi đó mẫu có thể chứa ``/`` để đặt tệp vào các thư mục con, được "
+"tạo khi cần: ``{dest}/{im:Make::}/{0}``"
+
+#, python-brace-format
+msgid "``{if:category:text}``"
+msgstr "``{if:category:text}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"*text* when the file belongs to *category* (``image``, ``video``, "
+"``audio`` or ``other``), nothing otherwise: ``{0}{if:video:_vid}``"
+msgstr ""
+"*text* khi tệp thuộc loại *category* (``image``, ``video``, ``audio`` "
+"hoặc ``other``), không có gì trong trường hợp khác: "
+"``{0}{if:video:_vid}``"
+
+#, python-brace-format
+msgid "``{date}``"
+msgstr "``{date}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default ``strftime`` format ``%Y-%m-%d``"
+msgstr "Ngày hôm nay, định dạng ``strftime`` mặc định ``%Y-%m-%d``"
+
+#, python-brace-format
+msgid "``{datetime}``"
+msgstr "``{datetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "Ngày và giờ hiện tại, định dạng mặc định ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{mdatetime}``"
+msgstr "``{mdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "Ngày và giờ sửa đổi tệp, định dạng mặc định ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{cdatetime}``"
+msgstr "``{cdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default format ``%Y-%m-%d_%H%M%S`` (inode "
+"change time on Linux)"
+msgstr ""
+"Ngày và giờ tạo tệp, định dạng mặc định ``%Y-%m-%d_%H%M%S`` (thời điểm "
+"thay đổi inode trên Linux)"
+
+#, python-brace-format
+msgid "``{dir}``"
+msgstr "``{dir}``"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "Tên thư mục cha trực tiếp"
+
+#, python-brace-format
+msgid "``{im:Field}``"
+msgstr "``{im:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images — see :ref:`image-fields`)"
+msgstr "Trường siêu dữ liệu EXIF hoặc IPTC (ảnh, xem :ref:`image-fields`)"
+
+#, python-brace-format
+msgid "``{au:Field}``"
+msgstr "``{au:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see :ref:`audio-fields`)"
+msgstr "Trường siêu dữ liệu âm thanh (mp3, ogg, flac…, xem :ref:`audio-fields`)"
+
+#, python-brace-format
+msgid "``{vi:Field}``"
+msgstr "``{vi:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see :ref:`video-fields`)"
+msgstr "Trường siêu dữ liệu video (mp4, mkv, avi…, xem :ref:`video-fields`)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Image metadata fields ``{im:…}``"
+msgstr "Trường siêu dữ liệu ảnh ``{im:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Read with **pyexiv2**, or **Pillow** when pyexiv2 is not available (see "
+":ref:`optional-dependencies`).  Field names are case-insensitive.  A "
+"*default* is strongly recommended — metadata may be absent from non-image"
+" files or images without EXIF/IPTC data."
+msgstr ""
+"Đọc bằng **pyexiv2**, hoặc bằng **Pillow** khi không có pyexiv2 (xem :ref"
+":`optional-dependencies`).  Tên trường không phân biệt hoa thường.  Rất "
+"nên dùng *default*: siêu dữ liệu có thể không có trong tệp không phải ảnh"
+" hoặc trong ảnh không có dữ liệu EXIF/IPTC."
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "Kiểu"
+
+msgid "``DateTimeOriginal``"
+msgstr "``DateTimeOriginal``"
+
+# ==AUTO== Automatically translated
+msgid "datetime"
+msgstr "ngày giờ"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "Ngày giờ chụp ảnh"
+
+msgid "``DateTimeDigitized``"
+msgstr "``DateTimeDigitized``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "Ngày giờ số hóa ảnh"
+
+msgid "``DateTime``"
+msgstr "``DateTime``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Ngày giờ tệp được thay đổi lần cuối (EXIF)"
+
+msgid "``Make``"
+msgstr "``Make``"
+
+# ==AUTO== Automatically translated
+msgid "text"
+msgstr "văn bản"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "Hãng sản xuất máy ảnh"
+
+msgid "``Model``"
+msgstr "``Model``"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "Mẫu máy ảnh"
+
+msgid "``LensModel``"
+msgstr "``LensModel``"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "Mẫu ống kính"
+
+msgid "``ISOSpeedRatings``"
+msgstr "``ISOSpeedRatings``"
+
+# ==AUTO== Automatically translated
+msgid "integer"
+msgstr "số nguyên"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "Độ nhạy ISO"
+
+msgid "``FNumber``"
+msgstr "``FNumber``"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. ``2.8``)"
+msgstr "Khẩu độ (ví dụ ``2.8``)"
+
+msgid "``ExposureTime``"
+msgstr "``ExposureTime``"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. ``1/125``)"
+msgstr "Tốc độ màn trập (ví dụ ``1/125``)"
+
+msgid "``FocalLength``"
+msgstr "``FocalLength``"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "Tiêu cự tính bằng mm"
+
+msgid "``ImageDescription``"
+msgstr "``ImageDescription``"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "Mô tả hoặc tiêu đề ảnh"
+
+msgid "``Artist``"
+msgstr "``Artist``"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "Nhiếp ảnh gia hoặc tác giả (EXIF)"
+
+msgid "``Copyright``"
+msgstr "``Copyright``"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "Thông báo bản quyền"
+
+msgid "``ObjectName``"
+msgstr "``ObjectName``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "Tiêu đề IPTC hoặc tên đối tượng"
+
+msgid "``Caption``"
+msgstr "``Caption``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC caption / description"
+msgstr "Chú thích hoặc mô tả IPTC"
+
+msgid "``By-line``"
+msgstr "``By-line``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "Nhiếp ảnh gia hoặc tác giả IPTC"
+
+msgid "``City``"
+msgstr "``City``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "Thành phố IPTC"
+
+msgid "``Country``"
+msgstr "``Country``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "Quốc gia IPTC"
+
+msgid "``DateCreated``"
+msgstr "``DateCreated``"
+
+# ==AUTO== Automatically translated
+msgid "date"
+msgstr "ngày"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "Ngày tạo IPTC"
+
+msgid "``Keywords``"
+msgstr "``Keywords``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Từ khóa IPTC (ngăn cách bằng dấu chấm phẩy)"
+
+msgid "``Credit``"
+msgstr "``Credit``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC credit line"
+msgstr "Dòng ghi công IPTC"
+
+msgid "``Source``"
+msgstr "``Source``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC source"
+msgstr "Nguồn IPTC"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields ``{au:…}``"
+msgstr "Trường siêu dữ liệu âm thanh ``{au:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **mutagen**.  Supported formats: mp3, ogg, flac, opus, aac/m4a "
+"and others handled by mutagen.  Field names are case-insensitive."
+msgstr ""
+"Cần **mutagen**.  Định dạng được hỗ trợ: mp3, ogg, flac, opus, aac/m4a và"
+" các định dạng khác mà mutagen hỗ trợ.  Tên trường không phân biệt hoa "
+"thường."
+
+msgid "``title``"
+msgstr "``title``"
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "Tên bản nhạc"
+
+msgid "``artist``"
+msgstr "``artist``"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "Nghệ sĩ của bản nhạc"
+
+msgid "``albumartist``"
+msgstr "``albumartist``"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "Nghệ sĩ của album"
+
+msgid "``album``"
+msgstr "``album``"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "Tên album"
+
+msgid "``tracknumber``"
+msgstr "``tracknumber``"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips ``/total`` if present)"
+msgstr "Số thứ tự bản nhạc (bỏ ``/total`` nếu có)"
+
+msgid "``discnumber``"
+msgstr "``discnumber``"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips ``/total`` if present)"
+msgstr "Số thứ tự đĩa (bỏ ``/total`` nếu có)"
+
+msgid "``date``"
+msgstr "``date``"
+
+# ==AUTO== Automatically translated
+msgid "date/text"
+msgstr "ngày/văn bản"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — ``datetime.date`` when the full date is available "
+"(supports ``strftime`` format); plain text otherwise"
+msgstr ""
+"Ngày phát hành: ``datetime.date`` khi có đủ ngày (hỗ trợ định dạng "
+"``strftime``); văn bản thường trong trường hợp khác"
+
+msgid "``year``"
+msgstr "``year``"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from the ``date`` tag)"
+msgstr "Năm phát hành (lấy từ thẻ ``date``)"
+
+msgid "``genre``"
+msgstr "``genre``"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "Thể loại"
+
+msgid "``comment``"
+msgstr "``comment``"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "Bình luận"
+
+msgid "``composer``"
+msgstr "``composer``"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "Nhà soạn nhạc"
+
+msgid "``bpm``"
+msgstr "``bpm``"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "Số nhịp mỗi phút"
+
+msgid "``duration``"
+msgstr "``duration``"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "Thời lượng tính bằng giây"
+
+msgid "``bitrate``"
+msgstr "``bitrate``"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "Tốc độ bit tính bằng kbps"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields ``{vi:…}``"
+msgstr "Trường siêu dữ liệu video ``{vi:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **pymediainfo** (and the MediaInfo system library).  Supported "
+"formats: mp4, mkv, avi, mov, webm and others handled by MediaInfo.  Field"
+" names are case-insensitive."
+msgstr ""
+"Cần **pymediainfo** (và thư viện hệ thống MediaInfo).  Định dạng được hỗ "
+"trợ: mp4, mkv, avi, mov, webm và các định dạng khác mà MediaInfo hỗ trợ."
+"  Tên trường không phân biệt hoa thường."
+
+msgid "``width``"
+msgstr "``width``"
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "Chiều rộng video tính bằng điểm ảnh"
+
+msgid "``height``"
+msgstr "``height``"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "Chiều cao video tính bằng điểm ảnh"
+
+msgid "``framerate``"
+msgstr "``framerate``"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. ``29.970``)"
+msgstr "Tốc độ khung hình (ví dụ ``29.970``)"
+
+msgid "``videocodec``"
+msgstr "``videocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. ``AVC``, ``HEVC``)"
+msgstr "Tên codec video (ví dụ ``AVC``, ``HEVC``)"
+
+msgid "``audiocodec``"
+msgstr "``audiocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. ``AAC``, ``AC-3``)"
+msgstr "Tên codec âm thanh (ví dụ ``AAC``, ``AC-3``)"
+
+msgid "``audiochannels``"
+msgstr "``audiochannels``"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "Số kênh âm thanh"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "Tốc độ bit tổng tính bằng kbps"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "Thẻ tiêu đề"
+
+msgid "``encodeddate``"
+msgstr "``encodeddate``"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "Ngày giờ mã hóa"
+
+msgid "``performer``"
+msgstr "``performer``"
+
+# ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "Người biểu diễn hoặc nghệ sĩ"
+
+msgid "``copyright``"
+msgstr "``copyright``"
+
+msgid "``description``"
+msgstr "``description``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement examples"
+msgstr "Ví dụ thay thế"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Mẫu"
+
+#, python-brace-format
+msgid "``{1}_{num:04}``"
+msgstr "``{1}_{num:04}``"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr "Nhóm bắt giữ 1 theo sau là bộ đếm 4 chữ số có thêm số không (bắt đầu từ 1)"
+
+#, python-brace-format
+msgid "``{1}_{num:04:10}``"
+msgstr "``{1}_{num:04:10}``"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "Như trên, nhưng bộ đếm bắt đầu từ 10"
+
+#, python-brace-format
+msgid "``backup_{newnum:03}``"
+msgstr "``backup_{newnum:03}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: continues after the highest ``backup_NNN``"
+" already on disk"
+msgstr ""
+"Bộ đếm 3 chữ số không xung đột: tiếp tục sau ``backup_NNN`` lớn nhất đã "
+"có trên đĩa"
+
+#, python-brace-format
+msgid "``{date}-{0}``"
+msgstr "``{date}-{0}``"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "Ngày hôm nay đặt trước văn bản khớp"
+
+#, python-brace-format, python-format
+msgid "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+msgstr "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; ``unknown`` if EXIF absent"
+msgstr "Ngày giờ chụp dạng gọn; ``unknown`` nếu không có EXIF"
+
+#, python-brace-format
+msgid "``{im:Make::} {im:Model::}``"
+msgstr "``{im:Make::} {im:Model::}``"
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "Hãng và mẫu máy ảnh (chuỗi rỗng nếu không có)"
+
+#, python-brace-format
+msgid "``{au:artist::unknown}_{au:title::untitled}``"
+msgstr "``{au:artist::unknown}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; fallbacks if absent"
+msgstr "Nghệ sĩ và tên bản nhạc, có giá trị dự phòng nếu không có"
+
+#, python-brace-format, python-format
+msgid "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+msgstr "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Ngày phát hành, số thứ tự bản nhạc có thêm số không, tên bản nhạc"
+
+#, python-brace-format
+msgid "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+msgstr "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. ``1920x1080_AVC``)"
+msgstr "Độ phân giải và codec video (ví dụ ``1920x1080_AVC``)"
+
+#, python-brace-format
+msgid "``{re:year}_{re:title}``"
+msgstr "``{re:year}_{re:title}``"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "Các nhóm có tên của biểu thức chính quy (chỉ chế độ regex)"
+
+#, python-brace-format, python-format
+msgid "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+msgstr "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Thư mục cha, ngày sửa đổi tệp, bộ đếm 3 chữ số"
+
+# ==AUTO== Automatically translated
+msgid "Headless CLI Reference"
+msgstr "Tham khảo dòng lệnh không giao diện"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Headless mode is activated when ``--search``, ``--saved`` or ``--schema``"
+" is provided.  No window is opened; renames are performed and the process"
+" exits. Settings that are not given on the command line come from the "
+"profile chosen with ``--profile``, or from the last profile used in the "
+"GUI."
+msgstr ""
+"Chế độ không giao diện được bật khi có ``--search``, ``--saved`` hoặc "
+"``--schema``.  Không cửa sổ nào được mở; các thao tác đổi tên được thực "
+"hiện và chương trình thoát.  Các cài đặt không được đưa trên dòng lệnh "
+"lấy từ hồ sơ chọn bằng ``--profile``, hoặc từ hồ sơ dùng lần cuối trong "
+"giao diện đồ họa."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming is atomic: if any target is in conflict, nothing is renamed and "
+"the command exits with an error listing the conflicts."
+msgstr ""
+"Việc đổi tên là nguyên tử: nếu có đích nào xung đột, không có gì được đổi"
+" tên và lệnh kết thúc với lỗi liệt kê các xung đột."
+
+# ==AUTO== Automatically translated
+msgid "Rename source (mutually exclusive)"
+msgstr "Nguồn đổi tên (loại trừ lẫn nhau)"
+
+msgid "``--search TEXT``"
+msgstr "``--search TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern/expression — activates headless mode."
+msgstr "Mẫu hoặc biểu thức tìm kiếm; bật chế độ không giao diện."
+
+msgid "``--saved NAME``"
+msgstr "``--saved NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Load a named save — activates headless mode.  Other options override "
+"values from the save."
+msgstr ""
+"Tải một bản lưu có tên; bật chế độ không giao diện.  Các tùy chọn khác "
+"ghi đè giá trị của bản lưu."
+
+msgid "``--schema LIST``"
+msgstr "``--schema LIST``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rename :ref:`schema <schema-mode>`: comma-separated fields, e.g. "
+"``'Trip,,Paris,###'`` — activates headless mode.  Non-empty fields form "
+"both the folder tree under ``--dest`` and the name (joined with ``_``); a"
+" field of ``#`` only is the counter, padded to the number of ``#``; empty"
+" fields are skipped.  Sidecar mode is always on."
+msgstr ""
+":ref:`Lược đồ <schema-mode>` đổi tên: các trường ngăn cách bằng dấu phẩy,"
+" ví dụ ``'Trip,,Paris,###'``; bật chế độ không giao diện.  Các trường "
+"không trống tạo thành cả cây thư mục dưới ``--dest`` lẫn tên tệp (nối "
+"bằng ``_``); trường chỉ gồm ``#`` là bộ đếm, thêm số không cho đủ số "
+"``#``; các trường trống bị bỏ qua.  Chế độ sidecar luôn bật."
+
+# ==AUTO== Automatically translated
+msgid "Schema options"
+msgstr "Tùy chọn lược đồ"
+
+msgid "``--dest DIR``"
+msgstr "``--dest DIR``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root.  With ``--schema``, defaults to the profile's "
+"destination and is required if it has none (except with ``--renumber``)."
+"  Also the value of the ``{dest}`` field in ``--replace``."
+msgstr ""
+"Gốc đích.  Với ``--schema``, mặc định là đích của hồ sơ, và bắt buộc nếu "
+"hồ sơ không có (trừ khi dùng ``--renumber``).  Cũng là giá trị của trường"
+" ``{dest}`` trong ``--replace``."
+
+msgid "``--fill-gaps`` / ``--no-fill-gaps``"
+msgstr "``--fill-gaps`` / ``--no-fill-gaps``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` takes the smallest free number instead of continuing after "
+"the highest one (default: the profile's setting with ``--schema``, "
+"``--no-fill-gaps`` otherwise)."
+msgstr ""
+"``{newnum}`` lấy số trống nhỏ nhất thay vì tiếp tục sau số lớn nhất (mặc "
+"định: cài đặt của hồ sơ khi dùng ``--schema``, ``--no-fill-gaps`` trong "
+"trường hợp khác)."
+
+msgid "``--renumber``"
+msgstr "``--renumber``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` runs from its start value, ignoring the numbers already used"
+" on disk; with ``--schema``, renumber the files in place."
+msgstr ""
+"``{newnum}`` bắt đầu từ giá trị bắt đầu của nó, bỏ qua các số đã dùng "
+"trên đĩa; với ``--schema``, đánh số lại các tệp tại chỗ."
+
+msgid "``--video-marker TEXT``"
+msgstr "``--video-marker TEXT``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: text added to the name of video files (default: the "
+"profile's marker)."
+msgstr ""
+"Với ``--schema``: văn bản thêm vào tên tệp video (mặc định: dấu đánh dấu "
+"của hồ sơ)."
+
+msgid "``--video-marker-pos N``"
+msgstr "``--video-marker-pos N``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: position of the video marker between the fields (0 = "
+"before the first field; default: the profile's position)."
+msgstr ""
+"Với ``--schema``: vị trí của dấu đánh dấu video giữa các trường (0 = "
+"trước trường đầu tiên; mặc định: vị trí của hồ sơ)."
+
+# ==AUTO== Automatically translated
+msgid "Rename options"
+msgstr "Tùy chọn đổi tên"
+
+msgid "``--replace TEXT``"
+msgstr "``--replace TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement string (default: empty string)."
+msgstr "Chuỗi thay thế (mặc định: chuỗi rỗng)."
+
+#, python-brace-format
+msgid "``--mode {pattern,regex,plain}``"
+msgstr "``--mode {pattern,regex,plain}``"
+
+# ==AUTO== Automatically translated
+msgid "Search mode: ``pattern`` (default), ``regex``, or ``plain``."
+msgstr "Chế độ tìm kiếm: ``pattern`` (mặc định), ``regex`` hoặc ``plain``."
+
+#, python-brace-format
+msgid "``--list {files,dirs,all}``"
+msgstr "``--list {files,dirs,all}``"
+
+# ==AUTO== Automatically translated
+msgid "Entry types to process: ``files`` (default), ``dirs``, or ``all``."
+msgstr "Loại mục cần xử lý: ``files`` (mặc định), ``dirs`` hoặc ``all``."
+
+msgid "``--recurse`` / ``--no-recurse``"
+msgstr "``--recurse`` / ``--no-recurse``"
+
+# ==AUTO== Automatically translated
+msgid "Recurse into sub-directories (default: ``--no-recurse``)."
+msgstr "Duyệt cả thư mục con (mặc định: ``--no-recurse``)."
+
+#, python-brace-format
+msgid "``--ext-mode {keep,lower,upper,normalize,modify}``"
+msgstr "``--ext-mode {keep,lower,upper,normalize,modify}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"How to handle the extension during rename (default: ``keep``).  ``lower``"
+" / ``upper`` case-fold the extension; ``normalize`` maps it through the "
+"extension normalization table (managed from the GUI, **Edit → Settings… →"
+" Extension Normalization** tab); ``modify`` includes the extension in the"
+" search/replace pattern, same as *Modify extension* in the GUI."
+msgstr ""
+"Cách xử lý phần mở rộng khi đổi tên (mặc định: ``keep``).  ``lower`` / "
+"``upper`` đổi hoa thường của phần mở rộng; ``normalize`` đưa nó qua bảng "
+"chuẩn hóa phần mở rộng (quản lý trong giao diện đồ họa, thẻ **Chỉnh sửa →"
+" Cài đặt… → Chuẩn hóa phần mở rộng**); ``modify`` đưa phần mở rộng vào "
+"mẫu tìm và thay thế, giống *Sửa đổi phần mở rộng* trong giao diện đồ họa."
+
+msgid "``--sidecar-mode`` / ``--no-sidecar-mode``"
+msgstr "``--sidecar-mode`` / ``--no-sidecar-mode``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Group :ref:`sidecar files <sidecar-files>` with their base file when "
+"renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
+" ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
+"is an error.  Category configuration (base extensions, sidecar suffixes) "
+"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+msgstr ""
+"Nhóm các :ref:`tệp sidecar <sidecar-files>` với tệp chính của chúng khi "
+"đổi tên (mặc định: ``--no-sidecar-mode``).  Cần ``--ext-mode keep``, "
+"``lower`` hoặc ``upper``; kết hợp với ``normalize`` hoặc ``modify`` là "
+"lỗi.  Cấu hình loại (phần mở rộng chính, hậu tố sidecar) được dùng chung "
+"với hộp thoại **Chỉnh sửa → Tệp sidecar…** của giao diện đồ họa."
+
+msgid "``--filter GLOB``"
+msgstr "``--filter GLOB``"
+
+# ==AUTO== Automatically translated
+msgid "Glob pattern to restrict the file listing (e.g. ``'*.jpg'``)."
+msgstr "Mẫu glob để giới hạn danh sách tệp (ví dụ ``'*.jpg'``)."
+
+msgid "``--select GLOB``"
+msgstr "``--select GLOB``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Restrict the rename to entries matching ``GLOB`` (basename match), as if "
+"selecting them by clicking in the GUI file list. May be given multiple "
+"times to accumulate (equivalent of Ctrl+click). With ``--sidecar-mode``, "
+"selecting a base file also selects its sidecars, and selecting a sidecar "
+"also selects its base file and every sibling sidecar — the same grouping "
+"the GUI applies when you click a row, including the same ambiguity "
+"handling (a sidecar matching more than one base file is still flagged and"
+" skipped, whether or not it was selected). Omit to act on every listed "
+"entry (default)."
+msgstr ""
+"Giới hạn việc đổi tên ở các mục khớp ``GLOB`` (so với tên cơ sở), như khi"
+" chọn chúng bằng cách nhấp trong danh sách tệp của giao diện đồ họa.  Có "
+"thể dùng nhiều lần để cộng dồn (tương đương Ctrl+nhấp).  Với ``--sidecar-"
+"mode``, chọn một tệp chính cũng chọn các sidecar của nó, và chọn một "
+"sidecar cũng chọn tệp chính cùng mọi sidecar anh em: cùng cách nhóm mà "
+"giao diện đồ họa áp dụng khi nhấp vào một hàng, kể cả cùng cách xử lý sự "
+"mơ hồ (sidecar khớp với nhiều tệp chính vẫn bị đánh dấu và bỏ qua, dù có "
+"được chọn hay không).  Nếu bỏ qua, mọi mục trong danh sách đều được xử lý"
+" (mặc định)."
+
+msgid "``--sep``"
+msgstr "``--sep``"
+
+# ==AUTO== Automatically translated
+msgid "Separator conversion applied after rename.  Default: ``none``."
+msgstr "Chuyển đổi dấu phân cách áp dụng sau khi đổi tên.  Mặc định: ``none``."
+
+#, python-brace-format
+msgid "``--case {none,upper,lower,capitalize,title}``"
+msgstr "``--case {none,upper,lower,capitalize,title}``"
+
+# ==AUTO== Automatically translated
+msgid "Capitalisation applied after rename.  Default: ``none``."
+msgstr "Đổi chữ hoa/thường áp dụng sau khi đổi tên.  Mặc định: ``none``."
+
+msgid "``--accent`` / ``--no-accent``"
+msgstr "``--accent`` / ``--no-accent``"
+
+# ==AUTO== Automatically translated
+msgid "Strip diacritics from result names (default: ``--no-accent``)."
+msgstr "Bỏ dấu phụ khỏi tên kết quả (mặc định: ``--no-accent``)."
+
+msgid "``--dup`` / ``--no-dup``"
+msgstr "``--dup`` / ``--no-dup``"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive duplicate separators (default: ``--no-dup``)."
+msgstr "Gộp các dấu phân cách trùng lặp liên tiếp (mặc định: ``--no-dup``)."
+
+msgid "``--confirm`` / ``--no-confirm``"
+msgstr "``--confirm`` / ``--no-confirm``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Preview changes and ask for confirmation before renaming (default: "
+"``--no-confirm``)."
+msgstr ""
+"Hiển thị các thay đổi và yêu cầu xác nhận trước khi đổi tên (mặc định: "
+"``--no-confirm``)."
+
+msgid "``--dry-run`` / ``--no-dry-run``"
+msgstr "``--dry-run`` / ``--no-dry-run``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Print the equivalent ``mv`` commands to stdout instead of renaming "
+"anything (default: ``--no-dry-run``).  The output is a valid POSIX shell "
+"script — quoted with ``shlex.quote``, conflicts reported as ``#`` "
+"comments — that can be piped to ``sh`` to actually perform the rename. "
+"Takes precedence over ``--confirm``: no interactive prompt is shown."
+msgstr ""
+"In ra đầu ra chuẩn các lệnh ``mv`` tương đương thay vì đổi tên (mặc định:"
+" ``--no-dry-run``).  Đầu ra là một script shell POSIX hợp lệ, được bảo vệ"
+" bằng ``shlex.quote``, với các xung đột ghi dưới dạng chú thích ``#``, có"
+" thể chuyển cho ``sh`` để thực sự đổi tên.  Được ưu tiên hơn "
+"``--confirm``: không có câu hỏi tương tác nào."
+
+# ==AUTO== Automatically translated
+msgid "Logging"
+msgstr "Nhật ký"
+
+msgid "``-d`` / ``--debug``"
+msgstr "``-d`` / ``--debug``"
+
+# ==AUTO== Automatically translated
+msgid "Enable debug output (overrides the saved preference)."
+msgstr "Bật thông báo gỡ lỗi (ghi đè tùy chọn đã lưu)."
+
+msgid "``-v`` / ``--verbose``"
+msgstr "``-v`` / ``--verbose``"
+
+# ==AUTO== Automatically translated
+msgid "Enable verbose output — INFO level (overrides the saved preference)."
+msgstr "Bật thông báo chi tiết, mức INFO (ghi đè tùy chọn đã lưu)."
+
+msgid "``-q`` / ``--quiet``"
+msgstr "``-q`` / ``--quiet``"
+
+# ==AUTO== Automatically translated
+msgid "Suppress informational messages — WARNING level."
+msgstr "Ẩn thông báo thông tin, mức WARNING."
+
+# ==AUTO== Automatically translated
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgid "``--profile NAME``"
+msgstr "``--profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar "
+"configuration, schema defaults) instead of the last one used in the GUI."
+"  In GUI mode, open the window on that profile."
+msgstr ""
+"Dùng :ref:`hồ sơ <profiles>` *NAME* (cài đặt, bản lưu, cấu hình sidecar, "
+"giá trị mặc định của lược đồ) thay vì hồ sơ dùng lần cuối trong giao diện"
+" đồ họa.  Ở chế độ đồ họa, mở cửa sổ với hồ sơ đó."
+
+msgid "``--config-dir DIR``"
+msgstr "``--config-dir DIR``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override the configuration directory — see :ref:`config-files` for the "
+"platform defaults.  Intended for testing."
+msgstr ""
+"Ghi đè thư mục cấu hình; xem :ref:`config-files` để biết giá trị mặc định"
+" của từng nền tảng.  Dành cho kiểm thử."
+
+msgid "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+msgstr "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linux only: install (or remove) a desktop menu entry and icon for the "
+"current user, then exit.  Useful after a ``pip`` install, which has no "
+"post-install hook to do it."
+msgstr ""
+"Chỉ Linux: cài đặt (hoặc gỡ) một mục menu và biểu tượng cho người dùng "
+"hiện tại, rồi thoát.  Hữu ích sau khi cài bằng ``pip``, vốn không có bước"
+" sau cài đặt để làm việc này."
+
+# ==AUTO== Automatically translated
+msgid "Self-update"
+msgstr "Tự cập nhật"
+
+msgid "``--auto-update``"
+msgstr "``--auto-update``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Download the latest release matching the running platform and "
+"architecture from `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ and replace the "
+"running executable with it, then exit.  This option is only offered when "
+"running a pre-built (PyInstaller) executable; a source checkout or a "
+"``pip``/PyPI install has no single running binary to replace, so the "
+"option is absent from ``--help`` and rejected as an unknown argument "
+"there.  Restart PBRenamer to use the new build; the update does not "
+"relaunch it automatically."
+msgstr ""
+"Tải từ `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ phiên bản mới nhất "
+"phù hợp với nền tảng và kiến trúc đang chạy, thay thế tệp thực thi đang "
+"chạy bằng phiên bản đó, rồi thoát.  Tùy chọn này chỉ có với tệp thực thi "
+"dựng sẵn (PyInstaller); bản sao mã nguồn hay bản cài bằng ``pip``/PyPI "
+"không có một tệp thực thi duy nhất để thay, nên tùy chọn không xuất hiện "
+"trong ``--help`` và bị từ chối như một đối số không xác định.  Hãy khởi "
+"động lại PBRenamer để dùng phiên bản mới; việc cập nhật không tự khởi "
+"động lại chương trình."
+
+# ==AUTO== Automatically translated
+msgid "Help export"
+msgstr "Xuất trợ giúp"
+
+msgid "``--help-search``"
+msgstr "``--help-search``"
+
+# ==AUTO== Automatically translated
+msgid "Print the search-field help HTML to stdout and exit."
+msgstr "In HTML trợ giúp của trường tìm kiếm ra đầu ra chuẩn rồi thoát."
+
+msgid "``--help-replace``"
+msgstr "``--help-replace``"
+
+# ==AUTO== Automatically translated
+msgid "Print the replacement-field help HTML to stdout and exit."
+msgstr "In HTML trợ giúp của trường thay thế ra đầu ra chuẩn rồi thoát."
+
+# ==AUTO== Automatically translated
+msgid "CLI Examples"
+msgstr "Ví dụ dòng lệnh"
+
+# ==AUTO== Automatically translated
+msgid "Remove an ``IMG_`` prefix from all JPEG files in the current directory::"
+msgstr "Bỏ tiền tố ``IMG_`` khỏi mọi tệp JPEG trong thư mục hiện tại::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Add the parent folder name and a zero-padded counter to every file, "
+"recursively::"
+msgstr ""
+"Thêm vào mỗi tệp, theo cách đệ quy, tên thư mục cha và một bộ đếm có thêm"
+" số không::"
+
+# ==AUTO== Automatically translated
+msgid "Rename audio files using their tags, with fallbacks::"
+msgstr "Đổi tên tệp âm thanh theo thẻ của chúng, có giá trị dự phòng::"
+
+# ==AUTO== Automatically translated
+msgid "Load a saved preset and override its separator setting::"
+msgstr "Tải một bản lưu có tên và ghi đè cài đặt dấu phân cách của nó::"
+
+# ==AUTO== Automatically translated
+msgid "Preview changes before applying::"
+msgstr "Xem các thay đổi trước khi áp dụng::"
+
+# ==AUTO== Automatically translated
+msgid "Print the equivalent ``mv`` commands without renaming anything::"
+msgstr "In các lệnh ``mv`` tương đương mà không đổi tên gì::"
+
+# ==AUTO== Automatically translated
+msgid "Only rename two specific files (and their sidecars) out of the directory::"
+msgstr "Chỉ đổi tên hai tệp cụ thể (và các sidecar của chúng) trong thư mục::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sort the pictures of a folder into ``~/Photos/Paris/2024/Street/``, with "
+"a 3-digit counter, using the settings of the ``photos`` profile::"
+msgstr ""
+"Sắp xếp ảnh của một thư mục vào ``~/Photos/Paris/2024/Street/``, với bộ "
+"đếm 3 chữ số, dùng cài đặt của hồ sơ ``photos``::"
+
+# ==AUTO== Automatically translated
+msgid "Renumber the files of a folder from 1, in place::"
+msgstr "Đánh số lại từ 1, tại chỗ, các tệp của một thư mục::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Move files into one folder per camera model, with a counter, sidecars "
+"following their picture::"
+msgstr ""
+"Di chuyển tệp vào mỗi thư mục cho một mẫu máy ảnh, có bộ đếm, với các "
+"sidecar đi theo ảnh của chúng::"

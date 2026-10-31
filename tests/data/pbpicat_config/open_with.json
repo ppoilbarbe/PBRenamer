@@ -1,0 +1,12 @@
+{
+  "image/png": [
+    "org.gnome.eog.desktop",
+    "gimp.desktop"
+  ],
+  "image/jpeg": [
+    "org.gnome.eog.desktop"
+  ],
+  "video/mp4": [
+    "vlc.desktop"
+  ]
+}

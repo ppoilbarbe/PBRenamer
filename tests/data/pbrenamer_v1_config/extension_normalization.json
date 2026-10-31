@@ -1,0 +1,10 @@
+[
+  {
+    "from": "jpeg",
+    "to": "jpg"
+  },
+  {
+    "from": "yml",
+    "to": "yaml"
+  }
+]

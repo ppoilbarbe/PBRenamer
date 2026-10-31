@@ -1,4 +1,4 @@
-"""Pattern presets — JSON persistence in the platform config directory.
+"""Pattern presets — JSON persistence in the current profile's directory.
 
 search.json  : list of {"mode": str, "pattern": str} objects, most recent first.
 replace.json : list of strings, most recent first.
@@ -31,9 +31,9 @@ def _read_json(path: Path) -> object:
 class PatternPresets:
     def __init__(self, config_dir: Path | None = None) -> None:
         if config_dir is None:
-            import pbrenamer.settings as _settings
+            from pbrenamer import profiles
 
-            config_dir = _settings._dirs.config_home / "patterns"
+            config_dir = profiles.profile_dir() / "patterns"
         self._dir = config_dir
         self._dir.mkdir(parents=True, exist_ok=True)
 

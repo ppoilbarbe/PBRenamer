@@ -18,9 +18,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
+msgid "EXIF"
+msgstr "EXIF"
+
+msgid "IPTC"
+msgstr "IPTC"
+
+msgid "XMP"
+msgstr "XMP"
+
+msgid "Sidecar file"
+msgstr "Fichier sidecar"
+
+msgid "XMP (sidecar)"
+msgstr "XMP (sidecar)"
+
+msgid "No EXIF orientation tag to apply."
+msgstr "Aucun tag d'orientation EXIF à appliquer."
+
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "Valeur d'orientation EXIF non supportée : {v}"
+
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr ""
+"Ce fichier semble tronqué (des données manquent à la fin), probablement à"
+" cause d'une écriture incomplète par l'appareil photo. La rotation sans "
+"perte est impossible sans supprimer les lignes concernées."
+
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran n'est pas disponible.\n"
+"La rotation JPEG sans perte nécessite jpegtran.\n"
+"Installez libjpeg-turbo pour activer cette fonctionnalité."
+
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "Le schéma contient plusieurs champs numériques (un seul autorisé)."
+
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "Le champ « {field} » contient le caractère interdit « {char} »."
+
+msgid "The schema is empty: fill in at least one field."
+msgstr "Le schéma est vide : remplissez au moins un champ."
+
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "Le marqueur vidéo contient le caractère interdit « {char} »."
+
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr ""
+"Le schéma n'a aucun champ numérique (utilisez « # » pour définir un "
+"compteur)."
+
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
-msgstr "{name!r} pourrait être le sidecar de plusieurs fichiers de base : {owners}"
+msgstr "{name!r} pourrait être le sidecar de plusieurs fichiers de base : {owners}"
 
 msgid "language_name"
 msgstr "Français"
@@ -46,6 +105,45 @@ msgstr "Musique"
 msgid "Videos"
 msgstr "Vidéos"
 
+msgid "Open with"
+msgstr "Ouvrir avec"
+
+msgid "Choose an application:"
+msgstr "Choisir une application :"
+
+msgid "Application name:"
+msgstr "Nom de l'application :"
+
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr ""
+"Nom de profil « {name} » invalide : utilisez des lettres, des chiffres, «"
+" - » et « _ » (un « . » initial masque le profil)."
+
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr ""
+"Nom de profil « {name} » invalide : utilisez des lettres, des chiffres, «"
+" - » et « _ »."
+
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "Profil « {name} » introuvable."
+
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "Le profil « {name} » existe déjà."
+
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr ""
+"Le profil « {name} » est le dernier profil visible : il ne peut être ni "
+"supprimé ni masqué."
+
 msgid "About PBRenamer"
 msgstr "À propos de PBRenamer"
 
@@ -59,25 +157,41 @@ msgid "GPLv3"
 msgstr "GPLv3"
 
 msgid "License:"
-msgstr "Licence :"
+msgstr "Licence :"
 
 msgid "Python version:"
-msgstr "Version Python :"
+msgstr "Version Python :"
 
 msgid "PySide6 version:"
-msgstr "Version PySide6 :"
+msgstr "Version PySide6 :"
+
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "Renommer ({n})"
+
+msgid "Rename"
+msgstr "Renommer"
+
+#, python-format
+msgid "Undo (%d)"
+msgstr "Annuler (%d)"
+
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Annuler le dernier lot (%d niveau(x) disponible(s))"
+
+msgid "Undo"
+msgstr "Annuler"
+
+msgid "Undo last rename batch"
+msgstr "Annuler le dernier lot de renommage"
 
 msgid "File information"
 msgstr "Informations sur le fichier"
 
-msgid "Field"
-msgstr "Champ"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Value"
-msgstr "Valeur"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Informations sur le fichier « {name} »"
 
 msgid "Image"
 msgstr "Image"
@@ -94,24 +208,11 @@ msgstr "Dossier"
 msgid "Other"
 msgstr "Autre"
 
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Informations sur le fichier — {name}"
-
 msgid "File:"
-msgstr "Fichier :"
+msgstr "Fichier :"
 
 msgid "Type:"
-msgstr "Type :"
-
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Métadonnées de l'image (EXIF / IPTC)"
-
-msgid "Audio metadata"
-msgstr "Métadonnées audio"
-
-msgid "Video metadata"
-msgstr "Métadonnées vidéo"
+msgstr "Type :"
 
 msgid "Select a single file to display its information."
 msgstr "Sélectionnez un seul fichier pour afficher ses informations."
@@ -119,53 +220,85 @@ msgstr "Sélectionnez un seul fichier pour afficher ses informations."
 msgid "Select a file to display its information."
 msgstr "Sélectionnez un fichier pour afficher ses informations."
 
-msgid "Universal fields"
-msgstr "Champs universels"
+msgid "Original"
+msgstr "Original"
 
-msgid "Today's date"
-msgstr "Date d'aujourd'hui"
+msgid "Preview"
+msgstr "Aperçu"
 
-msgid "Current date and time"
-msgstr "Date et heure actuelles"
+msgid "Thumbnail"
+msgstr "Miniature"
 
-msgid "File modification date/time"
-msgstr "Date/heure de modification du fichier"
+msgid "Sidecar"
+msgstr "Sidecar"
 
-msgid "Missing"
-msgstr "Manquant"
+msgid "No sidecar: double-click to create one"
+msgstr "Aucun sidecar : double-cliquez pour en créer un"
 
-msgid "File creation date/time"
-msgstr "Date/heure de création du fichier"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "Impossible de créer {name} : {error}"
 
-msgid "Parent folder name"
-msgstr "Nom du dossier parent"
+msgid "cannot move/copy a folder into itself"
+msgstr "impossible de déplacer/copier un dossier dans lui-même"
 
-msgid "Batch fields"
-msgstr "Champs de lot"
+msgid "Move errors"
+msgstr "Erreurs de déplacement"
 
-msgid "Computed"
-msgstr "Calculé"
+msgid "Copy errors"
+msgstr "Erreurs de copie"
 
-msgid "Full matched text"
-msgstr "Texte intégralement correspondant"
+msgid "Confirm overwrite"
+msgstr "Confirmer l'écrasement"
 
-msgid "Capture groups"
-msgstr "Groupes de capture"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} élément(s) existent déjà dans {dir} et seraient écrasés."
 
-msgid "Auto-incrementing counter"
-msgstr "Compteur auto-incrémenté"
+msgid "Overwrite"
+msgstr "Écraser"
 
-msgid "Conflict-free counter"
-msgstr "Compteur sans conflit"
+msgid "Skip"
+msgstr "Ignorer"
 
-msgid "Named regex group"
-msgstr "Groupe regex nommé"
+msgid "▲ Move up"
+msgstr "▲ Monter"
 
-msgid "Insert into replacement field"
-msgstr "Insérer dans le champ de remplacement"
+msgid "▼ Move down"
+msgstr "▼ Descendre"
+
+msgid "Sort ↓"
+msgstr "Trier ↓"
+
+msgid "Sort the list in ascending order"
+msgstr "Trier la liste par ordre croissant"
+
+msgid "Sort ↑"
+msgstr "Trier ↑"
+
+msgid "Sort the list in descending order"
+msgstr "Trier la liste par ordre décroissant"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Clear all"
+msgstr "Tout effacer"
+
+msgid "Clear history"
+msgstr "Effacer l'historique"
+
+msgid "Clear all values from this history?"
+msgstr "Effacer toutes les valeurs de cet historique ?"
+
+msgid "Sidecar filter"
+msgstr "Filtre sidecar"
 
 msgid "History"
 msgstr "Historique"
+
+msgid "Patterns"
+msgstr "Motifs"
 
 msgid "Search"
 msgstr "Recherche"
@@ -209,9 +342,6 @@ msgstr "Supprimer les entrées sélectionnées"
 msgid "Delete the selected search history entries"
 msgstr "Supprimer les entrées sélectionnées de l'historique de recherche"
 
-msgid "Clear all"
-msgstr "Tout effacer"
-
 msgid "Remove all search history entries"
 msgstr "Supprimer toutes les entrées de l'historique de recherche"
 
@@ -239,71 +369,401 @@ msgstr "Supprimer toutes les entrées de l'historique de remplacement"
 msgid "Delete the entire replacement pattern history"
 msgstr "Supprimer tout l'historique des motifs de remplacement"
 
+msgid "Template"
+msgstr "Modèle"
+
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Impossible de déterminer un modèle pour « {name} ».\n"
+"Aucune partie du nom de fichier ne correspond à l'historique d'un champ."
+
+msgid "Confirm deletion"
+msgstr "Confirmer la suppression"
+
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Impossible de déplacer vers la corbeille : {name}"
+
+msgid "Deletion error"
+msgstr "Erreur de suppression"
+
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Déplacer {count} fichiers vers la corbeille ?"
+
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Déplacer vers la corbeille :\n"
+"{names}"
+
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Supprimer définitivement {count} fichiers ?"
+
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Supprimer définitivement :\n"
+"{names}"
+
+msgid "Rotation unavailable"
+msgstr "Rotation indisponible"
+
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} fichier(s) n'ont pas pu être pivotés."
+
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} fichier(s) pivoté(s)."
+
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} tag(s) d'orientation EXIF réinitialisé(s)."
+
+msgid "Fit window  0 / X"
+msgstr "Adapter à la fenêtre  0 / X"
+
+msgid "Actual size (1:1)  1 / Z"
+msgstr "Taille réelle (1:1)  1 / Z"
+
+msgid "Fit width  W"
+msgstr "Adapter à la largeur  W"
+
+msgid "Fit height  H"
+msgstr "Adapter à la hauteur  H"
+
+msgid "Zoom in  +"
+msgstr "Agrandir  +"
+
+msgid "Zoom out  −"
+msgstr "Diminuer  −"
+
+msgid "Rotate 90° left  F6"
+msgstr "Rotation 90° à gauche  F6"
+
+msgid "Rotate 180°  F7"
+msgstr "Rotation 180°  F7"
+
+msgid "Rotate 90° right  F8"
+msgstr "Rotation 90° à droite  F8"
+
+msgid "Apply EXIF orientation  F9"
+msgstr "Appliquer l'orientation EXIF  F9"
+
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "Forcer l'orientation EXIF à 0°  F10"
+
+msgid "Open"
+msgstr "Ouvrir"
+
+msgid "Show metadata panel"
+msgstr "Afficher le panneau des métadonnées"
+
+msgid "Cannot load image."
+msgstr "Impossible de charger l'image."
+
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "Passer en navigation linéaire (arrêt aux extrémités de la liste)"
+
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr "Passer en navigation circulaire (bouclage aux extrémités de la liste)"
+
+msgid " (max)"
+msgstr " (max)"
+
+msgid "Keyboard"
+msgstr "Clavier"
+
+msgid "Mouse"
+msgstr "Souris"
+
+msgid "Rotate 90° left, without loss"
+msgstr "Rotation 90° à gauche, sans perte"
+
+msgid "Rotate 180°, without loss"
+msgstr "Rotation 180°, sans perte"
+
+msgid "Rotate 90° right, without loss"
+msgstr "Rotation 90° à droite, sans perte"
+
+msgid "Apply EXIF orientation"
+msgstr "Appliquer l'orientation EXIF"
+
+msgid "Force EXIF orientation to 0°"
+msgstr "Forcer l'orientation EXIF à 0°"
+
+msgid "directory tree"
+msgstr "arborescence"
+
+msgid "file list"
+msgstr "liste des fichiers"
+
+msgid "Open a folder"
+msgstr "Ouvrir un dossier"
+
+msgid "Quit"
+msgstr "Quitter"
+
+msgid "New profile"
+msgstr "Nouveau profil"
+
+msgid "Duplicate profile"
+msgstr "Dupliquer le profil"
+
+msgid "Profile configuration"
+msgstr "Configuration du profil"
+
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "Raccourcis clavier et souris (cette fenêtre)"
+
+msgid "Rename as shown in the Preview column"
+msgstr "Renommer comme indiqué dans la colonne Aperçu"
+
+msgid "Reload the file list"
+msgstr "Recharger la liste des fichiers"
+
+msgid "Switch focus between directory tree and file list"
+msgstr "Basculer le focus entre l'arborescence et la liste des fichiers"
+
+msgid "Navigate directories"
+msgstr "Se déplacer dans les répertoires"
+
+msgid "Select previous / next file"
+msgstr "Sélectionner le fichier précédent / suivant"
+
+msgid "Jump to first / last entry"
+msgstr "Aller au premier / dernier élément"
+
+msgid "Show the selected images in the viewer"
+msgstr "Afficher les images sélectionnées dans le visualiseur"
+
+msgid "Open the selected files with their default application"
+msgstr "Ouvrir les fichiers sélectionnés avec leur application par défaut"
+
+msgid "Open with…"
+msgstr "Ouvrir avec…"
+
+msgid "Delete selected file(s) and their sidecars"
+msgstr "Supprimer les fichiers sélectionnés et leurs sidecars"
+
+msgid "click"
+msgstr "clic"
+
+msgid "Add to the selection / select a range"
+msgstr "Ajouter à la sélection / sélectionner une plage"
+
+msgid "No selection"
+msgstr "Aucune sélection"
+
+msgid "Rename, renumber and preview act on all listed files"
+msgstr "Renommer, renuméroter et l'aperçu portent sur tous les fichiers listés"
+
+msgid "Double-click on a thumbnail"
+msgstr "Double-clic sur une vignette"
+
+msgid "Show the image in the viewer"
+msgstr "Afficher l'image dans le visualiseur"
+
+msgid "Double-click on a name"
+msgstr "Double-clic sur un nom"
+
+msgid "Open the file with its default application"
+msgstr "Ouvrir le fichier avec son application par défaut"
+
+msgid "Double-click on a sidecar"
+msgstr "Double-clic sur un sidecar"
+
+msgid "Open the sidecar file"
+msgstr "Ouvrir le fichier sidecar"
+
+msgid "Right-click on the file list"
+msgstr "Clic droit sur la liste des fichiers"
+
+msgid "Images menu"
+msgstr "Menu Images"
+
+msgid "Right-click on the directory tree"
+msgstr "Clic droit sur l'arborescence"
+
+msgid "Add the folder as a shortcut"
+msgstr "Ajouter le dossier comme raccourci"
+
+msgid "Drag onto a folder"
+msgstr "Glisser sur un dossier"
+
+msgid "Move the files and their sidecars"
+msgstr "Déplacer les fichiers et leurs sidecars"
+
+msgid "drag onto a folder"
+msgstr "glisser sur un dossier"
+
+msgid "Copy the files and their sidecars"
+msgstr "Copier les fichiers et leurs sidecars"
+
+msgid "Fit window"
+msgstr "Adapter à la fenêtre"
+
+msgid "Actual size (1:1)"
+msgstr "Taille réelle (1:1)"
+
+msgid "Fit width"
+msgstr "Adapter à la largeur"
+
+msgid "Fit height"
+msgstr "Adapter à la hauteur"
+
+msgid "Zoom in / Zoom out"
+msgstr "Agrandir / Réduire"
+
+msgid "Previous / next image of the selection, or of the list"
+msgstr "Image précédente / suivante de la sélection, ou de la liste"
+
+msgid "Show / hide the metadata"
+msgstr "Afficher / masquer les métadonnées"
+
+msgid "Open with the default application"
+msgstr "Ouvrir avec l'application par défaut"
+
+msgid "Delete current image and its sidecars"
+msgstr "Supprimer l'image affichée et ses sidecars"
+
+msgid "Close image viewer"
+msgstr "Fermer le visualiseur d'images"
+
+msgid "Left-click + drag"
+msgstr "Clic gauche + glisser"
+
+msgid "Pan image"
+msgstr "Déplacer l'image"
+
+msgid "Double left-click"
+msgstr "Double clic gauche"
+
+msgid "Center on clicked point"
+msgstr "Centrer sur le point cliqué"
+
+msgid "left-click"
+msgstr "clic gauche"
+
+msgid "Zoom in centered on point"
+msgstr "Zoom avant centré sur le point"
+
+msgid "right-click"
+msgstr "clic droit"
+
+msgid "Zoom out centered on point"
+msgstr "Zoom arrière centré sur le point"
+
+msgid "Click on a thumbnail of the strip"
+msgstr "Clic sur une vignette du bandeau"
+
+msgid "Show this image"
+msgstr "Afficher cette image"
+
+msgid "Main window"
+msgstr "Fenêtre principale"
+
+msgid "Image viewer"
+msgstr "Visualiseur d'images"
+
 msgid "Select folder"
 msgstr "Choisir un dossier"
 
-msgid "Original"
-msgstr "Original"
-
-msgid "Preview"
-msgstr "Aperçu"
-
 #, python-brace-format
 msgid "{path} — {n} item(s)"
-msgstr "{path} — {n} élément(s)"
+msgstr "{path} : {n} élément(s)"
+
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ sidecar orphelin, non renommé"
+
+msgid "Target(s) already taken:"
+msgstr "Cible(s) déjà prise(s) :"
+
+msgid "Nothing was renamed."
+msgstr "Aucun fichier n'a été renommé."
 
 #, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ aucun type correspondant ({types})"
-
-#, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} non disponible"
-
-msgid "Search — Help"
-msgstr "Recherche — Aide"
-
-msgid "Replace — Help"
-msgstr "Remplacement — Aide"
+msgid "{n} file(s) renamed."
+msgstr "{n} fichier(s) renommé(s)."
 
 msgid "Rename errors"
 msgstr "Erreurs de renommage"
 
-msgid "cannot move/copy a folder into itself"
-msgstr "impossible de déplacer/copier un dossier dans lui-même"
+msgid "Renumber"
+msgstr "Renuméroter"
 
-msgid "Move errors"
-msgstr "Erreurs de déplacement"
+msgid "Files are already correctly numbered."
+msgstr "Les fichiers sont déjà correctement numérotés."
 
-msgid "Copy errors"
-msgstr "Erreurs de copie"
-
-msgid "Confirm overwrite"
-msgstr "Confirmer l'écrasement"
+msgid "Confirm renumber"
+msgstr "Confirmer la renumérotation"
 
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} élément(s) existent déjà dans {dir} et seraient écrasés."
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "Renuméroter {n} fichier(s) à partir de 1 ?"
 
-msgid "Overwrite"
-msgstr "Écraser"
+msgid "Renumber errors"
+msgstr "Erreurs de renumérotation"
 
-msgid "Skip"
-msgstr "Ignorer"
+msgid "Undo errors"
+msgstr "Erreurs d'annulation"
 
-#, python-format
-msgid "Undo (%d)"
-msgstr "Annuler (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "Raccourcis clavier et souris"
 
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Annuler le dernier lot (%d niveau(x) disponible(s))"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "Passer au profil « {name} »"
 
-msgid "Undo"
-msgstr "Annuler"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "Nom du profil (lettres, chiffres, « - » et « _ ») :"
 
-msgid "Undo last rename batch"
-msgstr "Annuler le dernier lot de renommage"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "Nom du nouveau profil (copie de « {source} ») :"
+
+msgid "Rename profile"
+msgstr "Renommer le profil"
+
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "Nouveau nom du profil « {name} » (lettres, chiffres, « - » et « _ ») :"
+
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "Profil « {old} » renommé en « {name} »."
+
+msgid "Delete profile"
+msgstr "Supprimer le profil"
+
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "Aucun profil à supprimer : au moins un profil visible doit rester."
+
+msgid "Profile to delete:"
+msgstr "Profil à supprimer :"
+
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr ""
+"Supprimer le profil « {name} » et tous ses réglages ? Cette action est "
+"irréversible."
+
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Profil « {name} » supprimé."
+
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "Profil « {name} » chargé."
 
 msgid "Add as shortcut"
 msgstr "Ajouter comme raccourci"
@@ -311,14 +771,8 @@ msgstr "Ajouter comme raccourci"
 msgid "Open folder…"
 msgstr "Ouvrir un dossier…"
 
-msgid "Open a folder"
-msgstr "Ouvrir un dossier"
-
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Ouvrir un sélecteur de dossier et naviguer jusqu'au dossier sélectionné"
-
-msgid "Quit"
-msgstr "Quitter"
 
 msgid "Quit PBRenamer"
 msgstr "Quitter PBRenamer"
@@ -363,6 +817,28 @@ msgstr "À propos de cette application"
 msgid "Show version and license information"
 msgstr "Afficher les informations de version et de licence"
 
+msgid "Keyboard and mouse shortcuts…"
+msgstr "Raccourcis clavier et souris…"
+
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "Afficher les raccourcis clavier et souris"
+
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr ""
+"Lister les raccourcis clavier et souris de la fenêtre principale et du "
+"visualiseur"
+
+msgid "User guide"
+msgstr "Manuel utilisateur"
+
+msgid "Open the online user guide"
+msgstr "Ouvrir le manuel utilisateur en ligne"
+
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr ""
+"Ouvrir le manuel utilisateur, dans la langue de l'interface, dans le "
+"navigateur web"
+
 msgid "Edit shortcuts…"
 msgstr "Modifier les raccourcis…"
 
@@ -381,6 +857,139 @@ msgstr "Afficher les valeurs des champs du fichier"
 msgid "Open the file information window for the selected file"
 msgstr "Ouvrir la fenêtre d'informations sur le fichier sélectionné"
 
+msgid "New profile…"
+msgstr "Nouveau profil…"
+
+msgid "Create a new profile"
+msgstr "Créer un nouveau profil"
+
+msgid "Create a profile with default settings and switch to it"
+msgstr "Créer un profil avec les réglages par défaut et l'activer"
+
+msgid "Duplicate profile…"
+msgstr "Dupliquer le profil…"
+
+msgid "Duplicate the current profile"
+msgstr "Dupliquer le profil actuel"
+
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "Copier le profil actuel sous un nouveau nom et activer la copie"
+
+msgid "Rename profile…"
+msgstr "Renommer le profil…"
+
+msgid "Rename the current profile"
+msgstr "Renommer le profil actuel"
+
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "Donner un nouveau nom au profil actuel (lettres, chiffres, « - » et « _ »)"
+
+msgid "Delete profile…"
+msgstr "Supprimer un profil…"
+
+msgid "Delete a profile"
+msgstr "Supprimer un profil"
+
+msgid "Permanently delete a profile and all its settings"
+msgstr "Supprimer définitivement un profil et tous ses réglages"
+
+msgid "Profile configuration…"
+msgstr "Configuration du profil…"
+
+msgid "Configure the current profile"
+msgstr "Configurer le profil actuel"
+
+msgid "Configure the schema fields and options of the current profile"
+msgstr "Configurer les champs du schéma et les options du profil actuel"
+
+msgid "Open with a chosen application"
+msgstr "Ouvrir avec une application choisie"
+
+msgid "Choose the application that opens the selected file"
+msgstr "Choisir l'application qui ouvre le fichier sélectionné"
+
+msgid "View"
+msgstr "Visualiser"
+
+msgid "Show in the image viewer"
+msgstr "Afficher dans le visualiseur d'images"
+
+msgid "Show the selected images and videos in the image viewer"
+msgstr "Afficher les images et vidéos sélectionnées dans le visualiseur d'images"
+
+msgid "Fill the schema from the file name"
+msgstr "Remplir le schéma à partir du nom de fichier"
+
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr ""
+"Déduire les champs du schéma du nom du fichier sélectionné et de ses "
+"dossiers"
+
+msgid "Delete the selected files"
+msgstr "Supprimer les fichiers sélectionnés"
+
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr ""
+"Supprimer les fichiers sélectionnés et leurs sidecars (vers la corbeille "
+"si elle est activée)"
+
+msgid "Orphan sidecars…"
+msgstr "Sidecars orphelins…"
+
+msgid "List the sidecars without a base file"
+msgstr "Lister les sidecars sans fichier de base"
+
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr ""
+"Lister, puis supprimer, les fichiers sidecar du dossier qui n'ont pas de "
+"fichier de base"
+
+msgid "Rotate 90° left"
+msgstr "Rotation 90° à gauche"
+
+msgid "Rotate counter-clockwise, without loss"
+msgstr "Rotation dans le sens antihoraire, sans perte"
+
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr ""
+"Faire pivoter les images sélectionnées de 90° dans le sens antihoraire, "
+"sans perte"
+
+msgid "Rotate 180°"
+msgstr "Rotation 180°"
+
+msgid "Rotate the selected images 180°, without loss"
+msgstr "Faire pivoter les images sélectionnées de 180°, sans perte"
+
+msgid "Rotate 90° right"
+msgstr "Rotation 90° à droite"
+
+msgid "Rotate clockwise, without loss"
+msgstr "Rotation dans le sens horaire, sans perte"
+
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr ""
+"Faire pivoter les images sélectionnées de 90° dans le sens horaire, sans "
+"perte"
+
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "Faire pivoter les pixels selon l'orientation EXIF"
+
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "Faire pivoter les pixels selon l'orientation EXIF, puis la réinitialiser"
+
+msgid "Set the EXIF orientation to normal"
+msgstr "Remettre l'orientation EXIF à la normale"
+
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "Mettre le tag d'orientation EXIF à 1 (0°) sans faire pivoter les pixels"
+
+msgid "Refresh"
+msgstr "Actualiser"
+
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "Relire le dossier et actualiser les miniatures"
+
 msgid "Browse the filesystem"
 msgstr "Parcourir le système de fichiers"
 
@@ -390,7 +999,7 @@ msgstr ""
 "droite"
 
 msgid "Show:"
-msgstr "Afficher :"
+msgstr "Afficher :"
 
 msgid "Files only"
 msgstr "Fichiers uniquement"
@@ -416,6 +1025,37 @@ msgstr "Inclure tous les sous-dossiers"
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Si coché, les fichiers de tous les sous-dossiers sont listés"
 
+msgid "Thumbnails"
+msgstr "Miniatures"
+
+msgid "Show image thumbnails in the file list"
+msgstr "Afficher les miniatures des images dans la liste des fichiers"
+
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr ""
+"Afficher une colonne de miniatures ; ce réglage appartient au profil "
+"actuel"
+
+msgid "By date"
+msgstr "Par date"
+
+msgid "Sort the files by modification date"
+msgstr "Trier les fichiers par date de modification"
+
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr ""
+"Trier par date de modification plutôt que par nom ; les dossiers restent "
+"en tête"
+
+msgid "Reversed"
+msgstr "Inversé"
+
+msgid "Reverse the sort order"
+msgstr "Inverser l'ordre de tri"
+
+msgid "List the files in reverse order; folders stay first"
+msgstr "Lister les fichiers dans l'ordre inverse ; les dossiers restent en tête"
+
 msgid "Keep extension"
 msgstr "Conserver l'extension"
 
@@ -440,9 +1080,9 @@ msgid ""
 "Modify: the extension is included in the search/replace pattern like the "
 "rest of the name"
 msgstr ""
-"Conserver : extension inchangée. Minuscules/Majuscules : casse de "
-"l'extension modifiée. Normaliser : extension convertie via la table de "
-"normalisation (menu Édition). Modifier : l'extension est incluse dans le "
+"Conserver : extension inchangée. Minuscules/Majuscules : casse de "
+"l'extension modifiée. Normaliser : extension convertie via la table de "
+"normalisation (menu Édition). Modifier : l'extension est incluse dans le "
 "motif de recherche/remplacement comme le reste du nom"
 
 msgid "Sidecar mode"
@@ -475,7 +1115,7 @@ msgid "Recompute the preview each time the pattern or options change"
 msgstr "Recalculer l'aperçu à chaque modification du motif ou des options"
 
 msgid "Filter:"
-msgstr "Filtre :"
+msgstr "Filtre :"
 
 msgid "Glob pattern to filter the file list"
 msgstr "Motif glob pour filtrer la liste de fichiers"
@@ -485,6 +1125,27 @@ msgstr ""
 "Seuls les fichiers correspondant à ce motif glob sont listés (ex. *.txt, "
 "image_*)"
 
+msgid "Sidecar filter…"
+msgstr "Filtre sidecar…"
+
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Filtre sur le contenu des sidecars</b><br>Expression régulière Python "
+"appliquée au <i>contenu</i> des fichiers sidecar.<br>Seuls les fichiers "
+"ayant au moins un sidecar dont le contenu correspond sont affichés, avec "
+"leurs sidecars.<br>Les fichiers sans sidecar sont toujours masqués quand "
+"un filtre est actif.<br><tt>.*</tt> traverse les sauts de ligne "
+"(re.DOTALL).<br>Insensible à la casse (re.IGNORECASE), caractères "
+"accentués compris.<br>Appuyez sur Entrée pour garder le filtre dans "
+"l'historique ; laissez vide pour afficher tous les fichiers."
+
 msgid "Files to be renamed"
 msgstr "Fichiers à renommer"
 
@@ -492,11 +1153,25 @@ msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
 msgstr ""
-"Sélectionnez des lignes pour restreindre les opérations à ces fichiers ; "
+"Sélectionnez des lignes pour restreindre les opérations à ces fichiers ; "
 "laissez vide pour appliquer à tous"
 
+msgid "Pattern"
+msgstr "Motif"
+
+msgid "Rename in place with search/replace patterns"
+msgstr "Renommer sur place avec des motifs de recherche et remplacement"
+
+msgid "Schema"
+msgstr "Schéma"
+
+msgid "Sort files into a destination tree built from schema fields"
+msgstr ""
+"Classer les fichiers dans une arborescence de destination construite à "
+"partir des champs du schéma"
+
 msgid "Search:"
-msgstr "Recherche :"
+msgstr "Recherche :"
 
 msgid "Search pattern"
 msgstr "Motif de recherche"
@@ -506,7 +1181,7 @@ msgid ""
 "Pattern to match against file names. Use tokens: {#} numbers, {L} "
 "letters, {C} non-space, {X} anything"
 msgstr ""
-"Motif à faire correspondre aux noms de fichiers. Utilisez les jetons : "
+"Motif à faire correspondre aux noms de fichiers. Utilisez les jetons : "
 "{#} chiffres, {L} lettres, {C} non-espace, {X} tout"
 
 msgid "Save to history"
@@ -524,9 +1199,6 @@ msgid ""
 msgstr ""
 "Afficher l'aide sur les motifs de recherche (jetons de motif, expressions"
 " rationnelles, texte brut)"
-
-msgid "Pattern"
-msgstr "Motif"
 
 msgid "Search using pattern tokens"
 msgstr "Rechercher avec des jetons de motif"
@@ -548,7 +1220,7 @@ msgid ""
 "backreferences in the replacement"
 msgstr ""
 "Faire correspondre les noms de fichiers avec une expression rationnelle "
-"Python ; utilisez \\1 \\2… pour les rétro-références dans le remplacement"
+"Python ; utilisez \\1 \\2… pour les rétro-références dans le remplacement"
 
 msgid "Plain text"
 msgstr "Texte brut"
@@ -575,7 +1247,7 @@ msgstr ""
 "que soit la casse"
 
 msgid "Replace:"
-msgstr "Remplacement :"
+msgstr "Remplacement :"
 
 msgid "Replacement pattern"
 msgstr "Motif de remplacement"
@@ -606,7 +1278,7 @@ msgid "Post-processing"
 msgstr "Post-traitement"
 
 msgid "Separator:"
-msgstr "Séparateur :"
+msgstr "Séparateur :"
 
 msgid "No change"
 msgstr "Aucun changement"
@@ -651,7 +1323,7 @@ msgstr ""
 "etc.)"
 
 msgid "Case:"
-msgstr "Casse :"
+msgstr "Casse :"
 
 msgid "UPPERCASE"
 msgstr "MAJUSCULES"
@@ -687,7 +1359,7 @@ msgstr ""
 "points, tirets, tirets bas) en un seul"
 
 msgid "Save:"
-msgstr "Enregistrer :"
+msgstr "Enregistrer :"
 
 msgid "Named save"
 msgstr "Sauvegarde nommée"
@@ -712,9 +1384,6 @@ msgstr ""
 "Enregistrer tous les paramètres de recherche, remplacement et post-"
 "traitement sous le nom actuel (écrase tout enregistrement existant avec "
 "le même nom)"
-
-msgid "Delete"
-msgstr "Supprimer"
 
 msgid "Delete this named save"
 msgstr "Supprimer cette sauvegarde nommée"
@@ -744,18 +1413,27 @@ msgstr "Supprimer toutes les valeurs d'aperçu de la colonne Aperçu"
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Inverser le dernier lot de renommages effectués sur le disque"
 
-msgid "Rename"
-msgstr "Renommer"
-
-msgid "Apply renames on disk"
-msgstr "Appliquer les renommages sur le disque"
+msgid "Renumber from 1 in place"
+msgstr "Renuméroter à partir de 1 sur place"
 
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
 msgstr ""
-"Renommer définitivement tous les fichiers affichés dans la colonne Aperçu"
-" (activé uniquement en l'absence de conflits)"
+"Renuméroter les fichiers sélectionnés (tous les fichiers listés si aucun "
+"n'est sélectionné) à partir de 1, sur place, selon le schéma"
+
+msgid "Apply renames on disk (F2)"
+msgstr "Appliquer les renommages sur le disque (F2)"
+
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Renommer définitivement les fichiers sélectionnés (tous les fichiers "
+"listés si aucun n'est sélectionné) comme indiqué dans la colonne Aperçu "
+"(actif uniquement en l'absence de conflit)"
 
 msgid "File"
 msgstr "Fichier"
@@ -763,11 +1441,99 @@ msgstr "Fichier"
 msgid "Edit"
 msgstr "Édition"
 
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Images"
+msgstr "Images"
+
+msgid "Open sidecar"
+msgstr "Ouvrir le sidecar"
+
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
 msgid "Help"
 msgstr "Aide"
+
+msgid "Field"
+msgstr "Champ"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Métadonnées de l'image (EXIF / IPTC)"
+
+msgid "Audio metadata"
+msgstr "Métadonnées audio"
+
+msgid "Video metadata"
+msgstr "Métadonnées vidéo"
+
+msgid "Universal fields"
+msgstr "Champs universels"
+
+msgid "Today's date"
+msgstr "Date d'aujourd'hui"
+
+msgid "Current date and time"
+msgstr "Date et heure actuelles"
+
+msgid "Missing"
+msgstr "Manquant"
+
+msgid "File modification date/time"
+msgstr "Date/heure de modification du fichier"
+
+msgid "File creation date/time"
+msgstr "Date/heure de création du fichier"
+
+msgid "Parent folder name"
+msgstr "Nom du dossier parent"
+
+msgid "Batch fields"
+msgstr "Champs de lot"
+
+msgid "Computed"
+msgstr "Calculé"
+
+msgid "Full matched text"
+msgstr "Texte intégralement correspondant"
+
+msgid "Capture groups"
+msgstr "Groupes de capture"
+
+msgid "Auto-incrementing counter"
+msgstr "Compteur auto-incrémenté"
+
+msgid "Conflict-free counter"
+msgstr "Compteur sans conflit"
+
+msgid "Named regex group"
+msgstr "Groupe regex nommé"
+
+msgid "Insert into replacement field"
+msgstr "Insérer dans le champ de remplacement"
+
+msgid "Orphan sidecars"
+msgstr "Sidecars orphelins"
+
+msgid "Delete selected"
+msgstr "Supprimer la sélection"
+
+msgid "Delete all"
+msgstr "Tout supprimer"
+
+msgid "Close"
+msgstr "Fermer"
+
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} fichier(s) sidecar orphelin(s) :"
 
 #, python-brace-format
 msgid ""
@@ -780,10 +1546,10 @@ msgstr ""
 "champ de remplacement."
 
 msgid "One or more digits (0–9)"
-msgstr "Un ou plusieurs chiffres (0–9)"
+msgstr "Un ou plusieurs chiffres (de 0 à 9)"
 
 msgid "One or more letters (a–z, A–Z and Unicode letters)"
-msgstr "Une ou plusieurs lettres (a–z, A–Z et lettres Unicode)"
+msgstr "Une ou plusieurs lettres (de a à z, de A à Z et lettres Unicode)"
 
 msgid "One or more non-whitespace characters"
 msgstr "Un ou plusieurs caractères non-blancs"
@@ -792,12 +1558,12 @@ msgid "Any sequence of characters, including empty"
 msgstr "Toute séquence de caractères, y compris vide"
 
 msgid "Trash — matches and discards a segment (not captured)"
-msgstr "Poubelle — correspond à un segment et le rejette (non capturé)"
+msgstr "Poubelle, correspond à un segment et le rejette (non capturé)"
 
 #, python-brace-format
 msgid "Capture group — the matched text is bound to {1}, {2}… in the replacement"
 msgstr ""
-"Groupe capturant — le texte correspondant est lié à {1}, {2}… dans le "
+"Groupe capturant, le texte correspondant est lié à {1}, {2}… dans le "
 "remplacement"
 
 msgid "Example"
@@ -845,9 +1611,9 @@ msgid ""
 "special characters. Every occurrence of the exact text in the file name "
 "is replaced."
 msgstr ""
-"Le champ de recherche est comparé en tant que chaîne littérale — sans "
-"jokers, sans caractères spéciaux. Toutes les occurrences du texte exact "
-"dans le nom de fichier sont remplacées."
+"Le champ de recherche est comparé en tant que chaîne littérale, sans "
+"jokers ni caractères spéciaux. Toutes les occurrences du texte exact dans"
+" le nom de fichier sont remplacées."
 
 msgid "Search patterns"
 msgstr "Motifs de recherche"
@@ -868,7 +1634,7 @@ msgid ""
 msgstr ""
 "La chaîne de remplacement est identique quel que soit le mode de "
 "recherche. Les champs s'écrivent <code>{name}</code> et peuvent inclure "
-"des options de formatage :"
+"des options de formatage :"
 
 msgid "plain value"
 msgstr "valeur brute"
@@ -878,14 +1644,14 @@ msgstr "avec format  (entier = largeur min · strftime pour les dates)"
 
 msgid "case:   - lower   + upper   ! Caps   * Title   = unchanged"
 msgstr ""
-"casse :  - minusc.   + MAJUSC.   ! Première maj.   * Chaque Mot   = "
+"casse :  - minusc.   + MAJUSC.   ! Première maj.   * Chaque Mot   = "
 "inchangé"
 
 msgid "align:  &lt; left   &gt; right   0 zero-pad   ^ centre"
-msgstr "alignt : &lt; gauche   &gt; droite   0 zéros à gauche   ^ centré"
+msgstr "alignt : &lt; gauche   &gt; droite   0 zéros à gauche   ^ centré"
 
 msgid "all options; default used when field is absent"
-msgstr "toutes les options ; défaut utilisé si le champ est absent"
+msgstr "toutes les options ; défaut utilisé si le champ est absent"
 
 msgid "literal '{' character"
 msgstr "caractère '{' littéral"
@@ -896,9 +1662,9 @@ msgid ""
 "literal fallback used when the field is absent; omitting it flags the "
 "file in red in the preview."
 msgstr ""
-"<b>fmt</b> : largeur minimale (entier) pour les textes/nombres, ou format"
-" <code>strftime</code> pour les dates.<br><b>défaut</b> : valeur "
-"littérale utilisée si le champ est absent ; son omission signale le "
+"<b>fmt</b> : largeur minimale (entier) pour les textes/nombres, ou format"
+" <code>strftime</code> pour les dates.<br><b>défaut</b> : valeur "
+"littérale utilisée si le champ est absent ; son omission signale le "
 "fichier en rouge dans l'aperçu."
 
 #, python-brace-format
@@ -912,15 +1678,15 @@ msgid ""
 "only, the file is flagged in red if the field is absent and no default is"
 " set."
 msgstr ""
-"<b>Types de fichiers mixtes</b> — quand le remplacement contient des "
+"<b>Types de fichiers mixtes</b> : quand le remplacement contient des "
 "champs provenant de plusieurs espaces de noms de type de fichier "
 "(<code>{im:…}</code>, <code>{vi:…}</code>, <code>{au:…}</code>), un champ"
 " dont l'espace de noms ne s'applique pas au fichier courant contribue "
-"silencieusement une chaîne vide, même sans valeur par défaut — mais si le"
-" fichier ne correspond à <em>aucun</em> des espaces de noms utilisés dans"
-" le gabarit, le fichier est signalé en rouge. Avec un <em>seul</em> "
-"espace de noms, le fichier est signalé en rouge si le champ est absent et"
-" qu'aucune valeur par défaut n'est définie."
+"silencieusement une chaîne vide, même sans valeur par défaut. En "
+"revanche, si le fichier ne correspond à <em>aucun</em> des espaces de "
+"noms utilisés dans le gabarit, le fichier est signalé en rouge. Avec un "
+"<em>seul</em> espace de noms, le fichier est signalé en rouge si le champ"
+" est absent et qu'aucune valeur par défaut n'est définie."
 
 msgid "all modes"
 msgstr "tous modes"
@@ -951,7 +1717,7 @@ msgid ""
 "<em>default</em> sets the start value (e.g. <code>{num:02:10}</code> "
 "starts at 10, zero-padded to 2 digits)"
 msgstr ""
-"Compteur auto-incrémenté — fmt est une largeur minimale ; "
+"Compteur auto-incrémenté : fmt est une largeur minimale ; "
 "<em>default</em> fixe la valeur de départ (ex. <code>{num:02:10}</code> "
 "démarre à 10, complété à 2 chiffres)"
 
@@ -961,43 +1727,43 @@ msgid ""
 " on disk or has been assigned to another file in the same batch — "
 "guarantees no conflicts"
 msgstr ""
-"Comme <code>{num}</code> mais saute les valeurs dont le nom cible existe "
-"déjà sur le disque ou a été attribué à un autre fichier du même lot — "
-"garantit l'absence de conflits"
+"Comme <code>{num}</code>, mais saute les valeurs dont le nom cible existe"
+" déjà sur le disque ou a été attribué à un autre fichier du même lot, ce "
+"qui garantit l'absence de conflits"
 
 #, python-format
 msgid "Today's date — default fmt <code>%Y-%m-%d</code>"
-msgstr "Date du jour — format par défaut <code>%Y-%m-%d</code>"
+msgstr "Date du jour, format par défaut <code>%Y-%m-%d</code>"
 
 #, python-format
 msgid "Current date and time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Date et heure courantes — format par défaut <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date et heure courantes, format par défaut <code>%Y-%m-%d_%H%M%S</code>"
 
 #, python-format
 msgid "File modification date/time — default fmt <code>%Y-%m-%d_%H%M%S</code>"
-msgstr "Date/heure de modification — fmt par défaut <code>%Y-%m-%d_%H%M%S</code>"
+msgstr "Date/heure de modification, fmt par défaut <code>%Y-%m-%d_%H%M%S</code>"
 
 #, python-format
 msgid ""
 "File creation date/time — default fmt <code>%Y-%m-%d_%H%M%S</code> (inode"
 " change time on Linux)"
 msgstr ""
-"Date/heure de création — fmt par défaut <code>%Y-%m-%d_%H%M%S</code> "
-"(date de changement d'inode sous Linux)"
+"Date/heure de création, fmt par défaut <code>%Y-%m-%d_%H%M%S</code> (date"
+" de changement d'inode sous Linux)"
 
 msgid "Name of the immediate parent folder"
 msgstr "Nom du dossier parent immédiat"
 
 msgid "EXIF or IPTC metadata field (images only — see list below)"
 msgstr ""
-"Champ de métadonnées EXIF ou IPTC (images uniquement — voir la liste ci-"
+"Champ de métadonnées EXIF ou IPTC (images uniquement, voir la liste ci-"
 "dessous)"
 
 msgid "Audio metadata field (mp3, ogg, flac… — see list below)"
-msgstr "Champ de métadonnées audio (mp3, ogg, flac… — voir liste ci-dessous)"
+msgstr "Champ de métadonnées audio (mp3, ogg, flac…, voir la liste ci-dessous)"
 
 msgid "Video metadata field (mp4, mkv, avi… — see list below)"
-msgstr "Champ de métadonnées vidéo (mp4, mkv, avi… — voir liste ci-dessous)"
+msgstr "Champ de métadonnées vidéo (mp4, mkv, avi…, voir la liste ci-dessous)"
 
 #, python-brace-format
 msgid ""
@@ -1010,9 +1776,9 @@ msgstr ""
 "Les noms de champs sont insensibles à la casse. Lorsque "
 "<code>{im:…}</code> est combiné avec <code>{vi:…}</code> ou "
 "<code>{au:…}</code> dans le même modèle, les champs non correspondants "
-"sont silencieusement vides — aucune valeur par défaut n'est nécessaire. "
-"Avec uniquement des champs <code>{im:…}</code>, une valeur par défaut est"
-" recommandée pour éviter de signaler les fichiers non-image en rouge."
+"sont silencieusement vides, et aucune valeur par défaut n'est nécessaire."
+" Avec uniquement des champs <code>{im:…}</code>, une valeur par défaut "
+"est recommandée pour éviter de signaler les fichiers non-image en rouge."
 
 msgid "Type"
 msgstr "Type"
@@ -1082,7 +1848,7 @@ msgid ""
 "silently empty. With only <code>{au:…}</code> fields, a default is "
 "recommended."
 msgstr ""
-"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
+"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
 "mp3, ogg, flac, opus, aac/m4a et autres formats gérés par mutagen. "
 "Lorsque combiné avec <code>{im:…}</code> ou <code>{vi:…}</code>, les "
 "champs non correspondants sont silencieusement vides. Avec uniquement des"
@@ -1110,8 +1876,8 @@ msgid ""
 "Release date — datetime.date when full date available (strftime "
 "formatting); plain text otherwise"
 msgstr ""
-"Date de sortie — datetime.date si la date complète est disponible "
-"(formatage strftime) ; texte brut sinon"
+"Date de sortie : datetime.date si la date complète est disponible "
+"(formatage strftime) ; texte brut sinon"
 
 msgid "Release year (extracted from date tag)"
 msgstr "Année de sortie (extraite de la balise date)"
@@ -1142,7 +1908,7 @@ msgid ""
 "silently empty. With only <code>{vi:…}</code> fields, a default is "
 "recommended."
 msgstr ""
-"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
+"Les noms de champs sont insensibles à la casse. Formats pris en charge : "
 "mp4, mkv, avi, mov, webm et autres formats gérés par MediaInfo "
 "(pymediainfo). Lorsque combiné avec <code>{im:…}</code> ou "
 "<code>{au:…}</code>, les champs non correspondants sont silencieusement "
@@ -1191,23 +1957,23 @@ msgid ""
 "Conflict-free 3-digit counter: skips values where <code>backup_NNN</code>"
 " already exists"
 msgstr ""
-"Compteur à 3 chiffres sans conflit : saute les valeurs où "
+"Compteur à 3 chiffres sans conflit : saute les valeurs où "
 "<code>backup_NNN</code> existe déjà"
 
 msgid "Today's date prepended to the matched text"
 msgstr "Date du jour préfixée au texte correspondant"
 
 msgid "Shooting date/time compact; \"unknown\" if EXIF absent"
-msgstr "Date/heure de prise de vue compact ; \"inconnu\" si EXIF absent"
+msgstr "Date/heure de prise de vue compacte ; « inconnu » si EXIF absent"
 
 msgid "Hour+minute of digitisation; \"0000\" if absent"
-msgstr "Heure+minute de numérisation ; \"0000\" si absent"
+msgstr "Heure+minute de numérisation ; « 0000 » si absent"
 
 msgid "Camera make and model (empty string if absent)"
 msgstr "Marque et modèle d'appareil (chaîne vide si absent)"
 
 msgid "Audio artist and title; \"unknown\"/\"untitled\" if absent"
-msgstr "Artiste et titre audio ; \"inconnu\"/\"sans titre\" si absent"
+msgstr "Artiste et titre audio ; « inconnu » ou « sans titre » si absent"
 
 msgid "Audio release date, zero-padded track number, title"
 msgstr "Date de sortie audio, numéro de piste complété par zéros, titre"
@@ -1222,7 +1988,7 @@ msgid ""
 "Shooting date for images, encoded date for videos — the non-matching "
 "field is silently empty (mixed-type template)"
 msgstr ""
-"Date de prise de vue pour les images, date d'encodage pour les vidéos — "
+"Date de prise de vue pour les images, date d'encodage pour les vidéos ; "
 "le champ non correspondant est silencieusement vide (modèle multi-type)"
 
 msgid "Named regex groups (regex mode only)"
@@ -1263,6 +2029,241 @@ msgstr "Champs de métadonnées vidéo pour <code>{vi:…}</code>"
 msgid "Examples"
 msgstr "Exemples"
 
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "Configuration du profil « {name} »"
+
+#, python-brace-format
+msgid "Field {n}"
+msgstr "Champ {n}"
+
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "Champ {n} :"
+
+msgid "Display"
+msgstr "Affichage"
+
+msgid "Number of fields of the rename schema"
+msgstr "Nombre de champs du schéma de renommage"
+
+msgid "Number of fields:"
+msgstr "Nombre de champs :"
+
+msgid "Text inserted in the name of video files"
+msgstr "Texte inséré dans le nom des fichiers vidéo"
+
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr ""
+"Inséré à la position choisie avec les boutons radio de l'onglet Schéma ; "
+"laissez vide pour ne pas insérer de marqueur"
+
+msgid "Video marker:"
+msgstr "Marqueur vidéo :"
+
+msgid "Field titles:"
+msgstr "Titres des champs :"
+
+msgid "Show thumbnails"
+msgstr "Afficher les miniatures"
+
+msgid "Show a thumbnail column in the file list"
+msgstr "Afficher une colonne de miniatures dans la liste des fichiers"
+
+msgid "Maximum width:"
+msgstr "Largeur maximale :"
+
+msgid "Maximum height:"
+msgstr "Hauteur maximale :"
+
+msgid "Sidecar files"
+msgstr "Fichiers sidecar"
+
+msgid "Show the sidecar column"
+msgstr "Afficher la colonne des sidecars"
+
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr ""
+"Indiquer les fichiers qui ont des sidecars ; double-cliquez sur la "
+"colonne pour ouvrir un sidecar ou en créer un"
+
+msgid "Show the sidecar content filter"
+msgstr "Afficher le filtre sur le contenu des sidecars"
+
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "Filtrer la liste des fichiers sur le contenu des fichiers sidecar"
+
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "Extension du sidecar créé par un double-clic, sans point"
+
+msgid "New sidecar extension:"
+msgstr "Extension des nouveaux sidecars :"
+
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "Supprimer les fichiers sidecar vides lors du chargement d'un répertoire"
+
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr ""
+"Les fichiers vides nommés comme un sidecar sont supprimés au listage du "
+"répertoire, sauf un sidecar qui vient d'être créé"
+
+msgid "Maximum number of values kept in each field history"
+msgstr "Nombre maximal de valeurs gardées dans chaque historique de champ"
+
+msgid "Max history entries:"
+msgstr "Nombre max d'entrées d'historique :"
+
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "Variation du zoom à chaque agrandissement ou réduction"
+
+msgid "Zoom step:"
+msgstr "Pas de zoom :"
+
+msgid "Largest zoom of the image viewer"
+msgstr "Zoom maximal du visualiseur d'images"
+
+msgid "Maximum zoom:"
+msgstr "Zoom maximal :"
+
+msgid "Right"
+msgstr "Droite"
+
+msgid "Left"
+msgstr "Gauche"
+
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr "Côté du visualiseur d'images où s'affiche le panneau des métadonnées"
+
+msgid "Metadata panel:"
+msgstr "Panneau des métadonnées :"
+
+msgid "Show images turned as their EXIF orientation says"
+msgstr "Afficher les images tournées selon leur orientation EXIF"
+
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "S'applique aux miniatures et au visualiseur d'images"
+
+msgid "Deletion"
+msgstr "Suppression"
+
+msgid "Move deleted files to the trash"
+msgstr "Déplacer les fichiers supprimés vers la corbeille"
+
+msgid "When unchecked, deleted files are removed permanently"
+msgstr ""
+"Si la case est décochée, les fichiers supprimés sont effacés "
+"définitivement"
+
+msgid "Confirm deletions"
+msgstr "Confirmation des suppressions"
+
+msgid "Ask for a confirmation before deleting files"
+msgstr "Demander une confirmation avant de supprimer des fichiers"
+
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr ""
+"Au-delà de ce nombre de fichiers, la confirmation n'indique que leur "
+"nombre"
+
+msgid "Files listed in the confirmation:"
+msgstr "Fichiers listés dans la confirmation :"
+
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ aucune destination pour {dest}"
+
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} doit commencer le nom"
+
+msgid "⚠ absolute path"
+msgstr "⚠ chemin absolu"
+
+msgid "⚠ extension separator removed"
+msgstr "⚠ séparateur d'extension supprimé"
+
+msgid "⚠ invalid path"
+msgstr "⚠ chemin invalide"
+
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ aucun type correspondant ({types})"
+
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} non disponible"
+
+msgid "Search — Help"
+msgstr "Aide de la recherche"
+
+msgid "Replace — Help"
+msgstr "Aide du remplacement"
+
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr ""
+"Champ du schéma « {title} » : un niveau de répertoire et une partie du "
+"nom ; « ### » est le compteur, un champ vide est ignoré"
+
+msgid "Destination:"
+msgstr "Destination :"
+
+msgid "Destination root directory…"
+msgstr "Répertoire racine de destination…"
+
+msgid "Root of the destination tree"
+msgstr "Racine de l'arborescence de destination"
+
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr ""
+"Les fichiers sont déplacés sous ce répertoire, dans des sous-répertoires "
+"nommés d'après les champs"
+
+msgid "Browse…"
+msgstr "Parcourir…"
+
+msgid "Choose the destination directory"
+msgstr "Choisir le répertoire de destination"
+
+msgid "Fill gaps"
+msgstr "Combler les trous"
+
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr ""
+"Combler les trous de numérotation au lieu de continuer après le plus "
+"grand numéro"
+
+msgid "Video marker position"
+msgstr "Position du marqueur vidéo"
+
+msgid "Choose destination directory"
+msgstr "Choisir le répertoire destination"
+
+msgid "Choose a destination directory."
+msgstr "Choisissez un répertoire de destination."
+
+msgid "The destination must be an absolute path."
+msgstr "La destination doit être un chemin absolu."
+
+msgid "Proposed template"
+msgstr "Modèle proposé"
+
+msgid "Detected template, confirm to fill the fields:"
+msgstr "Modèle détecté, confirmez pour remplir les champs :"
+
+msgid "(empty)"
+msgstr "(vide)"
+
 msgid "System default"
 msgstr "Langue du système"
 
@@ -1279,13 +2280,13 @@ msgid "Select the interface language"
 msgstr "Sélectionner la langue de l'interface"
 
 msgid "Language:"
-msgstr "Langue :"
+msgstr "Langue :"
 
 msgid "Set the application logging verbosity"
 msgstr "Définir le niveau de verbosité de la journalisation de l'application"
 
 msgid "Log level:"
-msgstr "Niveau de journalisation :"
+msgstr "Niveau de journalisation :"
 
 msgid "Behaviour"
 msgstr "Comportement"
@@ -1317,7 +2318,7 @@ msgstr ""
 "de recherche ou de remplacement (ms)"
 
 msgid "Auto-preview delay:"
-msgstr "Délai d'aperçu auto :"
+msgstr "Délai d'aperçu auto :"
 
 msgid " ms"
 msgstr " ms"
@@ -1331,8 +2332,8 @@ msgid ""
 "Extensions mapped here are applied by the \"Normalize extension\" mode. "
 "Matching is case-insensitive; extensions not listed are left unchanged."
 msgstr ""
-"Les extensions associées ici sont appliquées par le mode « Normaliser "
-"l'extension ». La correspondance ne tient pas compte de la casse ; les "
+"Les extensions associées ici sont appliquées par le mode « Normaliser "
+"l'extension ». La correspondance ne tient pas compte de la casse ; les "
 "extensions absentes de la liste ne sont pas modifiées."
 
 msgid "Extension normalization table"
@@ -1366,10 +2367,7 @@ msgid "Move down"
 msgstr "Descendre"
 
 msgid "Saved shortcuts:"
-msgstr "Raccourcis enregistrés :"
-
-msgid "Images"
-msgstr "Images"
+msgstr "Raccourcis enregistrés :"
 
 msgid "Duplicate extension"
 msgstr "Extension en double"
@@ -1388,8 +2386,8 @@ msgid ""
 " sidecars."
 msgstr ""
 "Un fichier sidecar est associé à un fichier de base par un suffixe de nom"
-" (ex. « img.jpg » + « img.xmp »). Chaque onglet configure une catégorie "
-"de fichier de base : quelles extensions comptent comme ses fichiers de "
+" (ex. « img.jpg » + « img.xmp »). Chaque onglet configure une catégorie "
+"de fichier de base : quelles extensions comptent comme ses fichiers de "
 "base, et quels suffixes identifient ses fichiers sidecar."
 
 msgid "Common"
@@ -1411,8 +2409,8 @@ msgid ""
 "Other: any file whose extension doesn't match the Images, Video, or Audio"
 " categories. No editable extension list — it is the catch-all category."
 msgstr ""
-"Autres : tout fichier dont l'extension ne correspond pas aux catégories "
-"Images, Vidéo ou Audio. Pas de liste d'extensions modifiable — c'est la "
+"Autres : tout fichier dont l'extension ne correspond pas aux catégories "
+"Images, Vidéo ou Audio. Pas de liste d'extensions modifiable, c'est la "
 "catégorie fourre-tout."
 
 msgid "Sidecar suffixes"

@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import zipfile
+from pathlib import Path
 
 import pytest
 
@@ -302,6 +303,27 @@ class TestWindowsUpdaterReplace:
 
         assert current.read_bytes() == b"OLD"
 
+    def test_leftover_old_file_is_tolerated(self, monkeypatch, tmp_path):
+        """The old .exe may still be locked: the update succeeds anyway and
+        the .old file is left for a later update to remove."""
+        current = tmp_path / "app.exe"
+        current.write_bytes(b"OLD")
+        new_file = tmp_path / "new.exe"
+        new_file.write_bytes(b"NEW")
+        real_unlink = Path.unlink
+
+        def locked_unlink(self, missing_ok=False):
+            if self.name == "app.exe.old" and not missing_ok:
+                raise PermissionError("file in use")
+            real_unlink(self, missing_ok=missing_ok)
+
+        monkeypatch.setattr(Path, "unlink", locked_unlink)
+
+        auto_update._WindowsUpdater().replace(current, new_file)
+
+        assert current.read_bytes() == b"NEW"
+        assert (tmp_path / "app.exe.old").read_bytes() == b"OLD"
+
 
 class TestMacUpdaterAppRoot:
     def test_finds_enclosing_app_bundle(self, tmp_path):
@@ -362,6 +384,39 @@ class TestMacUpdaterReplace:
 
         # Original bundle must be left untouched on failure.
         assert (app_root / "Contents" / "MacOS" / "pbrenamer").read_bytes() == b"OLD"
+
+    def _make_app(self, tmp_path):
+        app_root = tmp_path / "PBRenamer.app"
+        (app_root / "Contents" / "MacOS").mkdir(parents=True)
+        (app_root / "Contents" / "MacOS" / "pbrenamer").write_bytes(b"OLD")
+        return app_root
+
+    def test_stale_old_bundle_is_removed_first(self, tmp_path):
+        app_root = self._make_app(tmp_path)
+        stale = tmp_path / "PBRenamer.app.old"
+        (stale / "Contents").mkdir(parents=True)
+        (stale / "Contents" / "stale").write_bytes(b"STALE")
+
+        auto_update._MacUpdater().replace(app_root, self._make_app_zip(tmp_path))
+
+        binary = app_root / "Contents" / "MacOS" / "pbrenamer"
+        assert binary.read_bytes() == b"NEW"
+        assert not stale.exists()
+
+    def test_restores_original_bundle_when_move_fails(self, monkeypatch, tmp_path):
+        app_root = self._make_app(tmp_path)
+
+        def failing_move(src, dst):
+            raise OSError("disk full")
+
+        monkeypatch.setattr(auto_update.shutil, "move", failing_move)
+
+        with pytest.raises(OSError, match="disk full"):
+            auto_update._MacUpdater().replace(app_root, self._make_app_zip(tmp_path))
+
+        binary = app_root / "Contents" / "MacOS" / "pbrenamer"
+        assert binary.read_bytes() == b"OLD"
+        assert not (tmp_path / "PBRenamer.app.old").exists()
 
 
 class TestPerformAutoUpdateMacos:

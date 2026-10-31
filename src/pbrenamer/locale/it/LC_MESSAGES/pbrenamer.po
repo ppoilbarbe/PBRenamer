@@ -19,6 +19,77 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
+msgid "EXIF"
+msgstr "EXIF"
+
+# ==AUTO== Automatically translated
+msgid "IPTC"
+msgstr "IPTC"
+
+# ==AUTO== Automatically translated
+msgid "XMP"
+msgstr "XMP"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar file"
+msgstr "File sidecar"
+
+# ==AUTO== Automatically translated
+msgid "XMP (sidecar)"
+msgstr "XMP (sidecar)"
+
+# ==AUTO== Automatically translated
+msgid "No EXIF orientation tag to apply."
+msgstr "Nessun tag di orientamento EXIF da applicare."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "Valore di orientamento EXIF non supportato: {v}"
+
+# ==AUTO== Automatically translated
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr ""
+"Questo file sembra troncato (mancano dati alla fine), probabilmente a "
+"causa di una scrittura incompleta da parte della fotocamera. La rotazione"
+" senza perdita non è possibile senza scartare le righe interessate."
+
+# ==AUTO== Automatically translated
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran non è disponibile.\n"
+"La rotazione JPEG senza perdita richiede jpegtran.\n"
+"Installare libjpeg-turbo per abilitare questa funzionalità."
+
+# ==AUTO== Automatically translated
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "Lo schema contiene più campi numerici (ne è consentito uno solo)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "Il campo «{field}» contiene il carattere vietato «{char}»."
+
+# ==AUTO== Automatically translated
+msgid "The schema is empty: fill in at least one field."
+msgstr "Lo schema è vuoto: compila almeno un campo."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "Il marcatore video contiene il carattere vietato «{char}»."
+
+# ==AUTO== Automatically translated
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr "Lo schema non ha alcun campo numerico (usa «#» per definire un contatore)."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
 msgstr "{name!r} potrebbe essere sidecar di più file base: {owners}"
@@ -56,6 +127,51 @@ msgid "Videos"
 msgstr "Video"
 
 # ==AUTO== Automatically translated
+msgid "Open with"
+msgstr "Apri con"
+
+# ==AUTO== Automatically translated
+msgid "Choose an application:"
+msgstr "Scegli un'applicazione:"
+
+# ==AUTO== Automatically translated
+msgid "Application name:"
+msgstr "Nome dell'applicazione:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr ""
+"Nome di profilo «{name}» non valido: usa lettere, cifre, «-» e «_» (un "
+"«.» iniziale nasconde il profilo)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr "Nome di profilo «{name}» non valido: usa lettere, cifre, «-» e «_»."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "Profilo «{name}» non trovato."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "Il profilo «{name}» esiste già."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr ""
+"Il profilo «{name}» è l'ultimo profilo visibile: non può essere eliminato"
+" né nascosto."
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "Informazioni su PBRenamer"
 
@@ -84,20 +200,40 @@ msgid "PySide6 version:"
 msgstr "Versione PySide6:"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "Rinomina ({n})"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "Rinomina"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "Annulla (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Annulla l'ultimo lotto di rinominazione (%d livello/i disponibile/i)"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Annulla"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "Annulla l'ultimo batch di rinominazione"
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Informazioni sul file"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "Campo"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "Descrizione"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "Valore"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "Informazioni sul file — {name}"
 
 # ==AUTO== Automatically translated
 msgid "Image"
@@ -120,29 +256,12 @@ msgid "Other"
 msgstr "Altro"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "Informazioni sul file — {name}"
-
-# ==AUTO== Automatically translated
 msgid "File:"
 msgstr "File:"
 
 # ==AUTO== Automatically translated
 msgid "Type:"
 msgstr "Tipo:"
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Metadati immagine (EXIF / IPTC)"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "Metadati audio"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "Metadati video"
 
 # ==AUTO== Automatically translated
 msgid "Select a single file to display its information."
@@ -153,68 +272,110 @@ msgid "Select a file to display its information."
 msgstr "Seleziona un file per visualizzarne le informazioni."
 
 # ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "Campi universali"
+msgid "Original"
+msgstr "Originale"
 
 # ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "Data odierna"
+msgid "Preview"
+msgstr "Anteprima"
 
 # ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "Data e ora attuali"
+msgid "Thumbnail"
+msgstr "Miniatura"
 
 # ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "Data/ora di modifica del file"
+msgid "Sidecar"
+msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "Mancante"
+msgid "No sidecar: double-click to create one"
+msgstr "Nessun sidecar: fai doppio clic per crearne uno"
 
 # ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "Data/ora di creazione del file"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "Impossibile creare {name}: {error}"
 
 # ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "Nome della cartella padre"
+msgid "cannot move/copy a folder into itself"
+msgstr "impossibile spostare/copiare una cartella al suo interno"
 
 # ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "Campi batch"
+msgid "Move errors"
+msgstr "Errori di spostamento"
 
 # ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "Calcolato"
+msgid "Copy errors"
+msgstr "Errori di copia"
 
 # ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "Testo completo corrispondente"
+msgid "Confirm overwrite"
+msgstr "Conferma sovrascrittura"
 
 # ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "Gruppi di cattura"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} elemento/i esistono già in {dir} e verrebbero sovrascritti."
 
 # ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "Contatore autoincrementante"
+msgid "Overwrite"
+msgstr "Sovrascrivi"
 
 # ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "Contatore senza conflitti"
+msgid "Skip"
+msgstr "Salta"
 
 # ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "Gruppo regex con nome"
+msgid "▲ Move up"
+msgstr "▲ Sposta su"
 
 # ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "Inserisci nel campo di sostituzione"
+msgid "▼ Move down"
+msgstr "▼ Sposta giù"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↓"
+msgstr "Ordina ↓"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in ascending order"
+msgstr "Ordina la lista in ordine crescente"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↑"
+msgstr "Ordina ↑"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in descending order"
+msgstr "Ordina la lista in ordine decrescente"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "Elimina"
+
+# ==AUTO== Automatically translated
+msgid "Clear all"
+msgstr "Cancella tutto"
+
+# ==AUTO== Automatically translated
+msgid "Clear history"
+msgstr "Cancella cronologia"
+
+# ==AUTO== Automatically translated
+msgid "Clear all values from this history?"
+msgstr "Cancellare tutti i valori da questa cronologia?"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Filtro sidecar"
 
 # ==AUTO== Automatically translated
 msgid "History"
 msgstr "Cronologia"
+
+# ==AUTO== Automatically translated
+msgid "Patterns"
+msgstr "Pattern"
 
 # ==AUTO== Automatically translated
 msgid "Search"
@@ -272,10 +433,6 @@ msgid "Delete the selected search history entries"
 msgstr "Elimina le voci selezionate dalla cronologia di ricerca"
 
 # ==AUTO== Automatically translated
-msgid "Clear all"
-msgstr "Cancella tutto"
-
-# ==AUTO== Automatically translated
 msgid "Remove all search history entries"
 msgstr "Rimuovi tutte le voci della cronologia di ricerca"
 
@@ -312,16 +469,411 @@ msgid "Delete the entire replacement pattern history"
 msgstr "Elimina l'intera cronologia dei pattern di sostituzione"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Modello"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Impossibile determinare un modello per «{name}».\n"
+"Nessuna parte del nome del file corrisponde alla cronologia di un campo."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Conferma eliminazione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Impossibile spostare nel cestino: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Errore di eliminazione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Spostare {count} file nel cestino?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Sposta nel cestino:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Eliminare definitivamente {count} file?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Eliminare definitivamente:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Rotazione non disponibile"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Impossibile ruotare {n} file."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} file ruotati."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} tag di orientamento EXIF reimpostato/i."
+
+# ==AUTO== Automatically translated
+msgid "Fit window  0 / X"
+msgstr "Adatta alla finestra  0 / X"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)  1 / Z"
+msgstr "Dimensione reale (1:1)  1 / Z"
+
+# ==AUTO== Automatically translated
+msgid "Fit width  W"
+msgstr "Adatta larghezza  W"
+
+# ==AUTO== Automatically translated
+msgid "Fit height  H"
+msgstr "Adatta altezza  H"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in  +"
+msgstr "Ingrandisci  +"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out  −"
+msgstr "Riduci  −"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left  F6"
+msgstr "Ruota di 90° a sinistra  F6"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°  F7"
+msgstr "Ruota di 180°  F7"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right  F8"
+msgstr "Ruota di 90° a destra  F8"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation  F9"
+msgstr "Applica l'orientamento EXIF  F9"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "Forza l'orientamento EXIF a 0°  F10"
+
+# ==AUTO== Automatically translated
+msgid "Open"
+msgstr "Apri"
+
+# ==AUTO== Automatically translated
+msgid "Show metadata panel"
+msgstr "Mostra il pannello dei metadati"
+
+# ==AUTO== Automatically translated
+msgid "Cannot load image."
+msgstr "Impossibile caricare l'immagine."
+
+# ==AUTO== Automatically translated
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "Passa alla navigazione lineare (fermati alle estremità dell'elenco)"
+
+# ==AUTO== Automatically translated
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr ""
+"Passa alla navigazione circolare (riparti dall'altra estremità "
+"dell'elenco)"
+
+# ==AUTO== Automatically translated
+msgid " (max)"
+msgstr " (max)"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard"
+msgstr "Tastiera"
+
+# ==AUTO== Automatically translated
+msgid "Mouse"
+msgstr "Mouse"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left, without loss"
+msgstr "Ruota di 90° a sinistra, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°, without loss"
+msgstr "Ruota di 180°, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right, without loss"
+msgstr "Ruota di 90° a destra, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation"
+msgstr "Applica orientamento EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°"
+msgstr "Forza orientamento EXIF a 0°"
+
+# ==AUTO== Automatically translated
+msgid "directory tree"
+msgstr "albero delle cartelle"
+
+# ==AUTO== Automatically translated
+msgid "file list"
+msgstr "elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "Apri una cartella"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "Esci"
+
+# ==AUTO== Automatically translated
+msgid "New profile"
+msgstr "Nuovo profilo"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile"
+msgstr "Duplica profilo"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "Configurazione del profilo"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "Scorciatoie da tastiera e mouse (questa finestra)"
+
+# ==AUTO== Automatically translated
+msgid "Rename as shown in the Preview column"
+msgstr "Rinomina come mostrato nella colonna Anteprima"
+
+# ==AUTO== Automatically translated
+msgid "Reload the file list"
+msgstr "Ricarica l'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Switch focus between directory tree and file list"
+msgstr "Sposta il focus tra l'albero delle cartelle e l'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Navigate directories"
+msgstr "Navigare tra le cartelle"
+
+# ==AUTO== Automatically translated
+msgid "Select previous / next file"
+msgstr "Seleziona il file precedente / successivo"
+
+# ==AUTO== Automatically translated
+msgid "Jump to first / last entry"
+msgstr "Vai al primo / ultimo elemento"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images in the viewer"
+msgstr "Mostra le immagini selezionate nel visualizzatore"
+
+# ==AUTO== Automatically translated
+msgid "Open the selected files with their default application"
+msgstr "Apri i file selezionati con la loro applicazione predefinita"
+
+# ==AUTO== Automatically translated
+msgid "Open with…"
+msgstr "Apri con…"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected file(s) and their sidecars"
+msgstr "Elimina i file selezionati e i loro sidecar"
+
+# ==AUTO== Automatically translated
+msgid "click"
+msgstr "clic"
+
+# ==AUTO== Automatically translated
+msgid "Add to the selection / select a range"
+msgstr "Aggiungi alla selezione / seleziona un intervallo"
+
+# ==AUTO== Automatically translated
+msgid "No selection"
+msgstr "Nessuna selezione"
+
+# ==AUTO== Automatically translated
+msgid "Rename, renumber and preview act on all listed files"
+msgstr "Rinomina, rinumera e l'anteprima agiscono su tutti i file elencati"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a thumbnail"
+msgstr "Doppio clic su una miniatura"
+
+# ==AUTO== Automatically translated
+msgid "Show the image in the viewer"
+msgstr "Mostra l'immagine nel visualizzatore"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a name"
+msgstr "Doppio clic su un nome"
+
+# ==AUTO== Automatically translated
+msgid "Open the file with its default application"
+msgstr "Apri il file con la sua applicazione predefinita"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a sidecar"
+msgstr "Doppio clic su un sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Open the sidecar file"
+msgstr "Apri il file sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the file list"
+msgstr "Clic destro sull'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Images menu"
+msgstr "Menu Immagini"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the directory tree"
+msgstr "Clic destro sull'albero delle cartelle"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder as a shortcut"
+msgstr "Aggiungi la cartella come scorciatoia"
+
+# ==AUTO== Automatically translated
+msgid "Drag onto a folder"
+msgstr "Trascina su una cartella"
+
+# ==AUTO== Automatically translated
+msgid "Move the files and their sidecars"
+msgstr "Sposta i file e i loro sidecar"
+
+# ==AUTO== Automatically translated
+msgid "drag onto a folder"
+msgstr "trascina su una cartella"
+
+# ==AUTO== Automatically translated
+msgid "Copy the files and their sidecars"
+msgstr "Copia i file e i loro sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Fit window"
+msgstr "Adatta alla finestra"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)"
+msgstr "Dimensione reale (1:1)"
+
+# ==AUTO== Automatically translated
+msgid "Fit width"
+msgstr "Adatta alla larghezza"
+
+# ==AUTO== Automatically translated
+msgid "Fit height"
+msgstr "Adatta all'altezza"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in / Zoom out"
+msgstr "Ingrandisci / Riduci"
+
+# ==AUTO== Automatically translated
+msgid "Previous / next image of the selection, or of the list"
+msgstr "Immagine precedente / successiva della selezione o dell'elenco"
+
+# ==AUTO== Automatically translated
+msgid "Show / hide the metadata"
+msgstr "Mostra / nascondi i metadati"
+
+# ==AUTO== Automatically translated
+msgid "Open with the default application"
+msgstr "Apri con l'applicazione predefinita"
+
+# ==AUTO== Automatically translated
+msgid "Delete current image and its sidecars"
+msgstr "Elimina l'immagine corrente e i suoi sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Close image viewer"
+msgstr "Chiudi il visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "Left-click + drag"
+msgstr "Clic sinistro + trascina"
+
+# ==AUTO== Automatically translated
+msgid "Pan image"
+msgstr "Sposta l'immagine"
+
+# ==AUTO== Automatically translated
+msgid "Double left-click"
+msgstr "Doppio clic sinistro"
+
+# ==AUTO== Automatically translated
+msgid "Center on clicked point"
+msgstr "Centra sul punto cliccato"
+
+# ==AUTO== Automatically translated
+msgid "left-click"
+msgstr "clic sinistro"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in centered on point"
+msgstr "Ingrandisci centrato sul punto"
+
+# ==AUTO== Automatically translated
+msgid "right-click"
+msgstr "clic destro"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out centered on point"
+msgstr "Riduci centrato sul punto"
+
+# ==AUTO== Automatically translated
+msgid "Click on a thumbnail of the strip"
+msgstr "Clic su una miniatura della striscia"
+
+# ==AUTO== Automatically translated
+msgid "Show this image"
+msgstr "Mostra questa immagine"
+
+# ==AUTO== Automatically translated
+msgid "Main window"
+msgstr "Finestra principale"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "Visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
 msgid "Select folder"
 msgstr "Seleziona cartella"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "Originale"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "Anteprima"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -329,73 +881,111 @@ msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} elemento/i"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ nessun tipo corrispondente ({types})"
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ sidecar orfano, non rinominato"
+
+# ==AUTO== Automatically translated
+msgid "Target(s) already taken:"
+msgstr "Destinazione/i già occupata/e:"
+
+# ==AUTO== Automatically translated
+msgid "Nothing was renamed."
+msgstr "Nessun file è stato rinominato."
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} non disponibile"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "Ricerca — Guida"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "Sostituzione — Guida"
+msgid "{n} file(s) renamed."
+msgstr "{n} file rinominato/i."
 
 # ==AUTO== Automatically translated
 msgid "Rename errors"
 msgstr "Errori di rinominazione"
 
 # ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "impossibile spostare/copiare una cartella al suo interno"
+msgid "Renumber"
+msgstr "Rinumera"
 
 # ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "Errori di spostamento"
+msgid "Files are already correctly numbered."
+msgstr "I file sono già numerati correttamente."
 
 # ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "Errori di copia"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "Conferma sovrascrittura"
+msgid "Confirm renumber"
+msgstr "Conferma rinumerazione"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} elemento/i esistono già in {dir} e verrebbero sovrascritti."
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "Rinumerare {n} file a partire da 1?"
 
 # ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "Sovrascrivi"
+msgid "Renumber errors"
+msgstr "Errori di rinumerazione"
 
 # ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "Salta"
+msgid "Undo errors"
+msgstr "Errori di annullamento"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "Annulla (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "Scorciatoie da tastiera e mouse"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Annulla l'ultimo lotto di rinominazione (%d livello/i disponibile/i)"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "Passa al profilo «{name}»"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "Annulla"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "Nome del profilo (lettere, cifre, «-» e «_»):"
 
 # ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "Annulla l'ultimo batch di rinominazione"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "Nome del nuovo profilo (copia di «{source}»):"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile"
+msgstr "Rinomina profilo"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "Nuovo nome del profilo «{name}» (lettere, cifre, «-» e «_»):"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "Profilo «{old}» rinominato in «{name}»."
+
+# ==AUTO== Automatically translated
+msgid "Delete profile"
+msgstr "Elimina profilo"
+
+# ==AUTO== Automatically translated
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "Nessun profilo da eliminare: deve restare almeno un profilo visibile."
+
+# ==AUTO== Automatically translated
+msgid "Profile to delete:"
+msgstr "Profilo da eliminare:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr ""
+"Eliminare il profilo «{name}» e tutte le sue impostazioni? L'operazione "
+"non può essere annullata."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Profilo «{name}» eliminato."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "Profilo «{name}» caricato."
 
 # ==AUTO== Automatically translated
 msgid "Add as shortcut"
@@ -406,16 +996,8 @@ msgid "Open folder…"
 msgstr "Apri cartella…"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Apri una cartella"
-
-# ==AUTO== Automatically translated
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Aprire un selettore di directory e navigare fino alla cartella selezionata"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "Esci"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -474,6 +1056,32 @@ msgid "Show version and license information"
 msgstr "Mostra informazioni su versione e licenza"
 
 # ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts…"
+msgstr "Scorciatoie da tastiera e mouse…"
+
+# ==AUTO== Automatically translated
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "Mostra le scorciatoie da tastiera e mouse"
+
+# ==AUTO== Automatically translated
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr ""
+"Elenca le scorciatoie da tastiera e mouse della finestra principale e del"
+" visualizzatore"
+
+# ==AUTO== Automatically translated
+msgid "User guide"
+msgstr "Guida utente"
+
+# ==AUTO== Automatically translated
+msgid "Open the online user guide"
+msgstr "Apri la guida utente online"
+
+# ==AUTO== Automatically translated
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr "Apri la guida utente, nella lingua dell'interfaccia, nel browser web"
+
+# ==AUTO== Automatically translated
 msgid "Edit shortcuts…"
 msgstr "Modifica scorciatoie…"
 
@@ -496,6 +1104,172 @@ msgstr "Mostra i valori dei campi del file"
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "Aprire la finestra delle informazioni per il file selezionato"
+
+# ==AUTO== Automatically translated
+msgid "New profile…"
+msgstr "Nuovo profilo…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new profile"
+msgstr "Crea un nuovo profilo"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with default settings and switch to it"
+msgstr "Crea un profilo con le impostazioni predefinite e passa a esso"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile…"
+msgstr "Duplica profilo…"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate the current profile"
+msgstr "Duplica il profilo corrente"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "Copia il profilo corrente con un nuovo nome e passa alla copia"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile…"
+msgstr "Rinomina profilo…"
+
+# ==AUTO== Automatically translated
+msgid "Rename the current profile"
+msgstr "Rinomina il profilo corrente"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "Assegna un nuovo nome al profilo corrente (lettere, cifre, «-» e «_»)"
+
+# ==AUTO== Automatically translated
+msgid "Delete profile…"
+msgstr "Elimina profilo…"
+
+# ==AUTO== Automatically translated
+msgid "Delete a profile"
+msgstr "Elimina un profilo"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings"
+msgstr "Elimina definitivamente un profilo e tutte le sue impostazioni"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration…"
+msgstr "Configurazione del profilo…"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile"
+msgstr "Configura il profilo corrente"
+
+# ==AUTO== Automatically translated
+msgid "Configure the schema fields and options of the current profile"
+msgstr "Configura i campi dello schema e le opzioni del profilo corrente"
+
+# ==AUTO== Automatically translated
+msgid "Open with a chosen application"
+msgstr "Apri con un'applicazione scelta"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the selected file"
+msgstr "Scegli l'applicazione che apre il file selezionato"
+
+# ==AUTO== Automatically translated
+msgid "View"
+msgstr "Visualizza"
+
+# ==AUTO== Automatically translated
+msgid "Show in the image viewer"
+msgstr "Mostra nel visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer"
+msgstr "Mostra le immagini e i video selezionati nel visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name"
+msgstr "Compila lo schema dal nome del file"
+
+# ==AUTO== Automatically translated
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr ""
+"Deduci i campi dello schema dal nome del file selezionato e dalle sue "
+"cartelle"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files"
+msgstr "Elimina i file selezionati"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr "Elimina i file selezionati e i loro sidecar (nel cestino se attivato)"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars…"
+msgstr "Sidecar orfani…"
+
+# ==AUTO== Automatically translated
+msgid "List the sidecars without a base file"
+msgstr "Elenca i sidecar senza file di base"
+
+# ==AUTO== Automatically translated
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr "Elenca, poi elimina, i file sidecar della cartella senza file di base"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left"
+msgstr "Ruota di 90° a sinistra"
+
+# ==AUTO== Automatically translated
+msgid "Rotate counter-clockwise, without loss"
+msgstr "Ruota in senso antiorario, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr "Ruota le immagini selezionate di 90° in senso antiorario, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°"
+msgstr "Ruota 180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 180°, without loss"
+msgstr "Ruota le immagini selezionate di 180°, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right"
+msgstr "Ruota di 90° a destra"
+
+# ==AUTO== Automatically translated
+msgid "Rotate clockwise, without loss"
+msgstr "Ruota in senso orario, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr "Ruota le immagini selezionate di 90° in senso orario, senza perdita"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "Ruota i pixel secondo l'orientamento EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "Ruota i pixel secondo l'orientamento EXIF, poi reimpostalo"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation to normal"
+msgstr "Imposta l'orientamento EXIF su normale"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "Imposta il tag di orientamento EXIF a 1 (0°) senza ruotare i pixel"
+
+# ==AUTO== Automatically translated
+msgid "Refresh"
+msgstr "Aggiorna"
+
+# ==AUTO== Automatically translated
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "Rileggi la cartella e aggiorna le miniature"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -542,6 +1316,44 @@ msgstr "Includi tutte le sottocartelle"
 # ==AUTO== Automatically translated
 msgid "When checked, files from all subdirectories are listed"
 msgstr "Se selezionato, vengono elencati i file di tutte le sottocartelle"
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "Miniature"
+
+# ==AUTO== Automatically translated
+msgid "Show image thumbnails in the file list"
+msgstr "Mostra le miniature delle immagini nell'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr ""
+"Mostra una colonna di miniature; questa impostazione appartiene al "
+"profilo corrente"
+
+# ==AUTO== Automatically translated
+msgid "By date"
+msgstr "Per data"
+
+# ==AUTO== Automatically translated
+msgid "Sort the files by modification date"
+msgstr "Ordina i file per data di modifica"
+
+# ==AUTO== Automatically translated
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr "Ordina per data di modifica anziché per nome; le cartelle restano in cima"
+
+# ==AUTO== Automatically translated
+msgid "Reversed"
+msgstr "Invertito"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the sort order"
+msgstr "Inverti l'ordine di ordinamento"
+
+# ==AUTO== Automatically translated
+msgid "List the files in reverse order; folders stay first"
+msgstr "Elenca i file in ordine inverso; le cartelle restano in cima"
 
 # ==AUTO== Automatically translated
 msgid "Keep extension"
@@ -628,6 +1440,29 @@ msgstr ""
 "*.txt, image_*)"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar filter…"
+msgstr "Filtro sidecar…"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Filtro sul contenuto dei sidecar</b><br>Espressione regolare Python "
+"applicata al <i>contenuto</i> dei file sidecar.<br>Sono mostrati solo i "
+"file con almeno un sidecar il cui contenuto corrisponde, insieme ai loro "
+"sidecar.<br>I file senza sidecar sono sempre nascosti quando un filtro è "
+"attivo.<br><tt>.*</tt> attraversa le interruzioni di riga "
+"(re.DOTALL).<br>Non distingue maiuscole e minuscole (re.IGNORECASE), "
+"caratteri accentati compresi.<br>Premi Invio per conservare il filtro "
+"nella cronologia; lascia vuoto per mostrare tutti i file."
+
+# ==AUTO== Automatically translated
 msgid "Files to be renamed"
 msgstr "File da rinominare"
 
@@ -638,6 +1473,24 @@ msgid ""
 msgstr ""
 "Seleziona le righe per limitare le operazioni a quei file; lascia "
 "deselezionato per applicare a tutti"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Pattern"
+
+# ==AUTO== Automatically translated
+msgid "Rename in place with search/replace patterns"
+msgstr "Rinomina sul posto con pattern di ricerca e sostituzione"
+
+# ==AUTO== Automatically translated
+msgid "Schema"
+msgstr "Schema"
+
+# ==AUTO== Automatically translated
+msgid "Sort files into a destination tree built from schema fields"
+msgstr ""
+"Smista i file in un albero di destinazione costruito dai campi dello "
+"schema"
 
 # ==AUTO== Automatically translated
 msgid "Search:"
@@ -677,10 +1530,6 @@ msgid ""
 msgstr ""
 "Mostrare la guida sui pattern di ricerca (token pattern, espressioni "
 "regolari, testo normale)"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "Pattern"
 
 # ==AUTO== Automatically translated
 msgid "Search using pattern tokens"
@@ -909,10 +1758,6 @@ msgstr ""
 "stesso nome)"
 
 # ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "Elimina"
-
-# ==AUTO== Automatically translated
 msgid "Delete this named save"
 msgstr "Elimina questo salvataggio con nome"
 
@@ -951,20 +1796,30 @@ msgid "Reverse the last batch of renames performed on disk"
 msgstr "Annulla l'ultimo batch di rinominazioni eseguite su disco"
 
 # ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "Rinomina"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "Applica rinominazioni su disco"
+msgid "Renumber from 1 in place"
+msgstr "Rinumera da 1 sul posto"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
 msgstr ""
-"Rinomina definitivamente tutti i file mostrati nella colonna Anteprima "
-"(abilitato solo quando non ci sono conflitti)"
+"Rinumera i file selezionati (tutti i file elencati se nessuno è "
+"selezionato) da 1, sul posto, secondo lo schema"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "Applica le rinomine sul disco (F2)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Rinomina definitivamente i file selezionati (tutti i file elencati se "
+"nessuno è selezionato) come mostrato nella colonna Anteprima (attivo solo"
+" in assenza di conflitti)"
 
 # ==AUTO== Automatically translated
 msgid "File"
@@ -975,12 +1830,129 @@ msgid "Edit"
 msgstr "Modifica"
 
 # ==AUTO== Automatically translated
+msgid "Profile"
+msgstr "Profilo"
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "Immagini"
+
+# ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Apri sidecar"
+
+# ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Scorciatoie"
 
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "Guida"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Campo"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Descrizione"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "Valore"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Metadati immagine (EXIF / IPTC)"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "Metadati audio"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "Metadati video"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "Campi universali"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "Data odierna"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "Data e ora attuali"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "Mancante"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "Data/ora di modifica del file"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "Data/ora di creazione del file"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "Nome della cartella padre"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "Campi batch"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "Calcolato"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "Testo completo corrispondente"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "Gruppi di cattura"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "Contatore autoincrementante"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "Contatore senza conflitti"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "Gruppo regex con nome"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "Inserisci nel campo di sostituzione"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars"
+msgstr "Sidecar orfani"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected"
+msgstr "Elimina selezionati"
+
+# ==AUTO== Automatically translated
+msgid "Delete all"
+msgstr "Elimina tutti"
+
+# ==AUTO== Automatically translated
+msgid "Close"
+msgstr "Chiudi"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} file sidecar orfano/i:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1597,6 +2569,304 @@ msgid "Examples"
 msgstr "Esempi"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "Configurazione del profilo «{name}»"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}"
+msgstr "Campo {n}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "Campo {n}:"
+
+# ==AUTO== Automatically translated
+msgid "Display"
+msgstr "Visualizzazione"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields of the rename schema"
+msgstr "Numero di campi dello schema di rinomina"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields:"
+msgstr "Numero di campi:"
+
+# ==AUTO== Automatically translated
+msgid "Text inserted in the name of video files"
+msgstr "Testo inserito nel nome dei file video"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr ""
+"Inserito nella posizione scelta con i pulsanti di opzione della scheda "
+"Schema; lascia vuoto per nessun marcatore"
+
+# ==AUTO== Automatically translated
+msgid "Video marker:"
+msgstr "Marcatore video:"
+
+# ==AUTO== Automatically translated
+msgid "Field titles:"
+msgstr "Titoli dei campi:"
+
+# ==AUTO== Automatically translated
+msgid "Show thumbnails"
+msgstr "Mostra le miniature"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column in the file list"
+msgstr "Mostra una colonna di miniature nell'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Maximum width:"
+msgstr "Larghezza massima:"
+
+# ==AUTO== Automatically translated
+msgid "Maximum height:"
+msgstr "Altezza massima:"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "File sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar column"
+msgstr "Mostra la colonna dei sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr ""
+"Mostra quali file hanno dei sidecar; fai doppio clic sulla colonna per "
+"aprire un sidecar o crearne uno"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar content filter"
+msgstr "Mostra il filtro sul contenuto dei sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "Filtra l'elenco dei file in base al contenuto dei file sidecar"
+
+# ==AUTO== Automatically translated
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "Estensione del sidecar creato con un doppio clic, senza punto"
+
+# ==AUTO== Automatically translated
+msgid "New sidecar extension:"
+msgstr "Estensione dei nuovi sidecar:"
+
+# ==AUTO== Automatically translated
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "Elimina i file sidecar vuoti durante il caricamento di una directory"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr ""
+"I file vuoti con il nome di un sidecar vengono eliminati quando si elenca"
+" la cartella, tranne un sidecar appena creato"
+
+# ==AUTO== Automatically translated
+msgid "Maximum number of values kept in each field history"
+msgstr "Numero massimo di valori conservati in ogni cronologia di campo"
+
+# ==AUTO== Automatically translated
+msgid "Max history entries:"
+msgstr "Max voci cronologia:"
+
+# ==AUTO== Automatically translated
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "Variazione dello zoom a ogni ingrandimento o riduzione"
+
+# ==AUTO== Automatically translated
+msgid "Zoom step:"
+msgstr "Passo zoom:"
+
+# ==AUTO== Automatically translated
+msgid "Largest zoom of the image viewer"
+msgstr "Zoom massimo del visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "Maximum zoom:"
+msgstr "Zoom massimo:"
+
+# ==AUTO== Automatically translated
+msgid "Right"
+msgstr "Destra"
+
+# ==AUTO== Automatically translated
+msgid "Left"
+msgstr "Sinistra"
+
+# ==AUTO== Automatically translated
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr ""
+"Lato del visualizzatore di immagini in cui è mostrato il pannello dei "
+"metadati"
+
+# ==AUTO== Automatically translated
+msgid "Metadata panel:"
+msgstr "Pannello dei metadati:"
+
+# ==AUTO== Automatically translated
+msgid "Show images turned as their EXIF orientation says"
+msgstr "Mostra le immagini ruotate secondo il loro orientamento EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "Si applica alle miniature e al visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "Deletion"
+msgstr "Eliminazione"
+
+# ==AUTO== Automatically translated
+msgid "Move deleted files to the trash"
+msgstr "Sposta i file eliminati nel cestino"
+
+# ==AUTO== Automatically translated
+msgid "When unchecked, deleted files are removed permanently"
+msgstr "Se non selezionato, i file eliminati vengono rimossi definitivamente"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletions"
+msgstr "Conferma eliminazioni"
+
+# ==AUTO== Automatically translated
+msgid "Ask for a confirmation before deleting files"
+msgstr "Chiedi conferma prima di eliminare i file"
+
+# ==AUTO== Automatically translated
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr "Oltre questo numero di file, la conferma indica solo il loro numero"
+
+# ==AUTO== Automatically translated
+msgid "Files listed in the confirmation:"
+msgstr "File elencati nella conferma:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ nessuna destinazione per {dest}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} deve iniziare il nome"
+
+# ==AUTO== Automatically translated
+msgid "⚠ absolute path"
+msgstr "⚠ percorso assoluto"
+
+# ==AUTO== Automatically translated
+msgid "⚠ extension separator removed"
+msgstr "⚠ separatore dell'estensione rimosso"
+
+# ==AUTO== Automatically translated
+msgid "⚠ invalid path"
+msgstr "⚠ percorso non valido"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ nessun tipo corrispondente ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} non disponibile"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "Ricerca — Guida"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "Sostituzione — Guida"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr ""
+"Campo dello schema «{title}»: un livello di directory e una parte del "
+"nome; «###» è il contatore, un campo vuoto viene saltato"
+
+# ==AUTO== Automatically translated
+msgid "Destination:"
+msgstr "Destinazione:"
+
+# ==AUTO== Automatically translated
+msgid "Destination root directory…"
+msgstr "Directory radice di destinazione…"
+
+# ==AUTO== Automatically translated
+msgid "Root of the destination tree"
+msgstr "Radice dell'albero di destinazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr ""
+"I file vengono spostati sotto questa directory, in sottodirectory "
+"chiamate come i campi"
+
+# ==AUTO== Automatically translated
+msgid "Browse…"
+msgstr "Sfoglia…"
+
+# ==AUTO== Automatically translated
+msgid "Choose the destination directory"
+msgstr "Scegli la directory di destinazione"
+
+# ==AUTO== Automatically translated
+msgid "Fill gaps"
+msgstr "Colma i vuoti"
+
+# ==AUTO== Automatically translated
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr "Colma i vuoti di numerazione invece di proseguire dopo il numero più alto"
+
+# ==AUTO== Automatically translated
+msgid "Video marker position"
+msgstr "Posizione del marcatore video"
+
+# ==AUTO== Automatically translated
+msgid "Choose destination directory"
+msgstr "Scegli directory di destinazione"
+
+# ==AUTO== Automatically translated
+msgid "Choose a destination directory."
+msgstr "Scegli una directory di destinazione."
+
+# ==AUTO== Automatically translated
+msgid "The destination must be an absolute path."
+msgstr "La destinazione deve essere un percorso assoluto."
+
+# ==AUTO== Automatically translated
+msgid "Proposed template"
+msgstr "Modello proposto"
+
+# ==AUTO== Automatically translated
+msgid "Detected template, confirm to fill the fields:"
+msgstr "Modello rilevato, conferma per compilare i campi:"
+
+# ==AUTO== Automatically translated
+msgid "(empty)"
+msgstr "(vuoto)"
+
+# ==AUTO== Automatically translated
 msgid "System default"
 msgstr "Predefinito di sistema"
 
@@ -1725,10 +2995,6 @@ msgstr "Giù"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "Scorciatoie salvate:"
-
-# ==AUTO== Automatically translated
-msgid "Images"
-msgstr "Immagini"
 
 # ==AUTO== Automatically translated
 msgid "Duplicate extension"

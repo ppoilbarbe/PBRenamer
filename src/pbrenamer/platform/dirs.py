@@ -143,3 +143,13 @@ def AppDirs(app_name: str) -> _BaseDirs:  # noqa: N802
     if sys.platform == "darwin":
         return _MacDirs(app_name)
     return XdgDirs(app_name)
+
+
+def pbpicat_config_dir() -> Path:
+    """Return PBPicat's configuration directory (source of the one-time import).
+
+    PBPicat kept its catalogues in the config directory on Linux and Windows,
+    and in ``~/Library/Application Support`` (our data directory) on macOS.
+    """
+    dirs = AppDirs("pbpicat")
+    return dirs.data_home if sys.platform == "darwin" else dirs.config_home

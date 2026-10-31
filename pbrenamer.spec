@@ -69,6 +69,31 @@ _datas = [
 # Bundled resources (icons, …).
 _datas += [("src/pbrenamer/resources", "pbrenamer/resources")]
 
+# ---------------------------------------------------------------------------
+# Image tools (optional [images] extra): jpegtran and pyexiv2's native libs
+# ---------------------------------------------------------------------------
+
+import importlib.util as _importlib_util
+import shutil as _shutil
+
+# jpegtran (libjpeg-turbo, pulled in by Pillow) does the lossless JPEG
+# rotations; image_ops looks for it next to the executable first.
+_jpegtran = _shutil.which("jpegtran")
+_binaries = [(_jpegtran, ".")] if _jpegtran else []
+
+# pyexiv2 loads its native libs via ctypes.CDLL() with a dynamically built
+# path, so PyInstaller's import analysis never finds them.  find_spec()
+# locates the package without importing it (importing pyexiv2.lib would
+# load the libraries on the build machine).
+_pyexiv2_spec = _importlib_util.find_spec("pyexiv2")
+if _pyexiv2_spec is not None:
+    _pyexiv2_lib_dir = Path(_pyexiv2_spec.origin).parent / "lib"
+    _binaries += [
+        (str(f), "pyexiv2/lib")
+        for f in sorted(_pyexiv2_lib_dir.iterdir())
+        if f.suffix in (".so", ".dylib", ".dll", ".pyd")
+    ]
+
 # Native per-platform icon (synced from PBIcons via tools/update_icons.py).
 _icons = {
     "win32": "src/pbrenamer/resources/pbrenamer.ico",
@@ -93,6 +118,7 @@ a = Analysis(
     # Needed so that `import pbrenamer` resolves against the src tree even
     # without an editable install in the build environment.
     pathex=["src"],
+    binaries=_binaries,
     datas=_datas,
     # The platform sub-package is discovered dynamically; list it explicitly
     # so PyInstaller does not miss any module.
@@ -101,6 +127,10 @@ a = Analysis(
         "pbrenamer.platform.dirs",
         "pbrenamer.platform.fs",
         "pbrenamer.platform.locale",
+        "pbrenamer.platform.open_with",
+        "pbrenamer.platform._open_linux",
+        "pbrenamer.platform._open_macos",
+        "pbrenamer.platform._open_windows",
         # email.utils is used by about_dialog.py — do not add to excludes
         "email.utils",
         # urllib.request (used by --auto-update) imports ssl lazily inside a

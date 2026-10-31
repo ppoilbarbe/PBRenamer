@@ -1,0 +1,3122 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "User Guide"
+msgstr "用户指南"
+
+# ==AUTO== Automatically translated
+msgid "On this page"
+msgstr "本页内容"
+
+# ==AUTO== Automatically translated
+msgid "Installation"
+msgstr "安装"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer is distributed as a standalone executable.  Download the "
+"archive for your platform from the `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ page, extract it, "
+"and run the binary directly — no Python installation required."
+msgstr ""
+"PBRenamer 以独立可执行文件的形式发布。请从 `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ "
+"页面下载适合您平台的压缩包，解压后直接运行，无需安装 Python。"
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "可选依赖"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The executables include everything.  When PBRenamer is installed with "
+"``pip``, some features need optional extras:"
+msgstr "可执行文件已包含所有内容。使用 ``pip`` 安装 PBRenamer 时，部分功能需要可选附加组件："
+
+msgid "``pip install pbrenamer[meta]``"
+msgstr "``pip install pbrenamer[meta]``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Pillow, mutagen and pymediainfo: the ``{im:…}``, ``{au:…}`` and "
+"``{vi:…}`` metadata fields."
+msgstr "Pillow、mutagen 和 pymediainfo：元数据字段 ``{im:…}``、``{au:…}`` 和 ``{vi:…}``。"
+
+msgid "``pip install pbrenamer[images]``"
+msgstr "``pip install pbrenamer[images]``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"pyexiv2, pillow-heif and Pillow: thumbnails of HEIC files, rotation, EXIF"
+" orientation, and the metadata panel of the image viewer."
+msgstr "pyexiv2、pillow-heif 和 Pillow：HEIC 文件的缩略图、旋转、EXIF 方向以及图片查看器的元数据面板。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Lossless rotation of JPEG files also needs the ``jpegtran`` program (from"
+" libjpeg-turbo) on the ``PATH``."
+msgstr "无损旋转 JPEG 文件还需要 ``PATH`` 中有 ``jpegtran`` 程序（来自 libjpeg-turbo）。"
+
+# ==AUTO== Automatically translated
+msgid "Launching"
+msgstr "启动"
+
+# ==AUTO== Automatically translated
+msgid "GUI mode"
+msgstr "图形模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Run the binary (or ``python -m pbrenamer`` from a development "
+"environment)::"
+msgstr "运行可执行文件（或在开发环境中运行 ``python -m pbrenamer``）::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"If *DIR* is omitted the current working directory is used as the starting"
+" folder.  ``--profile NAME`` opens the window on a given :ref:`profile "
+"<profiles>` instead of the last one used.  Qt platform options such as "
+"``--style`` and ``--platform`` are forwarded to Qt and can be appended "
+"after the positional argument."
+msgstr ""
+"如果省略 *DIR*，则以当前工作目录作为起始文件夹。``--profile NAME`` 以指定的 :ref:`配置文件 <profiles>`"
+" 打开窗口，而不是上次使用的配置文件。Qt 平台选项（如 ``--style`` 和 ``--platform``）会传递给 "
+"Qt，可以添加在位置参数之后。"
+
+# ==AUTO== Automatically translated
+msgid "Headless (no-GUI) mode"
+msgstr "无界面模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Pass ``--search``, ``--saved`` or ``--schema`` to activate headless mode."
+" PBRenamer will list, rename, and exit without opening any window::"
+msgstr ""
+"传入 ``--search``、``--saved`` 或 ``--schema`` 即可启用无界面模式。PBRenamer "
+"会列出文件、执行重命名并退出，不打开任何窗口::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"See :ref:`cli-reference` for the full flag list and :ref:`cli-examples` "
+"for worked examples."
+msgstr "完整的选项列表见 :ref:`cli-reference`，详细示例见 :ref:`cli-examples`。"
+
+# ==AUTO== Automatically translated
+msgid "The GUI"
+msgstr "图形界面"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The window has a directory tree on the left, the file list on the right, "
+"and below them the rule panel with two tabs, **Pattern** (search and "
+"replace, described in this chapter) and **Schema** (see :ref:`schema-"
+"mode`).  The action bar at the bottom holds the **Undo**, **Preview**, "
+"**Clear**, **Renumber** and **Rename** buttons.  The menus are **File**, "
+"**Edit**, **Profile**, **Images**, **Shortcuts** and **Help**; the name "
+"of the current :ref:`profile <profiles>` is shown in the window title."
+msgstr ""
+"窗口左侧是目录树，右侧是文件列表，下方是包含两个选项卡的规则面板：**模式**\\ （搜索和替换，本章介绍）和 **模式结构**\\ （见 "
+":ref:`schema-mode`）。底部的操作栏包含 **撤销**、**预览**、**清除**、**重新编号** 和 **重命名** "
+"按钮。菜单包括 **文件**、**编辑**、**配置文件**、**图像**、**快捷方式** 和 **帮助**；当前 :ref:`配置文件 "
+"<profiles>` 的名称显示在窗口标题中。"
+
+# ==AUTO== Automatically translated
+msgid "Opening a folder"
+msgstr "打开文件夹"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
+"directory tree, or drag a directory onto the window to load its contents."
+"  Use the **Recursive** checkbox to include sub-directories.  The "
+"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
+"listing."
+msgstr ""
+"选择 **文件 → 打开文件夹…**\\ （**Ctrl+O**），在目录树中选择一个文件夹，或将文件夹拖到窗口上以加载其内容。**递归** "
+"复选框会包含子目录。**过滤器** 字段接受 glob 模式（例如 ``*.jpg``）来限制列表。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the **Show** combo to display *Files only*, *Directories only*, or "
+"*Files and directories*.  The **By date** checkbox sorts the files by "
+"modification date instead of by name, and **Reversed** reverses the "
+"order; folders always stay first.  The list follows changes made on disk "
+"by other programs."
+msgstr ""
+"**显示** 下拉列表可选择 *仅文件*、*仅目录* 或 *文件和目录*。**按日期** 复选框按修改日期而不是按名称排序文件，**倒序** "
+"反转顺序；文件夹始终排在最前。列表会跟随其他程序在磁盘上所做的更改。"
+
+# ==AUTO== Automatically translated
+msgid "The file list"
+msgstr "文件列表"
+
+# ==AUTO== Automatically translated
+msgid "The main table shows:"
+msgstr "主表格显示："
+
+# ==AUTO== Automatically translated
+msgid "**Thumbnail** — optional, see :ref:`thumbnails`."
+msgstr "**缩略图**：可选，见 :ref:`thumbnails`。"
+
+# ==AUTO== Automatically translated
+msgid "**Original** — the current file name on disk."
+msgstr "**原始**：文件在磁盘上的当前名称。"
+
+# ==AUTO== Automatically translated
+msgid "**Sidecar** — optional, see :ref:`sidecar-column`."
+msgstr "**Sidecar**：可选，见 :ref:`sidecar-column`。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Preview** — the name after renaming.  The cell is empty when the "
+"current pattern does not match the file.  Rows shown in a distinct colour"
+" are directories."
+msgstr "**预览**：重命名后的名称。当前模式与文件不匹配时，单元格为空。以不同颜色显示的行是目录。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Preview** to compute the Preview column, or check **Auto-"
+"preview** to recompute it whenever the pattern or an option changes (the "
+"delay is set in :ref:`settings`).  **Clear** empties the column."
+msgstr ""
+"点击 **预览** 计算“预览”列，或勾选 **自动预览**，使其在模式或任一选项改变时自动重新计算（延迟在 :ref:`settings` "
+"中设置）。**清除** 清空该列。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rows with a naming conflict are highlighted in red.  The **Rename** "
+"button is disabled until all conflicts are resolved."
+msgstr "存在命名冲突的行以红色突出显示。在所有冲突解决之前，**重命名** 按钮保持禁用。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"You can select a subset of rows with the usual keyboard/mouse modifiers "
+"(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
+"files; with no selection it applies to every listed file.  **Tab** moves "
+"the focus between the directory tree and the file list."
+msgstr ""
+"可以用常规的键盘和鼠标修饰键（Shift+单击、Ctrl+单击）选择部分行。此时重命名只作用于所选文件；没有选择时则作用于列表中的所有文件。**Tab**"
+" 在目录树和文件列表之间切换焦点。"
+
+# ==AUTO== Automatically translated
+msgid "Drag and drop"
+msgstr "拖放"
+
+# ==AUTO== Automatically translated
+msgid "Files and directories can be dragged:"
+msgstr "文件和目录可以拖动："
+
+# ==AUTO== Automatically translated
+msgid "between the directory tree and the file list,"
+msgstr "在目录树和文件列表之间，"
+
+# ==AUTO== Automatically translated
+msgid ""
+"between PBRenamer and external applications (a file manager, another "
+"window),"
+msgstr "在 PBRenamer 和其他应用程序（文件管理器、另一个窗口）之间，"
+
+# ==AUTO== Automatically translated
+msgid ""
+"to copy or move them.  The action taken (copy or move) follows the "
+"standard OS/Qt drag modifier keys — the default action is a move; hold "
+"the platform's copy modifier (e.g. **Ctrl** on Linux/Windows) to force a "
+"copy instead. Custom cursors indicate the resulting action while "
+"dragging."
+msgstr ""
+"以复制或移动它们。执行的操作（复制或移动）遵循系统和 Qt 的标准拖动修饰键：默认为移动；按住平台的复制修饰键（例如 Linux 和 "
+"Windows 上的 **Ctrl**）可强制复制。拖动时会以专用光标提示将要执行的操作。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"If any dropped item would overwrite an existing file or directory, a "
+"single confirmation dialog lists how many collide and offers "
+"**Overwrite**, **Skip** (collisions only — everything else still "
+"proceeds), or **Cancel** (nothing is copied/moved). Dropping a folder "
+"into itself or one of its own sub-directories is rejected with an error."
+msgstr ""
+"如果放下的项目会覆盖已有的文件或目录，会弹出一个确认对话框，说明冲突的数量，并提供 **覆盖**、**跳过**\\ "
+"（仅跳过冲突项，其余照常进行）或 **取消**\\ （不复制也不移动任何内容）。将文件夹放入其自身或其子目录会被拒绝并报错。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only **moves** are recorded on the undo stack; copies are not undoable, "
+"since the original file is left in place."
+msgstr "只有 **移动** 会记录到撤销栈中；复制无法撤销，因为原文件仍在原处。"
+
+# ==AUTO== Automatically translated
+msgid "Configuring the rename rules"
+msgstr "配置重命名规则"
+
+# ==AUTO== Automatically translated
+msgid "The right-hand panel contains all renaming controls."
+msgstr "右侧面板包含所有重命名控件。"
+
+# ==AUTO== Automatically translated
+msgid "Search field"
+msgstr "搜索字段"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the search expression in the **Search** combo.  Three modes are "
+"available via the adjacent selector:"
+msgstr "在 **搜索** 下拉框中输入搜索表达式。旁边的选择器提供三种模式："
+
+msgid "``Pattern``"
+msgstr "``Pattern``"
+
+# ==AUTO== Automatically translated
+msgid "Wildcard-based matching.  See :ref:`pattern-mode`."
+msgstr "基于通配符的匹配。见 :ref:`pattern-mode`。"
+
+msgid "``Regex``"
+msgstr "``Regex``"
+
+# ==AUTO== Automatically translated
+msgid "Full Python ``re``-module syntax.  See :ref:`regex-mode`."
+msgstr "完整的 Python ``re`` 模块语法。见 :ref:`regex-mode`。"
+
+msgid "``Plain``"
+msgstr "``Plain``"
+
+# ==AUTO== Automatically translated
+msgid "Literal string matching.  See :ref:`plain-mode`."
+msgstr "字面字符串匹配。见 :ref:`plain-mode`。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the search field to open the non-modal "
+"Search Patterns help dialog."
+msgstr "点击搜索字段旁的 **?** 按钮可打开非模态的搜索模式帮助。"
+
+# ==AUTO== Automatically translated
+msgid "Replace field"
+msgstr "替换字段"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the replacement expression.  The syntax is the same for all three "
+"search modes.  See :ref:`replacement-fields` for the complete field "
+"reference."
+msgstr "输入替换表达式。三种搜索模式的语法相同。完整的字段参考见 :ref:`replacement-fields`。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the replace field to open the non-modal "
+"Replacement Fields help dialog."
+msgstr "点击替换字段旁的 **?** 按钮可打开非模态的替换字段帮助。"
+
+# ==AUTO== Automatically translated
+msgid "Extension mode"
+msgstr "扩展名模式"
+
+# ==AUTO== Automatically translated
+msgid "Controls how the file extension is handled during rename.  Choices:"
+msgstr "控制重命名时如何处理文件扩展名。可选项："
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Keep extension* (default) — the search/replace pattern is applied to the"
+" file *stem* only; the extension is preserved unchanged."
+msgstr "*保留扩展名*\\ （默认）：搜索和替换模式只作用于文件名的 *主干*；扩展名保持不变。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in lowercase* — the extension is preserved but forced to "
+"lowercase (e.g. ``.JPG`` → ``.jpg``)."
+msgstr "*扩展名小写*：保留扩展名，但改为小写（例如 ``.JPG`` → ``.jpg``）。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in uppercase* — the extension is preserved but forced to "
+"uppercase (e.g. ``.jpg`` → ``.JPG``)."
+msgstr "*扩展名大写*：保留扩展名，但改为大写（例如 ``.jpg`` → ``.JPG``）。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Normalize extension* — the extension is looked up (case-insensitively) "
+"in the extension normalization table (**Edit → Settings… → Extension "
+"Normalization** tab) and replaced accordingly (e.g. ``.jpeg`` → "
+"``.jpg``); left unchanged if not found in the table."
+msgstr ""
+"*标准化扩展名*：在扩展名标准化表（**编辑 → 设置… → 扩展名标准化** 选项卡）中查找扩展名（不区分大小写）并相应替换（例如 "
+"``.jpeg`` → ``.jpg``）；若表中没有则保持不变。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Modify extension* — the search/replace pattern is applied to the full "
+"file name, including the extension."
+msgstr "*修改扩展名*：搜索和替换模式作用于完整的文件名，包括扩展名。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The normalization table is managed from the **Extension Normalization** "
+"tab of the Settings dialog (**Edit → Settings…**): add, remove, or clear "
+"``from → to`` extension mappings (both sides without the leading dot). "
+"Changes to the table apply immediately and are kept even if the dialog is"
+" later cancelled."
+msgstr ""
+"标准化表在设置对话框（**编辑 → 设置…**）的 **扩展名标准化** 选项卡中管理：添加、删除或清空 ``from → to`` "
+"扩展名映射（两侧都不带前导点）。对表的修改立即生效，即使之后取消对话框也会保留。"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **sidecar file** is a file associated with a *base file* by a name "
+"suffix — for example ``photo.jpg`` (base file) and ``photo.xmp`` or "
+"``photo.info.json`` (sidecars). PBRenamer can detect these relationships,"
+" group the files together in the list, and rename an entire group in one "
+"operation."
+msgstr ""
+"**Sidecar 文件** 是通过名称后缀与 *主文件* 关联的文件，例如 ``photo.jpg``\\ （主文件）与 "
+"``photo.xmp`` 或 ``photo.info.json``\\ （Sidecar 文件）。PBRenamer "
+"能识别这些关系，在列表中将文件分组，并在一次操作中重命名整个组。"
+
+# ==AUTO== Automatically translated
+msgid "Enabling sidecar mode"
+msgstr "启用附属文件模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Sidecar mode** checkbox, next to the Extension mode combo, turns "
+"the feature on.  It is only selectable when Extension mode is *Keep "
+"extension*, *Extension in lowercase*, or *Extension in uppercase* — "
+"sidecar suffixes are never re-derived, so a mode that rewrites the "
+"extension (*Normalize extension*, *Modify extension*) would make the "
+"relationship ambiguous.  The checkbox is greyed out (and treated as "
+"unchecked) for those two modes; its checked/unchecked state is otherwise "
+"remembered like the Extension mode itself, both in the toolbar state and "
+"in named presets."
+msgstr ""
+"扩展名模式下拉框旁的 **附属文件模式** 复选框用于开启此功能。只有当扩展名模式为 *保留扩展名*、*扩展名小写* 或 *扩展名大写* "
+"时才可选择：Sidecar "
+"后缀从不重新推导，因此会改写扩展名的模式（*标准化扩展名*、*修改扩展名*）会使关系变得含糊。在这两种模式下，复选框显示为灰色（并视为未勾选）；其他情况下，它的状态与扩展名模式一样会被记住，包括工具栏状态和命名保存中。"
+
+# ==AUTO== Automatically translated
+msgid "How grouping works"
+msgstr "分组的工作方式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each file is classified into one of four categories based on its own "
+"extension: **Images**, **Video**, **Audio**, or **Other** (anything not "
+"recognised as an image/video/audio base extension — this also includes "
+"sidecar-only files such as a bare ``.xmp``). Each category has its own "
+"configurable list of:"
+msgstr ""
+"每个文件根据其自身的扩展名归入四个类别之一：**图像**、**视频**、**音频** 或 **其他**\\ "
+"（所有未被识别为图像、视频或音频主扩展名的文件，也包括只作为 Sidecar 的文件，例如单独的 "
+"``.xmp``）。每个类别都有各自可配置的列表："
+
+# ==AUTO== Automatically translated
+msgid ""
+"**base extensions** — which extensions make a file a candidate *base* for"
+" that category (not applicable to *Other*, which is the catch-all);"
+msgstr "**主扩展名**：使文件成为该类别候选 *主文件* 的扩展名（*其他* 不适用，它收纳其余所有文件）；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**sidecar suffixes** — which name suffixes, when found at the end of a "
+"file name, mark it as that category's sidecar."
+msgstr "**Sidecar 后缀**：出现在文件名末尾时，将其标记为该类别 Sidecar 文件的名称后缀。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A fifth, **Common** list of sidecar suffixes applies to every category in"
+" addition to its own list."
+msgstr "第五个列表 **通用** 中的 Sidecar 后缀，除各类别自己的列表外，还适用于所有类别。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"For a candidate sidecar file, PBRenamer looks — within the same directory"
+" only — for base files whose stem (the part before the matched suffix) "
+"and category match. A sidecar suffix is only searched among *its own "
+"potential base file's category* (plus the common list); it is never "
+"matched against unrelated categories."
+msgstr ""
+"对于候选 Sidecar 文件，PBRenamer 仅在同一目录中查找主干（匹配后缀之前的部分）和类别都相符的主文件。Sidecar 后缀只在 "
+"*其潜在主文件所属的类别*\\ （加上通用列表）中查找，从不与无关类别匹配。"
+
+# ==AUTO== Automatically translated
+msgid "**Exactly one** matching base file → the sidecar joins that base's group."
+msgstr "**恰好一个** 匹配的主文件 → Sidecar 文件加入该文件的组。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**No** matching base file → the file is left ungrouped, exactly as if "
+"sidecar mode were off."
+msgstr "**没有** 匹配的主文件 → 文件不加入任何组，与关闭附属文件模式时完全相同。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**More than one** matching base file — whether all candidates are in the "
+"same category (e.g. ``clip.xml`` matching both ``clip.jpg`` and "
+"``clip.png``, both images) or in different categories (e.g. ``clip.xml`` "
+"matching an image ``clip.jpg`` *and* a video ``clip.avi``, because "
+"``.xml`` is a sidecar suffix for both) — this is an explicit, "
+"**unrenamable ambiguity**. The sidecar and *every* candidate base file "
+"involved are flagged with an error explaining the conflict; none of them "
+"can be renamed until the ambiguity is resolved (e.g. by removing or "
+"renaming one of the conflicting files, or by adjusting the category "
+"configuration)."
+msgstr ""
+"**多于一个** 匹配的主文件，无论候选文件属于同一类别（例如 ``clip.xml`` 同时匹配 ``clip.jpg`` 和 "
+"``clip.png``，两者都是图像）还是不同类别（例如 ``clip.xml`` 同时匹配图像 ``clip.jpg`` *和* 视频 "
+"``clip.avi``，因为 ``.xml`` 对两者都是 Sidecar 后缀）：这都是一种明确的、**无法重命名的歧义**。该 "
+"Sidecar 文件以及涉及的 *每个* "
+"候选主文件都会被标记错误并说明冲突；在歧义解决之前（例如删除或重命名其中一个冲突文件，或调整类别配置），它们都不能被重命名。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"If a suffix is only configured as a sidecar suffix for one category, a "
+"file of another category with the same stem never causes ambiguity: with "
+"``.xml`` configured as an image-only sidecar suffix, ``clip.xml`` + "
+"``clip.jpg`` (image) + ``clip.avi`` (video) has a single candidate "
+"(``clip.jpg``) — ``clip.xml`` joins its group, and ``clip.avi`` stays an "
+"independent, ungrouped file."
+msgstr ""
+"如果某个后缀只被配置为一个类别的 Sidecar 后缀，那么另一个类别中主干相同的文件永远不会造成歧义：当 ``.xml`` 仅被配置为图像的 "
+"Sidecar 后缀时，``clip.xml`` + ``clip.jpg``\\ （图像）+ ``clip.avi``\\ "
+"（视频）只有一个候选（``clip.jpg``）；``clip.xml`` 加入它的组，而 ``clip.avi`` 仍是独立、不分组的文件。"
+
+# ==AUTO== Automatically translated
+msgid "Selection, preview, and renaming"
+msgstr "选择、预览和重命名"
+
+# ==AUTO== Automatically translated
+msgid "While sidecar mode is active:"
+msgstr "附属文件模式开启时："
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar rows are shown in a distinct colour in the file list; ambiguous "
+"rows are shown as errors (like any other conflict), disabling the "
+"**Rename** button until resolved."
+msgstr "Sidecar 行在文件列表中以不同颜色显示；有歧义的行像其他冲突一样显示为错误，并在解决之前禁用 **重命名** 按钮。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selecting any file in a group — the base or any of its sidecars — "
+"automatically selects the whole group."
+msgstr "选择组中的任何文件（主文件或其任一 Sidecar 文件）都会自动选中整个组。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The rename pattern is applied to the base file's *stem* only, exactly as "
+"under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same"
+" transformed stem, followed verbatim by its own sidecar suffix (case "
+"preserved as found on disk) — the suffix itself is never altered."
+msgstr ""
+"重命名模式只作用于主文件的 *主干*，与 *保留扩展名*、*扩展名小写* 或 *扩展名大写* 完全相同；每个 Sidecar "
+"文件沿用同一个转换后的主干，后面原样接上它自己的 Sidecar 后缀（保留磁盘上的大小写）：后缀本身从不改变。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming a group is a single operation: the base file and all its "
+"sidecars are renamed together, recorded as one batch on the undo stack, "
+"so **Undo** restores the whole group at once."
+msgstr "重命名一个组是一次操作：主文件及其所有 Sidecar 文件一起重命名，并作为一批记录到撤销栈中，因此 **撤销** 会一次恢复整个组。"
+
+# ==AUTO== Automatically translated
+msgid "Configuring categories"
+msgstr "配置类别"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open **Edit → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category. The dialog has one tab per base "
+"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+msgstr ""
+"打开 **编辑 → 附属文件…** 配置每个类别的主扩展名和 Sidecar "
+"后缀。对话框为每个主类别（*图像*、*视频*、*音频*、*其他*）各设一个选项卡，另有一个 *通用* 选项卡："
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each *base extensions* list (Images/Video/Audio only — *Other* has no "
+"such list, it is the catch-all) and each *sidecar suffixes* list can be "
+"edited with add/remove controls; an extension already assigned to a "
+"different category is rejected with a warning naming the conflicting "
+"category."
+msgstr ""
+"每个 *主扩展名* 列表（仅图像、视频和音频：*其他* 没有，它收纳其余所有文件）和每个 *Sidecar 后缀* "
+"列表都可以用添加和删除按钮编辑；已分配给其他类别的扩展名会被拒绝，并给出指明该类别的警告。"
+
+# ==AUTO== Automatically translated
+msgid "Each list has its own **Restore defaults** button."
+msgstr "每个列表都有自己的 **恢复默认值** 按钮。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Changes apply immediately and persist across sessions "
+"(``sidecar_config.json`` in the folder of the current profile), "
+"independently of whether the dialog is later closed or cancelled."
+msgstr "修改立即生效并在会话之间保留（保存在当前配置文件文件夹中的 ``sidecar_config.json``），无论之后对话框是关闭还是取消。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar grouping is also available in :ref:`headless mode <cli-"
+"reference>` via ``--sidecar-mode`` / ``--no-sidecar-mode``."
+msgstr ""
+"Sidecar 分组在 :ref:`无界面模式 <cli-reference>` 中也可通过 ``--sidecar-mode`` / "
+"``--no-sidecar-mode`` 使用。"
+
+# ==AUTO== Automatically translated
+msgid "Post-processing options"
+msgstr "后处理选项"
+
+# ==AUTO== Automatically translated
+msgid ""
+"These transforms are applied *after* the search/replace step, in the "
+"order listed:"
+msgstr "这些转换在搜索和替换步骤 *之后* 按所列顺序应用："
+
+# ==AUTO== Automatically translated
+msgid "**Separator**"
+msgstr "**分隔符**"
+
+# ==AUTO== Automatically translated
+msgid "Convert between space-like delimiters.  Choices:"
+msgstr "在类似空格的分隔符之间转换。可选项："
+
+# ==AUTO== Automatically translated
+msgid "*None* — no conversion (default)"
+msgstr "*无*：不转换（默认）"
+
+# ==AUTO== Automatically translated
+msgid "*Space → underscore*"
+msgstr "*空格 → 下划线*"
+
+# ==AUTO== Automatically translated
+msgid "*Underscore → space*"
+msgstr "*下划线 → 空格*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dot*"
+msgstr "*空格 → 点*"
+
+# ==AUTO== Automatically translated
+msgid "*Dot → space*"
+msgstr "*点 → 空格*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dash*"
+msgstr "*空格 → 连字符*"
+
+# ==AUTO== Automatically translated
+msgid "*Dash → space*"
+msgstr "*连字符 → 空格*"
+
+# ==AUTO== Automatically translated
+msgid "**Case**"
+msgstr "**大小写**"
+
+# ==AUTO== Automatically translated
+msgid "Apply a case transform to the result:"
+msgstr "对结果应用大小写转换："
+
+# ==AUTO== Automatically translated
+msgid "*None* — no change (default)"
+msgstr "*无*：不改变（默认）"
+
+# ==AUTO== Automatically translated
+msgid "*UPPER CASE*"
+msgstr "*大写*"
+
+# ==AUTO== Automatically translated
+msgid "*lower case*"
+msgstr "*小写*"
+
+# ==AUTO== Automatically translated
+msgid "*Capitalize* (first character upper, rest lower)"
+msgstr "*首字母大写*\\ （第一个字符大写，其余小写）"
+
+# ==AUTO== Automatically translated
+msgid "*Title Case* (each word capitalised)"
+msgstr "*标题格式*\\ （每个单词首字母大写）"
+
+# ==AUTO== Automatically translated
+msgid "**Strip accents**"
+msgstr "**去除重音**"
+
+# ==AUTO== Automatically translated
+msgid "Remove diacritics via Unicode NFD normalisation (``á → a``, ``ü → u``)."
+msgstr "通过 Unicode NFD 规范化去除变音符号（``á → a``、``ü → u``）。"
+
+# ==AUTO== Automatically translated
+msgid "**Collapse duplicates**"
+msgstr "**合并重复分隔符**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse consecutive identical separator characters (``.``, ``-``, ``_``,"
+" space) into one."
+msgstr "将连续相同的分隔符（``.``、``-``、``_``、空格）合并为一个。"
+
+# ==AUTO== Automatically translated
+msgid "Presets"
+msgstr "保存项"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search and replace combos keep a history of the patterns used (most "
+"recent first); the button next to each combo adds the current pattern to "
+"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
+"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+msgstr ""
+"搜索和替换下拉框会保留所用模式的历史记录（最近的在前）；每个下拉框旁的按钮会把当前模式加入其中。**编辑 → 历史记录…** 可编辑搜索、替换和 "
+":ref:`Sidecar 过滤器 <sidecar-filter>` 的历史记录：添加、删除、调整顺序、排序或清空。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Save** field gives the current settings a name: type a name and "
+"click **Save**, pick it later from the same drop-down to restore it, or "
+"click **Delete** to remove it.  Named saves can also be loaded with "
+"``--saved`` in headless mode.  Histories and named saves belong to the "
+"current :ref:`profile <profiles>`."
+msgstr ""
+"**保存** 字段为当前设置命名：输入名称并点击 **保存**，之后在同一下拉框中选择它即可恢复，或点击 **删除** "
+"将其删除。命名保存项也可以在无界面模式下用 ``--saved`` 加载。历史记录和命名保存项属于当前 :ref:`配置文件 "
+"<profiles>`。"
+
+# ==AUTO== Automatically translated
+msgid "Applying renames"
+msgstr "应用重命名"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Rename** (**F2**) to apply the renames shown in the Preview "
+"column. The button shows how many files will be renamed, e.g. **Rename "
+"(12)**, and is only enabled when a preview is displayed and has no "
+"conflict.  The status bar reports how many files were renamed."
+msgstr ""
+"点击 **重命名**\\ （**F2**）应用“预览”列中显示的重命名。按钮会显示将要重命名的文件数，例如 **重命名 "
+"(12)**，并且只有在显示了无冲突的预览时才可用。状态栏会报告已重命名的文件数。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Renaming is atomic: every target is checked first, and if one of them "
+"fails during the operation, the renames already done are rolled back.  "
+"When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
+"``{dest}`` template), missing folders are created, and source folders "
+"left empty below the listed folder are removed.  After a rename the "
+"Preview column is cleared."
+msgstr ""
+"重命名是原子操作：先检查所有目标，若其中之一在操作过程中失败，已完成的重命名会被回滚。当新名称包含文件夹时（:ref:`模式结构 <schema-"
+"mode>` 或带 ``{dest}`` 的模板），会创建缺少的文件夹，并删除所列文件夹下变为空的源文件夹。重命名后，“预览”列会被清空。"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "撤销"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Undo** to revert the most recent batch.  Each rename batch is "
+"recorded on an undo stack; the button label shows the number of available"
+" batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
+" drag and drop, :ref:`rotations and EXIF orientation resets <image-"
+"rotation>` are recorded on the same stack."
+msgstr ""
+"点击 **撤销** 可撤回最近一批操作。每批重命名都会记录到撤销栈中；当有多批可撤销时，按钮标签会显示数量（例如 **撤销 "
+"(3)**）。拖放产生的移动、:ref:`旋转和 EXIF 方向重置 <image-rotation>` 也记录在同一个栈中。"
+
+# ==AUTO== Automatically translated
+msgid "Shortcuts"
+msgstr "快捷方式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Shortcuts** menu provides one-click navigation to common "
+"directories."
+msgstr "**快捷方式** 菜单提供一键跳转到常用目录。"
+
+# ==AUTO== Automatically translated
+msgid "**System directories**"
+msgstr "**系统目录**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The top of the menu lists platform directories (Home, Desktop, Documents,"
+" Downloads, Pictures, Music, Videos).  On Linux, GTK bookmarks are shown "
+"instead when the file ``~/.config/gtk-3.0/bookmarks`` (or ``~/.gtk-"
+"bookmarks``) exists."
+msgstr ""
+"菜单顶部列出平台目录（主目录、桌面、文档、下载、图片、音乐、视频）。在 Linux 上，如果存在 "
+"``~/.config/gtk-3.0/bookmarks``\\ （或 ``~/.gtk-bookmarks``）文件，则改为显示 GTK "
+"书签。"
+
+# ==AUTO== Automatically translated
+msgid "**User-defined shortcuts**"
+msgstr "**自定义快捷方式**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Right-click any directory in the left-hand tree and choose **Add as "
+"shortcut**.  The entry is appended to the shortcuts list and persisted "
+"between sessions."
+msgstr "在左侧目录树中右键单击任一目录，选择 **添加为快捷方式**。该条目会追加到快捷方式列表中，并在会话之间保留。"
+
+# ==AUTO== Automatically translated
+msgid "**Editing shortcuts**"
+msgstr "**编辑快捷方式**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **Shortcuts → Edit shortcuts…** to open the *Edit Shortcuts* "
+"dialog, where shortcuts can be reordered with *Move up* / *Move down* or "
+"removed."
+msgstr "选择 **快捷方式 → 编辑快捷方式…** 打开 *编辑快捷方式* 对话框，可在其中用 *上移* / *下移* 调整顺序或删除快捷方式。"
+
+# ==AUTO== Automatically translated
+msgid "File information"
+msgstr "文件信息"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) "
+"to display a non-modal window listing the actual values of every "
+"replacement field for the selected file.  Double-click a field to insert "
+"it into the replacement pattern."
+msgstr ""
+"选择 **文件 → 信息**\\ （**Ctrl+I**，也位于 **图像** "
+"菜单中），打开一个非模态窗口，列出所选文件每个替换字段的实际值。双击某个字段可将其插入替换模式。"
+
+# ==AUTO== Automatically translated
+msgid "The window has three groups:"
+msgstr "窗口分为三组："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Universal fields** — ``{date}``, ``{datetime}``, ``{mdatetime}``, "
+"``{cdatetime}``, ``{dir}``; values are read from the file system."
+msgstr "**通用字段**：``{date}``、``{datetime}``、``{mdatetime}``、``{cdatetime}``、``{dir}``；其值从文件系统读取。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Batch fields** — ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``, "
+"``{re:name}``; labelled *Computed* (they depend on the active pattern)."
+msgstr ""
+"**批量字段**：``{0}``、``{1}``/``{2}``…、``{num}``、``{newnum}``、``{re:name}``；标为"
+" *计算值*\\ （取决于当前模式）。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Metadata fields** — ``{im:…}``, ``{au:…}``, or ``{vi:…}`` depending on "
+"the file type; values are read from the file's embedded metadata."
+msgstr "**元数据字段**：根据文件类型为 ``{im:…}``、``{au:…}`` 或 ``{vi:…}``；其值从文件内嵌的元数据读取。"
+
+# ==AUTO== Automatically translated
+msgid "The window updates live whenever the selection changes."
+msgstr "每当选择改变时，窗口会实时更新。"
+
+# ==AUTO== Automatically translated
+msgid "Help"
+msgstr "帮助"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Help** menu opens this **User guide** in the web browser, in the "
+"language of the interface, and the **Keyboard and mouse shortcuts…** "
+"window (**F1**), which lists every shortcut of the main window and of the"
+" image viewer."
+msgstr ""
+"**帮助** 菜单以界面语言在网页浏览器中打开本 **用户指南**，并可打开 **键盘和鼠标快捷操作…** "
+"窗口（**F1**），其中列出主窗口和图片查看器的所有快捷操作。"
+
+# ==AUTO== Automatically translated
+msgid "Profiles"
+msgstr "配置文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **profile** is a named set of settings for one way of working: for "
+"instance a ``default`` profile that renames documents in place with the "
+"Pattern tab, and a ``photos`` profile that sorts pictures into a folder "
+"tree with the Schema tab, thumbnails and the sidecar column.  Switching "
+"profiles switches all of this at once."
+msgstr ""
+"**配置文件** 是为某种工作方式命名的一组设置：例如，用“模式”选项卡就地重命名文档的 ``default`` "
+"配置文件，以及用“模式结构”选项卡、缩略图和 Sidecar 列把图片归类到文件夹树中的 ``photos`` "
+"配置文件。切换配置文件会一次性切换所有这些设置。"
+
+# ==AUTO== Automatically translated
+msgid "A profile holds:"
+msgstr "配置文件包含："
+
+# ==AUTO== Automatically translated
+msgid ""
+"the tab shown at start-up (Pattern or Schema) and the Schema tab settings"
+" (number and titles of the fields, destination, video marker and its "
+"position, fill gaps);"
+msgstr "启动时显示的选项卡（模式或模式结构）以及“模式结构”选项卡的设置（字段数量和标题、目标、视频标记及其位置、填补编号空缺）；"
+
+# ==AUTO== Automatically translated
+msgid "the :ref:`sidecar <sidecar-files>` categories and suffixes;"
+msgstr ":ref:`Sidecar <sidecar-files>` 类别和后缀；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the display options (thumbnails and their size, sidecar column, sidecar "
+"filter, sort by date, history length) and the image options (viewer zoom,"
+" EXIF orientation, metadata panel, deletion);"
+msgstr ""
+"显示选项（缩略图及其尺寸、Sidecar 列、Sidecar 过滤器、按日期排序、历史记录长度）和图像选项（查看器缩放、EXIF "
+"方向、元数据面板、删除）；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the histories (search, replacement, schema fields, sidecar filter) and "
+"the named saves;"
+msgstr "历史记录（搜索、替换、模式结构字段、Sidecar 过滤器）和命名保存项；"
+
+# ==AUTO== Automatically translated
+msgid "the last folder and the state of the option bar."
+msgstr "上次的文件夹和选项栏的状态。"
+
+# ==AUTO== Automatically translated
+msgid "Managing profiles"
+msgstr "管理配置文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Profile** menu lists the profiles: choose one to switch to it.  It "
+"also offers:"
+msgstr "**配置文件** 菜单列出所有配置文件：选择其中一个即可切换。菜单还提供："
+
+# ==AUTO== Automatically translated
+msgid "**New profile…** (**Ctrl+N**)"
+msgstr "**新建配置文件…**\\ （**Ctrl+N**）"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with the default settings and switch to it."
+msgstr "用默认设置创建配置文件并切换到它。"
+
+# ==AUTO== Automatically translated
+msgid "**Duplicate profile…** (**Ctrl+Shift+D**)"
+msgstr "**复制配置文件…**\\ （**Ctrl+Shift+D**）"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy."
+msgstr "以新名称复制当前配置文件并切换到副本。"
+
+# ==AUTO== Automatically translated
+msgid "**Rename profile…**"
+msgstr "**重命名配置文件…**"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name."
+msgstr "为当前配置文件指定新名称。"
+
+# ==AUTO== Automatically translated
+msgid "**Delete profile…**"
+msgstr "**删除配置文件…**"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings."
+msgstr "永久删除一个配置文件及其所有设置。"
+
+# ==AUTO== Automatically translated
+msgid "**Profile configuration…** (**Ctrl+,**)"
+msgstr "**配置文件设置…**\\ （**Ctrl+,**）"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile (see below)."
+msgstr "配置当前配置文件（见下文）。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
+"whose name starts with ``-`` is **hidden**: it is not listed in the menu "
+"and is never reopened at start-up, but it can be used with ``--profile``."
+"  At least one visible profile always exists: the last one can be neither"
+" deleted nor hidden, and ``default`` is created again if none is left.  "
+"Apart from that, ``default`` is a profile like any other."
+msgstr ""
+"配置文件名称可以包含字母、数字、``-`` 和 ``_``。名称以 ``-`` 开头的配置文件是 **隐藏** "
+"的：它不出现在菜单中，启动时也不会被重新打开，但可以通过 ``--profile`` "
+"使用。始终至少存在一个可见的配置文件：最后一个既不能删除也不能隐藏，如果一个也不剩，会重新创建 "
+"``default``。除此之外，``default`` 与其他配置文件没有区别。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer reopens the last profile used.  ``--profile NAME`` selects "
+"another one, in the GUI as in headless mode."
+msgstr "PBRenamer 会重新打开上次使用的配置文件。``--profile NAME`` 可选择其他配置文件，在图形界面和无界面模式中均适用。"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "配置文件设置"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…** has three tabs."
+msgstr "**配置文件 → 配置文件设置…** 有三个选项卡。"
+
+# ==AUTO== Automatically translated
+msgid "**Schema**"
+msgstr "**模式结构**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Number of fields of the schema, the title of each field (shown above it "
+"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+msgstr "模式结构的字段数、每个字段的标题（显示在“模式结构”选项卡中该字段上方）以及视频标记（见 :ref:`schema-mode`）。"
+
+# ==AUTO== Automatically translated
+msgid "**Display**"
+msgstr "**显示**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Thumbnails (shown or not, maximum width and height), the sidecar column "
+"and the sidecar content filter (shown or not), the extension of the "
+"sidecar created by a double-click, whether empty sidecar files are "
+"deleted when a folder is loaded, and the maximum number of entries kept "
+"in each history."
+msgstr ""
+"缩略图（是否显示、最大宽度和高度）、Sidecar 列和按 Sidecar 内容过滤（是否显示）、双击时创建的 Sidecar "
+"文件的扩展名、加载文件夹时是否删除空的 Sidecar 文件，以及每个历史记录保留的最大条目数。"
+
+# ==AUTO== Automatically translated
+msgid "**Images**"
+msgstr "**图像**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
+"whether images are shown turned as their EXIF orientation says (also "
+"applies to the thumbnails).  Deletion: move deleted files to the trash "
+"instead of removing them permanently, ask for a confirmation, and the "
+"number of files above which the confirmation only gives their count."
+msgstr ""
+"图片查看器：缩放步长、最大缩放、元数据面板所在的一侧，以及是否按 EXIF "
+"方向旋转显示图像（也适用于缩略图）。删除：将删除的文件移到回收站而不是永久删除、要求确认，以及超过多少个文件时确认对话框只显示数量。"
+
+# ==AUTO== Automatically translated
+msgid "Schema Mode"
+msgstr "模式结构模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Schema** tab sorts files into a folder tree built from a few "
+"fields, for instance a place, a year and a subject.  With the fields "
+"``Paris``, ``2024``, *(empty)*, ``Street``, *(empty)*, ``###`` and the "
+"destination ``~/Photos``, the file ``IMG_0012.jpg`` becomes::"
+msgstr ""
+"**模式结构** 选项卡根据几个字段（例如地点、年份和主题）构建文件夹树，并把文件归类到其中。若字段为 "
+"``Paris``、``2024``、*（空）*、``Street``、*（空）*、``###``，目标为 ``~/Photos``，则文件 "
+"``IMG_0012.jpg`` 变为::"
+
+# ==AUTO== Automatically translated
+msgid "The rules are:"
+msgstr "规则如下："
+
+# ==AUTO== Automatically translated
+msgid ""
+"every non-empty field, in order, is both a folder level under the "
+"destination and a part of the name, joined with ``_``;"
+msgstr "每个非空字段按顺序既是目标下的一级文件夹，也是名称的一部分，各部分以 ``_`` 连接；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a field made only of ``#`` is the **counter**, padded to the number of "
+"``#``; at most one field may be a counter, and it is always placed at the"
+" end of the name;"
+msgstr "只由 ``#`` 组成的字段是 **计数器**，用零补足到 ``#`` 的个数；最多只能有一个字段是计数器，并且它总是放在名称末尾；"
+
+# ==AUTO== Automatically translated
+msgid "empty fields are skipped;"
+msgstr "空字段会被跳过；"
+
+# ==AUTO== Automatically translated
+msgid "a field may not contain ``_``, ``.``, ``/`` or ``\\``;"
+msgstr "字段不能包含 ``_``、``.``、``/`` 或 ``\\``；"
+
+# ==AUTO== Automatically translated
+msgid "the extension is kept, in lower case."
+msgstr "保留扩展名，并转为小写。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The counter continues after the highest number already used in the target"
+" folder by files of the same name, so that a new batch never overwrites "
+"earlier ones.  With **Fill gaps** checked, it takes the smallest free "
+"numbers first.  Images and videos are numbered separately."
+msgstr ""
+"计数器从目标文件夹中同名文件已使用的最大编号之后继续，因此新的一批文件永远不会覆盖以前的文件。勾选 **填补编号空缺** "
+"后，会优先使用最小的空闲编号。图像和视频分别编号。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each field keeps a history of its values (most recent first) in its drop-"
+"down list.  The history is updated when a rename or a renumbering "
+"succeeds."
+msgstr "每个字段在其下拉列表中保留取值历史（最近的在前）。重命名或重新编号成功时会更新历史记录。"
+
+# ==AUTO== Automatically translated
+msgid "Destination"
+msgstr "目标"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Destination** field is the root of the folder tree.  It must be an "
+"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"renaming, and source folders left empty are removed."
+msgstr "**目标** 字段是文件夹树的根。它必须是绝对路径；可用 **浏览…** 选择。重命名时会创建缺少的文件夹，并删除变为空的源文件夹。"
+
+# ==AUTO== Automatically translated
+msgid "Video marker"
+msgstr "视频标记"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **video marker** (set in **Profile configuration…**, *Schema* tab) is a"
+" text added to the name of video files only, so that they are easy to "
+"tell apart: with the marker ``vid``, a video becomes "
+"``Paris_2024_Street_vid_001.mp4``. The small radio buttons between the "
+"fields choose where the marker goes, from before the first field to after"
+" the last one."
+msgstr ""
+"**视频标记**\\ （在 **配置文件设置…** 的 *模式结构* 选项卡中设置）是只添加到视频文件名中的文字，便于区分：若标记为 "
+"``vid``，视频会变为 "
+"``Paris_2024_Street_vid_001.mp4``。字段之间的小单选按钮用于选择标记的位置，从第一个字段之前到最后一个字段之后。"
+
+# ==AUTO== Automatically translated
+msgid "Sidecars in schema mode"
+msgstr "模式结构模式下的 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar mode is always on in the Schema tab: each sidecar follows its "
+"base file and takes its new name.  A sidecar without a base file (an "
+"*orphan*) is neither renamed nor renumbered; its preview reads *orphan "
+"sidecar, not renamed*.  **Images → Orphan sidecars…** lists them (see "
+":ref:`image-tools`)."
+msgstr ""
+"在“模式结构”选项卡中，附属文件模式始终开启：每个 Sidecar 文件跟随其主文件并获得其新名称。没有主文件的 Sidecar 文件（*孤立* "
+"文件）既不会被重命名也不会被重新编号；其预览显示 *孤立的 Sidecar 文件，未重命名*。**图像 → 孤立 Sidecar 文件…** "
+"可列出它们（见 :ref:`image-tools`）。"
+
+# ==AUTO== Automatically translated
+msgid "Renumber"
+msgstr "重新编号"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the schema has a counter, the **Renumber** button renumbers the "
+"selected files (every listed file if none is selected) from 1, in place, "
+"without moving them.  Like **Rename**, it is only enabled when a preview "
+"is displayed.  Files are renamed through temporary names, so swapping "
+"numbers is safe."
+msgstr ""
+"当模式结构中有计数器时，**重新编号** 按钮会从 1 开始就地重新编号所选文件（若未选择则为列表中的所有文件），不移动文件。与 **重命名** "
+"一样，只有在显示预览时才可用。文件会通过临时名称进行重命名，因此交换编号是安全的。"
+
+# ==AUTO== Automatically translated
+msgid "Template"
+msgstr "模板"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → Template** fills the schema from the name of the selected file"
+" and up to three of its parent folders: the parts of the name found in a "
+"field's history go to that field, and a trailing number goes to the "
+"counter field.  A dialog shows the proposed fields before they are filled"
+" in."
+msgstr ""
+"**图像 → 模板** "
+"根据所选文件的名称及其最多三级上级文件夹填写模式结构：名称中出现在某字段历史记录里的部分会填入该字段，末尾的数字会填入计数器字段。填写之前，会有对话框显示建议的字段。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"In headless mode, the same schema is given with ``--schema``, for "
+"instance ``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (see :ref"
+":`cli-reference`)."
+msgstr ""
+"在无界面模式中，同样的模式结构用 ``--schema`` 指定，例如 ``--schema 'Paris,2024,,Street,,###' "
+"--dest ~/Photos``\\ （见 :ref:`cli-reference`）。"
+
+# ==AUTO== Automatically translated
+msgid "Image Tools"
+msgstr "图像工具"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer includes tools to look at and tidy up photos and videos before "
+"sorting them.  Some depend on optional libraries (see :ref:`optional-"
+"dependencies`); an action that cannot work is disabled."
+msgstr ""
+"PBRenamer 提供了在归类之前查看和整理照片与视频的工具。其中一些依赖可选库（见 :ref:`optional-"
+"dependencies`）；无法工作的操作会被禁用。"
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "缩略图"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Thumbnails** checkbox of the option bar adds a thumbnail column to "
+"the file list.  Thumbnails are loaded in the background, visible rows "
+"first. Their maximum size is set in **Profile configuration…**, *Display*"
+" tab. Double-clicking a thumbnail opens the image in the viewer; double-"
+"clicking a name opens the file with its default application."
+msgstr ""
+"选项栏中的 **缩略图** 复选框会在文件列表中添加缩略图列。缩略图在后台加载，可见行优先。其最大尺寸在 **配置文件设置…** 的 *显示* "
+"选项卡中设置。双击缩略图会在查看器中打开图像；双击名称会用默认应用程序打开文件。"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar column"
+msgstr "Sidecar 列"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, the **Sidecar** column shows "
+"whether a file has sidecars: ``●`` followed by their suffixes, or ``○`` "
+"for an image, video or audio file without any.  Double-clicking it opens "
+"the sidecar (a menu lets you choose when there are several).  On a file "
+"without a sidecar, it creates an empty one with the extension set in the "
+"profile (for instance ``xmp``) and opens it."
+msgstr ""
+"在 **配置文件设置…** 中启用后，**Sidecar** 列会显示文件是否有 Sidecar 文件：``●`` 后跟其后缀，或对没有 "
+"Sidecar 的图像、视频或音频文件显示 ``○``。双击该列会打开 Sidecar 文件（有多个时可通过菜单选择）。对于没有 Sidecar "
+"的文件，会用配置文件中设置的扩展名（例如 ``xmp``）创建一个空文件并打开。"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Sidecar 过滤器"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, a **Sidecar filter…** field "
+"appears in the action bar.  Type a regular expression: only the files "
+"having a sidecar whose content matches it remain listed (case-"
+"insensitive, across lines), together with their sidecars.  The list is "
+"filtered as you type; **Enter** also adds the expression to the filter's "
+"own history.  Empty the field to list every file again."
+msgstr ""
+"在 **配置文件设置…** 中启用后，操作栏中会出现 **Sidecar 过滤器…** 字段。输入一个正则表达式：只有其 Sidecar "
+"文件内容与之匹配（不区分大小写，可跨行）的文件及其 Sidecar 文件会保留在列表中。列表会随输入即时过滤；按 **Enter** "
+"还会把表达式加入过滤器自己的历史记录。清空该字段即可重新列出所有文件。"
+
+# ==AUTO== Automatically translated
+msgid "The Images menu"
+msgstr "“图像”菜单"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Images** menu is also the context menu of the file list.  Its "
+"actions apply to the selected files:"
+msgstr "**图像** 菜单也是文件列表的右键菜单。其操作作用于所选文件："
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**打开**\\ （**Ctrl+Enter**）"
+
+# ==AUTO== Automatically translated
+msgid "Open the files with their default application."
+msgstr "用默认应用程序打开文件。"
+
+# ==AUTO== Automatically translated
+msgid "**Open with…** (**Ctrl+Shift+O**)"
+msgstr "**打开方式…**\\ （**Ctrl+Shift+O**）"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the file."
+msgstr "选择用于打开文件的应用程序。"
+
+# ==AUTO== Automatically translated
+msgid "**Open sidecar**"
+msgstr "**打开 Sidecar 文件**"
+
+# ==AUTO== Automatically translated
+msgid "Open one of the sidecars of the file."
+msgstr "打开该文件的某个 Sidecar 文件。"
+
+# ==AUTO== Automatically translated
+msgid "**View** (**Enter**)"
+msgstr "**查看**\\ （**Enter**）"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer."
+msgstr "在图片查看器中显示所选的图像和视频。"
+
+# ==AUTO== Automatically translated
+msgid "**Template**"
+msgstr "**模板**"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name (see :ref:`schema-mode`)."
+msgstr "根据文件名填写模式结构（见 :ref:`schema-mode`）。"
+
+# ==AUTO== Automatically translated
+msgid "**Delete** (**Del**)"
+msgstr "**删除**\\ （**Del**）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delete the files and their sidecars, to the trash or permanently, after a"
+" confirmation, as set in the profile."
+msgstr "按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除。"
+
+# ==AUTO== Automatically translated
+msgid "**Orphan sidecars…**"
+msgstr "**孤立 Sidecar 文件…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"List the sidecar files of the folder that have no base file, then delete "
+"the selected ones or all of them."
+msgstr "列出文件夹中没有主文件的 Sidecar 文件，然后删除所选的或全部。"
+
+# ==AUTO== Automatically translated
+msgid "**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)"
+msgstr "**向左旋转 90° / 180° / 向右旋转 90°**\\ （**F6** / **F7** / **F8**）"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the images without loss."
+msgstr "无损旋转图像。"
+
+# ==AUTO== Automatically translated
+msgid "**Apply EXIF orientation** (**F9**)"
+msgstr "**应用EXIF方向**\\ （**F9**）"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation tag says, then reset the tag."
+msgstr "按 EXIF 方向标签旋转像素，然后重置该标签。"
+
+# ==AUTO== Automatically translated
+msgid "**Force EXIF orientation to 0°** (**F10**)"
+msgstr "**强制将 EXIF 方向设为 0°**\\ （**F10**）"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to normal without rotating the pixels."
+msgstr "将 EXIF 方向标签设为正常，不旋转像素。"
+
+# ==AUTO== Automatically translated
+msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
+msgstr "**信息**\\ （**Ctrl+I**）和 **刷新**\\ （**F5**）"
+
+# ==AUTO== Automatically translated
+msgid "Show the file information window; read the folder again."
+msgstr "显示文件信息窗口；重新读取文件夹。"
+
+# ==AUTO== Automatically translated
+msgid "Rotation and EXIF orientation"
+msgstr "旋转和 EXIF 方向"
+
+# ==AUTO== Automatically translated
+msgid ""
+"JPEG files are rotated with ``jpegtran`` (from libjpeg-turbo), which "
+"turns them without recompressing; other formats are saved by Pillow, "
+"without loss where the format allows it.  Rotations and EXIF resets can "
+"be undone with **Undo**."
+msgstr ""
+"JPEG 文件用 ``jpegtran``\\ （来自 libjpeg-turbo）旋转，不会重新压缩；其他格式由 Pillow "
+"保存，在格式允许时无损。旋转和 EXIF 方向重置可以用 **撤销** 撤回。"
+
+# ==AUTO== Automatically translated
+msgid "The image viewer"
+msgstr "图片查看器"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → View** opens the image viewer on the selected images and "
+"videos (a video is shown as a placeholder).  The viewer follows the "
+"selection of the file list.  It offers:"
+msgstr "**图像 → 查看** 用所选的图像和视频打开图片查看器（视频以占位图显示）。查看器会跟随文件列表的选择。它提供："
+
+# ==AUTO== Automatically translated
+msgid ""
+"zoom modes in the toolbar: fit window (**0** or **X**), actual size "
+"(**1** or **Z**), fit width (**W**), fit height (**H**), and zoom in and "
+"out (**+** and **−**); drag to pan, double-click to centre on a point, "
+"**Ctrl+click** and **Ctrl+right-click** to zoom on a point;"
+msgstr ""
+"工具栏中的缩放模式：适应窗口（**0** 或 **X**）、实际大小（**1** 或 "
+"**Z**）、适应宽度（**W**）、适应高度（**H**），以及放大和缩小（**+** 和 "
+"**−**）；拖动以平移，双击以某点为中心，**Ctrl+单击** 和 **Ctrl+右键单击** 以某点为中心缩放；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"navigation with the arrow keys: within the selection when several files "
+"are selected, otherwise to the previous or next file of the list; a "
+"toolbar button switches between linear navigation (stop at the ends) and "
+"circular navigation (wrap around);"
+msgstr "用方向键导航：选择了多个文件时在所选文件之间切换，否则切换到列表中的上一个或下一个文件；工具栏中的一个按钮可在线性导航（在两端停止）和循环导航（回到开头）之间切换；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a strip of thumbnails of the selection, when several files are selected: "
+"click one to show it;"
+msgstr "选择了多个文件时，显示所选文件的缩略图条：单击其中一个即可显示；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the "
+"image; double-click a field to insert it into the replacement pattern;"
+msgstr "元数据面板（**I**），显示图像的 EXIF、IPTC 和 XMP 数据；双击某个字段可将其插入替换模式；"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the image actions: open, open with, delete, rotations and EXIF "
+"orientation, with the same shortcuts as in the main window; **Esc** "
+"closes the viewer."
+msgstr "图像操作：打开、打开方式、删除、旋转和 EXIF 方向，快捷键与主窗口相同；**Esc** 关闭查看器。"
+
+# ==AUTO== Automatically translated
+msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."
+msgstr "完整列表见 **帮助 → 键盘和鼠标快捷操作…**\\ （**F1**）。"
+
+# ==AUTO== Automatically translated
+msgid "Settings"
+msgstr "设置"
+
+# ==AUTO== Automatically translated
+msgid "**Edit → Settings…** holds the options shared by every profile."
+msgstr "**编辑 → 设置…** 包含所有配置文件共用的选项。"
+
+# ==AUTO== Automatically translated
+msgid "*General* tab:"
+msgstr "*常规* 选项卡："
+
+# ==AUTO== Automatically translated
+msgid "**Language**"
+msgstr "**语言**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Select the UI language.  Several languages are bundled; the change takes "
+"effect at the next start."
+msgstr "选择界面语言。内置多种语言；更改在下次启动时生效。"
+
+# ==AUTO== Automatically translated
+msgid "**Log level**"
+msgstr "**日志级别**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Controls diagnostic output written to the console.  Choices: ``DEBUG``, "
+"``INFO`` (default), ``WARNING``, ``ERROR``, ``CRITICAL``.  Can be "
+"overridden at launch with ``--debug``, ``--verbose``, or ``--quiet``."
+msgstr ""
+"控制写入控制台的诊断输出。可选项：``DEBUG``、``INFO``\\ "
+"（默认）、``WARNING``、``ERROR``、``CRITICAL``。启动时可用 ``--debug``、``--verbose`` 或"
+" ``--quiet`` 覆盖。"
+
+# ==AUTO== Automatically translated
+msgid "**Restore last opened directory** *(Behaviour group)*"
+msgstr "**恢复上次打开的目录** *（行为组）*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the app reopens the directory that was active in the "
+"previous session of the profile.  A directory passed on the command line "
+"always takes priority.  Default: disabled (current working directory is "
+"used)."
+msgstr "启用后，应用程序会重新打开该配置文件上一个会话中的当前目录。命令行中传入的目录始终优先。默认：禁用（使用当前工作目录）。"
+
+# ==AUTO== Automatically translated
+msgid "**Restore toolbar state** *(Behaviour group)*"
+msgstr "**恢复工具栏状态** *（行为组）*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the options of the option bar and of the Pattern tab are "
+"restored as they were left."
+msgstr "启用后，选项栏和“模式”选项卡的选项会恢复到离开时的状态。"
+
+# ==AUTO== Automatically translated
+msgid "**Auto-preview delay** *(Behaviour group)*"
+msgstr "**自动预览延迟** *（行为组）*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delay, in milliseconds, before the preview is recomputed when **Auto-"
+"preview** is checked."
+msgstr "勾选 **自动预览** 时，重新计算预览前的延迟（毫秒）。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension Normalization* tab: the table used by the *Normalize "
+"extension* mode (see :ref:`extension-mode`)."
+msgstr "*扩展名标准化* 选项卡：*标准化扩展名* 模式使用的表（见 :ref:`extension-mode`）。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The settings of a profile are in **Profile → Profile configuration…** "
+"(see :ref:`profiles`)."
+msgstr "配置文件自身的设置位于 **配置文件 → 配置文件设置…**\\ （见 :ref:`profiles`）。"
+
+# ==AUTO== Automatically translated
+msgid "Configuration Files"
+msgstr "配置文件存储"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Everything the Settings dialog and other panels persist — preferences, "
+"profiles, presets, and per-feature configuration — is stored as plain-"
+"text files (Qt INI and JSON) under a single per-user configuration "
+"directory.  No system directories or registry keys are touched."
+msgstr ""
+"设置对话框和其他面板保存的所有内容（偏好设置、配置文件、保存项以及各功能的配置）都以文本文件（Qt INI 和 "
+"JSON）的形式保存在每个用户唯一的配置目录中。不会触及任何系统目录或注册表项。"
+
+# ==AUTO== Automatically translated
+msgid "Default location"
+msgstr "默认位置"
+
+# ==AUTO== Automatically translated
+msgid "Platform"
+msgstr "平台"
+
+# ==AUTO== Automatically translated
+msgid "Default directory"
+msgstr "默认目录"
+
+# ==AUTO== Automatically translated
+msgid "Linux"
+msgstr "Linux"
+
+# ==AUTO== Automatically translated
+msgid "``$XDG_CONFIG_HOME/pbrenamer`` (usually ``~/.config/pbrenamer``)"
+msgstr "``$XDG_CONFIG_HOME/pbrenamer``\\ （通常为 ``~/.config/pbrenamer``）"
+
+# ==AUTO== Automatically translated
+msgid "macOS"
+msgstr "macOS"
+
+msgid "``~/Library/Preferences/pbrenamer``"
+msgstr "``~/Library/Preferences/pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid "Windows"
+msgstr "Windows"
+
+msgid "``%APPDATA%\\pbrenamer``"
+msgstr "``%APPDATA%\\pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override with ``--config-dir DIR`` (see :ref:`cli-reference`) to point at"
+" a different directory — useful for testing or for running several "
+"isolated configurations side by side."
+msgstr ""
+"使用 ``--config-dir DIR``\\ （见 :ref:`cli-"
+"reference`）可指定其他目录，便于测试或并行运行多个相互隔离的配置。"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "文件"
+
+# ==AUTO== Automatically translated
+msgid "Shared by every profile:"
+msgstr "所有配置文件共用："
+
+msgid "``pbrenamer.conf``"
+msgstr "``pbrenamer.conf``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Qt INI settings: log level, language override, behaviour options, preview"
+" delay, last profile, image viewer options."
+msgstr "Qt INI 设置：日志级别、所选语言、行为选项、预览延迟、上次的配置文件、图片查看器选项。"
+
+msgid "``shortcuts.json``"
+msgstr "``shortcuts.json``"
+
+# ==AUTO== Automatically translated
+msgid "User-defined directory shortcuts (**Shortcuts** menu)."
+msgstr "自定义目录快捷方式（**快捷方式** 菜单）。"
+
+msgid "``extension_normalization.json``"
+msgstr "``extension_normalization.json``"
+
+# ==AUTO== Automatically translated
+msgid "Per-extension normalization table used by extension mode ``normalize``."
+msgstr "扩展名模式 ``normalize`` 使用的扩展名标准化表。"
+
+msgid "``open_with.json``"
+msgstr "``open_with.json``"
+
+# ==AUTO== Automatically translated
+msgid "Applications recently chosen with **Open with…**."
+msgstr "最近通过 **打开方式…** 选择的应用程序。"
+
+msgid "``window_state.json``"
+msgstr "``window_state.json``"
+
+# ==AUTO== Automatically translated
+msgid "Main window geometry, position, and splitter ratios."
+msgstr "主窗口的尺寸、位置和分隔条比例。"
+
+# ==AUTO== Automatically translated
+msgid "One folder per profile, ``profiles/NAME/``:"
+msgstr "每个配置文件一个文件夹，``profiles/NAME/``："
+
+msgid "``profile.json``"
+msgstr "``profile.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Tab shown at start-up, Schema tab settings, display and image options, "
+"last directory, option bar state."
+msgstr "启动时显示的选项卡、“模式结构”选项卡的设置、显示和图像选项、上次的目录、选项栏状态。"
+
+msgid "``history.json``"
+msgstr "``history.json``"
+
+# ==AUTO== Automatically translated
+msgid "Histories of the schema fields and of the sidecar filter."
+msgstr "模式结构字段和 Sidecar 过滤器的历史记录。"
+
+msgid "``sidecar_config.json``"
+msgstr "``sidecar_config.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+":ref:`Sidecar file <sidecar-files>` category configuration (base "
+"extensions / sidecar suffixes per category), managed from **Edit → "
+"Sidecar Files…**."
+msgstr ""
+":ref:`Sidecar 文件 <sidecar-files>` 的类别配置（每个类别的主扩展名和 Sidecar 后缀），通过 **编辑 → "
+"附属文件…** 管理。"
+
+msgid "``patterns/search.json`` / ``patterns/replace.json``"
+msgstr "``patterns/search.json`` / ``patterns/replace.json``"
+
+# ==AUTO== Automatically translated
+msgid "Most-recently-used search and replacement patterns."
+msgstr "最近使用的搜索和替换模式。"
+
+msgid "``patterns/saves.json``"
+msgstr "``patterns/saves.json``"
+
+# ==AUTO== Automatically translated
+msgid "Named saves, also loadable headlessly with ``--saved NAME``."
+msgstr "命名保存项，也可以在无界面模式下用 ``--saved NAME`` 加载。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"None of these files are required to exist — deleting any one of them "
+"simply resets that piece of state to its default the next time PBRenamer "
+"starts. Deleting the ``profiles`` folder recreates the profiles from the "
+"1.x configuration and PBPicat's catalogues, as on the first start of "
+"version 2."
+msgstr ""
+"这些文件都不是必需的：删除其中任何一个，只会在 PBRenamer 下次启动时将相应状态恢复为默认值。删除 ``profiles`` 文件夹会根据"
+" 1.x 的配置和 PBPicat 的目录重新创建配置文件，就像版本 2 首次启动时那样。"
+
+# ==AUTO== Automatically translated
+msgid "Migrating from PBPicat"
+msgstr "从 PBPicat 迁移"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer 2 includes every function of PBPicat, which it replaces: the "
+"schema, the destination tree, renumbering, the video marker, the image "
+"viewer, rotations, the sidecar tools and the catalogues."
+msgstr ""
+"PBRenamer 2 包含 PBPicat 的全部功能并取代它：模式结构、目标文件夹树、重新编号、视频标记、图片查看器、旋转、Sidecar "
+"工具和目录。"
+
+# ==AUTO== Automatically translated
+msgid "Automatic import"
+msgstr "自动导入"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On its first start, PBRenamer 2 reads PBPicat's configuration (without "
+"modifying it) and turns each **catalogue** into a **profile** of the same"
+" name, or ``pbpicat-NAME`` if a profile already has that name.  The "
+"imported profile opens on the Schema tab with thumbnails, the sidecar "
+"column and the sidecar filter, and keeps:"
+msgstr ""
+"首次启动时，PBRenamer 2 会读取 PBPicat 的配置（不做修改），把每个 **目录** 转换为同名的 "
+"**配置文件**；若已有同名配置文件，则命名为 ``pbpicat-"
+"NAME``。导入的配置文件会在“模式结构”选项卡中打开，启用缩略图、Sidecar 列和 Sidecar 过滤器，并保留："
+
+# ==AUTO== Automatically translated
+msgid ""
+"the number and titles of the schema fields, the destination, the video "
+"marker and its position, fill gaps;"
+msgstr "模式结构字段的数量和标题、目标、视频标记及其位置、填补编号空缺；"
+
+# ==AUTO== Automatically translated
+msgid "the image and video extensions and the sidecar extensions;"
+msgstr "图像和视频扩展名以及 Sidecar 扩展名；"
+
+# ==AUTO== Automatically translated
+msgid "the display, viewer and deletion options;"
+msgstr "显示、查看器和删除选项；"
+
+# ==AUTO== Automatically translated
+msgid "the field histories and the last folder."
+msgstr "字段历史记录和上次的文件夹。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Open with** application lists and the viewer's navigation and "
+"metadata panel options are imported too.  Window sizes, the language and "
+"PBPicat's defaults for new catalogues are not.  The settings of PBRenamer"
+" 1.x go to the ``default`` profile."
+msgstr ""
+"**打开方式** 的应用程序列表以及查看器的导航和元数据面板选项也会导入。窗口尺寸、语言以及 PBPicat "
+"为新目录设置的默认值不会导入。PBRenamer 1.x 的设置会转入 ``default`` 配置文件。"
+
+# ==AUTO== Automatically translated
+msgid "Where things are now"
+msgstr "功能现在的位置"
+
+# ==AUTO== Automatically translated
+msgid "PBPicat"
+msgstr "PBPicat"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer 2"
+msgstr "PBRenamer 2"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue, catalogue menu"
+msgstr "目录、目录菜单"
+
+# ==AUTO== Automatically translated
+msgid "Profile, **Profile** menu"
+msgstr "配置文件、**配置文件** 菜单"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue settings, program settings"
+msgstr "目录设置、程序设置"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…**, **Edit → Settings…**"
+msgstr "**配置文件 → 配置文件设置…**、**编辑 → 设置…**"
+
+# ==AUTO== Automatically translated
+msgid "Schema fields, destination, video marker buttons"
+msgstr "模式结构字段、目标、视频标记按钮"
+
+# ==AUTO== Automatically translated
+msgid "**Schema** tab"
+msgstr "**模式结构** 选项卡"
+
+# ==AUTO== Automatically translated
+msgid "*Rename All* / *Rename selection*"
+msgstr "*Rename All* / *Rename selection*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** (the selection, or every listed file when none is selected), "
+"after a preview"
+msgstr "**重命名**\\ （所选文件，若未选择则为列表中的所有文件），需先预览"
+
+# ==AUTO== Automatically translated
+msgid "*Renumber from 1*"
+msgstr "*Renumber from 1*"
+
+# ==AUTO== Automatically translated
+msgid "**Renumber** (Schema tab with a counter field)"
+msgstr "**重新编号**\\ （带计数器字段的“模式结构”选项卡）"
+
+# ==AUTO== Automatically translated
+msgid "Tooltip preview of the new name"
+msgstr "工具提示中的新名称预览"
+
+# ==AUTO== Automatically translated
+msgid "**Preview** column"
+msgstr "**预览** 列"
+
+# ==AUTO== Automatically translated
+msgid "Rotations, EXIF, open, open with, delete, template, orphan sidecars"
+msgstr "旋转、EXIF、打开、打开方式、删除、模板、孤立 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "**Images** menu and context menu of the file list"
+msgstr "**图像** 菜单和文件列表的右键菜单"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "图片查看器"
+
+# ==AUTO== Automatically translated
+msgid "**Images → View** (**Enter**)"
+msgstr "**图像 → 查看**\\ （**Enter**）"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue on the command line"
+msgstr "命令行中的目录"
+
+msgid "``pbrenamer --profile NAME``"
+msgstr "``pbrenamer --profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid "What changes"
+msgstr "有哪些变化"
+
+# ==AUTO== Automatically translated
+msgid ""
+"There is no ``pbpicat`` command: start ``pbrenamer``, or ``pbrenamer "
+"--profile NAME`` for a given profile."
+msgstr ""
+"没有 ``pbpicat`` 命令：请启动 ``pbrenamer``，或用 ``pbrenamer --profile NAME`` "
+"指定配置文件。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** and **Renumber** apply what the Preview column shows: compute "
+"the preview first (or check **Auto-preview**)."
+msgstr "**重命名** 和 **重新编号** 应用的是“预览”列显示的内容：请先计算预览（或勾选 **自动预览**）。"
+
+# ==AUTO== Automatically translated
+msgid "A sidecar without a base file is not renamed in schema mode."
+msgstr "在模式结构模式下，没有主文件的 Sidecar 文件不会被重命名。"
+
+# ==AUTO== Automatically translated
+msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgstr "每次重命名都可以用 **撤销** 撤回，旋转和 EXIF 重置也一样。"
+
+# ==AUTO== Automatically translated
+msgid "Schemas can also be applied without the GUI, with ``--schema``."
+msgstr "模式结构也可以在无界面模式下用 ``--schema`` 应用。"
+
+# ==AUTO== Automatically translated
+msgid "Search Patterns"
+msgstr "搜索模式"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "模式匹配模式"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards.  Segments matched by numbered tokens are "
+"*captured* and available in the replacement as ``{1}``, ``{2}``, etc."
+msgstr "标记（token）相当于带类型的通配符。被编号标记匹配的片段会被 *捕获*，可在替换中以 ``{1}``、``{2}`` 等形式使用。"
+
+# ==AUTO== Automatically translated
+msgid "Token"
+msgstr "标记"
+
+# ==AUTO== Automatically translated
+msgid "Matches"
+msgstr "匹配"
+
+#, python-brace-format
+msgid "``{#}``"
+msgstr "``{#}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits (0–9)"
+msgstr "一个或多个数字（0–9）"
+
+#, python-brace-format
+msgid "``{L}``"
+msgstr "``{L}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z)"
+msgstr "一个或多个字母（a–z、A–Z）"
+
+#, python-brace-format
+msgid "``{C}``"
+msgstr "``{C}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "一个或多个非空白字符"
+
+#, python-brace-format
+msgid "``{X}``"
+msgstr "``{X}``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "任意字符序列，可以为空"
+
+#, python-brace-format
+msgid "``{@}``"
+msgstr "``{@}``"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "丢弃：匹配并舍弃一个片段（不捕获）"
+
+#, python-brace-format
+msgid "``{1}``, ``{2}``…"
+msgstr "``{1}``, ``{2}``…"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to ``{1}``, ``{2}``… in the "
+"replacement"
+msgstr "捕获组：匹配的文本绑定到替换中的 ``{1}``、``{2}``…"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — swap two parts separated by an ignored middle segment:"
+msgstr "**示例**：交换被一个忽略的中间片段隔开的两部分："
+
+# ==AUTO== Automatically translated
+msgid "Search"
+msgstr "搜索"
+
+# ==AUTO== Automatically translated
+msgid "Replace"
+msgstr "替换"
+
+# ==AUTO== Automatically translated
+msgid "Result"
+msgstr "结果"
+
+#, python-brace-format
+msgid "``{1}_{@}_{2}``"
+msgstr "``{1}_{@}_{2}``"
+
+#, python-brace-format
+msgid "``{2}_{1}``"
+msgstr "``{2}_{1}``"
+
+# ==AUTO== Automatically translated
+msgid "photo_trash_holiday → holiday_photo"
+msgstr "photo_trash_holiday → holiday_photo"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "正则表达式模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Full Python ``re``-module syntax.  The match is applied to the file stem "
+"(or full name if the extension mode is *Modify extension*)."
+msgstr "完整的 Python ``re`` 模块语法。匹配作用于文件名主干（若扩展名模式为 *修改扩展名*，则作用于完整名称）。"
+
+# ==AUTO== Automatically translated
+msgid "Syntax"
+msgstr "语法"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "说明"
+
+msgid "``.``"
+msgstr "``.``"
+
+# ==AUTO== Automatically translated
+msgid "Any single character"
+msgstr "任意单个字符"
+
+msgid "``.*`` / ``.+``"
+msgstr "``.*`` / ``.+``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy); non-empty variant"
+msgstr "任意序列（贪婪）；非空版本"
+
+msgid "``\\\\d+``"
+msgstr "``\\\\d+``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "一个或多个数字"
+
+msgid "``\\\\w+``"
+msgstr "``\\\\w+``"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, ``_``)"
+msgstr "单词字符（字母、数字、``_``）"
+
+msgid "``(…)``"
+msgstr "``(…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Numbered capture group → ``{1}``, ``{2}``… in replacement"
+msgstr "编号捕获组 → 替换中的 ``{1}``、``{2}``…"
+
+msgid "``(?P<name>…)``"
+msgstr "``(?P<name>…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Named capture group → ``{re:name}`` in replacement"
+msgstr "命名捕获组 → 替换中的 ``{re:name}``"
+
+msgid "``(?i)``"
+msgstr "``(?i)``"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive flag"
+msgstr "不区分大小写标志"
+
+msgid "``^`` / ``$``"
+msgstr "``^`` / ``$``"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "名称的开头 / 结尾"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — reformat an ISO date:"
+msgstr "**示例**：重新格式化 ISO 日期："
+
+#, python-brace-format
+msgid "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+msgstr "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+
+#, python-brace-format
+msgid "``{3}/{2}/{1}``"
+msgstr "``{3}/{2}/{1}``"
+
+msgid "2024-06-15 → 15/06/2024"
+msgstr "2024-06-15 → 15/06/2024"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "纯文本模式"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters.  Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr "搜索字段按字面字符串匹配，没有通配符，也没有特殊字符。文件名中每一处与该文本完全相同的地方都会被替换。"
+
+# ==AUTO== Automatically translated
+msgid "**Example:**"
+msgstr "**示例：**"
+
+msgid "``IMG_``"
+msgstr "``IMG_``"
+
+msgid "``photo_``"
+msgstr "``photo_``"
+
+# ==AUTO== Automatically translated
+msgid "IMG_0042 → photo_0042"
+msgstr "IMG_0042 → photo_0042"
+
+# ==AUTO== Automatically translated
+msgid "Replacement Fields"
+msgstr "替换字段"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string syntax is the same regardless of the search mode. "
+"Fields are written ``{name}`` and accept optional formatting options::"
+msgstr "无论使用哪种搜索模式，替换字符串的语法都相同。字段写作 ``{name}``，并可带格式选项::"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The case character comes first, before the alignment, e.g. ``{1:+<10}``."
+msgstr "大小写字符写在最前面，位于对齐方式之前，例如 ``{1:+<10}``。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**fmt** is a minimum width (digit) for text/numbers, or a ``strftime`` "
+"format string for dates and datetimes."
+msgstr "**fmt** 对文本和数字是最小宽度（数字），对日期和日期时间是 ``strftime`` 格式字符串。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**default** is used when the field is absent.  Omitting it makes the "
+"field's absence an error (the row is shown in red in the preview)."
+msgstr "字段缺失时使用 **default**。省略它时，字段缺失即为错误（该行在预览中显示为红色）。"
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "可用字段"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "字段"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "适用于"
+
+#, python-brace-format
+msgid "``{0}``"
+msgstr "``{0}``"
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "所有模式"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or the search literal in plain-text mode)"
+msgstr "完整的匹配文本（纯文本模式下为搜索文本）"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "模式匹配、正则"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "编号捕获组（从 1 开始）"
+
+#, python-brace-format
+msgid "``{re:name}``"
+msgstr "``{re:name}``"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "仅正则"
+
+# ==AUTO== Automatically translated
+msgid "Named group ``(?P<name>…)`` from the search regex"
+msgstr "搜索正则表达式中的命名组 ``(?P<name>…)``"
+
+#, python-brace-format
+msgid "``{num}``"
+msgstr "``{num}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter.  *fmt* is a minimum width; *default* sets the "
+"starting value (e.g. ``{num:02:10}`` starts at 10, zero-padded to 2 "
+"digits)"
+msgstr "自增计数器。*fmt* 是最小宽度；*default* 设定起始值（例如 ``{num:02:10}`` 从 10 开始，补零到 2 位）"
+
+#, python-brace-format
+msgid "``{newnum}``"
+msgstr "``{newnum}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Counter that continues after the highest number already used on disk by "
+"names of the same form in the target folder (``backup_007`` → next is "
+"``backup_008``), so that numbering never conflicts.  With ``--fill-gaps``"
+" it takes the smallest free numbers first; with ``--renumber`` it ignores"
+" the disk and starts from its start value"
+msgstr ""
+"从目标文件夹中同形式名称在磁盘上已使用的最大编号之后继续的计数器（``backup_007`` → 下一个是 "
+"``backup_008``），因此编号永远不会冲突。使用 ``--fill-gaps`` 时优先使用最小的空闲编号；使用 "
+"``--renumber`` 时忽略磁盘，从起始值开始"
+
+#, python-brace-format
+msgid "``{dest}``"
+msgstr "``{dest}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root (``--dest`` in headless mode).  Only valid at the very "
+"start of the template, which may then contain ``/`` to place the file in "
+"sub-folders, created as needed: ``{dest}/{im:Make::}/{0}``"
+msgstr ""
+"目标根目录（无界面模式下为 ``--dest``）。只能出现在模板的最开头，此时模板可以包含 "
+"``/``，把文件放入按需创建的子文件夹：``{dest}/{im:Make::}/{0}``"
+
+#, python-brace-format
+msgid "``{if:category:text}``"
+msgstr "``{if:category:text}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"*text* when the file belongs to *category* (``image``, ``video``, "
+"``audio`` or ``other``), nothing otherwise: ``{0}{if:video:_vid}``"
+msgstr ""
+"文件属于类别 *category*\\ （``image``、``video``、``audio`` 或 ``other``）时为 "
+"*text*，否则为空：``{0}{if:video:_vid}``"
+
+#, python-brace-format
+msgid "``{date}``"
+msgstr "``{date}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default ``strftime`` format ``%Y-%m-%d``"
+msgstr "今天的日期，默认 ``strftime`` 格式为 ``%Y-%m-%d``"
+
+#, python-brace-format
+msgid "``{datetime}``"
+msgstr "``{datetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "当前日期和时间，默认格式为 ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{mdatetime}``"
+msgstr "``{mdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "文件修改日期和时间，默认格式为 ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{cdatetime}``"
+msgstr "``{cdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default format ``%Y-%m-%d_%H%M%S`` (inode "
+"change time on Linux)"
+msgstr "文件创建日期和时间，默认格式为 ``%Y-%m-%d_%H%M%S``\\ （Linux 上为 inode 更改时间）"
+
+#, python-brace-format
+msgid "``{dir}``"
+msgstr "``{dir}``"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "直接上级文件夹的名称"
+
+#, python-brace-format
+msgid "``{im:Field}``"
+msgstr "``{im:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images — see :ref:`image-fields`)"
+msgstr "EXIF 或 IPTC 元数据字段（图像，见 :ref:`image-fields`）"
+
+#, python-brace-format
+msgid "``{au:Field}``"
+msgstr "``{au:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see :ref:`audio-fields`)"
+msgstr "音频元数据字段（mp3、ogg、flac…，见 :ref:`audio-fields`）"
+
+#, python-brace-format
+msgid "``{vi:Field}``"
+msgstr "``{vi:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see :ref:`video-fields`)"
+msgstr "视频元数据字段（mp4、mkv、avi…，见 :ref:`video-fields`）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Image metadata fields ``{im:…}``"
+msgstr "图像元数据字段 ``{im:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Read with **pyexiv2**, or **Pillow** when pyexiv2 is not available (see "
+":ref:`optional-dependencies`).  Field names are case-insensitive.  A "
+"*default* is strongly recommended — metadata may be absent from non-image"
+" files or images without EXIF/IPTC data."
+msgstr ""
+"通过 **pyexiv2** 读取，pyexiv2 不可用时通过 **Pillow** 读取（见 :ref:`optional-"
+"dependencies`）。字段名不区分大小写。强烈建议提供 *default*：非图像文件或没有 EXIF/IPTC "
+"数据的图像可能缺少元数据。"
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "类型"
+
+msgid "``DateTimeOriginal``"
+msgstr "``DateTimeOriginal``"
+
+# ==AUTO== Automatically translated
+msgid "datetime"
+msgstr "日期时间"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "拍摄日期和时间"
+
+msgid "``DateTimeDigitized``"
+msgstr "``DateTimeDigitized``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "图像数字化的日期和时间"
+
+msgid "``DateTime``"
+msgstr "``DateTime``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "文件最后更改的日期和时间（EXIF）"
+
+msgid "``Make``"
+msgstr "``Make``"
+
+# ==AUTO== Automatically translated
+msgid "text"
+msgstr "文本"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "相机制造商"
+
+msgid "``Model``"
+msgstr "``Model``"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "相机型号"
+
+msgid "``LensModel``"
+msgstr "``LensModel``"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "镜头型号"
+
+msgid "``ISOSpeedRatings``"
+msgstr "``ISOSpeedRatings``"
+
+# ==AUTO== Automatically translated
+msgid "integer"
+msgstr "整数"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "ISO 感光度"
+
+msgid "``FNumber``"
+msgstr "``FNumber``"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. ``2.8``)"
+msgstr "光圈（例如 ``2.8``）"
+
+msgid "``ExposureTime``"
+msgstr "``ExposureTime``"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. ``1/125``)"
+msgstr "快门速度（例如 ``1/125``）"
+
+msgid "``FocalLength``"
+msgstr "``FocalLength``"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "焦距（毫米）"
+
+msgid "``ImageDescription``"
+msgstr "``ImageDescription``"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "图像描述或标题"
+
+msgid "``Artist``"
+msgstr "``Artist``"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "摄影师或作者（EXIF）"
+
+msgid "``Copyright``"
+msgstr "``Copyright``"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "版权声明"
+
+msgid "``ObjectName``"
+msgstr "``ObjectName``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "IPTC 标题或对象名称"
+
+msgid "``Caption``"
+msgstr "``Caption``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC caption / description"
+msgstr "IPTC 说明或描述"
+
+msgid "``By-line``"
+msgstr "``By-line``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "IPTC 摄影师或作者"
+
+msgid "``City``"
+msgstr "``City``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "IPTC 城市"
+
+msgid "``Country``"
+msgstr "``Country``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "IPTC 国家"
+
+msgid "``DateCreated``"
+msgstr "``DateCreated``"
+
+# ==AUTO== Automatically translated
+msgid "date"
+msgstr "日期"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "IPTC 创建日期"
+
+msgid "``Keywords``"
+msgstr "``Keywords``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "IPTC 关键词（以分号分隔）"
+
+msgid "``Credit``"
+msgstr "``Credit``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC credit line"
+msgstr "IPTC 署名行"
+
+msgid "``Source``"
+msgstr "``Source``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC source"
+msgstr "IPTC 来源"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields ``{au:…}``"
+msgstr "音频元数据字段 ``{au:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **mutagen**.  Supported formats: mp3, ogg, flac, opus, aac/m4a "
+"and others handled by mutagen.  Field names are case-insensitive."
+msgstr ""
+"需要 **mutagen**。支持的格式：mp3、ogg、flac、opus、aac/m4a 以及 mutagen "
+"支持的其他格式。字段名不区分大小写。"
+
+msgid "``title``"
+msgstr "``title``"
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "曲目标题"
+
+msgid "``artist``"
+msgstr "``artist``"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "曲目艺术家"
+
+msgid "``albumartist``"
+msgstr "``albumartist``"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "专辑艺术家"
+
+msgid "``album``"
+msgstr "``album``"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "专辑名称"
+
+msgid "``tracknumber``"
+msgstr "``tracknumber``"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips ``/total`` if present)"
+msgstr "曲目编号（若有 ``/total`` 则去掉）"
+
+msgid "``discnumber``"
+msgstr "``discnumber``"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips ``/total`` if present)"
+msgstr "碟片编号（若有 ``/total`` 则去掉）"
+
+msgid "``date``"
+msgstr "``date``"
+
+# ==AUTO== Automatically translated
+msgid "date/text"
+msgstr "日期/文本"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — ``datetime.date`` when the full date is available "
+"(supports ``strftime`` format); plain text otherwise"
+msgstr "发行日期：有完整日期时为 ``datetime.date``\\ （支持 ``strftime`` 格式），否则为纯文本"
+
+msgid "``year``"
+msgstr "``year``"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from the ``date`` tag)"
+msgstr "发行年份（从 ``date`` 标签中提取）"
+
+msgid "``genre``"
+msgstr "``genre``"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "流派"
+
+msgid "``comment``"
+msgstr "``comment``"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "注释"
+
+msgid "``composer``"
+msgstr "``composer``"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "作曲者"
+
+msgid "``bpm``"
+msgstr "``bpm``"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "每分钟节拍数"
+
+msgid "``duration``"
+msgstr "``duration``"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "时长（秒）"
+
+msgid "``bitrate``"
+msgstr "``bitrate``"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "比特率（kbps）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields ``{vi:…}``"
+msgstr "视频元数据字段 ``{vi:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **pymediainfo** (and the MediaInfo system library).  Supported "
+"formats: mp4, mkv, avi, mov, webm and others handled by MediaInfo.  Field"
+" names are case-insensitive."
+msgstr ""
+"需要 **pymediainfo**\\ （以及 MediaInfo 系统库）。支持的格式：mp4、mkv、avi、mov、webm 以及 "
+"MediaInfo 支持的其他格式。字段名不区分大小写。"
+
+msgid "``width``"
+msgstr "``width``"
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "视频宽度（像素）"
+
+msgid "``height``"
+msgstr "``height``"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "视频高度（像素）"
+
+msgid "``framerate``"
+msgstr "``framerate``"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. ``29.970``)"
+msgstr "帧率（例如 ``29.970``）"
+
+msgid "``videocodec``"
+msgstr "``videocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. ``AVC``, ``HEVC``)"
+msgstr "视频编解码器名称（例如 ``AVC``、``HEVC``）"
+
+msgid "``audiocodec``"
+msgstr "``audiocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. ``AAC``, ``AC-3``)"
+msgstr "音频编解码器名称（例如 ``AAC``、``AC-3``）"
+
+msgid "``audiochannels``"
+msgstr "``audiochannels``"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "音频声道数"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "总比特率（kbps）"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "标题标签"
+
+msgid "``encodeddate``"
+msgstr "``encodeddate``"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "编码日期和时间"
+
+msgid "``performer``"
+msgstr "``performer``"
+
+# ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "表演者或艺术家"
+
+msgid "``copyright``"
+msgstr "``copyright``"
+
+msgid "``description``"
+msgstr "``description``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement examples"
+msgstr "替换示例"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "模式"
+
+#, python-brace-format
+msgid "``{1}_{num:04}``"
+msgstr "``{1}_{num:04}``"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr "捕获组 1 后接 4 位补零计数器（从 1 开始）"
+
+#, python-brace-format
+msgid "``{1}_{num:04:10}``"
+msgstr "``{1}_{num:04:10}``"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "同上，但计数器从 10 开始"
+
+#, python-brace-format
+msgid "``backup_{newnum:03}``"
+msgstr "``backup_{newnum:03}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: continues after the highest ``backup_NNN``"
+" already on disk"
+msgstr "无冲突的 3 位计数器：从磁盘上已有的最大 ``backup_NNN`` 之后继续"
+
+#, python-brace-format
+msgid "``{date}-{0}``"
+msgstr "``{date}-{0}``"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "在匹配文本前加上今天的日期"
+
+#, python-brace-format, python-format
+msgid "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+msgstr "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; ``unknown`` if EXIF absent"
+msgstr "紧凑的拍摄日期和时间；缺少 EXIF 时为 ``unknown``"
+
+#, python-brace-format
+msgid "``{im:Make::} {im:Model::}``"
+msgstr "``{im:Make::} {im:Model::}``"
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "相机品牌和型号（缺失时为空字符串）"
+
+#, python-brace-format
+msgid "``{au:artist::unknown}_{au:title::untitled}``"
+msgstr "``{au:artist::unknown}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; fallbacks if absent"
+msgstr "音频艺术家和标题；缺失时使用后备值"
+
+#, python-brace-format, python-format
+msgid "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+msgstr "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "音频发行日期、补零的曲目编号、标题"
+
+#, python-brace-format
+msgid "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+msgstr "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. ``1920x1080_AVC``)"
+msgstr "视频分辨率和编解码器（例如 ``1920x1080_AVC``）"
+
+#, python-brace-format
+msgid "``{re:year}_{re:title}``"
+msgstr "``{re:year}_{re:title}``"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "正则表达式的命名组（仅正则模式）"
+
+#, python-brace-format, python-format
+msgid "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+msgstr "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "上级文件夹、文件修改日期、3 位计数器"
+
+# ==AUTO== Automatically translated
+msgid "Headless CLI Reference"
+msgstr "无界面命令行参考"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Headless mode is activated when ``--search``, ``--saved`` or ``--schema``"
+" is provided.  No window is opened; renames are performed and the process"
+" exits. Settings that are not given on the command line come from the "
+"profile chosen with ``--profile``, or from the last profile used in the "
+"GUI."
+msgstr ""
+"提供 ``--search``、``--saved`` 或 ``--schema`` "
+"时启用无界面模式。不会打开任何窗口；执行重命名后程序退出。命令行中未指定的设置取自 ``--profile`` "
+"选择的配置文件，或图形界面中上次使用的配置文件。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming is atomic: if any target is in conflict, nothing is renamed and "
+"the command exits with an error listing the conflicts."
+msgstr "重命名是原子操作：只要有一个目标冲突，就不会重命名任何文件，命令以错误结束并列出冲突。"
+
+# ==AUTO== Automatically translated
+msgid "Rename source (mutually exclusive)"
+msgstr "重命名来源（互斥）"
+
+msgid "``--search TEXT``"
+msgstr "``--search TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern/expression — activates headless mode."
+msgstr "搜索模式或表达式；启用无界面模式。"
+
+msgid "``--saved NAME``"
+msgstr "``--saved NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Load a named save — activates headless mode.  Other options override "
+"values from the save."
+msgstr "加载一个命名保存项；启用无界面模式。其他选项会覆盖保存项中的值。"
+
+msgid "``--schema LIST``"
+msgstr "``--schema LIST``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rename :ref:`schema <schema-mode>`: comma-separated fields, e.g. "
+"``'Trip,,Paris,###'`` — activates headless mode.  Non-empty fields form "
+"both the folder tree under ``--dest`` and the name (joined with ``_``); a"
+" field of ``#`` only is the counter, padded to the number of ``#``; empty"
+" fields are skipped.  Sidecar mode is always on."
+msgstr ""
+"重命名 :ref:`模式结构 <schema-mode>`：以逗号分隔的字段，例如 "
+"``'Trip,,Paris,###'``；启用无界面模式。非空字段既构成 ``--dest`` 下的文件夹树，也构成名称（以 ``_`` "
+"连接）；只由 ``#`` 组成的字段是计数器，补足到 ``#`` 的个数；空字段会被跳过。附属文件模式始终开启。"
+
+# ==AUTO== Automatically translated
+msgid "Schema options"
+msgstr "模式结构选项"
+
+msgid "``--dest DIR``"
+msgstr "``--dest DIR``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root.  With ``--schema``, defaults to the profile's "
+"destination and is required if it has none (except with ``--renumber``)."
+"  Also the value of the ``{dest}`` field in ``--replace``."
+msgstr ""
+"目标根目录。使用 ``--schema`` 时默认为配置文件的目标，若配置文件没有目标则必须指定（使用 ``--renumber`` "
+"时除外）。它也是 ``--replace`` 中 ``{dest}`` 字段的值。"
+
+msgid "``--fill-gaps`` / ``--no-fill-gaps``"
+msgstr "``--fill-gaps`` / ``--no-fill-gaps``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` takes the smallest free number instead of continuing after "
+"the highest one (default: the profile's setting with ``--schema``, "
+"``--no-fill-gaps`` otherwise)."
+msgstr ""
+"``{newnum}`` 取最小的空闲编号，而不是从最大编号之后继续（默认：使用 ``--schema`` 时取配置文件的设置，否则为 "
+"``--no-fill-gaps``）。"
+
+msgid "``--renumber``"
+msgstr "``--renumber``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` runs from its start value, ignoring the numbers already used"
+" on disk; with ``--schema``, renumber the files in place."
+msgstr "``{newnum}`` 从起始值开始，忽略磁盘上已使用的编号；与 ``--schema`` 一起使用时，就地重新编号文件。"
+
+msgid "``--video-marker TEXT``"
+msgstr "``--video-marker TEXT``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: text added to the name of video files (default: the "
+"profile's marker)."
+msgstr "与 ``--schema`` 一起使用：添加到视频文件名中的文字（默认：配置文件的标记）。"
+
+msgid "``--video-marker-pos N``"
+msgstr "``--video-marker-pos N``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: position of the video marker between the fields (0 = "
+"before the first field; default: the profile's position)."
+msgstr "与 ``--schema`` 一起使用：视频标记在字段之间的位置（0 = 第一个字段之前；默认：配置文件中的位置）。"
+
+# ==AUTO== Automatically translated
+msgid "Rename options"
+msgstr "重命名选项"
+
+msgid "``--replace TEXT``"
+msgstr "``--replace TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement string (default: empty string)."
+msgstr "替换字符串（默认：空字符串）。"
+
+#, python-brace-format
+msgid "``--mode {pattern,regex,plain}``"
+msgstr "``--mode {pattern,regex,plain}``"
+
+# ==AUTO== Automatically translated
+msgid "Search mode: ``pattern`` (default), ``regex``, or ``plain``."
+msgstr "搜索模式：``pattern``\\ （默认）、``regex`` 或 ``plain``。"
+
+#, python-brace-format
+msgid "``--list {files,dirs,all}``"
+msgstr "``--list {files,dirs,all}``"
+
+# ==AUTO== Automatically translated
+msgid "Entry types to process: ``files`` (default), ``dirs``, or ``all``."
+msgstr "要处理的条目类型：``files``\\ （默认）、``dirs`` 或 ``all``。"
+
+msgid "``--recurse`` / ``--no-recurse``"
+msgstr "``--recurse`` / ``--no-recurse``"
+
+# ==AUTO== Automatically translated
+msgid "Recurse into sub-directories (default: ``--no-recurse``)."
+msgstr "递归进入子目录（默认：``--no-recurse``）。"
+
+#, python-brace-format
+msgid "``--ext-mode {keep,lower,upper,normalize,modify}``"
+msgstr "``--ext-mode {keep,lower,upper,normalize,modify}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"How to handle the extension during rename (default: ``keep``).  ``lower``"
+" / ``upper`` case-fold the extension; ``normalize`` maps it through the "
+"extension normalization table (managed from the GUI, **Edit → Settings… →"
+" Extension Normalization** tab); ``modify`` includes the extension in the"
+" search/replace pattern, same as *Modify extension* in the GUI."
+msgstr ""
+"重命名时如何处理扩展名（默认：``keep``）。``lower`` / ``upper`` 改变扩展名的大小写；``normalize`` "
+"通过扩展名标准化表转换（在图形界面中管理，**编辑 → 设置… → 扩展名标准化** 选项卡）；``modify`` "
+"把扩展名纳入搜索和替换模式，与图形界面中的 *修改扩展名* 相同。"
+
+msgid "``--sidecar-mode`` / ``--no-sidecar-mode``"
+msgstr "``--sidecar-mode`` / ``--no-sidecar-mode``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Group :ref:`sidecar files <sidecar-files>` with their base file when "
+"renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
+" ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
+"is an error.  Category configuration (base extensions, sidecar suffixes) "
+"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+msgstr ""
+"重命名时把 :ref:`Sidecar 文件 <sidecar-files>` 与其主文件分为一组（默认：``--no-sidecar-"
+"mode``）。需要 ``--ext-mode keep``、``lower`` 或 ``upper``；与 ``normalize`` 或 "
+"``modify`` 组合会报错。类别配置（主扩展名、Sidecar 后缀）与图形界面的 **编辑 → 附属文件…** 对话框共用。"
+
+msgid "``--filter GLOB``"
+msgstr "``--filter GLOB``"
+
+# ==AUTO== Automatically translated
+msgid "Glob pattern to restrict the file listing (e.g. ``'*.jpg'``)."
+msgstr "用于限制文件列表的 glob 模式（例如 ``'*.jpg'``）。"
+
+msgid "``--select GLOB``"
+msgstr "``--select GLOB``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Restrict the rename to entries matching ``GLOB`` (basename match), as if "
+"selecting them by clicking in the GUI file list. May be given multiple "
+"times to accumulate (equivalent of Ctrl+click). With ``--sidecar-mode``, "
+"selecting a base file also selects its sidecars, and selecting a sidecar "
+"also selects its base file and every sibling sidecar — the same grouping "
+"the GUI applies when you click a row, including the same ambiguity "
+"handling (a sidecar matching more than one base file is still flagged and"
+" skipped, whether or not it was selected). Omit to act on every listed "
+"entry (default)."
+msgstr ""
+"把重命名限制在与 ``GLOB`` 匹配的条目上（按基本名称匹配），如同在图形界面的文件列表中单击选择它们。可多次指定以累加（相当于 "
+"Ctrl+单击）。使用 ``--sidecar-mode`` 时，选择主文件也会选择其 Sidecar 文件，选择 Sidecar "
+"文件也会选择其主文件和所有同组 Sidecar 文件：与在图形界面中单击某行时的分组方式相同，歧义处理也相同（匹配多个主文件的 Sidecar "
+"文件无论是否被选中，都会被标记并跳过）。省略时处理所有列出的条目（默认）。"
+
+msgid "``--sep``"
+msgstr "``--sep``"
+
+# ==AUTO== Automatically translated
+msgid "Separator conversion applied after rename.  Default: ``none``."
+msgstr "重命名后应用的分隔符转换。默认：``none``。"
+
+#, python-brace-format
+msgid "``--case {none,upper,lower,capitalize,title}``"
+msgstr "``--case {none,upper,lower,capitalize,title}``"
+
+# ==AUTO== Automatically translated
+msgid "Capitalisation applied after rename.  Default: ``none``."
+msgstr "重命名后应用的大小写转换。默认：``none``。"
+
+msgid "``--accent`` / ``--no-accent``"
+msgstr "``--accent`` / ``--no-accent``"
+
+# ==AUTO== Automatically translated
+msgid "Strip diacritics from result names (default: ``--no-accent``)."
+msgstr "从结果名称中去除变音符号（默认：``--no-accent``）。"
+
+msgid "``--dup`` / ``--no-dup``"
+msgstr "``--dup`` / ``--no-dup``"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive duplicate separators (default: ``--no-dup``)."
+msgstr "合并连续的重复分隔符（默认：``--no-dup``）。"
+
+msgid "``--confirm`` / ``--no-confirm``"
+msgstr "``--confirm`` / ``--no-confirm``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Preview changes and ask for confirmation before renaming (default: "
+"``--no-confirm``)."
+msgstr "重命名前显示更改并请求确认（默认：``--no-confirm``）。"
+
+msgid "``--dry-run`` / ``--no-dry-run``"
+msgstr "``--dry-run`` / ``--no-dry-run``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Print the equivalent ``mv`` commands to stdout instead of renaming "
+"anything (default: ``--no-dry-run``).  The output is a valid POSIX shell "
+"script — quoted with ``shlex.quote``, conflicts reported as ``#`` "
+"comments — that can be piped to ``sh`` to actually perform the rename. "
+"Takes precedence over ``--confirm``: no interactive prompt is shown."
+msgstr ""
+"把等效的 ``mv`` 命令输出到标准输出，而不执行任何重命名（默认：``--no-dry-run``）。输出是有效的 POSIX shell "
+"脚本，用 ``shlex.quote`` 转义，冲突以 ``#`` 注释标出，可以通过管道交给 ``sh`` 来真正执行重命名。优先于 "
+"``--confirm``：不会显示交互式提问。"
+
+# ==AUTO== Automatically translated
+msgid "Logging"
+msgstr "日志"
+
+msgid "``-d`` / ``--debug``"
+msgstr "``-d`` / ``--debug``"
+
+# ==AUTO== Automatically translated
+msgid "Enable debug output (overrides the saved preference)."
+msgstr "启用调试输出（覆盖已保存的偏好设置）。"
+
+msgid "``-v`` / ``--verbose``"
+msgstr "``-v`` / ``--verbose``"
+
+# ==AUTO== Automatically translated
+msgid "Enable verbose output — INFO level (overrides the saved preference)."
+msgstr "启用详细输出，INFO 级别（覆盖已保存的偏好设置）。"
+
+msgid "``-q`` / ``--quiet``"
+msgstr "``-q`` / ``--quiet``"
+
+# ==AUTO== Automatically translated
+msgid "Suppress informational messages — WARNING level."
+msgstr "隐藏信息性消息，WARNING 级别。"
+
+# ==AUTO== Automatically translated
+msgid "Advanced"
+msgstr "高级"
+
+msgid "``--profile NAME``"
+msgstr "``--profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar "
+"configuration, schema defaults) instead of the last one used in the GUI."
+"  In GUI mode, open the window on that profile."
+msgstr ""
+"使用 :ref:`配置文件 <profiles>` *NAME*\\ （设置、保存项、Sidecar "
+"配置、模式结构默认值），而不是图形界面中上次使用的配置文件。在图形模式下，以该配置文件打开窗口。"
+
+msgid "``--config-dir DIR``"
+msgstr "``--config-dir DIR``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override the configuration directory — see :ref:`config-files` for the "
+"platform defaults.  Intended for testing."
+msgstr "覆盖配置目录；各平台的默认值见 :ref:`config-files`。用于测试。"
+
+msgid "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+msgstr "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linux only: install (or remove) a desktop menu entry and icon for the "
+"current user, then exit.  Useful after a ``pip`` install, which has no "
+"post-install hook to do it."
+msgstr "仅 Linux：为当前用户安装（或删除）桌面菜单项和图标，然后退出。适用于通过 ``pip`` 安装之后，因为它没有执行此操作的安装后步骤。"
+
+# ==AUTO== Automatically translated
+msgid "Self-update"
+msgstr "自动更新"
+
+msgid "``--auto-update``"
+msgstr "``--auto-update``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Download the latest release matching the running platform and "
+"architecture from `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ and replace the "
+"running executable with it, then exit.  This option is only offered when "
+"running a pre-built (PyInstaller) executable; a source checkout or a "
+"``pip``/PyPI install has no single running binary to replace, so the "
+"option is absent from ``--help`` and rejected as an unknown argument "
+"there.  Restart PBRenamer to use the new build; the update does not "
+"relaunch it automatically."
+msgstr ""
+"从 `GitHub Releases <https://github.com/ppoilbarbe/PBRenamer/releases>`_ "
+"下载与当前平台和架构匹配的最新版本，用它替换正在运行的可执行文件，然后退出。此选项仅在预构建的可执行文件（PyInstaller）中提供；源代码副本或通过"
+" ``pip``/PyPI 的安装没有可替换的单一可执行文件，因此 ``--help`` 中没有该选项，使用时会被当作未知参数拒绝。重新启动 "
+"PBRenamer 才能使用新版本；更新不会自动重新启动程序。"
+
+# ==AUTO== Automatically translated
+msgid "Help export"
+msgstr "导出帮助"
+
+msgid "``--help-search``"
+msgstr "``--help-search``"
+
+# ==AUTO== Automatically translated
+msgid "Print the search-field help HTML to stdout and exit."
+msgstr "将搜索字段帮助的 HTML 输出到标准输出并退出。"
+
+msgid "``--help-replace``"
+msgstr "``--help-replace``"
+
+# ==AUTO== Automatically translated
+msgid "Print the replacement-field help HTML to stdout and exit."
+msgstr "将替换字段帮助的 HTML 输出到标准输出并退出。"
+
+# ==AUTO== Automatically translated
+msgid "CLI Examples"
+msgstr "命令行示例"
+
+# ==AUTO== Automatically translated
+msgid "Remove an ``IMG_`` prefix from all JPEG files in the current directory::"
+msgstr "去掉当前目录中所有 JPEG 文件的 ``IMG_`` 前缀::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Add the parent folder name and a zero-padded counter to every file, "
+"recursively::"
+msgstr "递归地为每个文件加上上级文件夹名称和补零计数器::"
+
+# ==AUTO== Automatically translated
+msgid "Rename audio files using their tags, with fallbacks::"
+msgstr "根据标签重命名音频文件，并提供后备值::"
+
+# ==AUTO== Automatically translated
+msgid "Load a saved preset and override its separator setting::"
+msgstr "加载一个命名保存项并覆盖其分隔符设置::"
+
+# ==AUTO== Automatically translated
+msgid "Preview changes before applying::"
+msgstr "应用前先预览更改::"
+
+# ==AUTO== Automatically translated
+msgid "Print the equivalent ``mv`` commands without renaming anything::"
+msgstr "输出等效的 ``mv`` 命令而不重命名任何文件::"
+
+# ==AUTO== Automatically translated
+msgid "Only rename two specific files (and their sidecars) out of the directory::"
+msgstr "只重命名目录中两个指定的文件（及其 Sidecar 文件）::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sort the pictures of a folder into ``~/Photos/Paris/2024/Street/``, with "
+"a 3-digit counter, using the settings of the ``photos`` profile::"
+msgstr ""
+"使用 ``photos`` 配置文件的设置，把文件夹中的图片归类到 ``~/Photos/Paris/2024/Street/``，并使用 3 "
+"位计数器::"
+
+# ==AUTO== Automatically translated
+msgid "Renumber the files of a folder from 1, in place::"
+msgstr "从 1 开始就地重新编号文件夹中的文件::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Move files into one folder per camera model, with a counter, sidecars "
+"following their picture::"
+msgstr "按相机型号把文件移动到各自的文件夹中，带计数器，Sidecar 文件跟随其图片::"

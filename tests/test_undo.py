@@ -1,7 +1,17 @@
-"""Tests for pbrenamer.core.undo — UndoManager."""
+"""Tests for pbrenamer.core.undo — UndoManager and typed entries."""
+
+import os
+
+import pytest
 
 from pbrenamer.core import filetools
-from pbrenamer.core.undo import UndoManager
+from pbrenamer.core.undo import (
+    CopyEntry,
+    MoveEntry,
+    RenameEntry,
+    UndoError,
+    UndoManager,
+)
 
 
 class TestCanUndo:
@@ -108,3 +118,74 @@ class TestLen:
         um.add_batch([("/a", "/b")])
         um.clear()
         assert len(um) == 0
+
+
+class TestRenameEntry:
+    def test_undo_restores_names_and_removes_created_dirs(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        (src / "sub").mkdir()
+        (src / "sub" / "a.jpg").write_text("A")
+        dest = tmp_path / "dest"
+        result = filetools.execute_renames(
+            [(str(src / "sub" / "a.jpg"), str(dest / "x" / "A_1.jpg"))],
+            prune_root=str(src),
+        )
+        assert not (src / "sub").exists()
+
+        um = UndoManager()
+        um.add(RenameEntry.from_result(result))
+        um.undo()
+
+        assert (src / "sub" / "a.jpg").read_text() == "A"
+        assert not dest.exists()
+
+    def test_undo_of_a_swap(self, tmp_path):
+        (tmp_path / "a").write_text("A")
+        (tmp_path / "b").write_text("B")
+        pairs = [(str(tmp_path / "a"), str(tmp_path / "b"))]
+        pairs.append((str(tmp_path / "b"), str(tmp_path / "a")))
+        entry = RenameEntry.from_result(filetools.execute_renames(pairs))
+        entry.undo()
+        assert (tmp_path / "a").read_text() == "A"
+
+    def test_undo_refused_when_original_taken(self, tmp_path):
+        (tmp_path / "a").touch()
+        entry = RenameEntry.from_result(
+            filetools.execute_renames([(str(tmp_path / "a"), str(tmp_path / "b"))])
+        )
+        (tmp_path / "a").touch()
+        um = UndoManager()
+        um.add(entry)
+        with pytest.raises(UndoError):
+            um.undo()
+        assert (tmp_path / "b").exists()
+        assert not um.can_undo()
+
+
+class TestMoveEntry:
+    def test_failure_reported(self, tmp_path):
+        entry = MoveEntry([(str(tmp_path / "a"), str(tmp_path / "missing"))])
+        with pytest.raises(UndoError, match="missing"):
+            entry.undo()
+
+
+class TestCopyEntry:
+    def test_deletes_copies_and_keeps_originals(self, tmp_path):
+        (tmp_path / "a").touch()
+        (tmp_path / "d").mkdir()
+        (tmp_path / "d" / "f").touch()
+        filetools.copy_path(str(tmp_path / "a"), str(tmp_path / "a2"))
+        filetools.copy_path(str(tmp_path / "d"), str(tmp_path / "d2"))
+        CopyEntry(
+            [
+                (str(tmp_path / "a"), str(tmp_path / "a2")),
+                (str(tmp_path / "d"), str(tmp_path / "d2")),
+            ]
+        ).undo()
+        assert sorted(os.listdir(tmp_path)) == ["a", "d"]
+
+    def test_failure_reported(self, tmp_path):
+        entry = CopyEntry([(str(tmp_path / "a"), str(tmp_path / "gone"))])
+        with pytest.raises(UndoError, match="gone"):
+            entry.undo()

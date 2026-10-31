@@ -4,133 +4,92 @@ from __future__ import annotations
 
 import logging
 import os
-import re
-import time
-from collections import defaultdict
 
-from PySide6.QtCore import QDir, QFileSystemWatcher, Qt, QTimer, QUrl
-from PySide6.QtGui import QColor, QDesktopServices, QIcon
+from PySide6.QtCore import QDir, Qt, QTimer, QUrl
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QApplication,
     QFileDialog,
     QFileSystemModel,
+    QInputDialog,
+    QLineEdit,
     QMainWindow,
     QMenu,
     QMessageBox,
-    QStyledItemDelegate,
-    QTreeWidgetItem,
 )
 
 import pbrenamer.settings as _cfg
-from pbrenamer.core import filetools, sidecar
-from pbrenamer.core import replacement as _repl
-from pbrenamer.core.undo import UndoManager
+from pbrenamer import i18n, profiles
+from pbrenamer.core import filetools
+from pbrenamer.core.undo import RenameEntry, UndoError, UndoManager
 from pbrenamer.platform import system_bookmarks
-from pbrenamer.platform.fs import conflict_key, same_file_path
-from pbrenamer.resources import path as _resource
 from pbrenamer.ui.about_dialog import AboutDialog
-from pbrenamer.ui.file_info_window import FileInfoWindow
+from pbrenamer.ui.action_bar import ActionBar
+from pbrenamer.ui.file_list import FileListController, PreviewEntry
 from pbrenamer.ui.history_dialog import HistoryDialog
+from pbrenamer.ui.image_actions import ImageActions
+from pbrenamer.ui.keyboard_help import keyboard_html
 from pbrenamer.ui.main_window_ui import Ui_MainWindow
-from pbrenamer.ui.pattern_help import PatternHelpDialog, replace_html, search_html
+from pbrenamer.ui.pattern_help import PatternHelpDialog
 from pbrenamer.ui.presets import PatternPresets
+from pbrenamer.ui.profile_dialog import ProfileDialog
+from pbrenamer.ui.rule_panel_pattern import PatternRulePanel, resolve_extension_mode
+from pbrenamer.ui.rule_panel_schema import SchemaRulePanel
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 from pbrenamer.ui.sidecar_dialog import SidecarDialog
-from pbrenamer.ui.widgets import WhitespaceLineEdit
 from pbrenamer.ui.window_state import WindowState
 
 _log = logging.getLogger(__name__)
-_SAVE_NAME_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
-
-def _resolve_extension_mode(cfg: dict) -> str | None:
-    """Return the extension mode from *cfg*, or None if absent.
-
-    Reads the current ``"extension_mode"`` key if present, else migrates the
-    legacy ``"keep_extension"`` bool (``True`` -> "keep", ``False`` ->
-    "modify") from configs saved before the enum was introduced.
-    """
-    if "extension_mode" in cfg:
-        return str(cfg["extension_mode"])
-    if "keep_extension" in cfg:
-        return "keep" if cfg["keep_extension"] else "modify"
-    return None
-
-
-class _SearchModeDelegate(QStyledItemDelegate):
-    """Appends a dimmed mode label on the right of each search history item."""
-
-    _LABELS = {"pattern": "pat", "regex": "RE", "plain": "txt"}
-
-    def paint(self, painter, option, index):
-        super().paint(painter, option, index)
-        mode = index.data(Qt.ItemDataRole.UserRole)
-        label = self._LABELS.get(mode, "")
-        if not label:
-            return
-        painter.save()
-        color = option.palette.color(option.palette.ColorRole.Text)
-        color.setAlphaF(0.5)
-        painter.setPen(color)
-        font = painter.font()
-        font.setItalic(True)
-        painter.setFont(font)
-        painter.drawText(
-            option.rect.adjusted(0, 0, -6, 0),
-            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter,
-            label,
-        )
-        painter.restore()
-
-
-_PREVIEW_COLOR = QColor("#0066cc")
-_UNCHANGED_COLOR = QColor("#888888")
-_DIR_COLOR = QColor("#aa6600")
-_CONFLICT_COLOR = QColor("#cc0000")
-_ERROR_COLOR = QColor("#cc0000")
-_SIDECAR_COLOR = QColor("#0099aa")
-_INVALID_STYLE = "QLineEdit { background-color: #ffaaaa; }"
-_SIDECAR_ACTIVE_EXT_MODES = ("keep", "lower", "upper")
+_PATTERN_TAB, _SCHEMA_TAB = 0, 1
+_TAB_OF_MODE = {"pattern": _PATTERN_TAB, "schema": _SCHEMA_TAB}
 
 
 class MainWindow(QMainWindow):
-    """Top-level window for PBRenamer."""
+    """Top-level window for PBRenamer.
+
+    Wires together the file list, the rule panels (Pattern and Schema tabs)
+    and the action bar, and owns the directory tree, the menus, the current
+    profile and the window state.
+    """
 
     def __init__(self, start_dir: str | None = None) -> None:
         super().__init__()
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
 
-        self._current_dir: str | None = None
-        self._sidecar_result: sidecar.SidecarGroupResult | None = None
-        self._linking_selection = False
-        self._prev_group_selection: set[str] = set()
         self._undo = UndoManager()
         self._presets = PatternPresets()
         self._window_state = WindowState()
-        self._search_help: PatternHelpDialog | None = None
-        self._replace_help: PatternHelpDialog | None = None
-        self._file_info: FileInfoWindow | None = None
-        self._preview_timer = QTimer(self)
-        self._preview_timer.setSingleShot(True)
-        self._preview_timer.timeout.connect(self._on_preview)
-
-        self._fs_watcher = QFileSystemWatcher(self)
-        self._fs_watcher.directoryChanged.connect(self._on_dir_changed_external)
-        self._fs_change_timer = QTimer(self)
-        self._fs_change_timer.setSingleShot(True)
-        self._fs_change_timer.timeout.connect(self._on_fs_change)
-        self._last_internal_reload: float = 0.0
-
+        self._keyboard_help: PatternHelpDialog | None = None
         self._geometry_restored = False
 
+        self._schema = SchemaRulePanel(self._ui.tabSchema)
+        self._ui.tabSchema.layout().addWidget(self._schema)
+        self._files = FileListController(
+            self._ui,
+            self._undo,
+            self._window_state,
+            self._extension_mode,
+            self,
+            sidecars_forced=self._schema_mode,
+        )
+        self._pattern = PatternRulePanel(
+            self._ui, self._presets, self._window_state, self._files, self
+        )
+        self._actions = ActionBar(self._ui, self._undo, self)
+        self._images = ImageActions(
+            self._ui, self._files, self._undo, self._window_state, self
+        )
+        self._profile_actions: list = []
+
+        self._ui.tabRules.setCurrentIndex(_TAB_OF_MODE[profiles.load()["mode"]])
         self._setup_directory_tree()
-        self._populate_pattern_combos()
-        self._populate_named_saves()
-        self._setup_help_buttons()
         self._connect_signals()
-        self._update_sidecar_checkbox_state()
+        self._apply_mode_state()
+        self._files.apply_display()
+        self._update_title()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
         if _cfg.get_restore_toolbar_state():
@@ -159,11 +118,10 @@ class MainWindow(QMainWindow):
         QFileSystemModel hasn't populated the index for *path* yet (deep paths
         are loaded lazily in background threads; index() returns invalid until
         each ancestor has been fetched, so selectionChanged never fires and
-        _reload_files is never called).  Fall back to a direct assignment."""
+        the file list is never reloaded).  Fall back to a direct assignment."""
         self._navigate_to(path)
-        if os.path.isdir(path) and self._current_dir != path:
-            self._current_dir = path
-            self._reload_files()
+        if os.path.isdir(path) and self._files.current_dir != path:
+            self._files.set_directory(path)
 
     def _navigate_to(self, path: str) -> None:
         if not os.path.isdir(path):
@@ -173,92 +131,34 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.scrollTo(idx)
         self._ui.treeDirectory.expand(idx)
 
-    def _setup_help_buttons(self) -> None:
-        help_icon = QIcon(_resource("question.svg"))
-        self._ui.btnSearchHelp.setIcon(help_icon)
-        self._ui.btnReplaceHelp.setIcon(help_icon)
-        add_icon = QIcon(_resource("add.svg"))
-        self._ui.btnSearchAdd.setIcon(add_icon)
-        self._ui.btnReplaceAdd.setIcon(add_icon)
-        self._ui.cmbPatternSearch.view().setItemDelegate(
-            _SearchModeDelegate(self._ui.cmbPatternSearch)
-        )
-        self._ui.cmbPatternSearch.setLineEdit(WhitespaceLineEdit())
-        self._ui.cmbPatternDest.setLineEdit(WhitespaceLineEdit())
-
-    def _populate_pattern_combos(self) -> None:
-        self._populate_search_combo()
-        self._populate_replace_combo()
-
-    def _populate_search_combo(self) -> None:
-        self._ui.cmbPatternSearch.clear()
-        for mode, pattern in self._presets.get_search():
-            self._ui.cmbPatternSearch.addItem(pattern, mode)
-        self._update_search_add_button()
-
-    def _populate_replace_combo(self) -> None:
-        self._ui.cmbPatternDest.clear()
-        for pattern in self._presets.get_replace():
-            self._ui.cmbPatternDest.addItem(pattern)
-        self._update_replace_add_button()
-
     def _connect_signals(self) -> None:
         self._ui.actionOpenFolder.triggered.connect(self._on_open)
-        self._ui.btnPreview.clicked.connect(self._on_preview)
-        self._ui.btnClearPreview.clicked.connect(self._on_clear_preview)
-        self._ui.btnUndo.clicked.connect(self._on_undo)
-        self._ui.btnRename.clicked.connect(self._on_rename)
 
         sel_model = self._ui.treeDirectory.selectionModel()
         sel_model.selectionChanged.connect(lambda *_: self._on_directory_selected())
 
-        # Drag'n'drop
-        self._ui.treeDirectory.files_dropped.connect(self._on_files_dropped)
-        self._ui.tblFiles.files_dropped.connect(self._on_files_dropped)
-        self._ui.tblFiles.current_dir_getter = lambda: self._current_dir
-
-        # Patterns tab — post-processing
-        self._ui.cmbSpaces.currentIndexChanged.connect(self._on_post_process_changed)
-        self._ui.chkRemoveAccents.toggled.connect(self._on_post_process_changed)
-        self._ui.chkRemoveDuplicates.toggled.connect(self._on_post_process_changed)
-        self._ui.cmbCaps.currentIndexChanged.connect(self._on_post_process_changed)
-        self._ui.cmbExtensionMode.currentIndexChanged.connect(
-            self._on_extension_mode_changed
-        )
-        self._ui.chkSidecarMode.toggled.connect(self._reload_files)
-
-        # Pattern add/help buttons
-        self._ui.btnSearchAdd.clicked.connect(self._on_add_search)
-        self._ui.btnReplaceAdd.clicked.connect(self._on_add_replace)
-        self._ui.btnSearchHelp.clicked.connect(self._on_search_help)
-        self._ui.btnReplaceHelp.clicked.connect(self._on_replace_help)
-
-        # Named saves
-        self._ui.cmbNamedSaves.currentTextChanged.connect(self._on_save_name_changed)
-        self._ui.cmbNamedSaves.activated.connect(self._on_named_save_selected)
-        self._ui.btnSaveSave.clicked.connect(self._on_save_save)
-        self._ui.btnSaveDelete.clicked.connect(self._on_save_delete)
-
-        # Search mode (Pattern / Regex / Plain text) + case sensitivity
-        for rad in (self._ui.radPattern, self._ui.radRegex, self._ui.radPlainText):
-            rad.toggled.connect(lambda _: self._on_mode_changed())
-        self._ui.chkCaseInsensitive.toggled.connect(lambda _: self._on_mode_changed())
-        self._ui.cmbPatternSearch.activated.connect(self._on_search_preset_selected)
-        self._ui.cmbPatternDest.activated.connect(self._on_replace_preset_selected)
-        self._ui.cmbPatternSearch.currentTextChanged.connect(
-            lambda _: self._on_search_text_changed()
-        )
-        self._ui.cmbPatternDest.currentTextChanged.connect(
-            lambda _: self._on_replace_text_changed()
-        )
-
-        # Options that trigger a file list reload
-        self._ui.cmbMode.currentIndexChanged.connect(self._reload_files)
-        self._ui.chkRecursive.toggled.connect(self._reload_files)
-        self._ui.edtFilter.editingFinished.connect(self._reload_files)
-
-        # Auto-preview
-        self._ui.chkAutoPreview.toggled.connect(self._on_auto_preview_toggled)
+        # Components
+        self._actions.preview_requested.connect(self._on_preview)
+        self._actions.clear_requested.connect(self._files.clear_preview)
+        self._actions.undo_requested.connect(self._on_undo)
+        self._actions.rename_requested.connect(self._on_rename)
+        self._ui.btnRenumber.clicked.connect(self._on_renumber)
+        self._ui.tabRules.currentChanged.connect(self._on_mode_changed)
+        self._ui.chkThumbnails.toggled.connect(self._on_thumbnails_toggled)
+        self._pattern.edited.connect(self._actions.schedule_preview)
+        self._pattern.changed.connect(self._actions.request_auto_preview)
+        self._schema.edited.connect(self._actions.schedule_preview)
+        self._schema.edited.connect(self._update_renumber_button)
+        self._schema.changed.connect(self._actions.request_auto_preview)
+        self._files.files_reloaded.connect(self._on_files_reloaded)
+        self._files.selection_changed.connect(self._actions.request_auto_preview)
+        self._files.rename_count_changed.connect(self._actions.set_rename_count)
+        self._files.rename_count_changed.connect(self._update_renumber_button)
+        self._files.undo_stack_changed.connect(self._actions.refresh_undo)
+        self._files.field_requested.connect(self._pattern.insert_field)
+        self._images.undo_stack_changed.connect(self._actions.refresh_undo)
+        self._images.status_message.connect(self.statusBar().showMessage)
+        self._images.template_accepted.connect(self._on_template_accepted)
 
         # Menu bar
         self._ui.actionQuit.triggered.connect(self._on_quit)
@@ -266,86 +166,33 @@ class MainWindow(QMainWindow):
         self._ui.actionSidecarFiles.triggered.connect(self._on_sidecar_files)
         self._ui.actionSettings.triggered.connect(self._on_settings)
         self._ui.actionAbout.triggered.connect(self._on_about)
+        self._ui.actionKeyboardHelp.triggered.connect(self._on_keyboard_help)
+        self._ui.actionUserGuide.triggered.connect(self._on_user_guide)
         self._ui.actionEditShortcuts.triggered.connect(self._on_edit_shortcuts)
-        self._ui.actionFileInfo.triggered.connect(self._on_file_info)
         self._ui.menuShortcuts.aboutToShow.connect(self._build_shortcuts_menu)
+        self._ui.actionProfileNew.triggered.connect(self._on_profile_new)
+        self._ui.actionProfileDuplicate.triggered.connect(self._on_profile_duplicate)
+        self._ui.actionProfileRename.triggered.connect(self._on_profile_rename)
+        self._ui.actionProfileDelete.triggered.connect(self._on_profile_delete)
+        self._ui.actionProfileConfig.triggered.connect(self._on_profile_config)
+        self._ui.menuProfile.aboutToShow.connect(self._build_profile_menu)
 
         # Directory tree context menu
         self._ui.treeDirectory.customContextMenuRequested.connect(
             self._on_tree_context_menu
         )
 
-        # File list context menu + selection tracking for info window
-        self._ui.tblFiles.customContextMenuRequested.connect(
-            self._on_files_context_menu
-        )
-        self._ui.tblFiles.itemSelectionChanged.connect(self._on_file_selection_changed)
-        self._ui.tblFiles.itemDoubleClicked.connect(self._on_file_double_clicked)
-
-    # ── Filesystem change notifications ──────────────────────────────────────
-
-    def _on_dir_changed_external(self) -> None:
-        if time.monotonic() - self._last_internal_reload < 0.5:
-            return
-        self._fs_change_timer.start(200)
-
-    def _listing_unchanged(self) -> bool:
-        """Return True if the on-disk listing still matches what's displayed.
-
-        QFileSystemWatcher notifications can be spurious — e.g. a desktop
-        indexer or thumbnailer touching directory metadata without actually
-        adding/removing/renaming any entry. Rebuilding the tree for those
-        causes a visible flicker (clear + repopulate) for no reason, so
-        _on_fs_change skips the reload entirely when nothing really changed.
-        """
-        mode = self._ui.cmbMode.currentIndex()
-        recursive = self._ui.chkRecursive.isChecked()
-        pattern = self._ui.edtFilter.text().strip() or None
-        if recursive:
-            entries = filetools.get_file_listing_recursive(
-                self._current_dir, mode, pattern
-            )
-        else:
-            entries = filetools.get_file_listing(self._current_dir, mode, pattern)
-        new_paths = [path for _, path in entries]
-        root = self._ui.tblFiles.invisibleRootItem()
-        current_paths = [
-            root.child(i).data(0, Qt.ItemDataRole.UserRole)
-            for i in range(root.childCount())
-        ]
-        return new_paths == current_paths
-
-    def _on_fs_change(self) -> None:
-        if not self._current_dir or not os.path.isdir(self._current_dir):
-            return
-        if self._listing_unchanged():
-            return
-        selected_paths = {
-            item.data(0, Qt.ItemDataRole.UserRole)
-            for item in self._ui.tblFiles.selectedItems()
-        }
-        self._reload_files()
-        if selected_paths:
-            root = self._ui.tblFiles.invisibleRootItem()
-            self._ui.tblFiles.blockSignals(True)
-            for i in range(root.childCount()):
-                item = root.child(i)
-                if item.data(0, Qt.ItemDataRole.UserRole) in selected_paths:
-                    item.setSelected(True)
-            self._ui.tblFiles.blockSignals(False)
-            self._on_file_selection_changed()
-
-    # ── Directory / file loading ──────────────────────────────────────────────
+    # ── Directory selection ───────────────────────────────────────────────────
 
     def _on_open(self) -> None:
         folder = QFileDialog.getExistingDirectory(self, _("Select folder"))
         if not folder:
             return
-        self._current_dir = folder
+        self._files.current_dir = folder
         idx = self._fs_model.index(folder)
         self._ui.treeDirectory.setCurrentIndex(idx)
         self._ui.treeDirectory.scrollTo(idx)
-        self._reload_files()
+        self._files.reload()
 
     def _on_directory_selected(self) -> None:
         indexes = self._ui.treeDirectory.selectionModel().selectedIndexes()
@@ -354,962 +201,188 @@ class MainWindow(QMainWindow):
         path = self._fs_model.filePath(indexes[0])
         if not os.path.isdir(path):
             return
-        if path == self._current_dir:
+        if path == self._files.current_dir:
             return
         _log.info("Directory selected: %s", path)
-        self._current_dir = path
-        self._reload_files()
+        self._files.set_directory(path)
 
-    def _reload_files(self) -> None:
-        if not self._current_dir or not os.path.isdir(self._current_dir):
-            return
-        self._last_internal_reload = time.monotonic()
-        self._fs_change_timer.stop()
-        watched = self._fs_watcher.directories()
-        if list(watched) != [self._current_dir]:
-            if watched:
-                self._fs_watcher.removePaths(list(watched))
-            self._fs_watcher.addPath(self._current_dir)
-        mode = self._ui.cmbMode.currentIndex()
-        recursive = self._ui.chkRecursive.isChecked()
-        pattern = self._ui.edtFilter.text().strip() or None
-
-        _log.debug(
-            "Reloading files: dir=%s mode=%d recursive=%s pattern=%r",
-            self._current_dir,
-            mode,
-            recursive,
-            pattern,
-        )
-
-        if recursive:
-            entries = filetools.get_file_listing_recursive(
-                self._current_dir, mode, pattern
-            )
-        else:
-            entries = filetools.get_file_listing(self._current_dir, mode, pattern)
-
-        self._ui.tblFiles.clear()
-        self._ui.tblFiles.setHeaderLabels([_("Original"), _("Preview")])
-        for name, path in entries:
-            display = os.path.relpath(path, self._current_dir) if recursive else name
-            item = QTreeWidgetItem([display, ""])
-            item.setData(0, Qt.ItemDataRole.UserRole, path)
-            if os.path.isdir(path):
-                item.setForeground(0, _DIR_COLOR)
-            self._ui.tblFiles.addTopLevelItem(item)
-        self._recompute_sidecar_grouping(entries)
-        self._apply_sidecar_coloring()
-        self._ui.tblFiles.resizeColumnToContents(0)
-
+    def _on_files_reloaded(self) -> None:
         count = self._ui.tblFiles.topLevelItemCount()
-        _log.debug("Loaded %d item(s) from %s", count, self._current_dir)
         self.statusBar().showMessage(
-            _("{path} — {n} item(s)").format(path=self._current_dir, n=count)
+            _("{path} — {n} item(s)").format(path=self._files.current_dir, n=count)
         )
-        self._ui.btnRename.setEnabled(False)
+        self._update_renumber_button()
+        self._actions.request_auto_preview()
 
-        if self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
+    # ── Rule mode (Pattern / Schema tabs) ─────────────────────────────────────
 
-    # ── Preview (pattern tab only) ────────────────────────────────────────────
+    def _schema_mode(self) -> bool:
+        return self._ui.tabRules.currentIndex() == _SCHEMA_TAB
 
-    def _active_items(self) -> list[QTreeWidgetItem]:
-        """Return selected top-level items, or all if nothing is selected."""
-        selected = self._ui.tblFiles.selectedItems()
-        if selected:
-            return selected
-        root = self._ui.tblFiles.invisibleRootItem()
-        return [root.child(i) for i in range(root.childCount())]
+    def _extension_mode(self) -> str | None:
+        """Extension mode of the active rule (the schema lowercases it)."""
+        return "lower" if self._schema_mode() else self._pattern.extension_mode()
 
-    def _validate_search_input(self) -> bool:
-        """Validate the search field when in regex mode; colour it red if invalid.
+    def _on_mode_changed(self, index: int) -> None:
+        data = profiles.load()
+        data["mode"] = "schema" if index == _SCHEMA_TAB else "pattern"
+        profiles.save(data)
+        _log.info("Rule mode: %s", data["mode"])
+        self._apply_mode_state()
+        if self._files.current_dir:
+            self._files.reload()
 
-        Returns True if the input is valid for the active mode.
-        """
-        if not self._ui.radRegex.isChecked():
-            self._ui.cmbPatternSearch.lineEdit().setStyleSheet("")
-            return True
-        pattern = self._ui.cmbPatternSearch.currentText()
-        line_edit = self._ui.cmbPatternSearch.lineEdit()
-        if not pattern:
-            line_edit.setStyleSheet("")
-            return True
-        try:
-            re.compile(pattern)
-            line_edit.setStyleSheet("")
-            return True
-        except re.error:
-            line_edit.setStyleSheet(_INVALID_STYLE)
-            return False
+    def _on_thumbnails_toggled(self, checked: bool) -> None:
+        data = profiles.load()
+        data["display"]["thumbnails"] = checked
+        profiles.save(data)
+        self._files.apply_display()
 
-    def _validate_replace_input(self) -> bool:
-        """Validate the replacement field syntax and mode compatibility.
+    def _apply_mode_state(self) -> None:
+        """Enable the controls of the active mode."""
+        self._ui.cmbExtensionMode.setEnabled(not self._schema_mode())
+        self._files.update_sidecar_checkbox_state()
+        self._update_renumber_button()
 
-        Returns True if valid.
-        """
-        template = self._ui.cmbPatternDest.currentText()
-        line_edit = self._ui.cmbPatternDest.lineEdit()
-        if not template:
-            line_edit.setStyleSheet("")
-            return True
-        try:
-            tokens = _repl.parse(template)
-        except _repl.ReplacementSyntaxError:
-            line_edit.setStyleSheet(_INVALID_STYLE)
-            return False
-        errors = _repl.validate(tokens, self._current_search_mode())
-        if errors:
-            line_edit.setStyleSheet(_INVALID_STYLE)
-            return False
-        line_edit.setStyleSheet("")
-        return True
-
-    def _on_search_text_changed(self) -> None:
-        self._validate_search_input()
-        self._update_search_add_button()
-        if self._ui.chkAutoPreview.isChecked():
-            self._preview_timer.start(_cfg.get_preview_delay())
-
-    def _on_replace_text_changed(self) -> None:
-        self._validate_replace_input()
-        self._update_replace_add_button()
-        if self._ui.chkAutoPreview.isChecked():
-            self._preview_timer.start(_cfg.get_preview_delay())
-
-    def _on_mode_changed(self) -> None:
-        self._validate_search_input()
-        self._validate_replace_input()
-        self._update_search_add_button()
-        if self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
-
-    def _update_search_add_button(self) -> None:
-        pattern = self._ui.cmbPatternSearch.currentText()
-        if not pattern:
-            self._ui.btnSearchAdd.setEnabled(False)
-            return
-        if self._ui.radRegex.isChecked():
-            try:
-                re.compile(pattern)
-            except re.error:
-                self._ui.btnSearchAdd.setEnabled(False)
-                return
-        mode = self._current_search_mode()
-        already = any(
-            self._ui.cmbPatternSearch.itemText(i) == pattern
-            and self._ui.cmbPatternSearch.itemData(i) == mode
-            for i in range(self._ui.cmbPatternSearch.count())
+    def _update_renumber_button(self) -> None:
+        """Renumber shows with a schema counter and, like Rename, stays
+        disabled until a preview is displayed."""
+        self._ui.btnRenumber.setVisible(
+            self._schema_mode() and self._schema.has_counter()
         )
-        self._ui.btnSearchAdd.setEnabled(not already)
-
-    def _update_replace_add_button(self) -> None:
-        pattern = self._ui.cmbPatternDest.currentText()
-        if not pattern or not self._validate_replace_input():
-            self._ui.btnReplaceAdd.setEnabled(False)
-            return
-        already = any(
-            self._ui.cmbPatternDest.itemText(i) == pattern
-            for i in range(self._ui.cmbPatternDest.count())
-        )
-        self._ui.btnReplaceAdd.setEnabled(not already)
-
-    def _do_rename(
-        self,
-        use_regex: bool,
-        use_plain: bool,
-        stem: str,
-        orig_path: str,
-        search: str,
-        replace: str,
-        counter: int,
-        *,
-        newnum: int | None = None,
-        case_insensitive: bool = False,
-    ) -> tuple[str | None, str | None]:
-        """Dispatch to the appropriate filetools rename function.
-
-        *orig_path* must be the actual file path (with extension) so that
-        metadata fields such as {mdatetime} and {im:…}/{au:…} can stat the file.
-        """
-        if use_regex:
-            return filetools.rename_using_regex(
-                stem,
-                orig_path,
-                search,
-                replace,
-                newnum=newnum,
-                case_insensitive=case_insensitive,
-            )
-        if use_plain:
-            return filetools.rename_using_plain_text(
-                stem,
-                orig_path,
-                search,
-                replace,
-                newnum=newnum,
-                case_insensitive=case_insensitive,
-            )
-        return filetools.rename_using_patterns(
-            stem,
-            orig_path,
-            search,
-            replace,
-            counter,
-            newnum=newnum,
-            case_insensitive=case_insensitive,
+        self._ui.btnRenumber.setEnabled(
+            any(item.text(1) for item in self._files.all_items())
         )
 
-    def _apply_postproc(self, name: str, path: str) -> str:
-        """Apply active post-processing options."""
-        sep_idx = self._ui.cmbSpaces.currentIndex()
-        if sep_idx > 0:
-            name, _op = filetools.replace_spaces(name, path, sep_idx - 1)
-        if self._ui.chkRemoveAccents.isChecked():
-            name, _op = filetools.replace_accents(name, path)
-        if self._ui.chkRemoveDuplicates.isChecked():
-            name, _op = filetools.replace_duplicated(name, path)
-        caps_idx = self._ui.cmbCaps.currentIndex()
-        if caps_idx > 0:
-            name, _op = filetools.replace_capitalization(name, path, caps_idx - 1)
-        return name
-
-    def _make_newnum_state(self, replace: str) -> _repl.NewNumState | None:
-        """Return a NewNumState if *replace* contains {newnum}, else None."""
-        try:
-            segments = _repl.parse(replace)
-        except _repl.ReplacementSyntaxError:
-            return None
-        for seg in segments:
-            if isinstance(seg, _repl.FieldSegment) and seg.name == "newnum":
-                start = 1
-                if seg.default is not None:
-                    try:
-                        start = int(seg.default)
-                    except ValueError:
-                        pass
-                return _repl.NewNumState(start)
-        return None
+    # ── Preview / Rename / Undo ───────────────────────────────────────────────
 
     def _on_preview(self) -> None:
-        if not self._current_dir:
+        if not self._files.current_dir:
             return
-        search = self._ui.cmbPatternSearch.currentText()
-        replace = self._ui.cmbPatternDest.currentText()
-        if not search:
-            return
-
-        use_regex = self._ui.radRegex.isChecked()
-        use_plain = self._ui.radPlainText.isChecked()
-        case_insensitive = self._ui.chkCaseInsensitive.isChecked()
-        if use_regex and not self._validate_search_input():
-            return
-        if not self._validate_replace_input():
-            return
-
-        mode_label = "regex" if use_regex else ("plain" if use_plain else "pattern")
-        ext_mode = self._ui.cmbExtensionMode.currentData()
-        normalization_table = _cfg.get_extension_normalization_map()
-        items = self._active_items()
-        _log.info(
-            "Preview: %d item(s), mode=%s, search=%r, replace=%r",
-            len(items),
-            mode_label,
-            search,
-            replace,
+        items = self._files.active_items()
+        panel = self._schema if self._schema_mode() else self._pattern
+        orphans = self._schema_orphans()
+        kept = [i for i in items if i.data(0, Qt.ItemDataRole.UserRole) not in orphans]
+        entries = panel.preview(
+            [item.data(0, Qt.ItemDataRole.UserRole) for item in kept],
+            self._files.sidecar_followers(),
         )
-        newnum_state = self._make_newnum_state(replace)
+        if entries is None:
+            if self._schema_mode():
+                self._files.clear_preview()
+            return
+        skipped = [i for i in items if i not in kept]
+        note = PreviewEntry(_("⚠ orphan sidecar, not renamed"), skipped=True)
+        self._files.show_previews(kept + skipped, entries + [note] * len(skipped))
 
-        root = self._ui.tblFiles.invisibleRootItem()
-        for i in range(root.childCount()):
-            root.child(i).setText(1, "")
+    def _schema_orphans(self) -> set[str]:
+        """Schema mode: the orphan sidecars are left alone (numbered like a
+        base file, they would get attached to another file)."""
+        return self._files.listed_orphan_sidecars() if self._schema_mode() else set()
 
-        for counter, item in enumerate(items, start=1):
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            name = os.path.basename(path)
-
-            if ext_mode == "modify":
-                stem, stem_path, ext = name, path, ""
-            else:
-                stem, stem_path, ext = filetools.cut_extension(name, path)
-                ext = filetools.apply_extension_mode(ext, ext_mode, normalization_table)
-
-            field_error = False
-            field_error_name = ""
-            field_error_namespaces: frozenset[str] | None = None
-            newname = None
-
-            if newnum_state is not None:
-                dir_path = os.path.dirname(path)
-                k = newnum_state.current
-                while True:
-                    try:
-                        raw, _op = self._do_rename(
-                            use_regex,
-                            use_plain,
-                            stem,
-                            path,
-                            search,
-                            replace,
-                            counter,
-                            newnum=k,
-                            case_insensitive=case_insensitive,
-                        )
-                    except _repl.FieldResolutionError as err:
-                        field_error = True
-                        field_error_name = err.field
-                        field_error_namespaces = err.namespaces
-                        break
-                    if raw is None:
-                        break
-                    processed = self._apply_postproc(raw, stem_path)
-                    candidate = filetools.add_extension(processed, stem_path, ext)[0]
-                    cand_path = os.path.join(dir_path, candidate)
-                    if candidate not in newnum_state.reserved and (
-                        not os.path.exists(cand_path)
-                        or same_file_path(cand_path, path, dir_path)
-                    ):
-                        newnum_state.reserved.add(candidate)
-                        newnum_state.current = k + 1
-                        newname = candidate
-                        break
-                    k += 1
-            else:
-                try:
-                    raw, _op = self._do_rename(
-                        use_regex,
-                        use_plain,
-                        stem,
-                        path,
-                        search,
-                        replace,
-                        counter,
-                        case_insensitive=case_insensitive,
-                    )
-                except _repl.FieldResolutionError as err:
-                    field_error = True
-                    field_error_name = err.field
-                    field_error_namespaces = err.namespaces
-                    raw = None
-                if raw is not None:
-                    processed = self._apply_postproc(raw, stem_path)
-                    newname = filetools.add_extension(processed, stem_path, ext)[0]
-
-            if newname is not None:
-                _log.debug("Preview: %r → %r", name, newname)
-                item.setText(1, newname)
-                item.setData(1, Qt.ItemDataRole.UserRole, False)
-            elif field_error:
-                if field_error_namespaces:
-                    types = "/".join(
-                        ns.rstrip(":") for ns in sorted(field_error_namespaces)
-                    )
-                    _log.debug("Preview: %r — no matching type among %s", name, types)
-                    item.setText(
-                        1, _("⚠ no matching type ({types})").format(types=types)
-                    )
-                else:
-                    _log.debug(
-                        "Preview: %r — field %r unavailable", name, field_error_name
-                    )
-                    item.setText(
-                        1, _("⚠ {field} unavailable").format(field=field_error_name)
-                    )
-                item.setData(1, Qt.ItemDataRole.UserRole, True)
-            else:
-                item.setText(1, "")
-                item.setData(1, Qt.ItemDataRole.UserRole, False)
-
-        if self._sidecar_mode_active() and self._sidecar_result:
-            path_to_item = {
-                root.child(i).data(0, Qt.ItemDataRole.UserRole): root.child(i)
-                for i in range(root.childCount())
-            }
-            for sidecar_path, base_path in self._sidecar_result.sidecar_of.items():
-                sidecar_item = path_to_item[sidecar_path]
-                base_item = path_to_item[base_path]
-                base_new_name = base_item.text(1)
-                base_had_error = bool(base_item.data(1, Qt.ItemDataRole.UserRole))
-                if not base_new_name or base_had_error:
-                    sidecar_item.setText(1, "")
-                    sidecar_item.setData(1, Qt.ItemDataRole.UserRole, False)
-                    continue
-                base_stem, _stem_path, _ext = filetools.cut_extension(
-                    base_new_name, base_path
+    def _execute(self, pairs: list[tuple[str, str]], title: str) -> bool:
+        """Rename *pairs* all or nothing, record the undo entry and reload
+        the list, selecting the renamed files still listed (else the row
+        that followed them); on failure show why under *title*.  Return
+        True on success."""
+        next_path = self._files.next_path_after([src for src, _dst in pairs])
+        try:
+            result = filetools.execute_renames(
+                pairs, prune_root=self._files.current_dir
+            )
+        except filetools.RenameError as exc:
+            _log.warning("Rename refused or rolled back: %s", exc)
+            if exc.conflicts:
+                detail = "\n".join(
+                    f"{os.path.basename(src)} → {dst}" for src, dst in exc.conflicts
                 )
-                suffix = self._sidecar_result.sidecar_suffix[sidecar_path]
-                sidecar_item.setText(1, f"{base_stem}.{suffix}")
-                sidecar_item.setData(1, Qt.ItemDataRole.UserRole, False)
-        self._apply_sidecar_coloring()
-
-        self._ui.tblFiles.resizeColumnToContents(1)
-        self._refresh_conflicts()
-
-    def _refresh_conflicts(self) -> None:
-        """Recompute conflict coloring and enable/disable Rename."""
-        root = self._ui.tblFiles.invisibleRootItem()
-        n = root.childCount()
-
-        previews: list[tuple[str, str, QTreeWidgetItem, bool]] = []
-        has_field_error = False
-        for i in range(n):
-            item = root.child(i)
-            preview = item.text(1)
-            if not preview:
-                continue
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            is_error = bool(item.data(1, Qt.ItemDataRole.UserRole))
-            if is_error:
-                has_field_error = True
-                item.setForeground(1, _ERROR_COLOR)
-            previews.append((preview, path, item, is_error))
-
-        if not previews or all(e for *_, e in previews):
-            self._ui.btnRename.setEnabled(False)
-            return
-
-        # Detect duplicate targets among non-error entries.
-        valid = [(p, path, item, e) for p, path, item, e in previews if not e]
-
-        target_map: dict[str, list[int]] = defaultdict(list)
-        for idx, (preview, path, _, _) in enumerate(valid):
-            parent = os.path.dirname(path)
-            target = os.path.join(parent, preview)
-            target_map[conflict_key(target, parent)].append(idx)
-
-        conflict_indices: set[int] = set()
-        for indices in target_map.values():
-            if len(indices) > 1:
-                conflict_indices.update(indices)
-
-        for idx, (preview, path, _, _) in enumerate(valid):
-            parent = os.path.dirname(path)
-            target = os.path.join(parent, preview)
-            if not same_file_path(target, path, parent) and os.path.exists(target):
-                conflict_indices.add(idx)
-
-        has_conflict = bool(conflict_indices)
-        any_changed = False
-        for idx, (preview, path, item, _) in enumerate(valid):
-            if idx in conflict_indices:
-                item.setForeground(1, _CONFLICT_COLOR)
-            elif preview != os.path.basename(path):
-                item.setForeground(1, _PREVIEW_COLOR)
-                any_changed = True
+                message = _("Target(s) already taken:") + "\n" + detail
             else:
-                item.setForeground(1, _UNCHANGED_COLOR)
-
-        self._ui.btnRename.setEnabled(
-            any_changed and not has_conflict and not has_field_error
-        )
-
-    def _on_clear_preview(self) -> None:
-        root = self._ui.tblFiles.invisibleRootItem()
-        for i in range(root.childCount()):
-            root.child(i).setText(1, "")
-        self._ui.btnRename.setEnabled(False)
-
-    # ── Pattern help dialogs ──────────────────────────────────────────────────
-
-    def _on_search_help(self) -> None:
-        if self._search_help is None:
-            self._search_help = PatternHelpDialog(
-                search_html(),
-                _("Search — Help"),
-                "help_search",
-                self._window_state,
+                message = str(exc)
+            QMessageBox.warning(
                 self,
+                title,
+                _("Nothing was renamed.") + "\n\n" + message,
+                QMessageBox.StandardButton.Ok,
             )
-        if self._search_help.isVisible():
-            self._search_help.raise_()
-            self._search_help.activateWindow()
-        else:
-            self._search_help.show()
-
-    def _on_replace_help(self) -> None:
-        if self._replace_help is None:
-            self._replace_help = PatternHelpDialog(
-                replace_html(),
-                _("Replace — Help"),
-                "help_replace",
-                self._window_state,
-                self,
-            )
-        if self._replace_help.isVisible():
-            self._replace_help.raise_()
-            self._replace_help.activateWindow()
-        else:
-            self._replace_help.show()
-
-    # ── Patterns tab — post-processing ───────────────────────────────────────
-
-    def _on_post_process_changed(self) -> None:
-        if self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
-
-    def _on_extension_mode_changed(self) -> None:
-        self._update_sidecar_checkbox_state()
-        if self._ui.chkSidecarMode.isChecked():
-            self._reload_files()
-        elif self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
-
-    # ── Sidecar files ─────────────────────────────────────────────────────────
-
-    def _sidecar_mode_active(self) -> bool:
-        """True if sidecar grouping should be applied: the checkbox is
-        checked and the current extension mode is compatible with it
-        (Keep/Lowercase/Uppercase — Normalize/Modify rewrite the extension,
-        which is incompatible with leaving sidecar suffixes untouched)."""
-        if not self._ui.chkSidecarMode.isChecked():
+            self._files.clear_preview()
+            self._files.reload()
             return False
-        return self._ui.cmbExtensionMode.currentData() in _SIDECAR_ACTIVE_EXT_MODES
-
-    def _update_sidecar_checkbox_state(self) -> None:
-        allowed = self._ui.cmbExtensionMode.currentData() in _SIDECAR_ACTIVE_EXT_MODES
-        self._ui.chkSidecarMode.setEnabled(allowed)
-
-    def _recompute_sidecar_grouping(self, entries: list[tuple[str, str]]) -> None:
-        self._prev_group_selection = set()
-        if not self._sidecar_mode_active():
-            self._sidecar_result = None
-            return
-        config = _cfg.get_sidecar_config()
-        self._sidecar_result = sidecar.build_sidecar_groups(entries, config)
-
-    def _apply_sidecar_coloring(self) -> None:
-        """Tint sidecar rows (column 0) and surface ambiguity errors for
-        the current self._sidecar_result. No-op when sidecar mode is
-        inactive (self._sidecar_result is None)."""
-        if self._sidecar_result is None:
-            return
-        root = self._ui.tblFiles.invisibleRootItem()
-        for i in range(root.childCount()):
-            item = root.child(i)
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            if path in self._sidecar_result.sidecar_of:
-                item.setForeground(0, _SIDECAR_COLOR)
-        self._apply_sidecar_errors()
-
-    def _apply_sidecar_errors(self) -> None:
-        """Tint every sidecar_result.errors row's filename (column 0), and
-        additionally set the ambiguity-error text/color on column 1 — which
-        _refresh_conflicts treats as a field error blocking Rename — only
-        for rows that are part of the current selection (_active_items()).
-        An ambiguous file the user hasn't selected must not block renaming
-        an unrelated selection, same as any other field-resolution error is
-        already scoped to _active_items() in _on_preview.
-
-        Called right after listing (so the tint/error is visible even
-        before Preview is run — at that point nothing is selected yet, so
-        _active_items() returns every row) and again at the tail of
-        _on_preview, which clears column 1 for every row before
-        recomputing it — errors always win over a computed preview for
-        selected rows. Only called from _apply_sidecar_coloring, which
-        already guarantees self._sidecar_result is not None."""
-        active_paths = {
-            item.data(0, Qt.ItemDataRole.UserRole) for item in self._active_items()
-        }
-        root = self._ui.tblFiles.invisibleRootItem()
-        for i in range(root.childCount()):
-            item = root.child(i)
-            path = item.data(0, Qt.ItemDataRole.UserRole)
-            if path in self._sidecar_result.errors:
-                item.setForeground(0, _ERROR_COLOR)
-                if path in active_paths:
-                    item.setText(1, self._sidecar_result.errors[path])
-                    item.setData(1, Qt.ItemDataRole.UserRole, True)
-
-    def _group_of(self, path: str) -> set[str]:
-        """Return {base, *sidecars} for the group *path* belongs to, or
-        {path} if it belongs to no group."""
-        base = self._sidecar_result.sidecar_of.get(path, path)
-        return {base, *self._sidecar_result.groups.get(base, [])}
-
-    def _link_group_selection(self) -> None:
-        """Keep whole sidecar groups selected/deselected together.
-
-        A plain click (no modifier) or Shift range-select *replaces* the
-        whole selection with whatever Qt just computed — it is never a
-        per-item toggle, even when the click lands on a file that was
-        already selected as part of a group (re-clicking any member of an
-        already-selected group must keep the whole group selected, just
-        like re-clicking a lone, ungrouped file leaves it selected). In
-        that case every newly selected file simply pulls its whole group
-        in, with no reference to what was selected before.
-
-        Only a genuine Ctrl+click is a toggle of a single item against the
-        existing selection. There, comparing against the selection left by
-        the previous call (``self._prev_group_selection``) is required:
-        every newly *deselected* file pushes its whole group back out,
-        even though other members of that group are still individually
-        selected. Without tracking what changed, a Ctrl+click meant to
-        deselect one member of an already-fully-selected group would be
-        immediately undone: the remaining selected siblings would still
-        resolve to the same group and re-select it whole.
-        """
-        if self._sidecar_result is None:
-            return
-        root = self._ui.tblFiles.invisibleRootItem()
-        path_to_item = {
-            root.child(i).data(0, Qt.ItemDataRole.UserRole): root.child(i)
-            for i in range(root.childCount())
-        }
-        new_selected = {
-            i.data(0, Qt.ItemDataRole.UserRole)
-            for i in self._ui.tblFiles.selectedItems()
-        }
-
-        toggling = bool(
-            QApplication.keyboardModifiers() & Qt.KeyboardModifier.ControlModifier
+        _log.info("Renamed %d file(s)", len(result.pairs))
+        self._undo.add(RenameEntry.from_result(result))
+        self._actions.refresh_undo()
+        # The preview stays empty after a rename, even with auto-preview on.
+        with self._actions.auto_preview_held():
+            self._files.clear_preview()
+            self._files.reload()
+            self._files.select_after_change(
+                [dst for _src, dst in result.pairs], next_path
+            )
+        self.statusBar().showMessage(
+            _("{n} file(s) renamed.").format(n=len(result.pairs))
         )
-        if toggling:
-            to_select = set(new_selected)
-            for path in self._prev_group_selection - new_selected:
-                to_select -= self._group_of(path)
-            for path in new_selected - self._prev_group_selection:
-                to_select |= self._group_of(path)
-        else:
-            to_select = set()
-            for path in new_selected:
-                to_select |= self._group_of(path)
-
-        if to_select != new_selected:
-            self._linking_selection = True
-            self._ui.tblFiles.blockSignals(True)
-            for path, item in path_to_item.items():
-                item.setSelected(path in to_select)
-            self._ui.tblFiles.blockSignals(False)
-            self._linking_selection = False
-
-        self._prev_group_selection = to_select
-
-    # ── Pattern history ───────────────────────────────────────────────────────
-
-    def _current_search_mode(self) -> str:
-        if self._ui.radRegex.isChecked():
-            return "regex"
-        if self._ui.radPlainText.isChecked():
-            return "plain"
-        return "pattern"
-
-    def _on_add_search(self) -> None:
-        pattern = self._ui.cmbPatternSearch.currentText()
-        if not pattern:
-            return
-        mode = self._current_search_mode()
-        self._presets.add_search(mode, pattern)
-        self._populate_search_combo()
-        self._ui.cmbPatternSearch.setCurrentIndex(0)
-
-    def _on_add_replace(self) -> None:
-        pattern = self._ui.cmbPatternDest.currentText()
-        if not pattern:
-            return
-        self._presets.add_replace(pattern)
-        self._populate_replace_combo()
-        self._ui.cmbPatternDest.setCurrentIndex(0)
-
-    def _on_search_preset_selected(self, index: int) -> None:
-        if index < 0:
-            return
-        mode = self._ui.cmbPatternSearch.itemData(index)
-        pattern = self._ui.cmbPatternSearch.itemText(index)
-        if mode == "regex":
-            self._ui.radRegex.setChecked(True)
-        elif mode == "plain":
-            self._ui.radPlainText.setChecked(True)
-        elif mode == "pattern":
-            self._ui.radPattern.setChecked(True)
-        else:
-            return  # unknown mode — do not promote
-        self._presets.add_search(mode, pattern)
-        self._populate_search_combo()
-        self._ui.cmbPatternSearch.setCurrentIndex(0)
-
-    def _on_replace_preset_selected(self, index: int) -> None:
-        if index < 0:
-            return
-        pattern = self._ui.cmbPatternDest.itemText(index)
-        if not pattern:
-            return
-        self._presets.add_replace(pattern)
-        self._populate_replace_combo()
-        self._ui.cmbPatternDest.setCurrentIndex(0)
-
-    # ── Named saves ──────────────────────────────────────────────────────────
-
-    def _populate_named_saves(self) -> None:
-        combo = self._ui.cmbNamedSaves
-        current_text = combo.currentText()
-        # Block the embedded QLineEdit too: combo.blockSignals() alone does not
-        # stop the QCompleter from receiving textChanged events, which can queue
-        # a deferred activated() and corrupt the LRU order.
-        le = combo.lineEdit()
-        combo.blockSignals(True)
-        if le is not None:
-            le.blockSignals(True)
-        combo.clear()
-        for name in self._presets.get_saves():
-            combo.addItem(name)
-        idx = combo.findText(current_text)
-        if idx >= 0:
-            combo.setCurrentIndex(idx)
-        else:
-            combo.setCurrentText(current_text)
-        if le is not None:
-            le.blockSignals(False)
-        combo.blockSignals(False)
-        self._update_save_buttons()
-
-    def _update_save_buttons(self) -> None:
-        name = self._ui.cmbNamedSaves.currentText()
-        valid_name = bool(name and _SAVE_NAME_RE.match(name))
-        self._ui.btnSaveSave.setEnabled(valid_name)
-        self._ui.btnSaveDelete.setEnabled(name in self._presets.get_saves())
-
-    def _on_save_name_changed(self) -> None:
-        self._update_save_buttons()
-
-    def _on_named_save_selected(self, index: int) -> None:
-        if index < 0:
-            return
-        name = self._ui.cmbNamedSaves.itemText(index)
-        cfg = self._presets.get_saves().get(name)
-        if cfg is None:
-            return
-        self._apply_save_config(cfg)
-        self._presets.use_save(name)
-        self._populate_named_saves()
-        self._ui.cmbNamedSaves.setCurrentText(name)
-
-    def _collect_save_config(self) -> dict:
-        cfg: dict = {
-            "search_pattern": self._ui.cmbPatternSearch.currentText(),
-            "search_mode": self._current_search_mode(),
-            "case_insensitive": self._ui.chkCaseInsensitive.isChecked(),
-            "replace_pattern": self._ui.cmbPatternDest.currentText(),
-            "separator": self._ui.cmbSpaces.currentIndex(),
-            "remove_accents": self._ui.chkRemoveAccents.isChecked(),
-            "remove_duplicates": self._ui.chkRemoveDuplicates.isChecked(),
-            "case": self._ui.cmbCaps.currentIndex(),
-            "extension_mode": self._ui.cmbExtensionMode.currentData(),
-            "sidecar_mode": self._ui.chkSidecarMode.isChecked(),
-        }
-        f = self._ui.edtFilter.text()
-        if f:
-            cfg["filter"] = f
-        return cfg
-
-    def _apply_save_config(self, cfg: dict) -> None:
-        if "search_pattern" in cfg:
-            self._ui.cmbPatternSearch.setCurrentText(cfg["search_pattern"])
-        mode = cfg.get("search_mode", "")
-        if mode == "regex":
-            self._ui.radRegex.setChecked(True)
-        elif mode == "plain":
-            self._ui.radPlainText.setChecked(True)
-        elif mode == "pattern":
-            self._ui.radPattern.setChecked(True)
-        if "case_insensitive" in cfg:
-            self._ui.chkCaseInsensitive.setChecked(bool(cfg["case_insensitive"]))
-        if "replace_pattern" in cfg:
-            self._ui.cmbPatternDest.setCurrentText(cfg["replace_pattern"])
-        if "separator" in cfg:
-            self._ui.cmbSpaces.setCurrentIndex(int(cfg["separator"]))
-        if "remove_accents" in cfg:
-            self._ui.chkRemoveAccents.setChecked(bool(cfg["remove_accents"]))
-        if "remove_duplicates" in cfg:
-            self._ui.chkRemoveDuplicates.setChecked(bool(cfg["remove_duplicates"]))
-        if "case" in cfg:
-            self._ui.cmbCaps.setCurrentIndex(int(cfg["case"]))
-        ext_mode = _resolve_extension_mode(cfg)
-        if ext_mode is not None:
-            idx = self._ui.cmbExtensionMode.findData(ext_mode)
-            if idx >= 0:
-                self._ui.cmbExtensionMode.setCurrentIndex(idx)
-        if "sidecar_mode" in cfg:
-            self._ui.chkSidecarMode.setChecked(bool(cfg["sidecar_mode"]))
-        self._update_sidecar_checkbox_state()
-        current_filter = self._ui.edtFilter.text()
-        new_filter = cfg.get("filter", "")
-        self._ui.edtFilter.setText(new_filter)
-        if new_filter != current_filter:
-            self._reload_files()
-
-    def _on_save_save(self) -> None:
-        name = self._ui.cmbNamedSaves.currentText()
-        if not _SAVE_NAME_RE.match(name):
-            return
-        self._presets.set_save(name, self._collect_save_config())
-        self._populate_named_saves()
-        self._ui.cmbNamedSaves.setCurrentText(name)
-
-    def _on_save_delete(self) -> None:
-        name = self._ui.cmbNamedSaves.currentText()
-        if name not in self._presets.get_saves():
-            return
-        self._presets.delete_save(name)
-        self._populate_named_saves()
-        self._ui.cmbNamedSaves.setCurrentText("")
-
-    # ── Rename / Undo ─────────────────────────────────────────────────────────
+        return True
 
     def _on_rename(self) -> None:
-        renames: list[tuple[str, str]] = []
-        for item in self._active_items():
-            preview = item.text(1)
-            if not preview or item.data(1, Qt.ItemDataRole.UserRole):
-                continue
-            original_path: str = item.data(0, Qt.ItemDataRole.UserRole)
-            new_path = os.path.join(os.path.dirname(original_path), preview)
-            if original_path != new_path:
-                renames.append((original_path, new_path))
-
+        renames = self._files.pending_renames()
         if not renames:
             return
 
         _log.info("Renaming %d file(s)", len(renames))
-        errors: list[str] = []
-        done: list[tuple[str, str]] = []
-        for original, new in renames:
-            ok, err = filetools.rename_file(original, new)
-            if ok:
-                done.append((original, new))
+        if self._execute(renames, _("Rename errors")):
+            if self._schema_mode():
+                self._schema.record_history()
+                self._schema.save_dest()
             else:
-                errors.append(f"{os.path.basename(original)}: {err}")
+                self._pattern.record_history()
 
-        _log.info("Renamed %d file(s), %d error(s)", len(done), len(errors))
-        if done:
-            self._undo.add_batch(done)
-            self._refresh_undo_button()
-            search = self._ui.cmbPatternSearch.currentText()
-            replace = self._ui.cmbPatternDest.currentText()
-            if search:
-                self._presets.add_search(self._current_search_mode(), search)
-            if replace:
-                self._presets.add_replace(replace)
-            self._populate_pattern_combos()
-            self._ui.cmbPatternSearch.setCurrentIndex(0)
-            self._ui.cmbPatternDest.setCurrentIndex(0)
-
-        if errors:
+    def _on_renumber(self) -> None:
+        if not self._files.current_dir:
+            return
+        orphans = self._schema_orphans()
+        paths = [
+            path
+            for item in self._files.active_items()
+            if (path := item.data(0, Qt.ItemDataRole.UserRole)) not in orphans
+        ]
+        pairs = self._schema.renumber_plan(paths, self._files.sidecar_followers())
+        if pairs is None:
             QMessageBox.warning(
                 self,
-                _("Rename errors"),
-                "\n".join(errors),
+                _("Renumber"),
+                self._schema.lblMessage.text(),
                 QMessageBox.StandardButton.Ok,
             )
-
-        self._on_clear_preview()
-        self._reload_files()
-
-    def _on_files_dropped(self, paths: list[str], target_dir: str, move: bool) -> None:
-        if not paths or not os.path.isdir(target_dir):
             return
-
-        pending: list[tuple[str, str]] = []
-        errors: list[str] = []
-        for src in paths:
-            if not os.path.exists(src):
-                continue
-            dest = os.path.join(target_dir, os.path.basename(src.rstrip(os.sep)))
-            if same_file_path(dest, src, target_dir):
-                continue
-            if os.path.isdir(src):
-                src_abs = os.path.abspath(src)
-                target_abs = os.path.abspath(target_dir)
-                if target_abs == src_abs or target_abs.startswith(src_abs + os.sep):
-                    errors.append(
-                        f"{os.path.basename(src)}: "
-                        + _("cannot move/copy a folder into itself")
-                    )
-                    continue
-            pending.append((src, dest))
-
-        if not pending:
-            if errors:
-                QMessageBox.warning(
-                    self,
-                    _("Move errors") if move else _("Copy errors"),
-                    "\n".join(errors),
-                    QMessageBox.StandardButton.Ok,
-                )
+        if not pairs:
+            self.statusBar().showMessage(_("Files are already correctly numbered."))
             return
-
-        conflicts = [(s, d) for s, d in pending if os.path.exists(d)]
-        overwrite_all = False
-        if conflicts:
-            box = QMessageBox(self)
-            box.setIcon(QMessageBox.Icon.Warning)
-            box.setWindowTitle(_("Confirm overwrite"))
-            msg = _("{n} item(s) already exist in {dir} and would be overwritten.")
-            box.setText(msg.format(n=len(conflicts), dir=target_dir))
-            overwrite_btn = box.addButton(
-                _("Overwrite"), QMessageBox.ButtonRole.YesRole
-            )
-            skip_btn = box.addButton(_("Skip"), QMessageBox.ButtonRole.NoRole)
-            cancel_btn = box.addButton(QMessageBox.StandardButton.Cancel)
-            box.setDefaultButton(cancel_btn)
-            box.exec()
-            clicked = box.clickedButton()
-            if clicked is cancel_btn:
-                return
-            overwrite_all = clicked is overwrite_btn
-            if clicked is skip_btn:
-                conflict_set = set(conflicts)
-                pending = [p for p in pending if p not in conflict_set]
-
-        _log.info(
-            "%s %d file(s) into %s",
-            "Moving" if move else "Copying",
-            len(pending),
-            target_dir,
+        reply = QMessageBox.question(
+            self,
+            _("Confirm renumber"),
+            _("Renumber {n} file(s) starting from 1?").format(n=len(pairs)),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
-        done: list[tuple[str, str]] = []
-        any_success = False
-        for src, dest in pending:
-            op = filetools.move_path if move else filetools.copy_path
-            ok, err = op(src, dest, overwrite=overwrite_all)
-            if ok:
-                any_success = True
-                if move:
-                    done.append((src, dest))
-            else:
-                errors.append(f"{os.path.basename(src)}: {err}")
-
-        if done:
-            self._undo.add_batch(done)
-            self._refresh_undo_button()
-
-        if errors:
-            QMessageBox.warning(
-                self,
-                _("Move errors") if move else _("Copy errors"),
-                "\n".join(errors),
-                QMessageBox.StandardButton.Ok,
-            )
-
-        if any_success:
-            self._reload_files()
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+        _log.info("Renumbering %d file(s)", len(pairs))
+        if self._execute(pairs, _("Renumber errors")):
+            self._schema.record_history()
 
     def _on_undo(self) -> None:
-        _log.info("Undoing last rename batch")
-        self._undo.undo()
-        self._refresh_undo_button()
-        self._reload_files()
-
-    def _refresh_undo_button(self) -> None:
-        n = len(self._undo)
-        self._ui.btnUndo.setEnabled(n > 0)
-        if n > 0:
-            self._ui.btnUndo.setText(_("Undo (%d)") % n)
-            self._ui.btnUndo.setToolTip(
-                _("Undo last rename batch (%d level(s) available)") % n
+        _log.info("Undoing last batch")
+        try:
+            self._undo.undo()
+        except UndoError as exc:
+            _log.warning("Undo failed: %s", exc)
+            QMessageBox.warning(
+                self,
+                _("Undo errors"),
+                str(exc),
+                QMessageBox.StandardButton.Ok,
             )
-        else:
-            self._ui.btnUndo.setText(_("Undo"))
-            self._ui.btnUndo.setToolTip(_("Undo last rename batch"))
+        self._actions.refresh_undo()
+        self._files.reload()
 
     # ── Window state (geometry + splitters) ──────────────────────────────────
 
@@ -1351,19 +424,24 @@ class MainWindow(QMainWindow):
             list(self._ui.splitterMain.sizes()),
             list(self._ui.splitterRight.sizes()),
         )
-        if self._current_dir:
-            _cfg.set_last_dir(self._current_dir)
+        self._save_profile_state()
+        super().closeEvent(event)
+
+    def _save_profile_state(self) -> None:
+        """Store the directory, toolbar state and destination in the profile."""
+        if self._files.current_dir:
+            _cfg.set_last_dir(self._files.current_dir)
         if _cfg.get_restore_toolbar_state():
             _cfg.set_toolbar_state(self._collect_toolbar_state())
-        super().closeEvent(event)
+        self._schema.save_dest()
 
     def _collect_toolbar_state(self) -> dict:
         return {
             "mode": self._ui.cmbMode.currentIndex(),
             "recursive": self._ui.chkRecursive.isChecked(),
-            "extension_mode": self._ui.cmbExtensionMode.currentData(),
+            "extension_mode": self._pattern.extension_mode(),
             "sidecar_mode": self._ui.chkSidecarMode.isChecked(),
-            "auto_preview": self._ui.chkAutoPreview.isChecked(),
+            "auto_preview": self._actions.auto_preview(),
             "filter": self._ui.edtFilter.text(),
         }
 
@@ -1377,26 +455,18 @@ class MainWindow(QMainWindow):
                 self._ui.cmbMode.setCurrentIndex(idx)
         if "recursive" in state:
             self._ui.chkRecursive.setChecked(bool(state["recursive"]))
-        ext_mode = _resolve_extension_mode(state)
+        ext_mode = resolve_extension_mode(state)
         if ext_mode is not None:
             idx = self._ui.cmbExtensionMode.findData(ext_mode)
             if idx >= 0:
                 self._ui.cmbExtensionMode.setCurrentIndex(idx)
         if "sidecar_mode" in state:
             self._ui.chkSidecarMode.setChecked(bool(state["sidecar_mode"]))
-        self._update_sidecar_checkbox_state()
+        self._files.update_sidecar_checkbox_state()
         if "auto_preview" in state:
-            self._ui.chkAutoPreview.setChecked(bool(state["auto_preview"]))
+            self._actions.set_auto_preview(bool(state["auto_preview"]))
         if "filter" in state:
             self._ui.edtFilter.setText(str(state["filter"]))
-
-    # ── Auto-preview / tab change ─────────────────────────────────────────────
-
-    def _on_auto_preview_toggled(self, checked: bool) -> None:
-        if checked:
-            self._on_preview()
-        else:
-            self._preview_timer.stop()
 
     # ── Menu handlers ─────────────────────────────────────────────────────────
 
@@ -1404,24 +474,222 @@ class MainWindow(QMainWindow):
         QApplication.quit()
 
     def _on_history(self) -> None:
+        values = self._schema.fields()
+        self._schema.save_dest()
         HistoryDialog(self._presets, self._window_state, self).exec()
-        self._populate_pattern_combos()
+        self._pattern.populate_pattern_combos()
+        self._files.reload_filter_history()
+        self._schema.reload_profile()
+        self._schema.set_fields(values)
 
     def _on_settings(self) -> None:
         SettingsDialog(self._window_state, self).exec()
-        if (
-            self._ui.chkAutoPreview.isChecked()
-            and self._ui.cmbExtensionMode.currentData() == "normalize"
-        ):
-            self._on_preview()
+        if self._pattern.extension_mode() == "normalize":
+            self._actions.request_auto_preview()
 
     def _on_sidecar_files(self) -> None:
         SidecarDialog(self._window_state, self).exec()
-        if self._sidecar_mode_active():
-            self._reload_files()
+        # Categories drive the thumbnails, the sidecar column and grouping.
+        self._files.apply_display()
 
     def _on_about(self) -> None:
         AboutDialog(self).exec()
+
+    def _on_user_guide(self) -> None:
+        QDesktopServices.openUrl(QUrl(i18n.user_guide_url()))
+
+    def _on_keyboard_help(self) -> None:
+        """Non-modal, kept between calls (geometry restored)."""
+        if self._keyboard_help is None:
+            self._keyboard_help = PatternHelpDialog(
+                keyboard_html(),
+                _("Keyboard and mouse shortcuts"),
+                "keyboard_help",
+                self._window_state,
+                self,
+            )
+        self._keyboard_help.show()
+        self._keyboard_help.raise_()
+        self._keyboard_help.activateWindow()
+
+    # ── Profiles ──────────────────────────────────────────────────────────────
+
+    def _update_title(self) -> None:
+        name = profiles.current()
+        if name == profiles.DEFAULT:
+            self.setWindowTitle("PBRenamer")
+        else:
+            self.setWindowTitle(f"PBRenamer [{name}]")
+
+    def _build_profile_menu(self) -> None:
+        menu = self._ui.menuProfile
+        for action in self._profile_actions:
+            menu.removeAction(action)
+        self._profile_actions.clear()
+        current = profiles.current()
+        names = profiles.list_profiles()
+        if current not in names:
+            names = sorted([*names, current])
+        for name in names:
+            action = menu.addAction(name)
+            action.setCheckable(True)
+            action.setChecked(name == current)
+            action.setStatusTip(_("Switch to the profile “{name}”").format(name=name))
+            action.triggered.connect(lambda _checked, n=name: self._switch_profile(n))
+            self._profile_actions.append(action)
+
+    def _ask_profile_name(self, title: str, label: str, text: str = "") -> str | None:
+        name, ok = QInputDialog.getText(
+            self, title, label, QLineEdit.EchoMode.Normal, text
+        )
+        name = name.strip()
+        return name if ok and name else None
+
+    def _on_profile_new(self) -> None:
+        title = _("New profile")
+        name = self._ask_profile_name(
+            title,
+            _("Profile name (letters, digits, “-” and “_”):"),
+        )
+        if name is None:
+            return
+        try:
+            profiles.validate_new_name(name)
+            profiles.create(name)
+        except profiles.ProfileError as exc:
+            QMessageBox.warning(self, title, str(exc))
+            return
+        self._switch_profile(name)
+
+    def _on_profile_duplicate(self) -> None:
+        title = _("Duplicate profile")
+        source = profiles.current()
+        name = self._ask_profile_name(
+            title, _("New profile name (copy of “{source}”):").format(source=source)
+        )
+        if name is None:
+            return
+        self._save_profile_state()
+        try:
+            profiles.validate_new_name(name)
+            profiles.duplicate(source, name)
+        except profiles.ProfileError as exc:
+            QMessageBox.warning(self, title, str(exc))
+            return
+        self._switch_profile(name)
+
+    def _on_profile_rename(self) -> None:
+        title = _("Rename profile")
+        old = profiles.current()
+        name = self._ask_profile_name(
+            title,
+            _(
+                "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+            ).format(name=old),
+            old,
+        )
+        if name is None or name == old:
+            return
+        self._save_profile_state()
+        try:
+            profiles.validate_new_name(name)
+            profiles.rename(old, name)
+        except profiles.ProfileError as exc:
+            QMessageBox.warning(self, title, str(exc))
+            return
+        _log.info("Profile renamed: %s -> %s", old, name)
+        # The presets point into the profile directory, which has moved.
+        self._presets = PatternPresets()
+        self._pattern.set_presets(self._presets)
+        self._update_title()
+        self.statusBar().showMessage(
+            _("Profile “{old}” renamed to “{name}”.").format(old=old, name=name)
+        )
+
+    def _on_profile_delete(self) -> None:
+        title = _("Delete profile")
+        # Hidden profiles are never offered: they stay hidden.
+        names = profiles.list_profiles()
+        if len(names) < 2:
+            QMessageBox.information(
+                self,
+                title,
+                _(
+                    "There is no profile to delete:"
+                    " at least one visible profile must remain."
+                ),
+            )
+            return
+        current = profiles.current()
+        index = names.index(current) if current in names else 0
+        name, ok = QInputDialog.getItem(
+            self, title, _("Profile to delete:"), names, index, False
+        )
+        if not ok:
+            return
+        reply = QMessageBox.question(
+            self,
+            title,
+            _(
+                "Delete the profile “{name}” and all its settings?"
+                " This cannot be undone."
+            ).format(name=name),
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+        if name == current:
+            self._switch_profile(profiles.fallback([n for n in names if n != name]))
+        profiles.delete(name)
+        self.statusBar().showMessage(_("Profile “{name}” deleted.").format(name=name))
+
+    def _switch_profile(self, name: str) -> None:
+        """Make *name* the current profile and load its settings.  The undo
+        stack is kept: it only concerns files."""
+        if name == profiles.current():
+            return
+        self._save_profile_state()
+        profiles.use(name)
+        _log.info("Profile: %s", name)
+
+        self._presets = PatternPresets()
+        self._pattern.set_presets(self._presets)
+        self._schema.reload_profile()
+        self._ui.tabRules.blockSignals(True)
+        self._ui.tabRules.setCurrentIndex(_TAB_OF_MODE[profiles.load()["mode"]])
+        self._ui.tabRules.blockSignals(False)
+        if _cfg.get_restore_toolbar_state():
+            self._restore_toolbar_state()
+        self._apply_mode_state()
+        self._update_title()
+
+        last_dir = _cfg.get_last_dir()
+        if last_dir and os.path.isdir(last_dir) and last_dir != self._files.current_dir:
+            self._files.current_dir = last_dir
+            self._navigate_to(last_dir)
+        self._files.clear_preview()
+        self._images.apply_profile()
+        self._files.apply_display()
+        self.statusBar().showMessage(_("Profile “{name}” loaded.").format(name=name))
+
+    def _on_profile_config(self) -> None:
+        values = self._schema.fields()
+        self._schema.save_dest()
+        if (
+            ProfileDialog(self._window_state, self).exec()
+            != ProfileDialog.DialogCode.Accepted
+        ):
+            return
+        self._schema.reload_profile()
+        self._schema.set_fields(values)
+        self._apply_mode_state()
+        self._images.apply_profile()
+        self._files.apply_display()
+
+    def _on_template_accepted(self, fields: list[str]) -> None:
+        """Template: fill the schema fields and switch to the Schema tab."""
+        self._schema.set_fields(fields)
+        self._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
 
     # ── Shortcuts menu ────────────────────────────────────────────────────────
 
@@ -1449,13 +717,17 @@ class MainWindow(QMainWindow):
     def _on_shortcut(self, path: str) -> None:
         if not os.path.isdir(path):
             return
-        self._current_dir = path
+        self._files.current_dir = path
         self._navigate_to(path)
-        self._reload_files()
+        self._files.reload()
 
     def _on_tree_context_menu(self, pos) -> None:
         index = self._ui.treeDirectory.indexAt(pos)
-        path = self._fs_model.filePath(index) if index.isValid() else self._current_dir
+        path = (
+            self._fs_model.filePath(index)
+            if index.isValid()
+            else self._files.current_dir
+        )
         if not path or not os.path.isdir(path):
             return
 
@@ -1476,50 +748,3 @@ class MainWindow(QMainWindow):
 
     def _on_edit_shortcuts(self) -> None:
         ShortcutsDialog(self._window_state, self).exec()
-
-    # ── File information window ───────────────────────────────────────────────
-
-    def _on_file_info(self) -> None:
-        if self._file_info is None:
-            self._file_info = FileInfoWindow(self._window_state, self)
-            self._file_info.field_requested.connect(self._on_field_requested)
-        self._refresh_file_info()
-        self._file_info.show()
-        self._file_info.raise_()
-        self._file_info.activateWindow()
-
-    def _on_file_selection_changed(self) -> None:
-        if self._sidecar_mode_active() and not self._linking_selection:
-            self._link_group_selection()
-        if self._file_info is not None and self._file_info.isVisible():
-            self._refresh_file_info()
-        if self._ui.chkAutoPreview.isChecked():
-            self._on_preview()
-
-    def _refresh_file_info(self) -> None:
-        if self._file_info is None:
-            return
-        items = self._ui.tblFiles.selectedItems()
-        if len(items) > 1:
-            self._file_info.show_multiple()
-        elif len(items) == 1:
-            path = items[0].data(0, Qt.ItemDataRole.UserRole)
-            if path:
-                self._file_info.update_file(path)
-            else:
-                self._file_info.show_empty()
-        else:
-            self._file_info.show_empty()
-
-    def _on_field_requested(self, field: str) -> None:
-        self._ui.cmbPatternDest.lineEdit().insert(field)
-
-    def _on_file_double_clicked(self, item: QTreeWidgetItem) -> None:
-        path = item.data(0, Qt.ItemDataRole.UserRole)
-        if path:
-            QDesktopServices.openUrl(QUrl.fromLocalFile(path))
-
-    def _on_files_context_menu(self, pos) -> None:
-        menu = QMenu(self)
-        menu.addAction(self._ui.actionFileInfo)
-        menu.exec(self._ui.tblFiles.viewport().mapToGlobal(pos))

@@ -242,3 +242,13 @@ class TestNamedSaves:
         saves = presets.get_saves()
         assert list(saves.keys()) == ["dup", "other"]
         assert saves["dup"] == {"x": 1}  # first occurrence wins
+
+
+def test_default_dir_is_current_profile(config_dir):
+    from pbrenamer import profiles
+
+    PatternPresets().add_replace("x")
+    assert (config_dir / "profiles/default/patterns/replace.json").exists()
+    profiles.create("p")
+    profiles.use("p")
+    assert PatternPresets().get_replace() == list(_REPLACE_DEFAULTS)

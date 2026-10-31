@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import datetime
+import importlib.util
+import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -426,3 +428,125 @@ class TestFieldType:
         assert image_meta.field_type("datetimeoriginal") == image_meta.field_type(
             "DateTimeOriginal"
         )
+
+
+# ---------------------------------------------------------------------------
+# read_raw_sections (ported from PBPicat's test_metadata.py)
+# ---------------------------------------------------------------------------
+
+_XMP_SIDECAR = """<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+ <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <dc:title>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default">Hello Title</rdf:li>
+    </rdf:Alt>
+   </dc:title>
+   <dc:subject><rdf:Bag><rdf:li>a</rdf:li><rdf:li>b</rdf:li></rdf:Bag></dc:subject>
+  </rdf:Description>
+ </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end="w"?>"""
+
+needs_pyexiv2 = pytest.mark.skipif(
+    importlib.util.find_spec("pyexiv2") is None, reason="pyexiv2 not installed"
+)
+
+
+def _jpeg_with_exif(path: Path, make: str = "ACME") -> str:
+    from PIL import Image
+
+    exif = Image.Exif()
+    exif[_MAKE_TAG] = make
+    Image.new("RGB", (20, 10)).save(path, format="JPEG", exif=exif)
+    return str(path)
+
+
+def _without_pyexiv2(monkeypatch):
+    monkeypatch.setattr(image_meta, "_read_tags_pyexiv2", lambda _p: None)
+
+
+class TestReadRawSections:
+    def test_plain_image_is_empty(self, sample_png):
+        assert image_meta.read_raw_sections(str(sample_png)) == []
+
+    def test_unreadable_file_is_empty(self, tmp_path):
+        path = tmp_path / "not_an_image.txt"
+        path.write_text("hello")
+        assert image_meta.read_raw_sections(str(path)) == []
+
+    @needs_pyexiv2
+    def test_embedded_exif(self, tmp_path):
+        sections = image_meta.read_raw_sections(_jpeg_with_exif(tmp_path / "p.jpg"))
+        assert dict(sections)["EXIF"] == [("Image.Make", "ACME")]
+
+    @needs_pyexiv2
+    def test_sidecar_xmp(self, tmp_path):
+        image = _jpeg_with_exif(tmp_path / "photo.jpg")
+        sidecar = tmp_path / "photo.xmp"
+        sidecar.write_text(_XMP_SIDECAR)
+        sections = image_meta.read_raw_sections(
+            image, [str(tmp_path / "photo.pp3"), str(sidecar)]
+        )
+        assert [title for title, _rows in sections] == ["EXIF", "XMP (sidecar)"]
+        rows = dict(sections)["XMP (sidecar)"]
+        assert rows[0] == ("Sidecar file", "photo.xmp")
+        assert ("dc.title", "Hello Title") in rows
+        assert ("dc.subject", "a, b") in rows
+
+    @needs_pyexiv2
+    def test_pyexiv2_open_error(self, tmp_path, monkeypatch):
+        import pyexiv2
+
+        def boom(*_a):
+            raise RuntimeError("bad file")
+
+        monkeypatch.setattr(pyexiv2, "Image", boom)
+        assert image_meta.read_raw_sections(str(tmp_path / "x.jpg")) == []
+
+    @needs_pyexiv2
+    def test_pyexiv2_reader_error(self, tmp_path, monkeypatch):
+        import pyexiv2
+
+        def boom(_self):
+            raise RuntimeError("no iptc")
+
+        monkeypatch.setattr(pyexiv2.Image, "read_iptc", boom)
+        sections = image_meta.read_raw_sections(_jpeg_with_exif(tmp_path / "p.jpg"))
+        assert [title for title, _rows in sections] == ["EXIF"]
+
+    def test_without_pyexiv2(self, monkeypatch):
+        monkeypatch.setitem(sys.modules, "pyexiv2", None)
+        assert image_meta._read_tags_pyexiv2("x.jpg") is None
+
+    @pytest.mark.skipif(not SAMPLE_EXIF.exists(), reason="sample_exif.jpg not found")
+    def test_pillow_fallback(self, tmp_path, monkeypatch):
+        _without_pyexiv2(monkeypatch)
+        sidecar = tmp_path / "s.xmp"
+        sidecar.write_text(_XMP_SIDECAR)
+        sections = dict(image_meta.read_raw_sections(str(SAMPLE_EXIF), [str(sidecar)]))
+        assert ("Make", "Canon") in sections["EXIF"]
+        assert ("DateTimeOriginal", "2021:11:20 21:54:56") in sections["EXIF"]
+        assert "XMP (sidecar)" not in sections
+
+    def test_pillow_fallback_iptc(self, tmp_path, monkeypatch):
+        _without_pyexiv2(monkeypatch)
+        img = _make_image(_FakeExif({}))
+        info = {(2, 25): [b"a", b"b"], (2, 99): b"x"}
+        with (
+            patch.object(image_meta.Image, "open", return_value=img),
+            patch.object(image_meta.IptcImagePlugin, "getiptcinfo", return_value=info),
+        ):
+            sections = dict(image_meta.read_raw_sections("x.jpg"))
+        assert sections["IPTC"] == [("2:99", "x"), ("keywords", "a, b")]
+
+    def test_stringify(self):
+        assert image_meta._stringify({'lang="x-default"': "t"}) == "t"
+        assert image_meta._stringify((1, b"x")) == "1, x"
+
+
+def test_pillow_fallback_open_error(monkeypatch):
+    _without_pyexiv2(monkeypatch)
+    with patch.object(image_meta.Image, "open", side_effect=OSError("bad")):
+        assert image_meta.read_raw_sections("x.jpg") == []

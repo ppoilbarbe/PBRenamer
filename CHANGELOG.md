@@ -6,110 +6,350 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Merge PBPicat
+
+PBPicat, the schema-based photo and video filing tool, is merged into PBRenamer, which replaces it.
+Every PBPicat feature now lives in PBRenamer, mostly as a new Schema mode and as optional image
+tools.
+
+- **Schema mode**: new Schema tab next to the Pattern tab of the rule panel. A schema of N fields
+  builds both the destination tree under a destination root and the file name: `Trip,,Paris,###`
+  files `IMG_0012.JPG` as `<dest>/Trip/Paris/Trip_Paris_001.jpg`. A field made of `#` only is the
+  counter, padded to the number of `#`; empty fields are skipped; `_`, `.`, `/` and `\` are rejected
+  while typing. Each field has its own history. Options: destination (with Browse), Fill gaps, and a
+  video marker inserted at a chosen position between the fields for video files. Sidecar mode is
+  always on and the extension is lowercased. A missing or relative destination or an invalid schema
+  is reported in the panel. New `core/schema.py`
+- **Rename and Renumber buttons**: a single "Rename (n)" button (F2) acts on the selection, or on
+  every listed file when nothing is selected. In schema mode, a Renumber button (shown when a `###`
+  field exists) renumbers the files in place from 1, after confirmation; it records the field
+  histories like Rename. The preview column shows the target path relative to the destination
+- **Template** (Images menu and context menu): infers the schema fields from the selected file's
+  name and folders, using the field histories, and fills the Schema tab
+- **Rename engine**, shared by both modes, the GUI and the CLI (new `core/planner.py`): results may
+  contain sub-directories, created when renaming; source directories emptied by a rename are removed
+  (below the displayed directory). New `{dest}` field for the destination root, allowed only at the
+  start; `..`, `.`, empty components and absolute paths are rejected
+- `{newnum}` now continues after the highest number of its series in the **target** directory
+  (numeric comparison, files of the batch excluded), with optional fill-gaps, per-category counters
+  and renumbering; sidecars take no number and their base file's number keeps their names free
+- `{if:category:text}` conditional field (`image`, `video`, `audio`, `other`), used for the video
+  marker
+- **Atomic execution**: every target is checked first, an error rolls back the whole batch, and
+  chains and swaps go through temporary names
+- **Behaviour change, CLI conflicts**: headless renames are now atomic. When any target conflicts,
+  nothing is renamed and the command exits with status 1 after listing the conflicts, `--dry-run`
+  included. Before 2.0, conflicting entries were skipped and the others renamed
+- **Profiles** replace PBPicat's catalogues and group the per-workflow settings: mode (last tab
+  used), schema settings, display and image options, histories, sidecar configuration, pattern
+  presets, last directory and toolbar state, stored under `<config>/profiles/<name>/`. New Profile
+  menu: New (Ctrl+N), Duplicate (Ctrl+Shift+D), Rename, Delete, Profile configuration (Ctrl+,) and
+  the list of visible profiles. Names starting with `.` or `-` are hidden; the last visible profile
+  can be neither deleted nor hidden, and `default` is recreated only when no visible profile is
+  left. The window title shows the profile; the undo stack survives a profile switch
+- **Behaviour change, configuration migration**: on the first start, the 1.x pattern presets,
+  sidecar configuration, last directory and toolbar state are copied into the `default` profile (the
+  1.x files are left in place), and each PBPicat catalogue is imported once as a profile (a name
+  collision gets a `pbpicat-` prefix). The PBPicat configuration is only read, and nothing is
+  imported with a custom `--config-dir`. Shortcuts, extension normalisation, window geometries,
+  language and preferences stay global
+- **CLI**: `--schema LIST` (exclusive with `--search` and `--saved`), `--dest DIR`, `--fill-gaps` /
+  `--no-fill-gaps`, `--renumber`, `--video-marker TEXT`, `--video-marker-pos N` and `--profile NAME`
+  (unknown profile: exit status 2; remembered in GUI mode only). `--dest`, `--fill-gaps` and
+  `--renumber` also work in pattern mode; schema mode rejects the pattern-only options and takes its
+  defaults from the profile. There is no `pbpicat` command: imported catalogues open with
+  `pbrenamer --profile NAME`
+- **File list**: optional thumbnail column (lazy loading of the visible rows, up to four workers,
+  HEIC through pillow-heif, resolution and size under the name); optional sidecar column
+  (double-click opens a sidecar, offers a choice, or creates an empty one with the profile's
+  extension); optional deletion of empty sidecars when loading a directory; sidecar content filter
+  (regular expression, case-insensitive) with its history; sort by date and reversed sort, saved in
+  the profile. The selection and current row survive a reload, renamed files stay selected, and Tab
+  moves between the directory tree and the file list. Double-clicking a thumbnail opens the image
+  viewer, the name or preview opens the default application
+- **Images menu**, also the file list context menu: Open (Ctrl+Enter), Open with (Ctrl+Shift+O:
+  application chooser with a most-recently-used list per MIME type on Linux, `open -a` on macOS,
+  system dialog on Windows), View (Enter), Template, Delete (Del: files with their sidecars, to the
+  trash or permanently, configurable confirmation), Orphan sidecars, Open sidecar, lossless
+  rotations (F6 to F10: jpegtran for JPEG, Pillow otherwise), apply the EXIF orientation or reset it
+  to 0°, Information and Refresh (F5). Actions are enabled according to the selection and the
+  optional dependencies available; rotations and EXIF resets can be undone
+- **Image viewer**: zoom, selection strip with lazily loaded thumbnails, linear or circular
+  navigation, metadata panel on either side. Arrow keys move within a multiple selection, or else
+  through the list, and the viewer follows the selection of the main window
+- **Metadata**: one metadata view, shared by the viewer and the File information window, with raw
+  EXIF, IPTC and XMP sections and the sidecar's XMP. Image metadata (including `{im:…}`) is read
+  with pyexiv2, with Pillow as a fallback
+- **Drag and drop**: sidecars follow their file, whether listed or dropped from another application,
+  and copies can be undone (except those that overwrote a file)
+- **Undo**: typed entries for renames, moves, copies, rotations and EXIF resets
+- **History dialog**: one tab per schema field and a Sidecar filter tab, sorted case- and
+  accent-insensitively
+- **Profile configuration dialog**: Schema (field count and titles, video marker), Display
+  (thumbnails, sidecar column and filter, new sidecar extension, empty sidecars, history size) and
+  Images (zoom, metadata panel side, EXIF auto-rotation, trash, confirmation) tabs
+- **Help → Keyboard and mouse shortcuts** (F1): non-modal window ported from PBPicat and extended
+  with PBRenamer's own shortcuts
+- **Optional dependencies**: new `[meta]` (Pillow, mutagen, pymediainfo) and `[images]` (Pillow,
+  pillow-heif, pyexiv2) extras, plus the external `jpegtran` tool; actions that need a missing one
+  are disabled. pyexiv2 has no wheel for Intel macOS, where Pillow is used instead; on Apple Silicon
+  it requires macOS 14. The PyInstaller executables bundle jpegtran and pyexiv2's native libraries
+- **Translations**: the new strings are translated in all 8 languages, reusing PBPicat's catalogues
+  where possible
+- **Documentation**: user guide chapters Profiles, Schema Mode, Image Tools, Migrating from PBPicat
+  and Optional dependencies; the API reference lists the new modules
+- Performance test on 5,000 photos (`make perf`, excluded from `make test`)
+- Internal: the main window is split into components (`PatternRulePanel`, `FileListController`,
+  `ActionBar`)
+
 ### Added
 
 - README: ReadTheDocs "Documentation Status" badge
+- Help → User guide opens the online manual in the interface language
+  (`https://pbrenamer.readthedocs.io/<lang>/latest/user_guide.html`)
+- The user guide (`index.rst` and `user_guide.rst`, not the API reference nor the changelog) is
+  translated into French, German, Spanish, Italian, Russian, Vietnamese and Chinese with sphinx-intl
+  (`docs/locale/<lang>/LC_MESSAGES/`), and published as Read the Docs translation projects;
+  `conf.py` takes the language from `READTHEDOCS_LANGUAGE`. New `make docs LANG=xx`,
+  `make docs-translate` and `make docs-stats` targets, `tools/fix_po_files.py --docs`, and
+  sphinx-intl in the dev dependencies
 
 ### Changed
 
-- `--auto-update` is now only registered as a CLI option when running the PyInstaller-built executable (`sys.frozen`). A source checkout or a `pip`/PyPI install no longer lists it in `--help` and rejects it as an unknown argument, instead of accepting it and then failing with a runtime error. `_build_parser()` gained a `frozen` keyword for testing
+- `--auto-update` is now only registered as a CLI option when running the PyInstaller-built
+  executable (`sys.frozen`). A source checkout or a `pip`/PyPI install no longer lists it in
+  `--help` and rejects it as an unknown argument, instead of accepting it and then failing with a
+  runtime error. `_build_parser()` gained a `frozen` keyword for testing
+- Sidecar mode lists each base file's sidecars right after it, sorted by suffix
+- A failed undo is now reported in a message box instead of being silently ignored
 
 ### Fixed
 
-- Auto-preview mode: changing the file selection didn't refresh the preview, even though preview scopes to the current selection (`_active_items()`) — the preview stayed stale until another trigger (typing in the search/replace fields, etc.) fired it
+- Auto-preview mode: changing the file selection didn't refresh the preview, even though preview
+  scopes to the current selection (`_active_items()`) — the preview stayed stale until another
+  trigger (typing in the search/replace fields, etc.) fired it
+- `window_state.json` ignored `--config-dir`, so test runs could write to the real user
+  configuration
+- Pattern mode: a search that found nothing in the stem could not match the extension separator, so
+  `..` → `.` didn't rename `a..xmp`; such a search is now retried on the stem followed by its
+  separator, and a replacement that removes the separator is reported as an error
+- Sidecar grouping: a file of the "other" category named like a sidecar (e.g. `x.xmp` next to
+  `x.jpg`, with common sidecar suffixes configured) was taken as a competing base file, which raised
+  a false ambiguity error
 
 ## [1.8.1] - 2026-08-19
 
 ### Added
 
-- `docs/user_guide.rst`: document `--auto-update`, and add a new "Configuration Files" section listing every persisted config file and its default location per platform
+- `docs/user_guide.rst`: document `--auto-update`, and add a new "Configuration Files" section
+  listing every persisted config file and its default location per platform
 
 ### Fixed
 
-- `docs/user_guide.rst`: `--config-dir`'s documented macOS default was wrong (`~/Library/Application Support/pbrenamer`); it's actually `~/Library/Preferences/pbrenamer` (matches `platform/dirs.py:_MacDirs.config_home`)
-- `--auto-update` crashed the PyInstaller executable with `ModuleNotFoundError: No module named 'http'` — the Linux/Windows build excluded the stdlib `http` package, which `urllib.request` needs. Removed `http` from `pbrenamer.spec`'s excludes
-- `--auto-update` then failed every HTTPS request with `unknown url type: https` on the Linux build — PyInstaller's binary scan resolved `libssl.so.3`/`libcrypto.so.3` to the system copy (missing symbols the bundled `_ssl`/`_hashlib` extensions need) instead of the conda env's own matching copy. `pbrenamer.spec` now forces the env's own OpenSSL libraries back into the bundle, and adds `ssl` to `hiddenimports` since `urllib.request` only imports it inside a try/except that PyInstaller's static analysis misses
-- README: "Internationalised" feature bullet claimed only English and French were included; it now lists all 8 bundled languages (English, German, Spanish, French, Italian, Russian, Vietnamese, Chinese)
+- `docs/user_guide.rst`: `--config-dir`'s documented macOS default was wrong
+  (`~/Library/Application Support/pbrenamer`); it's actually `~/Library/Preferences/pbrenamer`
+  (matches `platform/dirs.py:_MacDirs.config_home`)
+- `--auto-update` crashed the PyInstaller executable with
+  `ModuleNotFoundError: No module named 'http'` — the Linux/Windows build excluded the stdlib `http`
+  package, which `urllib.request` needs. Removed `http` from `pbrenamer.spec`'s excludes
+- `--auto-update` then failed every HTTPS request with `unknown url type: https` on the Linux build
+  — PyInstaller's binary scan resolved `libssl.so.3`/`libcrypto.so.3` to the system copy (missing
+  symbols the bundled `_ssl`/`_hashlib` extensions need) instead of the conda env's own matching
+  copy. `pbrenamer.spec` now forces the env's own OpenSSL libraries back into the bundle, and adds
+  `ssl` to `hiddenimports` since `urllib.request` only imports it inside a try/except that
+  PyInstaller's static analysis misses
+- README: "Internationalised" feature bullet claimed only English and French were included; it now
+  lists all 8 bundled languages (English, German, Spanish, French, Italian, Russian, Vietnamese,
+  Chinese)
 
 ## [1.8.0] - 2026-08-19
 
 ### Added
 
-- `--auto-update` downloads the latest GitHub release matching the running platform/architecture and replaces the current executable with it, then exits. Only available in PyInstaller-built executables (`sys.frozen`) — rejected with an error for source checkouts and pip/PyPI installs, which have no single running binary to replace. New `platform/auto_update.py`
-- Headless mode: `--dry-run`/`--no-dry-run` flag prints the equivalent `mv` commands to stdout instead of renaming files. Output is a valid POSIX shell script (paths quoted with `shlex.quote`, conflicts reported as `#` comments) that can be piped to `sh` to actually perform the rename. Takes precedence over `--confirm` — no interactive prompt is shown
-- Headless mode: `--select GLOB` restricts the rename to entries matching `GLOB`, mirroring GUI row selection (clicking a file). Repeatable to accumulate matches (equivalent of Ctrl+click). With `--sidecar-mode`, selecting a base file also selects its sidecars and vice versa, using the same grouping and ambiguity handling as the GUI (`core/sidecar.build_sidecar_groups()`). New `__main__._resolve_selection()`
+- `--auto-update` downloads the latest GitHub release matching the running platform/architecture and
+  replaces the current executable with it, then exits. Only available in PyInstaller-built
+  executables (`sys.frozen`) — rejected with an error for source checkouts and pip/PyPI installs,
+  which have no single running binary to replace. New `platform/auto_update.py`
+- Headless mode: `--dry-run`/`--no-dry-run` flag prints the equivalent `mv` commands to stdout
+  instead of renaming files. Output is a valid POSIX shell script (paths quoted with `shlex.quote`,
+  conflicts reported as `#` comments) that can be piped to `sh` to actually perform the rename.
+  Takes precedence over `--confirm` — no interactive prompt is shown
+- Headless mode: `--select GLOB` restricts the rename to entries matching `GLOB`, mirroring GUI row
+  selection (clicking a file). Repeatable to accumulate matches (equivalent of Ctrl+click). With
+  `--sidecar-mode`, selecting a base file also selects its sidecars and vice versa, using the same
+  grouping and ambiguity handling as the GUI (`core/sidecar.build_sidecar_groups()`). New
+  `__main__._resolve_selection()`
 
 ### Fixed
 
-- `make dist` always resolved the release version to `dev`, even on a clean, exactly-tagged commit — `PY_SOURCES` in the Makefile was built from unsorted `find` output, so `pybabel extract` (via `make translate`, a `dist` prerequisite) reordered `.po` catalogue entries on every run despite no actual string changes, dirtying the working tree right before `tools/git_version.sh` checked it. `find` output is now sorted, making `make translate` idempotent
-- Sidecar mode: a sidecar file ambiguous between multiple base files (e.g. two candidate base files sharing a suffix) no longer disables the Rename button for the whole file list — the error now only blocks rename when one of the files involved in the ambiguity is actually selected, matching how every other field-resolution error is already scoped to the current selection
-- Sidecar mode: re-clicking (plain click, no modifier) any file belonging to an already fully-selected sidecar group no longer deselects the whole group. Only a genuine Ctrl+click now toggles a single item against the existing selection; a plain click or Shift range-select always replaces the selection with the clicked file's whole group, consistent with clicking an ungrouped file staying selected
+- `make dist` always resolved the release version to `dev`, even on a clean, exactly-tagged commit —
+  `PY_SOURCES` in the Makefile was built from unsorted `find` output, so `pybabel extract` (via
+  `make translate`, a `dist` prerequisite) reordered `.po` catalogue entries on every run despite no
+  actual string changes, dirtying the working tree right before `tools/git_version.sh` checked it.
+  `find` output is now sorted, making `make translate` idempotent
+- Sidecar mode: a sidecar file ambiguous between multiple base files (e.g. two candidate base files
+  sharing a suffix) no longer disables the Rename button for the whole file list — the error now
+  only blocks rename when one of the files involved in the ambiguity is actually selected, matching
+  how every other field-resolution error is already scoped to the current selection
+- Sidecar mode: re-clicking (plain click, no modifier) any file belonging to an already
+  fully-selected sidecar group no longer deselects the whole group. Only a genuine Ctrl+click now
+  toggles a single item against the existing selection; a plain click or Shift range-select always
+  replaces the selection with the clicked file's whole group, consistent with clicking an ungrouped
+  file staying selected
 
 ## [1.7.0] - 2026-08-18
 
 ### Added
 
-- Drag'n'drop of files and directories between PBRenamer and external applications, and between the directory tree and the file list: copy or move (negotiated via the OS/Qt drag modifier keys), with a batched Overwrite/Skip/Cancel confirmation when a destination already exists. New `core/filetools.copy_path()`/`move_path()` functions back the operation; only moves are recorded to the undo history (copies are not undoable). Implemented by the new `ui/dnd_widgets.py` (`DirectoryTreeView`, `FileListWidget`)
-- Custom, HiDPI-aware drag cursors (copy / move / alias / not-allowed), sourced from PBIcons' new `cursors/` icon set and synced via `tools/update_icons.py` (now also covers the fixed `_CURSOR_FILES` list and searches the `cursors` PBIcons subdirectory); implemented by the new `ui/dnd_cursors.py`
+- Drag'n'drop of files and directories between PBRenamer and external applications, and between the
+  directory tree and the file list: copy or move (negotiated via the OS/Qt drag modifier keys), with
+  a batched Overwrite/Skip/Cancel confirmation when a destination already exists. New
+  `core/filetools.copy_path()`/`move_path()` functions back the operation; only moves are recorded
+  to the undo history (copies are not undoable). Implemented by the new `ui/dnd_widgets.py`
+  (`DirectoryTreeView`, `FileListWidget`)
+- Custom, HiDPI-aware drag cursors (copy / move / alias / not-allowed), sourced from PBIcons' new
+  `cursors/` icon set and synced via `tools/update_icons.py` (now also covers the fixed
+  `_CURSOR_FILES` list and searches the `cursors` PBIcons subdirectory); implemented by the new
+  `ui/dnd_cursors.py`
 - README badges: latest GitHub release, CI status, test coverage (Codecov), and PyPI version
-- CI now uploads `coverage.xml` to Codecov (`codecov/codecov-action`) after the test suite runs; pytest gained a `--cov-report=xml` output alongside the existing terminal report
-- Sidecar file support: a file associated with a base file by a name suffix (e.g. `img.jpg` + `img.xmp`) can now be grouped, colored, selected, and renamed together with its base file. New **Edit → Sidecar Files…** dialog (`ui/sidecar_dialog.py`), with one tab per base-file category (Images / Video / Audio / Other) plus a Common tab, configures which extensions count as that category's base files and which suffixes identify its sidecars, each list independently restorable to its default; persisted to `sidecar_config.json`. A new toolbar "Sidecar mode" checkbox (enabled only for the Keep/Lowercase/Uppercase extension modes) drives the behaviour: sidecar rows are colored distinctly in the file list, selecting a base or sidecar auto-selects the whole group, a sidecar with more than one candidate base file is flagged as an explicit, unrenamable ambiguity error, and renaming a group applies the pattern to the base file's stem only, reusing it verbatim (own suffix unchanged) for every sidecar. New pure grouping algorithm in `core/sidecar.py` (`SidecarConfig`, `build_sidecar_groups()`). Mirrored in headless mode via `--sidecar-mode`/`--no-sidecar-mode` (`__main__.py`)
+- CI now uploads `coverage.xml` to Codecov (`codecov/codecov-action`) after the test suite runs;
+  pytest gained a `--cov-report=xml` output alongside the existing terminal report
+- Sidecar file support: a file associated with a base file by a name suffix (e.g. `img.jpg` +
+  `img.xmp`) can now be grouped, colored, selected, and renamed together with its base file. New
+  **Edit → Sidecar Files…** dialog (`ui/sidecar_dialog.py`), with one tab per base-file category
+  (Images / Video / Audio / Other) plus a Common tab, configures which extensions count as that
+  category's base files and which suffixes identify its sidecars, each list independently restorable
+  to its default; persisted to `sidecar_config.json`. A new toolbar "Sidecar mode" checkbox (enabled
+  only for the Keep/Lowercase/Uppercase extension modes) drives the behaviour: sidecar rows are
+  colored distinctly in the file list, selecting a base or sidecar auto-selects the whole group, a
+  sidecar with more than one candidate base file is flagged as an explicit, unrenamable ambiguity
+  error, and renaming a group applies the pattern to the base file's stem only, reusing it verbatim
+  (own suffix unchanged) for every sidecar. New pure grouping algorithm in `core/sidecar.py`
+  (`SidecarConfig`, `build_sidecar_groups()`). Mirrored in headless mode via
+  `--sidecar-mode`/`--no-sidecar-mode` (`__main__.py`)
 
 ### Changed
 
-- About dialog restyled to match the PBIcons-family apps (e.g. PBRegisterActivity): icon in its own column on the left, application name/version/author/description/details framed in a raised panel on the right, centered Close button
+- About dialog restyled to match the PBIcons-family apps (e.g. PBRegisterActivity): icon in its own
+  column on the left, application name/version/author/description/details framed in a raised panel
+  on the right, centered Close button
 
 ### Fixed
 
-- `_on_rename()` could use a row's raw error text (e.g. an ambiguous-sidecar message) as a literal rename target if invoked while the Rename button's disabled state was bypassed; it now skips any row flagged with a field/grouping error
-- Adding a base-file extension already assigned to a different category (e.g. `jpg` to both Images and Video) silently created a duplicate that made category lookup ambiguous; the Sidecar Files dialog now rejects it with an explicit warning naming the conflicting category
-- The Sidecar Files dialog let a sidecar suffix (per-category or Common) be added even when it was already a base extension in one of the categories (e.g. adding `jpg` as a Video sidecar suffix while it is an Images base extension), creating the same category-lookup ambiguity as the base-extension case; it is now rejected with the same warning
-- In sidecar mode, Ctrl+click-toggling off one member (base or sidecar) of an already-fully-selected group left the whole group selected instead of deselecting it: `_link_group_selection()` only ever looked at the current selection to decide which groups to *expand*, so the group's other still-selected members immediately re-pulled the toggled-off file back in. It now also tracks the previous selection and, when part of a group is toggled off, deselects the whole group — mirroring the existing behaviour where selecting any member selects the whole group. Toggling off an unrelated file (outside any group, or the sole selected member of a solo file) is unaffected
+- `_on_rename()` could use a row's raw error text (e.g. an ambiguous-sidecar message) as a literal
+  rename target if invoked while the Rename button's disabled state was bypassed; it now skips any
+  row flagged with a field/grouping error
+- Adding a base-file extension already assigned to a different category (e.g. `jpg` to both Images
+  and Video) silently created a duplicate that made category lookup ambiguous; the Sidecar Files
+  dialog now rejects it with an explicit warning naming the conflicting category
+- The Sidecar Files dialog let a sidecar suffix (per-category or Common) be added even when it was
+  already a base extension in one of the categories (e.g. adding `jpg` as a Video sidecar suffix
+  while it is an Images base extension), creating the same category-lookup ambiguity as the
+  base-extension case; it is now rejected with the same warning
+- In sidecar mode, Ctrl+click-toggling off one member (base or sidecar) of an already-fully-selected
+  group left the whole group selected instead of deselecting it: `_link_group_selection()` only ever
+  looked at the current selection to decide which groups to *expand*, so the group's other
+  still-selected members immediately re-pulled the toggled-off file back in. It now also tracks the
+  previous selection and, when part of a group is toggled off, deselects the whole group — mirroring
+  the existing behaviour where selecting any member selects the whole group. Toggling off an
+  unrelated file (outside any group, or the sole selected member of a solo file) is unaffected
 
 ## [1.6.0] - 2026-08-13
 
 ### Added
 
-- Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track: `performer`, `copyright`, `comment`, `description`, `genre`
-- Extension normalization table, managed from its own tab in the Settings dialog (**Edit → Settings… → Extension Normalization**): user-editable `from → to` extension mappings (e.g. `jpeg → jpg`, `yml → yaml`), persisted to `extension_normalization.json`, used by the new "Normalize extension" mode; changes apply immediately regardless of whether the dialog is later confirmed or cancelled
+- Five editorial `{vi:…}` video metadata fields, read from the MediaInfo `General` track:
+  `performer`, `copyright`, `comment`, `description`, `genre`
+- Extension normalization table, managed from its own tab in the Settings dialog (**Edit → Settings…
+  → Extension Normalization**): user-editable `from → to` extension mappings (e.g. `jpeg → jpg`,
+  `yml → yaml`), persisted to `extension_normalization.json`, used by the new "Normalize extension"
+  mode; changes apply immediately regardless of whether the dialog is later confirmed or cancelled
 
 ### Changed
 
-- Menu actions (Open folder, Information, History, Settings, Edit shortcuts, About, Quit) and the search/replace toolbar buttons (add-to-history "+", pattern help "?") now use bundled SVG icons (`resources/*.svg`) instead of plain text / programmatically-painted icons; `pattern_help.make_add_icon()`/`make_help_icon()` removed
-- The "Keep extension" checkbox is now a 5-way combobox: *Keep extension* (unchanged behaviour), *Extension in lowercase*, *Extension in uppercase*, *Normalize extension* (via the new normalization table), *Modify extension* (unchanged behaviour of the former unchecked state). Existing saved preferences (`keep_extension: true/false`, in toolbar state and named saves) are migrated transparently to `keep`/`modify`.
-- CLI: `--keep-ext`/`--no-keep-ext` replaced by `--ext-mode {keep,lower,upper,normalize,modify}` (default `keep`), consistent with the existing string-`choices` style of `--case`/`--sep`. This is a breaking change for scripts invoking `--keep-ext` directly.
+- Menu actions (Open folder, Information, History, Settings, Edit shortcuts, About, Quit) and the
+  search/replace toolbar buttons (add-to-history "+", pattern help "?") now use bundled SVG icons
+  (`resources/*.svg`) instead of plain text / programmatically-painted icons;
+  `pattern_help.make_add_icon()`/`make_help_icon()` removed
+- The "Keep extension" checkbox is now a 5-way combobox: *Keep extension* (unchanged behaviour),
+  *Extension in lowercase*, *Extension in uppercase*, *Normalize extension* (via the new
+  normalization table), *Modify extension* (unchanged behaviour of the former unchecked state).
+  Existing saved preferences (`keep_extension: true/false`, in toolbar state and named saves) are
+  migrated transparently to `keep`/`modify`.
+- CLI: `--keep-ext`/`--no-keep-ext` replaced by `--ext-mode {keep,lower,upper,normalize,modify}`
+  (default `keep`), consistent with the existing string-`choices` style of `--case`/`--sep`. This is
+  a breaking change for scripts invoking `--keep-ext` directly.
 
 ### Fixed
 
-- `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` / `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions alongside the current one
-- Navigating via a shortcut/bookmark (`_on_shortcut`) triggered `_reload_files()` twice — `_navigate_to()`'s `setCurrentIndex()` synchronously fired `_on_directory_selected()` before `_current_dir` had been updated, so its same-path guard did not catch the redundant call — causing the file list (and, with auto-preview on, the preview column) to be cleared and repopulated a second time right after the first; fixed by setting `_current_dir` before calling `_navigate_to()`, matching the pattern already used in `_on_open()`
-- Preview/file list still flickered once per directory change even after the above fix: `QFileSystemWatcher` can emit a spurious `directoryChanged` signal shortly after a directory starts being watched (e.g. a desktop indexer or thumbnailer touching directory metadata with no actual file added/removed/renamed), which `_on_fs_change` treated as a real change and rebuilt the whole file list for. `_on_fs_change` now compares the on-disk listing against what's currently displayed (`_listing_unchanged()`) and skips the reload when nothing actually changed.
+- `make pypi-build` now removes `dist/pypi/` before rebuilding, so `publish-pypi` /
+  `publish-testpypi` no longer pick up wheel/sdist artifacts left over from previous versions
+  alongside the current one
+- Navigating via a shortcut/bookmark (`_on_shortcut`) triggered `_reload_files()` twice —
+  `_navigate_to()`'s `setCurrentIndex()` synchronously fired `_on_directory_selected()` before
+  `_current_dir` had been updated, so its same-path guard did not catch the redundant call — causing
+  the file list (and, with auto-preview on, the preview column) to be cleared and repopulated a
+  second time right after the first; fixed by setting `_current_dir` before calling
+  `_navigate_to()`, matching the pattern already used in `_on_open()`
+- Preview/file list still flickered once per directory change even after the above fix:
+  `QFileSystemWatcher` can emit a spurious `directoryChanged` signal shortly after a directory
+  starts being watched (e.g. a desktop indexer or thumbnailer touching directory metadata with no
+  actual file added/removed/renamed), which `_on_fs_change` treated as a real change and rebuilt the
+  whole file list for. `_on_fs_change` now compares the on-disk listing against what's currently
+  displayed (`_listing_unchanged()`) and skips the reload when nothing actually changed.
 
 ## [1.5.1] - 2026-08-09
 
 ### Added
 
-- `make verify-testpypi` / `make verify-pypi`: install the latest `pbrenamer` from TestPyPI / the real PyPI into a throwaway venv, run `pbrenamer $(ARGS)` (default `--version`, override e.g. `make verify-testpypi ARGS="--help-search"`) as a smoke test, then remove the venv — cleanup always runs even if the install or the smoke test fails, and the target still exits non-zero on failure
+- `make verify-testpypi` / `make verify-pypi`: install the latest `pbrenamer` from TestPyPI / the
+  real PyPI into a throwaway venv, run `pbrenamer $(ARGS)` (default `--version`, override e.g.
+  `make verify-testpypi ARGS="--help-search"`) as a smoke test, then remove the venv — cleanup
+  always runs even if the install or the smoke test fails, and the target still exits non-zero on
+  failure
 
 ### Fixed
 
-- Mixed-type replacement templates (e.g. `{im:…}{vi:…}`) on a file that matches *none* of the namespaces used in the template still flag the file as an error (unchanged), but the message is now explicit about which namespaces were tried instead of misleadingly naming only the first field — e.g. `⚠ no matching type (im/vi)` instead of `⚠ im:DateTimeDigitized unavailable`, which wrongly suggested only that one field was the problem.
+- Mixed-type replacement templates (e.g. `{im:…}{vi:…}`) on a file that matches *none* of the
+  namespaces used in the template still flag the file as an error (unchanged), but the message is
+  now explicit about which namespaces were tried instead of misleadingly naming only the first field
+  — e.g. `⚠ no matching type (im/vi)` instead of `⚠ im:DateTimeDigitized unavailable`, which wrongly
+  suggested only that one field was the problem.
 
 ## [1.5.0] - 2026-08-09
 
 ### Added
 
-- `make update-icons` (new Makefile target, backed by the new `tools/update_icons.py`) syncs `pbrenamer.svg` and the new `pbrenamer.ico`/`pbrenamer.icns` byte-for-byte from the PBIcons reference project (local checkout or GitHub)
-- PyInstaller build now embeds a native icon (`pbrenamer.ico` on Windows, `pbrenamer.icns` on macOS via `BUNDLE`), synced from PBIcons
-- `--install-desktop-entry` / `--uninstall-desktop-entry` CLI flags (`platform/desktop.py`): install/remove a user-level `.desktop` menu entry and icon on Linux, working around pip's lack of a post-install hook for `pip install pbrenamer`
-- The generated `.desktop` entry's `Comment=` is now localized (`Comment[fr]=`, `Comment[de]=`, …) for every language with a compiled catalogue, reusing the existing translated "A graphical batch file renaming utility." string from the About dialog; `Name=PBRenamer` is intentionally left unlocalized
-- `make pypi-build` / `make publish-testpypi` / `make publish-pypi` (new Makefile targets): build the wheel + sdist into `dist/pypi/` and upload to TestPyPI or the real PyPI via `twine`; `publish-pypi` asks for an explicit `yes` confirmation before the irreversible upload. Adds `build`/`twine` as dev dependencies
+- `make update-icons` (new Makefile target, backed by the new `tools/update_icons.py`) syncs
+  `pbrenamer.svg` and the new `pbrenamer.ico`/`pbrenamer.icns` byte-for-byte from the PBIcons
+  reference project (local checkout or GitHub)
+- PyInstaller build now embeds a native icon (`pbrenamer.ico` on Windows, `pbrenamer.icns` on macOS
+  via `BUNDLE`), synced from PBIcons
+- `--install-desktop-entry` / `--uninstall-desktop-entry` CLI flags (`platform/desktop.py`):
+  install/remove a user-level `.desktop` menu entry and icon on Linux, working around pip's lack of
+  a post-install hook for `pip install pbrenamer`
+- The generated `.desktop` entry's `Comment=` is now localized (`Comment[fr]=`, `Comment[de]=`, …)
+  for every language with a compiled catalogue, reusing the existing translated "A graphical batch
+  file renaming utility." string from the About dialog; `Name=PBRenamer` is intentionally left
+  unlocalized
+- `make pypi-build` / `make publish-testpypi` / `make publish-pypi` (new Makefile targets): build
+  the wheel + sdist into `dist/pypi/` and upload to TestPyPI or the real PyPI via `twine`;
+  `publish-pypi` asks for an explicit `yes` confirmation before the irreversible upload. Adds
+  `build`/`twine` as dev dependencies
 
 ### Fixed
 
-- Picking an entry from the search pattern history no longer overwrites the replace field with the first entry of the replace history (and vice versa); each history combo box now only refreshes its own list
-- PyPI wheel now ships compiled `.mo` translation catalogues: a new hatchling build hook (`hatch_build.py`) compiles the committed `.po` sources at wheel-build time and force-includes the result, since `.mo` files are gitignored generated artifacts and were previously silently dropped from the wheel — the installed app had no languages available (`i18n.available_languages()` globs for `.mo`)
-- `license` metadata switched from the legacy `{ file = "LICENSE" }` form (which duplicated the full GPLv3 text into the `License:` metadata field) to the SPDX expression `GPL-3.0-only` with `license-files = ["LICENSE"]`, and dropped the now-redundant `License ::` classifier
+- Picking an entry from the search pattern history no longer overwrites the replace field with the
+  first entry of the replace history (and vice versa); each history combo box now only refreshes its
+  own list
+- PyPI wheel now ships compiled `.mo` translation catalogues: a new hatchling build hook
+  (`hatch_build.py`) compiles the committed `.po` sources at wheel-build time and force-includes the
+  result, since `.mo` files are gitignored generated artifacts and were previously silently dropped
+  from the wheel — the installed app had no languages available (`i18n.available_languages()` globs
+  for `.mo`)
+- `license` metadata switched from the legacy `{ file = "LICENSE" }` form (which duplicated the full
+  GPLv3 text into the `License:` metadata field) to the SPDX expression `GPL-3.0-only` with
+  `license-files = ["LICENSE"]`, and dropped the now-redundant `License ::` classifier
 
 ## [1.4.4] - 2026-08-05
 

@@ -64,7 +64,7 @@ class _BaseUpdater:
 
     def replace(self, target: Path, downloaded_file: Path) -> None:
         """Replace *target* with *downloaded_file* (consuming it)."""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover — abstract, always overridden
 
 
 # ---------------------------------------------------------------------------

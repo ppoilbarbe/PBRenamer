@@ -39,6 +39,20 @@ Application settings
    :members:
    :undoc-members:
 
+Profiles
+--------
+
+.. automodule:: pbrenamer.profiles
+   :members:
+   :undoc-members:
+
+Migration
+---------
+
+.. automodule:: pbrenamer.migration
+   :members:
+   :undoc-members:
+
 core — Rename engine
 --------------------
 
@@ -49,10 +63,31 @@ filetools
    :members:
    :undoc-members:
 
+planner
+~~~~~~~
+
+.. automodule:: pbrenamer.core.planner
+   :members:
+   :undoc-members:
+
 replacement
 ~~~~~~~~~~~
 
 .. automodule:: pbrenamer.core.replacement
+   :members:
+   :undoc-members:
+
+schema
+~~~~~~
+
+.. automodule:: pbrenamer.core.schema
+   :members:
+   :undoc-members:
+
+sidecar
+~~~~~~~
+
+.. automodule:: pbrenamer.core.sidecar
    :members:
    :undoc-members:
 
@@ -94,6 +129,23 @@ video\_meta
    :members:
    :undoc-members:
 
+core — Images
+-------------
+
+image\_io
+~~~~~~~~~
+
+.. automodule:: pbrenamer.core.image_io
+   :members:
+   :undoc-members:
+
+image\_ops
+~~~~~~~~~~
+
+.. automodule:: pbrenamer.core.image_ops
+   :members:
+   :undoc-members:
+
 platform
 --------
 
@@ -125,48 +177,132 @@ bookmarks
    :members:
    :undoc-members:
 
+open\_with
+~~~~~~~~~~
+
+.. automodule:: pbrenamer.platform.open_with
+   :members:
+   :undoc-members:
+
+desktop
+~~~~~~~
+
+.. automodule:: pbrenamer.platform.desktop
+   :members:
+   :undoc-members:
+
+auto\_update
+~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.platform.auto_update
+   :members:
+   :undoc-members:
+
 ui
 --
 
-widgets
-~~~~~~~
+main\_window
+~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.widgets
+.. automodule:: pbrenamer.ui.main_window
    :members:
    :undoc-members:
 
-presets
-~~~~~~~
+action\_bar
+~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.presets
+.. automodule:: pbrenamer.ui.action_bar
    :members:
    :undoc-members:
 
-window\_state
+file\_list
+~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.file_list
+   :members:
+   :undoc-members:
+
+dnd\_widgets
+~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.dnd_widgets
+   :members:
+   :undoc-members:
+
+dnd\_cursors
+~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.dnd_cursors
+   :members:
+   :undoc-members:
+
+thumbnails
+~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.thumbnails
+   :members:
+   :undoc-members:
+
+rule\_panel\_pattern
+~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.rule_panel_pattern
+   :members:
+   :undoc-members:
+
+rule\_panel\_schema
+~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.rule_panel_schema
+   :members:
+   :undoc-members:
+
+schema\_proposal\_dialog
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.schema_proposal_dialog
+   :members:
+   :undoc-members:
+
+image\_actions
+~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.image_actions
+   :members:
+   :undoc-members:
+
+image\_viewer
 ~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.window_state
+.. automodule:: pbrenamer.ui.image_viewer
    :members:
    :undoc-members:
 
-pattern\_help
-~~~~~~~~~~~~~
+metadata\_view
+~~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.pattern_help
+.. automodule:: pbrenamer.ui.metadata_view
    :members:
    :undoc-members:
 
-file\_info\_window
-~~~~~~~~~~~~~~~~~~
+orphan\_sidecars\_dialog
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.file_info_window
+.. automodule:: pbrenamer.ui.orphan_sidecars_dialog
    :members:
    :undoc-members:
 
-shortcuts\_dialog
-~~~~~~~~~~~~~~~~~
+profile\_dialog
+~~~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.shortcuts_dialog
+.. automodule:: pbrenamer.ui.profile_dialog
+   :members:
+   :undoc-members:
+
+sidecar\_dialog
+~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.sidecar_dialog
    :members:
    :undoc-members:
 
@@ -184,6 +320,13 @@ history\_dialog
    :members:
    :undoc-members:
 
+shortcuts\_dialog
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.shortcuts_dialog
+   :members:
+   :undoc-members:
+
 about\_dialog
 ~~~~~~~~~~~~~
 
@@ -191,9 +334,51 @@ about\_dialog
    :members:
    :undoc-members:
 
-main\_window
-~~~~~~~~~~~~
+file\_info\_window
+~~~~~~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.main_window
+.. automodule:: pbrenamer.ui.file_info_window
+   :members:
+   :undoc-members:
+
+pattern\_help
+~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.pattern_help
+   :members:
+   :undoc-members:
+
+keyboard\_help
+~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.keyboard_help
+   :members:
+   :undoc-members:
+
+presets
+~~~~~~~
+
+.. automodule:: pbrenamer.ui.presets
+   :members:
+   :undoc-members:
+
+widgets
+~~~~~~~
+
+.. automodule:: pbrenamer.ui.widgets
+   :members:
+   :undoc-members:
+
+window\_state
+~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.window_state
+   :members:
+   :undoc-members:
+
+geometry\_mixin
+~~~~~~~~~~~~~~~
+
+.. automodule:: pbrenamer.ui.geometry_mixin
    :members:
    :undoc-members:

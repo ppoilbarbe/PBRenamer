@@ -1,6 +1,9 @@
 config:
-  # Line length not enforced — CHANGELOG bullets and docs are naturally long
-  MD013: false
+  # Line length: prose only (tables and code blocks may be wider)
+  MD013:
+    line_length: 100
+    tables: false
+    code_blocks: false
   # Duplicate headings allowed when they live under different parent sections
   # (standard Keep-a-Changelog pattern: ### Added, ### Fixed repeat per release)
   MD024:

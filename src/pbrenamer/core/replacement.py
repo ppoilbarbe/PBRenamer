@@ -27,6 +27,14 @@ Syntax::
     Literal fallback when the field is absent; omit to make absence
     an error (file shown in red in the preview).
 
+``{dest}``
+    Destination root; only valid at the very start of the result, which
+    may contain ``/`` to place the file in sub-directories.
+
+``{if:category:text}``
+    Literal *text* when the file belongs to *category* (image, video,
+    audio, other), nothing otherwise.  *text* may contain ``:``.
+
 ``{{``
     Literal ``{`` character.
 """
@@ -40,6 +48,7 @@ import re
 from dataclasses import dataclass
 
 from pbrenamer.core import audio_meta, image_meta, video_meta
+from pbrenamer.core.sidecar import CATEGORIES
 
 _log = logging.getLogger(__name__)
 
@@ -52,13 +61,32 @@ SEARCH_REGEX = "regex"
 SEARCH_PLAIN = "plain"
 
 _SIMPLE_FIELDS = frozenset(
-    {"0", "num", "newnum", "date", "datetime", "mdatetime", "cdatetime", "dir"}
+    {
+        "0",
+        "num",
+        "newnum",
+        "date",
+        "datetime",
+        "mdatetime",
+        "cdatetime",
+        "dir",
+        "dest",
+    }
 )
 _GROUP_RE = re.compile(r"^[1-9][0-9]*$")
 _TOKEN_RE = re.compile(r"\{\{|\{([^{}]*)\}")
 
 # All prefixes that introduce a namespaced field (3 characters including the colon).
 _META_PREFIXES = frozenset({"im:", "au:", "vi:", "re:"})
+
+# Conditional field prefix: {if:category:text}.
+_IF_PREFIX = "if:"
+
+# Private-use characters standing for the destination root and for the
+# {newnum} value while a name is being computed.  Post-processing (spaces,
+# case, accents, duplicates) leaves them untouched.
+DEST_MARKER = "\ue000"
+NEWNUM_MARKER = "\ue001"
 
 # Mapping from field prefix to the corresponding metadata reader function.
 _META_READERS = {
@@ -132,22 +160,13 @@ class FieldResolutionError(ValueError):
         super().__init__(message)
 
 
-class NewNumState:
-    """Mutable counter shared across one preview/rename batch for {newnum}.
-
-    Tracks which counter values have been used and which target names are
-    already reserved, so each file receives a conflict-free number.
-    """
-
-    def __init__(self, start: int = 1) -> None:
-        self.start = start
-        self.current = start
-        self.reserved: set[str] = set()
-
-
 # ---------------------------------------------------------------------------
 # Parser
 # ---------------------------------------------------------------------------
+
+
+def _is_if_field(name: str) -> bool:
+    return name.lower().startswith(_IF_PREFIX)
 
 
 def _is_valid_name(name: str) -> bool:
@@ -198,12 +217,24 @@ def _parse_field(content: str) -> FieldSegment:
     raw = "{" + content + "}"
     if not content:
         raise ReplacementSyntaxError("Empty field: {}", raw)
+    if _is_if_field(content):
+        return _parse_if_field(content, raw)
     name, options = _split_name_options(content)
     if not _is_valid_name(name):
         raise ReplacementSyntaxError(f"Unknown field name: {name!r}", raw)
     case, align, fmt, default = _parse_options(options)
     return FieldSegment(
         name=name, case=case, align=align, fmt=fmt, default=default, raw=raw
+    )
+
+
+def _parse_if_field(content: str, raw: str) -> FieldSegment:
+    """Parse ``if:category:text``; *text* is kept verbatim in ``default``."""
+    category, _sep, text = content[len(_IF_PREFIX) :].partition(":")
+    if category not in CATEGORIES:
+        raise ReplacementSyntaxError(f"Unknown file category: {category!r}", raw)
+    return FieldSegment(
+        name=_IF_PREFIX + category, case="", align="", fmt="", default=text, raw=raw
     )
 
 
@@ -319,6 +350,8 @@ def substitute(
     counter: int,
     now: datetime.datetime,
     newnum: int | None = None,
+    category: str | None = None,
+    newnum_probe: bool = False,
 ) -> str:
     """Resolve all field segments and return the assembled replacement string.
 
@@ -327,6 +360,9 @@ def substitute(
     *groups* are {1}, {2}…: numbered capture groups (1-based indexing).
     *named_groups* are {re:name}: named regex groups.
     *path* is the full file path (used for dir, mdatetime, im: and au: fields).
+    *category* is the file category tested by {if:…} fields.
+    *newnum_probe* replaces every {newnum} by NEWNUM_MARKER (used to locate
+    the counter within the computed name); {dest} always yields DEST_MARKER.
 
     Raises FieldResolutionError if a field is absent and has no default.
     """
@@ -363,6 +399,15 @@ def substitute(
     for seg in segments:
         if isinstance(seg, LiteralSegment):
             parts.append(seg.text)
+            continue
+        if _is_if_field(seg.name):
+            parts.append(seg.default if seg.name[3:] == category else "")
+            continue
+        if seg.name == "dest":
+            parts.append(DEST_MARKER)
+            continue
+        if seg.name == "newnum" and newnum_probe:
+            parts.append(NEWNUM_MARKER)
             continue
 
         value = _resolve(

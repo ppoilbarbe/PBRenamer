@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import pytest
 from PySide6.QtCore import QMimeData, QPointF, Qt, QUrl
 from PySide6.QtGui import QDropEvent
 from PySide6.QtWidgets import QAbstractItemView, QTreeWidgetItem
 
-from pbrenamer.ui.dnd_widgets import DirectoryTreeView, FileListWidget
+from pbrenamer.ui.dnd_widgets import DirectoryTreeView, FileListWidget, _toggle_focus
 
 
 class _FakeIndex:
@@ -456,3 +457,68 @@ class TestFileListWidget:
         widget.startDrag(Qt.DropAction.MoveAction)
 
         assert _FakeDrag.instances == []
+
+
+# ---------------------------------------------------------------------------
+# Tab between the tree and the list, focus without selection
+# ---------------------------------------------------------------------------
+
+
+class TestTabAndFocus:
+    @pytest.fixture
+    def pair(self, qtbot):
+        from PySide6.QtWidgets import QHBoxLayout, QWidget
+
+        host = QWidget()
+        layout = QHBoxLayout(host)
+        tree, files = DirectoryTreeView(host), FileListWidget(host)
+        layout.addWidget(tree)
+        layout.addWidget(files)
+        tree.tab_partner, files.tab_partner = files, tree
+        for name in ("a", "b"):
+            item = QTreeWidgetItem([name])
+            item.setData(0, Qt.ItemDataRole.UserRole, "/x/" + name)
+            files.addTopLevelItem(item)
+        qtbot.addWidget(host)
+        host.show()
+        qtbot.waitExposed(host)
+        yield tree, files  # keeps host alive
+
+    def test_tab_toggles_focus(self, pair, qtbot):
+        tree, files = pair
+        tree.setFocus()
+        qtbot.waitUntil(tree.hasFocus)
+        qtbot.keyClick(tree, Qt.Key.Key_Tab)
+        qtbot.waitUntil(files.hasFocus)
+        qtbot.keyClick(files, Qt.Key.Key_Backtab)
+        qtbot.waitUntil(tree.hasFocus)
+
+    def test_other_keys_unchanged(self, pair):
+        from PySide6.QtCore import QEvent
+        from PySide6.QtGui import QKeyEvent
+
+        tree, files = pair
+        event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down, Qt.NoModifier)
+        assert not _toggle_focus(files, event)
+        files.tab_partner = None
+        tab = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Tab, Qt.NoModifier)
+        assert not _toggle_focus(files, tab)
+
+    def test_keyboard_focus_sets_current_without_selection(self, pair, qtbot):
+        tree, files = pair
+        tree.setFocus()
+        qtbot.waitUntil(tree.hasFocus)
+        qtbot.keyClick(tree, Qt.Key.Key_Tab)
+        qtbot.waitUntil(files.hasFocus)
+        assert files.currentItem() is files.topLevelItem(0)
+        assert files.selectedItems() == []
+
+    def test_mime_data_adds_sidecars(self, pair):
+        _tree, files = pair
+        files.sidecars_of = lambda p: [p + ".xmp", "/x/b"] if p == "/x/a" else []
+        mime = files.mimeData([files.topLevelItem(0), files.topLevelItem(1)])
+        assert [u.toLocalFile() for u in mime.urls()] == [
+            "/x/a",
+            "/x/a.xmp",
+            "/x/b",
+        ]

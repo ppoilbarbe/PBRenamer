@@ -6,15 +6,17 @@ import json
 import logging
 from pathlib import Path
 
-from pbrenamer.platform import AppDirs
-
 _log = logging.getLogger(__name__)
 
-_STATE_FILE = AppDirs("pbrenamer").config_home / "window_state.json"
+_STATE_FILE = "window_state.json"
 
 
 class WindowState:
-    def __init__(self, path: Path = _STATE_FILE) -> None:
+    def __init__(self, path: Path | None = None) -> None:
+        if path is None:
+            from pbrenamer import settings
+
+            path = settings._dirs.config_home / _STATE_FILE
         self._path = path
 
     def _load_raw(self) -> dict:
@@ -49,6 +51,22 @@ class WindowState:
             return result
         except (KeyError, TypeError, ValueError):
             _log.debug("load_geometry [%s] → corrupt data: %r", key, d)
+            return None
+
+    # ── Splitter sizes of a secondary window ──────────────────────────────────
+
+    def save_sizes(self, key: str, sizes: list[int]) -> None:
+        raw = self._load_raw()
+        raw[key] = [int(v) for v in sizes]
+        self._write(raw)
+
+    def load_sizes(self, key: str) -> list[int] | None:
+        value = self._load_raw().get(key)
+        if not isinstance(value, list):
+            return None
+        try:
+            return [int(v) for v in value]
+        except (TypeError, ValueError):
             return None
 
     # ── MainWindow state (geometry + two splitters) ───────────────────────────

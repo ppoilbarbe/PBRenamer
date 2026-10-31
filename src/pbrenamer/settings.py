@@ -9,8 +9,9 @@ from types import SimpleNamespace
 
 from PySide6.QtCore import QSettings
 
+from pbrenamer import profiles
 from pbrenamer.core import sidecar
-from pbrenamer.platform import AppDirs
+from pbrenamer.platform import AppDirs, pbpicat_config_dir
 
 _log = logging.getLogger(__name__)
 
@@ -19,16 +20,14 @@ _dirs = AppDirs(_DOMAIN)
 _LOG_LEVEL_KEY = "log/level"
 _DEFAULT_LEVEL = "INFO"
 _RESTORE_LAST_DIR_KEY = "behaviour/restore_last_dir"
-_LAST_DIR_KEY = "behaviour/last_dir"
 _RESTORE_TOOLBAR_KEY = "behaviour/restore_toolbar_state"
-_TOOLBAR_STATE_KEY = "behaviour/toolbar_state"
 _PREVIEW_DELAY_KEY = "behaviour/preview_delay_ms"
 _PREVIEW_DELAY_DEFAULT = 500
 _PREVIEW_DELAY_MIN = 100
 _PREVIEW_DELAY_MAX = 1000
 _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
 _EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
-_SIDECAR_CONFIG_FILE = _dirs.config_home / "sidecar_config.json"
+_SIDECAR_CONFIG_FILE = "sidecar_config.json"
 
 LEVELS: tuple[str, ...] = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 
@@ -45,12 +44,17 @@ _DEFAULT_OWN_SUFFIX_LISTS = {
 }
 
 
-def configure(config_dir: Path | None = None) -> None:
+def configure(
+    config_dir: Path | None = None, *, pbpicat_dir: Path | None = None
+) -> None:
     """Override the configuration directory used by all settings functions.
 
-    Pass ``None`` to restore the platform default. Intended for testing.
+    Pass ``None`` to restore the platform default. PBPicat's catalogues are
+    imported from *pbpicat_dir* when the profiles are created; with a custom
+    *config_dir* nothing is imported unless *pbpicat_dir* is given, so that a
+    test or scratch configuration never reads the user's PBPicat settings.
     """
-    global _dirs, _SHORTCUTS_FILE, _EXTENSION_NORMALIZATION_FILE, _SIDECAR_CONFIG_FILE
+    global _dirs, _SHORTCUTS_FILE, _EXTENSION_NORMALIZATION_FILE
     if config_dir is None:
         _dirs = AppDirs(_DOMAIN)
     else:
@@ -61,7 +65,9 @@ def configure(config_dir: Path | None = None) -> None:
         )
     _SHORTCUTS_FILE = _dirs.config_home / "shortcuts.json"
     _EXTENSION_NORMALIZATION_FILE = _dirs.config_home / "extension_normalization.json"
-    _SIDECAR_CONFIG_FILE = _dirs.config_home / "sidecar_config.json"
+    if pbpicat_dir is None and config_dir is None:
+        pbpicat_dir = pbpicat_config_dir()
+    profiles.reset(pbpicat_dir)
 
 
 def _settings() -> QSettings:
@@ -151,15 +157,19 @@ def get_extension_normalization_map() -> dict[str, str]:
     }
 
 
+def _sidecar_config_file() -> Path:
+    return profiles.profile_dir() / _SIDECAR_CONFIG_FILE
+
+
 def get_sidecar_settings() -> dict:
-    """Return the raw persisted sidecar config dict, defensively validated.
+    """Return the current profile's sidecar config dict, defensively validated.
 
     A missing/corrupt file, or a malformed individual key, drops just that
     key rather than rejecting the whole file — callers fall back to
     ``core.sidecar``'s defaults for whatever is missing.
     """
     try:
-        data = json.loads(_SIDECAR_CONFIG_FILE.read_text(encoding="utf-8"))
+        data = json.loads(_sidecar_config_file().read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
     if not isinstance(data, dict):
@@ -189,11 +199,10 @@ def get_sidecar_settings() -> dict:
 
 
 def set_sidecar_settings(data: dict) -> None:
-    """Persist the full sidecar config dict as-is."""
-    _SIDECAR_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
-    _SIDECAR_CONFIG_FILE.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    """Persist the full sidecar config dict as-is in the current profile."""
+    path = _sidecar_config_file()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def get_sidecar_base_extensions(category: str) -> list[str]:
@@ -300,13 +309,15 @@ def set_restore_last_dir(enabled: bool) -> None:
 
 
 def get_last_dir() -> str:
-    """Return the last directory accessed, or an empty string if none."""
-    return str(_settings().value(_LAST_DIR_KEY, ""))
+    """Return the current profile's last directory, or an empty string."""
+    return profiles.load()["last_dir"]
 
 
 def set_last_dir(path: str) -> None:
-    """Persist the last accessed directory."""
-    _settings().setValue(_LAST_DIR_KEY, path)
+    """Persist the current profile's last directory."""
+    data = profiles.load()
+    data["last_dir"] = path
+    profiles.save(data)
 
 
 def get_restore_toolbar_state() -> bool:
@@ -323,24 +334,15 @@ def set_restore_toolbar_state(enabled: bool) -> None:
 
 
 def get_toolbar_state() -> dict:
-    """Return the saved toolbar state dict, or an empty dict."""
-    import json as _json
-
-    raw = _settings().value(_TOOLBAR_STATE_KEY, "")
-    if not raw:
-        return {}
-    try:
-        data = _json.loads(str(raw))
-        return data if isinstance(data, dict) else {}
-    except (ValueError, TypeError):
-        return {}
+    """Return the current profile's saved toolbar state dict, or an empty dict."""
+    return profiles.load()["toolbar_state"]
 
 
 def set_toolbar_state(state: dict) -> None:
-    """Persist the toolbar state dict."""
-    import json as _json
-
-    _settings().setValue(_TOOLBAR_STATE_KEY, _json.dumps(state))
+    """Persist the current profile's toolbar state dict."""
+    data = profiles.load()
+    data["toolbar_state"] = state
+    profiles.save(data)
 
 
 def get_preview_delay() -> int:
@@ -371,3 +373,58 @@ def apply_log_level(level: str | None = None) -> None:
     numeric = getattr(logging, level, logging.INFO)
     logging.getLogger().setLevel(numeric)
     _log.debug("Log level set to %s", level)
+
+
+# ── Image viewer and "Open with" ─────────────────────────────────────────────
+
+_VIEWER_CIRCULAR_KEY = "viewer/circular_navigation"
+_VIEWER_METADATA_KEY = "viewer/metadata_panel_visible"
+_OPEN_WITH_FILE = "open_with.json"
+
+
+def _get_bool(key: str, default: bool) -> bool:
+    val = _settings().value(key, default)
+    if isinstance(val, bool):
+        return val
+    return str(val).lower() in ("true", "1", "yes")
+
+
+def get_viewer_circular() -> bool:
+    """Return True if the viewer wraps around at the ends of the list."""
+    return _get_bool(_VIEWER_CIRCULAR_KEY, False)
+
+
+def set_viewer_circular(enabled: bool) -> None:
+    _settings().setValue(_VIEWER_CIRCULAR_KEY, enabled)
+
+
+def get_viewer_metadata_visible() -> bool:
+    """Return True if the viewer shows its metadata panel."""
+    return _get_bool(_VIEWER_METADATA_KEY, False)
+
+
+def set_viewer_metadata_visible(visible: bool) -> None:
+    _settings().setValue(_VIEWER_METADATA_KEY, visible)
+
+
+def get_open_with_lru() -> dict[str, list[str]]:
+    """Return the "Open with" applications by MIME type, most recent first."""
+    try:
+        data = json.loads(
+            (_dirs.config_home / _OPEN_WITH_FILE).read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    return {
+        mime: [app for app in apps if isinstance(app, str)]
+        for mime, apps in data.items()
+        if isinstance(mime, str) and isinstance(apps, list)
+    }
+
+
+def set_open_with_lru(data: dict[str, list[str]]) -> None:
+    path = _dirs.config_home / _OPEN_WITH_FILE
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

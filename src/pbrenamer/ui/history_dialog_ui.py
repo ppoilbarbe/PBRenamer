@@ -1,4 +1,4 @@
-"""UI layout for the History dialog (search/replace pattern management)."""
+"""UI layout for the History dialog (pattern and schema field histories)."""
 
 from PySide6.QtWidgets import (
     QAbstractItemView,
@@ -10,7 +10,9 @@ from PySide6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QSpacerItem,
+    QTabWidget,
     QVBoxLayout,
+    QWidget,
 )
 
 from pbrenamer.ui.widgets import WhitespaceLineEdit
@@ -24,11 +26,15 @@ class Ui_HistoryDialog:
 
         layout = QVBoxLayout(dialog)
 
-        # ── Side-by-side panels: Search (left) | Replace (right) ──────────────
-        panels = QHBoxLayout()
-        panels.addWidget(self._make_search_panel(dialog), 1)
-        panels.addWidget(self._make_replace_panel(dialog), 1)
-        layout.addLayout(panels)
+        # ── Tabs: patterns (Search | Replace side by side), then one tab per
+        # schema field, added by HistoryDialog ─────────────────────────────────
+        self.tabs = QTabWidget(dialog)
+        patterns = QWidget(self.tabs)
+        panels = QHBoxLayout(patterns)
+        panels.addWidget(self._make_search_panel(patterns), 1)
+        panels.addWidget(self._make_replace_panel(patterns), 1)
+        self.tabs.addTab(patterns, _("Patterns"))
+        layout.addWidget(self.tabs)
 
         # ── Close button ───────────────────────────────────────────────────────
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Close, dialog)

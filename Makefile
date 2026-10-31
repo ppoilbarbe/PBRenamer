@@ -10,6 +10,26 @@ LOCALE_DIR := src/pbrenamer/locale
 POT_FILE   := $(LOCALE_DIR)/pbrenamer.pot
 PO_LOCALES := en fr de es it ru vi zh_CN
 
+# ── Docs ─────────────────────────────────────────────────────────────────────
+# Only the narrative pages (index.rst, user_guide.rst) are translated; the API
+# reference (autodoc) and the changelog (generated, English only) are not.
+# docs/locale/<lang>/LC_MESSAGES/ holds one sphinx-intl catalog per page,
+# separate from the application catalogs under src/pbrenamer/locale/.
+DOCS_LOCALE    := $(DOCS)/locale
+DOC_LOCALES    := fr de es it ru vi zh_CN
+# sphinx-build -b gettext takes individual source files, not a directory.
+DOCS_NARRATIVE := $(DOCS)/index.rst $(DOCS)/user_guide.rst
+# `make docs LANG=fr` builds a translated guide.  LANG is only honoured when
+# given on the command line: it is also the standard locale variable (e.g.
+# fr_FR.UTF-8), which make imports, and a plain `make docs` must build the
+# English source whatever the user's locale.  It reaches conf.py as
+# READTHEDOCS_LANGUAGE, as on Read the Docs.  make also exports command-line
+# variables to recipes and sphinx-build fails on LANG=fr (not a valid system
+# locale), hence DOC_ENV removing it from sphinx-build's environment.
+DOC_LANG       := $(if $(filter command line,$(origin LANG)),$(LANG),en)
+DOC_ENV        := $(if $(filter command line,$(origin LANG)),env -u LANG)
+DOC_HTML       := $(DOCS)/_build/html$(if $(filter-out en,$(DOC_LANG)),-$(DOC_LANG))
+
 R  := \033[0m
 B  := \033[1m
 G  := \033[32m
@@ -28,8 +48,8 @@ PO_FILES        := $(foreach lang,$(PO_LOCALES),$(LOCALE_DIR)/$(lang)/LC_MESSAGE
 TRANSLATE_STAMP := .translate.stamp
 
 .DEFAULT_GOAL := help
-.PHONY: all help venv venv-update install translate new-lang run test coverage \
-        hooks lint format docs docs-live dist srcdist clean force-translate \
+.PHONY: all help venv venv-update install translate new-lang run test perf coverage \
+        hooks lint format docs docs-live docs-translate docs-stats dist srcdist clean force-translate \
         bump-major bump-minor bump-patch bump-set update-icons \
         pypi-build publish-pypi verify-pypi publish-testpypi verify-testpypi
 
@@ -114,6 +134,9 @@ run: ## Launch PBRenamer from the pixi env  (usage: make run ARGS="--debug /some
 test: ## Run test suite
 	$(CONDA_RUN) pytest
 
+perf: ## Run the performance tests (5,000 images; slow, not part of make test)
+	$(CONDA_RUN) pytest -m perf -s --no-cov tests/perf
+
 coverage: ## Run test suite and open HTML coverage report
 	$(CONDA_RUN) pytest --cov-report=term-missing --cov-report=html
 	@printf "$(G)Report:$(R) $(Y)htmlcov/index.html$(R)\n"
@@ -129,12 +152,26 @@ format: ## Auto-format source code
 	$(CONDA_RUN) ruff format $(SRC)
 	$(CONDA_RUN) ruff check --fix $(SRC)
 
-docs: ## Build HTML documentation
-	$(CONDA_RUN) sphinx-build -b html $(DOCS) $(DOCS)/_build/html
-	@printf "$(G)Open:$(R) $(DOCS)/_build/html/index.html\n"
+docs: ## Build HTML documentation  (usage: make docs [LANG=fr], default en)
+	@$(if $(filter $(DOC_LANG),en $(DOC_LOCALES)),:,\
+	    printf "Unknown docs language '$(DOC_LANG)' (expected: en $(DOC_LOCALES))\n" >&2; exit 1)
+	$(DOC_ENV) READTHEDOCS_LANGUAGE=$(DOC_LANG) $(CONDA_RUN) sphinx-build -b html $(DOCS) $(DOC_HTML)
+	@printf "$(G)Open:$(R) $(DOC_HTML)/index.html\n"
 
 docs-live: ## Build docs and watch for changes (hot reload)
 	$(CONDA_RUN) sphinx-autobuild $(DOCS) $(DOCS)/_build/html
+
+docs-translate: ## Extract the user guide strings and update docs/locale/*.po
+	@printf "$(C)Extracting translatable strings from the narrative pages...$(R)\n"
+	$(CONDA_RUN) sphinx-build -q -b gettext $(DOCS) $(DOCS)/_build/gettext $(DOCS_NARRATIVE)
+	@printf "$(C)Updating $(DOCS_LOCALE)/*.po...$(R)\n"
+	$(CONDA_RUN) sphinx-intl update -p $(DOCS)/_build/gettext -d $(DOCS_LOCALE) \
+	    $(foreach lang,$(DOC_LOCALES),-l $(lang))
+	$(CONDA_RUN) python tools/fix_po_files.py --docs $(DOCS_LOCALE)
+	@printf "$(G)Done.$(R) Translate every new msgstr under $(Y)$(DOCS_LOCALE)/$(R).\n"
+
+docs-stats: ## Report the user guide translation completeness
+	$(CONDA_RUN) sphinx-intl stat -d $(DOCS_LOCALE)
 
 update-icons: ## Sync app icon (.svg/.ico/.icns) from PBIcons
 	$(CONDA_RUN) python tools/update_icons.py

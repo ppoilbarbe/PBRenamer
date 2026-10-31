@@ -1,0 +1,10 @@
+{
+  "default_sidecar_extensions": [
+    ".xmp",
+    ".dop",
+    ".pp3",
+    ".prompt.txt",
+    ".info.json"
+  ],
+  "language": ""
+}

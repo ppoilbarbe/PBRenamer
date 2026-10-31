@@ -1,0 +1,11 @@
+{
+  "base_extensions": {},
+  "own_suffixes": {
+    "image": [
+      "xmp",
+      "info.json",
+      "prompt.txt"
+    ]
+  },
+  "common_suffixes": []
+}

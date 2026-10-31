@@ -124,3 +124,17 @@ class TestDialogGeometry:
         )
         ws = WindowState(p)
         assert ws.load_geometry("win") is None
+
+
+def test_default_path_follows_configure(config_dir):
+    WindowState().save_geometry("dlg", 1, 2, 3, 4)
+    assert (config_dir / "window_state.json").exists()
+
+
+def test_sizes(tmp_path):
+    ws = WindowState(tmp_path / "ws.json")
+    assert ws.load_sizes("split") is None
+    ws.save_sizes("split", [300, 100])
+    assert ws.load_sizes("split") == [300, 100]
+    (tmp_path / "ws.json").write_text(json.dumps({"split": ["a"]}))
+    assert ws.load_sizes("split") is None

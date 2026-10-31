@@ -6,6 +6,7 @@ from __future__ import annotations
 from unittest.mock import MagicMock, patch
 
 import pytest
+from PySide6.QtWidgets import QMessageBox
 from pytestqt.qtbot import QtBot
 
 import pbrenamer.settings as _cfg
@@ -863,12 +864,12 @@ class TestShortcutsDialog:
 
 class TestDetectType:
     def test_directory(self, tmp_path):
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         assert _detect_type(str(tmp_path)) == "directory"
 
     def test_other_for_unknown_extension(self, tmp_path):
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         p = tmp_path / "file.xyz"
         p.touch()
@@ -876,7 +877,7 @@ class TestDetectType:
 
     def test_image_for_jpeg(self, tmp_path):
         from pbrenamer.core import image_meta
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         p = tmp_path / "photo.jpg"
         p.touch()
@@ -885,7 +886,7 @@ class TestDetectType:
 
     def test_audio_for_mp3(self, tmp_path):
         from pbrenamer.core import audio_meta, image_meta
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         p = tmp_path / "song.mp3"
         p.touch()
@@ -897,7 +898,7 @@ class TestDetectType:
 
     def test_video_for_mp4(self, tmp_path):
         from pbrenamer.core import audio_meta, image_meta, video_meta
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         p = tmp_path / "clip.mp4"
         p.touch()
@@ -914,7 +915,7 @@ class TestDetectType:
         # finds a video track. Even if audio_meta.can_read were True, video is
         # checked first in _detect_type and must win.
         from pbrenamer.core import audio_meta, image_meta, video_meta
-        from pbrenamer.ui.file_info_window import _detect_type
+        from pbrenamer.ui.metadata_view import detect_type as _detect_type
 
         p = tmp_path / "movie.mp4"
         p.touch()
@@ -930,7 +931,7 @@ class TestFmt:
     def test_datetime(self):
         import datetime
 
-        from pbrenamer.ui.file_info_window import _fmt
+        from pbrenamer.ui.metadata_view import fmt as _fmt
 
         dt = datetime.datetime(2024, 3, 15, 10, 30, 0)
         assert _fmt(dt) == "2024-03-15_103000"
@@ -938,18 +939,18 @@ class TestFmt:
     def test_date(self):
         import datetime
 
-        from pbrenamer.ui.file_info_window import _fmt
+        from pbrenamer.ui.metadata_view import fmt as _fmt
 
         d = datetime.date(2024, 3, 15)
         assert _fmt(d) == "2024-03-15"
 
     def test_string(self):
-        from pbrenamer.ui.file_info_window import _fmt
+        from pbrenamer.ui.metadata_view import fmt as _fmt
 
         assert _fmt("hello") == "hello"
 
     def test_integer(self):
-        from pbrenamer.ui.file_info_window import _fmt
+        from pbrenamer.ui.metadata_view import fmt as _fmt
 
         assert _fmt(42) == "42"
 
@@ -1083,7 +1084,7 @@ class TestFileInfoWindow:
         w.field_requested.connect(received.append)
         section = w._tree.topLevelItem(0)
         leaf = section.child(0)
-        w._on_item_double_clicked(leaf, 0)
+        w._tree._on_item_double_clicked(leaf, 0)
         assert received == [leaf.text(0)]
 
     def test_double_click_section_header_is_noop(
@@ -1100,13 +1101,13 @@ class TestFileInfoWindow:
         received = []
         w.field_requested.connect(received.append)
         section = w._tree.topLevelItem(0)
-        w._on_item_double_clicked(section, 0)
+        w._tree._on_item_double_clicked(section, 0)
         assert received == []
 
     def test_context_menu_on_leaf_emits_field_requested(
         self, qtbot: QtBot, tmp_path, window_state, monkeypatch
     ):
-        import pbrenamer.ui.file_info_window as fiw
+        import pbrenamer.ui.metadata_view as fiw
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         mock_menu = MagicMock()
@@ -1128,14 +1129,14 @@ class TestFileInfoWindow:
         section = w._tree.topLevelItem(0)
         leaf = section.child(0)
         rect = w._tree.visualItemRect(leaf)
-        w._on_tree_context_menu(rect.center())
+        w._tree._on_context_menu(rect.center())
         assert len(received) == 1
         assert received[0] == leaf.text(0)
 
     def test_context_menu_on_section_header_is_noop(
         self, qtbot: QtBot, tmp_path, window_state, monkeypatch
     ):
-        import pbrenamer.ui.file_info_window as fiw
+        import pbrenamer.ui.metadata_view as fiw
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         mock_menu = MagicMock()
@@ -1153,14 +1154,14 @@ class TestFileInfoWindow:
         w.field_requested.connect(received.append)
         section = w._tree.topLevelItem(0)
         rect = w._tree.visualItemRect(section)
-        w._on_tree_context_menu(rect.center())
+        w._tree._on_context_menu(rect.center())
         assert received == []
         mock_menu.exec.assert_not_called()
 
     def test_context_menu_action_not_chosen_no_signal(
         self, qtbot: QtBot, tmp_path, window_state, monkeypatch
     ):
-        import pbrenamer.ui.file_info_window as fiw
+        import pbrenamer.ui.metadata_view as fiw
         from pbrenamer.ui.file_info_window import FileInfoWindow
 
         mock_menu = MagicMock()
@@ -1182,7 +1183,7 @@ class TestFileInfoWindow:
         section = w._tree.topLevelItem(0)
         leaf = section.child(0)
         rect = w._tree.visualItemRect(leaf)
-        w._on_tree_context_menu(rect.center())
+        w._tree._on_context_menu(rect.center())
         assert received == []
 
     def test_close_event_saves_geometry(self, qtbot: QtBot, tmp_path):
@@ -1394,3 +1395,160 @@ class TestWhitespaceLineEdit:
         w.setText(long_text)
         w.setCursorPosition(len(long_text))  # scroll to end
         self._force_paint(w)
+
+
+# ---------------------------------------------------------------------------
+# HistoryDialog — schema field histories (ports PBPicat's
+# tests/test_ui_history_dialog.py)
+# ---------------------------------------------------------------------------
+
+
+class TestSortFold:
+    def test_case_and_diacritics(self):
+        from pbrenamer.ui.history_dialog import sort_fold
+
+        folds = {sort_fold(t) for t in ("O", "o", "Ô", "ô", "Ǫ")}
+        assert folds == {"o"}
+
+    def test_ligatures(self):
+        from pbrenamer.ui.history_dialog import sort_fold
+
+        assert sort_fold("Œuf") == sort_fold("œuf") == sort_fold("OEuf") == "oeuf"
+        assert sort_fold("Æther") == "aether"
+
+    @pytest.mark.parametrize(
+        ("items", "reverse", "expected"),
+        [
+            (["cerise", "Abricot", "banane"], False, ["Abricot", "banane", "cerise"]),
+            (["cerise", "Abricot", "banane"], True, ["cerise", "banane", "Abricot"]),
+            (["cerise", "banane", "ANANAS"], False, ["ANANAS", "banane", "cerise"]),
+            (["Ôtage", "Œuvre", "Abricot"], False, ["Abricot", "Œuvre", "Ôtage"]),
+            (["", "banane", "Abricot"], False, ["Abricot", "banane", ""]),
+            (["", "Abricot", "banane"], True, ["banane", "Abricot", ""]),
+        ],
+    )
+    def test_sorted_history(self, items, reverse, expected):
+        from pbrenamer.ui.history_dialog import sorted_history
+
+        assert sorted_history(items, reverse=reverse) == expected
+
+
+class TestFieldHistoryWidget:
+    @pytest.fixture
+    def make(self, qtbot: QtBot):
+        from pbrenamer import profiles
+        from pbrenamer.ui.history_dialog import FieldHistoryWidget
+
+        def make(items, row=-1):
+            profiles.set_history("field_0", items)
+            w = FieldHistoryWidget("field_0")
+            qtbot.addWidget(w)
+            w.list.setCurrentRow(row)
+            return w
+
+        return make
+
+    @staticmethod
+    def _saved():
+        from pbrenamer import profiles
+
+        return profiles.get_history("field_0")
+
+    def test_loads_history(self, make):
+        w = make(["A", "B", "C"])
+        assert w.items() == ["A", "B", "C"]
+        assert w.key == "field_0"
+
+    def test_move_up(self, make):
+        w = make(["A", "B", "C"], row=1)
+        w.btnUp.click()
+        assert self._saved() == ["B", "A", "C"]
+        assert w.list.currentRow() == 0
+        assert not w.btnUp.isEnabled()
+        w._move_up()
+        assert self._saved() == ["B", "A", "C"]
+
+    def test_move_down(self, make):
+        w = make(["A", "B", "C"], row=1)
+        w.btnDown.click()
+        assert self._saved() == ["A", "C", "B"]
+        assert not w.btnDown.isEnabled()
+        w._move_down()
+        assert self._saved() == ["A", "C", "B"]
+
+    def test_move_down_no_selection(self, make):
+        w = make(["A", "B"])
+        w._move_down()
+        assert w.items() == ["A", "B"]
+
+    def test_sort(self, make):
+        w = make(["cerise", "Abricot", "banane"])
+        w.btnSortAsc.click()
+        assert self._saved() == ["Abricot", "banane", "cerise"]
+        w.btnSortDesc.click()
+        assert self._saved() == ["cerise", "banane", "Abricot"]
+
+    def test_delete(self, make):
+        w = make(["A", "B", "C"], row=2)
+        w.btnDelete.click()
+        assert self._saved() == ["A", "B"]
+        assert w.list.currentRow() == 1
+
+    def test_delete_no_selection(self, make):
+        w = make(["A"])
+        w._delete_selected()
+        assert w.items() == ["A"]
+
+    @pytest.mark.parametrize(
+        ("answer", "expected"),
+        [
+            (QMessageBox.StandardButton.Yes, []),
+            (QMessageBox.StandardButton.No, ["A", "B"]),
+        ],
+    )
+    def test_clear_all(self, make, monkeypatch, answer, expected):
+        monkeypatch.setattr(QMessageBox, "question", lambda *a: answer)
+        w = make(["A", "B"])
+        w.btnClear.click()
+        assert w.items() == expected
+
+    def test_clear_all_empty(self, make, monkeypatch):
+        monkeypatch.setattr(QMessageBox, "question", lambda *a: pytest.fail("asked"))
+        w = make([])
+        w._clear_all()
+
+    def test_buttons(self, make):
+        w = make(["A", "B", "C"], row=1)
+        assert w.btnUp.isEnabled() and w.btnDown.isEnabled()
+        w = make(["A"])
+        assert not w.btnDelete.isEnabled()
+        assert not w.btnSortAsc.isEnabled() and not w.btnSortDesc.isEnabled()
+        assert w.btnClear.isEnabled()
+
+    def test_drag_reorder_saved(self, make):
+        w = make(["A", "B", "C"])
+        w.list.model().moveRow(w.list.rootIndex(), 0, w.list.rootIndex(), 3)
+        assert self._saved() == ["B", "C", "A"]
+
+
+class TestHistoryDialogFields:
+    def test_one_tab_per_field(self, qtbot: QtBot):
+        from pbrenamer import profiles
+        from pbrenamer.ui.history_dialog import HistoryDialog
+        from pbrenamer.ui.presets import PatternPresets
+
+        profiles.set_schema(field_count=3, field_titles=["Place", "Year"])
+        ws = MagicMock()
+        ws.load_geometry.return_value = None
+        dlg = HistoryDialog(PatternPresets(), ws)
+        qtbot.addWidget(dlg)
+        tabs = dlg._ui.tabs
+        assert [tabs.tabText(i) for i in range(tabs.count())] == [
+            "Patterns",
+            "Place",
+            "Year",
+            "Field 3",
+            "Sidecar filter",
+        ]
+        assert [w.key for w in dlg.field_widgets] == ["field_0", "field_1", "field_2"]
+        assert dlg.filter_widget.key == "sidecar_filter"

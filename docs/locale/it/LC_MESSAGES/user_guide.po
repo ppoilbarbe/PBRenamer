@@ -1,0 +1,3557 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: it\n"
+"Language-Team: it <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "User Guide"
+msgstr "Guida utente"
+
+# ==AUTO== Automatically translated
+msgid "On this page"
+msgstr "In questa pagina"
+
+# ==AUTO== Automatically translated
+msgid "Installation"
+msgstr "Installazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer is distributed as a standalone executable.  Download the "
+"archive for your platform from the `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ page, extract it, "
+"and run the binary directly — no Python installation required."
+msgstr ""
+"PBRenamer è distribuito come eseguibile autonomo.  Scaricare l'archivio "
+"per la propria piattaforma dalla pagina `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_, estrarlo ed "
+"eseguire direttamente il binario, senza installare Python."
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "Dipendenze facoltative"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The executables include everything.  When PBRenamer is installed with "
+"``pip``, some features need optional extras:"
+msgstr ""
+"Gli eseguibili includono tutto.  Quando PBRenamer è installato con "
+"``pip``, alcune funzioni richiedono extra facoltativi:"
+
+msgid "``pip install pbrenamer[meta]``"
+msgstr "``pip install pbrenamer[meta]``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Pillow, mutagen and pymediainfo: the ``{im:…}``, ``{au:…}`` and "
+"``{vi:…}`` metadata fields."
+msgstr ""
+"Pillow, mutagen e pymediainfo: i campi di metadati ``{im:…}``, ``{au:…}``"
+" e ``{vi:…}``."
+
+msgid "``pip install pbrenamer[images]``"
+msgstr "``pip install pbrenamer[images]``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"pyexiv2, pillow-heif and Pillow: thumbnails of HEIC files, rotation, EXIF"
+" orientation, and the metadata panel of the image viewer."
+msgstr ""
+"pyexiv2, pillow-heif e Pillow: miniature dei file HEIC, rotazione, "
+"orientamento EXIF e pannello dei metadati del visualizzatore di immagini."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Lossless rotation of JPEG files also needs the ``jpegtran`` program (from"
+" libjpeg-turbo) on the ``PATH``."
+msgstr ""
+"La rotazione senza perdita dei file JPEG richiede anche il programma "
+"``jpegtran`` (di libjpeg-turbo) nel ``PATH``."
+
+# ==AUTO== Automatically translated
+msgid "Launching"
+msgstr "Avvio"
+
+# ==AUTO== Automatically translated
+msgid "GUI mode"
+msgstr "Modalità grafica"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Run the binary (or ``python -m pbrenamer`` from a development "
+"environment)::"
+msgstr ""
+"Eseguire il binario (oppure ``python -m pbrenamer`` da un ambiente di "
+"sviluppo)::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"If *DIR* is omitted the current working directory is used as the starting"
+" folder.  ``--profile NAME`` opens the window on a given :ref:`profile "
+"<profiles>` instead of the last one used.  Qt platform options such as "
+"``--style`` and ``--platform`` are forwarded to Qt and can be appended "
+"after the positional argument."
+msgstr ""
+"Se *DIR* è omesso, la cartella di lavoro corrente diventa la cartella "
+"iniziale.  ``--profile NAME`` apre la finestra su un dato :ref:`profilo "
+"<profiles>` invece dell'ultimo usato.  Le opzioni di piattaforma di Qt "
+"come ``--style`` e ``--platform`` vengono passate a Qt e possono essere "
+"aggiunte dopo l'argomento posizionale."
+
+# ==AUTO== Automatically translated
+msgid "Headless (no-GUI) mode"
+msgstr "Modalità senza interfaccia"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Pass ``--search``, ``--saved`` or ``--schema`` to activate headless mode."
+" PBRenamer will list, rename, and exit without opening any window::"
+msgstr ""
+"Passare ``--search``, ``--saved`` o ``--schema`` per attivare la modalità"
+" senza interfaccia.  PBRenamer elenca, rinomina e termina senza aprire "
+"alcuna finestra::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"See :ref:`cli-reference` for the full flag list and :ref:`cli-examples` "
+"for worked examples."
+msgstr ""
+"Vedere :ref:`cli-reference` per l'elenco completo delle opzioni e :ref"
+":`cli-examples` per esempi commentati."
+
+# ==AUTO== Automatically translated
+msgid "The GUI"
+msgstr "L'interfaccia grafica"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The window has a directory tree on the left, the file list on the right, "
+"and below them the rule panel with two tabs, **Pattern** (search and "
+"replace, described in this chapter) and **Schema** (see :ref:`schema-"
+"mode`).  The action bar at the bottom holds the **Undo**, **Preview**, "
+"**Clear**, **Renumber** and **Rename** buttons.  The menus are **File**, "
+"**Edit**, **Profile**, **Images**, **Shortcuts** and **Help**; the name "
+"of the current :ref:`profile <profiles>` is shown in the window title."
+msgstr ""
+"La finestra mostra l'albero delle cartelle a sinistra, l'elenco dei file "
+"a destra e, sotto, il pannello delle regole con due schede, **Pattern** "
+"(cerca e sostituisci, descritto in questo capitolo) e **Schema** (vedere "
+":ref:`schema-mode`).  La barra delle azioni, in basso, contiene i "
+"pulsanti **Annulla**, **Anteprima**, **Cancella**, **Rinumera** e "
+"**Rinomina**.  I menu sono **File**, **Modifica**, **Profilo**, "
+"**Immagini**, **Scorciatoie** e **Guida**; il nome del :ref:`profilo "
+"<profiles>` corrente compare nel titolo della finestra."
+
+# ==AUTO== Automatically translated
+msgid "Opening a folder"
+msgstr "Aprire una cartella"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
+"directory tree, or drag a directory onto the window to load its contents."
+"  Use the **Recursive** checkbox to include sub-directories.  The "
+"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
+"listing."
+msgstr ""
+"Scegliere **File → Apri cartella…** (**Ctrl+O**), selezionare una "
+"cartella nell'albero o trascinare una cartella sulla finestra per "
+"caricarne il contenuto.  La casella **Ricorsivo** include le "
+"sottocartelle.  Il campo **Filtro** accetta un pattern glob (ad es. "
+"``*.jpg``) per restringere l'elenco."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the **Show** combo to display *Files only*, *Directories only*, or "
+"*Files and directories*.  The **By date** checkbox sorts the files by "
+"modification date instead of by name, and **Reversed** reverses the "
+"order; folders always stay first.  The list follows changes made on disk "
+"by other programs."
+msgstr ""
+"L'elenco a discesa **Mostra** propone *Solo file*, *Solo cartelle* o "
+"*File e cartelle*.  La casella **Per data** ordina i file per data di "
+"modifica invece che per nome, e **Invertito** inverte l'ordine; le "
+"cartelle restano sempre in cima.  L'elenco segue le modifiche fatte sul "
+"disco da altri programmi."
+
+# ==AUTO== Automatically translated
+msgid "The file list"
+msgstr "L'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "The main table shows:"
+msgstr "La tabella principale mostra:"
+
+# ==AUTO== Automatically translated
+msgid "**Thumbnail** — optional, see :ref:`thumbnails`."
+msgstr "**Miniatura**: facoltativa, vedere :ref:`thumbnails`."
+
+# ==AUTO== Automatically translated
+msgid "**Original** — the current file name on disk."
+msgstr "**Originale**: il nome attuale del file sul disco."
+
+# ==AUTO== Automatically translated
+msgid "**Sidecar** — optional, see :ref:`sidecar-column`."
+msgstr "**Sidecar**: facoltativa, vedere :ref:`sidecar-column`."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Preview** — the name after renaming.  The cell is empty when the "
+"current pattern does not match the file.  Rows shown in a distinct colour"
+" are directories."
+msgstr ""
+"**Anteprima**: il nome dopo la rinomina.  La cella è vuota quando il "
+"pattern corrente non corrisponde al file.  Le righe di un colore diverso "
+"sono cartelle."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Preview** to compute the Preview column, or check **Auto-"
+"preview** to recompute it whenever the pattern or an option changes (the "
+"delay is set in :ref:`settings`).  **Clear** empties the column."
+msgstr ""
+"Fare clic su **Anteprima** per calcolare la colonna Anteprima, oppure "
+"spuntare **Anteprima automatica** per ricalcolarla a ogni modifica del "
+"pattern o di un'opzione (il ritardo si imposta in :ref:`settings`).  "
+"**Cancella** svuota la colonna."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rows with a naming conflict are highlighted in red.  The **Rename** "
+"button is disabled until all conflicts are resolved."
+msgstr ""
+"Le righe con un conflitto di nome sono evidenziate in rosso.  Il pulsante"
+" **Rinomina** resta disattivato finché tutti i conflitti non sono "
+"risolti."
+
+# ==AUTO== Automatically translated
+msgid ""
+"You can select a subset of rows with the usual keyboard/mouse modifiers "
+"(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
+"files; with no selection it applies to every listed file.  **Tab** moves "
+"the focus between the directory tree and the file list."
+msgstr ""
+"È possibile selezionare una parte delle righe con i soliti modificatori "
+"di tastiera e mouse (Maiusc+clic, Ctrl+clic).  La rinomina si applica "
+"allora solo ai file selezionati; senza selezione si applica a tutti i "
+"file elencati.  **Tab** sposta il focus tra l'albero delle cartelle e "
+"l'elenco dei file."
+
+# ==AUTO== Automatically translated
+msgid "Drag and drop"
+msgstr "Trascinamento"
+
+# ==AUTO== Automatically translated
+msgid "Files and directories can be dragged:"
+msgstr "File e cartelle possono essere trascinati:"
+
+# ==AUTO== Automatically translated
+msgid "between the directory tree and the file list,"
+msgstr "tra l'albero delle cartelle e l'elenco dei file,"
+
+# ==AUTO== Automatically translated
+msgid ""
+"between PBRenamer and external applications (a file manager, another "
+"window),"
+msgstr ""
+"tra PBRenamer e altre applicazioni (un gestore di file, un'altra "
+"finestra),"
+
+# ==AUTO== Automatically translated
+msgid ""
+"to copy or move them.  The action taken (copy or move) follows the "
+"standard OS/Qt drag modifier keys — the default action is a move; hold "
+"the platform's copy modifier (e.g. **Ctrl** on Linux/Windows) to force a "
+"copy instead. Custom cursors indicate the resulting action while "
+"dragging."
+msgstr ""
+"per copiarli o spostarli.  L'azione eseguita (copia o spostamento) segue "
+"i tasti modificatori di trascinamento standard del sistema e di Qt: per "
+"impostazione predefinita è uno spostamento; tenere premuto il tasto di "
+"copia della piattaforma (ad es. **Ctrl** su Linux e Windows) per forzare "
+"una copia.  Cursori appositi indicano l'azione durante il trascinamento."
+
+# ==AUTO== Automatically translated
+msgid ""
+"If any dropped item would overwrite an existing file or directory, a "
+"single confirmation dialog lists how many collide and offers "
+"**Overwrite**, **Skip** (collisions only — everything else still "
+"proceeds), or **Cancel** (nothing is copied/moved). Dropping a folder "
+"into itself or one of its own sub-directories is rejected with an error."
+msgstr ""
+"Se un elemento rilasciato sovrascriverebbe un file o una cartella "
+"esistente, un'unica finestra di conferma indica quante sono le collisioni"
+" e propone **Sovrascrivi**, **Salta** (solo le collisioni, tutto il resto"
+" viene eseguito) o **Annulla** (non viene copiato né spostato nulla).  "
+"Rilasciare una cartella dentro se stessa o in una delle sue sottocartelle"
+" viene rifiutato con un errore."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only **moves** are recorded on the undo stack; copies are not undoable, "
+"since the original file is left in place."
+msgstr ""
+"Solo gli **spostamenti** sono registrati nella pila di annullamento; le "
+"copie non si possono annullare, perché il file originale resta al suo "
+"posto."
+
+# ==AUTO== Automatically translated
+msgid "Configuring the rename rules"
+msgstr "Configurare le regole di rinomina"
+
+# ==AUTO== Automatically translated
+msgid "The right-hand panel contains all renaming controls."
+msgstr "Il pannello a destra contiene tutti i comandi di rinomina."
+
+# ==AUTO== Automatically translated
+msgid "Search field"
+msgstr "Campo di ricerca"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the search expression in the **Search** combo.  Three modes are "
+"available via the adjacent selector:"
+msgstr ""
+"Inserire l'espressione di ricerca nell'elenco **Cerca**.  Il selettore "
+"accanto propone tre modalità:"
+
+msgid "``Pattern``"
+msgstr "``Pattern``"
+
+# ==AUTO== Automatically translated
+msgid "Wildcard-based matching.  See :ref:`pattern-mode`."
+msgstr "Corrispondenza con caratteri jolly.  Vedere :ref:`pattern-mode`."
+
+msgid "``Regex``"
+msgstr "``Regex``"
+
+# ==AUTO== Automatically translated
+msgid "Full Python ``re``-module syntax.  See :ref:`regex-mode`."
+msgstr "Sintassi completa del modulo ``re`` di Python.  Vedere :ref:`regex-mode`."
+
+msgid "``Plain``"
+msgstr "``Plain``"
+
+# ==AUTO== Automatically translated
+msgid "Literal string matching.  See :ref:`plain-mode`."
+msgstr "Corrispondenza di testo letterale.  Vedere :ref:`plain-mode`."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the search field to open the non-modal "
+"Search Patterns help dialog."
+msgstr ""
+"Il pulsante **?** accanto al campo di ricerca apre la guida non modale "
+"dei pattern di ricerca."
+
+# ==AUTO== Automatically translated
+msgid "Replace field"
+msgstr "Campo di sostituzione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Enter the replacement expression.  The syntax is the same for all three "
+"search modes.  See :ref:`replacement-fields` for the complete field "
+"reference."
+msgstr ""
+"Inserire l'espressione di sostituzione.  La sintassi è la stessa per le "
+"tre modalità di ricerca.  Vedere :ref:`replacement-fields` per il "
+"riferimento completo dei campi."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click the **?** button next to the replace field to open the non-modal "
+"Replacement Fields help dialog."
+msgstr ""
+"Il pulsante **?** accanto al campo di sostituzione apre la guida non "
+"modale dei campi di sostituzione."
+
+# ==AUTO== Automatically translated
+msgid "Extension mode"
+msgstr "Modalità estensione"
+
+# ==AUTO== Automatically translated
+msgid "Controls how the file extension is handled during rename.  Choices:"
+msgstr ""
+"Stabilisce come viene trattata l'estensione del file durante la rinomina."
+"  Scelte:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Keep extension* (default) — the search/replace pattern is applied to the"
+" file *stem* only; the extension is preserved unchanged."
+msgstr ""
+"*Mantieni estensione* (predefinita): il pattern di ricerca e sostituzione"
+" si applica solo alla *radice* del nome; l'estensione resta invariata."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in lowercase* — the extension is preserved but forced to "
+"lowercase (e.g. ``.JPG`` → ``.jpg``)."
+msgstr ""
+"*Estensione in minuscolo*: l'estensione viene mantenuta ma portata in "
+"minuscolo (ad es. ``.JPG`` → ``.jpg``)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension in uppercase* — the extension is preserved but forced to "
+"uppercase (e.g. ``.jpg`` → ``.JPG``)."
+msgstr ""
+"*Estensione in maiuscolo*: l'estensione viene mantenuta ma portata in "
+"maiuscolo (ad es. ``.jpg`` → ``.JPG``)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Normalize extension* — the extension is looked up (case-insensitively) "
+"in the extension normalization table (**Edit → Settings… → Extension "
+"Normalization** tab) and replaced accordingly (e.g. ``.jpeg`` → "
+"``.jpg``); left unchanged if not found in the table."
+msgstr ""
+"*Normalizza estensione*: l'estensione viene cercata (senza distinguere "
+"maiuscole e minuscole) nella tabella di normalizzazione delle estensioni "
+"(scheda **Modifica → Impostazioni… → Normalizzazione estensioni**) e "
+"sostituita di conseguenza (ad es. ``.jpeg`` → ``.jpg``); resta invariata "
+"se non è nella tabella."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Modify extension* — the search/replace pattern is applied to the full "
+"file name, including the extension."
+msgstr ""
+"*Modifica estensione*: il pattern di ricerca e sostituzione si applica al"
+" nome completo, estensione compresa."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The normalization table is managed from the **Extension Normalization** "
+"tab of the Settings dialog (**Edit → Settings…**): add, remove, or clear "
+"``from → to`` extension mappings (both sides without the leading dot). "
+"Changes to the table apply immediately and are kept even if the dialog is"
+" later cancelled."
+msgstr ""
+"La tabella di normalizzazione si gestisce dalla scheda **Normalizzazione "
+"estensioni** delle impostazioni (**Modifica → Impostazioni…**): "
+"aggiungere, rimuovere o cancellare le corrispondenze di estensioni ``from"
+" → to`` (entrambi i lati senza il punto iniziale).  Le modifiche alla "
+"tabella si applicano subito e vengono conservate anche se la finestra "
+"viene poi annullata."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "File sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **sidecar file** is a file associated with a *base file* by a name "
+"suffix — for example ``photo.jpg`` (base file) and ``photo.xmp`` or "
+"``photo.info.json`` (sidecars). PBRenamer can detect these relationships,"
+" group the files together in the list, and rename an entire group in one "
+"operation."
+msgstr ""
+"Un **file sidecar** è un file associato a un *file principale* tramite un"
+" suffisso del nome, per esempio ``photo.jpg`` (file principale) e "
+"``photo.xmp`` o ``photo.info.json`` (sidecar).  PBRenamer rileva queste "
+"relazioni, raggruppa i file nell'elenco e rinomina un intero gruppo in "
+"un'unica operazione."
+
+# ==AUTO== Automatically translated
+msgid "Enabling sidecar mode"
+msgstr "Attivare la modalità sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Sidecar mode** checkbox, next to the Extension mode combo, turns "
+"the feature on.  It is only selectable when Extension mode is *Keep "
+"extension*, *Extension in lowercase*, or *Extension in uppercase* — "
+"sidecar suffixes are never re-derived, so a mode that rewrites the "
+"extension (*Normalize extension*, *Modify extension*) would make the "
+"relationship ambiguous.  The checkbox is greyed out (and treated as "
+"unchecked) for those two modes; its checked/unchecked state is otherwise "
+"remembered like the Extension mode itself, both in the toolbar state and "
+"in named presets."
+msgstr ""
+"La casella **Modalità sidecar**, accanto all'elenco della modalità "
+"estensione, attiva la funzione.  È selezionabile solo quando la modalità "
+"estensione è *Mantieni estensione*, *Estensione in minuscolo* o "
+"*Estensione in maiuscolo*: i suffissi dei sidecar non vengono mai "
+"ricalcolati, quindi una modalità che riscrive l'estensione (*Normalizza "
+"estensione*, *Modifica estensione*) renderebbe ambigua la relazione.  Per"
+" queste due modalità la casella è disattivata (e considerata non "
+"spuntata); altrimenti il suo stato viene ricordato come la modalità "
+"estensione stessa, sia nello stato della barra degli strumenti sia nei "
+"salvataggi con nome."
+
+# ==AUTO== Automatically translated
+msgid "How grouping works"
+msgstr "Come funziona il raggruppamento"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each file is classified into one of four categories based on its own "
+"extension: **Images**, **Video**, **Audio**, or **Other** (anything not "
+"recognised as an image/video/audio base extension — this also includes "
+"sidecar-only files such as a bare ``.xmp``). Each category has its own "
+"configurable list of:"
+msgstr ""
+"Ogni file è classificato in una di quattro categorie in base alla propria"
+" estensione: **Immagini**, **Video**, **Audio** o **Altro** (tutto ciò "
+"che non è riconosciuto come estensione principale di immagine, video o "
+"audio, compresi i file che sono solo sidecar, come un ``.xmp`` isolato)."
+"  Ogni categoria ha un proprio elenco configurabile di:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**base extensions** — which extensions make a file a candidate *base* for"
+" that category (not applicable to *Other*, which is the catch-all);"
+msgstr ""
+"**estensioni principali**: le estensioni che rendono un file un *file "
+"principale* candidato per quella categoria (non vale per *Altro*, che "
+"raccoglie tutto il resto);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**sidecar suffixes** — which name suffixes, when found at the end of a "
+"file name, mark it as that category's sidecar."
+msgstr ""
+"**suffissi sidecar**: i suffissi che, trovati alla fine di un nome di "
+"file, lo indicano come sidecar di quella categoria."
+
+# ==AUTO== Automatically translated
+msgid ""
+"A fifth, **Common** list of sidecar suffixes applies to every category in"
+" addition to its own list."
+msgstr ""
+"Un quinto elenco, **Comune**, di suffissi sidecar si applica a tutte le "
+"categorie oltre al loro elenco proprio."
+
+# ==AUTO== Automatically translated
+msgid ""
+"For a candidate sidecar file, PBRenamer looks — within the same directory"
+" only — for base files whose stem (the part before the matched suffix) "
+"and category match. A sidecar suffix is only searched among *its own "
+"potential base file's category* (plus the common list); it is never "
+"matched against unrelated categories."
+msgstr ""
+"Per un sidecar candidato, PBRenamer cerca, solo nella stessa cartella, i "
+"file principali la cui radice (la parte prima del suffisso trovato) e la "
+"cui categoria corrispondono.  Un suffisso sidecar viene cercato solo "
+"nella *categoria del proprio file principale potenziale* (più l'elenco "
+"comune); non viene mai confrontato con altre categorie."
+
+# ==AUTO== Automatically translated
+msgid "**Exactly one** matching base file → the sidecar joins that base's group."
+msgstr ""
+"**Esattamente un** file principale corrispondente → il sidecar entra nel "
+"gruppo di quel file."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**No** matching base file → the file is left ungrouped, exactly as if "
+"sidecar mode were off."
+msgstr ""
+"**Nessun** file principale corrispondente → il file resta fuori da ogni "
+"gruppo, esattamente come se la modalità sidecar fosse disattivata."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**More than one** matching base file — whether all candidates are in the "
+"same category (e.g. ``clip.xml`` matching both ``clip.jpg`` and "
+"``clip.png``, both images) or in different categories (e.g. ``clip.xml`` "
+"matching an image ``clip.jpg`` *and* a video ``clip.avi``, because "
+"``.xml`` is a sidecar suffix for both) — this is an explicit, "
+"**unrenamable ambiguity**. The sidecar and *every* candidate base file "
+"involved are flagged with an error explaining the conflict; none of them "
+"can be renamed until the ambiguity is resolved (e.g. by removing or "
+"renaming one of the conflicting files, or by adjusting the category "
+"configuration)."
+msgstr ""
+"**Più di un** file principale corrispondente, che i candidati siano tutti"
+" della stessa categoria (ad es. ``clip.xml`` corrisponde sia a "
+"``clip.jpg`` sia a ``clip.png``, entrambe immagini) o di categorie "
+"diverse (ad es. ``clip.xml`` corrisponde a un'immagine ``clip.jpg`` *e* a"
+" un video ``clip.avi``, perché ``.xml`` è un suffisso sidecar per "
+"entrambi): è un'**ambiguità che impedisce la rinomina**.  Il sidecar e "
+"*ogni* file principale candidato coinvolto sono segnalati con un errore "
+"che spiega il conflitto; nessuno di essi può essere rinominato finché "
+"l'ambiguità non è risolta (ad es. eliminando o rinominando uno dei file "
+"in conflitto, o modificando la configurazione delle categorie)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"If a suffix is only configured as a sidecar suffix for one category, a "
+"file of another category with the same stem never causes ambiguity: with "
+"``.xml`` configured as an image-only sidecar suffix, ``clip.xml`` + "
+"``clip.jpg`` (image) + ``clip.avi`` (video) has a single candidate "
+"(``clip.jpg``) — ``clip.xml`` joins its group, and ``clip.avi`` stays an "
+"independent, ungrouped file."
+msgstr ""
+"Se un suffisso è configurato come suffisso sidecar per una sola "
+"categoria, un file di un'altra categoria con la stessa radice non causa "
+"mai ambiguità: con ``.xml`` configurato come suffisso sidecar solo per le"
+" immagini, ``clip.xml`` + ``clip.jpg`` (immagine) + ``clip.avi`` (video) "
+"ha un solo candidato (``clip.jpg``); ``clip.xml`` entra nel suo gruppo e "
+"``clip.avi`` resta un file indipendente, fuori da ogni gruppo."
+
+# ==AUTO== Automatically translated
+msgid "Selection, preview, and renaming"
+msgstr "Selezione, anteprima e rinomina"
+
+# ==AUTO== Automatically translated
+msgid "While sidecar mode is active:"
+msgstr "Quando la modalità sidecar è attiva:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar rows are shown in a distinct colour in the file list; ambiguous "
+"rows are shown as errors (like any other conflict), disabling the "
+"**Rename** button until resolved."
+msgstr ""
+"Le righe dei sidecar sono mostrate in un colore diverso nell'elenco dei "
+"file; le righe ambigue appaiono come errori (come ogni altro conflitto) e"
+" disattivano il pulsante **Rinomina** finché non vengono risolte."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selecting any file in a group — the base or any of its sidecars — "
+"automatically selects the whole group."
+msgstr ""
+"Selezionare un file qualsiasi di un gruppo, il principale o uno dei suoi "
+"sidecar, seleziona automaticamente l'intero gruppo."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The rename pattern is applied to the base file's *stem* only, exactly as "
+"under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same"
+" transformed stem, followed verbatim by its own sidecar suffix (case "
+"preserved as found on disk) — the suffix itself is never altered."
+msgstr ""
+"Il pattern di rinomina si applica solo alla *radice* del file principale,"
+" esattamente come con *Mantieni estensione*, *Estensione in minuscolo* o "
+"*Estensione in maiuscolo*; ogni sidecar riutilizza la stessa radice "
+"trasformata, seguita senza modifiche dal proprio suffisso sidecar "
+"(maiuscole e minuscole come sul disco): il suffisso non viene mai "
+"alterato."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming a group is a single operation: the base file and all its "
+"sidecars are renamed together, recorded as one batch on the undo stack, "
+"so **Undo** restores the whole group at once."
+msgstr ""
+"Rinominare un gruppo è un'unica operazione: il file principale e tutti i "
+"suoi sidecar vengono rinominati insieme e registrati come un solo blocco "
+"nella pila di annullamento, così **Annulla** ripristina l'intero gruppo "
+"in una volta."
+
+# ==AUTO== Automatically translated
+msgid "Configuring categories"
+msgstr "Configurare le categorie"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open **Edit → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category. The dialog has one tab per base "
+"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+msgstr ""
+"Aprire **Modifica → File sidecar…** per configurare le estensioni "
+"principali e i suffissi sidecar di ogni categoria.  La finestra ha una "
+"scheda per categoria principale (*Immagini*, *Video*, *Audio*, *Altro*) "
+"più una scheda *Comune*:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each *base extensions* list (Images/Video/Audio only — *Other* has no "
+"such list, it is the catch-all) and each *sidecar suffixes* list can be "
+"edited with add/remove controls; an extension already assigned to a "
+"different category is rejected with a warning naming the conflicting "
+"category."
+msgstr ""
+"Ogni elenco di *estensioni principali* (solo Immagini, Video e Audio: "
+"*Altro* non ne ha, raccoglie tutto il resto) e ogni elenco di *suffissi "
+"sidecar* si modifica con i pulsanti di aggiunta e rimozione; "
+"un'estensione già assegnata a un'altra categoria viene rifiutata con un "
+"avviso che nomina quella categoria."
+
+# ==AUTO== Automatically translated
+msgid "Each list has its own **Restore defaults** button."
+msgstr "Ogni elenco ha il proprio pulsante **Ripristina predefiniti**."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Changes apply immediately and persist across sessions "
+"(``sidecar_config.json`` in the folder of the current profile), "
+"independently of whether the dialog is later closed or cancelled."
+msgstr ""
+"Le modifiche si applicano subito e vengono conservate tra le sessioni "
+"(``sidecar_config.json`` nella cartella del profilo corrente), "
+"indipendentemente dal fatto che la finestra venga poi chiusa o annullata."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar grouping is also available in :ref:`headless mode <cli-"
+"reference>` via ``--sidecar-mode`` / ``--no-sidecar-mode``."
+msgstr ""
+"Il raggruppamento dei sidecar è disponibile anche in :ref:`modalità senza"
+" interfaccia <cli-reference>` con ``--sidecar-mode`` / ``--no-sidecar-"
+"mode``."
+
+# ==AUTO== Automatically translated
+msgid "Post-processing options"
+msgstr "Opzioni di post-elaborazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"These transforms are applied *after* the search/replace step, in the "
+"order listed:"
+msgstr ""
+"Queste trasformazioni si applicano *dopo* la fase di ricerca e "
+"sostituzione, nell'ordine indicato:"
+
+# ==AUTO== Automatically translated
+msgid "**Separator**"
+msgstr "**Separatore**"
+
+# ==AUTO== Automatically translated
+msgid "Convert between space-like delimiters.  Choices:"
+msgstr "Converte tra delimitatori di tipo spazio.  Scelte:"
+
+# ==AUTO== Automatically translated
+msgid "*None* — no conversion (default)"
+msgstr "*Nessuno*: nessuna conversione (predefinito)"
+
+# ==AUTO== Automatically translated
+msgid "*Space → underscore*"
+msgstr "*Spazio → trattino basso*"
+
+# ==AUTO== Automatically translated
+msgid "*Underscore → space*"
+msgstr "*Trattino basso → spazio*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dot*"
+msgstr "*Spazio → punto*"
+
+# ==AUTO== Automatically translated
+msgid "*Dot → space*"
+msgstr "*Punto → spazio*"
+
+# ==AUTO== Automatically translated
+msgid "*Space → dash*"
+msgstr "*Spazio → trattino*"
+
+# ==AUTO== Automatically translated
+msgid "*Dash → space*"
+msgstr "*Trattino → spazio*"
+
+# ==AUTO== Automatically translated
+msgid "**Case**"
+msgstr "**Maiuscole**"
+
+# ==AUTO== Automatically translated
+msgid "Apply a case transform to the result:"
+msgstr "Applica al risultato una trasformazione di maiuscole e minuscole:"
+
+# ==AUTO== Automatically translated
+msgid "*None* — no change (default)"
+msgstr "*Nessuna*: nessuna modifica (predefinito)"
+
+# ==AUTO== Automatically translated
+msgid "*UPPER CASE*"
+msgstr "*MAIUSCOLO*"
+
+# ==AUTO== Automatically translated
+msgid "*lower case*"
+msgstr "*minuscolo*"
+
+# ==AUTO== Automatically translated
+msgid "*Capitalize* (first character upper, rest lower)"
+msgstr "*Prima lettera maiuscola* (primo carattere maiuscolo, il resto minuscolo)"
+
+# ==AUTO== Automatically translated
+msgid "*Title Case* (each word capitalised)"
+msgstr "*Ogni Parola Maiuscola* (ogni parola inizia con la maiuscola)"
+
+# ==AUTO== Automatically translated
+msgid "**Strip accents**"
+msgstr "**Rimuovi accenti**"
+
+# ==AUTO== Automatically translated
+msgid "Remove diacritics via Unicode NFD normalisation (``á → a``, ``ü → u``)."
+msgstr ""
+"Elimina i segni diacritici con la normalizzazione Unicode NFD (``á → a``,"
+" ``ü → u``)."
+
+# ==AUTO== Automatically translated
+msgid "**Collapse duplicates**"
+msgstr "**Rimuovi separatori doppi**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Collapse consecutive identical separator characters (``.``, ``-``, ``_``,"
+" space) into one."
+msgstr ""
+"Riduce a uno i caratteri separatori identici consecutivi (``.``, ``-``, "
+"``_``, spazio)."
+
+# ==AUTO== Automatically translated
+msgid "Presets"
+msgstr "Salvataggi"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search and replace combos keep a history of the patterns used (most "
+"recent first); the button next to each combo adds the current pattern to "
+"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
+"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+msgstr ""
+"Gli elenchi di ricerca e di sostituzione conservano una cronologia dei "
+"pattern usati (i più recenti per primi); il pulsante accanto a ogni "
+"elenco vi aggiunge il pattern corrente.  **Modifica → Cronologia…** "
+"modifica le cronologie di ricerca, di sostituzione e del :ref:`filtro "
+"sidecar <sidecar-filter>`: aggiungere, rimuovere, riordinare, ordinare o "
+"svuotare."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Save** field gives the current settings a name: type a name and "
+"click **Save**, pick it later from the same drop-down to restore it, or "
+"click **Delete** to remove it.  Named saves can also be loaded with "
+"``--saved`` in headless mode.  Histories and named saves belong to the "
+"current :ref:`profile <profiles>`."
+msgstr ""
+"Il campo **Salva** dà un nome alle impostazioni correnti: digitare un "
+"nome e fare clic su **Salva**, sceglierlo più tardi dallo stesso elenco "
+"per ripristinarlo, oppure fare clic su **Elimina** per rimuoverlo.  I "
+"salvataggi con nome si possono caricare anche con ``--saved`` in modalità"
+" senza interfaccia.  Cronologie e salvataggi con nome appartengono al "
+":ref:`profilo <profiles>` corrente."
+
+# ==AUTO== Automatically translated
+msgid "Applying renames"
+msgstr "Applicare le rinomine"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Rename** (**F2**) to apply the renames shown in the Preview "
+"column. The button shows how many files will be renamed, e.g. **Rename "
+"(12)**, and is only enabled when a preview is displayed and has no "
+"conflict.  The status bar reports how many files were renamed."
+msgstr ""
+"Fare clic su **Rinomina** (**F2**) per applicare le rinomine mostrate "
+"nella colonna Anteprima.  Il pulsante indica quanti file verranno "
+"rinominati, ad es. **Rinomina (12)**, ed è attivo solo quando è mostrata "
+"un'anteprima senza conflitti.  La barra di stato indica quanti file sono "
+"stati rinominati."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Renaming is atomic: every target is checked first, and if one of them "
+"fails during the operation, the renames already done are rolled back.  "
+"When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
+"``{dest}`` template), missing folders are created, and source folders "
+"left empty below the listed folder are removed.  After a rename the "
+"Preview column is cleared."
+msgstr ""
+"La rinomina è atomica: tutte le destinazioni vengono prima verificate e, "
+"se una di esse fallisce durante l'operazione, le rinomine già eseguite "
+"vengono annullate.  Quando il nuovo nome contiene una cartella (uno "
+":ref:`schema <schema-mode>` o un modello con ``{dest}``), le cartelle "
+"mancanti vengono create e le cartelle di origine rimaste vuote sotto la "
+"cartella elencata vengono eliminate.  Dopo una rinomina la colonna "
+"Anteprima viene svuotata."
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "Annulla"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Click **Undo** to revert the most recent batch.  Each rename batch is "
+"recorded on an undo stack; the button label shows the number of available"
+" batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
+" drag and drop, :ref:`rotations and EXIF orientation resets <image-"
+"rotation>` are recorded on the same stack."
+msgstr ""
+"Fare clic su **Annulla** per annullare l'ultimo blocco.  Ogni blocco di "
+"rinomine è registrato in una pila di annullamento; l'etichetta del "
+"pulsante mostra il numero di blocchi disponibili (ad es. **Annulla (3)**)"
+" quando ce n'è più di uno.  Gli spostamenti per trascinamento, le "
+":ref:`rotazioni e i ripristini dell'orientamento EXIF <image-rotation>` "
+"sono registrati nella stessa pila."
+
+# ==AUTO== Automatically translated
+msgid "Shortcuts"
+msgstr "Scorciatoie"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Shortcuts** menu provides one-click navigation to common "
+"directories."
+msgstr "Il menu **Scorciatoie** dà accesso con un clic alle cartelle più usate."
+
+# ==AUTO== Automatically translated
+msgid "**System directories**"
+msgstr "**Cartelle di sistema**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The top of the menu lists platform directories (Home, Desktop, Documents,"
+" Downloads, Pictures, Music, Videos).  On Linux, GTK bookmarks are shown "
+"instead when the file ``~/.config/gtk-3.0/bookmarks`` (or ``~/.gtk-"
+"bookmarks``) exists."
+msgstr ""
+"La parte alta del menu elenca le cartelle della piattaforma (Home, "
+"Scrivania, Documenti, Scaricati, Immagini, Musica, Video).  Su Linux "
+"vengono invece mostrati i segnalibri GTK quando esiste il file "
+"``~/.config/gtk-3.0/bookmarks`` (o ``~/.gtk-bookmarks``)."
+
+# ==AUTO== Automatically translated
+msgid "**User-defined shortcuts**"
+msgstr "**Scorciatoie personali**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Right-click any directory in the left-hand tree and choose **Add as "
+"shortcut**.  The entry is appended to the shortcuts list and persisted "
+"between sessions."
+msgstr ""
+"Fare clic destro su una cartella dell'albero a sinistra e scegliere "
+"**Aggiungi come scorciatoia**.  La voce viene aggiunta all'elenco delle "
+"scorciatoie e conservata tra le sessioni."
+
+# ==AUTO== Automatically translated
+msgid "**Editing shortcuts**"
+msgstr "**Modificare le scorciatoie**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **Shortcuts → Edit shortcuts…** to open the *Edit Shortcuts* "
+"dialog, where shortcuts can be reordered with *Move up* / *Move down* or "
+"removed."
+msgstr ""
+"Scegliere **Scorciatoie → Modifica scorciatoie…** per aprire la finestra "
+"*Modifica scorciatoie*, dove le scorciatoie si possono riordinare con "
+"*Su* / *Giù* o eliminare."
+
+# ==AUTO== Automatically translated
+msgid "File information"
+msgstr "Informazioni sul file"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) "
+"to display a non-modal window listing the actual values of every "
+"replacement field for the selected file.  Double-click a field to insert "
+"it into the replacement pattern."
+msgstr ""
+"Scegliere **File → Informazioni** (**Ctrl+I**, anche nel menu "
+"**Immagini**) per aprire una finestra non modale che elenca i valori "
+"reali di ogni campo di sostituzione per il file selezionato.  Fare doppio"
+" clic su un campo per inserirlo nel pattern di sostituzione."
+
+# ==AUTO== Automatically translated
+msgid "The window has three groups:"
+msgstr "La finestra ha tre gruppi:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Universal fields** — ``{date}``, ``{datetime}``, ``{mdatetime}``, "
+"``{cdatetime}``, ``{dir}``; values are read from the file system."
+msgstr ""
+"**Campi universali**: ``{date}``, ``{datetime}``, ``{mdatetime}``, "
+"``{cdatetime}``, ``{dir}``; i valori sono letti dal file system."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Batch fields** — ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``, "
+"``{re:name}``; labelled *Computed* (they depend on the active pattern)."
+msgstr ""
+"**Campi batch**: ``{0}``, ``{1}``/``{2}``…, ``{num}``, ``{newnum}``, "
+"``{re:name}``; indicati come *Calcolato* (dipendono dal pattern attivo)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"**Metadata fields** — ``{im:…}``, ``{au:…}``, or ``{vi:…}`` depending on "
+"the file type; values are read from the file's embedded metadata."
+msgstr ""
+"**Campi di metadati**: ``{im:…}``, ``{au:…}`` o ``{vi:…}`` secondo il "
+"tipo di file; i valori sono letti dai metadati incorporati nel file."
+
+# ==AUTO== Automatically translated
+msgid "The window updates live whenever the selection changes."
+msgstr "La finestra si aggiorna in tempo reale a ogni cambio di selezione."
+
+# ==AUTO== Automatically translated
+msgid "Help"
+msgstr "Guida"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Help** menu opens this **User guide** in the web browser, in the "
+"language of the interface, and the **Keyboard and mouse shortcuts…** "
+"window (**F1**), which lists every shortcut of the main window and of the"
+" image viewer."
+msgstr ""
+"Il menu **Guida** apre questa **Guida utente** nel browser web, nella "
+"lingua dell'interfaccia, e la finestra **Scorciatoie da tastiera e "
+"mouse…** (**F1**), che elenca tutte le scorciatoie della finestra "
+"principale e del visualizzatore di immagini."
+
+# ==AUTO== Automatically translated
+msgid "Profiles"
+msgstr "Profili"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **profile** is a named set of settings for one way of working: for "
+"instance a ``default`` profile that renames documents in place with the "
+"Pattern tab, and a ``photos`` profile that sorts pictures into a folder "
+"tree with the Schema tab, thumbnails and the sidecar column.  Switching "
+"profiles switches all of this at once."
+msgstr ""
+"Un **profilo** è un insieme di impostazioni con un nome per un modo di "
+"lavorare: per esempio un profilo ``default`` che rinomina documenti sul "
+"posto con la scheda Pattern, e un profilo ``photos`` che ordina immagini "
+"in un albero di cartelle con la scheda Schema, le miniature e la colonna "
+"sidecar.  Cambiare profilo cambia tutto questo in una volta."
+
+# ==AUTO== Automatically translated
+msgid "A profile holds:"
+msgstr "Un profilo contiene:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the tab shown at start-up (Pattern or Schema) and the Schema tab settings"
+" (number and titles of the fields, destination, video marker and its "
+"position, fill gaps);"
+msgstr ""
+"la scheda mostrata all'avvio (Pattern o Schema) e le impostazioni della "
+"scheda Schema (numero e titoli dei campi, destinazione, marcatore video e"
+" sua posizione, colmare i vuoti);"
+
+# ==AUTO== Automatically translated
+msgid "the :ref:`sidecar <sidecar-files>` categories and suffixes;"
+msgstr "le categorie e i suffissi :ref:`sidecar <sidecar-files>`;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the display options (thumbnails and their size, sidecar column, sidecar "
+"filter, sort by date, history length) and the image options (viewer zoom,"
+" EXIF orientation, metadata panel, deletion);"
+msgstr ""
+"le opzioni di visualizzazione (miniature e loro dimensione, colonna "
+"sidecar, filtro sidecar, ordinamento per data, lunghezza delle "
+"cronologie) e le opzioni delle immagini (zoom del visualizzatore, "
+"orientamento EXIF, pannello dei metadati, eliminazione);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the histories (search, replacement, schema fields, sidecar filter) and "
+"the named saves;"
+msgstr ""
+"le cronologie (ricerca, sostituzione, campi dello schema, filtro sidecar)"
+" e i salvataggi con nome;"
+
+# ==AUTO== Automatically translated
+msgid "the last folder and the state of the option bar."
+msgstr "l'ultima cartella e lo stato della barra delle opzioni."
+
+# ==AUTO== Automatically translated
+msgid "Managing profiles"
+msgstr "Gestire i profili"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Profile** menu lists the profiles: choose one to switch to it.  It "
+"also offers:"
+msgstr ""
+"Il menu **Profilo** elenca i profili: sceglierne uno per passarvi.  "
+"Propone inoltre:"
+
+# ==AUTO== Automatically translated
+msgid "**New profile…** (**Ctrl+N**)"
+msgstr "**Nuovo profilo…** (**Ctrl+N**)"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with the default settings and switch to it."
+msgstr "Crea un profilo con le impostazioni predefinite e passa a esso."
+
+# ==AUTO== Automatically translated
+msgid "**Duplicate profile…** (**Ctrl+Shift+D**)"
+msgstr "**Duplica profilo…** (**Ctrl+Maiusc+D**)"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy."
+msgstr "Copia il profilo corrente con un nuovo nome e passa alla copia."
+
+# ==AUTO== Automatically translated
+msgid "**Rename profile…**"
+msgstr "**Rinomina profilo…**"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name."
+msgstr "Dà un nuovo nome al profilo corrente."
+
+# ==AUTO== Automatically translated
+msgid "**Delete profile…**"
+msgstr "**Elimina profilo…**"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings."
+msgstr "Elimina definitivamente un profilo e tutte le sue impostazioni."
+
+# ==AUTO== Automatically translated
+msgid "**Profile configuration…** (**Ctrl+,**)"
+msgstr "**Configurazione del profilo…** (**Ctrl+,**)"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile (see below)."
+msgstr "Configura il profilo corrente (vedere sotto)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
+"whose name starts with ``-`` is **hidden**: it is not listed in the menu "
+"and is never reopened at start-up, but it can be used with ``--profile``."
+"  At least one visible profile always exists: the last one can be neither"
+" deleted nor hidden, and ``default`` is created again if none is left.  "
+"Apart from that, ``default`` is a profile like any other."
+msgstr ""
+"I nomi dei profili possono contenere lettere, cifre, ``-`` e ``_``.  Un "
+"profilo il cui nome inizia con ``-`` è **nascosto**: non compare nel menu"
+" e non viene mai riaperto all'avvio, ma si può usare con ``--profile``.  "
+"Esiste sempre almeno un profilo visibile: l'ultimo non può essere né "
+"eliminato né nascosto, e ``default`` viene ricreato se non ne resta "
+"nessuno.  A parte questo, ``default`` è un profilo come gli altri."
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer reopens the last profile used.  ``--profile NAME`` selects "
+"another one, in the GUI as in headless mode."
+msgstr ""
+"PBRenamer riapre l'ultimo profilo usato.  ``--profile NAME`` ne sceglie "
+"un altro, nell'interfaccia grafica come in modalità senza interfaccia."
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "Configurazione del profilo"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…** has three tabs."
+msgstr "**Profilo → Configurazione del profilo…** ha tre schede."
+
+# ==AUTO== Automatically translated
+msgid "**Schema**"
+msgstr "**Schema**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Number of fields of the schema, the title of each field (shown above it "
+"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+msgstr ""
+"Il numero di campi dello schema, il titolo di ogni campo (mostrato sopra "
+"di esso nella scheda Schema) e il marcatore video (vedere :ref:`schema-"
+"mode`)."
+
+# ==AUTO== Automatically translated
+msgid "**Display**"
+msgstr "**Visualizzazione**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Thumbnails (shown or not, maximum width and height), the sidecar column "
+"and the sidecar content filter (shown or not), the extension of the "
+"sidecar created by a double-click, whether empty sidecar files are "
+"deleted when a folder is loaded, and the maximum number of entries kept "
+"in each history."
+msgstr ""
+"Le miniature (mostrate o no, larghezza e altezza massime), la colonna "
+"sidecar e il filtro sul contenuto dei sidecar (mostrati o no), "
+"l'estensione del sidecar creato con un doppio clic, se eliminare i "
+"sidecar vuoti al caricamento di una cartella, e il numero massimo di voci"
+" conservate in ogni cronologia."
+
+# ==AUTO== Automatically translated
+msgid "**Images**"
+msgstr "**Immagini**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
+"whether images are shown turned as their EXIF orientation says (also "
+"applies to the thumbnails).  Deletion: move deleted files to the trash "
+"instead of removing them permanently, ask for a confirmation, and the "
+"number of files above which the confirmation only gives their count."
+msgstr ""
+"Visualizzatore di immagini: passo dello zoom, zoom massimo, lato del "
+"pannello dei metadati e se mostrare le immagini ruotate secondo il loro "
+"orientamento EXIF (vale anche per le miniature).  Eliminazione: spostare "
+"i file eliminati nel cestino invece di cancellarli definitivamente, "
+"chiedere una conferma, e il numero di file oltre il quale la conferma ne "
+"indica solo il numero."
+
+# ==AUTO== Automatically translated
+msgid "Schema Mode"
+msgstr "Modalità schema"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Schema** tab sorts files into a folder tree built from a few "
+"fields, for instance a place, a year and a subject.  With the fields "
+"``Paris``, ``2024``, *(empty)*, ``Street``, *(empty)*, ``###`` and the "
+"destination ``~/Photos``, the file ``IMG_0012.jpg`` becomes::"
+msgstr ""
+"La scheda **Schema** ordina i file in un albero di cartelle costruito da "
+"pochi campi, per esempio un luogo, un anno e un soggetto.  Con i campi "
+"``Paris``, ``2024``, *(vuoto)*, ``Street``, *(vuoto)*, ``###`` e la "
+"destinazione ``~/Photos``, il file ``IMG_0012.jpg`` diventa::"
+
+# ==AUTO== Automatically translated
+msgid "The rules are:"
+msgstr "Le regole sono:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"every non-empty field, in order, is both a folder level under the "
+"destination and a part of the name, joined with ``_``;"
+msgstr ""
+"ogni campo non vuoto, nell'ordine, è sia un livello di cartella sotto la "
+"destinazione sia una parte del nome, unite con ``_``;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a field made only of ``#`` is the **counter**, padded to the number of "
+"``#``; at most one field may be a counter, and it is always placed at the"
+" end of the name;"
+msgstr ""
+"un campo composto solo da ``#`` è il **contatore**, completato con zeri "
+"fino al numero di ``#``; al massimo un campo può essere un contatore, ed "
+"è sempre posto alla fine del nome;"
+
+# ==AUTO== Automatically translated
+msgid "empty fields are skipped;"
+msgstr "i campi vuoti vengono saltati;"
+
+# ==AUTO== Automatically translated
+msgid "a field may not contain ``_``, ``.``, ``/`` or ``\\``;"
+msgstr "un campo non può contenere ``_``, ``.``, ``/`` o ``\\``;"
+
+# ==AUTO== Automatically translated
+msgid "the extension is kept, in lower case."
+msgstr "l'estensione viene mantenuta, in minuscolo."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The counter continues after the highest number already used in the target"
+" folder by files of the same name, so that a new batch never overwrites "
+"earlier ones.  With **Fill gaps** checked, it takes the smallest free "
+"numbers first.  Images and videos are numbered separately."
+msgstr ""
+"Il contatore riprende dopo il numero più alto già usato nella cartella di"
+" destinazione da file con lo stesso nome, così un nuovo blocco non "
+"sovrascrive mai i precedenti.  Con **Colma i vuoti** spuntato, prende "
+"prima i numeri liberi più piccoli.  Immagini e video sono numerati "
+"separatamente."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Each field keeps a history of its values (most recent first) in its drop-"
+"down list.  The history is updated when a rename or a renumbering "
+"succeeds."
+msgstr ""
+"Ogni campo conserva una cronologia dei suoi valori (i più recenti per "
+"primi) nel proprio elenco a discesa.  La cronologia viene aggiornata "
+"quando una rinomina o una rinumerazione riesce."
+
+# ==AUTO== Automatically translated
+msgid "Destination"
+msgstr "Destinazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Destination** field is the root of the folder tree.  It must be an "
+"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"renaming, and source folders left empty are removed."
+msgstr ""
+"Il campo **Destinazione** è la radice dell'albero di cartelle.  Deve "
+"essere un percorso assoluto; **Sfoglia…** permette di sceglierlo.  Le "
+"cartelle mancanti vengono create durante la rinomina, e le cartelle di "
+"origine rimaste vuote vengono eliminate."
+
+# ==AUTO== Automatically translated
+msgid "Video marker"
+msgstr "Marcatore video"
+
+# ==AUTO== Automatically translated
+msgid ""
+"A **video marker** (set in **Profile configuration…**, *Schema* tab) is a"
+" text added to the name of video files only, so that they are easy to "
+"tell apart: with the marker ``vid``, a video becomes "
+"``Paris_2024_Street_vid_001.mp4``. The small radio buttons between the "
+"fields choose where the marker goes, from before the first field to after"
+" the last one."
+msgstr ""
+"Un **marcatore video** (impostato in **Configurazione del profilo…**, "
+"scheda *Schema*) è un testo aggiunto solo al nome dei file video, per "
+"distinguerli facilmente: con il marcatore ``vid``, un video diventa "
+"``Paris_2024_Street_vid_001.mp4``.  I piccoli pulsanti di opzione tra i "
+"campi scelgono dove va il marcatore, da prima del primo campo a dopo "
+"l'ultimo."
+
+# ==AUTO== Automatically translated
+msgid "Sidecars in schema mode"
+msgstr "Sidecar in modalità schema"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sidecar mode is always on in the Schema tab: each sidecar follows its "
+"base file and takes its new name.  A sidecar without a base file (an "
+"*orphan*) is neither renamed nor renumbered; its preview reads *orphan "
+"sidecar, not renamed*.  **Images → Orphan sidecars…** lists them (see "
+":ref:`image-tools`)."
+msgstr ""
+"Nella scheda Schema la modalità sidecar è sempre attiva: ogni sidecar "
+"segue il proprio file principale e ne prende il nuovo nome.  Un sidecar "
+"senza file principale (un *orfano*) non viene né rinominato né "
+"rinumerato; la sua anteprima indica *sidecar orfano, non rinominato*.  "
+"**Immagini → Sidecar orfani…** li elenca (vedere :ref:`image-tools`)."
+
+# ==AUTO== Automatically translated
+msgid "Renumber"
+msgstr "Rinumera"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the schema has a counter, the **Renumber** button renumbers the "
+"selected files (every listed file if none is selected) from 1, in place, "
+"without moving them.  Like **Rename**, it is only enabled when a preview "
+"is displayed.  Files are renamed through temporary names, so swapping "
+"numbers is safe."
+msgstr ""
+"Quando lo schema ha un contatore, il pulsante **Rinumera** rinumera da 1,"
+" sul posto e senza spostarli, i file selezionati (tutti i file elencati "
+"se non c'è selezione).  Come **Rinomina**, è attivo solo quando è "
+"mostrata un'anteprima.  I file vengono rinominati tramite nomi "
+"temporanei, quindi scambiare i numeri è sicuro."
+
+# ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Modello"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → Template** fills the schema from the name of the selected file"
+" and up to three of its parent folders: the parts of the name found in a "
+"field's history go to that field, and a trailing number goes to the "
+"counter field.  A dialog shows the proposed fields before they are filled"
+" in."
+msgstr ""
+"**Immagini → Modello** compila lo schema a partire dal nome del file "
+"selezionato e da un massimo di tre delle sue cartelle superiori: le parti"
+" del nome presenti nella cronologia di un campo vanno in quel campo, e un"
+" numero finale va nel campo contatore.  Una finestra mostra i campi "
+"proposti prima di compilarli."
+
+# ==AUTO== Automatically translated
+msgid ""
+"In headless mode, the same schema is given with ``--schema``, for "
+"instance ``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (see :ref"
+":`cli-reference`)."
+msgstr ""
+"In modalità senza interfaccia, lo stesso schema si indica con "
+"``--schema``, per esempio ``--schema 'Paris,2024,,Street,,###' --dest "
+"~/Photos`` (vedere :ref:`cli-reference`)."
+
+# ==AUTO== Automatically translated
+msgid "Image Tools"
+msgstr "Strumenti per le immagini"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer includes tools to look at and tidy up photos and videos before "
+"sorting them.  Some depend on optional libraries (see :ref:`optional-"
+"dependencies`); an action that cannot work is disabled."
+msgstr ""
+"PBRenamer include strumenti per esaminare e riordinare foto e video prima"
+" di ordinarli.  Alcuni dipendono da librerie facoltative (vedere :ref"
+":`optional-dependencies`); un'azione che non può funzionare è "
+"disattivata."
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "Miniature"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Thumbnails** checkbox of the option bar adds a thumbnail column to "
+"the file list.  Thumbnails are loaded in the background, visible rows "
+"first. Their maximum size is set in **Profile configuration…**, *Display*"
+" tab. Double-clicking a thumbnail opens the image in the viewer; double-"
+"clicking a name opens the file with its default application."
+msgstr ""
+"La casella **Miniature** della barra delle opzioni aggiunge all'elenco "
+"dei file una colonna di miniature.  Le miniature vengono caricate in "
+"background, prima le righe visibili.  La loro dimensione massima si "
+"imposta in **Configurazione del profilo…**, scheda *Visualizzazione*.  Un"
+" doppio clic su una miniatura apre l'immagine nel visualizzatore; un "
+"doppio clic su un nome apre il file con la sua applicazione predefinita."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar column"
+msgstr "Colonna sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, the **Sidecar** column shows "
+"whether a file has sidecars: ``●`` followed by their suffixes, or ``○`` "
+"for an image, video or audio file without any.  Double-clicking it opens "
+"the sidecar (a menu lets you choose when there are several).  On a file "
+"without a sidecar, it creates an empty one with the extension set in the "
+"profile (for instance ``xmp``) and opens it."
+msgstr ""
+"Quando è attivata in **Configurazione del profilo…**, la colonna "
+"**Sidecar** indica se un file ha dei sidecar: ``●`` seguito dai loro "
+"suffissi, oppure ``○`` per un'immagine, un video o un file audio che non "
+"ne ha.  Un doppio clic nella colonna apre il sidecar (un menu permette di"
+" scegliere se ce ne sono diversi).  Su un file senza sidecar, ne crea uno"
+" vuoto con l'estensione impostata nel profilo (per esempio ``xmp``) e lo "
+"apre."
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Filtro sidecar"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled in **Profile configuration…**, a **Sidecar filter…** field "
+"appears in the action bar.  Type a regular expression: only the files "
+"having a sidecar whose content matches it remain listed (case-"
+"insensitive, across lines), together with their sidecars.  The list is "
+"filtered as you type; **Enter** also adds the expression to the filter's "
+"own history.  Empty the field to list every file again."
+msgstr ""
+"Quando è attivato in **Configurazione del profilo…**, nella barra delle "
+"azioni compare un campo **Filtro sidecar…**.  Digitare un'espressione "
+"regolare: restano elencati solo i file che hanno un sidecar il cui "
+"contenuto le corrisponde (senza distinguere maiuscole e minuscole, su più"
+" righe), insieme ai loro sidecar.  L'elenco viene filtrato durante la "
+"digitazione; **Invio** aggiunge inoltre l'espressione alla cronologia "
+"propria del filtro.  Svuotare il campo per elencare di nuovo tutti i "
+"file."
+
+# ==AUTO== Automatically translated
+msgid "The Images menu"
+msgstr "Il menu Immagini"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Images** menu is also the context menu of the file list.  Its "
+"actions apply to the selected files:"
+msgstr ""
+"Il menu **Immagini** è anche il menu contestuale dell'elenco dei file.  "
+"Le sue azioni si applicano ai file selezionati:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Apri** (**Ctrl+Invio**)"
+
+# ==AUTO== Automatically translated
+msgid "Open the files with their default application."
+msgstr "Apre i file con la loro applicazione predefinita."
+
+# ==AUTO== Automatically translated
+msgid "**Open with…** (**Ctrl+Shift+O**)"
+msgstr "**Apri con…** (**Ctrl+Maiusc+O**)"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the file."
+msgstr "Sceglie l'applicazione che apre il file."
+
+# ==AUTO== Automatically translated
+msgid "**Open sidecar**"
+msgstr "**Apri sidecar**"
+
+# ==AUTO== Automatically translated
+msgid "Open one of the sidecars of the file."
+msgstr "Apre uno dei sidecar del file."
+
+# ==AUTO== Automatically translated
+msgid "**View** (**Enter**)"
+msgstr "**Visualizza** (**Invio**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer."
+msgstr "Mostra le immagini e i video selezionati nel visualizzatore di immagini."
+
+# ==AUTO== Automatically translated
+msgid "**Template**"
+msgstr "**Modello**"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name (see :ref:`schema-mode`)."
+msgstr "Compila lo schema a partire dal nome del file (vedere :ref:`schema-mode`)."
+
+# ==AUTO== Automatically translated
+msgid "**Delete** (**Del**)"
+msgstr "**Elimina** (**Canc**)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delete the files and their sidecars, to the trash or permanently, after a"
+" confirmation, as set in the profile."
+msgstr ""
+"Elimina i file e i loro sidecar, nel cestino o definitivamente, dopo una "
+"conferma, secondo le impostazioni del profilo."
+
+# ==AUTO== Automatically translated
+msgid "**Orphan sidecars…**"
+msgstr "**Sidecar orfani…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"List the sidecar files of the folder that have no base file, then delete "
+"the selected ones or all of them."
+msgstr ""
+"Elenca i file sidecar della cartella che non hanno un file principale, "
+"poi elimina quelli selezionati o tutti."
+
+# ==AUTO== Automatically translated
+msgid "**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)"
+msgstr ""
+"**Ruota di 90° a sinistra / 180° / 90° a destra** (**F6** / **F7** / "
+"**F8**)"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the images without loss."
+msgstr "Ruota le immagini senza perdita."
+
+# ==AUTO== Automatically translated
+msgid "**Apply EXIF orientation** (**F9**)"
+msgstr "**Applica orientamento EXIF** (**F9**)"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation tag says, then reset the tag."
+msgstr "Ruota i pixel come indica il tag di orientamento EXIF, poi azzera il tag."
+
+# ==AUTO== Automatically translated
+msgid "**Force EXIF orientation to 0°** (**F10**)"
+msgstr "**Forza orientamento EXIF a 0°** (**F10**)"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to normal without rotating the pixels."
+msgstr "Imposta il tag di orientamento EXIF su normale senza ruotare i pixel."
+
+# ==AUTO== Automatically translated
+msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
+msgstr "**Informazioni** (**Ctrl+I**) e **Aggiorna** (**F5**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the file information window; read the folder again."
+msgstr "Mostra la finestra delle informazioni sul file; rilegge la cartella."
+
+# ==AUTO== Automatically translated
+msgid "Rotation and EXIF orientation"
+msgstr "Rotazione e orientamento EXIF"
+
+# ==AUTO== Automatically translated
+msgid ""
+"JPEG files are rotated with ``jpegtran`` (from libjpeg-turbo), which "
+"turns them without recompressing; other formats are saved by Pillow, "
+"without loss where the format allows it.  Rotations and EXIF resets can "
+"be undone with **Undo**."
+msgstr ""
+"I file JPEG vengono ruotati con ``jpegtran`` (di libjpeg-turbo), che li "
+"ruota senza ricomprimerli; gli altri formati vengono salvati da Pillow, "
+"senza perdita quando il formato lo consente.  Le rotazioni e gli "
+"azzeramenti dell'orientamento EXIF si possono annullare con **Annulla**."
+
+# ==AUTO== Automatically translated
+msgid "The image viewer"
+msgstr "Il visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Images → View** opens the image viewer on the selected images and "
+"videos (a video is shown as a placeholder).  The viewer follows the "
+"selection of the file list.  It offers:"
+msgstr ""
+"**Immagini → Visualizza** apre il visualizzatore sulle immagini e sui "
+"video selezionati (un video è rappresentato da un'immagine segnaposto).  "
+"Il visualizzatore segue la selezione dell'elenco dei file.  Offre:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"zoom modes in the toolbar: fit window (**0** or **X**), actual size "
+"(**1** or **Z**), fit width (**W**), fit height (**H**), and zoom in and "
+"out (**+** and **−**); drag to pan, double-click to centre on a point, "
+"**Ctrl+click** and **Ctrl+right-click** to zoom on a point;"
+msgstr ""
+"modalità di zoom nella barra degli strumenti: adatta alla finestra (**0**"
+" o **X**), dimensione reale (**1** o **Z**), adatta alla larghezza "
+"(**W**), adatta all'altezza (**H**), ingrandisci e riduci (**+** e "
+"**−**); trascinare per spostare l'immagine, doppio clic per centrare su "
+"un punto, **Ctrl+clic** e **Ctrl+clic destro** per zoomare su un punto;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"navigation with the arrow keys: within the selection when several files "
+"are selected, otherwise to the previous or next file of the list; a "
+"toolbar button switches between linear navigation (stop at the ends) and "
+"circular navigation (wrap around);"
+msgstr ""
+"la navigazione con le frecce: all'interno della selezione quando sono "
+"selezionati più file, altrimenti verso il file precedente o successivo "
+"dell'elenco; un pulsante della barra degli strumenti alterna tra "
+"navigazione lineare (si ferma alle estremità) e navigazione circolare "
+"(riparte dall'inizio);"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a strip of thumbnails of the selection, when several files are selected: "
+"click one to show it;"
+msgstr ""
+"una striscia di miniature della selezione, quando sono selezionati più "
+"file: fare clic su una per mostrarla;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the "
+"image; double-click a field to insert it into the replacement pattern;"
+msgstr ""
+"un pannello dei metadati (**I**) che mostra i dati EXIF, IPTC e XMP "
+"dell'immagine; fare doppio clic su un campo per inserirlo nel pattern di "
+"sostituzione;"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the image actions: open, open with, delete, rotations and EXIF "
+"orientation, with the same shortcuts as in the main window; **Esc** "
+"closes the viewer."
+msgstr ""
+"le azioni sulle immagini: apri, apri con, elimina, rotazioni e "
+"orientamento EXIF, con le stesse scorciatoie della finestra principale; "
+"**Esc** chiude il visualizzatore."
+
+# ==AUTO== Automatically translated
+msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."
+msgstr ""
+"L'elenco completo si trova in **Guida → Scorciatoie da tastiera e "
+"mouse…** (**F1**)."
+
+# ==AUTO== Automatically translated
+msgid "Settings"
+msgstr "Impostazioni"
+
+# ==AUTO== Automatically translated
+msgid "**Edit → Settings…** holds the options shared by every profile."
+msgstr ""
+"**Modifica → Impostazioni…** raccoglie le opzioni comuni a tutti i "
+"profili."
+
+# ==AUTO== Automatically translated
+msgid "*General* tab:"
+msgstr "Scheda *Generale*:"
+
+# ==AUTO== Automatically translated
+msgid "**Language**"
+msgstr "**Lingua**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Select the UI language.  Several languages are bundled; the change takes "
+"effect at the next start."
+msgstr ""
+"Sceglie la lingua dell'interfaccia.  Sono incluse diverse lingue; la "
+"modifica ha effetto al successivo avvio."
+
+# ==AUTO== Automatically translated
+msgid "**Log level**"
+msgstr "**Livello di log**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Controls diagnostic output written to the console.  Choices: ``DEBUG``, "
+"``INFO`` (default), ``WARNING``, ``ERROR``, ``CRITICAL``.  Can be "
+"overridden at launch with ``--debug``, ``--verbose``, or ``--quiet``."
+msgstr ""
+"Regola i messaggi di diagnostica scritti nella console.  Scelte: "
+"``DEBUG``, ``INFO`` (predefinito), ``WARNING``, ``ERROR``, ``CRITICAL``."
+"  Può essere sostituito all'avvio con ``--debug``, ``--verbose`` o "
+"``--quiet``."
+
+# ==AUTO== Automatically translated
+msgid "**Restore last opened directory** *(Behaviour group)*"
+msgstr "**Ripristina l'ultima directory aperta** *(gruppo Comportamento)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the app reopens the directory that was active in the "
+"previous session of the profile.  A directory passed on the command line "
+"always takes priority.  Default: disabled (current working directory is "
+"used)."
+msgstr ""
+"Se attivata, l'applicazione riapre la cartella attiva nella sessione "
+"precedente del profilo.  Una cartella passata sulla riga di comando ha "
+"sempre la precedenza.  Predefinito: disattivato (viene usata la cartella "
+"di lavoro corrente)."
+
+# ==AUTO== Automatically translated
+msgid "**Restore toolbar state** *(Behaviour group)*"
+msgstr "**Ripristina stato della barra degli strumenti** *(gruppo Comportamento)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When enabled, the options of the option bar and of the Pattern tab are "
+"restored as they were left."
+msgstr ""
+"Se attivata, le opzioni della barra delle opzioni e della scheda Pattern "
+"vengono ripristinate come erano state lasciate."
+
+# ==AUTO== Automatically translated
+msgid "**Auto-preview delay** *(Behaviour group)*"
+msgstr "**Ritardo anteprima automatica** *(gruppo Comportamento)*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Delay, in milliseconds, before the preview is recomputed when **Auto-"
+"preview** is checked."
+msgstr ""
+"Ritardo, in millisecondi, prima del ricalcolo dell'anteprima quando "
+"**Anteprima automatica** è spuntata."
+
+# ==AUTO== Automatically translated
+msgid ""
+"*Extension Normalization* tab: the table used by the *Normalize "
+"extension* mode (see :ref:`extension-mode`)."
+msgstr ""
+"Scheda *Normalizzazione estensioni*: la tabella usata dalla modalità "
+"*Normalizza estensione* (vedere :ref:`extension-mode`)."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The settings of a profile are in **Profile → Profile configuration…** "
+"(see :ref:`profiles`)."
+msgstr ""
+"Le impostazioni di un profilo si trovano in **Profilo → Configurazione "
+"del profilo…** (vedere :ref:`profiles`)."
+
+# ==AUTO== Automatically translated
+msgid "Configuration Files"
+msgstr "File di configurazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Everything the Settings dialog and other panels persist — preferences, "
+"profiles, presets, and per-feature configuration — is stored as plain-"
+"text files (Qt INI and JSON) under a single per-user configuration "
+"directory.  No system directories or registry keys are touched."
+msgstr ""
+"Tutto ciò che la finestra delle impostazioni e gli altri pannelli "
+"conservano (preferenze, profili, salvataggi e configurazione delle "
+"singole funzioni) è memorizzato in file di testo (INI di Qt e JSON) in "
+"un'unica cartella di configurazione per utente.  Non viene toccata "
+"nessuna cartella di sistema né alcuna chiave di registro."
+
+# ==AUTO== Automatically translated
+msgid "Default location"
+msgstr "Posizione predefinita"
+
+# ==AUTO== Automatically translated
+msgid "Platform"
+msgstr "Piattaforma"
+
+# ==AUTO== Automatically translated
+msgid "Default directory"
+msgstr "Cartella predefinita"
+
+# ==AUTO== Automatically translated
+msgid "Linux"
+msgstr "Linux"
+
+# ==AUTO== Automatically translated
+msgid "``$XDG_CONFIG_HOME/pbrenamer`` (usually ``~/.config/pbrenamer``)"
+msgstr "``$XDG_CONFIG_HOME/pbrenamer`` (di solito ``~/.config/pbrenamer``)"
+
+# ==AUTO== Automatically translated
+msgid "macOS"
+msgstr "macOS"
+
+msgid "``~/Library/Preferences/pbrenamer``"
+msgstr "``~/Library/Preferences/pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid "Windows"
+msgstr "Windows"
+
+msgid "``%APPDATA%\\pbrenamer``"
+msgstr "``%APPDATA%\\pbrenamer``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override with ``--config-dir DIR`` (see :ref:`cli-reference`) to point at"
+" a different directory — useful for testing or for running several "
+"isolated configurations side by side."
+msgstr ""
+"``--config-dir DIR`` (vedere :ref:`cli-reference`) indica un'altra "
+"cartella, utile per i test o per usare più configurazioni isolate in "
+"parallelo."
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "File"
+
+# ==AUTO== Automatically translated
+msgid "Shared by every profile:"
+msgstr "Comuni a tutti i profili:"
+
+msgid "``pbrenamer.conf``"
+msgstr "``pbrenamer.conf``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Qt INI settings: log level, language override, behaviour options, preview"
+" delay, last profile, image viewer options."
+msgstr ""
+"Impostazioni INI di Qt: livello di log, lingua scelta, opzioni di "
+"comportamento, ritardo dell'anteprima, ultimo profilo, opzioni del "
+"visualizzatore di immagini."
+
+msgid "``shortcuts.json``"
+msgstr "``shortcuts.json``"
+
+# ==AUTO== Automatically translated
+msgid "User-defined directory shortcuts (**Shortcuts** menu)."
+msgstr "Scorciatoie personali alle cartelle (menu **Scorciatoie**)."
+
+msgid "``extension_normalization.json``"
+msgstr "``extension_normalization.json``"
+
+# ==AUTO== Automatically translated
+msgid "Per-extension normalization table used by extension mode ``normalize``."
+msgstr ""
+"Tabella di normalizzazione delle estensioni usata dalla modalità "
+"estensione ``normalize``."
+
+msgid "``open_with.json``"
+msgstr "``open_with.json``"
+
+# ==AUTO== Automatically translated
+msgid "Applications recently chosen with **Open with…**."
+msgstr "Applicazioni scelte di recente con **Apri con…**."
+
+msgid "``window_state.json``"
+msgstr "``window_state.json``"
+
+# ==AUTO== Automatically translated
+msgid "Main window geometry, position, and splitter ratios."
+msgstr ""
+"Dimensione, posizione e proporzioni dei divisori della finestra "
+"principale."
+
+# ==AUTO== Automatically translated
+msgid "One folder per profile, ``profiles/NAME/``:"
+msgstr "Una cartella per profilo, ``profiles/NAME/``:"
+
+msgid "``profile.json``"
+msgstr "``profile.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Tab shown at start-up, Schema tab settings, display and image options, "
+"last directory, option bar state."
+msgstr ""
+"Scheda mostrata all'avvio, impostazioni della scheda Schema, opzioni di "
+"visualizzazione e delle immagini, ultima cartella, stato della barra "
+"delle opzioni."
+
+msgid "``history.json``"
+msgstr "``history.json``"
+
+# ==AUTO== Automatically translated
+msgid "Histories of the schema fields and of the sidecar filter."
+msgstr "Cronologie dei campi dello schema e del filtro sidecar."
+
+msgid "``sidecar_config.json``"
+msgstr "``sidecar_config.json``"
+
+# ==AUTO== Automatically translated
+msgid ""
+":ref:`Sidecar file <sidecar-files>` category configuration (base "
+"extensions / sidecar suffixes per category), managed from **Edit → "
+"Sidecar Files…**."
+msgstr ""
+"Configurazione delle categorie dei :ref:`file sidecar <sidecar-files>` "
+"(estensioni principali e suffissi sidecar per categoria), gestita da "
+"**Modifica → File sidecar…**."
+
+msgid "``patterns/search.json`` / ``patterns/replace.json``"
+msgstr "``patterns/search.json`` / ``patterns/replace.json``"
+
+# ==AUTO== Automatically translated
+msgid "Most-recently-used search and replacement patterns."
+msgstr "Pattern di ricerca e di sostituzione usati più di recente."
+
+msgid "``patterns/saves.json``"
+msgstr "``patterns/saves.json``"
+
+# ==AUTO== Automatically translated
+msgid "Named saves, also loadable headlessly with ``--saved NAME``."
+msgstr ""
+"Salvataggi con nome, caricabili anche senza interfaccia con ``--saved "
+"NAME``."
+
+# ==AUTO== Automatically translated
+msgid ""
+"None of these files are required to exist — deleting any one of them "
+"simply resets that piece of state to its default the next time PBRenamer "
+"starts. Deleting the ``profiles`` folder recreates the profiles from the "
+"1.x configuration and PBPicat's catalogues, as on the first start of "
+"version 2."
+msgstr ""
+"Nessuno di questi file è obbligatorio: eliminarne uno riporta "
+"semplicemente l'elemento corrispondente al valore predefinito al "
+"successivo avvio di PBRenamer.  Eliminare la cartella ``profiles`` ricrea"
+" i profili dalla configurazione 1.x e dai cataloghi di PBPicat, come al "
+"primo avvio della versione 2."
+
+# ==AUTO== Automatically translated
+msgid "Migrating from PBPicat"
+msgstr "Migrare da PBPicat"
+
+# ==AUTO== Automatically translated
+msgid ""
+"PBRenamer 2 includes every function of PBPicat, which it replaces: the "
+"schema, the destination tree, renumbering, the video marker, the image "
+"viewer, rotations, the sidecar tools and the catalogues."
+msgstr ""
+"PBRenamer 2 include tutte le funzioni di PBPicat, che sostituisce: lo "
+"schema, l'albero di destinazione, la rinumerazione, il marcatore video, "
+"il visualizzatore di immagini, le rotazioni, gli strumenti sidecar e i "
+"cataloghi."
+
+# ==AUTO== Automatically translated
+msgid "Automatic import"
+msgstr "Importazione automatica"
+
+# ==AUTO== Automatically translated
+msgid ""
+"On its first start, PBRenamer 2 reads PBPicat's configuration (without "
+"modifying it) and turns each **catalogue** into a **profile** of the same"
+" name, or ``pbpicat-NAME`` if a profile already has that name.  The "
+"imported profile opens on the Schema tab with thumbnails, the sidecar "
+"column and the sidecar filter, and keeps:"
+msgstr ""
+"Al primo avvio, PBRenamer 2 legge la configurazione di PBPicat (senza "
+"modificarla) e trasforma ogni **catalogo** in un **profilo** con lo "
+"stesso nome, oppure ``pbpicat-NAME`` se esiste già un profilo con quel "
+"nome.  Il profilo importato si apre sulla scheda Schema con le miniature,"
+" la colonna sidecar e il filtro sidecar, e conserva:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"the number and titles of the schema fields, the destination, the video "
+"marker and its position, fill gaps;"
+msgstr ""
+"il numero e i titoli dei campi dello schema, la destinazione, il "
+"marcatore video e la sua posizione, colmare i vuoti;"
+
+# ==AUTO== Automatically translated
+msgid "the image and video extensions and the sidecar extensions;"
+msgstr "le estensioni di immagini e video e le estensioni dei sidecar;"
+
+# ==AUTO== Automatically translated
+msgid "the display, viewer and deletion options;"
+msgstr "le opzioni di visualizzazione, del visualizzatore e di eliminazione;"
+
+# ==AUTO== Automatically translated
+msgid "the field histories and the last folder."
+msgstr "le cronologie dei campi e l'ultima cartella."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Open with** application lists and the viewer's navigation and "
+"metadata panel options are imported too.  Window sizes, the language and "
+"PBPicat's defaults for new catalogues are not.  The settings of PBRenamer"
+" 1.x go to the ``default`` profile."
+msgstr ""
+"Vengono importati anche gli elenchi di applicazioni di **Apri con** e le "
+"opzioni di navigazione e del pannello dei metadati del visualizzatore.  "
+"Non vengono importati le dimensioni delle finestre, la lingua e i valori "
+"predefiniti di PBPicat per i nuovi cataloghi.  Le impostazioni di "
+"PBRenamer 1.x vanno nel profilo ``default``."
+
+# ==AUTO== Automatically translated
+msgid "Where things are now"
+msgstr "Dove si trovano ora le funzioni"
+
+# ==AUTO== Automatically translated
+msgid "PBPicat"
+msgstr "PBPicat"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer 2"
+msgstr "PBRenamer 2"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue, catalogue menu"
+msgstr "Catalogo, menu dei cataloghi"
+
+# ==AUTO== Automatically translated
+msgid "Profile, **Profile** menu"
+msgstr "Profilo, menu **Profilo**"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue settings, program settings"
+msgstr "Impostazioni del catalogo, impostazioni del programma"
+
+# ==AUTO== Automatically translated
+msgid "**Profile → Profile configuration…**, **Edit → Settings…**"
+msgstr "**Profilo → Configurazione del profilo…**, **Modifica → Impostazioni…**"
+
+# ==AUTO== Automatically translated
+msgid "Schema fields, destination, video marker buttons"
+msgstr "Campi dello schema, destinazione, pulsanti del marcatore video"
+
+# ==AUTO== Automatically translated
+msgid "**Schema** tab"
+msgstr "Scheda **Schema**"
+
+# ==AUTO== Automatically translated
+msgid "*Rename All* / *Rename selection*"
+msgstr "*Rename All* / *Rename selection*"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** (the selection, or every listed file when none is selected), "
+"after a preview"
+msgstr ""
+"**Rinomina** (la selezione, o tutti i file elencati se non c'è "
+"selezione), dopo un'anteprima"
+
+# ==AUTO== Automatically translated
+msgid "*Renumber from 1*"
+msgstr "*Renumber from 1*"
+
+# ==AUTO== Automatically translated
+msgid "**Renumber** (Schema tab with a counter field)"
+msgstr "**Rinumera** (scheda Schema con un campo contatore)"
+
+# ==AUTO== Automatically translated
+msgid "Tooltip preview of the new name"
+msgstr "Anteprima del nuovo nome nel suggerimento"
+
+# ==AUTO== Automatically translated
+msgid "**Preview** column"
+msgstr "Colonna **Anteprima**"
+
+# ==AUTO== Automatically translated
+msgid "Rotations, EXIF, open, open with, delete, template, orphan sidecars"
+msgstr "Rotazioni, EXIF, apri, apri con, elimina, modello, sidecar orfani"
+
+# ==AUTO== Automatically translated
+msgid "**Images** menu and context menu of the file list"
+msgstr "Menu **Immagini** e menu contestuale dell'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "Visualizzatore di immagini"
+
+# ==AUTO== Automatically translated
+msgid "**Images → View** (**Enter**)"
+msgstr "**Immagini → Visualizza** (**Invio**)"
+
+# ==AUTO== Automatically translated
+msgid "Catalogue on the command line"
+msgstr "Catalogo sulla riga di comando"
+
+msgid "``pbrenamer --profile NAME``"
+msgstr "``pbrenamer --profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid "What changes"
+msgstr "Cosa cambia"
+
+# ==AUTO== Automatically translated
+msgid ""
+"There is no ``pbpicat`` command: start ``pbrenamer``, or ``pbrenamer "
+"--profile NAME`` for a given profile."
+msgstr ""
+"Non esiste il comando ``pbpicat``: avviare ``pbrenamer``, oppure "
+"``pbrenamer --profile NAME`` per un dato profilo."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Rename** and **Renumber** apply what the Preview column shows: compute "
+"the preview first (or check **Auto-preview**)."
+msgstr ""
+"**Rinomina** e **Rinumera** applicano ciò che mostra la colonna "
+"Anteprima: calcolare prima l'anteprima (o spuntare **Anteprima "
+"automatica**)."
+
+# ==AUTO== Automatically translated
+msgid "A sidecar without a base file is not renamed in schema mode."
+msgstr "In modalità schema, un sidecar senza file principale non viene rinominato."
+
+# ==AUTO== Automatically translated
+msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgstr ""
+"Ogni rinomina si può annullare con **Annulla**, come le rotazioni e gli "
+"azzeramenti EXIF."
+
+# ==AUTO== Automatically translated
+msgid "Schemas can also be applied without the GUI, with ``--schema``."
+msgstr "Gli schemi si possono applicare anche senza interfaccia, con ``--schema``."
+
+# ==AUTO== Automatically translated
+msgid "Search Patterns"
+msgstr "Pattern di ricerca"
+
+# ==AUTO== Automatically translated
+msgid "Pattern mode"
+msgstr "Modalità pattern"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Tokens act as typed wildcards.  Segments matched by numbered tokens are "
+"*captured* and available in the replacement as ``{1}``, ``{2}``, etc."
+msgstr ""
+"I token funzionano come caratteri jolly tipizzati.  I segmenti "
+"riconosciuti dai token numerati vengono *catturati* e sono disponibili "
+"nella sostituzione come ``{1}``, ``{2}`` e così via."
+
+# ==AUTO== Automatically translated
+msgid "Token"
+msgstr "Token"
+
+# ==AUTO== Automatically translated
+msgid "Matches"
+msgstr "Corrisponde a"
+
+#, python-brace-format
+msgid "``{#}``"
+msgstr "``{#}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits (0–9)"
+msgstr "Una o più cifre (0–9)"
+
+#, python-brace-format
+msgid "``{L}``"
+msgstr "``{L}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more letters (a–z, A–Z)"
+msgstr "Una o più lettere (a–z, A–Z)"
+
+#, python-brace-format
+msgid "``{C}``"
+msgstr "``{C}``"
+
+# ==AUTO== Automatically translated
+msgid "One or more non-whitespace characters"
+msgstr "Uno o più caratteri diversi da spazi"
+
+#, python-brace-format
+msgid "``{X}``"
+msgstr "``{X}``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence of characters, including empty"
+msgstr "Qualsiasi sequenza di caratteri, anche vuota"
+
+#, python-brace-format
+msgid "``{@}``"
+msgstr "``{@}``"
+
+# ==AUTO== Automatically translated
+msgid "Trash — matches and discards a segment (not captured)"
+msgstr "Cestino: riconosce e scarta un segmento (non catturato)"
+
+#, python-brace-format
+msgid "``{1}``, ``{2}``…"
+msgstr "``{1}``, ``{2}``…"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Capture group — the matched text is bound to ``{1}``, ``{2}``… in the "
+"replacement"
+msgstr ""
+"Gruppo di cattura: il testo riconosciuto è associato a ``{1}``, ``{2}``… "
+"nella sostituzione"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — swap two parts separated by an ignored middle segment:"
+msgstr ""
+"**Esempio**: scambiare due parti separate da un segmento centrale "
+"ignorato:"
+
+# ==AUTO== Automatically translated
+msgid "Search"
+msgstr "Cerca"
+
+# ==AUTO== Automatically translated
+msgid "Replace"
+msgstr "Sostituisci"
+
+# ==AUTO== Automatically translated
+msgid "Result"
+msgstr "Risultato"
+
+#, python-brace-format
+msgid "``{1}_{@}_{2}``"
+msgstr "``{1}_{@}_{2}``"
+
+#, python-brace-format
+msgid "``{2}_{1}``"
+msgstr "``{2}_{1}``"
+
+# ==AUTO== Automatically translated
+msgid "photo_trash_holiday → holiday_photo"
+msgstr "photo_trash_holiday → holiday_photo"
+
+# ==AUTO== Automatically translated
+msgid "Regular expression mode"
+msgstr "Modalità espressione regolare"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Full Python ``re``-module syntax.  The match is applied to the file stem "
+"(or full name if the extension mode is *Modify extension*)."
+msgstr ""
+"Sintassi completa del modulo ``re`` di Python.  La corrispondenza si "
+"applica alla radice del file (o al nome completo se la modalità "
+"estensione è *Modifica estensione*)."
+
+# ==AUTO== Automatically translated
+msgid "Syntax"
+msgstr "Sintassi"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "Descrizione"
+
+msgid "``.``"
+msgstr "``.``"
+
+# ==AUTO== Automatically translated
+msgid "Any single character"
+msgstr "Qualsiasi carattere"
+
+msgid "``.*`` / ``.+``"
+msgstr "``.*`` / ``.+``"
+
+# ==AUTO== Automatically translated
+msgid "Any sequence (greedy); non-empty variant"
+msgstr "Qualsiasi sequenza (avida); variante non vuota"
+
+msgid "``\\\\d+``"
+msgstr "``\\\\d+``"
+
+# ==AUTO== Automatically translated
+msgid "One or more digits"
+msgstr "Una o più cifre"
+
+msgid "``\\\\w+``"
+msgstr "``\\\\w+``"
+
+# ==AUTO== Automatically translated
+msgid "Word characters (letters, digits, ``_``)"
+msgstr "Caratteri di parola (lettere, cifre, ``_``)"
+
+msgid "``(…)``"
+msgstr "``(…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Numbered capture group → ``{1}``, ``{2}``… in replacement"
+msgstr "Gruppo di cattura numerato → ``{1}``, ``{2}``… nella sostituzione"
+
+msgid "``(?P<name>…)``"
+msgstr "``(?P<name>…)``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Named capture group → ``{re:name}`` in replacement"
+msgstr "Gruppo di cattura con nome → ``{re:name}`` nella sostituzione"
+
+msgid "``(?i)``"
+msgstr "``(?i)``"
+
+# ==AUTO== Automatically translated
+msgid "Case-insensitive flag"
+msgstr "Opzione per ignorare maiuscole e minuscole"
+
+msgid "``^`` / ``$``"
+msgstr "``^`` / ``$``"
+
+# ==AUTO== Automatically translated
+msgid "Start / end of the name"
+msgstr "Inizio / fine del nome"
+
+# ==AUTO== Automatically translated
+msgid "**Example** — reformat an ISO date:"
+msgstr "**Esempio**: riformattare una data ISO:"
+
+#, python-brace-format
+msgid "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+msgstr "``(\\\\d{4})-(\\\\d{2})-(\\\\d{2})``"
+
+#, python-brace-format
+msgid "``{3}/{2}/{1}``"
+msgstr "``{3}/{2}/{1}``"
+
+msgid "2024-06-15 → 15/06/2024"
+msgstr "2024-06-15 → 15/06/2024"
+
+# ==AUTO== Automatically translated
+msgid "Plain text mode"
+msgstr "Modalità testo semplice"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The search field is matched as a literal string — no wildcards, no "
+"special characters.  Every occurrence of the exact text in the file name "
+"is replaced."
+msgstr ""
+"Il campo di ricerca viene confrontato come stringa letterale, senza "
+"caratteri jolly né caratteri speciali.  Ogni occorrenza del testo esatto "
+"nel nome del file viene sostituita."
+
+# ==AUTO== Automatically translated
+msgid "**Example:**"
+msgstr "**Esempio:**"
+
+msgid "``IMG_``"
+msgstr "``IMG_``"
+
+msgid "``photo_``"
+msgstr "``photo_``"
+
+# ==AUTO== Automatically translated
+msgid "IMG_0042 → photo_0042"
+msgstr "IMG_0042 → photo_0042"
+
+# ==AUTO== Automatically translated
+msgid "Replacement Fields"
+msgstr "Campi di sostituzione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The replacement string syntax is the same regardless of the search mode. "
+"Fields are written ``{name}`` and accept optional formatting options::"
+msgstr ""
+"La sintassi della stringa di sostituzione è la stessa qualunque sia la "
+"modalità di ricerca.  I campi si scrivono ``{name}`` e accettano opzioni "
+"di formattazione::"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The case character comes first, before the alignment, e.g. ``{1:+<10}``."
+msgstr ""
+"Il carattere delle maiuscole viene per primo, prima dell'allineamento, ad"
+" es. ``{1:+<10}``."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**fmt** is a minimum width (digit) for text/numbers, or a ``strftime`` "
+"format string for dates and datetimes."
+msgstr ""
+"**fmt** è una larghezza minima (numero) per testi e numeri, oppure un "
+"formato ``strftime`` per date e date con ora."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**default** is used when the field is absent.  Omitting it makes the "
+"field's absence an error (the row is shown in red in the preview)."
+msgstr ""
+"**default** viene usato quando il campo manca.  Senza di esso, l'assenza "
+"del campo è un errore (la riga appare in rosso nell'anteprima)."
+
+# ==AUTO== Automatically translated
+msgid "Available fields"
+msgstr "Campi disponibili"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "Campo"
+
+# ==AUTO== Automatically translated
+msgid "Available in"
+msgstr "Disponibile in"
+
+#, python-brace-format
+msgid "``{0}``"
+msgstr "``{0}``"
+
+# ==AUTO== Automatically translated
+msgid "all modes"
+msgstr "tutte le modalità"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text (or the search literal in plain-text mode)"
+msgstr ""
+"Testo riconosciuto completo (o il testo cercato in modalità testo "
+"semplice)"
+
+# ==AUTO== Automatically translated
+msgid "pattern, regex"
+msgstr "pattern, regex"
+
+# ==AUTO== Automatically translated
+msgid "Numbered capture groups (1-based)"
+msgstr "Gruppi di cattura numerati (da 1)"
+
+#, python-brace-format
+msgid "``{re:name}``"
+msgstr "``{re:name}``"
+
+# ==AUTO== Automatically translated
+msgid "regex only"
+msgstr "solo regex"
+
+# ==AUTO== Automatically translated
+msgid "Named group ``(?P<name>…)`` from the search regex"
+msgstr "Gruppo con nome ``(?P<name>…)`` dell'espressione di ricerca"
+
+#, python-brace-format
+msgid "``{num}``"
+msgstr "``{num}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Auto-incrementing counter.  *fmt* is a minimum width; *default* sets the "
+"starting value (e.g. ``{num:02:10}`` starts at 10, zero-padded to 2 "
+"digits)"
+msgstr ""
+"Contatore autoincrementale.  *fmt* è una larghezza minima; *default* "
+"fissa il valore iniziale (ad es. ``{num:02:10}`` parte da 10, completato "
+"a 2 cifre)"
+
+#, python-brace-format
+msgid "``{newnum}``"
+msgstr "``{newnum}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Counter that continues after the highest number already used on disk by "
+"names of the same form in the target folder (``backup_007`` → next is "
+"``backup_008``), so that numbering never conflicts.  With ``--fill-gaps``"
+" it takes the smallest free numbers first; with ``--renumber`` it ignores"
+" the disk and starts from its start value"
+msgstr ""
+"Contatore che riprende dopo il numero più alto già usato sul disco da "
+"nomi della stessa forma nella cartella di destinazione (``backup_007`` → "
+"il successivo è ``backup_008``), così la numerazione non entra mai in "
+"conflitto.  Con ``--fill-gaps`` prende prima i numeri liberi più piccoli;"
+" con ``--renumber`` ignora il disco e parte dal suo valore iniziale"
+
+#, python-brace-format
+msgid "``{dest}``"
+msgstr "``{dest}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root (``--dest`` in headless mode).  Only valid at the very "
+"start of the template, which may then contain ``/`` to place the file in "
+"sub-folders, created as needed: ``{dest}/{im:Make::}/{0}``"
+msgstr ""
+"Radice di destinazione (``--dest`` in modalità senza interfaccia).  "
+"Valido solo all'inizio del modello, che può allora contenere ``/`` per "
+"mettere il file in sottocartelle, create se necessario: "
+"``{dest}/{im:Make::}/{0}``"
+
+#, python-brace-format
+msgid "``{if:category:text}``"
+msgstr "``{if:category:text}``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"*text* when the file belongs to *category* (``image``, ``video``, "
+"``audio`` or ``other``), nothing otherwise: ``{0}{if:video:_vid}``"
+msgstr ""
+"*text* quando il file appartiene alla categoria *category* (``image``, "
+"``video``, ``audio`` o ``other``), niente altrimenti: "
+"``{0}{if:video:_vid}``"
+
+#, python-brace-format
+msgid "``{date}``"
+msgstr "``{date}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Today's date — default ``strftime`` format ``%Y-%m-%d``"
+msgstr "Data odierna, formato ``strftime`` predefinito ``%Y-%m-%d``"
+
+#, python-brace-format
+msgid "``{datetime}``"
+msgstr "``{datetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Current date and time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "Data e ora correnti, formato predefinito ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{mdatetime}``"
+msgstr "``{mdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "File modification date/time — default format ``%Y-%m-%d_%H%M%S``"
+msgstr "Data e ora di modifica del file, formato predefinito ``%Y-%m-%d_%H%M%S``"
+
+#, python-brace-format
+msgid "``{cdatetime}``"
+msgstr "``{cdatetime}``"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid ""
+"File creation date/time — default format ``%Y-%m-%d_%H%M%S`` (inode "
+"change time on Linux)"
+msgstr ""
+"Data e ora di creazione del file, formato predefinito ``%Y-%m-%d_%H%M%S``"
+" (momento del cambio di inode su Linux)"
+
+#, python-brace-format
+msgid "``{dir}``"
+msgstr "``{dir}``"
+
+# ==AUTO== Automatically translated
+msgid "Name of the immediate parent folder"
+msgstr "Nome della cartella superiore immediata"
+
+#, python-brace-format
+msgid "``{im:Field}``"
+msgstr "``{im:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "EXIF or IPTC metadata field (images — see :ref:`image-fields`)"
+msgstr "Campo di metadati EXIF o IPTC (immagini, vedere :ref:`image-fields`)"
+
+#, python-brace-format
+msgid "``{au:Field}``"
+msgstr "``{au:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata field (mp3, ogg, flac… — see :ref:`audio-fields`)"
+msgstr "Campo di metadati audio (mp3, ogg, flac…, vedere :ref:`audio-fields`)"
+
+#, python-brace-format
+msgid "``{vi:Field}``"
+msgstr "``{vi:Field}``"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata field (mp4, mkv, avi… — see :ref:`video-fields`)"
+msgstr "Campo di metadati video (mp4, mkv, avi…, vedere :ref:`video-fields`)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Image metadata fields ``{im:…}``"
+msgstr "Campi di metadati immagine ``{im:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Read with **pyexiv2**, or **Pillow** when pyexiv2 is not available (see "
+":ref:`optional-dependencies`).  Field names are case-insensitive.  A "
+"*default* is strongly recommended — metadata may be absent from non-image"
+" files or images without EXIF/IPTC data."
+msgstr ""
+"Letti con **pyexiv2**, oppure con **Pillow** quando pyexiv2 non è "
+"disponibile (vedere :ref:`optional-dependencies`).  I nomi dei campi non "
+"distinguono maiuscole e minuscole.  Un *default* è vivamente consigliato:"
+" i metadati possono mancare nei file che non sono immagini o nelle "
+"immagini senza dati EXIF/IPTC."
+
+# ==AUTO== Automatically translated
+msgid "Type"
+msgstr "Tipo"
+
+msgid "``DateTimeOriginal``"
+msgstr "``DateTimeOriginal``"
+
+# ==AUTO== Automatically translated
+msgid "datetime"
+msgstr "data e ora"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the photo was taken"
+msgstr "Data e ora dello scatto"
+
+msgid "``DateTimeDigitized``"
+msgstr "``DateTimeDigitized``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the image was digitised"
+msgstr "Data e ora di digitalizzazione dell'immagine"
+
+msgid "``DateTime``"
+msgstr "``DateTime``"
+
+# ==AUTO== Automatically translated
+msgid "Date/time the file was last changed (EXIF)"
+msgstr "Data e ora dell'ultima modifica del file (EXIF)"
+
+msgid "``Make``"
+msgstr "``Make``"
+
+# ==AUTO== Automatically translated
+msgid "text"
+msgstr "testo"
+
+# ==AUTO== Automatically translated
+msgid "Camera manufacturer"
+msgstr "Produttore della fotocamera"
+
+msgid "``Model``"
+msgstr "``Model``"
+
+# ==AUTO== Automatically translated
+msgid "Camera model"
+msgstr "Modello della fotocamera"
+
+msgid "``LensModel``"
+msgstr "``LensModel``"
+
+# ==AUTO== Automatically translated
+msgid "Lens model"
+msgstr "Modello dell'obiettivo"
+
+msgid "``ISOSpeedRatings``"
+msgstr "``ISOSpeedRatings``"
+
+# ==AUTO== Automatically translated
+msgid "integer"
+msgstr "intero"
+
+# ==AUTO== Automatically translated
+msgid "ISO speed"
+msgstr "Sensibilità ISO"
+
+msgid "``FNumber``"
+msgstr "``FNumber``"
+
+# ==AUTO== Automatically translated
+msgid "Aperture (e.g. ``2.8``)"
+msgstr "Apertura (ad es. ``2.8``)"
+
+msgid "``ExposureTime``"
+msgstr "``ExposureTime``"
+
+# ==AUTO== Automatically translated
+msgid "Shutter speed (e.g. ``1/125``)"
+msgstr "Tempo di posa (ad es. ``1/125``)"
+
+msgid "``FocalLength``"
+msgstr "``FocalLength``"
+
+# ==AUTO== Automatically translated
+msgid "Focal length in mm"
+msgstr "Lunghezza focale in mm"
+
+msgid "``ImageDescription``"
+msgstr "``ImageDescription``"
+
+# ==AUTO== Automatically translated
+msgid "Image description / title"
+msgstr "Descrizione o titolo dell'immagine"
+
+msgid "``Artist``"
+msgstr "``Artist``"
+
+# ==AUTO== Automatically translated
+msgid "Photographer / creator (EXIF)"
+msgstr "Fotografo o autore (EXIF)"
+
+msgid "``Copyright``"
+msgstr "``Copyright``"
+
+# ==AUTO== Automatically translated
+msgid "Copyright notice"
+msgstr "Nota di copyright"
+
+msgid "``ObjectName``"
+msgstr "``ObjectName``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC title / object name"
+msgstr "Titolo IPTC o nome dell'oggetto"
+
+msgid "``Caption``"
+msgstr "``Caption``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC caption / description"
+msgstr "Didascalia o descrizione IPTC"
+
+msgid "``By-line``"
+msgstr "``By-line``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC photographer / creator"
+msgstr "Fotografo o autore IPTC"
+
+msgid "``City``"
+msgstr "``City``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC city"
+msgstr "Città IPTC"
+
+msgid "``Country``"
+msgstr "``Country``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC country"
+msgstr "Paese IPTC"
+
+msgid "``DateCreated``"
+msgstr "``DateCreated``"
+
+# ==AUTO== Automatically translated
+msgid "date"
+msgstr "data"
+
+# ==AUTO== Automatically translated
+msgid "IPTC creation date"
+msgstr "Data di creazione IPTC"
+
+msgid "``Keywords``"
+msgstr "``Keywords``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC keywords (semicolon-separated)"
+msgstr "Parole chiave IPTC (separate da punto e virgola)"
+
+msgid "``Credit``"
+msgstr "``Credit``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC credit line"
+msgstr "Riga dei crediti IPTC"
+
+msgid "``Source``"
+msgstr "``Source``"
+
+# ==AUTO== Automatically translated
+msgid "IPTC source"
+msgstr "Fonte IPTC"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Audio metadata fields ``{au:…}``"
+msgstr "Campi di metadati audio ``{au:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **mutagen**.  Supported formats: mp3, ogg, flac, opus, aac/m4a "
+"and others handled by mutagen.  Field names are case-insensitive."
+msgstr ""
+"Richiede **mutagen**.  Formati supportati: mp3, ogg, flac, opus, aac/m4a "
+"e altri gestiti da mutagen.  I nomi dei campi non distinguono maiuscole e"
+" minuscole."
+
+msgid "``title``"
+msgstr "``title``"
+
+# ==AUTO== Automatically translated
+msgid "Track title"
+msgstr "Titolo del brano"
+
+msgid "``artist``"
+msgstr "``artist``"
+
+# ==AUTO== Automatically translated
+msgid "Track artist"
+msgstr "Artista del brano"
+
+msgid "``albumartist``"
+msgstr "``albumartist``"
+
+# ==AUTO== Automatically translated
+msgid "Album artist"
+msgstr "Artista dell'album"
+
+msgid "``album``"
+msgstr "``album``"
+
+# ==AUTO== Automatically translated
+msgid "Album name"
+msgstr "Nome dell'album"
+
+msgid "``tracknumber``"
+msgstr "``tracknumber``"
+
+# ==AUTO== Automatically translated
+msgid "Track number (strips ``/total`` if present)"
+msgstr "Numero del brano (senza ``/total`` se presente)"
+
+msgid "``discnumber``"
+msgstr "``discnumber``"
+
+# ==AUTO== Automatically translated
+msgid "Disc number (strips ``/total`` if present)"
+msgstr "Numero del disco (senza ``/total`` se presente)"
+
+msgid "``date``"
+msgstr "``date``"
+
+# ==AUTO== Automatically translated
+msgid "date/text"
+msgstr "data/testo"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Release date — ``datetime.date`` when the full date is available "
+"(supports ``strftime`` format); plain text otherwise"
+msgstr ""
+"Data di pubblicazione: ``datetime.date`` quando è disponibile la data "
+"completa (supporta il formato ``strftime``), testo semplice altrimenti"
+
+msgid "``year``"
+msgstr "``year``"
+
+# ==AUTO== Automatically translated
+msgid "Release year (extracted from the ``date`` tag)"
+msgstr "Anno di pubblicazione (estratto dal tag ``date``)"
+
+msgid "``genre``"
+msgstr "``genre``"
+
+# ==AUTO== Automatically translated
+msgid "Genre"
+msgstr "Genere"
+
+msgid "``comment``"
+msgstr "``comment``"
+
+# ==AUTO== Automatically translated
+msgid "Comment"
+msgstr "Commento"
+
+msgid "``composer``"
+msgstr "``composer``"
+
+# ==AUTO== Automatically translated
+msgid "Composer"
+msgstr "Compositore"
+
+msgid "``bpm``"
+msgstr "``bpm``"
+
+# ==AUTO== Automatically translated
+msgid "Beats per minute"
+msgstr "Battiti al minuto"
+
+msgid "``duration``"
+msgstr "``duration``"
+
+# ==AUTO== Automatically translated
+msgid "Duration in seconds"
+msgstr "Durata in secondi"
+
+msgid "``bitrate``"
+msgstr "``bitrate``"
+
+# ==AUTO== Automatically translated
+msgid "Bitrate in kbps"
+msgstr "Bitrate in kbps"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Video metadata fields ``{vi:…}``"
+msgstr "Campi di metadati video ``{vi:…}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Requires **pymediainfo** (and the MediaInfo system library).  Supported "
+"formats: mp4, mkv, avi, mov, webm and others handled by MediaInfo.  Field"
+" names are case-insensitive."
+msgstr ""
+"Richiede **pymediainfo** (e la libreria di sistema MediaInfo).  Formati "
+"supportati: mp4, mkv, avi, mov, webm e altri gestiti da MediaInfo.  I "
+"nomi dei campi non distinguono maiuscole e minuscole."
+
+msgid "``width``"
+msgstr "``width``"
+
+# ==AUTO== Automatically translated
+msgid "Video width in pixels"
+msgstr "Larghezza del video in pixel"
+
+msgid "``height``"
+msgstr "``height``"
+
+# ==AUTO== Automatically translated
+msgid "Video height in pixels"
+msgstr "Altezza del video in pixel"
+
+msgid "``framerate``"
+msgstr "``framerate``"
+
+# ==AUTO== Automatically translated
+msgid "Frame rate (e.g. ``29.970``)"
+msgstr "Frequenza dei fotogrammi (ad es. ``29.970``)"
+
+msgid "``videocodec``"
+msgstr "``videocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Video codec name (e.g. ``AVC``, ``HEVC``)"
+msgstr "Nome del codec video (ad es. ``AVC``, ``HEVC``)"
+
+msgid "``audiocodec``"
+msgstr "``audiocodec``"
+
+# ==AUTO== Automatically translated
+msgid "Audio codec name (e.g. ``AAC``, ``AC-3``)"
+msgstr "Nome del codec audio (ad es. ``AAC``, ``AC-3``)"
+
+msgid "``audiochannels``"
+msgstr "``audiochannels``"
+
+# ==AUTO== Automatically translated
+msgid "Number of audio channels"
+msgstr "Numero di canali audio"
+
+# ==AUTO== Automatically translated
+msgid "Overall bitrate in kbps"
+msgstr "Bitrate complessivo in kbps"
+
+# ==AUTO== Automatically translated
+msgid "Title tag"
+msgstr "Tag del titolo"
+
+msgid "``encodeddate``"
+msgstr "``encodeddate``"
+
+# ==AUTO== Automatically translated
+msgid "Encoded date/time"
+msgstr "Data e ora di codifica"
+
+msgid "``performer``"
+msgstr "``performer``"
+
+# ==AUTO== Automatically translated
+msgid "Performer / artist"
+msgstr "Interprete o artista"
+
+msgid "``copyright``"
+msgstr "``copyright``"
+
+msgid "``description``"
+msgstr "``description``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement examples"
+msgstr "Esempi di sostituzione"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "Pattern"
+
+#, python-brace-format
+msgid "``{1}_{num:04}``"
+msgstr "``{1}_{num:04}``"
+
+# ==AUTO== Automatically translated
+msgid "Capture group 1 followed by a 4-digit zero-padded counter (starts at 1)"
+msgstr ""
+"Gruppo di cattura 1 seguito da un contatore a 4 cifre completato con zeri"
+" (parte da 1)"
+
+#, python-brace-format
+msgid "``{1}_{num:04:10}``"
+msgstr "``{1}_{num:04:10}``"
+
+# ==AUTO== Automatically translated
+msgid "Same, but counter starts at 10"
+msgstr "Uguale, ma il contatore parte da 10"
+
+#, python-brace-format
+msgid "``backup_{newnum:03}``"
+msgstr "``backup_{newnum:03}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Conflict-free 3-digit counter: continues after the highest ``backup_NNN``"
+" already on disk"
+msgstr ""
+"Contatore a 3 cifre senza conflitti: riprende dopo il ``backup_NNN`` più "
+"alto già presente sul disco"
+
+#, python-brace-format
+msgid "``{date}-{0}``"
+msgstr "``{date}-{0}``"
+
+# ==AUTO== Automatically translated
+msgid "Today's date prepended to the matched text"
+msgstr "Data odierna anteposta al testo riconosciuto"
+
+#, python-brace-format, python-format
+msgid "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+msgstr "``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Shooting date/time compact; ``unknown`` if EXIF absent"
+msgstr "Data e ora dello scatto compatte; ``unknown`` se manca l'EXIF"
+
+#, python-brace-format
+msgid "``{im:Make::} {im:Model::}``"
+msgstr "``{im:Make::} {im:Model::}``"
+
+# ==AUTO== Automatically translated
+msgid "Camera make and model (empty string if absent)"
+msgstr "Marca e modello della fotocamera (stringa vuota se mancano)"
+
+#, python-brace-format
+msgid "``{au:artist::unknown}_{au:title::untitled}``"
+msgstr "``{au:artist::unknown}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio artist and title; fallbacks if absent"
+msgstr "Artista e titolo audio, con valori di riserva se mancano"
+
+#, python-brace-format, python-format
+msgid "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+msgstr "``{au:date:%Y%m%d:00000000}_{au:tracknumber:02:00}_{au:title::untitled}``"
+
+# ==AUTO== Automatically translated
+msgid "Audio release date, zero-padded track number, title"
+msgstr "Data di pubblicazione, numero del brano completato con zeri, titolo"
+
+#, python-brace-format
+msgid "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+msgstr "``{vi:width::0}x{vi:height::0}_{vi:videocodec::unknown}``"
+
+# ==AUTO== Automatically translated
+msgid "Video resolution and codec (e.g. ``1920x1080_AVC``)"
+msgstr "Risoluzione e codec video (ad es. ``1920x1080_AVC``)"
+
+#, python-brace-format
+msgid "``{re:year}_{re:title}``"
+msgstr "``{re:year}_{re:title}``"
+
+# ==AUTO== Automatically translated
+msgid "Named regex groups (regex mode only)"
+msgstr "Gruppi con nome dell'espressione regolare (solo modalità regex)"
+
+#, python-brace-format, python-format
+msgid "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+msgstr "``{dir}_{mdatetime:%Y%m%d}_{num:03}``"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder, file modification date, 3-digit counter"
+msgstr "Cartella superiore, data di modifica del file, contatore a 3 cifre"
+
+# ==AUTO== Automatically translated
+msgid "Headless CLI Reference"
+msgstr "Riferimento della riga di comando senza interfaccia"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Headless mode is activated when ``--search``, ``--saved`` or ``--schema``"
+" is provided.  No window is opened; renames are performed and the process"
+" exits. Settings that are not given on the command line come from the "
+"profile chosen with ``--profile``, or from the last profile used in the "
+"GUI."
+msgstr ""
+"La modalità senza interfaccia si attiva quando viene indicato "
+"``--search``, ``--saved`` o ``--schema``.  Non si apre alcuna finestra; "
+"le rinomine vengono eseguite e il programma termina.  Le impostazioni non"
+" indicate sulla riga di comando provengono dal profilo scelto con "
+"``--profile``, o dall'ultimo profilo usato nell'interfaccia grafica."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renaming is atomic: if any target is in conflict, nothing is renamed and "
+"the command exits with an error listing the conflicts."
+msgstr ""
+"La rinomina è atomica: se una destinazione è in conflitto, non viene "
+"rinominato nulla e il comando termina con un errore che elenca i "
+"conflitti."
+
+# ==AUTO== Automatically translated
+msgid "Rename source (mutually exclusive)"
+msgstr "Origine della rinomina (mutuamente esclusive)"
+
+msgid "``--search TEXT``"
+msgstr "``--search TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Search pattern/expression — activates headless mode."
+msgstr "Pattern o espressione di ricerca; attiva la modalità senza interfaccia."
+
+msgid "``--saved NAME``"
+msgstr "``--saved NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Load a named save — activates headless mode.  Other options override "
+"values from the save."
+msgstr ""
+"Carica un salvataggio con nome; attiva la modalità senza interfaccia.  Le"
+" altre opzioni sostituiscono i valori del salvataggio."
+
+msgid "``--schema LIST``"
+msgstr "``--schema LIST``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Rename :ref:`schema <schema-mode>`: comma-separated fields, e.g. "
+"``'Trip,,Paris,###'`` — activates headless mode.  Non-empty fields form "
+"both the folder tree under ``--dest`` and the name (joined with ``_``); a"
+" field of ``#`` only is the counter, padded to the number of ``#``; empty"
+" fields are skipped.  Sidecar mode is always on."
+msgstr ""
+":ref:`Schema <schema-mode>` di rinomina: campi separati da virgole, ad "
+"es. ``'Trip,,Paris,###'``; attiva la modalità senza interfaccia.  I campi"
+" non vuoti formano sia l'albero di cartelle sotto ``--dest`` sia il nome "
+"(uniti con ``_``); un campo composto solo da ``#`` è il contatore, "
+"completato fino al numero di ``#``; i campi vuoti vengono saltati.  La "
+"modalità sidecar è sempre attiva."
+
+# ==AUTO== Automatically translated
+msgid "Schema options"
+msgstr "Opzioni dello schema"
+
+msgid "``--dest DIR``"
+msgstr "``--dest DIR``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Destination root.  With ``--schema``, defaults to the profile's "
+"destination and is required if it has none (except with ``--renumber``)."
+"  Also the value of the ``{dest}`` field in ``--replace``."
+msgstr ""
+"Radice di destinazione.  Con ``--schema``, per impostazione predefinita è"
+" la destinazione del profilo, ed è obbligatoria se questo non ne ha "
+"(tranne con ``--renumber``).  È anche il valore del campo ``{dest}`` in "
+"``--replace``."
+
+msgid "``--fill-gaps`` / ``--no-fill-gaps``"
+msgstr "``--fill-gaps`` / ``--no-fill-gaps``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` takes the smallest free number instead of continuing after "
+"the highest one (default: the profile's setting with ``--schema``, "
+"``--no-fill-gaps`` otherwise)."
+msgstr ""
+"``{newnum}`` prende il numero libero più piccolo invece di riprendere "
+"dopo il più alto (predefinito: l'impostazione del profilo con "
+"``--schema``, ``--no-fill-gaps`` altrimenti)."
+
+msgid "``--renumber``"
+msgstr "``--renumber``"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"``{newnum}`` runs from its start value, ignoring the numbers already used"
+" on disk; with ``--schema``, renumber the files in place."
+msgstr ""
+"``{newnum}`` parte dal suo valore iniziale, ignorando i numeri già usati "
+"sul disco; con ``--schema``, rinumera i file sul posto."
+
+msgid "``--video-marker TEXT``"
+msgstr "``--video-marker TEXT``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: text added to the name of video files (default: the "
+"profile's marker)."
+msgstr ""
+"Con ``--schema``: testo aggiunto al nome dei file video (predefinito: il "
+"marcatore del profilo)."
+
+msgid "``--video-marker-pos N``"
+msgstr "``--video-marker-pos N``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With ``--schema``: position of the video marker between the fields (0 = "
+"before the first field; default: the profile's position)."
+msgstr ""
+"Con ``--schema``: posizione del marcatore video tra i campi (0 = prima "
+"del primo campo; predefinito: la posizione del profilo)."
+
+# ==AUTO== Automatically translated
+msgid "Rename options"
+msgstr "Opzioni di rinomina"
+
+msgid "``--replace TEXT``"
+msgstr "``--replace TEXT``"
+
+# ==AUTO== Automatically translated
+msgid "Replacement string (default: empty string)."
+msgstr "Stringa di sostituzione (predefinito: stringa vuota)."
+
+#, python-brace-format
+msgid "``--mode {pattern,regex,plain}``"
+msgstr "``--mode {pattern,regex,plain}``"
+
+# ==AUTO== Automatically translated
+msgid "Search mode: ``pattern`` (default), ``regex``, or ``plain``."
+msgstr "Modalità di ricerca: ``pattern`` (predefinito), ``regex`` o ``plain``."
+
+#, python-brace-format
+msgid "``--list {files,dirs,all}``"
+msgstr "``--list {files,dirs,all}``"
+
+# ==AUTO== Automatically translated
+msgid "Entry types to process: ``files`` (default), ``dirs``, or ``all``."
+msgstr "Tipi di voci da elaborare: ``files`` (predefinito), ``dirs`` o ``all``."
+
+msgid "``--recurse`` / ``--no-recurse``"
+msgstr "``--recurse`` / ``--no-recurse``"
+
+# ==AUTO== Automatically translated
+msgid "Recurse into sub-directories (default: ``--no-recurse``)."
+msgstr "Include le sottocartelle (predefinito: ``--no-recurse``)."
+
+#, python-brace-format
+msgid "``--ext-mode {keep,lower,upper,normalize,modify}``"
+msgstr "``--ext-mode {keep,lower,upper,normalize,modify}``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"How to handle the extension during rename (default: ``keep``).  ``lower``"
+" / ``upper`` case-fold the extension; ``normalize`` maps it through the "
+"extension normalization table (managed from the GUI, **Edit → Settings… →"
+" Extension Normalization** tab); ``modify`` includes the extension in the"
+" search/replace pattern, same as *Modify extension* in the GUI."
+msgstr ""
+"Come trattare l'estensione durante la rinomina (predefinito: ``keep``).  "
+"``lower`` / ``upper`` cambiano maiuscole e minuscole dell'estensione; "
+"``normalize`` la fa passare per la tabella di normalizzazione delle "
+"estensioni (gestita nell'interfaccia grafica, scheda **Modifica → "
+"Impostazioni… → Normalizzazione estensioni**); ``modify`` include "
+"l'estensione nel pattern di ricerca e sostituzione, come *Modifica "
+"estensione* nell'interfaccia grafica."
+
+msgid "``--sidecar-mode`` / ``--no-sidecar-mode``"
+msgstr "``--sidecar-mode`` / ``--no-sidecar-mode``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Group :ref:`sidecar files <sidecar-files>` with their base file when "
+"renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
+" ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
+"is an error.  Category configuration (base extensions, sidecar suffixes) "
+"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+msgstr ""
+"Raggruppa i :ref:`file sidecar <sidecar-files>` con il loro file "
+"principale durante la rinomina (predefinito: ``--no-sidecar-mode``).  "
+"Richiede ``--ext-mode keep``, ``lower`` o ``upper``; combinarlo con "
+"``normalize`` o ``modify`` è un errore.  La configurazione delle "
+"categorie (estensioni principali, suffissi sidecar) è condivisa con la "
+"finestra **Modifica → File sidecar…** dell'interfaccia grafica."
+
+msgid "``--filter GLOB``"
+msgstr "``--filter GLOB``"
+
+# ==AUTO== Automatically translated
+msgid "Glob pattern to restrict the file listing (e.g. ``'*.jpg'``)."
+msgstr "Pattern glob che restringe l'elenco dei file (ad es. ``'*.jpg'``)."
+
+msgid "``--select GLOB``"
+msgstr "``--select GLOB``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Restrict the rename to entries matching ``GLOB`` (basename match), as if "
+"selecting them by clicking in the GUI file list. May be given multiple "
+"times to accumulate (equivalent of Ctrl+click). With ``--sidecar-mode``, "
+"selecting a base file also selects its sidecars, and selecting a sidecar "
+"also selects its base file and every sibling sidecar — the same grouping "
+"the GUI applies when you click a row, including the same ambiguity "
+"handling (a sidecar matching more than one base file is still flagged and"
+" skipped, whether or not it was selected). Omit to act on every listed "
+"entry (default)."
+msgstr ""
+"Limita la rinomina alle voci che corrispondono a ``GLOB`` (confronto sul "
+"nome di base), come se venissero selezionate con un clic nell'elenco "
+"dell'interfaccia grafica.  Può essere ripetuta per accumulare (equivale a"
+" Ctrl+clic).  Con ``--sidecar-mode``, selezionare un file principale "
+"seleziona anche i suoi sidecar, e selezionare un sidecar seleziona anche "
+"il suo file principale e tutti i sidecar fratelli: lo stesso "
+"raggruppamento che l'interfaccia grafica applica al clic su una riga, con"
+" la stessa gestione delle ambiguità (un sidecar che corrisponde a più "
+"file principali resta segnalato e viene saltato, selezionato o no).  Se "
+"omessa, vengono elaborate tutte le voci elencate (predefinito)."
+
+msgid "``--sep``"
+msgstr "``--sep``"
+
+# ==AUTO== Automatically translated
+msgid "Separator conversion applied after rename.  Default: ``none``."
+msgstr ""
+"Conversione dei separatori applicata dopo la rinomina.  Predefinito: "
+"``none``."
+
+#, python-brace-format
+msgid "``--case {none,upper,lower,capitalize,title}``"
+msgstr "``--case {none,upper,lower,capitalize,title}``"
+
+# ==AUTO== Automatically translated
+msgid "Capitalisation applied after rename.  Default: ``none``."
+msgstr ""
+"Modifica di maiuscole e minuscole applicata dopo la rinomina.  "
+"Predefinito: ``none``."
+
+msgid "``--accent`` / ``--no-accent``"
+msgstr "``--accent`` / ``--no-accent``"
+
+# ==AUTO== Automatically translated
+msgid "Strip diacritics from result names (default: ``--no-accent``)."
+msgstr ""
+"Elimina i segni diacritici dai nomi risultanti (predefinito: ``--no-"
+"accent``)."
+
+msgid "``--dup`` / ``--no-dup``"
+msgstr "``--dup`` / ``--no-dup``"
+
+# ==AUTO== Automatically translated
+msgid "Collapse consecutive duplicate separators (default: ``--no-dup``)."
+msgstr "Riduce i separatori doppi consecutivi (predefinito: ``--no-dup``)."
+
+msgid "``--confirm`` / ``--no-confirm``"
+msgstr "``--confirm`` / ``--no-confirm``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Preview changes and ask for confirmation before renaming (default: "
+"``--no-confirm``)."
+msgstr ""
+"Mostra le modifiche e chiede conferma prima di rinominare (predefinito: "
+"``--no-confirm``)."
+
+msgid "``--dry-run`` / ``--no-dry-run``"
+msgstr "``--dry-run`` / ``--no-dry-run``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Print the equivalent ``mv`` commands to stdout instead of renaming "
+"anything (default: ``--no-dry-run``).  The output is a valid POSIX shell "
+"script — quoted with ``shlex.quote``, conflicts reported as ``#`` "
+"comments — that can be piped to ``sh`` to actually perform the rename. "
+"Takes precedence over ``--confirm``: no interactive prompt is shown."
+msgstr ""
+"Scrive sull'output standard i comandi ``mv`` equivalenti invece di "
+"rinominare qualcosa (predefinito: ``--no-dry-run``).  L'output è uno "
+"script di shell POSIX valido, protetto con ``shlex.quote`` e con i "
+"conflitti indicati come commenti ``#``, che può essere passato a ``sh`` "
+"per eseguire davvero la rinomina.  Ha la precedenza su ``--confirm``: non"
+" viene posta alcuna domanda interattiva."
+
+# ==AUTO== Automatically translated
+msgid "Logging"
+msgstr "Log"
+
+msgid "``-d`` / ``--debug``"
+msgstr "``-d`` / ``--debug``"
+
+# ==AUTO== Automatically translated
+msgid "Enable debug output (overrides the saved preference)."
+msgstr "Attiva i messaggi di debug (sostituisce la preferenza salvata)."
+
+msgid "``-v`` / ``--verbose``"
+msgstr "``-v`` / ``--verbose``"
+
+# ==AUTO== Automatically translated
+msgid "Enable verbose output — INFO level (overrides the saved preference)."
+msgstr ""
+"Attiva i messaggi dettagliati, livello INFO (sostituisce la preferenza "
+"salvata)."
+
+msgid "``-q`` / ``--quiet``"
+msgstr "``-q`` / ``--quiet``"
+
+# ==AUTO== Automatically translated
+msgid "Suppress informational messages — WARNING level."
+msgstr "Sopprime i messaggi informativi, livello WARNING."
+
+# ==AUTO== Automatically translated
+msgid "Advanced"
+msgstr "Avanzate"
+
+msgid "``--profile NAME``"
+msgstr "``--profile NAME``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar "
+"configuration, schema defaults) instead of the last one used in the GUI."
+"  In GUI mode, open the window on that profile."
+msgstr ""
+"Usa il :ref:`profilo <profiles>` *NAME* (impostazioni, salvataggi, "
+"configurazione dei sidecar, valori predefiniti dello schema) invece "
+"dell'ultimo usato nell'interfaccia grafica.  In modalità grafica, apre la"
+" finestra su quel profilo."
+
+msgid "``--config-dir DIR``"
+msgstr "``--config-dir DIR``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Override the configuration directory — see :ref:`config-files` for the "
+"platform defaults.  Intended for testing."
+msgstr ""
+"Sostituisce la cartella di configurazione; vedere :ref:`config-files` per"
+" i valori predefiniti di ogni piattaforma.  Pensato per i test."
+
+msgid "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+msgstr "``--install-desktop-entry`` / ``--uninstall-desktop-entry``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linux only: install (or remove) a desktop menu entry and icon for the "
+"current user, then exit.  Useful after a ``pip`` install, which has no "
+"post-install hook to do it."
+msgstr ""
+"Solo Linux: installa (o rimuove) una voce di menu e un'icona per l'utente"
+" corrente, poi termina.  Utile dopo un'installazione con ``pip``, che non"
+" ha una fase di post-installazione per farlo."
+
+# ==AUTO== Automatically translated
+msgid "Self-update"
+msgstr "Aggiornamento automatico"
+
+msgid "``--auto-update``"
+msgstr "``--auto-update``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Download the latest release matching the running platform and "
+"architecture from `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ and replace the "
+"running executable with it, then exit.  This option is only offered when "
+"running a pre-built (PyInstaller) executable; a source checkout or a "
+"``pip``/PyPI install has no single running binary to replace, so the "
+"option is absent from ``--help`` and rejected as an unknown argument "
+"there.  Restart PBRenamer to use the new build; the update does not "
+"relaunch it automatically."
+msgstr ""
+"Scarica da `GitHub Releases "
+"<https://github.com/ppoilbarbe/PBRenamer/releases>`_ l'ultima versione "
+"corrispondente alla piattaforma e all'architettura in uso, sostituisce "
+"con essa l'eseguibile in uso, poi termina.  Questa opzione esiste solo "
+"per un eseguibile precompilato (PyInstaller); una copia dei sorgenti o "
+"un'installazione con ``pip``/PyPI non ha un singolo binario da "
+"sostituire, quindi l'opzione non compare in ``--help`` e viene rifiutata "
+"come argomento sconosciuto.  Riavviare PBRenamer per usare la nuova "
+"versione; l'aggiornamento non lo riavvia automaticamente."
+
+# ==AUTO== Automatically translated
+msgid "Help export"
+msgstr "Esportazione della guida"
+
+msgid "``--help-search``"
+msgstr "``--help-search``"
+
+# ==AUTO== Automatically translated
+msgid "Print the search-field help HTML to stdout and exit."
+msgstr ""
+"Scrive sull'output standard l'HTML della guida del campo di ricerca e "
+"termina."
+
+msgid "``--help-replace``"
+msgstr "``--help-replace``"
+
+# ==AUTO== Automatically translated
+msgid "Print the replacement-field help HTML to stdout and exit."
+msgstr ""
+"Scrive sull'output standard l'HTML della guida del campo di sostituzione "
+"e termina."
+
+# ==AUTO== Automatically translated
+msgid "CLI Examples"
+msgstr "Esempi da riga di comando"
+
+# ==AUTO== Automatically translated
+msgid "Remove an ``IMG_`` prefix from all JPEG files in the current directory::"
+msgstr ""
+"Togliere il prefisso ``IMG_`` da tutti i file JPEG della cartella "
+"corrente::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Add the parent folder name and a zero-padded counter to every file, "
+"recursively::"
+msgstr ""
+"Aggiungere a ogni file, ricorsivamente, il nome della cartella superiore "
+"e un contatore completato con zeri::"
+
+# ==AUTO== Automatically translated
+msgid "Rename audio files using their tags, with fallbacks::"
+msgstr "Rinominare file audio in base ai loro tag, con valori di riserva::"
+
+# ==AUTO== Automatically translated
+msgid "Load a saved preset and override its separator setting::"
+msgstr ""
+"Caricare un salvataggio con nome e sostituirne l'impostazione del "
+"separatore::"
+
+# ==AUTO== Automatically translated
+msgid "Preview changes before applying::"
+msgstr "Vedere le modifiche prima di applicarle::"
+
+# ==AUTO== Automatically translated
+msgid "Print the equivalent ``mv`` commands without renaming anything::"
+msgstr "Scrivere i comandi ``mv`` equivalenti senza rinominare nulla::"
+
+# ==AUTO== Automatically translated
+msgid "Only rename two specific files (and their sidecars) out of the directory::"
+msgstr "Rinominare solo due file precisi (e i loro sidecar) della cartella::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Sort the pictures of a folder into ``~/Photos/Paris/2024/Street/``, with "
+"a 3-digit counter, using the settings of the ``photos`` profile::"
+msgstr ""
+"Ordinare le immagini di una cartella in ``~/Photos/Paris/2024/Street/``, "
+"con un contatore a 3 cifre, usando le impostazioni del profilo "
+"``photos``::"
+
+# ==AUTO== Automatically translated
+msgid "Renumber the files of a folder from 1, in place::"
+msgstr "Rinumerare da 1, sul posto, i file di una cartella::"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Move files into one folder per camera model, with a counter, sidecars "
+"following their picture::"
+msgstr ""
+"Spostare i file in una cartella per modello di fotocamera, con un "
+"contatore, con i sidecar che seguono la loro immagine::"

@@ -17,6 +17,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
+msgid "EXIF"
+msgstr "EXIF"
+
+msgid "IPTC"
+msgstr "IPTC"
+
+msgid "XMP"
+msgstr "XMP"
+
+msgid "Sidecar file"
+msgstr "Sidecar file"
+
+msgid "XMP (sidecar)"
+msgstr "XMP (sidecar)"
+
+msgid "No EXIF orientation tag to apply."
+msgstr "No EXIF orientation tag to apply."
+
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "Unsupported EXIF orientation value: {v}"
+
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "The schema contains several numeric fields (only one allowed)."
+
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "Field “{field}” contains the forbidden character “{char}”."
+
+msgid "The schema is empty: fill in at least one field."
+msgstr "The schema is empty: fill in at least one field."
+
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "The video marker contains the forbidden character “{char}”."
+
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr "The schema has no numeric field (use “#” to define a counter)."
+
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
 msgstr "{name!r} could be a sidecar of multiple base files: {owners}"
@@ -45,6 +102,43 @@ msgstr "Music"
 msgid "Videos"
 msgstr "Videos"
 
+msgid "Open with"
+msgstr "Open with"
+
+msgid "Choose an application:"
+msgstr "Choose an application:"
+
+msgid "Application name:"
+msgstr "Application name:"
+
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "Profile “{name}” not found."
+
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "Profile “{name}” already exists."
+
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+
 msgid "About PBRenamer"
 msgstr "About PBRenamer"
 
@@ -66,17 +160,33 @@ msgstr "Python version:"
 msgid "PySide6 version:"
 msgstr "PySide6 version:"
 
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "Rename ({n})"
+
+msgid "Rename"
+msgstr "Rename"
+
+#, python-format
+msgid "Undo (%d)"
+msgstr "Undo (%d)"
+
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "Undo last rename batch (%d level(s) available)"
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "Undo last rename batch"
+msgstr "Undo last rename batch"
+
 msgid "File information"
 msgstr "File information"
 
-msgid "Field"
-msgstr "Field"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Value"
-msgstr "Value"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "File information — {name}"
 
 msgid "Image"
 msgstr "Image"
@@ -93,24 +203,11 @@ msgstr "Directory"
 msgid "Other"
 msgstr "Other"
 
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "File information — {name}"
-
 msgid "File:"
 msgstr "File:"
 
 msgid "Type:"
 msgstr "Type:"
-
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "Image metadata (EXIF / IPTC)"
-
-msgid "Audio metadata"
-msgstr "Audio metadata"
-
-msgid "Video metadata"
-msgstr "Video metadata"
 
 msgid "Select a single file to display its information."
 msgstr "Select a single file to display its information."
@@ -118,53 +215,85 @@ msgstr "Select a single file to display its information."
 msgid "Select a file to display its information."
 msgstr "Select a file to display its information."
 
-msgid "Universal fields"
-msgstr "Universal fields"
+msgid "Original"
+msgstr "Original"
 
-msgid "Today's date"
-msgstr "Today's date"
+msgid "Preview"
+msgstr "Preview"
 
-msgid "Current date and time"
-msgstr "Current date and time"
+msgid "Thumbnail"
+msgstr "Thumbnail"
 
-msgid "File modification date/time"
-msgstr "File modification date/time"
+msgid "Sidecar"
+msgstr "Sidecar"
 
-msgid "Missing"
-msgstr "Missing"
+msgid "No sidecar: double-click to create one"
+msgstr "No sidecar: double-click to create one"
 
-msgid "File creation date/time"
-msgstr "File creation date/time"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "Cannot create {name}: {error}"
 
-msgid "Parent folder name"
-msgstr "Parent folder name"
+msgid "cannot move/copy a folder into itself"
+msgstr "cannot move/copy a folder into itself"
 
-msgid "Batch fields"
-msgstr "Batch fields"
+msgid "Move errors"
+msgstr "Move errors"
 
-msgid "Computed"
-msgstr "Computed"
+msgid "Copy errors"
+msgstr "Copy errors"
 
-msgid "Full matched text"
-msgstr "Full matched text"
+msgid "Confirm overwrite"
+msgstr "Confirm overwrite"
 
-msgid "Capture groups"
-msgstr "Capture groups"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} item(s) already exist in {dir} and would be overwritten."
 
-msgid "Auto-incrementing counter"
-msgstr "Auto-incrementing counter"
+msgid "Overwrite"
+msgstr "Overwrite"
 
-msgid "Conflict-free counter"
-msgstr "Conflict-free counter"
+msgid "Skip"
+msgstr "Skip"
 
-msgid "Named regex group"
-msgstr "Named regex group"
+msgid "▲ Move up"
+msgstr "▲ Move up"
 
-msgid "Insert into replacement field"
-msgstr "Insert into replacement field"
+msgid "▼ Move down"
+msgstr "▼ Move down"
+
+msgid "Sort ↓"
+msgstr "Sort ↓"
+
+msgid "Sort the list in ascending order"
+msgstr "Sort the list in ascending order"
+
+msgid "Sort ↑"
+msgstr "Sort ↑"
+
+msgid "Sort the list in descending order"
+msgstr "Sort the list in descending order"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Clear all"
+msgstr "Clear all"
+
+msgid "Clear history"
+msgstr "Clear history"
+
+msgid "Clear all values from this history?"
+msgstr "Clear all values from this history?"
+
+msgid "Sidecar filter"
+msgstr "Sidecar filter"
 
 msgid "History"
 msgstr "History"
+
+msgid "Patterns"
+msgstr "Patterns"
 
 msgid "Search"
 msgstr "Search"
@@ -208,9 +337,6 @@ msgstr "Remove selected entries"
 msgid "Delete the selected search history entries"
 msgstr "Delete the selected search history entries"
 
-msgid "Clear all"
-msgstr "Clear all"
-
 msgid "Remove all search history entries"
 msgstr "Remove all search history entries"
 
@@ -238,71 +364,399 @@ msgstr "Remove all replacement history entries"
 msgid "Delete the entire replacement pattern history"
 msgstr "Delete the entire replacement pattern history"
 
+msgid "Template"
+msgstr "Template"
+
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+
+msgid "Confirm deletion"
+msgstr "Confirm deletion"
+
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Could not move to trash: {name}"
+
+msgid "Deletion error"
+msgstr "Deletion error"
+
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Move {count} files to trash?"
+
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Move to trash:\n"
+"{names}"
+
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Permanently delete {count} files?"
+
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Permanently delete:\n"
+"{names}"
+
+msgid "Rotation unavailable"
+msgstr "Rotation unavailable"
+
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} file(s) could not be rotated."
+
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} file(s) rotated."
+
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} EXIF orientation tag(s) reset."
+
+msgid "Fit window  0 / X"
+msgstr "Fit window  0 / X"
+
+msgid "Actual size (1:1)  1 / Z"
+msgstr "Actual size (1:1)  1 / Z"
+
+msgid "Fit width  W"
+msgstr "Fit width  W"
+
+msgid "Fit height  H"
+msgstr "Fit height  H"
+
+msgid "Zoom in  +"
+msgstr "Zoom in  +"
+
+msgid "Zoom out  −"
+msgstr "Zoom out  −"
+
+msgid "Rotate 90° left  F6"
+msgstr "Rotate 90° left  F6"
+
+msgid "Rotate 180°  F7"
+msgstr "Rotate 180°  F7"
+
+msgid "Rotate 90° right  F8"
+msgstr "Rotate 90° right  F8"
+
+msgid "Apply EXIF orientation  F9"
+msgstr "Apply EXIF orientation  F9"
+
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "Force EXIF orientation to 0°  F10"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Show metadata panel"
+msgstr "Show metadata panel"
+
+msgid "Cannot load image."
+msgstr "Cannot load image."
+
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "Switch to linear navigation (stop at the ends of the list)"
+
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr "Switch to circular navigation (wrap around at the ends of the list)"
+
+msgid " (max)"
+msgstr " (max)"
+
+msgid "Keyboard"
+msgstr "Keyboard"
+
+msgid "Mouse"
+msgstr "Mouse"
+
+msgid "Rotate 90° left, without loss"
+msgstr "Rotate 90° left, without loss"
+
+msgid "Rotate 180°, without loss"
+msgstr "Rotate 180°, without loss"
+
+msgid "Rotate 90° right, without loss"
+msgstr "Rotate 90° right, without loss"
+
+msgid "Apply EXIF orientation"
+msgstr "Apply EXIF orientation"
+
+msgid "Force EXIF orientation to 0°"
+msgstr "Force EXIF orientation to 0°"
+
+msgid "directory tree"
+msgstr "directory tree"
+
+msgid "file list"
+msgstr "file list"
+
+msgid "Open a folder"
+msgstr "Open a folder"
+
+msgid "Quit"
+msgstr "Quit"
+
+msgid "New profile"
+msgstr "New profile"
+
+msgid "Duplicate profile"
+msgstr "Duplicate profile"
+
+msgid "Profile configuration"
+msgstr "Profile configuration"
+
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "Keyboard and mouse shortcuts (this window)"
+
+msgid "Rename as shown in the Preview column"
+msgstr "Rename as shown in the Preview column"
+
+msgid "Reload the file list"
+msgstr "Reload the file list"
+
+msgid "Switch focus between directory tree and file list"
+msgstr "Switch focus between directory tree and file list"
+
+msgid "Navigate directories"
+msgstr "Navigate directories"
+
+msgid "Select previous / next file"
+msgstr "Select previous / next file"
+
+msgid "Jump to first / last entry"
+msgstr "Jump to first / last entry"
+
+msgid "Show the selected images in the viewer"
+msgstr "Show the selected images in the viewer"
+
+msgid "Open the selected files with their default application"
+msgstr "Open the selected files with their default application"
+
+msgid "Open with…"
+msgstr "Open with…"
+
+msgid "Delete selected file(s) and their sidecars"
+msgstr "Delete selected file(s) and their sidecars"
+
+msgid "click"
+msgstr "click"
+
+msgid "Add to the selection / select a range"
+msgstr "Add to the selection / select a range"
+
+msgid "No selection"
+msgstr "No selection"
+
+msgid "Rename, renumber and preview act on all listed files"
+msgstr "Rename, renumber and preview act on all listed files"
+
+msgid "Double-click on a thumbnail"
+msgstr "Double-click on a thumbnail"
+
+msgid "Show the image in the viewer"
+msgstr "Show the image in the viewer"
+
+msgid "Double-click on a name"
+msgstr "Double-click on a name"
+
+msgid "Open the file with its default application"
+msgstr "Open the file with its default application"
+
+msgid "Double-click on a sidecar"
+msgstr "Double-click on a sidecar"
+
+msgid "Open the sidecar file"
+msgstr "Open the sidecar file"
+
+msgid "Right-click on the file list"
+msgstr "Right-click on the file list"
+
+msgid "Images menu"
+msgstr "Images menu"
+
+msgid "Right-click on the directory tree"
+msgstr "Right-click on the directory tree"
+
+msgid "Add the folder as a shortcut"
+msgstr "Add the folder as a shortcut"
+
+msgid "Drag onto a folder"
+msgstr "Drag onto a folder"
+
+msgid "Move the files and their sidecars"
+msgstr "Move the files and their sidecars"
+
+msgid "drag onto a folder"
+msgstr "drag onto a folder"
+
+msgid "Copy the files and their sidecars"
+msgstr "Copy the files and their sidecars"
+
+msgid "Fit window"
+msgstr "Fit window"
+
+msgid "Actual size (1:1)"
+msgstr "Actual size (1:1)"
+
+msgid "Fit width"
+msgstr "Fit width"
+
+msgid "Fit height"
+msgstr "Fit height"
+
+msgid "Zoom in / Zoom out"
+msgstr "Zoom in / Zoom out"
+
+msgid "Previous / next image of the selection, or of the list"
+msgstr "Previous / next image of the selection, or of the list"
+
+msgid "Show / hide the metadata"
+msgstr "Show / hide the metadata"
+
+msgid "Open with the default application"
+msgstr "Open with the default application"
+
+msgid "Delete current image and its sidecars"
+msgstr "Delete current image and its sidecars"
+
+msgid "Close image viewer"
+msgstr "Close image viewer"
+
+msgid "Left-click + drag"
+msgstr "Left-click + drag"
+
+msgid "Pan image"
+msgstr "Pan image"
+
+msgid "Double left-click"
+msgstr "Double left-click"
+
+msgid "Center on clicked point"
+msgstr "Center on clicked point"
+
+msgid "left-click"
+msgstr "left-click"
+
+msgid "Zoom in centered on point"
+msgstr "Zoom in centered on point"
+
+msgid "right-click"
+msgstr "right-click"
+
+msgid "Zoom out centered on point"
+msgstr "Zoom out centered on point"
+
+msgid "Click on a thumbnail of the strip"
+msgstr "Click on a thumbnail of the strip"
+
+msgid "Show this image"
+msgstr "Show this image"
+
+msgid "Main window"
+msgstr "Main window"
+
+msgid "Image viewer"
+msgstr "Image viewer"
+
 msgid "Select folder"
 msgstr "Select folder"
-
-msgid "Original"
-msgstr "Original"
-
-msgid "Preview"
-msgstr "Preview"
 
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} item(s)"
 
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ no matching type ({types})"
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ orphan sidecar, not renamed"
+
+msgid "Target(s) already taken:"
+msgstr "Target(s) already taken:"
+
+msgid "Nothing was renamed."
+msgstr "Nothing was renamed."
 
 #, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} unavailable"
-
-msgid "Search — Help"
-msgstr "Search — Help"
-
-msgid "Replace — Help"
-msgstr "Replace — Help"
+msgid "{n} file(s) renamed."
+msgstr "{n} file(s) renamed."
 
 msgid "Rename errors"
 msgstr "Rename errors"
 
-msgid "cannot move/copy a folder into itself"
-msgstr "cannot move/copy a folder into itself"
+msgid "Renumber"
+msgstr "Renumber"
 
-msgid "Move errors"
-msgstr "Move errors"
+msgid "Files are already correctly numbered."
+msgstr "Files are already correctly numbered."
 
-msgid "Copy errors"
-msgstr "Copy errors"
-
-msgid "Confirm overwrite"
-msgstr "Confirm overwrite"
+msgid "Confirm renumber"
+msgstr "Confirm renumber"
 
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} item(s) already exist in {dir} and would be overwritten."
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "Renumber {n} file(s) starting from 1?"
 
-msgid "Overwrite"
-msgstr "Overwrite"
+msgid "Renumber errors"
+msgstr "Renumber errors"
 
-msgid "Skip"
-msgstr "Skip"
+msgid "Undo errors"
+msgstr "Undo errors"
 
-#, python-format
-msgid "Undo (%d)"
-msgstr "Undo (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "Keyboard and mouse shortcuts"
 
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "Undo last rename batch (%d level(s) available)"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "Switch to the profile “{name}”"
 
-msgid "Undo"
-msgstr "Undo"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "Profile name (letters, digits, “-” and “_”):"
 
-msgid "Undo last rename batch"
-msgstr "Undo last rename batch"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "New profile name (copy of “{source}”):"
+
+msgid "Rename profile"
+msgstr "Rename profile"
+
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "Profile “{old}” renamed to “{name}”."
+
+msgid "Delete profile"
+msgstr "Delete profile"
+
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "There is no profile to delete: at least one visible profile must remain."
+
+msgid "Profile to delete:"
+msgstr "Profile to delete:"
+
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr "Delete the profile “{name}” and all its settings? This cannot be undone."
+
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "Profile “{name}” deleted."
+
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "Profile “{name}” loaded."
 
 msgid "Add as shortcut"
 msgstr "Add as shortcut"
@@ -310,14 +764,8 @@ msgstr "Add as shortcut"
 msgid "Open folder…"
 msgstr "Open folder…"
 
-msgid "Open a folder"
-msgstr "Open a folder"
-
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "Open a directory chooser and navigate the tree to the selected folder"
-
-msgid "Quit"
-msgstr "Quit"
 
 msgid "Quit PBRenamer"
 msgstr "Quit PBRenamer"
@@ -358,6 +806,24 @@ msgstr "About this application"
 msgid "Show version and license information"
 msgstr "Show version and license information"
 
+msgid "Keyboard and mouse shortcuts…"
+msgstr "Keyboard and mouse shortcuts…"
+
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "Show the keyboard and mouse shortcuts"
+
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr "List the keyboard and mouse shortcuts of the main window and viewer"
+
+msgid "User guide"
+msgstr "User guide"
+
+msgid "Open the online user guide"
+msgstr "Open the online user guide"
+
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr "Open the user guide, in the interface language, in the web browser"
+
 msgid "Edit shortcuts…"
 msgstr "Edit shortcuts…"
 
@@ -375,6 +841,129 @@ msgstr "Show file field values"
 
 msgid "Open the file information window for the selected file"
 msgstr "Open the file information window for the selected file"
+
+msgid "New profile…"
+msgstr "New profile…"
+
+msgid "Create a new profile"
+msgstr "Create a new profile"
+
+msgid "Create a profile with default settings and switch to it"
+msgstr "Create a profile with default settings and switch to it"
+
+msgid "Duplicate profile…"
+msgstr "Duplicate profile…"
+
+msgid "Duplicate the current profile"
+msgstr "Duplicate the current profile"
+
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "Copy the current profile under a new name and switch to the copy"
+
+msgid "Rename profile…"
+msgstr "Rename profile…"
+
+msgid "Rename the current profile"
+msgstr "Rename the current profile"
+
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "Give the current profile a new name (letters, digits, “-” and “_”)"
+
+msgid "Delete profile…"
+msgstr "Delete profile…"
+
+msgid "Delete a profile"
+msgstr "Delete a profile"
+
+msgid "Permanently delete a profile and all its settings"
+msgstr "Permanently delete a profile and all its settings"
+
+msgid "Profile configuration…"
+msgstr "Profile configuration…"
+
+msgid "Configure the current profile"
+msgstr "Configure the current profile"
+
+msgid "Configure the schema fields and options of the current profile"
+msgstr "Configure the schema fields and options of the current profile"
+
+msgid "Open with a chosen application"
+msgstr "Open with a chosen application"
+
+msgid "Choose the application that opens the selected file"
+msgstr "Choose the application that opens the selected file"
+
+msgid "View"
+msgstr "View"
+
+msgid "Show in the image viewer"
+msgstr "Show in the image viewer"
+
+msgid "Show the selected images and videos in the image viewer"
+msgstr "Show the selected images and videos in the image viewer"
+
+msgid "Fill the schema from the file name"
+msgstr "Fill the schema from the file name"
+
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr "Infer the schema fields from the selected file name and its folders"
+
+msgid "Delete the selected files"
+msgstr "Delete the selected files"
+
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr "Delete the selected files and their sidecars (to the trash if enabled)"
+
+msgid "Orphan sidecars…"
+msgstr "Orphan sidecars…"
+
+msgid "List the sidecars without a base file"
+msgstr "List the sidecars without a base file"
+
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr "List, then delete, the sidecar files of the folder without a base file"
+
+msgid "Rotate 90° left"
+msgstr "Rotate 90° left"
+
+msgid "Rotate counter-clockwise, without loss"
+msgstr "Rotate counter-clockwise, without loss"
+
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr "Rotate the selected images 90° counter-clockwise, without loss"
+
+msgid "Rotate 180°"
+msgstr "Rotate 180°"
+
+msgid "Rotate the selected images 180°, without loss"
+msgstr "Rotate the selected images 180°, without loss"
+
+msgid "Rotate 90° right"
+msgstr "Rotate 90° right"
+
+msgid "Rotate clockwise, without loss"
+msgstr "Rotate clockwise, without loss"
+
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr "Rotate the selected images 90° clockwise, without loss"
+
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "Rotate the pixels as the EXIF orientation says"
+
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "Rotate the pixels as the EXIF orientation says, then reset it"
+
+msgid "Set the EXIF orientation to normal"
+msgstr "Set the EXIF orientation to normal"
+
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "Read the folder again and refresh the thumbnails"
 
 msgid "Browse the filesystem"
 msgstr "Browse the filesystem"
@@ -408,6 +997,33 @@ msgstr "Include all subdirectories"
 
 msgid "When checked, files from all subdirectories are listed"
 msgstr "When checked, files from all subdirectories are listed"
+
+msgid "Thumbnails"
+msgstr "Thumbnails"
+
+msgid "Show image thumbnails in the file list"
+msgstr "Show image thumbnails in the file list"
+
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr "Show a thumbnail column; this setting belongs to the current profile"
+
+msgid "By date"
+msgstr "By date"
+
+msgid "Sort the files by modification date"
+msgstr "Sort the files by modification date"
+
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr "Sort by modification date instead of by name; folders stay first"
+
+msgid "Reversed"
+msgstr "Reversed"
+
+msgid "Reverse the sort order"
+msgstr "Reverse the sort order"
+
+msgid "List the files in reverse order; folders stay first"
+msgstr "List the files in reverse order; folders stay first"
 
 msgid "Keep extension"
 msgstr "Keep extension"
@@ -473,6 +1089,26 @@ msgstr "Glob pattern to filter the file list"
 msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 
+msgid "Sidecar filter…"
+msgstr "Sidecar filter…"
+
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+
 msgid "Files to be renamed"
 msgstr "Files to be renamed"
 
@@ -484,6 +1120,18 @@ msgstr ""
 "apply to allSelect rows to restrict operations to those files; leave "
 "unselected to apply to allSelect rows to restrict operations to those "
 "files; leave unselected to apply to all"
+
+msgid "Pattern"
+msgstr "Pattern"
+
+msgid "Rename in place with search/replace patterns"
+msgstr "Rename in place with search/replace patterns"
+
+msgid "Schema"
+msgstr "Schema"
+
+msgid "Sort files into a destination tree built from schema fields"
+msgstr "Sort files into a destination tree built from schema fields"
 
 msgid "Search:"
 msgstr "Search:"
@@ -519,9 +1167,6 @@ msgstr ""
 "Plain text)Show help about search patterns (Pattern tokens, Regular "
 "expressions, Plain text)Show help about search patterns (Pattern tokens, "
 "Regular expressions, Plain text)"
-
-msgid "Pattern"
-msgstr "Pattern"
 
 msgid "Search using pattern tokens"
 msgstr "Search using pattern tokens"
@@ -710,9 +1355,6 @@ msgstr ""
 "Save all search, replace and post-processing settings under the current "
 "name (overwrites any existing save with the same name)"
 
-msgid "Delete"
-msgstr "Delete"
-
 msgid "Delete this named save"
 msgstr "Delete this named save"
 
@@ -743,21 +1385,27 @@ msgstr "Remove all preview values from the Preview column"
 msgid "Reverse the last batch of renames performed on disk"
 msgstr "Reverse the last batch of renames performed on disk"
 
-msgid "Rename"
-msgstr "Rename"
-
-msgid "Apply renames on disk"
-msgstr "Apply renames on disk"
+msgid "Renumber from 1 in place"
+msgstr "Renumber from 1 in place"
 
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
 msgstr ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)Permanently rename all files shown in the "
-"Preview column (only enabled when there are no conflicts)Permanently "
-"rename all files shown in the Preview column (only enabled when there are"
-" no conflicts)"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+
+msgid "Apply renames on disk (F2)"
+msgstr "Apply renames on disk (F2)"
+
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
 
 msgid "File"
 msgstr "File"
@@ -765,11 +1413,99 @@ msgstr "File"
 msgid "Edit"
 msgstr "Edit"
 
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Images"
+msgstr "Images"
+
+msgid "Open sidecar"
+msgstr "Open sidecar"
+
 msgid "Shortcuts"
 msgstr "Shortcuts"
 
 msgid "Help"
 msgstr "Help"
+
+msgid "Field"
+msgstr "Field"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "Image metadata (EXIF / IPTC)"
+
+msgid "Audio metadata"
+msgstr "Audio metadata"
+
+msgid "Video metadata"
+msgstr "Video metadata"
+
+msgid "Universal fields"
+msgstr "Universal fields"
+
+msgid "Today's date"
+msgstr "Today's date"
+
+msgid "Current date and time"
+msgstr "Current date and time"
+
+msgid "Missing"
+msgstr "Missing"
+
+msgid "File modification date/time"
+msgstr "File modification date/time"
+
+msgid "File creation date/time"
+msgstr "File creation date/time"
+
+msgid "Parent folder name"
+msgstr "Parent folder name"
+
+msgid "Batch fields"
+msgstr "Batch fields"
+
+msgid "Computed"
+msgstr "Computed"
+
+msgid "Full matched text"
+msgstr "Full matched text"
+
+msgid "Capture groups"
+msgstr "Capture groups"
+
+msgid "Auto-incrementing counter"
+msgstr "Auto-incrementing counter"
+
+msgid "Conflict-free counter"
+msgstr "Conflict-free counter"
+
+msgid "Named regex group"
+msgstr "Named regex group"
+
+msgid "Insert into replacement field"
+msgstr "Insert into replacement field"
+
+msgid "Orphan sidecars"
+msgstr "Orphan sidecars"
+
+msgid "Delete selected"
+msgstr "Delete selected"
+
+msgid "Delete all"
+msgstr "Delete all"
+
+msgid "Close"
+msgstr "Close"
+
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} orphan sidecar file(s):"
 
 #, python-brace-format
 msgid ""
@@ -1249,6 +1985,235 @@ msgstr "Video metadata fields for <code>{vi:…}</code>"
 msgid "Examples"
 msgstr "Examples"
 
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "Profile configuration — {name}"
+
+#, python-brace-format
+msgid "Field {n}"
+msgstr "Field {n}"
+
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "Field {n}:"
+
+msgid "Display"
+msgstr "Display"
+
+msgid "Number of fields of the rename schema"
+msgstr "Number of fields of the rename schema"
+
+msgid "Number of fields:"
+msgstr "Number of fields:"
+
+msgid "Text inserted in the name of video files"
+msgstr "Text inserted in the name of video files"
+
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+
+msgid "Video marker:"
+msgstr "Video marker:"
+
+msgid "Field titles:"
+msgstr "Field titles:"
+
+msgid "Show thumbnails"
+msgstr "Show thumbnails"
+
+msgid "Show a thumbnail column in the file list"
+msgstr "Show a thumbnail column in the file list"
+
+msgid "Maximum width:"
+msgstr "Maximum width:"
+
+msgid "Maximum height:"
+msgstr "Maximum height:"
+
+msgid "Sidecar files"
+msgstr "Sidecar files"
+
+msgid "Show the sidecar column"
+msgstr "Show the sidecar column"
+
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+
+msgid "Show the sidecar content filter"
+msgstr "Show the sidecar content filter"
+
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "Filter the file list on the content of the sidecar files"
+
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "Extension of the sidecar created by a double-click, without dot"
+
+msgid "New sidecar extension:"
+msgstr "New sidecar extension:"
+
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "Delete empty sidecar files when loading a directory"
+
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+
+msgid "Maximum number of values kept in each field history"
+msgstr "Maximum number of values kept in each field history"
+
+msgid "Max history entries:"
+msgstr "Max history entries:"
+
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "Zoom change of each zoom in or zoom out"
+
+msgid "Zoom step:"
+msgstr "Zoom step:"
+
+msgid "Largest zoom of the image viewer"
+msgstr "Largest zoom of the image viewer"
+
+msgid "Maximum zoom:"
+msgstr "Maximum zoom:"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr "Side of the image viewer where the metadata panel is shown"
+
+msgid "Metadata panel:"
+msgstr "Metadata panel:"
+
+msgid "Show images turned as their EXIF orientation says"
+msgstr "Show images turned as their EXIF orientation says"
+
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "Applies to the thumbnails and to the image viewer"
+
+msgid "Deletion"
+msgstr "Deletion"
+
+msgid "Move deleted files to the trash"
+msgstr "Move deleted files to the trash"
+
+msgid "When unchecked, deleted files are removed permanently"
+msgstr "When unchecked, deleted files are removed permanently"
+
+msgid "Confirm deletions"
+msgstr "Confirm deletions"
+
+msgid "Ask for a confirmation before deleting files"
+msgstr "Ask for a confirmation before deleting files"
+
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr "Above this number of files, the confirmation only gives the count"
+
+msgid "Files listed in the confirmation:"
+msgstr "Files listed in the confirmation:"
+
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ no destination for {dest}"
+
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} must start the name"
+
+msgid "⚠ absolute path"
+msgstr "⚠ absolute path"
+
+msgid "⚠ extension separator removed"
+msgstr "⚠ extension separator removed"
+
+msgid "⚠ invalid path"
+msgstr "⚠ invalid path"
+
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ no matching type ({types})"
+
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} unavailable"
+
+msgid "Search — Help"
+msgstr "Search — Help"
+
+msgid "Replace — Help"
+msgstr "Replace — Help"
+
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+
+msgid "Destination:"
+msgstr "Destination:"
+
+msgid "Destination root directory…"
+msgstr "Destination root directory…"
+
+msgid "Root of the destination tree"
+msgstr "Root of the destination tree"
+
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+
+msgid "Browse…"
+msgstr "Browse…"
+
+msgid "Choose the destination directory"
+msgstr "Choose the destination directory"
+
+msgid "Fill gaps"
+msgstr "Fill gaps"
+
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr "Fill numbering gaps instead of continuing after the highest number"
+
+msgid "Video marker position"
+msgstr "Video marker position"
+
+msgid "Choose destination directory"
+msgstr "Choose destination directory"
+
+msgid "Choose a destination directory."
+msgstr "Choose a destination directory."
+
+msgid "The destination must be an absolute path."
+msgstr "The destination must be an absolute path."
+
+msgid "Proposed template"
+msgstr "Proposed template"
+
+msgid "Detected template, confirm to fill the fields:"
+msgstr "Detected template, confirm to fill the fields:"
+
+msgid "(empty)"
+msgstr "(empty)"
+
 msgid "System default"
 msgstr "System default"
 
@@ -1347,9 +2312,6 @@ msgstr "Move down"
 
 msgid "Saved shortcuts:"
 msgstr "Saved shortcuts:"
-
-msgid "Images"
-msgstr "Images"
 
 msgid "Duplicate extension"
 msgstr "Duplicate extension"

@@ -13,6 +13,25 @@ your platform from the `GitHub Releases
 <https://github.com/ppoilbarbe/PBRenamer/releases>`_ page, extract it, and run
 the binary directly — no Python installation required.
 
+.. _optional-dependencies:
+
+Optional dependencies
+~~~~~~~~~~~~~~~~~~~~~
+
+The executables include everything.  When PBRenamer is installed with
+``pip``, some features need optional extras:
+
+``pip install pbrenamer[meta]``
+    Pillow, mutagen and pymediainfo: the ``{im:…}``, ``{au:…}`` and
+    ``{vi:…}`` metadata fields.
+
+``pip install pbrenamer[images]``
+    pyexiv2, pillow-heif and Pillow: thumbnails of HEIC files, rotation,
+    EXIF orientation, and the metadata panel of the image viewer.
+
+Lossless rotation of JPEG files also needs the ``jpegtran`` program (from
+libjpeg-turbo) on the ``PATH``.
+
 Launching
 ---------
 
@@ -24,17 +43,20 @@ Run the binary (or ``python -m pbrenamer`` from a development environment)::
     pbrenamer [DIR]
 
 If *DIR* is omitted the current working directory is used as the starting
-folder.  Qt platform options such as ``--style`` and ``--platform`` are
-forwarded to Qt and can be appended after the positional argument.
+folder.  ``--profile NAME`` opens the window on a given :ref:`profile
+<profiles>` instead of the last one used.  Qt platform options such as
+``--style`` and ``--platform`` are forwarded to Qt and can be appended after
+the positional argument.
 
 Headless (no-GUI) mode
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Pass ``--search`` or ``--saved`` to activate headless mode.  PBRenamer will
-list, rename, and exit without opening any window::
+Pass ``--search``, ``--saved`` or ``--schema`` to activate headless mode.
+PBRenamer will list, rename, and exit without opening any window::
 
     pbrenamer --search PATTERN --replace REPLACEMENT [options] [DIR]
     pbrenamer --saved  NAME    [overrides…]            [DIR]
+    pbrenamer --schema FIELDS  --dest ROOT [options]   [DIR]
 
 See :ref:`cli-reference` for the full flag list and :ref:`cli-examples` for
 worked examples.
@@ -42,31 +64,50 @@ worked examples.
 The GUI
 -------
 
+The window has a directory tree on the left, the file list on the right, and
+below them the rule panel with two tabs, **Pattern** (search and replace,
+described in this chapter) and **Schema** (see :ref:`schema-mode`).  The
+action bar at the bottom holds the **Undo**, **Preview**, **Clear**,
+**Renumber** and **Rename** buttons.  The menus are **File**, **Edit**,
+**Profile**, **Images**, **Shortcuts** and **Help**; the name of the current
+:ref:`profile <profiles>` is shown in the window title.
+
 Opening a folder
 ~~~~~~~~~~~~~~~~
 
-Click **Open folder…** (toolbar) or drag a directory onto the window to load
-its contents.  Use the **Recurse** checkbox to include sub-directories.  A
-**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the
-listing.
+Choose **File → Open folder…** (**Ctrl+O**), select a folder in the directory
+tree, or drag a directory onto the window to load its contents.  Use the
+**Recursive** checkbox to include sub-directories.  The **Filter** field
+accepts a glob pattern (e.g. ``*.jpg``) to restrict the listing.
 
-Use the **Show** combo to display *Files only*, *Directories only*, or *Both*.
+Use the **Show** combo to display *Files only*, *Directories only*, or *Files
+and directories*.  The **By date** checkbox sorts the files by modification
+date instead of by name, and **Reversed** reverses the order; folders always
+stay first.  The list follows changes made on disk by other programs.
 
 The file list
 ~~~~~~~~~~~~~
 
 The main table shows:
 
-* **Original name** — the current file name on disk.
-* **New name** — the preview of the name after renaming.  The cell is empty
-  when the current pattern does not match the file.  Rows shown in a distinct
-  colour are directories.
+* **Thumbnail** — optional, see :ref:`thumbnails`.
+* **Original** — the current file name on disk.
+* **Sidecar** — optional, see :ref:`sidecar-column`.
+* **Preview** — the name after renaming.  The cell is empty when the current
+  pattern does not match the file.  Rows shown in a distinct colour are
+  directories.
+
+Click **Preview** to compute the Preview column, or check **Auto-preview** to
+recompute it whenever the pattern or an option changes (the delay is set in
+:ref:`settings`).  **Clear** empties the column.
 
 Rows with a naming conflict are highlighted in red.  The **Rename** button is
 disabled until all conflicts are resolved.
 
 You can select a subset of rows with the usual keyboard/mouse modifiers
-(Shift+click, Ctrl+click).  Renaming then applies only to the selected files.
+(Shift+click, Ctrl+click).  Renaming then applies only to the selected files;
+with no selection it applies to every listed file.  **Tab** moves the focus
+between the directory tree and the file list.
 
 Drag and drop
 ~~~~~~~~~~~~~~
@@ -122,6 +163,8 @@ modes.  See :ref:`replacement-fields` for the complete field reference.
 
 Click the **?** button next to the replace field to open the non-modal
 Replacement Fields help dialog.
+
+.. _extension-mode:
 
 Extension mode
 ^^^^^^^^^^^^^^
@@ -245,7 +288,7 @@ suffixes for each category. The dialog has one tab per base category
   category is rejected with a warning naming the conflicting category.
 * Each list has its own **Restore defaults** button.
 * Changes apply immediately and persist across sessions
-  (``sidecar_config.json`` in the configuration directory), independently of
+  (``sidecar_config.json`` in the folder of the current profile), independently of
   whether the dialog is later closed or cancelled.
 
 Sidecar grouping is also available in :ref:`headless mode <cli-reference>`
@@ -287,28 +330,44 @@ listed:
 Presets
 ^^^^^^^
 
-The search and replace combos store your history automatically (LRU order).
-Use the **Save** button to give the current pattern pair a name; named saves
-can be loaded later from the **Presets** menu or via ``--saved`` in headless
-mode.
+The search and replace combos keep a history of the patterns used (most
+recent first); the button next to each combo adds the current pattern to it.
+**Edit → History…** edits the search, replacement and :ref:`sidecar filter
+<sidecar-filter>` histories: add, remove, reorder, sort, or clear.
+
+The **Save** field gives the current settings a name: type a name and click
+**Save**, pick it later from the same drop-down to restore it, or click
+**Delete** to remove it.  Named saves can also be loaded with ``--saved`` in
+headless mode.  Histories and named saves belong to the current
+:ref:`profile <profiles>`.
 
 Applying renames
 ~~~~~~~~~~~~~~~~
 
-Click **Rename** to apply all non-conflicting renames.  The status bar reports
-how many files were renamed.
+Click **Rename** (**F2**) to apply the renames shown in the Preview column.
+The button shows how many files will be renamed, e.g. **Rename (12)**, and is
+only enabled when a preview is displayed and has no conflict.  The status bar
+reports how many files were renamed.
+
+Renaming is atomic: every target is checked first, and if one of them fails
+during the operation, the renames already done are rolled back.  When the new
+name contains a folder (a :ref:`schema <schema-mode>` or a ``{dest}``
+template), missing folders are created, and source folders left empty below
+the listed folder are removed.  After a rename the Preview column is cleared.
 
 Undo
 ~~~~
 
-Click **Undo** (or press **Ctrl+Z**) to revert the most recent rename batch.
-Each rename batch is recorded on an undo stack; the button label shows the
-number of available batches (e.g. **Undo (3)**) when more than one is queued.
+Click **Undo** to revert the most recent batch.  Each rename batch is
+recorded on an undo stack; the button label shows the number of available
+batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by drag
+and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` are
+recorded on the same stack.
 
 Shortcuts
 ~~~~~~~~~
 
-The **Go → Shortcuts** menu provides one-click navigation to common directories.
+The **Shortcuts** menu provides one-click navigation to common directories.
 
 **System directories**
     The top of the menu lists platform directories (Home, Desktop, Documents,
@@ -322,14 +381,17 @@ The **Go → Shortcuts** menu provides one-click navigation to common directorie
     persisted between sessions.
 
 **Editing shortcuts**
-    Choose **Go → Edit Shortcuts** to open the *Edit Shortcuts* dialog, where
-    shortcuts can be reordered with *Move up* / *Move down* or removed.
+    Choose **Shortcuts → Edit shortcuts…** to open the *Edit Shortcuts*
+    dialog, where shortcuts can be reordered with *Move up* / *Move down* or
+    removed.
 
 File information
 ~~~~~~~~~~~~~~~~
 
-Open **View → File information** to display a non-modal window listing the
-actual values of every replacement field for the selected file.
+Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) to
+display a non-modal window listing the actual values of every replacement
+field for the selected file.  Double-click a field to insert it into the
+replacement pattern.
 
 The window has three groups:
 
@@ -342,14 +404,300 @@ The window has three groups:
 
 The window updates live whenever the selection changes.
 
+Help
+~~~~
+
+The **Help** menu opens this **User guide** in the web browser, in the
+language of the interface, and the **Keyboard and mouse shortcuts…** window
+(**F1**), which lists every shortcut of the main window and of the image
+viewer.
+
+.. _profiles:
+
+Profiles
+--------
+
+A **profile** is a named set of settings for one way of working: for
+instance a ``default`` profile that renames documents in place with the
+Pattern tab, and a ``photos`` profile that sorts pictures into a folder tree
+with the Schema tab, thumbnails and the sidecar column.  Switching profiles
+switches all of this at once.
+
+A profile holds:
+
+* the tab shown at start-up (Pattern or Schema) and the Schema tab settings
+  (number and titles of the fields, destination, video marker and its
+  position, fill gaps);
+* the :ref:`sidecar <sidecar-files>` categories and suffixes;
+* the display options (thumbnails and their size, sidecar column, sidecar
+  filter, sort by date, history length) and the image options (viewer zoom,
+  EXIF orientation, metadata panel, deletion);
+* the histories (search, replacement, schema fields, sidecar filter) and the
+  named saves;
+* the last folder and the state of the option bar.
+
+Managing profiles
+~~~~~~~~~~~~~~~~~
+
+The **Profile** menu lists the profiles: choose one to switch to it.  It also
+offers:
+
+**New profile…** (**Ctrl+N**)
+    Create a profile with the default settings and switch to it.
+
+**Duplicate profile…** (**Ctrl+Shift+D**)
+    Copy the current profile under a new name and switch to the copy.
+
+**Rename profile…**
+    Give the current profile a new name.
+
+**Delete profile…**
+    Permanently delete a profile and all its settings.
+
+**Profile configuration…** (**Ctrl+,**)
+    Configure the current profile (see below).
+
+Profile names may contain letters, digits, ``-`` and ``_``.  A profile whose
+name starts with ``-`` is **hidden**: it is not listed in the menu and is
+never reopened at start-up, but it can be used with ``--profile``.  At least
+one visible profile always exists: the last one can be neither deleted nor
+hidden, and ``default`` is created again if none is left.  Apart from that,
+``default`` is a profile like any other.
+
+PBRenamer reopens the last profile used.  ``--profile NAME`` selects another
+one, in the GUI as in headless mode.
+
+Profile configuration
+~~~~~~~~~~~~~~~~~~~~~
+
+**Profile → Profile configuration…** has three tabs.
+
+**Schema**
+    Number of fields of the schema, the title of each field (shown above it
+    in the Schema tab), and the video marker (see :ref:`schema-mode`).
+
+**Display**
+    Thumbnails (shown or not, maximum width and height), the sidecar column
+    and the sidecar content filter (shown or not), the extension of the
+    sidecar created by a double-click, whether empty sidecar files are
+    deleted when a folder is loaded, and the maximum number of entries kept
+    in each history.
+
+**Images**
+    Image viewer: zoom step, maximum zoom, side of the metadata panel, and
+    whether images are shown turned as their EXIF orientation says (also
+    applies to the thumbnails).  Deletion: move deleted files to the trash
+    instead of removing them permanently, ask for a confirmation, and the
+    number of files above which the confirmation only gives their count.
+
+.. _schema-mode:
+
+Schema Mode
+-----------
+
+The **Schema** tab sorts files into a folder tree built from a few fields,
+for instance a place, a year and a subject.  With the fields ``Paris``,
+``2024``, *(empty)*, ``Street``, *(empty)*, ``###`` and the destination
+``~/Photos``, the file ``IMG_0012.jpg`` becomes::
+
+    ~/Photos/Paris/2024/Street/Paris_2024_Street_013.jpg
+
+The rules are:
+
+* every non-empty field, in order, is both a folder level under the
+  destination and a part of the name, joined with ``_``;
+* a field made only of ``#`` is the **counter**, padded to the number of
+  ``#``; at most one field may be a counter, and it is always placed at the
+  end of the name;
+* empty fields are skipped;
+* a field may not contain ``_``, ``.``, ``/`` or ``\``;
+* the extension is kept, in lower case.
+
+The counter continues after the highest number already used in the target
+folder by files of the same name, so that a new batch never overwrites
+earlier ones.  With **Fill gaps** checked, it takes the smallest free numbers
+first.  Images and videos are numbered separately.
+
+Each field keeps a history of its values (most recent first) in its
+drop-down list.  The history is updated when a rename or a renumbering
+succeeds.
+
+Destination
+~~~~~~~~~~~
+
+The **Destination** field is the root of the folder tree.  It must be an
+absolute path; **Browse…** chooses it.  Missing folders are created when
+renaming, and source folders left empty are removed.
+
+Video marker
+~~~~~~~~~~~~
+
+A **video marker** (set in **Profile configuration…**, *Schema* tab) is a text
+added to the name of video files only, so that they are easy to tell apart:
+with the marker ``vid``, a video becomes ``Paris_2024_Street_vid_001.mp4``.
+The small radio buttons between the fields choose where the marker goes,
+from before the first field to after the last one.
+
+Sidecars in schema mode
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Sidecar mode is always on in the Schema tab: each sidecar follows its base
+file and takes its new name.  A sidecar without a base file (an *orphan*) is
+neither renamed nor renumbered; its preview reads *orphan sidecar, not
+renamed*.  **Images → Orphan sidecars…** lists them (see
+:ref:`image-tools`).
+
+Renumber
+~~~~~~~~
+
+When the schema has a counter, the **Renumber** button renumbers the
+selected files (every listed file if none is selected) from 1, in place,
+without moving them.  Like **Rename**, it is only enabled when a preview is
+displayed.  Files are renamed through temporary names, so swapping numbers is
+safe.
+
+Template
+~~~~~~~~
+
+**Images → Template** fills the schema from the name of the selected file
+and up to three of its parent folders: the parts of the name found in a
+field's history go to that field, and a trailing number goes to the counter
+field.  A dialog shows the proposed fields before they are filled in.
+
+In headless mode, the same schema is given with ``--schema``, for instance
+``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (see
+:ref:`cli-reference`).
+
+.. _image-tools:
+
+Image Tools
+-----------
+
+PBRenamer includes tools to look at and tidy up photos and videos before
+sorting them.  Some depend on optional libraries (see
+:ref:`optional-dependencies`); an action that cannot work is disabled.
+
+.. _thumbnails:
+
+Thumbnails
+~~~~~~~~~~
+
+The **Thumbnails** checkbox of the option bar adds a thumbnail column to the
+file list.  Thumbnails are loaded in the background, visible rows first.
+Their maximum size is set in **Profile configuration…**, *Display* tab.
+Double-clicking a thumbnail opens the image in the viewer; double-clicking a
+name opens the file with its default application.
+
+.. _sidecar-column:
+
+Sidecar column
+~~~~~~~~~~~~~~
+
+When enabled in **Profile configuration…**, the **Sidecar** column shows
+whether a file has sidecars: ``●`` followed by their suffixes, or ``○`` for
+an image, video or audio file without any.  Double-clicking it opens the sidecar (a menu lets you choose when
+there are several).  On a file without a sidecar, it creates an empty one
+with the extension set in the profile (for instance ``xmp``) and opens it.
+
+.. _sidecar-filter:
+
+Sidecar filter
+~~~~~~~~~~~~~~
+
+When enabled in **Profile configuration…**, a **Sidecar filter…** field
+appears in the action bar.  Type a regular expression: only the files having
+a sidecar whose content matches it remain listed (case-insensitive, across
+lines), together with their sidecars.  The list is filtered as you type;
+**Enter** also adds the expression to the filter's own history.  Empty the
+field to list every file again.
+
+The Images menu
+~~~~~~~~~~~~~~~
+
+The **Images** menu is also the context menu of the file list.  Its actions
+apply to the selected files:
+
+**Open** (**Ctrl+Enter**)
+    Open the files with their default application.
+
+**Open with…** (**Ctrl+Shift+O**)
+    Choose the application that opens the file.
+
+**Open sidecar**
+    Open one of the sidecars of the file.
+
+**View** (**Enter**)
+    Show the selected images and videos in the image viewer.
+
+**Template**
+    Fill the schema from the file name (see :ref:`schema-mode`).
+
+**Delete** (**Del**)
+    Delete the files and their sidecars, to the trash or permanently,
+    after a confirmation, as set in the profile.
+
+**Orphan sidecars…**
+    List the sidecar files of the folder that have no base file, then
+    delete the selected ones or all of them.
+
+**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)
+    Rotate the images without loss.
+
+**Apply EXIF orientation** (**F9**)
+    Rotate the pixels as the EXIF orientation tag says, then reset the tag.
+
+**Force EXIF orientation to 0°** (**F10**)
+    Set the EXIF orientation tag to normal without rotating the pixels.
+
+**Information** (**Ctrl+I**) and **Refresh** (**F5**)
+    Show the file information window; read the folder again.
+
+.. _image-rotation:
+
+Rotation and EXIF orientation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+JPEG files are rotated with ``jpegtran`` (from libjpeg-turbo), which turns
+them without recompressing; other formats are saved by Pillow, without loss
+where the format allows it.  Rotations and EXIF resets can be undone with
+**Undo**.
+
+The image viewer
+~~~~~~~~~~~~~~~~
+
+**Images → View** opens the image viewer on the selected images and videos
+(a video is shown as a placeholder).  The viewer follows the selection of the
+file list.  It offers:
+
+* zoom modes in the toolbar: fit window (**0** or **X**), actual size
+  (**1** or **Z**), fit width (**W**), fit height (**H**), and zoom in and
+  out (**+** and **−**); drag to pan, double-click to centre on a point,
+  **Ctrl+click** and **Ctrl+right-click** to zoom on a point;
+* navigation with the arrow keys: within the selection when several files
+  are selected, otherwise to the previous or next file of the list; a
+  toolbar button switches between linear navigation (stop at the ends) and
+  circular navigation (wrap around);
+* a strip of thumbnails of the selection, when several files are selected:
+  click one to show it;
+* a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the image;
+  double-click a field to insert it into the replacement pattern;
+* the image actions: open, open with, delete, rotations and EXIF orientation,
+  with the same shortcuts as in the main window; **Esc** closes the viewer.
+
+The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**).
+
+.. _settings:
+
 Settings
 --------
 
-Open **Edit → Settings** to configure:
+**Edit → Settings…** holds the options shared by every profile.
+
+*General* tab:
 
 **Language**
-    Select the UI language.  Several languages are bundled; the selection
-    takes effect immediately and is persisted.
+    Select the UI language.  Several languages are bundled; the change takes
+    effect at the next start.
 
 **Log level**
     Controls diagnostic output written to the console.  Choices: ``DEBUG``,
@@ -358,8 +706,23 @@ Open **Edit → Settings** to configure:
 
 **Restore last opened directory** *(Behaviour group)*
     When enabled, the app reopens the directory that was active in the
-    previous session.  A directory passed on the command line always takes
-    priority.  Default: disabled (current working directory is used).
+    previous session of the profile.  A directory passed on the command line
+    always takes priority.  Default: disabled (current working directory is
+    used).
+
+**Restore toolbar state** *(Behaviour group)*
+    When enabled, the options of the option bar and of the Pattern tab are
+    restored as they were left.
+
+**Auto-preview delay** *(Behaviour group)*
+    Delay, in milliseconds, before the preview is recomputed when
+    **Auto-preview** is checked.
+
+*Extension Normalization* tab: the table used by the *Normalize extension*
+mode (see :ref:`extension-mode`).
+
+The settings of a profile are in **Profile → Profile configuration…** (see
+:ref:`profiles`).
 
 .. _config-files:
 
@@ -367,9 +730,9 @@ Configuration Files
 --------------------
 
 Everything the Settings dialog and other panels persist — preferences,
-presets, and per-feature configuration — is stored as plain-text files (Qt
-INI and JSON) under a single per-user configuration directory.  No system
-directories or registry keys are touched.
+profiles, presets, and per-feature configuration — is stored as plain-text
+files (Qt INI and JSON) under a single per-user configuration directory.  No
+system directories or registry keys are touched.
 
 Default location
 ~~~~~~~~~~~~~~~~~
@@ -384,41 +747,122 @@ Windows      ``%APPDATA%\pbrenamer``
 
 Override with ``--config-dir DIR`` (see :ref:`cli-reference`) to point at
 a different directory — useful for testing or for running several isolated
-profiles side by side.
+configurations side by side.
 
 Files
 ~~~~~
 
+Shared by every profile:
+
 ``pbrenamer.conf``
-    Qt INI settings: log level, language override, "restore last
-    directory" preference and last directory, toolbar state, preview
-    delay.
+    Qt INI settings: log level, language override, behaviour options,
+    preview delay, last profile, image viewer options.
 
 ``shortcuts.json``
-    User-defined directory shortcuts (**Go → Shortcuts** menu).
+    User-defined directory shortcuts (**Shortcuts** menu).
 
 ``extension_normalization.json``
     Per-extension normalization table used by extension mode ``normalize``.
+
+``open_with.json``
+    Applications recently chosen with **Open with…**.
+
+``window_state.json``
+    Main window geometry, position, and splitter ratios.
+
+One folder per profile, ``profiles/NAME/``:
+
+``profile.json``
+    Tab shown at start-up, Schema tab settings, display and image options,
+    last directory, option bar state.
+
+``history.json``
+    Histories of the schema fields and of the sidecar filter.
 
 ``sidecar_config.json``
     :ref:`Sidecar file <sidecar-files>` category configuration (base
     extensions / sidecar suffixes per category), managed from
     **Edit → Sidecar Files…**.
 
-``window_state.json``
-    Main window geometry, position, and splitter ratios.
-
 ``patterns/search.json`` / ``patterns/replace.json``
-    Most-recently-used search and replacement patterns (field dropdown
-    history).
+    Most-recently-used search and replacement patterns.
 
 ``patterns/saves.json``
-    Named presets saved from the Presets panel, also loadable headlessly
-    with ``--saved NAME``.
+    Named saves, also loadable headlessly with ``--saved NAME``.
 
-None of these files are required to exist — deleting any one of them (or
-the whole directory) simply resets that piece of state to its default the
-next time PBRenamer starts.
+None of these files are required to exist — deleting any one of them simply
+resets that piece of state to its default the next time PBRenamer starts.
+Deleting the ``profiles`` folder recreates the profiles from the 1.x
+configuration and PBPicat's catalogues, as on the first start of version 2.
+
+.. _pbpicat-migration:
+
+Migrating from PBPicat
+----------------------
+
+PBRenamer 2 includes every function of PBPicat, which it replaces: the
+schema, the destination tree, renumbering, the video marker, the image
+viewer, rotations, the sidecar tools and the catalogues.
+
+Automatic import
+~~~~~~~~~~~~~~~~
+
+On its first start, PBRenamer 2 reads PBPicat's configuration (without
+modifying it) and turns each **catalogue** into a **profile** of the same
+name, or ``pbpicat-NAME`` if a profile already has that name.  The imported
+profile opens on the Schema tab with thumbnails, the sidecar column and the
+sidecar filter, and keeps:
+
+* the number and titles of the schema fields, the destination, the video
+  marker and its position, fill gaps;
+* the image and video extensions and the sidecar extensions;
+* the display, viewer and deletion options;
+* the field histories and the last folder.
+
+The **Open with** application lists and the viewer's navigation and
+metadata panel options are imported too.  Window sizes, the language and
+PBPicat's defaults for new catalogues are not.  The settings of PBRenamer
+1.x go to the ``default`` profile.
+
+Where things are now
+~~~~~~~~~~~~~~~~~~~~
+
+.. list-table::
+   :header-rows: 1
+   :widths: 40 60
+
+   * - PBPicat
+     - PBRenamer 2
+   * - Catalogue, catalogue menu
+     - Profile, **Profile** menu
+   * - Catalogue settings, program settings
+     - **Profile → Profile configuration…**, **Edit → Settings…**
+   * - Schema fields, destination, video marker buttons
+     - **Schema** tab
+   * - *Rename All* / *Rename selection*
+     - **Rename** (the selection, or every listed file when none is
+       selected), after a preview
+   * - *Renumber from 1*
+     - **Renumber** (Schema tab with a counter field)
+   * - Tooltip preview of the new name
+     - **Preview** column
+   * - Rotations, EXIF, open, open with, delete, template, orphan sidecars
+     - **Images** menu and context menu of the file list
+   * - Image viewer
+     - **Images → View** (**Enter**)
+   * - Catalogue on the command line
+     - ``pbrenamer --profile NAME``
+
+What changes
+~~~~~~~~~~~~
+
+* There is no ``pbpicat`` command: start ``pbrenamer``, or
+  ``pbrenamer --profile NAME`` for a given profile.
+* **Rename** and **Renumber** apply what the Preview column shows: compute
+  the preview first (or check **Auto-preview**).
+* A sidecar without a base file is not renamed in schema mode.
+* Every rename can be undone with **Undo**, like rotations and EXIF resets.
+* Schemas can also be applied without the GUI, with ``--schema``.
 
 .. _search-patterns:
 
@@ -532,7 +976,12 @@ Fields are written ``{name}`` and accept optional formatting options::
     {name:<fmt}              left-align  (digit fmt = minimum width)
     {name:>fmt}              right-align
     {name:0fmt}              zero-pad right (numbers)
+    {name:^fmt}              centre
+    {name:+}                 upper case  (also - lower, ! capitalise,
+                             * Title Case, = unchanged)
     {{                       literal '{' character
+
+The case character comes first, before the alignment, e.g. ``{1:+<10}``.
 
 * **fmt** is a minimum width (digit) for text/numbers, or a ``strftime``
   format string for dates and datetimes.
@@ -565,9 +1014,20 @@ Available fields
        2 digits)
    * - ``{newnum}``
      - all modes
-     - Like ``{num}`` but skips values whose target name already exists on
-       disk or has been assigned to another file in the same batch —
-       guarantees conflict-free numbering
+     - Counter that continues after the highest number already used on disk
+       by names of the same form in the target folder (``backup_007`` →
+       next is ``backup_008``), so that numbering never conflicts.  With
+       ``--fill-gaps`` it takes the smallest free numbers first; with
+       ``--renumber`` it ignores the disk and starts from its start value
+   * - ``{dest}``
+     - all modes
+     - Destination root (``--dest`` in headless mode).  Only valid at the
+       very start of the template, which may then contain ``/`` to place the
+       file in sub-folders, created as needed: ``{dest}/{im:Make::}/{0}``
+   * - ``{if:category:text}``
+     - all modes
+     - *text* when the file belongs to *category* (``image``, ``video``,
+       ``audio`` or ``other``), nothing otherwise: ``{0}{if:video:_vid}``
    * - ``{date}``
      - all modes
      - Today's date — default ``strftime`` format ``%Y-%m-%d``
@@ -599,7 +1059,8 @@ Available fields
 Image metadata fields ``{im:…}``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Requires **Pillow**.  Field names are case-insensitive.  A *default* is
+Read with **pyexiv2**, or **Pillow** when pyexiv2 is not available (see
+:ref:`optional-dependencies`).  Field names are case-insensitive.  A *default* is
 strongly recommended — metadata may be absent from non-image files or images
 without EXIF/IPTC data.
 
@@ -812,8 +1273,8 @@ Replacement examples
    * - ``{1}_{num:04:10}``
      - Same, but counter starts at 10
    * - ``backup_{newnum:03}``
-     - Conflict-free 3-digit counter: skips values where ``backup_NNN``
-       already exists on disk
+     - Conflict-free 3-digit counter: continues after the highest
+       ``backup_NNN`` already on disk
    * - ``{date}-{0}``
      - Today's date prepended to the matched text
    * - ``{im:DateTimeOriginal:%Y%m%d_%H%M%S:unknown}``
@@ -836,12 +1297,21 @@ Replacement examples
 Headless CLI Reference
 ----------------------
 
-Headless mode is activated when ``--search`` or ``--saved`` is provided.  No
-window is opened; renames are performed and the process exits.
+Headless mode is activated when ``--search``, ``--saved`` or ``--schema`` is
+provided.  No window is opened; renames are performed and the process exits.
+Settings that are not given on the command line come from the profile chosen
+with ``--profile``, or from the last profile used in the GUI.
+
+Renaming is atomic: if any target is in conflict, nothing is renamed and the
+command exits with an error listing the conflicts.
 
 .. code-block:: text
 
-    pbrenamer [--search TEXT | --saved NAME]
+    pbrenamer [--search TEXT | --saved NAME | --schema LIST]
+              [--dest DIR]
+              [--fill-gaps | --no-fill-gaps]
+              [--renumber]
+              [--video-marker TEXT] [--video-marker-pos N]
               [--replace TEXT]
               [--mode {pattern,regex,plain}]
               [--list {files,dirs,all}]
@@ -858,6 +1328,7 @@ window is opened; renames are performed and the process exits.
               [--confirm | --no-confirm]
               [--dry-run | --no-dry-run]
               [-d | -v | -q]
+              [--profile NAME]
               [--config-dir DIR]
               [DIR]
 
@@ -870,6 +1341,39 @@ Rename source (mutually exclusive)
 ``--saved NAME``
     Load a named save — activates headless mode.  Other options override
     values from the save.
+
+``--schema LIST``
+    Rename :ref:`schema <schema-mode>`: comma-separated fields, e.g.
+    ``'Trip,,Paris,###'`` — activates headless mode.  Non-empty fields form
+    both the folder tree under ``--dest`` and the name (joined with ``_``);
+    a field of ``#`` only is the counter, padded to the number of ``#``;
+    empty fields are skipped.  Sidecar mode is always on.
+
+Schema options
+~~~~~~~~~~~~~~
+
+``--dest DIR``
+    Destination root.  With ``--schema``, defaults to the profile's
+    destination and is required if it has none (except with
+    ``--renumber``).  Also the value of the ``{dest}`` field in
+    ``--replace``.
+
+``--fill-gaps`` / ``--no-fill-gaps``
+    ``{newnum}`` takes the smallest free number instead of continuing after
+    the highest one (default: the profile's setting with ``--schema``,
+    ``--no-fill-gaps`` otherwise).
+
+``--renumber``
+    ``{newnum}`` runs from its start value, ignoring the numbers already
+    used on disk; with ``--schema``, renumber the files in place.
+
+``--video-marker TEXT``
+    With ``--schema``: text added to the name of video files (default: the
+    profile's marker).
+
+``--video-marker-pos N``
+    With ``--schema``: position of the video marker between the fields
+    (0 = before the first field; default: the profile's position).
 
 Rename options
 ~~~~~~~~~~~~~~
@@ -952,9 +1456,19 @@ Logging
 Advanced
 ~~~~~~~~
 
+``--profile NAME``
+    Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar
+    configuration, schema defaults) instead of the last one used in the
+    GUI.  In GUI mode, open the window on that profile.
+
 ``--config-dir DIR``
     Override the configuration directory — see :ref:`config-files` for the
     platform defaults.  Intended for testing.
+
+``--install-desktop-entry`` / ``--uninstall-desktop-entry``
+    Linux only: install (or remove) a desktop menu entry and icon for the
+    current user, then exit.  Useful after a ``pip`` install, which has no
+    post-install hook to do it.
 
 Self-update
 ~~~~~~~~~~~
@@ -1015,3 +1529,20 @@ Only rename two specific files (and their sidecars) out of the directory::
 
     pbrenamer --search "img" --replace "photo" --sidecar-mode \
               --select "img1.jpg" --select "img2.jpg" ~/Photos
+
+Sort the pictures of a folder into ``~/Photos/Paris/2024/Street/``, with a
+3-digit counter, using the settings of the ``photos`` profile::
+
+    pbrenamer --profile photos --schema "Paris,2024,,Street,,###" \
+              --dest ~/Photos ~/Downloads/card
+
+Renumber the files of a folder from 1, in place::
+
+    pbrenamer --schema "Paris,2024,Street,###" --renumber \
+              ~/Photos/Paris/2024/Street
+
+Move files into one folder per camera model, with a counter, sidecars
+following their picture::
+
+    pbrenamer --search "{X}" --replace "{dest}/{im:Model::unknown}/{newnum:04}" \
+              --sidecar-mode --dest ~/Sorted ~/Downloads/card

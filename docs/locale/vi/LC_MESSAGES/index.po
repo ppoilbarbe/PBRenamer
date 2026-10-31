@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, PBMou
+# This file is distributed under the same license as the PBRenamer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PBRenamer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2001-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: vi\n"
+"Language-Team: vi <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# ==AUTO== Automatically translated
+msgid "Contents"
+msgstr "Mục lục"
+
+# ==AUTO== Automatically translated
+msgid "Project"
+msgstr "Dự án"
+
+# ==AUTO== Automatically translated
+msgid "PBRenamer"
+msgstr "PBRenamer"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**PBRenamer** is a graphical batch file renaming utility for Linux, "
+"macOS, and Windows.  It combines a live-preview rename table with a "
+"flexible pattern engine that supports wildcards, regular expressions, "
+"plain-text substitution, metadata fields (EXIF/IPTC, audio tags, video "
+"properties), and a headless (no-GUI) CLI mode for scripting."
+msgstr ""
+"**PBRenamer** là tiện ích đồ họa để đổi tên tệp hàng loạt cho Linux, "
+"macOS và Windows.  Nó kết hợp bảng đổi tên có xem trước trực tiếp với một"
+" bộ máy mẫu linh hoạt, hỗ trợ ký tự đại diện, biểu thức chính quy, thay "
+"thế văn bản thuần, các trường siêu dữ liệu (EXIF/IPTC, thẻ âm thanh, "
+"thuộc tính video) và chế độ dòng lệnh không giao diện để viết script."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Its **schema mode** sorts photos and videos into a folder tree built from"
+" a few fields, with numbering, sidecar files and an image viewer; "
+"**profiles** keep the settings of each way of working.  See the "
+":doc:`user_guide`."
+msgstr ""
+"**Chế độ lược đồ** của nó sắp xếp ảnh và video vào một cây thư mục được "
+"dựng từ vài trường, kèm đánh số, tệp sidecar và trình xem ảnh; các **hồ "
+"sơ** lưu cài đặt cho từng cách làm việc.  Xem :doc:`user_guide`."

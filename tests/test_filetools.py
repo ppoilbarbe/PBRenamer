@@ -5,7 +5,7 @@ import os
 import pytest
 
 from pbrenamer.core import filetools
-from pbrenamer.core.replacement import FieldResolutionError, NewNumState
+from pbrenamer.core.replacement import DEST_MARKER, FieldResolutionError
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -134,6 +134,16 @@ class TestCutExtension:
         stem, _, ext = filetools.cut_extension("archive.tar.gz", _p("archive.tar.gz"))
         assert stem == "archive.tar"
         assert ext == "gz"
+
+    def test_dot_in_directory_is_not_an_extension(self):
+        stem, _, ext = filetools.cut_extension("v1.0/README", _p("v1.0/README"))
+        assert stem == "v1.0/README"
+        assert ext == ""
+
+    def test_extension_of_last_component(self):
+        stem, _, ext = filetools.cut_extension("v1.0/a.txt", _p("v1.0/a.txt"))
+        assert stem == "v1.0/a"
+        assert ext == "txt"
 
 
 class TestAddExtension:
@@ -1135,149 +1145,6 @@ class TestConflictHandling:
 
 
 # ---------------------------------------------------------------------------
-# {newnum} — conflict-free auto-numbering
-# ---------------------------------------------------------------------------
-
-
-class TestNewNum:
-    def test_newnum_assigns_unique_numbers(self, tmp_path):
-        for i in range(1, 4):
-            (tmp_path / f"scan_{i}.pdf").touch()
-
-        newnum_state = NewNumState(start=1)
-        plan: list[tuple[str, str]] = []
-
-        for name, path in filetools.get_file_listing(str(tmp_path), 0):
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-            k = newnum_state.current
-            while True:
-                new_stem, new_stem_path = filetools.rename_using_patterns(
-                    stem, stem_path, "{X}", "document_{newnum}", 1, newnum=k
-                )
-                if new_stem is None:
-                    break
-                _, new_path = filetools.add_extension(new_stem, new_stem_path, ext)
-                new_name = os.path.basename(new_path)
-                if new_name not in newnum_state.reserved:
-                    newnum_state.reserved.add(new_name)
-                    newnum_state.current = k + 1
-                    plan.append((path, new_path))
-                    break
-                k += 1
-
-        for orig, new in plan:
-            ok, err = filetools.rename_file(orig, new)
-            assert ok is True, f"Rename failed: {err}"
-
-        assert sorted(os.listdir(str(tmp_path))) == [
-            "document_1.pdf",
-            "document_2.pdf",
-            "document_3.pdf",
-        ]
-
-    def test_newnum_skips_pre_existing_file(self, tmp_path):
-        """If document_1.pdf exists, the renamed file should become document_2.pdf."""
-        (tmp_path / "document_1.pdf").touch()
-        (tmp_path / "scan_a.pdf").touch()
-
-        newnum_state = NewNumState(start=1)
-        # Pre-reserve the already-existing name
-        newnum_state.reserved.add("document_1.pdf")
-
-        for name, path in filetools.get_file_listing(str(tmp_path), 0):
-            if name == "document_1.pdf":
-                continue
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-            k = newnum_state.current
-            while True:
-                new_stem, new_stem_path = filetools.rename_using_patterns(
-                    stem, stem_path, "{X}", "document_{newnum}", 1, newnum=k
-                )
-                if new_stem is None:
-                    break
-                _, new_path = filetools.add_extension(new_stem, new_stem_path, ext)
-                new_name = os.path.basename(new_path)
-                cand_path = os.path.join(str(tmp_path), new_name)
-                if new_name not in newnum_state.reserved and not os.path.exists(
-                    cand_path
-                ):
-                    newnum_state.reserved.add(new_name)
-                    newnum_state.current = k + 1
-                    filetools.rename_file(path, cand_path)
-                    break
-                k += 1
-
-        names = sorted(os.listdir(str(tmp_path)))
-        assert "document_1.pdf" in names
-        assert "document_2.pdf" in names
-        assert "scan_a.pdf" not in names
-
-    def test_newnum_custom_start(self, tmp_path):
-        """NewNumState(start=10) should produce document_10, document_11, …"""
-        for i in range(1, 3):
-            (tmp_path / f"file_{i}.txt").touch()
-
-        newnum_state = NewNumState(start=10)
-        plan: list[tuple[str, str]] = []
-
-        for name, path in filetools.get_file_listing(str(tmp_path), 0):
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-            k = newnum_state.current
-            while True:
-                new_stem, new_stem_path = filetools.rename_using_patterns(
-                    stem, stem_path, "{X}", "item_{newnum}", 1, newnum=k
-                )
-                if new_stem is None:
-                    break
-                _, new_path = filetools.add_extension(new_stem, new_stem_path, ext)
-                new_name = os.path.basename(new_path)
-                if new_name not in newnum_state.reserved:
-                    newnum_state.reserved.add(new_name)
-                    newnum_state.current = k + 1
-                    plan.append((path, new_path))
-                    break
-                k += 1
-
-        for orig, new in plan:
-            filetools.rename_file(orig, new)
-
-        names = sorted(os.listdir(str(tmp_path)))
-        assert names == ["item_10.txt", "item_11.txt"]
-
-    def test_newnum_zero_padded(self, tmp_path):
-        """Zero-padding format {newnum:03} should produce document_001, …"""
-        for i in range(1, 4):
-            (tmp_path / f"raw_{i}.jpg").touch()
-
-        newnum_state = NewNumState(start=1)
-        plan: list[tuple[str, str]] = []
-
-        for name, path in filetools.get_file_listing(str(tmp_path), 0):
-            stem, stem_path, ext = filetools.cut_extension(name, path)
-            k = newnum_state.current
-            while True:
-                new_stem, new_stem_path = filetools.rename_using_patterns(
-                    stem, stem_path, "{X}", "photo_{newnum:03}", 1, newnum=k
-                )
-                if new_stem is None:
-                    break
-                _, new_path = filetools.add_extension(new_stem, new_stem_path, ext)
-                new_name = os.path.basename(new_path)
-                if new_name not in newnum_state.reserved:
-                    newnum_state.reserved.add(new_name)
-                    newnum_state.current = k + 1
-                    plan.append((path, new_path))
-                    break
-                k += 1
-
-        for orig, new in plan:
-            filetools.rename_file(orig, new)
-
-        names = sorted(os.listdir(str(tmp_path)))
-        assert names == ["photo_001.jpg", "photo_002.jpg", "photo_003.jpg"]
-
-
-# ---------------------------------------------------------------------------
 # Workflow helpers shared by the three mode test classes below
 # ---------------------------------------------------------------------------
 
@@ -1608,3 +1475,223 @@ class TestPlainTextModeWorkflow:
             )
             == expected
         )
+
+
+# ---------------------------------------------------------------------------
+# Target paths — {dest} and sub-directories
+# ---------------------------------------------------------------------------
+
+D = DEST_MARKER
+
+
+class TestResolveTarget:
+    def test_plain_name_stays_in_source_dir(self):
+        assert filetools.resolve_target("/s/a.jpg", "b.jpg") == "/s/b.jpg"
+
+    def test_relative_sub_directories(self):
+        assert filetools.resolve_target("/s/a.jpg", "x/y/b.jpg") == "/s/x/y/b.jpg"
+
+    def test_dest_root(self):
+        target = filetools.resolve_target("/s/a.jpg", D + "/x/b.jpg", "/d")
+        assert target == "/d/x/b.jpg"
+
+    def test_dest_alone_is_not_a_file_name(self):
+        with pytest.raises(filetools.TargetPathError) as info:
+            filetools.resolve_target("/s/a", D, "/d")
+        assert info.value.reason == filetools.TargetPathError.INVALID_COMPONENT
+
+    @pytest.mark.parametrize(
+        "name",
+        ["x" + D + "/b", D + "x/b", D + "/" + D],
+        ids=["not-first", "no-separator", "twice"],
+    )
+    def test_dest_position(self, name):
+        with pytest.raises(filetools.TargetPathError) as info:
+            filetools.resolve_target("/s/a", name, "/d")
+        assert info.value.reason == filetools.TargetPathError.DEST_POSITION
+
+    def test_dest_without_root(self):
+        with pytest.raises(filetools.TargetPathError) as info:
+            filetools.resolve_target("/s/a", D + "/b", None)
+        assert info.value.reason == filetools.TargetPathError.NO_DEST
+
+    def test_absolute_path_refused(self):
+        with pytest.raises(filetools.TargetPathError) as info:
+            filetools.resolve_target("/s/a", "/etc/passwd")
+        assert info.value.reason == filetools.TargetPathError.ABSOLUTE
+
+    @pytest.mark.parametrize("name", ["../b", "x/../b", "x//b", "x/", "./b"])
+    def test_invalid_components(self, name):
+        with pytest.raises(filetools.TargetPathError) as info:
+            filetools.resolve_target("/s/a", name, "/d")
+        assert info.value.reason == filetools.TargetPathError.INVALID_COMPONENT
+
+    def test_dot_dot_after_dest_refused(self):
+        with pytest.raises(filetools.TargetPathError):
+            filetools.resolve_target("/s/a", D + "/../b", "/d")
+
+
+class TestDisplayTarget:
+    def test_marker_replaced(self):
+        assert filetools.display_target(D + "/x/b", "/d/") == "/d/x/b"
+
+    def test_without_marker(self):
+        assert filetools.display_target("x/b", "/d") == "x/b"
+
+    def test_without_root(self):
+        assert filetools.display_target(D + "/b", None) == D + "/b"
+
+
+# ---------------------------------------------------------------------------
+# execute_renames — atomic batch rename
+# ---------------------------------------------------------------------------
+
+
+def _pairs(root, *names):
+    return [(str(root / a), str(root / b)) for a, b in names]
+
+
+class TestFindRenameConflicts:
+    def test_no_conflict(self, tmp_path):
+        (tmp_path / "a").touch()
+        assert filetools.find_rename_conflicts(_pairs(tmp_path, ("a", "b"))) == []
+
+    def test_shared_target(self, tmp_path):
+        pairs = _pairs(tmp_path, ("a", "x"), ("b", "x"))
+        assert filetools.find_rename_conflicts(pairs) == pairs
+
+    def test_existing_target(self, tmp_path):
+        (tmp_path / "x").touch()
+        pairs = _pairs(tmp_path, ("a", "x"))
+        assert filetools.find_rename_conflicts(pairs) == pairs
+
+    def test_target_freed_by_the_batch(self, tmp_path):
+        (tmp_path / "a").touch()
+        (tmp_path / "b").touch()
+        pairs = _pairs(tmp_path, ("a", "b"), ("b", "a"))
+        assert filetools.find_rename_conflicts(pairs) == []
+
+    def test_target_in_missing_directory(self, tmp_path):
+        pairs = _pairs(tmp_path, ("a", "new/dir/a"))
+        assert filetools.find_rename_conflicts(pairs) == []
+
+
+class TestExecuteRenames:
+    def test_simple_batch(self, tmp_path):
+        make_tree(tmp_path, {"a": None, "b": None})
+        result = filetools.execute_renames(_pairs(tmp_path, ("a", "c"), ("b", "d")))
+        assert sorted(os.listdir(tmp_path)) == ["c", "d"]
+        assert result.created_dirs == []
+        assert result.pruned_dirs == []
+
+    def test_identity_pairs_dropped(self, tmp_path):
+        (tmp_path / "a").touch()
+        result = filetools.execute_renames(_pairs(tmp_path, ("a", "a")))
+        assert result.pairs == []
+
+    def test_conflict_renames_nothing(self, tmp_path):
+        make_tree(tmp_path, {"a": None, "b": None, "x": None})
+        with pytest.raises(filetools.RenameError) as info:
+            filetools.execute_renames(_pairs(tmp_path, ("a", "c"), ("b", "x")))
+        assert info.value.conflicts == _pairs(tmp_path, ("b", "x"))
+        assert sorted(os.listdir(tmp_path)) == ["a", "b", "x"]
+
+    def test_creates_target_directories(self, tmp_path):
+        (tmp_path / "a").touch()
+        result = filetools.execute_renames(_pairs(tmp_path, ("a", "x/y/a")))
+        assert (tmp_path / "x" / "y" / "a").exists()
+        assert result.created_dirs == [str(tmp_path / "x"), str(tmp_path / "x" / "y")]
+
+    def test_swap_uses_temporary_names(self, tmp_path):
+        (tmp_path / "a").write_text("A")
+        (tmp_path / "b").write_text("B")
+        filetools.execute_renames(_pairs(tmp_path, ("a", "b"), ("b", "a")))
+        assert (tmp_path / "a").read_text() == "B"
+        assert (tmp_path / "b").read_text() == "A"
+        assert sorted(os.listdir(tmp_path)) == ["a", "b"]
+
+    def test_chain(self, tmp_path):
+        for i in (1, 2, 3):
+            (tmp_path / f"f{i}").write_text(str(i))
+        filetools.execute_renames(
+            _pairs(tmp_path, ("f1", "f2"), ("f2", "f3"), ("f3", "f4"))
+        )
+        assert [(tmp_path / f"f{i}").read_text() for i in (2, 3, 4)] == ["1", "2", "3"]
+        assert not (tmp_path / "f1").exists()
+
+    def test_error_rolls_back(self, tmp_path, monkeypatch):
+        make_tree(tmp_path, {"a": None, "b": None})
+        real_move = filetools.shutil.move
+
+        def _move(src, dst):
+            if src.endswith("b"):
+                raise OSError("disk full")
+            return real_move(src, dst)
+
+        monkeypatch.setattr(filetools.shutil, "move", _move)
+        with pytest.raises(filetools.RenameError) as info:
+            filetools.execute_renames(_pairs(tmp_path, ("a", "x/a"), ("b", "x/b")))
+        assert info.value.conflicts == []
+        assert "disk full" in str(info.value)
+        assert sorted(os.listdir(tmp_path)) == ["a", "b"]
+
+    def test_failed_rollback_is_logged(self, tmp_path, monkeypatch, caplog):
+        make_tree(tmp_path, {"a": None, "b": None})
+        real_move = filetools.shutil.move
+        calls = []
+
+        def _move(src, dst):
+            calls.append(src)
+            if len(calls) > 1:
+                raise OSError("broken")
+            return real_move(src, dst)
+
+        monkeypatch.setattr(filetools.shutil, "move", _move)
+        with pytest.raises(filetools.RenameError):
+            filetools.execute_renames(_pairs(tmp_path, ("a", "c"), ("b", "d")))
+        assert "Rollback failed" in caplog.text
+
+    def test_prunes_emptied_source_dirs_below_root(self, tmp_path):
+        make_tree(tmp_path, {"sub": {"deep": {"a": None}}})
+        result = filetools.execute_renames(
+            _pairs(tmp_path, ("sub/deep/a", "a")), prune_root=str(tmp_path)
+        )
+        assert os.listdir(tmp_path) == ["a"]
+        assert result.pruned_dirs == [
+            str(tmp_path / "sub" / "deep"),
+            str(tmp_path / "sub"),
+        ]
+
+    def test_never_prunes_root(self, tmp_path):
+        make_tree(tmp_path, {"src": {"a": None}})
+        root = tmp_path / "src"
+        filetools.execute_renames(
+            [(str(root / "a"), str(tmp_path / "a"))], prune_root=str(root)
+        )
+        assert root.is_dir()
+
+    def test_keeps_non_empty_source_dirs(self, tmp_path):
+        make_tree(tmp_path, {"sub": {"a": None, "b": None}})
+        result = filetools.execute_renames(
+            _pairs(tmp_path, ("sub/a", "a")), prune_root=str(tmp_path)
+        )
+        assert result.pruned_dirs == []
+
+    def test_no_pruning_without_root(self, tmp_path):
+        make_tree(tmp_path, {"sub": {"a": None}})
+        filetools.execute_renames(_pairs(tmp_path, ("sub/a", "a")))
+        assert (tmp_path / "sub").is_dir()
+
+
+class TestRemoveEmptyDirs:
+    def test_removes_deepest_first(self, tmp_path):
+        make_tree(tmp_path, {"x": {"y": {}}, "z": {"f": None}})
+        dirs = [str(tmp_path / "x"), str(tmp_path / "x" / "y"), str(tmp_path / "z")]
+        removed = filetools.remove_empty_dirs(dirs)
+        assert removed == [str(tmp_path / "x" / "y"), str(tmp_path / "x")]
+        assert (tmp_path / "z").is_dir()
+
+
+class TestPathKey:
+    def test_relative_path_without_existing_ancestor(self):
+        assert filetools.path_key("x") in ("x", "x".lower())

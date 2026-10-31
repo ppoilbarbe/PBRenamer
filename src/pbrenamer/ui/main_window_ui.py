@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QMenu,
     QMenuBar,
     QPushButton,
     QRadioButton,
@@ -19,6 +20,7 @@ from PySide6.QtWidgets import (
     QSpacerItem,
     QSplitter,
     QStatusBar,
+    QTabWidget,
     QToolButton,
     QVBoxLayout,
     QWidget,
@@ -35,6 +37,7 @@ class Ui_MainWindow:
         window.setWindowTitle("PBRenamer")
 
         self._setup_actions(window)
+        self._setup_image_actions(window)
         self._setup_central_widget(window)
         self._setup_statusbar(window)
         self._setup_menubar(window)
@@ -84,6 +87,25 @@ class Ui_MainWindow:
         self.actionAbout.setToolTip(_("About this application"))
         self.actionAbout.setStatusTip(_("Show version and license information"))
 
+        self.actionKeyboardHelp = QAction(
+            QIcon(_resource("help-keyboard-shortcuts.svg")),
+            _("Keyboard and mouse shortcuts…"),
+            window,
+        )
+        self.actionKeyboardHelp.setShortcut(QKeySequence("F1"))
+        self.actionKeyboardHelp.setToolTip(_("Show the keyboard and mouse shortcuts"))
+        self.actionKeyboardHelp.setStatusTip(
+            _("List the keyboard and mouse shortcuts of the main window and viewer")
+        )
+
+        self.actionUserGuide = QAction(
+            QIcon(_resource("help-user-manual.svg")), _("User guide"), window
+        )
+        self.actionUserGuide.setToolTip(_("Open the online user guide"))
+        self.actionUserGuide.setStatusTip(
+            _("Open the user guide, in the interface language, in the web browser")
+        )
+
         self.actionEditShortcuts = QAction(
             QIcon(_resource("edit.svg")), _("Edit shortcuts…"), window
         )
@@ -100,6 +122,145 @@ class Ui_MainWindow:
         self.actionFileInfo.setStatusTip(
             _("Open the file information window for the selected file")
         )
+
+        self.actionProfileNew = QAction(
+            QIcon(_resource("add.svg")), _("New profile…"), window
+        )
+        self.actionProfileNew.setShortcut(QKeySequence("Ctrl+N"))
+        self.actionProfileNew.setToolTip(_("Create a new profile"))
+        self.actionProfileNew.setStatusTip(
+            _("Create a profile with default settings and switch to it")
+        )
+
+        self.actionProfileDuplicate = QAction(_("Duplicate profile…"), window)
+        self.actionProfileDuplicate.setShortcut(QKeySequence("Ctrl+Shift+D"))
+        self.actionProfileDuplicate.setToolTip(_("Duplicate the current profile"))
+        self.actionProfileDuplicate.setStatusTip(
+            _("Copy the current profile under a new name and switch to the copy")
+        )
+
+        self.actionProfileRename = QAction(_("Rename profile…"), window)
+        self.actionProfileRename.setToolTip(_("Rename the current profile"))
+        self.actionProfileRename.setStatusTip(
+            _("Give the current profile a new name (letters, digits, “-” and “_”)")
+        )
+
+        self.actionProfileDelete = QAction(_("Delete profile…"), window)
+        self.actionProfileDelete.setToolTip(_("Delete a profile"))
+        self.actionProfileDelete.setStatusTip(
+            _("Permanently delete a profile and all its settings")
+        )
+
+        self.actionProfileConfig = QAction(
+            QIcon(_resource("configure.svg")), _("Profile configuration…"), window
+        )
+        self.actionProfileConfig.setShortcut(QKeySequence("Ctrl+,"))
+        self.actionProfileConfig.setToolTip(_("Configure the current profile"))
+        self.actionProfileConfig.setStatusTip(
+            _("Configure the schema fields and options of the current profile")
+        )
+
+    def _setup_image_actions(self, window):
+        """Actions of the Images menu, also in the file list context menu
+        and (rotations, open, delete…) in the image viewer."""
+
+        def action(icon, text, shortcut, tip, status):
+            act = QAction(QIcon(_resource(icon)) if icon else QIcon(), text, window)
+            if shortcut:
+                act.setShortcut(QKeySequence(shortcut))
+            act.setToolTip(tip)
+            act.setStatusTip(status)
+            act.setEnabled(False)
+            return act
+
+        self.actionImgOpen = action(
+            "open.svg",
+            _("Open"),
+            "Ctrl+Return",
+            _("Open with the default application"),
+            _("Open the selected files with their default application"),
+        )
+        self.actionImgOpenWith = action(
+            "open-with.svg",
+            _("Open with…"),
+            "Ctrl+Shift+O",
+            _("Open with a chosen application"),
+            _("Choose the application that opens the selected file"),
+        )
+        self.actionImgView = action(
+            "zoom-fit.svg",
+            _("View"),
+            "Return",
+            _("Show in the image viewer"),
+            _("Show the selected images and videos in the image viewer"),
+        )
+        self.actionImgTemplate = action(
+            "rename-template.svg",
+            _("Template"),
+            "",
+            _("Fill the schema from the file name"),
+            _("Infer the schema fields from the selected file name and its folders"),
+        )
+        self.actionImgDelete = action(
+            "delete.svg",
+            _("Delete"),
+            "Delete",
+            _("Delete the selected files"),
+            _("Delete the selected files and their sidecars (to the trash if enabled)"),
+        )
+        self.actionImgOrphans = action(
+            "sidecars.svg",
+            _("Orphan sidecars…"),
+            "",
+            _("List the sidecars without a base file"),
+            _("List, then delete, the sidecar files of the folder without a base file"),
+        )
+        self.actionRotateLeft = action(
+            "object-rotate-left.svg",
+            _("Rotate 90° left"),
+            "F6",
+            _("Rotate counter-clockwise, without loss"),
+            _("Rotate the selected images 90° counter-clockwise, without loss"),
+        )
+        self.actionRotate180 = action(
+            "object-flip-vertical.svg",
+            _("Rotate 180°"),
+            "F7",
+            _("Rotate 180°, without loss"),
+            _("Rotate the selected images 180°, without loss"),
+        )
+        self.actionRotateRight = action(
+            "object-rotate-right.svg",
+            _("Rotate 90° right"),
+            "F8",
+            _("Rotate clockwise, without loss"),
+            _("Rotate the selected images 90° clockwise, without loss"),
+        )
+        self.actionRotateExif = action(
+            "auto-rotate.svg",
+            _("Apply EXIF orientation"),
+            "F9",
+            _("Rotate the pixels as the EXIF orientation says"),
+            _("Rotate the pixels as the EXIF orientation says, then reset it"),
+        )
+        self.actionResetExif = action(
+            "reset-exif.svg",
+            _("Force EXIF orientation to 0°"),
+            "F10",
+            _("Set the EXIF orientation to normal"),
+            _("Set the EXIF orientation tag to 1 (0°) without rotating the pixels"),
+        )
+        self.actionRefresh = action(
+            "view-refresh.svg",
+            _("Refresh"),
+            "F5",
+            _("Reload the file list"),
+            _("Read the folder again and refresh the thumbnails"),
+        )
+        self.actionRefresh.setEnabled(True)
+        # Return and Delete also edit text fields: only on the file list.
+        for act in (self.actionImgView, self.actionImgDelete, self.actionImgOpen):
+            act.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
 
     # ── Central widget ────────────────────────────────────────────────────────
 
@@ -126,6 +287,8 @@ class Ui_MainWindow:
         self.splitterRight.addWidget(self._make_file_list(self.splitterRight))
         self.splitterRight.addWidget(self._make_bottom_panel(self.splitterRight))
         self.splitterMain.addWidget(self.splitterRight)
+        self.treeDirectory.tab_partner = self.tblFiles
+        self.tblFiles.tab_partner = self.treeDirectory
 
         root.addWidget(self.splitterMain)
         root.setStretch(1, 1)  # splitter takes all vertical space
@@ -155,6 +318,27 @@ class Ui_MainWindow:
             _("When checked, files from all subdirectories are listed")
         )
         bar.addWidget(self.chkRecursive)
+
+        self.chkThumbnails = QCheckBox(_("Thumbnails"), parent)
+        self.chkThumbnails.setToolTip(_("Show image thumbnails in the file list"))
+        self.chkThumbnails.setStatusTip(
+            _("Show a thumbnail column; this setting belongs to the current profile")
+        )
+        bar.addWidget(self.chkThumbnails)
+
+        self.chkSortByDate = QCheckBox(_("By date"), parent)
+        self.chkSortByDate.setToolTip(_("Sort the files by modification date"))
+        self.chkSortByDate.setStatusTip(
+            _("Sort by modification date instead of by name; folders stay first")
+        )
+        bar.addWidget(self.chkSortByDate)
+
+        self.chkSortReverse = QCheckBox(_("Reversed"), parent)
+        self.chkSortReverse.setToolTip(_("Reverse the sort order"))
+        self.chkSortReverse.setStatusTip(
+            _("List the files in reverse order; folders stay first")
+        )
+        bar.addWidget(self.chkSortReverse)
 
         self.cmbExtensionMode = QComboBox(parent)
         self.cmbExtensionMode.addItem(_("Keep extension"), userData="keep")
@@ -207,6 +391,30 @@ class Ui_MainWindow:
         )
         bar.addWidget(self.edtFilter)
 
+        self.cmbSidecarFilter = QComboBox(parent)
+        self.cmbSidecarFilter.setEditable(True)
+        self.cmbSidecarFilter.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        self.cmbSidecarFilter.setMinimumWidth(200)
+        self.cmbSidecarFilter.lineEdit().setPlaceholderText(_("Sidecar filter…"))
+        self.cmbSidecarFilter.setToolTip(
+            _(
+                "<b>Sidecar content filter</b><br>"
+                "Python regular expression applied to the <i>content</i>"
+                " of sidecar files.<br>"
+                "Only files with at least one sidecar whose content matches"
+                " are shown, with their sidecars.<br>"
+                "Files with no sidecar are always hidden when a filter is"
+                " active.<br>"
+                "<tt>.*</tt> matches across line breaks (re.DOTALL).<br>"
+                "Case-insensitive (re.IGNORECASE), including accented"
+                " characters.<br>"
+                "Press Enter to keep the filter in the history; leave empty"
+                " to show all files."
+            )
+        )
+        self.cmbSidecarFilter.setVisible(False)
+        bar.addWidget(self.cmbSidecarFilter)
+
         bar.addItem(
             QSpacerItem(
                 20, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum
@@ -215,9 +423,19 @@ class Ui_MainWindow:
         return bar
 
     def _make_file_list(self, parent):
-        """Two-column tree: Original | Preview."""
+        """File tree: Original | Preview, plus Thumbnail and Sidecar columns."""
         self.tblFiles = FileListWidget(parent)
-        self.tblFiles.setHeaderLabels([_("Original"), _("Preview")])
+        self.tblFiles.setHeaderLabels(
+            [_("Original"), _("Preview"), _("Thumbnail"), _("Sidecar")]
+        )
+        # Logical columns 0 and 1 keep their meaning; shown order is
+        # Thumbnail | Original | Sidecar | Preview.  Columns 2 and 3 are
+        # shown according to the profile.
+        header = self.tblFiles.header()
+        header.moveSection(2, 0)
+        header.moveSection(3, 2)
+        self.tblFiles.setColumnHidden(2, True)
+        self.tblFiles.setColumnHidden(3, True)
         self.tblFiles.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tblFiles.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.tblFiles.setAlternatingRowColors(True)
@@ -233,11 +451,25 @@ class Ui_MainWindow:
         return self.tblFiles
 
     def _make_bottom_panel(self, parent):
-        """Bottom pane: pattern editor (left) + action buttons (right)."""
+        """Bottom pane: rule tabs (left) + action buttons (right)."""
         panel = QWidget(parent)
         row = QHBoxLayout(panel)
         row.setContentsMargins(0, 0, 0, 0)
-        row.addWidget(self._make_rename_frame(panel))
+
+        self.tabRules = QTabWidget(panel)
+        self.tabRules.addTab(self._make_rename_frame(self.tabRules), _("Pattern"))
+        self.tabRules.setTabToolTip(
+            0, _("Rename in place with search/replace patterns")
+        )
+        # Filled by MainWindow with the schema rule panel (dynamic fields).
+        self.tabSchema = QWidget(self.tabRules)
+        QVBoxLayout(self.tabSchema).setContentsMargins(0, 0, 0, 0)
+        self.tabRules.addTab(self.tabSchema, _("Schema"))
+        self.tabRules.setTabToolTip(
+            1, _("Sort files into a destination tree built from schema fields")
+        )
+        row.addWidget(self.tabRules)
+
         row.addLayout(self._make_action_buttons(panel))
         return panel
 
@@ -551,12 +783,25 @@ class Ui_MainWindow:
         )
         col.addWidget(self.btnUndo)
 
+        self.btnRenumber = QPushButton(_("Renumber"), parent)
+        self.btnRenumber.setVisible(False)
+        self.btnRenumber.setToolTip(_("Renumber from 1 in place"))
+        self.btnRenumber.setStatusTip(
+            _(
+                "Renumber the selected files (all listed files if none is"
+                " selected) from 1, in place, following the schema"
+            )
+        )
+        col.addWidget(self.btnRenumber)
+
         self.btnRename = QPushButton(_("Rename"), parent)
         self.btnRename.setEnabled(False)
-        self.btnRename.setToolTip(_("Apply renames on disk"))
+        self.btnRename.setShortcut(QKeySequence("F2"))
+        self.btnRename.setToolTip(_("Apply renames on disk (F2)"))
         self.btnRename.setStatusTip(
             _(
-                "Permanently rename all files shown in the Preview column"
+                "Permanently rename the selected files (all listed files if"
+                " none is selected) as shown in the Preview column"
                 " (only enabled when there are no conflicts)"
             )
         )
@@ -591,10 +836,55 @@ class Ui_MainWindow:
         menu_edit.addAction(self.actionSidecarFiles)
         menu_edit.addAction(self.actionSettings)
 
+        # Profile menu (profile list appended by MainWindow._build_profile_menu)
+        self.menuProfile = menubar.addMenu(_("Profile"))
+        self.menuProfile.addAction(self.actionProfileNew)
+        self.menuProfile.addAction(self.actionProfileDuplicate)
+        self.menuProfile.addAction(self.actionProfileRename)
+        self.menuProfile.addAction(self.actionProfileDelete)
+        self.menuProfile.addSeparator()
+        self.menuProfile.addAction(self.actionProfileConfig)
+        self.menuProfile.addSeparator()
+
+        # Images menu (also the file list context menu)
+        self.menuImages = menubar.addMenu(_("Images"))
+        # Filled by ImageActions when the menu is shown: one entry per
+        # sidecar suffix of the targeted files.
+        self.menuOpenSidecar = QMenu(_("Open sidecar"), self.menuImages)
+        self.menuOpenSidecar.menuAction().setEnabled(False)
+        for act in (
+            self.actionImgOpen,
+            self.actionImgOpenWith,
+            self.menuOpenSidecar.menuAction(),
+            self.actionImgView,
+            self.actionImgTemplate,
+            None,
+            self.actionImgDelete,
+            self.actionImgOrphans,
+            None,
+            self.actionRotateLeft,
+            self.actionRotate180,
+            self.actionRotateRight,
+            self.actionRotateExif,
+            self.actionResetExif,
+            None,
+            self.actionFileInfo,
+            self.actionRefresh,
+        ):
+            if act is None:
+                self.menuImages.addSeparator()
+            else:
+                self.menuImages.addAction(act)
+        for act in (self.actionImgView, self.actionImgDelete, self.actionImgOpen):
+            self.tblFiles.addAction(act)
+
         # Shortcuts menu (populated dynamically by MainWindow._build_shortcuts_menu)
         self.menuShortcuts = menubar.addMenu(_("Shortcuts"))
         self.menuShortcuts.addAction(self.actionEditShortcuts)
 
         # Help menu
         menu_help = menubar.addMenu(_("Help"))
+        menu_help.addAction(self.actionUserGuide)
+        menu_help.addAction(self.actionKeyboardHelp)
+        menu_help.addSeparator()
         menu_help.addAction(self.actionAbout)

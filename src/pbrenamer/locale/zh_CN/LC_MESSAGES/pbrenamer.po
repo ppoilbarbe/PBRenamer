@@ -15,6 +15,74 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 # ==AUTO== Automatically translated
+msgid "EXIF"
+msgstr "EXIF"
+
+# ==AUTO== Automatically translated
+msgid "IPTC"
+msgstr "IPTC"
+
+# ==AUTO== Automatically translated
+msgid "XMP"
+msgstr "XMP"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar file"
+msgstr "Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "XMP (sidecar)"
+msgstr "XMP（sidecar）"
+
+# ==AUTO== Automatically translated
+msgid "No EXIF orientation tag to apply."
+msgstr "未找到EXIF方向标签。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Unsupported EXIF orientation value: {v}"
+msgstr "不支持的EXIF方向值：{v}"
+
+# ==AUTO== Automatically translated
+msgid ""
+"This file appears to be truncated (data is missing at the end), likely "
+"from an incomplete write by the camera. Lossless rotation is not possible"
+" without discarding the affected rows."
+msgstr "此文件似乎已被截断(末尾缺少数据),可能是相机写入不完整所致。无法在不丢弃受影响行的情况下进行无损旋转。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"jpegtran is not available.\n"
+"JPEG lossless rotation requires jpegtran.\n"
+"Install libjpeg-turbo to enable this feature."
+msgstr ""
+"jpegtran不可用。\n"
+"JPEG无损旋转需要jpegtran。\n"
+"请安装libjpeg-turbo以启用此功能。"
+
+# ==AUTO== Automatically translated
+msgid "The schema contains several numeric fields (only one allowed)."
+msgstr "模式结构包含多个数字字段（只允许一个）。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field “{field}” contains the forbidden character “{char}”."
+msgstr "字段“{field}”包含禁用字符“{char}”。"
+
+# ==AUTO== Automatically translated
+msgid "The schema is empty: fill in at least one field."
+msgstr "模式结构为空：请至少填写一个字段。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The video marker contains the forbidden character “{char}”."
+msgstr "视频标记包含禁用字符“{char}”。"
+
+# ==AUTO== Automatically translated
+msgid "The schema has no numeric field (use “#” to define a counter)."
+msgstr "模式结构没有数字字段（使用“#”定义计数器）。"
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{name!r} could be a sidecar of multiple base files: {owners}"
 msgstr "{name!r} 可能是多个基础文件的附属文件：{owners}"
@@ -52,6 +120,47 @@ msgid "Videos"
 msgstr "视频"
 
 # ==AUTO== Automatically translated
+msgid "Open with"
+msgstr "用...打开"
+
+# ==AUTO== Automatically translated
+msgid "Choose an application:"
+msgstr "选择应用程序："
+
+# ==AUTO== Automatically translated
+msgid "Application name:"
+msgstr "应用程序名称："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Invalid profile name “{name}”: use letters, digits, “-” and “_” (a "
+"leading “.” hides the profile)."
+msgstr "配置文件名“{name}”无效：请使用字母、数字、“-”和“_”（以“.”开头会隐藏该配置文件）。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid profile name “{name}”: use letters, digits, “-” and “_”."
+msgstr "配置文件名“{name}”无效：请使用字母、数字、“-”和“_”。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” not found."
+msgstr "未找到配置文件“{name}”。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” already exists."
+msgstr "配置文件“{name}”已存在。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The profile “{name}” is the last visible profile: it cannot be deleted or"
+" hidden."
+msgstr "配置文件“{name}”是最后一个可见的配置文件：不能删除或隐藏。"
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "关于 PBRenamer"
 
@@ -80,20 +189,40 @@ msgid "PySide6 version:"
 msgstr "PySide6 版本："
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Rename ({n})"
+msgstr "重命名（{n}）"
+
+# ==AUTO== Automatically translated
+msgid "Rename"
+msgstr "重命名"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo (%d)"
+msgstr "撤销 (%d)"
+
+# ==AUTO== Automatically translated
+#, python-format
+msgid "Undo last rename batch (%d level(s) available)"
+msgstr "撤销上一次批量重命名（可用 %d 级）"
+
+# ==AUTO== Automatically translated
+msgid "Undo"
+msgstr "撤销"
+
+# ==AUTO== Automatically translated
+msgid "Undo last rename batch"
+msgstr "撤销上一批重命名"
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "文件信息"
 
 # ==AUTO== Automatically translated
-msgid "Field"
-msgstr "字段"
-
-# ==AUTO== Automatically translated
-msgid "Description"
-msgstr "描述"
-
-# ==AUTO== Automatically translated
-msgid "Value"
-msgstr "值"
+#, python-brace-format
+msgid "File information — {name}"
+msgstr "文件信息 — {name}"
 
 # ==AUTO== Automatically translated
 msgid "Image"
@@ -116,29 +245,12 @@ msgid "Other"
 msgstr "其他"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "File information — {name}"
-msgstr "文件信息 — {name}"
-
-# ==AUTO== Automatically translated
 msgid "File:"
 msgstr "文件："
 
 # ==AUTO== Automatically translated
 msgid "Type:"
 msgstr "类型："
-
-# ==AUTO== Automatically translated
-msgid "Image metadata (EXIF / IPTC)"
-msgstr "图像元数据（EXIF / IPTC）"
-
-# ==AUTO== Automatically translated
-msgid "Audio metadata"
-msgstr "音频元数据"
-
-# ==AUTO== Automatically translated
-msgid "Video metadata"
-msgstr "视频元数据"
 
 # ==AUTO== Automatically translated
 msgid "Select a single file to display its information."
@@ -149,68 +261,110 @@ msgid "Select a file to display its information."
 msgstr "选择文件以显示其信息。"
 
 # ==AUTO== Automatically translated
-msgid "Universal fields"
-msgstr "通用字段"
+msgid "Original"
+msgstr "原始"
 
 # ==AUTO== Automatically translated
-msgid "Today's date"
-msgstr "今天日期"
+msgid "Preview"
+msgstr "预览"
 
 # ==AUTO== Automatically translated
-msgid "Current date and time"
-msgstr "当前日期和时间"
+msgid "Thumbnail"
+msgstr "缩略图"
 
 # ==AUTO== Automatically translated
-msgid "File modification date/time"
-msgstr "文件修改日期/时间"
+msgid "Sidecar"
+msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
-msgid "Missing"
-msgstr "缺失"
+msgid "No sidecar: double-click to create one"
+msgstr "无 Sidecar 文件：双击以创建"
 
 # ==AUTO== Automatically translated
-msgid "File creation date/time"
-msgstr "文件创建日期/时间"
+#, python-brace-format
+msgid "Cannot create {name}: {error}"
+msgstr "无法创建 {name}：{error}"
 
 # ==AUTO== Automatically translated
-msgid "Parent folder name"
-msgstr "父文件夹名称"
+msgid "cannot move/copy a folder into itself"
+msgstr "无法将文件夹移动/复制到其自身内部"
 
 # ==AUTO== Automatically translated
-msgid "Batch fields"
-msgstr "批量字段"
+msgid "Move errors"
+msgstr "移动错误"
 
 # ==AUTO== Automatically translated
-msgid "Computed"
-msgstr "计算值"
+msgid "Copy errors"
+msgstr "复制错误"
 
 # ==AUTO== Automatically translated
-msgid "Full matched text"
-msgstr "完整匹配文本"
+msgid "Confirm overwrite"
+msgstr "确认覆盖"
 
 # ==AUTO== Automatically translated
-msgid "Capture groups"
-msgstr "捕获组"
+#, python-brace-format
+msgid "{n} item(s) already exist in {dir} and would be overwritten."
+msgstr "{n} 个项目已存在于 {dir} 中，将被覆盖。"
 
 # ==AUTO== Automatically translated
-msgid "Auto-incrementing counter"
-msgstr "自动递增计数器"
+msgid "Overwrite"
+msgstr "覆盖"
 
 # ==AUTO== Automatically translated
-msgid "Conflict-free counter"
-msgstr "无冲突计数器"
+msgid "Skip"
+msgstr "跳过"
 
 # ==AUTO== Automatically translated
-msgid "Named regex group"
-msgstr "命名正则表达式组"
+msgid "▲ Move up"
+msgstr "▲ 上移"
 
 # ==AUTO== Automatically translated
-msgid "Insert into replacement field"
-msgstr "插入到替换字段"
+msgid "▼ Move down"
+msgstr "▼ 下移"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↓"
+msgstr "排序 ↓"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in ascending order"
+msgstr "按升序排序列表"
+
+# ==AUTO== Automatically translated
+msgid "Sort ↑"
+msgstr "排序 ↑"
+
+# ==AUTO== Automatically translated
+msgid "Sort the list in descending order"
+msgstr "按降序排序列表"
+
+# ==AUTO== Automatically translated
+msgid "Delete"
+msgstr "删除"
+
+# ==AUTO== Automatically translated
+msgid "Clear all"
+msgstr "全部清除"
+
+# ==AUTO== Automatically translated
+msgid "Clear history"
+msgstr "清除历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Clear all values from this history?"
+msgstr "清除此历史记录中的所有值？"
+
+# ==AUTO== Automatically translated
+msgid "Sidecar filter"
+msgstr "Sidecar 过滤器"
 
 # ==AUTO== Automatically translated
 msgid "History"
 msgstr "历史记录"
+
+# ==AUTO== Automatically translated
+msgid "Patterns"
+msgstr "模式"
 
 # ==AUTO== Automatically translated
 msgid "Search"
@@ -268,10 +422,6 @@ msgid "Delete the selected search history entries"
 msgstr "删除选定的搜索历史记录条目"
 
 # ==AUTO== Automatically translated
-msgid "Clear all"
-msgstr "全部清除"
-
-# ==AUTO== Automatically translated
 msgid "Remove all search history entries"
 msgstr "删除所有搜索历史记录条目"
 
@@ -308,16 +458,409 @@ msgid "Delete the entire replacement pattern history"
 msgstr "删除整个替换模式历史记录"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "模板"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"无法确定“{name}”的模板。\n"
+"文件名的任何部分都不匹配字段历史记录。"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "确认删除"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "无法移至回收站：{name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "删除错误"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "将 {count} 个文件移至回收站？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"移至回收站：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "永久删除 {count} 个文件？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"永久删除：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "旋转不可用"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} 个文件无法旋转。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "已旋转{n}个文件。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "已重置 {n} 个 EXIF 方向标签。"
+
+# ==AUTO== Automatically translated
+msgid "Fit window  0 / X"
+msgstr "适合窗口  0 / X"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)  1 / Z"
+msgstr "实际大小 (1:1)  1 / Z"
+
+# ==AUTO== Automatically translated
+msgid "Fit width  W"
+msgstr "适合宽度  W"
+
+# ==AUTO== Automatically translated
+msgid "Fit height  H"
+msgstr "适合高度  H"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in  +"
+msgstr "放大  +"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out  −"
+msgstr "缩小  −"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left  F6"
+msgstr "向左旋转 90°  F6"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°  F7"
+msgstr "旋转 180°  F7"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right  F8"
+msgstr "向右旋转 90°  F8"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation  F9"
+msgstr "应用 EXIF 方向  F9"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°  F10"
+msgstr "将 EXIF 方向强制设为 0°  F10"
+
+# ==AUTO== Automatically translated
+msgid "Open"
+msgstr "打开"
+
+# ==AUTO== Automatically translated
+msgid "Show metadata panel"
+msgstr "显示元数据面板"
+
+# ==AUTO== Automatically translated
+msgid "Cannot load image."
+msgstr "无法加载图像。"
+
+# ==AUTO== Automatically translated
+msgid "Switch to linear navigation (stop at the ends of the list)"
+msgstr "切换到线性浏览（在列表两端停止）"
+
+# ==AUTO== Automatically translated
+msgid "Switch to circular navigation (wrap around at the ends of the list)"
+msgstr "切换到循环浏览（到达列表一端时跳到另一端）"
+
+# ==AUTO== Automatically translated
+msgid " (max)"
+msgstr "（最大）"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard"
+msgstr "键盘"
+
+# ==AUTO== Automatically translated
+msgid "Mouse"
+msgstr "鼠标"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left, without loss"
+msgstr "向左无损旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°, without loss"
+msgstr "无损旋转 180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right, without loss"
+msgstr "向右无损旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Apply EXIF orientation"
+msgstr "应用EXIF方向"
+
+# ==AUTO== Automatically translated
+msgid "Force EXIF orientation to 0°"
+msgstr "强制将 EXIF 方向设为 0°"
+
+# ==AUTO== Automatically translated
+msgid "directory tree"
+msgstr "目录树"
+
+# ==AUTO== Automatically translated
+msgid "file list"
+msgstr "文件列表"
+
+# ==AUTO== Automatically translated
+msgid "Open a folder"
+msgstr "打开文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Quit"
+msgstr "退出"
+
+# ==AUTO== Automatically translated
+msgid "New profile"
+msgstr "新建配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile"
+msgstr "复制配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration"
+msgstr "配置文件设置"
+
+# ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts (this window)"
+msgstr "键盘和鼠标快捷操作（本窗口）"
+
+# ==AUTO== Automatically translated
+msgid "Rename as shown in the Preview column"
+msgstr "按“预览”列所示重命名"
+
+# ==AUTO== Automatically translated
+msgid "Reload the file list"
+msgstr "重新加载文件列表"
+
+# ==AUTO== Automatically translated
+msgid "Switch focus between directory tree and file list"
+msgstr "在目录树和文件列表之间切换焦点"
+
+# ==AUTO== Automatically translated
+msgid "Navigate directories"
+msgstr "浏览目录"
+
+# ==AUTO== Automatically translated
+msgid "Select previous / next file"
+msgstr "选择上一个 / 下一个文件"
+
+# ==AUTO== Automatically translated
+msgid "Jump to first / last entry"
+msgstr "跳到第一个 / 最后一个条目"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images in the viewer"
+msgstr "在查看器中显示所选图像"
+
+# ==AUTO== Automatically translated
+msgid "Open the selected files with their default application"
+msgstr "用默认应用程序打开所选文件"
+
+# ==AUTO== Automatically translated
+msgid "Open with…"
+msgstr "打开方式…"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected file(s) and their sidecars"
+msgstr "删除所选文件及其 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "click"
+msgstr "单击"
+
+# ==AUTO== Automatically translated
+msgid "Add to the selection / select a range"
+msgstr "添加到选择 / 选择范围"
+
+# ==AUTO== Automatically translated
+msgid "No selection"
+msgstr "未选择"
+
+# ==AUTO== Automatically translated
+msgid "Rename, renumber and preview act on all listed files"
+msgstr "重命名、重新编号和预览作用于所有列出的文件"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a thumbnail"
+msgstr "双击缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Show the image in the viewer"
+msgstr "在查看器中显示图像"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a name"
+msgstr "双击名称"
+
+# ==AUTO== Automatically translated
+msgid "Open the file with its default application"
+msgstr "用默认应用程序打开文件"
+
+# ==AUTO== Automatically translated
+msgid "Double-click on a sidecar"
+msgstr "双击 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Open the sidecar file"
+msgstr "打开 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the file list"
+msgstr "右键单击文件列表"
+
+# ==AUTO== Automatically translated
+msgid "Images menu"
+msgstr "“图像”菜单"
+
+# ==AUTO== Automatically translated
+msgid "Right-click on the directory tree"
+msgstr "右键单击目录树"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder as a shortcut"
+msgstr "将文件夹添加为快捷方式"
+
+# ==AUTO== Automatically translated
+msgid "Drag onto a folder"
+msgstr "拖到文件夹上"
+
+# ==AUTO== Automatically translated
+msgid "Move the files and their sidecars"
+msgstr "移动文件及其 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "drag onto a folder"
+msgstr "拖到文件夹上"
+
+# ==AUTO== Automatically translated
+msgid "Copy the files and their sidecars"
+msgstr "复制文件及其 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Fit window"
+msgstr "适应窗口"
+
+# ==AUTO== Automatically translated
+msgid "Actual size (1:1)"
+msgstr "实际大小（1:1）"
+
+# ==AUTO== Automatically translated
+msgid "Fit width"
+msgstr "适应宽度"
+
+# ==AUTO== Automatically translated
+msgid "Fit height"
+msgstr "适应高度"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in / Zoom out"
+msgstr "放大 / 缩小"
+
+# ==AUTO== Automatically translated
+msgid "Previous / next image of the selection, or of the list"
+msgstr "选择或列表中的上一张 / 下一张图像"
+
+# ==AUTO== Automatically translated
+msgid "Show / hide the metadata"
+msgstr "显示 / 隐藏元数据"
+
+# ==AUTO== Automatically translated
+msgid "Open with the default application"
+msgstr "用默认应用程序打开"
+
+# ==AUTO== Automatically translated
+msgid "Delete current image and its sidecars"
+msgstr "删除当前图像及其 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Close image viewer"
+msgstr "关闭图片查看器"
+
+# ==AUTO== Automatically translated
+msgid "Left-click + drag"
+msgstr "左键单击并拖动"
+
+# ==AUTO== Automatically translated
+msgid "Pan image"
+msgstr "平移图像"
+
+# ==AUTO== Automatically translated
+msgid "Double left-click"
+msgstr "左键双击"
+
+# ==AUTO== Automatically translated
+msgid "Center on clicked point"
+msgstr "以单击点为中心"
+
+# ==AUTO== Automatically translated
+msgid "left-click"
+msgstr "左键单击"
+
+# ==AUTO== Automatically translated
+msgid "Zoom in centered on point"
+msgstr "以该点为中心放大"
+
+# ==AUTO== Automatically translated
+msgid "right-click"
+msgstr "右键单击"
+
+# ==AUTO== Automatically translated
+msgid "Zoom out centered on point"
+msgstr "以该点为中心缩小"
+
+# ==AUTO== Automatically translated
+msgid "Click on a thumbnail of the strip"
+msgstr "单击缩略图条中的缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Show this image"
+msgstr "显示此图像"
+
+# ==AUTO== Automatically translated
+msgid "Main window"
+msgstr "主窗口"
+
+# ==AUTO== Automatically translated
+msgid "Image viewer"
+msgstr "图片查看器"
+
+# ==AUTO== Automatically translated
 msgid "Select folder"
 msgstr "选择文件夹"
-
-# ==AUTO== Automatically translated
-msgid "Original"
-msgstr "原始"
-
-# ==AUTO== Automatically translated
-msgid "Preview"
-msgstr "预览"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -325,73 +868,109 @@ msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} 个项目"
 
 # ==AUTO== Automatically translated
-#, python-brace-format
-msgid "⚠ no matching type ({types})"
-msgstr "⚠ 没有匹配的类型 ({types})"
+msgid "⚠ orphan sidecar, not renamed"
+msgstr "⚠ 孤立的 Sidecar 文件，未重命名"
+
+# ==AUTO== Automatically translated
+msgid "Target(s) already taken:"
+msgstr "目标已被占用："
+
+# ==AUTO== Automatically translated
+msgid "Nothing was renamed."
+msgstr "未重命名任何文件。"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "⚠ {field} unavailable"
-msgstr "⚠ {field} 不可用"
-
-# ==AUTO== Automatically translated
-msgid "Search — Help"
-msgstr "搜索 — 帮助"
-
-# ==AUTO== Automatically translated
-msgid "Replace — Help"
-msgstr "替换 — 帮助"
+msgid "{n} file(s) renamed."
+msgstr "已重命名 {n} 个文件。"
 
 # ==AUTO== Automatically translated
 msgid "Rename errors"
 msgstr "重命名错误"
 
 # ==AUTO== Automatically translated
-msgid "cannot move/copy a folder into itself"
-msgstr "无法将文件夹移动/复制到其自身内部"
+msgid "Renumber"
+msgstr "重新编号"
 
 # ==AUTO== Automatically translated
-msgid "Move errors"
-msgstr "移动错误"
+msgid "Files are already correctly numbered."
+msgstr "文件已正确编号。"
 
 # ==AUTO== Automatically translated
-msgid "Copy errors"
-msgstr "复制错误"
-
-# ==AUTO== Automatically translated
-msgid "Confirm overwrite"
-msgstr "确认覆盖"
+msgid "Confirm renumber"
+msgstr "确认重新编号"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
-msgid "{n} item(s) already exist in {dir} and would be overwritten."
-msgstr "{n} 个项目已存在于 {dir} 中，将被覆盖。"
+msgid "Renumber {n} file(s) starting from 1?"
+msgstr "从 1 开始重新编号 {n} 个文件？"
 
 # ==AUTO== Automatically translated
-msgid "Overwrite"
-msgstr "覆盖"
+msgid "Renumber errors"
+msgstr "重新编号错误"
 
 # ==AUTO== Automatically translated
-msgid "Skip"
-msgstr "跳过"
+msgid "Undo errors"
+msgstr "撤销错误"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo (%d)"
-msgstr "撤销 (%d)"
+msgid "Keyboard and mouse shortcuts"
+msgstr "键盘和鼠标快捷操作"
 
 # ==AUTO== Automatically translated
-#, python-format
-msgid "Undo last rename batch (%d level(s) available)"
-msgstr "撤销上一次批量重命名（可用 %d 级）"
+#, python-brace-format
+msgid "Switch to the profile “{name}”"
+msgstr "切换到配置文件“{name}”"
 
 # ==AUTO== Automatically translated
-msgid "Undo"
-msgstr "撤销"
+msgid "Profile name (letters, digits, “-” and “_”):"
+msgstr "配置文件名（字母、数字、“-”和“_”）："
 
 # ==AUTO== Automatically translated
-msgid "Undo last rename batch"
-msgstr "撤销上一批重命名"
+#, python-brace-format
+msgid "New profile name (copy of “{source}”):"
+msgstr "新配置文件名（“{source}”的副本）："
+
+# ==AUTO== Automatically translated
+msgid "Rename profile"
+msgstr "重命名配置文件"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "New name of the profile “{name}” (letters, digits, “-” and “_”):"
+msgstr "配置文件“{name}”的新名称（字母、数字、“-”和“_”）："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{old}” renamed to “{name}”."
+msgstr "配置文件“{old}”已重命名为“{name}”。"
+
+# ==AUTO== Automatically translated
+msgid "Delete profile"
+msgstr "删除配置文件"
+
+# ==AUTO== Automatically translated
+msgid "There is no profile to delete: at least one visible profile must remain."
+msgstr "没有可删除的配置文件：必须至少保留一个可见的配置文件。"
+
+# ==AUTO== Automatically translated
+msgid "Profile to delete:"
+msgstr "要删除的配置文件："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
+msgstr "删除配置文件“{name}”及其所有设置？此操作无法撤销。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” deleted."
+msgstr "已删除配置文件“{name}”。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile “{name}” loaded."
+msgstr "已加载配置文件“{name}”。"
 
 # ==AUTO== Automatically translated
 msgid "Add as shortcut"
@@ -402,16 +981,8 @@ msgid "Open folder…"
 msgstr "打开文件夹…"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "打开文件夹"
-
-# ==AUTO== Automatically translated
 msgid "Open a directory chooser and navigate the tree to the selected folder"
 msgstr "打开目录选择器并导航到所选文件夹"
-
-# ==AUTO== Automatically translated
-msgid "Quit"
-msgstr "退出"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -466,6 +1037,30 @@ msgid "Show version and license information"
 msgstr "显示版本和许可证信息"
 
 # ==AUTO== Automatically translated
+msgid "Keyboard and mouse shortcuts…"
+msgstr "键盘和鼠标快捷操作…"
+
+# ==AUTO== Automatically translated
+msgid "Show the keyboard and mouse shortcuts"
+msgstr "显示键盘和鼠标快捷操作"
+
+# ==AUTO== Automatically translated
+msgid "List the keyboard and mouse shortcuts of the main window and viewer"
+msgstr "列出主窗口和查看器的键盘和鼠标快捷操作"
+
+# ==AUTO== Automatically translated
+msgid "User guide"
+msgstr "用户指南"
+
+# ==AUTO== Automatically translated
+msgid "Open the online user guide"
+msgstr "打开在线用户指南"
+
+# ==AUTO== Automatically translated
+msgid "Open the user guide, in the interface language, in the web browser"
+msgstr "在网页浏览器中以界面语言打开用户指南"
+
+# ==AUTO== Automatically translated
 msgid "Edit shortcuts…"
 msgstr "编辑快捷方式…"
 
@@ -488,6 +1083,170 @@ msgstr "显示文件字段值"
 # ==AUTO== Automatically translated
 msgid "Open the file information window for the selected file"
 msgstr "打开所选文件的文件信息窗口"
+
+# ==AUTO== Automatically translated
+msgid "New profile…"
+msgstr "新建配置文件…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new profile"
+msgstr "创建新配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Create a profile with default settings and switch to it"
+msgstr "使用默认设置创建配置文件并切换到该配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate profile…"
+msgstr "复制配置文件…"
+
+# ==AUTO== Automatically translated
+msgid "Duplicate the current profile"
+msgstr "复制当前配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Copy the current profile under a new name and switch to the copy"
+msgstr "以新名称复制当前配置文件并切换到副本"
+
+# ==AUTO== Automatically translated
+msgid "Rename profile…"
+msgstr "重命名配置文件…"
+
+# ==AUTO== Automatically translated
+msgid "Rename the current profile"
+msgstr "重命名当前配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Give the current profile a new name (letters, digits, “-” and “_”)"
+msgstr "为当前配置文件指定新名称（字母、数字、“-”和“_”）"
+
+# ==AUTO== Automatically translated
+msgid "Delete profile…"
+msgstr "删除配置文件…"
+
+# ==AUTO== Automatically translated
+msgid "Delete a profile"
+msgstr "删除配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Permanently delete a profile and all its settings"
+msgstr "永久删除配置文件及其所有设置"
+
+# ==AUTO== Automatically translated
+msgid "Profile configuration…"
+msgstr "配置文件设置…"
+
+# ==AUTO== Automatically translated
+msgid "Configure the current profile"
+msgstr "配置当前配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Configure the schema fields and options of the current profile"
+msgstr "配置当前配置文件的模式结构字段和选项"
+
+# ==AUTO== Automatically translated
+msgid "Open with a chosen application"
+msgstr "用选定的应用程序打开"
+
+# ==AUTO== Automatically translated
+msgid "Choose the application that opens the selected file"
+msgstr "选择用于打开所选文件的应用程序"
+
+# ==AUTO== Automatically translated
+msgid "View"
+msgstr "查看"
+
+# ==AUTO== Automatically translated
+msgid "Show in the image viewer"
+msgstr "在图片查看器中显示"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer"
+msgstr "在图片查看器中显示所选图片和视频"
+
+# ==AUTO== Automatically translated
+msgid "Fill the schema from the file name"
+msgstr "根据文件名填写模式结构"
+
+# ==AUTO== Automatically translated
+msgid "Infer the schema fields from the selected file name and its folders"
+msgstr "根据所选文件名及其文件夹推断模式结构字段"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files"
+msgstr "删除所选文件"
+
+# ==AUTO== Automatically translated
+msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgstr "删除所选文件及其 Sidecar 文件（如已启用则移至回收站）"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars…"
+msgstr "孤立 Sidecar 文件…"
+
+# ==AUTO== Automatically translated
+msgid "List the sidecars without a base file"
+msgstr "列出没有主文件的 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "List, then delete, the sidecar files of the folder without a base file"
+msgstr "列出并删除文件夹中没有主文件的 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° left"
+msgstr "向左旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate counter-clockwise, without loss"
+msgstr "逆时针无损旋转"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° counter-clockwise, without loss"
+msgstr "将所选图片逆时针无损旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 180°"
+msgstr "旋转180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 180°, without loss"
+msgstr "将所选图片无损旋转 180°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate 90° right"
+msgstr "向右旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate clockwise, without loss"
+msgstr "顺时针无损旋转"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the selected images 90° clockwise, without loss"
+msgstr "将所选图片顺时针无损旋转 90°"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says"
+msgstr "按 EXIF 方向旋转像素"
+
+# ==AUTO== Automatically translated
+msgid "Rotate the pixels as the EXIF orientation says, then reset it"
+msgstr "按 EXIF 方向旋转像素，然后重置方向"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation to normal"
+msgstr "将 EXIF 方向设为正常"
+
+# ==AUTO== Automatically translated
+msgid "Set the EXIF orientation tag to 1 (0°) without rotating the pixels"
+msgstr "将 EXIF 方向标签设为 1（0°），不旋转像素"
+
+# ==AUTO== Automatically translated
+msgid "Refresh"
+msgstr "刷新"
+
+# ==AUTO== Automatically translated
+msgid "Read the folder again and refresh the thumbnails"
+msgstr "重新读取文件夹并刷新缩略图"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -532,6 +1291,42 @@ msgstr "包含所有子目录"
 # ==AUTO== Automatically translated
 msgid "When checked, files from all subdirectories are listed"
 msgstr "勾选后，所有子目录中的文件都会被列出"
+
+# ==AUTO== Automatically translated
+msgid "Thumbnails"
+msgstr "缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Show image thumbnails in the file list"
+msgstr "在文件列表中显示图片缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column; this setting belongs to the current profile"
+msgstr "显示缩略图列；此设置属于当前配置文件"
+
+# ==AUTO== Automatically translated
+msgid "By date"
+msgstr "按日期"
+
+# ==AUTO== Automatically translated
+msgid "Sort the files by modification date"
+msgstr "按修改日期排序文件"
+
+# ==AUTO== Automatically translated
+msgid "Sort by modification date instead of by name; folders stay first"
+msgstr "按修改日期而非名称排序；文件夹始终在前"
+
+# ==AUTO== Automatically translated
+msgid "Reversed"
+msgstr "倒序"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the sort order"
+msgstr "反转排序顺序"
+
+# ==AUTO== Automatically translated
+msgid "List the files in reverse order; folders stay first"
+msgstr "以相反顺序列出文件；文件夹始终在前"
 
 # ==AUTO== Automatically translated
 msgid "Keep extension"
@@ -606,6 +1401,26 @@ msgid "Only files matching this glob pattern are listed (e.g. *.txt, image_*)"
 msgstr "仅列出匹配此 Glob 模式的文件（例如 *.txt、image_*）"
 
 # ==AUTO== Automatically translated
+msgid "Sidecar filter…"
+msgstr "Sidecar 过滤器…"
+
+# ==AUTO== Automatically translated
+msgid ""
+"<b>Sidecar content filter</b><br>Python regular expression applied to the"
+" <i>content</i> of sidecar files.<br>Only files with at least one sidecar"
+" whose content matches are shown, with their sidecars.<br>Files with no "
+"sidecar are always hidden when a filter is active.<br><tt>.*</tt> matches"
+" across line breaks (re.DOTALL).<br>Case-insensitive (re.IGNORECASE), "
+"including accented characters.<br>Press Enter to keep the filter in the "
+"history; leave empty to show all files."
+msgstr ""
+"<b>Sidecar 内容过滤器</b><br>应用于 Sidecar 文件<i>内容</i>的 Python "
+"正则表达式。<br>仅显示至少有一个内容匹配的 Sidecar 文件的文件及其 Sidecar 文件。<br>过滤器启用时，没有 Sidecar "
+"文件的文件始终隐藏。<br><tt>.*</tt> "
+"可跨行匹配（re.DOTALL）。<br>不区分大小写（re.IGNORECASE），包括带重音的字符。<br>按 Enter "
+"将过滤器保存到历史记录；留空则显示所有文件。"
+
+# ==AUTO== Automatically translated
 msgid "Files to be renamed"
 msgstr "待重命名的文件"
 
@@ -614,6 +1429,22 @@ msgid ""
 "Select rows to restrict operations to those files; leave unselected to "
 "apply to all"
 msgstr "选择行以将操作限制在这些文件上；不选则应用于所有文件"
+
+# ==AUTO== Automatically translated
+msgid "Pattern"
+msgstr "模式"
+
+# ==AUTO== Automatically translated
+msgid "Rename in place with search/replace patterns"
+msgstr "使用搜索/替换模式就地重命名"
+
+# ==AUTO== Automatically translated
+msgid "Schema"
+msgstr "模式结构"
+
+# ==AUTO== Automatically translated
+msgid "Sort files into a destination tree built from schema fields"
+msgstr "按模式结构字段构建的目标目录树整理文件"
 
 # ==AUTO== Automatically translated
 msgid "Search:"
@@ -647,10 +1478,6 @@ msgid ""
 "Show help about search patterns (Pattern tokens, Regular expressions, "
 "Plain text)"
 msgstr "显示搜索模式帮助（模式标记、正则表达式、纯文本）"
-
-# ==AUTO== Automatically translated
-msgid "Pattern"
-msgstr "模式"
 
 # ==AUTO== Automatically translated
 msgid "Search using pattern tokens"
@@ -859,10 +1686,6 @@ msgid ""
 msgstr "以当前名称保存所有搜索、替换和后处理设置（覆盖同名的任何现有保存）"
 
 # ==AUTO== Automatically translated
-msgid "Delete"
-msgstr "删除"
-
-# ==AUTO== Automatically translated
 msgid "Delete this named save"
 msgstr "删除此命名保存"
 
@@ -897,18 +1720,25 @@ msgid "Reverse the last batch of renames performed on disk"
 msgstr "撤销磁盘上执行的最后一批重命名"
 
 # ==AUTO== Automatically translated
-msgid "Rename"
-msgstr "重命名"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk"
-msgstr "在磁盘上应用重命名"
+msgid "Renumber from 1 in place"
+msgstr "从 1 开始就地重新编号"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Permanently rename all files shown in the Preview column (only enabled "
-"when there are no conflicts)"
-msgstr "永久重命名预览列中显示的所有文件（仅在没有冲突时启用）"
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr "按模式结构从 1 开始就地重新编号所选文件（未选择时为所有列出的文件）"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "在磁盘上应用重命名（F2）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr "按“预览”列所示永久重命名所选文件（未选择时为所有列出的文件）（仅在无冲突时可用）"
 
 # ==AUTO== Automatically translated
 msgid "File"
@@ -919,12 +1749,129 @@ msgid "Edit"
 msgstr "编辑"
 
 # ==AUTO== Automatically translated
+msgid "Profile"
+msgstr "配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Images"
+msgstr "图像"
+
+# ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "打开 Sidecar 文件"
+
+# ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "快捷方式"
 
 # ==AUTO== Automatically translated
 msgid "Help"
 msgstr "帮助"
+
+# ==AUTO== Automatically translated
+msgid "Field"
+msgstr "字段"
+
+# ==AUTO== Automatically translated
+msgid "Description"
+msgstr "描述"
+
+# ==AUTO== Automatically translated
+msgid "Value"
+msgstr "值"
+
+# ==AUTO== Automatically translated
+msgid "Image metadata (EXIF / IPTC)"
+msgstr "图像元数据（EXIF / IPTC）"
+
+# ==AUTO== Automatically translated
+msgid "Audio metadata"
+msgstr "音频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Video metadata"
+msgstr "视频元数据"
+
+# ==AUTO== Automatically translated
+msgid "Universal fields"
+msgstr "通用字段"
+
+# ==AUTO== Automatically translated
+msgid "Today's date"
+msgstr "今天日期"
+
+# ==AUTO== Automatically translated
+msgid "Current date and time"
+msgstr "当前日期和时间"
+
+# ==AUTO== Automatically translated
+msgid "Missing"
+msgstr "缺失"
+
+# ==AUTO== Automatically translated
+msgid "File modification date/time"
+msgstr "文件修改日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "File creation date/time"
+msgstr "文件创建日期/时间"
+
+# ==AUTO== Automatically translated
+msgid "Parent folder name"
+msgstr "父文件夹名称"
+
+# ==AUTO== Automatically translated
+msgid "Batch fields"
+msgstr "批量字段"
+
+# ==AUTO== Automatically translated
+msgid "Computed"
+msgstr "计算值"
+
+# ==AUTO== Automatically translated
+msgid "Full matched text"
+msgstr "完整匹配文本"
+
+# ==AUTO== Automatically translated
+msgid "Capture groups"
+msgstr "捕获组"
+
+# ==AUTO== Automatically translated
+msgid "Auto-incrementing counter"
+msgstr "自动递增计数器"
+
+# ==AUTO== Automatically translated
+msgid "Conflict-free counter"
+msgstr "无冲突计数器"
+
+# ==AUTO== Automatically translated
+msgid "Named regex group"
+msgstr "命名正则表达式组"
+
+# ==AUTO== Automatically translated
+msgid "Insert into replacement field"
+msgstr "插入到替换字段"
+
+# ==AUTO== Automatically translated
+msgid "Orphan sidecars"
+msgstr "孤立旁注文件"
+
+# ==AUTO== Automatically translated
+msgid "Delete selected"
+msgstr "删除所选"
+
+# ==AUTO== Automatically translated
+msgid "Delete all"
+msgstr "全部删除"
+
+# ==AUTO== Automatically translated
+msgid "Close"
+msgstr "关闭"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} orphan sidecar file(s):"
+msgstr "{n} 个孤立旁注文件："
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -1488,6 +2435,292 @@ msgid "Examples"
 msgstr "示例"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Profile configuration — {name}"
+msgstr "配置文件设置：{name}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}"
+msgstr "字段 {n}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Field {n}:"
+msgstr "字段 {n}："
+
+# ==AUTO== Automatically translated
+msgid "Display"
+msgstr "显示"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields of the rename schema"
+msgstr "重命名模式结构的字段数"
+
+# ==AUTO== Automatically translated
+msgid "Number of fields:"
+msgstr "字段数量："
+
+# ==AUTO== Automatically translated
+msgid "Text inserted in the name of video files"
+msgstr "插入视频文件名中的文本"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Inserted at the position chosen with the radio buttons of the Schema tab;"
+" leave empty for no marker"
+msgstr "插入到“模式结构”选项卡中单选按钮所选的位置；留空则不插入标记"
+
+# ==AUTO== Automatically translated
+msgid "Video marker:"
+msgstr "视频标记："
+
+# ==AUTO== Automatically translated
+msgid "Field titles:"
+msgstr "字段标题："
+
+# ==AUTO== Automatically translated
+msgid "Show thumbnails"
+msgstr "显示缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Show a thumbnail column in the file list"
+msgstr "在文件列表中显示缩略图列"
+
+# ==AUTO== Automatically translated
+msgid "Maximum width:"
+msgstr "最大宽度："
+
+# ==AUTO== Automatically translated
+msgid "Maximum height:"
+msgstr "最大高度："
+
+# ==AUTO== Automatically translated
+msgid "Sidecar files"
+msgstr "Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar column"
+msgstr "显示 Sidecar 列"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show which files have sidecars; double-click the column to open a sidecar"
+" or create one"
+msgstr "显示哪些文件有 Sidecar 文件；双击该列可打开或创建 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Show the sidecar content filter"
+msgstr "显示 Sidecar 内容过滤器"
+
+# ==AUTO== Automatically translated
+msgid "Filter the file list on the content of the sidecar files"
+msgstr "按 Sidecar 文件的内容过滤文件列表"
+
+# ==AUTO== Automatically translated
+msgid "Extension of the sidecar created by a double-click, without dot"
+msgstr "双击创建的 Sidecar 文件的扩展名，不含点号"
+
+# ==AUTO== Automatically translated
+msgid "New sidecar extension:"
+msgstr "新 Sidecar 文件扩展名："
+
+# ==AUTO== Automatically translated
+msgid "Delete empty sidecar files when loading a directory"
+msgstr "加载目录时删除空的附属文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Empty files named like a sidecar are deleted when the directory is "
+"listed, except a sidecar just created"
+msgstr "列出目录时会删除按 Sidecar 命名的空文件，刚创建的 Sidecar 文件除外"
+
+# ==AUTO== Automatically translated
+msgid "Maximum number of values kept in each field history"
+msgstr "每个字段历史记录保留的最大值数"
+
+# ==AUTO== Automatically translated
+msgid "Max history entries:"
+msgstr "最大历史条目数："
+
+# ==AUTO== Automatically translated
+msgid "Zoom change of each zoom in or zoom out"
+msgstr "每次放大或缩小的缩放变化量"
+
+# ==AUTO== Automatically translated
+msgid "Zoom step:"
+msgstr "缩放步长："
+
+# ==AUTO== Automatically translated
+msgid "Largest zoom of the image viewer"
+msgstr "图片查看器的最大缩放"
+
+# ==AUTO== Automatically translated
+msgid "Maximum zoom:"
+msgstr "最大缩放："
+
+# ==AUTO== Automatically translated
+msgid "Right"
+msgstr "右"
+
+# ==AUTO== Automatically translated
+msgid "Left"
+msgstr "左"
+
+# ==AUTO== Automatically translated
+msgid "Side of the image viewer where the metadata panel is shown"
+msgstr "图片查看器中显示元数据面板的一侧"
+
+# ==AUTO== Automatically translated
+msgid "Metadata panel:"
+msgstr "元数据面板："
+
+# ==AUTO== Automatically translated
+msgid "Show images turned as their EXIF orientation says"
+msgstr "按 EXIF 方向旋转显示图片"
+
+# ==AUTO== Automatically translated
+msgid "Applies to the thumbnails and to the image viewer"
+msgstr "适用于缩略图和图片查看器"
+
+# ==AUTO== Automatically translated
+msgid "Deletion"
+msgstr "删除"
+
+# ==AUTO== Automatically translated
+msgid "Move deleted files to the trash"
+msgstr "将删除的文件移至回收站"
+
+# ==AUTO== Automatically translated
+msgid "When unchecked, deleted files are removed permanently"
+msgstr "取消勾选时，删除的文件将被永久移除"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletions"
+msgstr "确认删除"
+
+# ==AUTO== Automatically translated
+msgid "Ask for a confirmation before deleting files"
+msgstr "删除文件前请求确认"
+
+# ==AUTO== Automatically translated
+msgid "Above this number of files, the confirmation only gives the count"
+msgstr "超过此文件数时，确认框只显示数量"
+
+# ==AUTO== Automatically translated
+msgid "Files listed in the confirmation:"
+msgstr "确认框中列出的文件数："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no destination for {dest}"
+msgstr "⚠ {dest} 没有目标"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {dest} must start the name"
+msgstr "⚠ {dest} 必须位于名称开头"
+
+# ==AUTO== Automatically translated
+msgid "⚠ absolute path"
+msgstr "⚠ 绝对路径"
+
+# ==AUTO== Automatically translated
+msgid "⚠ extension separator removed"
+msgstr "⚠ 扩展名分隔符已被删除"
+
+# ==AUTO== Automatically translated
+msgid "⚠ invalid path"
+msgstr "⚠ 无效路径"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ no matching type ({types})"
+msgstr "⚠ 没有匹配的类型 ({types})"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "⚠ {field} unavailable"
+msgstr "⚠ {field} 不可用"
+
+# ==AUTO== Automatically translated
+msgid "Search — Help"
+msgstr "搜索 — 帮助"
+
+# ==AUTO== Automatically translated
+msgid "Replace — Help"
+msgstr "替换 — 帮助"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Schema field “{title}”: a directory level and a part of the name; “###” "
+"is the counter, an empty field is skipped"
+msgstr "模式结构字段“{title}”：一级目录和名称的一部分；“###”为计数器，空字段将被跳过"
+
+# ==AUTO== Automatically translated
+msgid "Destination:"
+msgstr "目标："
+
+# ==AUTO== Automatically translated
+msgid "Destination root directory…"
+msgstr "目标根目录…"
+
+# ==AUTO== Automatically translated
+msgid "Root of the destination tree"
+msgstr "目标目录树的根"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Files are moved under this directory, in sub-directories named after the "
+"fields"
+msgstr "文件将移至此目录下以字段命名的子目录中"
+
+# ==AUTO== Automatically translated
+msgid "Browse…"
+msgstr "浏览…"
+
+# ==AUTO== Automatically translated
+msgid "Choose the destination directory"
+msgstr "选择目标目录"
+
+# ==AUTO== Automatically translated
+msgid "Fill gaps"
+msgstr "填补编号空缺"
+
+# ==AUTO== Automatically translated
+msgid "Fill numbering gaps instead of continuing after the highest number"
+msgstr "填补编号空缺，而不是从最大编号之后继续"
+
+# ==AUTO== Automatically translated
+msgid "Video marker position"
+msgstr "视频标记位置"
+
+# ==AUTO== Automatically translated
+msgid "Choose destination directory"
+msgstr "选择目标目录"
+
+# ==AUTO== Automatically translated
+msgid "Choose a destination directory."
+msgstr "请选择目标目录。"
+
+# ==AUTO== Automatically translated
+msgid "The destination must be an absolute path."
+msgstr "目标必须是绝对路径。"
+
+# ==AUTO== Automatically translated
+msgid "Proposed template"
+msgstr "建议模板"
+
+# ==AUTO== Automatically translated
+msgid "Detected template, confirm to fill the fields:"
+msgstr "检测到模板，确认以填写字段："
+
+# ==AUTO== Automatically translated
+msgid "(empty)"
+msgstr "（空）"
+
+# ==AUTO== Automatically translated
 msgid "System default"
 msgstr "系统默认"
 
@@ -1608,10 +2841,6 @@ msgstr "下移"
 # ==AUTO== Automatically translated
 msgid "Saved shortcuts:"
 msgstr "已保存的快捷方式："
-
-# ==AUTO== Automatically translated
-msgid "Images"
-msgstr "图像"
 
 # ==AUTO== Automatically translated
 msgid "Duplicate extension"

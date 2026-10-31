@@ -1,0 +1,10 @@
+[
+  {
+    "mode": "pattern",
+    "pattern": "Bilan 20{X}"
+  },
+  {
+    "mode": "regex",
+    "pattern": "^IMG_(\\d+)"
+  }
+]

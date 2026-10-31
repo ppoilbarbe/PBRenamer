@@ -2,53 +2,13 @@
 
 from __future__ import annotations
 
-import datetime
 import os
 
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import (
-    QHeaderView,
-    QLabel,
-    QMenu,
-    QTreeWidget,
-    QTreeWidgetItem,
-    QVBoxLayout,
-    QWidget,
-)
+from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
 
-from pbrenamer.core import audio_meta, image_meta, video_meta
 from pbrenamer.ui.geometry_mixin import GeometryMixin
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-
-def _detect_type(path: str) -> str:
-    """Return 'image', 'audio', 'video', 'directory', or 'other'."""
-    if os.path.isdir(path):
-        return "directory"
-    if image_meta.can_read(path):
-        return "image"
-    if video_meta.can_read(path):
-        return "video"
-    if audio_meta.can_read(path):
-        return "audio"
-    return "other"
-
-
-def _fmt(value: object) -> str:
-    """Format a field value using its default display format."""
-    if isinstance(value, datetime.datetime):
-        return value.strftime("%Y-%m-%d_%H%M%S")
-    if isinstance(value, datetime.date):
-        return value.strftime("%Y-%m-%d")
-    return str(value)
-
-
-# ---------------------------------------------------------------------------
-# Window
-# ---------------------------------------------------------------------------
+from pbrenamer.ui.metadata_view import MetadataView
 
 
 class FileInfoWindow(GeometryMixin, QWidget):
@@ -71,18 +31,8 @@ class FileInfoWindow(GeometryMixin, QWidget):
         self._lbl_status.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._lbl_status.hide()
 
-        self._tree = QTreeWidget()
-        self._tree.setColumnCount(3)
-        self._tree.setHeaderLabels([_("Field"), _("Description"), _("Value")])
-        self._tree.setAlternatingRowColors(True)
-        self._tree.setRootIsDecorated(True)
-        hdr = self._tree.header()
-        hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
-        hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
-        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
-        self._tree.itemDoubleClicked.connect(self._on_item_double_clicked)
-        self._tree.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        self._tree.customContextMenuRequested.connect(self._on_tree_context_menu)
+        self._tree = MetadataView()
+        self._tree.field_requested.connect(self.field_requested)
         self._tree.hide()
 
         layout = QVBoxLayout(self)
@@ -92,10 +42,14 @@ class FileInfoWindow(GeometryMixin, QWidget):
 
     # ── Public API ────────────────────────────────────────────────────────────
 
-    def update_file(self, path: str) -> None:
-        """Populate the window for *path*."""
+    def update_file(
+        self, path: str, sidecars: list[str] | tuple[str, ...] = ()
+    ) -> None:
+        """Populate the window for *path* (and the XMP of its *sidecars*)."""
         name = os.path.basename(path)
-        file_type = _detect_type(path)
+        self.setWindowTitle(_("File information — {name}").format(name=name))
+        self._lbl_status.hide()
+        file_type = self._tree.show_file(path, sidecars)
         type_label = {
             "image": _("Image"),
             "audio": _("Audio"),
@@ -103,43 +57,11 @@ class FileInfoWindow(GeometryMixin, QWidget):
             "directory": _("Directory"),
             "other": _("Other"),
         }.get(file_type, _("Other"))
-
-        self.setWindowTitle(_("File information — {name}").format(name=name))
-        self._lbl_status.hide()
         self._lbl_info.setText(
             f"<b>{_('File:')}</b> {name} &nbsp;&nbsp; <b>{_('Type:')}</b> {type_label}"
         )
         self._lbl_info.show()
         self._tree.show()
-        self._tree.clear()
-
-        self._fill_universal(path)
-        self._fill_batch()
-
-        if file_type == "image":
-            self._fill_meta(
-                _("Image metadata (EXIF / IPTC)"),
-                "im",
-                image_meta.FIELD_REGISTRY,
-                image_meta.read_field,
-                path,
-            )
-        elif file_type == "audio":
-            self._fill_meta(
-                _("Audio metadata"),
-                "au",
-                audio_meta.FIELD_REGISTRY,
-                audio_meta.read_field,
-                path,
-            )
-        elif file_type == "video":
-            self._fill_meta(
-                _("Video metadata"),
-                "vi",
-                video_meta.FIELD_REGISTRY,
-                video_meta.read_field,
-                path,
-            )
 
     def show_multiple(self) -> None:
         self.setWindowTitle(_("File information"))
@@ -154,91 +76,3 @@ class FileInfoWindow(GeometryMixin, QWidget):
         self._tree.hide()
         self._lbl_status.setText(_("Select a file to display its information."))
         self._lbl_status.show()
-
-    # ── Private builders ──────────────────────────────────────────────────────
-
-    def _fill_universal(self, path: str) -> None:
-        sec = self._section(_("Universal fields"))
-        now = datetime.datetime.now()
-        self._row(sec, "{date}", _("Today's date"), _fmt(now.date()))
-        self._row(sec, "{datetime}", _("Current date and time"), _fmt(now))
-        try:
-            mdt = datetime.datetime.fromtimestamp(os.stat(path).st_mtime)
-            self._row(sec, "{mdatetime}", _("File modification date/time"), _fmt(mdt))
-        except OSError:
-            self._row(
-                sec, "{mdatetime}", _("File modification date/time"), _("Missing")
-            )
-        try:
-            st = os.stat(path)
-            cdt = datetime.datetime.fromtimestamp(
-                getattr(st, "st_birthtime", st.st_ctime)
-            )
-            self._row(sec, "{cdatetime}", _("File creation date/time"), _fmt(cdt))
-        except OSError:
-            self._row(sec, "{cdatetime}", _("File creation date/time"), _("Missing"))
-        parent = os.path.dirname(path)
-        dir_name = os.path.basename(parent) if parent else None
-        self._row(
-            sec,
-            "{dir}",
-            _("Parent folder name"),
-            dir_name if dir_name else _("Missing"),
-        )
-        sec.setExpanded(True)
-
-    def _fill_batch(self) -> None:
-        sec = self._section(_("Batch fields"))
-        computed = _("Computed")
-        self._row(sec, "{0}", _("Full matched text"), computed)
-        self._row(sec, "{1}, {2}…", _("Capture groups"), computed)
-        self._row(sec, "{num}", _("Auto-incrementing counter"), computed)
-        self._row(sec, "{newnum}", _("Conflict-free counter"), computed)
-        self._row(sec, "{re:name}", _("Named regex group"), computed)
-        sec.setExpanded(False)
-
-    def _fill_meta(self, title, prefix, registry, reader, path):
-        sec = self._section(title)
-        missing = _("Missing")
-        for key, info in registry.items():
-            val = reader(path, key)
-            self._row(
-                sec,
-                f"{{{prefix}:{key}}}",
-                info.description,
-                _fmt(val) if val is not None else missing,
-            )
-        sec.setExpanded(True)
-
-    def _section(self, title: str) -> QTreeWidgetItem:
-        item = QTreeWidgetItem(self._tree, [title])
-        font = item.font(0)
-        font.setBold(True)
-        item.setFont(0, font)
-        item.setFirstColumnSpanned(True)
-        return item
-
-    def _row(self, parent: QTreeWidgetItem, field: str, desc: str, value: str) -> None:
-        QTreeWidgetItem(parent, [field, desc, value])
-
-    # ── Interaction ───────────────────────────────────────────────────────────
-
-    def _on_item_double_clicked(self, item: QTreeWidgetItem, _column: int) -> None:
-        if item.childCount() > 0:
-            return
-        field = item.text(0)
-        if field:
-            self.field_requested.emit(field)
-
-    def _on_tree_context_menu(self, pos) -> None:
-        item = self._tree.itemAt(pos)
-        if item is None or item.childCount() > 0:
-            return
-        field = item.text(0)
-        if not field:  # pragma: no cover
-            return
-        menu = QMenu(self)
-        action = menu.addAction(_("Insert into replacement field"))
-        chosen = menu.exec(self._tree.viewport().mapToGlobal(pos))
-        if chosen is action:
-            self.field_requested.emit(field)

@@ -8,7 +8,6 @@ import pytest
 import pbrenamer.__main__ as _main_mod
 import pbrenamer.settings as _settings
 from pbrenamer.__main__ import (
-    _apply_postproc,
     _apply_sidecar_grouping,
     _build_parser,
     _detect_conflicts,
@@ -16,7 +15,9 @@ from pbrenamer.__main__ import (
     _plan,
     _resolve_ns,
     _resolve_selection,
+    _rule,
 )
+from pbrenamer.core import planner
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -44,6 +45,12 @@ def _ns(**kwargs) -> argparse.Namespace:
         directory=None,
         log_level=None,
         saved=None,
+        schema=None,
+        dest=None,
+        fill_gaps=False,
+        renumber=False,
+        video_marker=None,
+        video_marker_pos=None,
     )
     defaults.update(kwargs)
     return argparse.Namespace(**defaults)
@@ -263,6 +270,12 @@ class TestParser:
 # ---------------------------------------------------------------------------
 
 
+def _apply_postproc(name, path, *, sep="none", accent, dup, case):
+    """Post-process *name* with the rule built from the CLI options."""
+    rule = _rule(_ns(sep=sep, accent=accent, dup=dup, case=case))
+    return planner.apply_postproc(name, path, rule)
+
+
 class TestApplyPostproc:
     def _path(self, name: str) -> str:
         return f"/fake/{name}"
@@ -375,6 +388,12 @@ class TestResolveNs:
             confirm=False,
             directory=None,
             log_level=None,
+            schema=None,
+            dest=None,
+            fill_gaps=False,
+            renumber=False,
+            video_marker=None,
+            video_marker_pos=None,
         )
         defaults.update(kwargs)
         return argparse.Namespace(**defaults)
@@ -999,18 +1018,25 @@ class TestHeadlessRun:
         assert (tmp_path / "renamed_dir").exists()
         assert (tmp_path / "file.txt").exists()
 
-    def test_conflict_skipped_files_remain(self, tmp_path, capsys):
-        _make_files(tmp_path, "a_x.txt", "b_x.txt")
-        # Both would rename to "x.txt" — conflict
+    def test_conflict_renames_nothing(self, tmp_path, capsys):
+        _make_files(tmp_path, "a_x.txt", "b_x.txt", "a_y.txt")
+        # a_x and b_x would both become "x.txt"; a_y alone is fine.
         ns = _ns(search=r"^[ab]_", replace="", mode="regex", directory=str(tmp_path))
-        _headless_run(ns)
-        # Both originals must still exist (skipped due to conflict)
-        assert (tmp_path / "a_x.txt").exists()
-        assert (tmp_path / "b_x.txt").exists()
+        with pytest.raises(SystemExit) as exc_info:
+            _headless_run(ns)
+        assert exc_info.value.code == 1
+        err = capsys.readouterr().err
+        assert "conflict: a_x.txt → x.txt" in err
+        assert "2 conflict(s): nothing renamed" in err
+        assert sorted(p.name for p in tmp_path.iterdir()) == [
+            "a_x.txt",
+            "a_y.txt",
+            "b_x.txt",
+        ]
 
-    def test_conflict_shown_in_confirm_preview(self, tmp_path, capsys, monkeypatch):
+    def test_conflict_aborts_before_confirmation(self, tmp_path, capsys, monkeypatch):
         _make_files(tmp_path, "a_x.txt", "b_x.txt")
-        monkeypatch.setattr("builtins.input", lambda _: "n")
+        monkeypatch.setattr("builtins.input", lambda _: pytest.fail("asked"))
         ns = _ns(
             search=r"^[ab]_",
             replace="",
@@ -1018,9 +1044,22 @@ class TestHeadlessRun:
             confirm=True,
             directory=str(tmp_path),
         )
+        with pytest.raises(SystemExit):
+            _headless_run(ns)
+        assert "nothing renamed" in capsys.readouterr().err
+
+    def test_creates_sub_directories(self, tmp_path, capsys):
+        (tmp_path / "old").mkdir()
+        _make_files(tmp_path / "old", "a.txt")
+        ns = _ns(
+            search="{X}",
+            replace="new/{0}",
+            mode="pattern",
+            recurse=True,
+            directory=str(tmp_path),
+        )
         _headless_run(ns)
-        out = capsys.readouterr().out
-        assert "CONFLICT" in out
+        assert (tmp_path / "old" / "new" / "a.txt").exists()
 
     def test_modify_mode_renames_full_filename(self, tmp_path, capsys):
         _make_files(tmp_path, "data_v1.csv")
@@ -1057,12 +1096,18 @@ class TestHeadlessRun:
         _make_files(tmp_path, "foo.txt")
         from pbrenamer.core import filetools as _ft
 
-        monkeypatch.setattr(_ft, "rename_file", lambda *a: (False, "permission denied"))
+        def _fail(*_a):
+            raise OSError("permission denied")
+
+        monkeypatch.setattr(_ft.shutil, "move", _fail)
         ns = _ns(search="foo", replace="bar", mode="plain", directory=str(tmp_path))
         with pytest.raises(SystemExit) as exc_info:
             _headless_run(ns)
         assert exc_info.value.code == 1
-        assert "permission denied" in capsys.readouterr().err
+        err = capsys.readouterr().err
+        assert "permission denied" in err
+        assert "nothing renamed" in err
+        assert (tmp_path / "foo.txt").exists()
 
     def test_sidecar_mode_renames_base_and_sidecar_together(self, tmp_path, capsys):
         _make_files(tmp_path, "img.jpg", "img.xmp")
@@ -1136,9 +1181,12 @@ class TestDryRun:
             dry_run=True,
             directory=str(tmp_path),
         )
-        _headless_run(ns)
+        with pytest.raises(SystemExit) as exc_info:
+            _headless_run(ns)
+        assert exc_info.value.code == 1
         out = capsys.readouterr().out
-        assert "CONFLICT" in out
+        assert "# CONFLICT: a_x.txt" in out
+        assert "nothing would be renamed" in out
         assert (tmp_path / "a_x.txt").exists()
         assert (tmp_path / "b_x.txt").exists()
 
@@ -1503,3 +1551,387 @@ class TestAutoUpdateFlag:
             _main_mod.main()
         assert exc_info.value.code == 1
         assert "only available in" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------------
+# --schema, --dest, --fill-gaps, --renumber
+# ---------------------------------------------------------------------------
+
+
+def _main(monkeypatch, *args) -> int:
+    """Run main() with *args*; return the exit code (0 when it returns)."""
+    from pbrenamer.__main__ import main
+
+    monkeypatch.setattr(sys, "argv", ["pbrenamer", *map(str, args)])
+    try:
+        main()
+    except SystemExit as exc:
+        return exc.code
+    return 0
+
+
+def _tree(root) -> list[str]:
+    """Relative paths of every file under *root*, sorted."""
+    return sorted(
+        str(p.relative_to(root)).replace("\\", "/")
+        for p in root.rglob("*")
+        if p.is_file()
+    )
+
+
+class TestSchemaParser:
+    def test_defaults(self):
+        ns = _build_parser().parse_args([])
+        assert (ns.schema, ns.dest, ns.fill_gaps, ns.renumber) == (
+            None,
+            None,
+            None,
+            False,
+        )
+        assert ns.video_marker is None and ns.video_marker_pos is None
+
+    def test_values(self):
+        ns = _build_parser().parse_args(
+            [
+                "--schema",
+                "A,,###",
+                "--dest",
+                "/d",
+                "--fill-gaps",
+                "--renumber",
+                "--video-marker",
+                "VID",
+                "--video-marker-pos",
+                "2",
+            ]
+        )
+        assert ns.schema == "A,,###" and ns.dest == "/d"
+        assert ns.fill_gaps and ns.renumber
+        assert (ns.video_marker, ns.video_marker_pos) == ("VID", 2)
+
+    @pytest.mark.parametrize("other", [["--search", "x"], ["--saved", "x"]])
+    def test_schema_excludes_search_and_saved(self, other):
+        with pytest.raises(SystemExit):
+            _build_parser().parse_args(["--schema", "A", *other])
+
+
+class TestSchemaResolveNs:
+    def _raw(self, **kw):
+        return TestResolveNs()._raw_ns(**kw)
+
+    def test_schema_defaults(self, tmp_path):
+        ns = self._raw(schema="A,#", dest=str(tmp_path))
+        _resolve_ns(ns)
+        assert ns.sidecar_mode is True and ns.ext_mode == "lower"
+        assert (ns.video_marker, ns.video_marker_pos) == ("", 0)
+
+    def test_dest_made_absolute(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        ns = self._raw(schema="A", dest="out")
+        _resolve_ns(ns)
+        assert ns.dest == str(tmp_path / "out")
+
+    def test_dest_required(self, capsys):
+        with pytest.raises(SystemExit) as exc:
+            _resolve_ns(self._raw(schema="A"))
+        assert exc.value.code == 1
+        assert "requires --dest" in capsys.readouterr().err
+
+    def test_renumber_needs_no_dest(self):
+        ns = self._raw(schema="A,#", renumber=True)
+        _resolve_ns(ns)
+        assert ns.dest is None
+
+    def test_renumber_warns_dest_ignored(self, tmp_path, capsys):
+        _resolve_ns(self._raw(schema="A,#", renumber=True, dest=str(tmp_path)))
+        assert "--dest is ignored" in capsys.readouterr().err
+
+    @pytest.mark.parametrize(
+        ("attr", "value", "flag"),
+        [
+            ("replace", "x", "--replace"),
+            ("mode", "regex", "--mode"),
+            ("ext_mode", "keep", "--ext-mode"),
+            ("sep", "none", "--sep"),
+            ("case", "upper", "--case"),
+            ("accent", True, "--accent"),
+            ("dup", False, "--dup"),
+            ("sidecar_mode", False, "--no-sidecar-mode"),
+        ],
+    )
+    def test_pattern_options_rejected(self, tmp_path, capsys, attr, value, flag):
+        ns = self._raw(schema="A", dest=str(tmp_path), **{attr: value})
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+        assert f"{flag} cannot be used with --schema" in capsys.readouterr().err
+
+    def test_sidecar_mode_flag_accepted(self, tmp_path):
+        ns = self._raw(schema="A", dest=str(tmp_path), sidecar_mode=True)
+        _resolve_ns(ns)
+        assert ns.sidecar_mode is True
+
+    def test_invalid_schema_reported(self, tmp_path, capsys):
+        with pytest.raises(SystemExit):
+            _resolve_ns(self._raw(schema="A_B", dest=str(tmp_path)))
+        assert "invalid schema" in capsys.readouterr().err
+
+    @pytest.mark.parametrize(
+        ("attr", "value"), [("video_marker", "V"), ("video_marker_pos", 1)]
+    )
+    def test_marker_options_require_schema(self, capsys, attr, value):
+        with pytest.raises(SystemExit):
+            _resolve_ns(self._raw(search="x", **{attr: value}))
+        assert "requires --schema" in capsys.readouterr().err
+
+    def test_pattern_mode_rule_options(self, tmp_path):
+        ns = self._raw(search="x", dest=str(tmp_path), fill_gaps=True, renumber=True)
+        _resolve_ns(ns)
+        rule = _rule(ns)
+        assert rule.dest_root == str(tmp_path)
+        assert rule.fill_gaps and rule.renumber
+
+
+class TestSchemaRun:
+    def test_dry_run_touches_nothing(self, tmp_path, monkeypatch, capsys):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "a.JPG", "a.xmp")
+        dest = tmp_path / "out"
+        code = _main(
+            monkeypatch, src, "--schema", "Trip,,Paris,###", "--dest", dest, "--dry-run"
+        )
+        assert code == 0
+        out = capsys.readouterr().out
+        target = dest / "Trip" / "Paris" / "Trip_Paris_001"
+        assert f"{target}.jpg" in out and f"{target}.xmp" in out
+        assert _tree(src) == ["a.JPG", "a.xmp"] and not dest.exists()
+
+    def test_rename_with_sidecars_markers_and_counters(
+        self, tmp_path, monkeypatch, capsys
+    ):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "a.jpg", "a.xmp", "b.mp4", "c.png")
+        dest = tmp_path / "out"
+        (dest / "A").mkdir(parents=True)
+        _make_files(dest / "A", "A_007.jpg")
+        args = ("--schema", "A,###", "--dest", dest, "--video-marker", "VID")
+        code = _main(monkeypatch, src, *args, "--video-marker-pos", "1")
+        assert code == 0
+        assert "4 file(s) renamed" in capsys.readouterr().out
+        assert _tree(dest) == [
+            "A/A_007.jpg",
+            "A/A_008.jpg",
+            "A/A_008.xmp",
+            "A/A_009.png",
+            "A/A_VID_001.mp4",
+        ]
+        assert _tree(src) == []
+        assert src.is_dir()  # the listed directory is never pruned
+
+    def test_source_sub_directory_pruned(self, tmp_path, monkeypatch):
+        src = tmp_path / "src"
+        (src / "sub").mkdir(parents=True)
+        _make_files(src / "sub", "a.jpg")
+        dest = tmp_path / "out"
+        code = _main(monkeypatch, src, "--recurse", "--schema", "A,#", "--dest", dest)
+        assert code == 0
+        assert _tree(dest) == ["A/A_1.jpg"]
+        assert not (src / "sub").exists() and src.is_dir()
+
+    def test_second_batch_continues_numbering(self, tmp_path, monkeypatch):
+        dest = tmp_path / "out"
+        for batch in ("one", "two"):
+            src = tmp_path / batch
+            src.mkdir()
+            _make_files(src, "x.jpg", "y.jpg")
+            assert _main(monkeypatch, src, "--schema", "A,##", "--dest", dest) == 0
+        assert _tree(dest) == ["A/A_01.jpg", "A/A_02.jpg", "A/A_03.jpg", "A/A_04.jpg"]
+
+    def test_fill_gaps(self, tmp_path, monkeypatch):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "x.jpg")
+        dest = tmp_path / "out"
+        (dest / "A").mkdir(parents=True)
+        _make_files(dest / "A", "A_1.jpg", "A_3.jpg")
+        args = ("--schema", "A,#", "--dest", dest, "--fill-gaps")
+        assert _main(monkeypatch, src, *args) == 0
+        assert _tree(dest) == ["A/A_1.jpg", "A/A_2.jpg", "A/A_3.jpg"]
+
+    def test_conflict_renames_nothing(self, tmp_path, monkeypatch, capsys):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "x.jpg", "y.jpg")
+        dest = tmp_path / "out"
+        code = _main(monkeypatch, src, "--schema", "A", "--dest", dest)
+        assert code == 1
+        assert "nothing renamed" in capsys.readouterr().err
+        assert _tree(src) == ["x.jpg", "y.jpg"] and not dest.exists()
+
+    def test_select(self, tmp_path, monkeypatch):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "x.jpg", "x.xmp", "y.jpg")
+        dest = tmp_path / "out"
+        args = ("--schema", "A,#", "--dest", dest, "--select", "x.jpg")
+        assert _main(monkeypatch, src, *args) == 0
+        assert _tree(dest) == ["A/A_1.jpg", "A/A_1.xmp"]
+        assert _tree(src) == ["y.jpg"]
+
+    def test_renumber_in_place(self, tmp_path, monkeypatch, capsys):
+        _make_files(tmp_path, "A_05.jpg", "A_05.xmp", "A_09.jpg", "A_01.mp4")
+        args = ("--schema", "A,##", "--renumber")
+        assert _main(monkeypatch, tmp_path, *args) == 0
+        assert _tree(tmp_path) == ["A_01.jpg", "A_01.mp4", "A_01.xmp", "A_02.jpg"]
+
+    def test_renumber_already_numbered(self, tmp_path, monkeypatch, capsys):
+        _make_files(tmp_path, "A_1.jpg", "A_2.jpg")
+        assert _main(monkeypatch, tmp_path, "--schema", "A,#", "--renumber") == 0
+        assert "No files would be renamed" in capsys.readouterr().out
+
+    def test_renumber_without_counter(self, tmp_path, monkeypatch, capsys):
+        _make_files(tmp_path, "x.jpg")
+        assert _main(monkeypatch, tmp_path, "--schema", "A", "--renumber") == 1
+        assert "no numeric field" in capsys.readouterr().err
+
+    def test_pattern_mode_dest_field(self, tmp_path, monkeypatch):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "x.txt")
+        dest = tmp_path / "out"
+        args = ("--search", "{X}", "--replace", "{dest}/sub/{1}_{newnum}")
+        assert _main(monkeypatch, src, *args, "--dest", dest) == 0
+        assert _tree(dest) == ["sub/x_1.txt"]
+
+
+# ---------------------------------------------------------------------------
+# --profile
+# ---------------------------------------------------------------------------
+
+
+class TestProfileOption:
+    @pytest.fixture
+    def src(self, tmp_path):
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "a.jpg", "b.mp4")
+        return src
+
+    def test_parser(self):
+        assert _build_parser().parse_args(["--profile", "p"]).profile == "p"
+        assert _build_parser().parse_args([]).profile is None
+
+    @pytest.mark.parametrize("name", ["nope", "a/b"])
+    def test_unknown_profile(self, monkeypatch, capsys, src, name):
+        code = _main(monkeypatch, src, "--profile", name, "--search", "a")
+        assert code == 2
+        assert f"error: profile '{name}' not found" in capsys.readouterr().err
+
+    def test_headless_does_not_remember(self, monkeypatch, src):
+        from pbrenamer import profiles
+
+        profiles.create("p")
+        assert _main(monkeypatch, src, "--profile", "p", "--search", "x") == 0
+        assert profiles.current() == "p"
+        _settings.configure(_settings._dirs.config_home)
+        assert profiles.current() == "default"
+
+    def test_gui_remembers(self, monkeypatch, src):
+        from pbrenamer import profiles
+
+        profiles.create("p")
+        monkeypatch.setattr(_main_mod, "_gui_main", lambda ns: None)
+        assert _main(monkeypatch, src, "--profile", "p") == 0
+        _settings.configure(_settings._dirs.config_home)
+        assert profiles.current() == "p"
+
+    def test_hidden_profile_accepted(self, monkeypatch, src):
+        from pbrenamer import profiles
+
+        profiles.create(".h")
+        assert _main(monkeypatch, src, "--profile", ".h", "--search", "x") == 0
+
+    def test_saved_from_profile(self, monkeypatch, capsys, src):
+        from pbrenamer import profiles
+        from pbrenamer.ui.presets import PatternPresets
+
+        profiles.create("p")
+        profiles.use("p", remember=False)
+        PatternPresets().set_save(
+            "s", {"search_pattern": "a", "search_mode": "plain", "replace_pattern": "z"}
+        )
+        profiles.use("default", remember=False)
+        args = (src, "--saved", "s", "--dry-run")
+        assert _main(monkeypatch, *args) == 1
+        assert _main(monkeypatch, *args, "--profile", "p") == 0
+        assert "z.jpg" in capsys.readouterr().out
+
+    def test_sidecars_from_profile(self, monkeypatch, capsys, src):
+        from pbrenamer import profiles
+
+        _make_files(src, "a.note")
+        profiles.create("p")
+        profiles.use("p", remember=False)
+        _settings.set_sidecar_suffixes("image", ["note"])
+        profiles.use("default", remember=False)
+        args = (src, "--search", "a", "--replace", "c", "--sidecar-mode", "--dry-run")
+        assert _main(monkeypatch, *args, "--profile", "p") == 0
+        assert "c.note" in capsys.readouterr().out
+
+    def test_schema_defaults_from_profile(self, monkeypatch, tmp_path, src):
+        from pbrenamer import profiles
+
+        dest = tmp_path / "out"
+        profiles.create("p")
+        profiles.use("p", remember=False)
+        profiles.set_schema(
+            dest=str(dest), video_marker="V", video_marker_pos=1, fill_gaps=True
+        )
+        (dest / "A").mkdir(parents=True)
+        _make_files(dest / "A", "A_2.jpg")
+        assert _main(monkeypatch, src, "--profile", "p", "--schema", "A,#") == 0
+        assert _tree(dest) == ["A/A_1.jpg", "A/A_2.jpg", "A/A_V_1.mp4"]
+        # The CLI never writes to the profile.
+        assert profiles.get_schema()["dest"] == str(dest)
+
+    def test_cli_overrides_profile(self, monkeypatch, tmp_path, src):
+        from pbrenamer import profiles
+
+        profiles.set_schema(dest=str(tmp_path / "unused"), video_marker="V")
+        dest = tmp_path / "out"
+        code = _main(
+            monkeypatch,
+            src,
+            "--schema",
+            "A,#",
+            "--dest",
+            dest,
+            "--video-marker",
+            "",
+            "--no-fill-gaps",
+        )
+        assert code == 0
+        assert _tree(dest) == ["A/A_1.jpg", "A/A_1.mp4"]
+        assert not (tmp_path / "unused").exists()
+
+    def test_relative_profile_dest_made_absolute(self, monkeypatch, tmp_path, src):
+        from pbrenamer import profiles
+
+        monkeypatch.chdir(tmp_path)
+        profiles.set_schema(dest="out")
+        assert _main(monkeypatch, src, "--schema", "A,#") == 0
+        assert _tree(tmp_path / "out") == ["A/A_1.jpg", "A/A_1.mp4"]
+
+    def test_no_dest_anywhere(self, monkeypatch, capsys, src):
+        assert _main(monkeypatch, src, "--schema", "A,#") == 1
+        err = capsys.readouterr().err
+        assert "--schema requires --dest (profile 'default' has no destination)" in err
+
+    def test_renumber_ignores_profile_dest_silently(self, monkeypatch, capsys, src):
+        from pbrenamer import profiles
+
+        profiles.set_schema(dest="/elsewhere")
+        assert _main(monkeypatch, src, "--schema", "A,#", "--renumber") == 0
+        assert "warning" not in capsys.readouterr().err
+        assert sorted(p.name for p in src.iterdir()) == ["A_1.jpg", "A_1.mp4"]
