@@ -3406,8 +3406,8 @@ msgstr "Sopprime i messaggi informativi, livello WARNING."
 msgid "Advanced"
 msgstr "Avanzate"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 # ==AUTO== Automatically translated
 msgid ""

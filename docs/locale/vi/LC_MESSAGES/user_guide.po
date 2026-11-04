@@ -3303,8 +3303,8 @@ msgstr "Ẩn thông báo thông tin, mức WARNING."
 msgid "Advanced"
 msgstr "Nâng cao"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 # ==AUTO== Automatically translated
 msgid ""

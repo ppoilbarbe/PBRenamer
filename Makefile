@@ -11,14 +11,16 @@ POT_FILE   := $(LOCALE_DIR)/pbrenamer.pot
 PO_LOCALES := en fr de es it ru vi zh_CN
 
 # ── Docs ─────────────────────────────────────────────────────────────────────
-# Only the narrative pages (index.rst, user_guide.rst) are translated; the API
-# reference (autodoc) and the changelog (generated, English only) are not.
+# Only the narrative pages (index.rst, user_guide.rst, appendices/index.rst)
+# are translated; the API reference (autodoc), the changelog (generated) and
+# the technical appendices themselves stay in English.
 # docs/locale/<lang>/LC_MESSAGES/ holds one sphinx-intl catalog per page,
 # separate from the application catalogs under src/pbrenamer/locale/.
 DOCS_LOCALE    := $(DOCS)/locale
 DOC_LOCALES    := fr de es it ru vi zh_CN
 # sphinx-build -b gettext takes individual source files, not a directory.
-DOCS_NARRATIVE := $(DOCS)/index.rst $(DOCS)/user_guide.rst
+DOCS_NARRATIVE := $(DOCS)/index.rst $(DOCS)/user_guide.rst \
+                  $(DOCS)/appendices/index.rst
 # `make docs LANG=fr` builds a translated guide.  LANG is only honoured when
 # given on the command line: it is also the standard locale variable (e.g.
 # fr_FR.UTF-8), which make imports, and a plain `make docs` must build the

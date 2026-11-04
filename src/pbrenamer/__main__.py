@@ -323,6 +323,7 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--profile",
+        "-p",
         metavar="NAME",
         default=None,
         help=(

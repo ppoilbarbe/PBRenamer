@@ -319,11 +319,7 @@ class FileListController(QObject):
             names = os.listdir(self.current_dir)
         except OSError:
             return
-        self._pending_edit = {
-            p
-            for p in self._pending_edit
-            if os.path.isfile(p) and not os.path.getsize(p)
-        }
+        self._pending_edit = {p for p in self._pending_edit if sidecar.is_blank_file(p)}
         paths = [os.path.join(self.current_dir, n) for n in names]
         for path in sidecar.empty_sidecars(paths, _cfg.get_sidecar_config()):
             if path in self._pending_edit:

@@ -344,10 +344,15 @@ class TestEmptySidecars:
         ctrl._on_item_double_clicked(_item(ui, "a.jpg"), 3)
         ctrl.reload()
         assert (tmp_path / "a.xmp").exists()
+        # Saved untouched by an editor that adds a final newline: still
+        # protected.
+        (tmp_path / "a.xmp").write_bytes(b"\n")
+        ctrl.reload()
+        assert (tmp_path / "a.xmp").exists()
         # Once edited, it is no longer protected; emptied again, it goes.
         (tmp_path / "a.xmp").write_text("x")
         ctrl.reload()
-        (tmp_path / "a.xmp").write_bytes(b"")
+        (tmp_path / "a.xmp").write_bytes(b"\r\n")
         ctrl.reload()
         assert not (tmp_path / "a.xmp").exists()
 

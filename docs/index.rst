@@ -17,6 +17,7 @@ settings of each way of working.  See the :doc:`user_guide`.
 
    user_guide
    api
+   appendices/index
 
 .. toctree::
    :maxdepth: 1

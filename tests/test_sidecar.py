@@ -269,12 +269,14 @@ class TestEmptySidecars:
         (tmp_path / "a.xmp").write_bytes(b"")
         (tmp_path / "b.XMP").write_bytes(b"")
         (tmp_path / "c.xmp").write_text("x")
+        (tmp_path / "e.xmp").write_bytes(b"\n")
         (tmp_path / ".xmp").write_bytes(b"")
         (tmp_path / "d.xmp").mkdir()
         paths = [str(p) for p in tmp_path.iterdir()] + [str(tmp_path / "gone.xmp")]
         assert sorted(sidecar.empty_sidecars(paths, config)) == [
             str(tmp_path / "a.xmp"),
             str(tmp_path / "b.XMP"),
+            str(tmp_path / "e.xmp"),
         ]
 
     def test_stat_error_skipped(self, tmp_path, monkeypatch):
@@ -287,6 +289,56 @@ class TestEmptySidecars:
         monkeypatch.setattr(sidecar.os.path, "getsize", boom)
         config = sidecar.SidecarConfig.defaults()
         assert sidecar.empty_sidecars([str(f)], config) == []
+
+
+class TestIsBlankFile:
+    @pytest.mark.parametrize(
+        "data",
+        [b"", b"\n", b"\r\n", b"  \t\n", b"\xef\xbb\xbf", b"\xef\xbb\xbf\r\n"],
+    )
+    def test_blank(self, tmp_path, data):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(data)
+        assert sidecar.is_blank_file(str(f))
+
+    @pytest.mark.parametrize("data", [b"x", b"\n{}\n", b"\xef\xbb\xbfx"])
+    def test_not_blank(self, tmp_path, data):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(data)
+        assert not sidecar.is_blank_file(str(f))
+
+    def test_whitespace_over_threshold_not_blank(self, tmp_path):
+        at_limit = tmp_path / "a.xmp"
+        at_limit.write_bytes(b" " * sidecar.BLANK_FILE_MAX_SIZE)
+        over = tmp_path / "b.xmp"
+        over.write_bytes(b" " * (sidecar.BLANK_FILE_MAX_SIZE + 1))
+        assert sidecar.is_blank_file(str(at_limit))
+        assert not sidecar.is_blank_file(str(over))
+
+    def test_large_file_not_read(self, tmp_path, monkeypatch):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(b" " * 100)
+
+        def no_open(*_args, **_kwargs):
+            raise AssertionError("must not be read")
+
+        monkeypatch.setattr("builtins.open", no_open)
+        assert not sidecar.is_blank_file(str(f))
+
+    def test_missing_or_directory(self, tmp_path):
+        (tmp_path / "d.xmp").mkdir()
+        assert not sidecar.is_blank_file(str(tmp_path / "d.xmp"))
+        assert not sidecar.is_blank_file(str(tmp_path / "gone.xmp"))
+
+    def test_read_error(self, tmp_path, monkeypatch):
+        f = tmp_path / "a.xmp"
+        f.write_bytes(b"\n")
+
+        def boom(*_args, **_kwargs):
+            raise OSError("denied")
+
+        monkeypatch.setattr("builtins.open", boom)
+        assert not sidecar.is_blank_file(str(f))
 
 
 class TestOrphanSidecars:

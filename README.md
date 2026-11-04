@@ -200,7 +200,7 @@ pbrenamer [DIR] --schema "F1,F2,…,FN" [--dest ROOT] [OPTIONS]  # schema mode
 | `--case {none,upper,lower,capitalize,title}` | `none` | Apply capitalisation after rename |
 | `--confirm` / `--no-confirm` | `--no-confirm` | Preview and confirm before renaming |
 | `--dry-run` / `--no-dry-run` | `--no-dry-run` | Print the equivalent `mv` commands instead of renaming |
-| `--profile NAME` | *(last profile used in the GUI)* | Take the settings, presets and schema defaults from profile `NAME` |
+| `-p`, `--profile NAME` | *(last profile used in the GUI)* | Take the settings, presets and schema defaults from profile `NAME` |
 | `--debug` / `--verbose` / `--quiet` | *(saved pref)* | Override the saved log-level preference |
 | `--config-dir DIR` | *(platform default)* | Override the configuration directory (intended for testing) |
 

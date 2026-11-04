@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Documentation: new "Technical appendices" chapter, next to the user guide and the API reference.
+  Its title and introduction are translated into the 7 documentation languages; its first page,
+  "Merging PBRenamer and PBPicat", is the feasibility study and execution plan of the 2.0.0 merge,
+  in English only.
+
+### Changed
+
+- CLI: `-p` short form of `--profile`.
+- CI: `codecov/codecov-action` upgraded from v5 to v7, which runs on Node.js 24 and removes the
+  Node.js 20 deprecation warning from the test job.
+
+### Fixed
+
+- Empty sidecar deletion: a sidecar holding only whitespace (at most 16 bytes, UTF-8 BOM allowed)
+  now counts as empty. A sidecar created by a double-click in the sidecar column and saved
+  untouched by an editor that adds a final newline is now deleted like a truly empty one, and stays
+  protected until then.
+
 ## [2.0.0] - 2026-11-04
 
 ### Merge PBPicat

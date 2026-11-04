@@ -3427,8 +3427,8 @@ msgstr "Unterdrückt Informationsmeldungen, Stufe WARNING."
 msgid "Advanced"
 msgstr "Erweitert"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 # ==AUTO== Automatically translated
 msgid ""

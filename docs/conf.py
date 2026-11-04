@@ -76,9 +76,10 @@ napoleon_numpy_docstring = False
 autosummary_generate = True
 
 # ---------------------------------------------------------------------------
-# Internationalisation — the narrative pages (index.rst, user_guide.rst) are
-# translated with sphinx-intl (docs/locale/<lang>/LC_MESSAGES/, one catalog
-# per page); api.rst and changelog.rst stay in English.
+# Internationalisation — the narrative pages (index.rst, user_guide.rst and
+# the appendices/index.rst chapter page) are translated with sphinx-intl
+# (docs/locale/<lang>/LC_MESSAGES/, one catalog per page); api.rst,
+# changelog.rst and the appendices themselves stay in English.
 # ---------------------------------------------------------------------------
 
 locale_dirs = ["locale/"]

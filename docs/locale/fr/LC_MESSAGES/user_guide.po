@@ -2957,8 +2957,8 @@ msgstr "Masque les messages d'information, niveau WARNING."
 msgid "Advanced"
 msgstr "Avancé"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 msgid ""
 "Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar "

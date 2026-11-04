@@ -3368,8 +3368,8 @@ msgstr "Скрывает информационные сообщения, уро
 msgid "Advanced"
 msgstr "Дополнительно"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 # ==AUTO== Automatically translated
 msgid ""

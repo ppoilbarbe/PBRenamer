@@ -70,7 +70,7 @@ New language: `make new-lang LOCALE=de`, translate all `msgstr`, then `make tran
 
 ### User guide translations
 
-Only the narrative pages (`docs/index.rst`, `docs/user_guide.rst`) are translated, into the same 7 languages as the app; `api.rst` and `changelog.rst` stay English. Catalogs: `docs/locale/<lang>/LC_MESSAGES/{index,user_guide}.po` (sphinx-intl, one per page; `.mo` built by Sphinx, not committed).
+Only the narrative pages (`docs/index.rst`, `docs/user_guide.rst`, and the `docs/appendices/index.rst` chapter page) are translated, into the same 7 languages as the app; `api.rst`, `changelog.rst` and the technical appendices under `docs/appendices/` (e.g. `pbpicat_merge.rst`) stay English. Catalogs: `docs/locale/<lang>/LC_MESSAGES/{index,user_guide,appendices/index}.po` (sphinx-intl, one per page; `.mo` built by Sphinx, not committed). The narrative page list is `DOCS_NARRATIVE` in the Makefile.
 
 **After any change to a narrative page:**
 1. `make docs-translate` — extracts the pages and merges every `docs/locale/*/…/*.po`

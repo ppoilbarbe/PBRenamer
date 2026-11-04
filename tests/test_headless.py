@@ -1820,6 +1820,7 @@ class TestProfileOption:
 
     def test_parser(self):
         assert _build_parser().parse_args(["--profile", "p"]).profile == "p"
+        assert _build_parser().parse_args(["-p", "p"]).profile == "p"
         assert _build_parser().parse_args([]).profile is None
 
     @pytest.mark.parametrize("name", ["nope", "a/b"])

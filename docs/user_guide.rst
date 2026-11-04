@@ -1328,7 +1328,7 @@ command exits with an error listing the conflicts.
               [--confirm | --no-confirm]
               [--dry-run | --no-dry-run]
               [-d | -v | -q]
-              [--profile NAME]
+              [-p NAME | --profile NAME]
               [--config-dir DIR]
               [DIR]
 
@@ -1456,7 +1456,7 @@ Logging
 Advanced
 ~~~~~~~~
 
-``--profile NAME``
+``-p NAME`` / ``--profile NAME``
     Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar
     configuration, schema defaults) instead of the last one used in the
     GUI.  In GUI mode, open the window on that profile.

@@ -301,20 +301,46 @@ def all_suffixes(config: SidecarConfig) -> frozenset[str]:
     return frozenset(suffixes)
 
 
+BLANK_FILE_MAX_SIZE = 16
+"""Files larger than this many bytes are never blank (see :func:`is_blank_file`)."""
+
+_UTF8_BOM = b"\xef\xbb\xbf"
+
+
+def is_blank_file(path: str) -> bool:
+    """True if *path* is a regular file holding nothing but whitespace.
+
+    An editor often saves a final newline (or a BOM, or ``\\r\\n``) in a file
+    left untouched; such a file still counts as empty.  Only files of at most
+    :data:`BLANK_FILE_MAX_SIZE` bytes are read, so a directory scan stays as
+    cheap as a ``stat``.  Unreadable or missing paths are not blank."""
+    try:
+        if not os.path.isfile(path):
+            return False
+        size = os.path.getsize(path)
+        if size == 0:
+            return True
+        if size > BLANK_FILE_MAX_SIZE:
+            return False
+        with open(path, "rb") as f:
+            data = f.read(BLANK_FILE_MAX_SIZE + 1)
+    except OSError:
+        return False
+    return data.removeprefix(_UTF8_BOM).strip() == b""
+
+
 def empty_sidecars(paths: list[str], config: SidecarConfig) -> list[str]:
-    """Return the paths of *paths* that are empty files named like a sidecar
-    (``stem.suffix`` for any known suffix), orphans included."""
+    """Return the paths of *paths* that are blank files (see
+    :func:`is_blank_file`) named like a sidecar (``stem.suffix`` for any known
+    suffix), orphans included."""
     markers = ["." + s.lower() for s in all_suffixes(config)]
     result: list[str] = []
     for path in paths:
         name = os.path.basename(path).lower()
         if not _named_like_sidecar(name, markers):
             continue
-        try:
-            if os.path.isfile(path) and os.path.getsize(path) == 0:
-                result.append(path)
-        except OSError:
-            continue
+        if is_blank_file(path):
+            result.append(path)
     return result
 
 

@@ -2996,8 +2996,8 @@ msgstr "隐藏信息性消息，WARNING 级别。"
 msgid "Advanced"
 msgstr "高级"
 
-msgid "``--profile NAME``"
-msgstr "``--profile NAME``"
+msgid "``-p NAME`` / ``--profile NAME``"
+msgstr "``-p NAME`` / ``--profile NAME``"
 
 # ==AUTO== Automatically translated
 msgid ""
