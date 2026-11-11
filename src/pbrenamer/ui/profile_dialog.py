@@ -32,6 +32,7 @@ class ProfileDialog(GeometryMixin, QDialog):
             ForbiddenCharValidator(schema.FORBIDDEN_MARKER_CHARS, self)
         )
         self._ui.edtVideoMarker.setText(schema_cfg["video_marker"])
+        self._ui.chkRenameDirs.setChecked(schema_cfg["rename_dirs"])
         display, images = self._data["display"], self._data["images"]
         self._ui.spnHistoryMax.setValue(display["history_max"])
         self._ui.chkThumbnails.setChecked(display["thumbnails"])
@@ -81,6 +82,7 @@ class ProfileDialog(GeometryMixin, QDialog):
             for i, e in enumerate(self._title_edits)
         ]
         schema_cfg["video_marker"] = self._ui.edtVideoMarker.text().strip()
+        schema_cfg["rename_dirs"] = self._ui.chkRenameDirs.isChecked()
         display, images = self._data["display"], self._data["images"]
         display["history_max"] = self._ui.spnHistoryMax.value()
         display["thumbnails"] = self._ui.chkThumbnails.isChecked()

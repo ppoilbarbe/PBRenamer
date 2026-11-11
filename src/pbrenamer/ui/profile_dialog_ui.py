@@ -61,6 +61,15 @@ class Ui_ProfileDialog:
         )
         form.addRow(_("Video marker:"), self.edtVideoMarker)
 
+        self.chkRenameDirs = QCheckBox(_("Rename directories too"), tab)
+        self.chkRenameDirs.setToolTip(
+            _(
+                "When checked, the listed directories are moved and renamed by"
+                " the schema like files; otherwise they are left alone"
+            )
+        )
+        form.addRow(self.chkRenameDirs)
+
         layout.addLayout(form)
 
         layout.addWidget(QLabel(_("Field titles:"), tab))

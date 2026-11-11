@@ -502,8 +502,8 @@ msgstr "directory tree"
 msgid "file list"
 msgstr "file list"
 
-msgid "Open a folder"
-msgstr "Open a folder"
+msgid "Open the current folder in the file manager"
+msgstr "Open the current folder in the file manager"
 
 msgid "Quit"
 msgstr "Quit"
@@ -589,8 +589,8 @@ msgstr "Images menu"
 msgid "Right-click on the directory tree"
 msgstr "Right-click on the directory tree"
 
-msgid "Add the folder as a shortcut"
-msgstr "Add the folder as a shortcut"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "Open the folder, create a folder, add the folder as a shortcut"
 
 msgid "Drag onto a folder"
 msgstr "Drag onto a folder"
@@ -670,15 +670,15 @@ msgstr "Main window"
 msgid "Image viewer"
 msgstr "Image viewer"
 
-msgid "Select folder"
-msgstr "Select folder"
-
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} item(s)"
 
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ orphan sidecar, not renamed"
+
+msgid "⚠ directory, not renamed"
+msgstr "⚠ directory, not renamed"
 
 msgid "Target(s) already taken:"
 msgstr "Target(s) already taken:"
@@ -758,14 +758,42 @@ msgstr "Profile “{name}” deleted."
 msgid "Profile “{name}” loaded."
 msgstr "Profile “{name}” loaded."
 
+msgid "Open the folder in the file manager"
+msgstr "Open the folder in the file manager"
+
+msgid "Create folder…"
+msgstr "Create folder…"
+
+msgid "Create a new folder in this folder"
+msgstr "Create a new folder in this folder"
+
 msgid "Add as shortcut"
 msgstr "Add as shortcut"
 
-msgid "Open folder…"
-msgstr "Open folder…"
+msgid "Create folder"
+msgstr "Create folder"
 
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Open a directory chooser and navigate the tree to the selected folder"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "Name of the new folder in {path}:"
+
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "Invalid folder name: “{name}”."
+
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "“{name}” already exists."
+
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "Folder “{name}” created."
+
+msgid "Open current folder"
+msgstr "Open current folder"
+
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr "Show the folder selected in the directory tree in the file manager"
 
 msgid "Quit PBRenamer"
 msgstr "Quit PBRenamer"
@@ -2019,6 +2047,16 @@ msgstr ""
 msgid "Video marker:"
 msgstr "Video marker:"
 
+msgid "Rename directories too"
+msgstr "Rename directories too"
+
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+
 msgid "Field titles:"
 msgstr "Field titles:"
 
@@ -2192,6 +2230,15 @@ msgstr "Fill gaps"
 
 msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr "Fill numbering gaps instead of continuing after the highest number"
+
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
 
 msgid "Video marker position"
 msgstr "Video marker position"

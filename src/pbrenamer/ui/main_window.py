@@ -6,16 +6,16 @@ import logging
 import os
 
 from PySide6.QtCore import QDir, Qt, QTimer, QUrl
-from PySide6.QtGui import QDesktopServices
+from PySide6.QtGui import QDesktopServices, QIcon, QKeySequence
 from PySide6.QtWidgets import (
     QApplication,
-    QFileDialog,
     QFileSystemModel,
     QInputDialog,
     QLineEdit,
     QMainWindow,
     QMenu,
     QMessageBox,
+    QTreeWidgetItem,
 )
 
 import pbrenamer.settings as _cfg
@@ -23,13 +23,14 @@ from pbrenamer import i18n, profiles
 from pbrenamer.core import filetools
 from pbrenamer.core.undo import RenameEntry, UndoError, UndoManager
 from pbrenamer.platform import system_bookmarks
+from pbrenamer.resources import path as _resource
 from pbrenamer.ui.about_dialog import AboutDialog
 from pbrenamer.ui.action_bar import ActionBar
 from pbrenamer.ui.file_list import FileListController, PreviewEntry
 from pbrenamer.ui.history_dialog import HistoryDialog
 from pbrenamer.ui.image_actions import ImageActions
 from pbrenamer.ui.keyboard_help import keyboard_html
-from pbrenamer.ui.main_window_ui import Ui_MainWindow
+from pbrenamer.ui.main_window_ui import OPEN_FOLDER_KEYS, Ui_MainWindow
 from pbrenamer.ui.pattern_help import PatternHelpDialog
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.profile_dialog import ProfileDialog
@@ -44,6 +45,11 @@ _log = logging.getLogger(__name__)
 
 _PATTERN_TAB, _SCHEMA_TAB = 0, 1
 _TAB_OF_MODE = {"pattern": _PATTERN_TAB, "schema": _SCHEMA_TAB}
+
+
+def _open_folder(path: str) -> None:
+    """Show *path* in the platform's file manager."""
+    QDesktopServices.openUrl(QUrl.fromLocalFile(path))
 
 
 class MainWindow(QMainWindow):
@@ -132,7 +138,7 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.expand(idx)
 
     def _connect_signals(self) -> None:
-        self._ui.actionOpenFolder.triggered.connect(self._on_open)
+        self._ui.actionOpenCurrentFolder.triggered.connect(self._on_open_current_folder)
 
         sel_model = self._ui.treeDirectory.selectionModel()
         sel_model.selectionChanged.connect(lambda *_: self._on_directory_selected())
@@ -150,6 +156,8 @@ class MainWindow(QMainWindow):
         self._schema.edited.connect(self._actions.schedule_preview)
         self._schema.edited.connect(self._update_renumber_button)
         self._schema.changed.connect(self._actions.request_auto_preview)
+        self._ui.chkRecursive.toggled.connect(self._schema.set_recursive)
+        self._schema.set_recursive(self._ui.chkRecursive.isChecked())
         self._files.files_reloaded.connect(self._on_files_reloaded)
         self._files.selection_changed.connect(self._actions.request_auto_preview)
         self._files.rename_count_changed.connect(self._actions.set_rename_count)
@@ -184,15 +192,10 @@ class MainWindow(QMainWindow):
 
     # ── Directory selection ───────────────────────────────────────────────────
 
-    def _on_open(self) -> None:
-        folder = QFileDialog.getExistingDirectory(self, _("Select folder"))
-        if not folder:
-            return
-        self._files.current_dir = folder
-        idx = self._fs_model.index(folder)
-        self._ui.treeDirectory.setCurrentIndex(idx)
-        self._ui.treeDirectory.scrollTo(idx)
-        self._files.reload()
+    def _on_open_current_folder(self) -> None:
+        path = self._files.current_dir
+        if path and os.path.isdir(path):
+            _open_folder(path)
 
     def _on_directory_selected(self) -> None:
         indexes = self._ui.treeDirectory.selectionModel().selectedIndexes()
@@ -262,7 +265,18 @@ class MainWindow(QMainWindow):
         items = self._files.active_items()
         panel = self._schema if self._schema_mode() else self._pattern
         orphans = self._schema_orphans()
-        kept = [i for i in items if i.data(0, Qt.ItemDataRole.UserRole) not in orphans]
+        kept: list[QTreeWidgetItem] = []
+        skipped: list[tuple[QTreeWidgetItem, PreviewEntry]] = []
+        for item in items:
+            path = item.data(0, Qt.ItemDataRole.UserRole)
+            if path in orphans:
+                note = _("⚠ orphan sidecar, not renamed")
+            elif self._schema_dir_skipped(path):
+                note = _("⚠ directory, not renamed")
+            else:
+                kept.append(item)
+                continue
+            skipped.append((item, PreviewEntry(note, skipped=True)))
         entries = panel.preview(
             [item.data(0, Qt.ItemDataRole.UserRole) for item in kept],
             self._files.sidecar_followers(),
@@ -271,9 +285,19 @@ class MainWindow(QMainWindow):
             if self._schema_mode():
                 self._files.clear_preview()
             return
-        skipped = [i for i in items if i not in kept]
-        note = PreviewEntry(_("⚠ orphan sidecar, not renamed"), skipped=True)
-        self._files.show_previews(kept + skipped, entries + [note] * len(skipped))
+        self._files.show_previews(
+            kept + [item for item, _note in skipped],
+            entries + [note for _item, note in skipped],
+        )
+
+    def _schema_dir_skipped(self, path: str) -> bool:
+        """Schema mode: directories are left alone unless the profile
+        allows renaming them."""
+        return (
+            self._schema_mode()
+            and not self._schema.rename_dirs()
+            and os.path.isdir(path)
+        )
 
     def _schema_orphans(self) -> set[str]:
         """Schema mode: the orphan sidecars are left alone (numbered like a
@@ -344,6 +368,7 @@ class MainWindow(QMainWindow):
             path
             for item in self._files.active_items()
             if (path := item.data(0, Qt.ItemDataRole.UserRole)) not in orphans
+            and not self._schema_dir_skipped(path)
         ]
         pairs = self._schema.renumber_plan(paths, self._files.sidecar_followers())
         if pairs is None:
@@ -685,6 +710,7 @@ class MainWindow(QMainWindow):
         self._apply_mode_state()
         self._images.apply_profile()
         self._files.apply_display()
+        self._actions.request_auto_preview()
 
     def _on_template_accepted(self, fields: list[str]) -> None:
         """Template: fill the schema fields and switch to the Schema tab."""
@@ -732,11 +758,56 @@ class MainWindow(QMainWindow):
             return
 
         menu = QMenu(self)
+        # The shortcut is only shown (after a tab): the window action holds it.
+        key = QKeySequence(OPEN_FOLDER_KEYS[0]).toString(
+            QKeySequence.SequenceFormat.NativeText
+        )
+        open_action = menu.addAction(
+            QIcon(_resource("open.svg")), _("Open") + "\t" + key
+        )
+        open_action.setStatusTip(_("Open the folder in the file manager"))
+        create_action = menu.addAction(QIcon(_resource("add.svg")), _("Create folder…"))
+        create_action.setStatusTip(_("Create a new folder in this folder"))
+        menu.addSeparator()
         add_action = menu.addAction(_("Add as shortcut"))
         add_action.setStatusTip(path)
         chosen = menu.exec(self._ui.treeDirectory.viewport().mapToGlobal(pos))
-        if chosen is add_action:
+        if chosen is open_action:
+            _open_folder(path)
+        elif chosen is create_action:
+            self._create_folder(path)
+        elif chosen is add_action:
             self._add_shortcut(path)
+
+    def _create_folder(self, parent: str) -> None:
+        """Ask for a name and create that folder in *parent*."""
+        name, ok = QInputDialog.getText(
+            self,
+            _("Create folder"),
+            _("Name of the new folder in {path}:").format(path=parent),
+        )
+        name = name.strip()
+        if not ok or not name:
+            return
+        if name in (".", "..") or "/" in name or os.sep in name:
+            message = _("Invalid folder name: “{name}”.").format(name=name)
+        else:
+            try:
+                os.mkdir(os.path.join(parent, name))
+            except FileExistsError:
+                message = _("“{name}” already exists.").format(name=name)
+            except OSError as exc:
+                message = str(exc)
+            else:
+                _log.info("Created folder %s", os.path.join(parent, name))
+                self._ui.treeDirectory.expand(self._fs_model.index(parent))
+                self.statusBar().showMessage(
+                    _("Folder “{name}” created.").format(name=name)
+                )
+                return
+        QMessageBox.warning(
+            self, _("Create folder"), message, QMessageBox.StandardButton.Ok
+        )
 
     def _add_shortcut(self, path: str) -> None:
         name = os.path.basename(path) or path

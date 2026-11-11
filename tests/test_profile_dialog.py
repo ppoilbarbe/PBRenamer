@@ -31,6 +31,7 @@ def test_loads_profile(dialog):
     assert ui.spnFieldCount.value() == 3
     assert _titles(dialog) == ["Place", "Year", "Field 3"]
     assert ui.edtVideoMarker.text() == ""
+    assert not ui.chkRenameDirs.isChecked()
     assert ui.spnHistoryMax.value() == 20
 
 
@@ -52,6 +53,7 @@ def test_ok_saves(dialog):
     ui.spnFieldCount.setValue(4)
     dialog._title_edits[1].setText("  ")
     ui.edtVideoMarker.setText(" vid ")
+    ui.chkRenameDirs.setChecked(True)
     ui.spnHistoryMax.setValue(5)
     ui.buttonBox.accepted.emit()
     assert dialog.result() == QDialog.DialogCode.Accepted
@@ -59,6 +61,7 @@ def test_ok_saves(dialog):
     assert data["schema"]["field_count"] == 4
     assert data["schema"]["field_titles"] == ["Place", "Field 2", "Field 3", "Field 4"]
     assert data["schema"]["video_marker"] == "vid"
+    assert data["schema"]["rename_dirs"] is True
     assert data["display"]["history_max"] == 5
 
 

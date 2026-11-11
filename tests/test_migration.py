@@ -178,6 +178,7 @@ class TestImportPbpicat:
             "video_marker": "vid",
             "video_marker_pos": 0,
             "fill_gaps": False,
+            "rename_dirs": False,
         }
         assert family["last_dir"] == "/home/user/Catalog/familly/beach"
 

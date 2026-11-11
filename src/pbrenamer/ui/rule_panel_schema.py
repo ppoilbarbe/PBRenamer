@@ -8,7 +8,7 @@ from collections.abc import Mapping
 from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QValidator
+from PySide6.QtGui import QIcon, QValidator
 from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
@@ -27,11 +27,13 @@ from PySide6.QtWidgets import (
 import pbrenamer.settings as _cfg
 from pbrenamer import profiles
 from pbrenamer.core import planner, schema
+from pbrenamer.resources import path as _resource
 from pbrenamer.ui.file_list import PreviewEntry
 from pbrenamer.ui.rule_panel_pattern import error_text
 
 _log = logging.getLogger(__name__)
 _MESSAGE_STYLE = "QLabel { color: #cc0000; }"
+_WARNING_ICON_SIZE = 24
 
 
 class ForbiddenCharValidator(QValidator):
@@ -129,6 +131,7 @@ class SchemaRulePanel(QWidget):
         outer.addLayout(self._make_dest_row())
         self._fields_row = QHBoxLayout()
         outer.addLayout(self._fields_row)
+        outer.addWidget(self._make_recursive_warning())
         self.lblMessage = QLabel(self)
         self.lblMessage.setStyleSheet(_MESSAGE_STYLE)
         self.lblMessage.setWordWrap(True)
@@ -165,6 +168,36 @@ class SchemaRulePanel(QWidget):
         self.chkFillGaps.toggled.connect(self._on_fill_gaps_toggled)
         row.addWidget(self.chkFillGaps)
         return row
+
+    def _make_recursive_warning(self) -> QWidget:
+        """Warning shown while the Recursive option is checked."""
+        self.wdgRecursiveWarning = QWidget(self)
+        row = QHBoxLayout(self.wdgRecursiveWarning)
+        row.setContentsMargins(4, 4, 4, 4)
+        icon = QLabel(self.wdgRecursiveWarning)
+        icon.setPixmap(
+            QIcon(_resource("warning.svg")).pixmap(
+                _WARNING_ICON_SIZE, _WARNING_ICON_SIZE
+            )
+        )
+        icon.setAlignment(Qt.AlignmentFlag.AlignTop)
+        row.addWidget(icon)
+        self.lblRecursiveWarning = QLabel(
+            _(
+                "Recursive mode: the files of every sub-directory are moved into"
+                " the same destination tree, so files coming from different"
+                " directories may collide or be numbered together."
+            ),
+            self.wdgRecursiveWarning,
+        )
+        self.lblRecursiveWarning.setWordWrap(True)
+        row.addWidget(self.lblRecursiveWarning, 1)
+        self.wdgRecursiveWarning.setVisible(False)
+        return self.wdgRecursiveWarning
+
+    def set_recursive(self, recursive: bool) -> None:
+        """Show the collision warning while the listing is recursive."""
+        self.wdgRecursiveWarning.setVisible(recursive)
 
     # ── Profile ───────────────────────────────────────────────────────────────
 
@@ -235,6 +268,10 @@ class SchemaRulePanel(QWidget):
         profiles.set_schema(dest=self.dest())
 
     # ── Public interface ──────────────────────────────────────────────────────
+
+    def rename_dirs(self) -> bool:
+        """True when the profile lets the schema rename directories."""
+        return bool(self._schema["rename_dirs"])
 
     def dest(self) -> str:
         return os.path.expanduser(self.edtDest.text().strip())

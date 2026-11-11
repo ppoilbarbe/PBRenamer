@@ -647,8 +647,8 @@ msgid "file list"
 msgstr "список файлов"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Открыть папку"
+msgid "Open the current folder in the file manager"
+msgstr "Открыть текущую папку в файловом менеджере"
 
 # ==AUTO== Automatically translated
 msgid "Quit"
@@ -765,8 +765,8 @@ msgid "Right-click on the directory tree"
 msgstr "Щелчок правой кнопкой по дереву папок"
 
 # ==AUTO== Automatically translated
-msgid "Add the folder as a shortcut"
-msgstr "Добавить папку в ярлыки"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "Открыть папку, создать папку, добавить папку в ярлыки"
 
 # ==AUTO== Automatically translated
 msgid "Drag onto a folder"
@@ -873,10 +873,6 @@ msgid "Image viewer"
 msgstr "Просмотрщик изображений"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Выбрать папку"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} элемент(а/ов)"
@@ -884,6 +880,10 @@ msgstr "{path} — {n} элемент(а/ов)"
 # ==AUTO== Automatically translated
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ sidecar-файл без основного файла, не переименован"
+
+# ==AUTO== Automatically translated
+msgid "⚠ directory, not renamed"
+msgstr "⚠ папка, не переименована"
 
 # ==AUTO== Automatically translated
 msgid "Target(s) already taken:"
@@ -989,16 +989,52 @@ msgid "Profile “{name}” loaded."
 msgstr "Профиль «{name}» загружен."
 
 # ==AUTO== Automatically translated
+msgid "Open the folder in the file manager"
+msgstr "Открыть папку в файловом менеджере"
+
+# ==AUTO== Automatically translated
+msgid "Create folder…"
+msgstr "Создать папку…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder in this folder"
+msgstr "Создать новую папку в этой папке"
+
+# ==AUTO== Automatically translated
 msgid "Add as shortcut"
 msgstr "Добавить в ярлыки"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "Открыть папку…"
+msgid "Create folder"
+msgstr "Создать папку"
 
 # ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Открыть диалог выбора папки и перейти к выбранной папке"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "Имя новой папки в {path}:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "Недопустимое имя папки: «{name}»."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "«{name}» уже существует."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "Папка «{name}» создана."
+
+# ==AUTO== Automatically translated
+msgid "Open current folder"
+msgstr "Открыть текущую папку"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr "Показать в файловом менеджере папку, выбранную в дереве"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -2583,6 +2619,18 @@ msgid "Video marker:"
 msgstr "Видеомаркер:"
 
 # ==AUTO== Automatically translated
+msgid "Rename directories too"
+msgstr "Переименовывать также папки"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr ""
+"Если отмечено, перечисленные папки перемещаются и переименовываются по "
+"схеме, как файлы; иначе они не изменяются"
+
+# ==AUTO== Automatically translated
 msgid "Field titles:"
 msgstr "Названия полей:"
 
@@ -2804,6 +2852,16 @@ msgstr "Заполнять пропуски"
 # ==AUTO== Automatically translated
 msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr "Заполнять пропуски в нумерации вместо продолжения после наибольшего номера"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr ""
+"Рекурсивный режим: файлы всех подпапок перемещаются в одно и то же дерево"
+" назначения, поэтому файлы из разных папок могут конфликтовать или "
+"нумероваться вместе."
 
 # ==AUTO== Automatically translated
 msgid "Video marker position"

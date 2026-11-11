@@ -49,6 +49,7 @@ DEFAULTS: dict = {
         "video_marker": "",
         "video_marker_pos": 0,
         "fill_gaps": False,
+        "rename_dirs": False,
     },
     "display": {
         "thumbnail_max_width": 128,

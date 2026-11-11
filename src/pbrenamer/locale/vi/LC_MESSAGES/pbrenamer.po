@@ -644,8 +644,8 @@ msgid "file list"
 msgstr "danh sách tệp"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Mở một thư mục"
+msgid "Open the current folder in the file manager"
+msgstr "Mở thư mục hiện tại trong trình quản lý tệp"
 
 # ==AUTO== Automatically translated
 msgid "Quit"
@@ -760,8 +760,8 @@ msgid "Right-click on the directory tree"
 msgstr "Nhấp chuột phải vào cây thư mục"
 
 # ==AUTO== Automatically translated
-msgid "Add the folder as a shortcut"
-msgstr "Thêm thư mục làm phím tắt"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "Mở thư mục, tạo thư mục, thêm thư mục làm phím tắt"
 
 # ==AUTO== Automatically translated
 msgid "Drag onto a folder"
@@ -868,10 +868,6 @@ msgid "Image viewer"
 msgstr "Trình xem ảnh"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Chọn thư mục"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} mục"
@@ -879,6 +875,10 @@ msgstr "{path} — {n} mục"
 # ==AUTO== Automatically translated
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ sidecar mồ côi, không được đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "⚠ directory, not renamed"
+msgstr "⚠ thư mục, không được đổi tên"
 
 # ==AUTO== Automatically translated
 msgid "Target(s) already taken:"
@@ -984,16 +984,52 @@ msgid "Profile “{name}” loaded."
 msgstr "Đã tải hồ sơ “{name}”."
 
 # ==AUTO== Automatically translated
+msgid "Open the folder in the file manager"
+msgstr "Mở thư mục trong trình quản lý tệp"
+
+# ==AUTO== Automatically translated
+msgid "Create folder…"
+msgstr "Tạo thư mục…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder in this folder"
+msgstr "Tạo một thư mục mới trong thư mục này"
+
+# ==AUTO== Automatically translated
 msgid "Add as shortcut"
 msgstr "Thêm làm phím tắt"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "Mở thư mục…"
+msgid "Create folder"
+msgstr "Tạo thư mục"
 
 # ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Mở hộp thoại chọn thư mục và điều hướng đến thư mục đã chọn"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "Tên của thư mục mới trong {path}:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "Tên thư mục không hợp lệ: “{name}”."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "“{name}” đã tồn tại."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "Đã tạo thư mục “{name}”."
+
+# ==AUTO== Automatically translated
+msgid "Open current folder"
+msgstr "Mở thư mục hiện tại"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr "Hiển thị trong trình quản lý tệp thư mục được chọn trong cây thư mục"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -2562,6 +2598,18 @@ msgid "Video marker:"
 msgstr "Dấu đánh dấu video:"
 
 # ==AUTO== Automatically translated
+msgid "Rename directories too"
+msgstr "Đổi tên cả thư mục"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr ""
+"Khi được chọn, các thư mục trong danh sách được di chuyển và đổi tên theo"
+" lược đồ như tệp; nếu không, chúng được giữ nguyên"
+
+# ==AUTO== Automatically translated
 msgid "Field titles:"
 msgstr "Tiêu đề trường:"
 
@@ -2783,6 +2831,16 @@ msgstr "Lấp khoảng trống"
 # ==AUTO== Automatically translated
 msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr "Lấp khoảng trống trong đánh số thay vì tiếp tục sau số lớn nhất"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr ""
+"Chế độ đệ quy: tệp của mọi thư mục con được di chuyển vào cùng một cây "
+"đích, nên các tệp từ những thư mục khác nhau có thể xung đột hoặc được "
+"đánh số chung."
 
 # ==AUTO== Automatically translated
 msgid "Video marker position"

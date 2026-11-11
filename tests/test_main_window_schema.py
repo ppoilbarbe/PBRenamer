@@ -249,6 +249,70 @@ class TestOrphanSidecars:
         assert "orphan" not in self._texts(window)["lost.xmp"]
 
 
+class TestDirectories:
+    """Schema mode leaves the listed directories alone unless the profile
+    allows renaming them."""
+
+    @pytest.fixture
+    def mixed(self, photos):
+        (photos / "album").mkdir()
+        (photos / "album" / "inner.jpg").write_text("inner")
+        return photos
+
+    def _texts(self, window):
+        return {
+            os.path.basename(i.data(0, Qt.ItemDataRole.UserRole)): i.text(1)
+            for i in window._files.all_items()
+        }
+
+    def _show_dirs(self, window, mixed, dest, *fields):
+        window._ui.cmbMode.setCurrentIndex(2)  # files + dirs
+        _schema_window(window, mixed, dest, *fields)
+
+    def test_not_renamed_by_default(self, window, mixed, tmp_path):
+        self._show_dirs(window, mixed, tmp_path / "d", "A", "###")
+        texts = self._texts(window)
+        assert texts["album"] == "⚠ directory, not renamed"
+        assert texts["IMG_2.jpg"] == os.path.join("A", "A_002.jpg")
+        pending = [src for src, _dst in window._files.pending_renames()]
+        assert str(mixed / "album") not in pending
+        assert len(pending) == 4
+        window._on_rename()
+        assert sorted(p.name for p in mixed.iterdir()) == ["album"]
+
+    def test_renamed_when_allowed(self, window, mixed, tmp_path):
+        profiles.set_schema(rename_dirs=True)
+        window._schema.reload_profile()
+        self._show_dirs(window, mixed, tmp_path / "d", "A", "###")
+        assert self._texts(window)["album"] == os.path.join("A", "A_001")
+        pending = [src for src, _dst in window._files.pending_renames()]
+        assert str(mixed / "album") in pending
+
+    def test_not_renumbered(self, window, mixed, monkeypatch):
+        self._show_dirs(window, mixed, "/unused", "A", "###")
+        _answer(monkeypatch, QMessageBox.StandardButton.Yes)
+        window._on_renumber()
+        assert (mixed / "album" / "inner.jpg").exists()
+        assert (mixed / "A_001.jpg").read_text() == "IMG_1.JPG"
+
+    def test_pattern_mode_renames_dirs(self, window, mixed):
+        window._ui.cmbMode.setCurrentIndex(2)
+        window._files.set_directory(str(mixed))
+        window._on_preview()
+        assert "not renamed" not in self._texts(window)["album"]
+
+
+class TestRecursiveWarning:
+    def test_follows_recursive_checkbox(self, window):
+        warning = window._schema.wdgRecursiveWarning
+        assert warning.isHidden()
+        window._ui.chkRecursive.setChecked(True)
+        assert not warning.isHidden()
+        assert "collide" in window._schema.lblRecursiveWarning.text()
+        window._ui.chkRecursive.setChecked(False)
+        assert warning.isHidden()
+
+
 class TestRenumber:
     def test_confirmed(self, window, numbered, monkeypatch):
         _schema_window(window, numbered, "/unused", "A", "###")

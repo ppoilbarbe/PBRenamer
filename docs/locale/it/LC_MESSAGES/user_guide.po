@@ -166,16 +166,14 @@ msgstr "Aprire una cartella"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
-"directory tree, or drag a directory onto the window to load its contents."
-"  Use the **Recursive** checkbox to include sub-directories.  The "
-"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
-"listing."
+"Select a folder in the directory tree, or drag a directory onto the "
+"window, to load its contents.  Use the **Recursive** checkbox to include "
+"sub-directories.  The **Filter** field accepts a glob pattern (e.g. "
+"``*.jpg``) to restrict the listing."
 msgstr ""
-"Scegliere **File → Apri cartella…** (**Ctrl+O**), selezionare una "
-"cartella nell'albero o trascinare una cartella sulla finestra per "
-"caricarne il contenuto.  La casella **Ricorsivo** include le "
-"sottocartelle.  Il campo **Filtro** accetta un pattern glob (ad es. "
+"Selezionare una cartella nell'albero, o trascinare una cartella sulla "
+"finestra, per caricarne il contenuto.  La casella **Ricorsivo** include "
+"le sottocartelle.  Il campo **Filtro** accetta un pattern glob (ad es. "
 "``*.jpg``) per restringere l'elenco."
 
 # ==AUTO== Automatically translated
@@ -191,6 +189,44 @@ msgstr ""
 "modifica invece che per nome, e **Invertito** inverte l'ordine; le "
 "cartelle restano sempre in cima.  L'elenco segue le modifiche fatte sul "
 "disco da altri programmi."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**File → Open current folder** (**Ctrl+Enter**) shows the folder selected"
+" in the tree in the file manager.  The context menu of the directory tree"
+" offers:"
+msgstr ""
+"**File → Apri la cartella corrente** (**Ctrl+Invio**) mostra nel gestore "
+"di file la cartella selezionata nell'albero.  Il menu contestuale "
+"dell'albero offre:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Apri** (**Ctrl+Invio**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder in the file manager."
+msgstr "Mostrare la cartella nel gestore di file."
+
+# ==AUTO== Automatically translated
+msgid "**Create folder…**"
+msgstr "**Crea cartella…**"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder inside the folder that was right-clicked."
+msgstr ""
+"Creare una nuova cartella all'interno della cartella su cui si è fatto "
+"clic destro."
+
+# ==AUTO== Automatically translated
+msgid "**Add as shortcut**"
+msgstr "**Aggiungi come scorciatoia**"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`)."
+msgstr ""
+"Aggiungere la cartella al menu **Scorciatoie** (vedere :ref:`shortcuts-"
+"menu`)."
 
 # ==AUTO== Automatically translated
 msgid "The file list"
@@ -247,13 +283,16 @@ msgid ""
 "You can select a subset of rows with the usual keyboard/mouse modifiers "
 "(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
 "files; with no selection it applies to every listed file.  **Tab** moves "
-"the focus between the directory tree and the file list."
+"the focus between the directory tree and the file list; the one that has "
+"it is framed in the highlight color, and the selection of the other one "
+"turns grey."
 msgstr ""
 "È possibile selezionare una parte delle righe con i soliti modificatori "
 "di tastiera e mouse (Maiusc+clic, Ctrl+clic).  La rinomina si applica "
 "allora solo ai file selezionati; senza selezione si applica a tutti i "
 "file elencati.  **Tab** sposta il focus tra l'albero delle cartelle e "
-"l'elenco dei file."
+"l'elenco dei file; quella che lo ha è incorniciata con il colore di "
+"evidenziazione, e la selezione dell'altra diventa grigia."
 
 # ==AUTO== Automatically translated
 msgid "Drag and drop"
@@ -1169,11 +1208,12 @@ msgstr "**Schema**"
 # ==AUTO== Automatically translated
 msgid ""
 "Number of fields of the schema, the title of each field (shown above it "
-"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+"in the Schema tab), the video marker, and whether the schema renames "
+"directories too (see :ref:`schema-mode`)."
 msgstr ""
 "Il numero di campi dello schema, il titolo di ogni campo (mostrato sopra "
-"di esso nella scheda Schema) e il marcatore video (vedere :ref:`schema-"
-"mode`)."
+"di esso nella scheda Schema), il marcatore video e se lo schema rinomina "
+"anche le cartelle (vedere :ref:`schema-mode`)."
 
 # ==AUTO== Automatically translated
 msgid "**Display**"
@@ -1339,6 +1379,36 @@ msgstr ""
 "**Immagini → Sidecar orfani…** li elenca (vedere :ref:`image-tools`)."
 
 # ==AUTO== Automatically translated
+msgid "Directories in schema mode"
+msgstr "Cartelle in modalità schema"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the list shows directories (**Directories only** or **Files and "
+"directories**), they are left alone by default: their preview reads "
+"*directory, not renamed*, and neither **Rename** nor **Renumber** touches"
+" them.  Check **Rename directories too** in **Profile configuration…** "
+"(*Schema* tab) to move and rename them like files."
+msgstr ""
+"Quando l'elenco mostra cartelle (**Solo cartelle** o **File e "
+"cartelle**), per impostazione predefinita restano invariate: la loro "
+"anteprima indica *cartella, non rinominata*, e né **Rinomina** né "
+"**Rinumera** le toccano.  Selezionare **Rinomina anche le cartelle** in "
+"**Configurazione del profilo…** (scheda *Schema*) per spostarle e "
+"rinominarle come i file."
+
+# ==AUTO== Automatically translated
+msgid ""
+"With **Recursive** checked, a warning in the Schema tab reminds you that "
+"the files of every sub-directory go into the same destination tree: files"
+" coming from different directories may collide or be numbered together."
+msgstr ""
+"Con **Ricorsivo** selezionato, un avviso nella scheda Schema ricorda che "
+"i file di tutte le sottocartelle finiscono nello stesso albero di "
+"destinazione: file provenienti da cartelle diverse possono entrare in "
+"conflitto o essere numerati insieme."
+
+# ==AUTO== Automatically translated
 msgid "Renumber"
 msgstr "Rinumera"
 
@@ -1474,8 +1544,8 @@ msgstr ""
 "Le sue azioni si applicano ai file selezionati:"
 
 # ==AUTO== Automatically translated
-msgid "**Open** (**Ctrl+Enter**)"
-msgstr "**Apri** (**Ctrl+Invio**)"
+msgid "**Open** (**Ctrl+O**)"
+msgstr "**Apri** (**Ctrl+O**)"
 
 # ==AUTO== Automatically translated
 msgid "Open the files with their default application."

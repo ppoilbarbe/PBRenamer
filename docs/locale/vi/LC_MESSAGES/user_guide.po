@@ -165,16 +165,15 @@ msgstr "Mở một thư mục"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
-"directory tree, or drag a directory onto the window to load its contents."
-"  Use the **Recursive** checkbox to include sub-directories.  The "
-"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
-"listing."
+"Select a folder in the directory tree, or drag a directory onto the "
+"window, to load its contents.  Use the **Recursive** checkbox to include "
+"sub-directories.  The **Filter** field accepts a glob pattern (e.g. "
+"``*.jpg``) to restrict the listing."
 msgstr ""
-"Chọn **Tệp → Mở thư mục…** (**Ctrl+O**), chọn một thư mục trong cây thư "
-"mục, hoặc kéo một thư mục vào cửa sổ để tải nội dung của nó.  Hộp kiểm "
-"**Đệ quy** bao gồm cả các thư mục con.  Trường **Bộ lọc** nhận một mẫu "
-"glob (ví dụ ``*.jpg``) để giới hạn danh sách."
+"Chọn một thư mục trong cây thư mục, hoặc kéo một thư mục vào cửa sổ, để "
+"tải nội dung của nó.  Hộp kiểm **Đệ quy** bao gồm cả các thư mục con.  "
+"Trường **Bộ lọc** nhận một mẫu glob (ví dụ ``*.jpg``) để giới hạn danh "
+"sách."
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -188,6 +187,40 @@ msgstr ""
 "và thư mục*.  Hộp kiểm **Theo ngày** sắp xếp tệp theo ngày sửa đổi thay "
 "vì theo tên, và **Đảo ngược** đảo thứ tự; thư mục luôn đứng đầu.  Danh "
 "sách theo dõi các thay đổi mà chương trình khác thực hiện trên đĩa."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**File → Open current folder** (**Ctrl+Enter**) shows the folder selected"
+" in the tree in the file manager.  The context menu of the directory tree"
+" offers:"
+msgstr ""
+"**Tệp → Mở thư mục hiện tại** (**Ctrl+Enter**) hiển thị thư mục được chọn"
+" trong cây trong trình quản lý tệp.  Menu ngữ cảnh của cây thư mục cung "
+"cấp:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Mở** (**Ctrl+Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder in the file manager."
+msgstr "Hiển thị thư mục trong trình quản lý tệp."
+
+# ==AUTO== Automatically translated
+msgid "**Create folder…**"
+msgstr "**Tạo thư mục…**"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder inside the folder that was right-clicked."
+msgstr "Tạo một thư mục mới bên trong thư mục đã nhấp chuột phải."
+
+# ==AUTO== Automatically translated
+msgid "**Add as shortcut**"
+msgstr "**Thêm làm phím tắt**"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`)."
+msgstr "Thêm thư mục vào menu **Phím tắt** (xem :ref:`shortcuts-menu`)."
 
 # ==AUTO== Automatically translated
 msgid "The file list"
@@ -241,13 +274,16 @@ msgid ""
 "You can select a subset of rows with the usual keyboard/mouse modifiers "
 "(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
 "files; with no selection it applies to every listed file.  **Tab** moves "
-"the focus between the directory tree and the file list."
+"the focus between the directory tree and the file list; the one that has "
+"it is framed in the highlight color, and the selection of the other one "
+"turns grey."
 msgstr ""
 "Bạn có thể chọn một phần các hàng bằng các phím bổ trợ thông thường của "
 "bàn phím và chuột (Shift+nhấp, Ctrl+nhấp).  Khi đó việc đổi tên chỉ áp "
 "dụng cho các tệp được chọn; nếu không chọn gì, nó áp dụng cho mọi tệp "
 "trong danh sách.  **Tab** chuyển tiêu điểm giữa cây thư mục và danh sách "
-"tệp."
+"tệp; khung đang có tiêu điểm được viền bằng màu tô sáng, và vùng chọn của"
+" khung còn lại chuyển sang màu xám."
 
 # ==AUTO== Automatically translated
 msgid "Drag and drop"
@@ -1130,10 +1166,12 @@ msgstr "**Lược đồ**"
 # ==AUTO== Automatically translated
 msgid ""
 "Number of fields of the schema, the title of each field (shown above it "
-"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+"in the Schema tab), the video marker, and whether the schema renames "
+"directories too (see :ref:`schema-mode`)."
 msgstr ""
-"Số trường của lược đồ, tiêu đề của từng trường (hiển thị phía trên trường"
-" trong thẻ Lược đồ) và dấu đánh dấu video (xem :ref:`schema-mode`)."
+"Số trường của lược đồ, tiêu đề của mỗi trường (hiển thị phía trên trường "
+"trong thẻ Lược đồ), dấu video, và lược đồ có đổi tên cả thư mục hay không"
+" (xem :ref:`schema-mode`)."
 
 # ==AUTO== Automatically translated
 msgid "**Display**"
@@ -1293,6 +1331,34 @@ msgstr ""
 "chúng (xem :ref:`image-tools`)."
 
 # ==AUTO== Automatically translated
+msgid "Directories in schema mode"
+msgstr "Thư mục trong chế độ lược đồ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the list shows directories (**Directories only** or **Files and "
+"directories**), they are left alone by default: their preview reads "
+"*directory, not renamed*, and neither **Rename** nor **Renumber** touches"
+" them.  Check **Rename directories too** in **Profile configuration…** "
+"(*Schema* tab) to move and rename them like files."
+msgstr ""
+"Khi danh sách hiển thị thư mục (**Chỉ thư mục** hoặc **Tệp và thư mục**),"
+" theo mặc định chúng được giữ nguyên: bản xem trước của chúng ghi *thư "
+"mục, không được đổi tên*, và cả **Đổi tên** lẫn **Đánh số lại** đều không"
+" tác động đến chúng.  Chọn **Đổi tên cả thư mục** trong **Cấu hình hồ "
+"sơ…** (thẻ *Lược đồ*) để di chuyển và đổi tên chúng như tệp."
+
+# ==AUTO== Automatically translated
+msgid ""
+"With **Recursive** checked, a warning in the Schema tab reminds you that "
+"the files of every sub-directory go into the same destination tree: files"
+" coming from different directories may collide or be numbered together."
+msgstr ""
+"Khi **Đệ quy** được chọn, một cảnh báo trong thẻ Lược đồ nhắc rằng tệp "
+"của mọi thư mục con đều đi vào cùng một cây đích: các tệp từ những thư "
+"mục khác nhau có thể xung đột hoặc được đánh số chung."
+
+# ==AUTO== Automatically translated
 msgid "Renumber"
 msgstr "Đánh số lại"
 
@@ -1421,8 +1487,8 @@ msgstr ""
 "nó áp dụng cho các tệp được chọn:"
 
 # ==AUTO== Automatically translated
-msgid "**Open** (**Ctrl+Enter**)"
-msgstr "**Mở** (**Ctrl+Enter**)"
+msgid "**Open** (**Ctrl+O**)"
+msgstr "**Mở** (**Ctrl+O**)"
 
 # ==AUTO== Automatically translated
 msgid "Open the files with their default application."

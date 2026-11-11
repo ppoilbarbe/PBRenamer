@@ -146,14 +146,13 @@ msgstr "打开文件夹"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
-"directory tree, or drag a directory onto the window to load its contents."
-"  Use the **Recursive** checkbox to include sub-directories.  The "
-"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
-"listing."
+"Select a folder in the directory tree, or drag a directory onto the "
+"window, to load its contents.  Use the **Recursive** checkbox to include "
+"sub-directories.  The **Filter** field accepts a glob pattern (e.g. "
+"``*.jpg``) to restrict the listing."
 msgstr ""
-"选择 **文件 → 打开文件夹…**\\ （**Ctrl+O**），在目录树中选择一个文件夹，或将文件夹拖到窗口上以加载其内容。**递归** "
-"复选框会包含子目录。**过滤器** 字段接受 glob 模式（例如 ``*.jpg``）来限制列表。"
+"在目录树中选择一个文件夹，或将文件夹拖到窗口上，以加载其内容。\\ **递归** 复选框会包含子目录。\\ **过滤器** 字段接受 glob "
+"模式（例如 ``*.jpg``）来限制列表。"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -165,6 +164,37 @@ msgid ""
 msgstr ""
 "**显示** 下拉列表可选择 *仅文件*、*仅目录* 或 *文件和目录*。**按日期** 复选框按修改日期而不是按名称排序文件，**倒序** "
 "反转顺序；文件夹始终排在最前。列表会跟随其他程序在磁盘上所做的更改。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"**File → Open current folder** (**Ctrl+Enter**) shows the folder selected"
+" in the tree in the file manager.  The context menu of the directory tree"
+" offers:"
+msgstr "**文件 → 打开当前文件夹**\\ （\\ **Ctrl+Enter**\\ ）会在文件管理器中显示目录树中选中的文件夹。目录树的右键菜单提供："
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**打开**\\ （**Ctrl+Enter**）"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder in the file manager."
+msgstr "在文件管理器中显示该文件夹。"
+
+# ==AUTO== Automatically translated
+msgid "**Create folder…**"
+msgstr "**新建文件夹…**"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder inside the folder that was right-clicked."
+msgstr "在右键单击的文件夹中新建一个文件夹。"
+
+# ==AUTO== Automatically translated
+msgid "**Add as shortcut**"
+msgstr "**添加为快捷方式**"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`)."
+msgstr "将该文件夹添加到 **快捷方式** 菜单（见 :ref:`shortcuts-menu`）。"
 
 # ==AUTO== Automatically translated
 msgid "The file list"
@@ -213,10 +243,12 @@ msgid ""
 "You can select a subset of rows with the usual keyboard/mouse modifiers "
 "(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
 "files; with no selection it applies to every listed file.  **Tab** moves "
-"the focus between the directory tree and the file list."
+"the focus between the directory tree and the file list; the one that has "
+"it is framed in the highlight color, and the selection of the other one "
+"turns grey."
 msgstr ""
 "可以用常规的键盘和鼠标修饰键（Shift+单击、Ctrl+单击）选择部分行。此时重命名只作用于所选文件；没有选择时则作用于列表中的所有文件。**Tab**"
-" 在目录树和文件列表之间切换焦点。"
+" 在目录树和文件列表之间切换焦点；拥有焦点的一方以高亮色加框显示，另一方的选中项变为灰色。"
 
 # ==AUTO== Automatically translated
 msgid "Drag and drop"
@@ -984,8 +1016,11 @@ msgstr "**模式结构**"
 # ==AUTO== Automatically translated
 msgid ""
 "Number of fields of the schema, the title of each field (shown above it "
-"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
-msgstr "模式结构的字段数、每个字段的标题（显示在“模式结构”选项卡中该字段上方）以及视频标记（见 :ref:`schema-mode`）。"
+"in the Schema tab), the video marker, and whether the schema renames "
+"directories too (see :ref:`schema-mode`)."
+msgstr ""
+"模式结构的字段数、每个字段的标题（显示在“模式结构”选项卡中该字段的上方）、视频标记，以及模式结构是否也重命名目录（见 :ref:`schema-"
+"mode`）。"
 
 # ==AUTO== Automatically translated
 msgid "**Display**"
@@ -1123,6 +1158,29 @@ msgstr ""
 "可列出它们（见 :ref:`image-tools`）。"
 
 # ==AUTO== Automatically translated
+msgid "Directories in schema mode"
+msgstr "模式结构模式下的目录"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the list shows directories (**Directories only** or **Files and "
+"directories**), they are left alone by default: their preview reads "
+"*directory, not renamed*, and neither **Rename** nor **Renumber** touches"
+" them.  Check **Rename directories too** in **Profile configuration…** "
+"(*Schema* tab) to move and rename them like files."
+msgstr ""
+"当列表显示目录时（\\ **仅目录** 或 **文件和目录**\\ ），默认不会处理它们：其预览显示 *目录，未重命名*，\\ **重命名** 和"
+" **重新编号** 都不会改动它们。在 **配置文件设置…**\\ （\\ *模式结构* 选项卡）中勾选 "
+"**同时重命名目录**，即可像文件一样移动并重命名它们。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"With **Recursive** checked, a warning in the Schema tab reminds you that "
+"the files of every sub-directory go into the same destination tree: files"
+" coming from different directories may collide or be numbered together."
+msgstr "勾选 **递归** 时，“模式结构”选项卡中的警告会提醒：所有子目录中的文件都会进入同一个目标目录树，来自不同目录的文件可能冲突或被一起编号。"
+
+# ==AUTO== Automatically translated
 msgid "Renumber"
 msgstr "重新编号"
 
@@ -1234,8 +1292,8 @@ msgid ""
 msgstr "**图像** 菜单也是文件列表的右键菜单。其操作作用于所选文件："
 
 # ==AUTO== Automatically translated
-msgid "**Open** (**Ctrl+Enter**)"
-msgstr "**打开**\\ （**Ctrl+Enter**）"
+msgid "**Open** (**Ctrl+O**)"
+msgstr "**打开**\\ （\\ **Ctrl+O**\\ ）"
 
 # ==AUTO== Automatically translated
 msgid "Open the files with their default application."

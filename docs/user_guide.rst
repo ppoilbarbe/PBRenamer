@@ -75,15 +75,27 @@ action bar at the bottom holds the **Undo**, **Preview**, **Clear**,
 Opening a folder
 ~~~~~~~~~~~~~~~~
 
-Choose **File → Open folder…** (**Ctrl+O**), select a folder in the directory
-tree, or drag a directory onto the window to load its contents.  Use the
-**Recursive** checkbox to include sub-directories.  The **Filter** field
+Select a folder in the directory tree, or drag a directory onto the window,
+to load its contents.  Use the **Recursive** checkbox to include
+sub-directories.  The **Filter** field
 accepts a glob pattern (e.g. ``*.jpg``) to restrict the listing.
 
 Use the **Show** combo to display *Files only*, *Directories only*, or *Files
 and directories*.  The **By date** checkbox sorts the files by modification
 date instead of by name, and **Reversed** reverses the order; folders always
 stay first.  The list follows changes made on disk by other programs.
+
+**File → Open current folder** (**Ctrl+Enter**) shows the folder selected in
+the tree in the file manager.  The context menu of the directory tree offers:
+
+**Open** (**Ctrl+Enter**)
+    Show the folder in the file manager.
+
+**Create folder…**
+    Create a new folder inside the folder that was right-clicked.
+
+**Add as shortcut**
+    Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`).
 
 The file list
 ~~~~~~~~~~~~~
@@ -107,7 +119,8 @@ disabled until all conflicts are resolved.
 You can select a subset of rows with the usual keyboard/mouse modifiers
 (Shift+click, Ctrl+click).  Renaming then applies only to the selected files;
 with no selection it applies to every listed file.  **Tab** moves the focus
-between the directory tree and the file list.
+between the directory tree and the file list; the one that has it is framed
+in the highlight color, and the selection of the other one turns grey.
 
 Drag and drop
 ~~~~~~~~~~~~~~
@@ -364,6 +377,8 @@ batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by drag
 and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` are
 recorded on the same stack.
 
+.. _shortcuts-menu:
+
 Shortcuts
 ~~~~~~~~~
 
@@ -474,7 +489,8 @@ Profile configuration
 
 **Schema**
     Number of fields of the schema, the title of each field (shown above it
-    in the Schema tab), and the video marker (see :ref:`schema-mode`).
+    in the Schema tab), the video marker, and whether the schema renames
+    directories too (see :ref:`schema-mode`).
 
 **Display**
     Thumbnails (shown or not, maximum width and height), the sidecar column
@@ -547,6 +563,19 @@ neither renamed nor renumbered; its preview reads *orphan sidecar, not
 renamed*.  **Images → Orphan sidecars…** lists them (see
 :ref:`image-tools`).
 
+Directories in schema mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When the list shows directories (**Directories only** or **Files and
+directories**), they are left alone by default: their preview reads
+*directory, not renamed*, and neither **Rename** nor **Renumber** touches
+them.  Check **Rename directories too** in **Profile configuration…**
+(*Schema* tab) to move and rename them like files.
+
+With **Recursive** checked, a warning in the Schema tab reminds you that the
+files of every sub-directory go into the same destination tree: files coming
+from different directories may collide or be numbered together.
+
 Renumber
 ~~~~~~~~
 
@@ -617,7 +646,7 @@ The Images menu
 The **Images** menu is also the context menu of the file list.  Its actions
 apply to the selected files:
 
-**Open** (**Ctrl+Enter**)
+**Open** (**Ctrl+O**)
     Open the files with their default application.
 
 **Open with…** (**Ctrl+Shift+O**)

@@ -69,7 +69,7 @@ def keyboard_html() -> str:
     ctrl, shift = _mod("Ctrl"), _mod("Shift")
 
     main_keys = [
-        (_key("Ctrl+O"), _("Open a folder")),
+        (_key("Ctrl+Enter"), _("Open the current folder in the file manager")),
         (_key("Ctrl+I"), _("File information")),
         (_key("Ctrl+Q"), _("Quit")),
         (_key("Ctrl+N"), _("New profile")),
@@ -87,7 +87,7 @@ def keyboard_html() -> str:
         (_keys("Home", "End"), _("Jump to first / last entry")),
         (f"{_key('Return')} ({files})", _("Show the selected images in the viewer")),
         (
-            _key("Ctrl+Return"),
+            _key("Ctrl+O"),
             _("Open the selected files with their default application"),
         ),
         (_key("Ctrl+Shift+O"), _("Open with…")),
@@ -104,7 +104,10 @@ def keyboard_html() -> str:
         (_("Double-click on a name"), _("Open the file with its default application")),
         (_("Double-click on a sidecar"), _("Open the sidecar file")),
         (_("Right-click on the file list"), _("Images menu")),
-        (_("Right-click on the directory tree"), _("Add the folder as a shortcut")),
+        (
+            _("Right-click on the directory tree"),
+            _("Open the folder, create a folder, add the folder as a shortcut"),
+        ),
         (_("Drag onto a folder"), _("Move the files and their sidecars")),
         (
             copy_mod + _("drag onto a folder"),
@@ -119,7 +122,7 @@ def keyboard_html() -> str:
         ("+ / −", _("Zoom in / Zoom out")),
         ("← ↑ / → ↓", _("Previous / next image of the selection, or of the list")),
         (_key("I"), _("Show / hide the metadata")),
-        (_key("Ctrl+Return"), _("Open with the default application")),
+        (_key("Ctrl+O"), _("Open with the default application")),
         (_key("Ctrl+Shift+O"), _("Open with…")),
         (_key("Del"), _("Delete current image and its sidecars")),
         *rotations,

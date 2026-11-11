@@ -635,8 +635,8 @@ msgid "file list"
 msgstr "文件列表"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "打开文件夹"
+msgid "Open the current folder in the file manager"
+msgstr "在文件管理器中打开当前文件夹"
 
 # ==AUTO== Automatically translated
 msgid "Quit"
@@ -751,8 +751,8 @@ msgid "Right-click on the directory tree"
 msgstr "右键单击目录树"
 
 # ==AUTO== Automatically translated
-msgid "Add the folder as a shortcut"
-msgstr "将文件夹添加为快捷方式"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "打开文件夹、新建文件夹、将文件夹添加为快捷方式"
 
 # ==AUTO== Automatically translated
 msgid "Drag onto a folder"
@@ -859,10 +859,6 @@ msgid "Image viewer"
 msgstr "图片查看器"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "选择文件夹"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} 个项目"
@@ -870,6 +866,10 @@ msgstr "{path} — {n} 个项目"
 # ==AUTO== Automatically translated
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ 孤立的 Sidecar 文件，未重命名"
+
+# ==AUTO== Automatically translated
+msgid "⚠ directory, not renamed"
+msgstr "⚠ 目录，未重命名"
 
 # ==AUTO== Automatically translated
 msgid "Target(s) already taken:"
@@ -973,16 +973,52 @@ msgid "Profile “{name}” loaded."
 msgstr "已加载配置文件“{name}”。"
 
 # ==AUTO== Automatically translated
+msgid "Open the folder in the file manager"
+msgstr "在文件管理器中打开该文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Create folder…"
+msgstr "新建文件夹…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder in this folder"
+msgstr "在此文件夹中新建文件夹"
+
+# ==AUTO== Automatically translated
 msgid "Add as shortcut"
 msgstr "添加为快捷方式"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "打开文件夹…"
+msgid "Create folder"
+msgstr "新建文件夹"
 
 # ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "打开目录选择器并导航到所选文件夹"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "{path} 中新文件夹的名称："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "无效的文件夹名称：“{name}”。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "“{name}”已存在。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "已创建文件夹“{name}”。"
+
+# ==AUTO== Automatically translated
+msgid "Open current folder"
+msgstr "打开当前文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr "在文件管理器中显示目录树中选中的文件夹"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -2476,6 +2512,16 @@ msgid "Video marker:"
 msgstr "视频标记："
 
 # ==AUTO== Automatically translated
+msgid "Rename directories too"
+msgstr "同时重命名目录"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr "勾选后，列出的目录会像文件一样按模式结构移动并重命名；否则保持不变"
+
+# ==AUTO== Automatically translated
 msgid "Field titles:"
 msgstr "字段标题："
 
@@ -2691,6 +2737,13 @@ msgstr "填补编号空缺"
 # ==AUTO== Automatically translated
 msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr "填补编号空缺，而不是从最大编号之后继续"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr "递归模式：所有子目录中的文件都会移动到同一个目标目录树中，因此来自不同目录的文件可能冲突或被一起编号。"
 
 # ==AUTO== Automatically translated
 msgid "Video marker position"

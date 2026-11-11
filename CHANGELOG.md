@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.0] - 2026-11-11
 
 ### Added
 
@@ -12,12 +12,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Its title and introduction are translated into the 7 documentation languages; its first page,
   "Merging PBRenamer and PBPicat", is the feasibility study and execution plan of the 2.0.0 merge,
   in English only.
+- Schema mode: "Rename directories too" profile option (Profile configuration, Schema tab), off by
+  default.
+- Schema mode: while **Recursive** is checked, the Schema tab shows a warning icon (`warning.svg`,
+  synced from PBIcons) and explains that files from different sub-directories go into the same
+  destination tree and may collide or be numbered together.
+- Directory tree context menu: **Open** (Ctrl+Enter) shows the folder in the file manager, and
+  **Create folder…** creates a new folder inside the right-clicked one; both come before
+  **Add as shortcut**.
+- Focus marker: the directory tree or the file list, whichever has the keyboard focus (Tab /
+  Shift+Tab), is framed in the highlight color of the palette and keeps the normal selection
+  color; the other one shows a grey selection. Opening a context menu or a dialog keeps the
+  marker in place.
+- **File → Open current folder** (Ctrl+Enter, also Ctrl+Return): shows the folder selected in the
+  tree in the file manager.
 
 ### Changed
 
+- Schema mode: listed directories are no longer moved and renamed like files unless the new
+  "Rename directories too" option is on; their preview reads "⚠ directory, not renamed" and
+  Rename and Renumber leave them alone. The user guide documents both behaviors.
+- Shortcuts: **Open** (default application) of the Images menu, the file list context menu and the
+  image viewer moves from Ctrl+Return to Ctrl+O, in line with **Open with…** (Ctrl+Shift+O); menus
+  showed "Ctrl+Return", translated as "Ctrl+Retour" in French. Ctrl+Enter now opens the current
+  folder.
 - CLI: `-p` short form of `--profile`.
 - CI: `codecov/codecov-action` upgraded from v5 to v7, which runs on Node.js 24 and removes the
   Node.js 20 deprecation warning from the test job.
+
+### Removed
+
+- **File → Open folder…** (directory chooser): selecting a folder in the tree or dropping a
+  directory onto the window does the same.
 
 ### Fixed
 

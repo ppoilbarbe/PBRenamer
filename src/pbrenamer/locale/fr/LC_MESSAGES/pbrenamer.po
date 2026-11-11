@@ -507,8 +507,8 @@ msgstr "arborescence"
 msgid "file list"
 msgstr "liste des fichiers"
 
-msgid "Open a folder"
-msgstr "Ouvrir un dossier"
+msgid "Open the current folder in the file manager"
+msgstr "Ouvrir le dossier courant dans le gestionnaire de fichiers"
 
 msgid "Quit"
 msgstr "Quitter"
@@ -594,8 +594,8 @@ msgstr "Menu Images"
 msgid "Right-click on the directory tree"
 msgstr "Clic droit sur l'arborescence"
 
-msgid "Add the folder as a shortcut"
-msgstr "Ajouter le dossier comme raccourci"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "Ouvrir le dossier, créer un dossier, ajouter le dossier comme raccourci"
 
 msgid "Drag onto a folder"
 msgstr "Glisser sur un dossier"
@@ -675,15 +675,15 @@ msgstr "Fenêtre principale"
 msgid "Image viewer"
 msgstr "Visualiseur d'images"
 
-msgid "Select folder"
-msgstr "Choisir un dossier"
-
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} : {n} élément(s)"
 
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ sidecar orphelin, non renommé"
+
+msgid "⚠ directory, not renamed"
+msgstr "⚠ dossier, non renommé"
 
 msgid "Target(s) already taken:"
 msgstr "Cible(s) déjà prise(s) :"
@@ -765,14 +765,44 @@ msgstr "Profil « {name} » supprimé."
 msgid "Profile “{name}” loaded."
 msgstr "Profil « {name} » chargé."
 
+msgid "Open the folder in the file manager"
+msgstr "Ouvrir le dossier dans le gestionnaire de fichiers"
+
+msgid "Create folder…"
+msgstr "Créer un dossier…"
+
+msgid "Create a new folder in this folder"
+msgstr "Créer un nouveau dossier dans ce dossier"
+
 msgid "Add as shortcut"
 msgstr "Ajouter comme raccourci"
 
-msgid "Open folder…"
-msgstr "Ouvrir un dossier…"
+msgid "Create folder"
+msgstr "Créer un dossier"
 
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Ouvrir un sélecteur de dossier et naviguer jusqu'au dossier sélectionné"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "Nom du nouveau dossier dans {path} :"
+
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "Nom de dossier invalide : « {name} »."
+
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "« {name} » existe déjà."
+
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "Dossier « {name} » créé."
+
+msgid "Open current folder"
+msgstr "Ouvrir le dossier courant"
+
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr ""
+"Afficher dans le gestionnaire de fichiers le dossier sélectionné dans "
+"l'arborescence"
 
 msgid "Quit PBRenamer"
 msgstr "Quitter PBRenamer"
@@ -2063,6 +2093,16 @@ msgstr ""
 msgid "Video marker:"
 msgstr "Marqueur vidéo :"
 
+msgid "Rename directories too"
+msgstr "Renommer aussi les dossiers"
+
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr ""
+"Si coché, les dossiers listés sont déplacés et renommés par le schéma "
+"comme les fichiers ; sinon ils restent inchangés"
+
 msgid "Field titles:"
 msgstr "Titres des champs :"
 
@@ -2242,6 +2282,15 @@ msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr ""
 "Combler les trous de numérotation au lieu de continuer après le plus "
 "grand numéro"
+
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr ""
+"Mode récursif : les fichiers de tous les sous-dossiers sont déplacés dans"
+" la même arborescence de destination, des fichiers venant de dossiers "
+"différents peuvent donc entrer en collision ou être numérotés ensemble."
 
 msgid "Video marker position"
 msgstr "Position du marqueur vidéo"

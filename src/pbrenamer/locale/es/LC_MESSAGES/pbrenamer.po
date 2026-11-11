@@ -648,8 +648,8 @@ msgid "file list"
 msgstr "lista de archivos"
 
 # ==AUTO== Automatically translated
-msgid "Open a folder"
-msgstr "Abrir una carpeta"
+msgid "Open the current folder in the file manager"
+msgstr "Abrir la carpeta actual en el gestor de archivos"
 
 # ==AUTO== Automatically translated
 msgid "Quit"
@@ -766,8 +766,8 @@ msgid "Right-click on the directory tree"
 msgstr "Clic derecho en el árbol de carpetas"
 
 # ==AUTO== Automatically translated
-msgid "Add the folder as a shortcut"
-msgstr "Añadir la carpeta como atajo"
+msgid "Open the folder, create a folder, add the folder as a shortcut"
+msgstr "Abrir la carpeta, crear una carpeta, añadir la carpeta como atajo"
 
 # ==AUTO== Automatically translated
 msgid "Drag onto a folder"
@@ -874,10 +874,6 @@ msgid "Image viewer"
 msgstr "Visor de imágenes"
 
 # ==AUTO== Automatically translated
-msgid "Select folder"
-msgstr "Seleccionar carpeta"
-
-# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{path} — {n} item(s)"
 msgstr "{path} — {n} elemento(s)"
@@ -885,6 +881,10 @@ msgstr "{path} — {n} elemento(s)"
 # ==AUTO== Automatically translated
 msgid "⚠ orphan sidecar, not renamed"
 msgstr "⚠ sidecar huérfano, no renombrado"
+
+# ==AUTO== Automatically translated
+msgid "⚠ directory, not renamed"
+msgstr "⚠ directorio, no renombrado"
 
 # ==AUTO== Automatically translated
 msgid "Target(s) already taken:"
@@ -990,16 +990,54 @@ msgid "Profile “{name}” loaded."
 msgstr "Perfil «{name}» cargado."
 
 # ==AUTO== Automatically translated
+msgid "Open the folder in the file manager"
+msgstr "Abrir la carpeta en el gestor de archivos"
+
+# ==AUTO== Automatically translated
+msgid "Create folder…"
+msgstr "Crear carpeta…"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder in this folder"
+msgstr "Crear una carpeta nueva en esta carpeta"
+
+# ==AUTO== Automatically translated
 msgid "Add as shortcut"
 msgstr "Añadir como atajo"
 
 # ==AUTO== Automatically translated
-msgid "Open folder…"
-msgstr "Abrir carpeta…"
+msgid "Create folder"
+msgstr "Crear carpeta"
 
 # ==AUTO== Automatically translated
-msgid "Open a directory chooser and navigate the tree to the selected folder"
-msgstr "Abrir un selector de directorio y navegar hasta la carpeta seleccionada"
+#, python-brace-format
+msgid "Name of the new folder in {path}:"
+msgstr "Nombre de la nueva carpeta en {path}:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Invalid folder name: “{name}”."
+msgstr "Nombre de carpeta no válido: «{name}»."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "“{name}” already exists."
+msgstr "«{name}» ya existe."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Folder “{name}” created."
+msgstr "Carpeta «{name}» creada."
+
+# ==AUTO== Automatically translated
+msgid "Open current folder"
+msgstr "Abrir la carpeta actual"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder selected in the directory tree in the file manager"
+msgstr ""
+"Mostrar en el gestor de archivos la carpeta seleccionada en el árbol de "
+"directorios"
 
 # ==AUTO== Automatically translated
 msgid "Quit PBRenamer"
@@ -2615,6 +2653,18 @@ msgid "Video marker:"
 msgstr "Marcador de vídeo:"
 
 # ==AUTO== Automatically translated
+msgid "Rename directories too"
+msgstr "Renombrar también los directorios"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When checked, the listed directories are moved and renamed by the schema "
+"like files; otherwise they are left alone"
+msgstr ""
+"Si está marcado, los directorios listados se mueven y renombran según el "
+"esquema como los archivos; si no, se dejan intactos"
+
+# ==AUTO== Automatically translated
 msgid "Field titles:"
 msgstr "Títulos de los campos:"
 
@@ -2842,6 +2892,16 @@ msgid "Fill numbering gaps instead of continuing after the highest number"
 msgstr ""
 "Rellenar los huecos de numeración en lugar de continuar tras el número "
 "más alto"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Recursive mode: the files of every sub-directory are moved into the same "
+"destination tree, so files coming from different directories may collide "
+"or be numbered together."
+msgstr ""
+"Modo recursivo: los archivos de todos los subdirectorios se mueven al "
+"mismo árbol de destino, por lo que archivos de directorios distintos "
+"pueden colisionar o numerarse juntos."
 
 # ==AUTO== Automatically translated
 msgid "Video marker position"

@@ -15,7 +15,6 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import (
     QApplication,
-    QFileDialog,
     QMenu,
     QMessageBox,
     QStyleOptionViewItem,
@@ -195,29 +194,38 @@ class TestNavigation:
 
 
 # ---------------------------------------------------------------------------
-# _on_open  (lines 246-253)
+# File → Open current folder
 # ---------------------------------------------------------------------------
 
 
-class TestOnOpen:
-    def test_selects_folder(self, window, tmp_path, monkeypatch):
-        monkeypatch.setattr(
-            QFileDialog,
-            "getExistingDirectory",
-            staticmethod(lambda *a, **kw: str(tmp_path)),
-        )
-        window._on_open()
-        assert window._files.current_dir == str(tmp_path)
+class TestOpenCurrentFolder:
+    def test_opens_current_dir(self, window, tmp_path, monkeypatch):
+        opened = []
+        monkeypatch.setattr(_mwmod, "_open_folder", opened.append)
+        window._files.current_dir = str(tmp_path)
+        window._ui.actionOpenCurrentFolder.trigger()
+        assert opened == [str(tmp_path)]
 
-    def test_cancel_noop(self, window, monkeypatch):
-        original = window._files.current_dir
+    @pytest.mark.parametrize("current", [None, "/nonexistent/xyz"])
+    def test_no_folder_noop(self, window, monkeypatch, current):
+        opened = []
+        monkeypatch.setattr(_mwmod, "_open_folder", opened.append)
+        window._files.current_dir = current
+        window._on_open_current_folder()
+        assert opened == []
+
+    def test_shortcuts(self, window):
+        keys = [k.toString() for k in window._ui.actionOpenCurrentFolder.shortcuts()]
+        assert keys == ["Ctrl+Enter", "Ctrl+Return"]
+        assert window._ui.actionImgOpen.shortcut().toString() == "Ctrl+O"
+
+    def test_open_folder_uses_desktop_services(self, monkeypatch):
+        urls = []
         monkeypatch.setattr(
-            QFileDialog,
-            "getExistingDirectory",
-            staticmethod(lambda *a, **kw: ""),
+            _mwmod.QDesktopServices, "openUrl", staticmethod(urls.append)
         )
-        window._on_open()
-        assert window._files.current_dir == original
+        _mwmod._open_folder("/tmp")
+        assert urls[0].toLocalFile() == "/tmp"
 
 
 # ---------------------------------------------------------------------------
@@ -1633,17 +1641,82 @@ class TestShortcutsMenu:
         window._files.current_dir = str(tmp_path)
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
 
-    def test_on_tree_context_menu_add_chosen(
-        self, window, tmp_path, mock_qmenu, monkeypatch
+    @pytest.mark.parametrize(
+        ("choice", "target"),
+        [(0, "_open_folder"), (1, "_create_folder"), (2, "_add_shortcut")],
+    )
+    def test_on_tree_context_menu_chosen(
+        self, window, tmp_path, mock_qmenu, monkeypatch, choice, target
     ):
-        # Simulate the user choosing "Add as shortcut": exec returns the action
-        # so that (chosen is add_action) is True → _add_shortcut is called.
-        mock_qmenu.exec.return_value = mock_qmenu.addAction.return_value
+        """Open, Create folder… and Add as shortcut, in this order."""
+        actions = [MagicMock(), MagicMock(), MagicMock()]
+        mock_qmenu.addAction.side_effect = actions
+        mock_qmenu.exec.return_value = actions[choice]
+        from PySide6.QtCore import QModelIndex
+
+        monkeypatch.setattr(
+            window._ui.treeDirectory, "indexAt", lambda pos: QModelIndex()
+        )
         window._files.current_dir = str(tmp_path)
         called = []
-        monkeypatch.setattr(window, "_add_shortcut", lambda path: called.append(path))
+        if target == "_open_folder":
+            monkeypatch.setattr(_mwmod, target, called.append)
+        else:
+            monkeypatch.setattr(window, target, called.append)
         window._on_tree_context_menu(window._ui.treeDirectory.pos())
-        assert called
+        assert called == [str(tmp_path)]
+        open_text = mock_qmenu.addAction.call_args_list[0].args[1]
+        assert open_text.endswith("\tCtrl+Enter")
+
+    def _ask_name(self, monkeypatch, name, ok=True):
+        monkeypatch.setattr(
+            _mwmod.QInputDialog, "getText", staticmethod(lambda *a, **k: (name, ok))
+        )
+
+    def _warnings(self, monkeypatch):
+        shown = []
+        monkeypatch.setattr(
+            _mwmod.QMessageBox,
+            "warning",
+            staticmethod(lambda *a, **k: shown.append(a[2])),
+        )
+        return shown
+
+    def test_create_folder(self, window, tmp_path, monkeypatch):
+        self._ask_name(monkeypatch, "  New one ")
+        shown = self._warnings(monkeypatch)
+        window._create_folder(str(tmp_path))
+        assert (tmp_path / "New one").is_dir()
+        assert shown == []
+        assert "New one" in window.statusBar().currentMessage()
+
+    @pytest.mark.parametrize(("name", "ok"), [("x", False), ("   ", True)])
+    def test_create_folder_cancelled(self, window, tmp_path, monkeypatch, name, ok):
+        self._ask_name(monkeypatch, name, ok)
+        window._create_folder(str(tmp_path))
+        assert list(tmp_path.iterdir()) == []
+
+    @pytest.mark.parametrize("name", [".", "..", "a/b"])
+    def test_create_folder_invalid(self, window, tmp_path, monkeypatch, name):
+        self._ask_name(monkeypatch, name)
+        shown = self._warnings(monkeypatch)
+        window._create_folder(str(tmp_path))
+        assert "Invalid folder name" in shown[0]
+        assert list(tmp_path.iterdir()) == []
+
+    def test_create_folder_exists(self, window, tmp_path, monkeypatch):
+        (tmp_path / "dup").mkdir()
+        self._ask_name(monkeypatch, "dup")
+        shown = self._warnings(monkeypatch)
+        window._create_folder(str(tmp_path))
+        assert shown == ["“dup” already exists."]
+
+    def test_create_folder_os_error(self, window, tmp_path, monkeypatch):
+        self._ask_name(monkeypatch, "x")
+        shown = self._warnings(monkeypatch)
+        window._create_folder(str(tmp_path / "missing"))
+        assert len(shown) == 1
+        assert not (tmp_path / "missing").exists()
 
     def test_add_shortcut(self, window, tmp_path):
         window._add_shortcut(str(tmp_path))

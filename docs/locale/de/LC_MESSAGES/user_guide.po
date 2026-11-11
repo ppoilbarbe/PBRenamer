@@ -166,17 +166,16 @@ msgstr "Einen Ordner öffnen"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
-"directory tree, or drag a directory onto the window to load its contents."
-"  Use the **Recursive** checkbox to include sub-directories.  The "
-"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
-"listing."
+"Select a folder in the directory tree, or drag a directory onto the "
+"window, to load its contents.  Use the **Recursive** checkbox to include "
+"sub-directories.  The **Filter** field accepts a glob pattern (e.g. "
+"``*.jpg``) to restrict the listing."
 msgstr ""
-"Wählen Sie **Datei → Ordner öffnen…** (**Strg+O**), wählen Sie einen "
-"Ordner im Verzeichnisbaum aus oder ziehen Sie ein Verzeichnis auf das "
-"Fenster, um seinen Inhalt zu laden.  Das Kontrollkästchen **Rekursiv** "
-"bezieht Unterverzeichnisse ein.  Das Feld **Filter** akzeptiert ein Glob-"
-"Muster (z. B. ``*.jpg``), um die Liste einzuschränken."
+"Wählen Sie einen Ordner im Verzeichnisbaum aus oder ziehen Sie ein "
+"Verzeichnis auf das Fenster, um seinen Inhalt zu laden.  Das "
+"Kontrollkästchen **Rekursiv** bezieht Unterverzeichnisse ein.  Das Feld "
+"**Filter** akzeptiert ein Glob-Muster (z. B. ``*.jpg``), um die Liste "
+"einzuschränken."
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -192,6 +191,44 @@ msgstr ""
 " **Umgekehrt** kehrt die Reihenfolge um; Ordner stehen immer zuerst.  Die"
 " Liste folgt Änderungen, die andere Programme auf der Festplatte "
 "vornehmen."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**File → Open current folder** (**Ctrl+Enter**) shows the folder selected"
+" in the tree in the file manager.  The context menu of the directory tree"
+" offers:"
+msgstr ""
+"**Datei → Aktuellen Ordner öffnen** (**Strg+Eingabe**) zeigt den im Baum "
+"ausgewählten Ordner im Dateimanager an.  Das Kontextmenü des "
+"Verzeichnisbaums bietet:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Öffnen** (**Strg+Eingabe**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder in the file manager."
+msgstr "Den Ordner im Dateimanager anzeigen."
+
+# ==AUTO== Automatically translated
+msgid "**Create folder…**"
+msgstr "**Ordner erstellen…**"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder inside the folder that was right-clicked."
+msgstr ""
+"Einen neuen Ordner in dem mit der rechten Maustaste angeklickten Ordner "
+"erstellen."
+
+# ==AUTO== Automatically translated
+msgid "**Add as shortcut**"
+msgstr "**Als Verknüpfung hinzufügen**"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`)."
+msgstr ""
+"Den Ordner zum Menü **Verknüpfungen** hinzufügen (siehe :ref:`shortcuts-"
+"menu`)."
 
 # ==AUTO== Automatically translated
 msgid "The file list"
@@ -248,13 +285,16 @@ msgid ""
 "You can select a subset of rows with the usual keyboard/mouse modifiers "
 "(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
 "files; with no selection it applies to every listed file.  **Tab** moves "
-"the focus between the directory tree and the file list."
+"the focus between the directory tree and the file list; the one that has "
+"it is framed in the highlight color, and the selection of the other one "
+"turns grey."
 msgstr ""
 "Mit den üblichen Tastatur- und Mausmodifikatoren (Umschalt+Klick, "
 "Strg+Klick) können Sie einen Teil der Zeilen auswählen.  Das Umbenennen "
 "gilt dann nur für die ausgewählten Dateien; ohne Auswahl gilt es für alle"
 " aufgelisteten Dateien.  **Tab** wechselt den Fokus zwischen "
-"Verzeichnisbaum und Dateiliste."
+"Verzeichnisbaum und Dateiliste; die Ansicht mit dem Fokus ist in der "
+"Hervorhebungsfarbe umrahmt, und die Auswahl der anderen wird grau."
 
 # ==AUTO== Automatically translated
 msgid "Drag and drop"
@@ -1185,11 +1225,12 @@ msgstr "**Schema**"
 # ==AUTO== Automatically translated
 msgid ""
 "Number of fields of the schema, the title of each field (shown above it "
-"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+"in the Schema tab), the video marker, and whether the schema renames "
+"directories too (see :ref:`schema-mode`)."
 msgstr ""
 "Die Anzahl der Felder des Schemas, der Titel jedes Feldes (über dem Feld "
-"in der Registerkarte Schema angezeigt) und der Videomarker (siehe :ref"
-":`schema-mode`)."
+"in der Registerkarte Schema angezeigt), der Videomarker und ob das Schema"
+" auch Verzeichnisse umbenennt (siehe :ref:`schema-mode`)."
 
 # ==AUTO== Automatically translated
 msgid "**Display**"
@@ -1355,6 +1396,37 @@ msgstr ""
 "(siehe :ref:`image-tools`)."
 
 # ==AUTO== Automatically translated
+msgid "Directories in schema mode"
+msgstr "Verzeichnisse im Schemamodus"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the list shows directories (**Directories only** or **Files and "
+"directories**), they are left alone by default: their preview reads "
+"*directory, not renamed*, and neither **Rename** nor **Renumber** touches"
+" them.  Check **Rename directories too** in **Profile configuration…** "
+"(*Schema* tab) to move and rename them like files."
+msgstr ""
+"Wenn die Liste Verzeichnisse anzeigt (**Nur Verzeichnisse** oder "
+"**Dateien und Verzeichnisse**), bleiben sie standardmäßig unverändert: "
+"Ihre Vorschau lautet *Verzeichnis, nicht umbenannt*, und weder "
+"**Umbenennen** noch **Umnummerieren** rührt sie an.  Aktivieren Sie "
+"**Auch Verzeichnisse umbenennen** in **Profilkonfiguration…** "
+"(Registerkarte *Schema*), um sie wie Dateien zu verschieben und "
+"umzubenennen."
+
+# ==AUTO== Automatically translated
+msgid ""
+"With **Recursive** checked, a warning in the Schema tab reminds you that "
+"the files of every sub-directory go into the same destination tree: files"
+" coming from different directories may collide or be numbered together."
+msgstr ""
+"Ist **Rekursiv** aktiviert, erinnert eine Warnung in der Registerkarte "
+"Schema daran, dass die Dateien aller Unterverzeichnisse in denselben "
+"Zielbaum gelangen: Dateien aus verschiedenen Verzeichnissen können "
+"kollidieren oder gemeinsam nummeriert werden."
+
+# ==AUTO== Automatically translated
 msgid "Renumber"
 msgstr "Umnummerieren"
 
@@ -1492,8 +1564,8 @@ msgstr ""
 "Aktionen gelten für die ausgewählten Dateien:"
 
 # ==AUTO== Automatically translated
-msgid "**Open** (**Ctrl+Enter**)"
-msgstr "**Öffnen** (**Strg+Eingabe**)"
+msgid "**Open** (**Ctrl+O**)"
+msgstr "**Öffnen** (**Strg+O**)"
 
 # ==AUTO== Automatically translated
 msgid "Open the files with their default application."

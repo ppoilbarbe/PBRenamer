@@ -28,6 +28,11 @@ from PySide6.QtWidgets import (
 
 from pbrenamer.resources import path as _resource
 from pbrenamer.ui.dnd_widgets import DirectoryTreeView, FileListWidget
+from pbrenamer.ui.focus_marker import mark_focus
+
+# Open the current folder in the file manager.  "Enter" comes first so that
+# menus show "Ctrl+Enter"; "Return" (main keyboard) is the usual key.
+OPEN_FOLDER_KEYS = ("Ctrl+Enter", "Ctrl+Return")
 
 
 class Ui_MainWindow:
@@ -45,13 +50,17 @@ class Ui_MainWindow:
     # ── Actions ───────────────────────────────────────────────────────────────
 
     def _setup_actions(self, window):
-        self.actionOpenFolder = QAction(
-            QIcon(_resource("open.svg")), _("Open folder…"), window
+        self.actionOpenCurrentFolder = QAction(
+            QIcon(_resource("open.svg")), _("Open current folder"), window
         )
-        self.actionOpenFolder.setShortcut(QKeySequence("Ctrl+O"))
-        self.actionOpenFolder.setToolTip(_("Open a folder"))
-        self.actionOpenFolder.setStatusTip(
-            _("Open a directory chooser and navigate the tree to the selected folder")
+        self.actionOpenCurrentFolder.setShortcuts(
+            [QKeySequence(k) for k in OPEN_FOLDER_KEYS]
+        )
+        self.actionOpenCurrentFolder.setToolTip(
+            _("Open the current folder in the file manager")
+        )
+        self.actionOpenCurrentFolder.setStatusTip(
+            _("Show the folder selected in the directory tree in the file manager")
         )
 
         self.actionQuit = QAction(QIcon(_resource("quit.svg")), _("Quit"), window)
@@ -176,7 +185,7 @@ class Ui_MainWindow:
         self.actionImgOpen = action(
             "open.svg",
             _("Open"),
-            "Ctrl+Return",
+            "Ctrl+O",
             _("Open with the default application"),
             _("Open the selected files with their default application"),
         )
@@ -289,6 +298,8 @@ class Ui_MainWindow:
         self.splitterMain.addWidget(self.splitterRight)
         self.treeDirectory.tab_partner = self.tblFiles
         self.tblFiles.tab_partner = self.treeDirectory
+        self.treeFocusMarker = mark_focus(self.treeDirectory)
+        self.filesFocusMarker = mark_focus(self.tblFiles)
 
         root.addWidget(self.splitterMain)
         root.setStretch(1, 1)  # splitter takes all vertical space
@@ -823,7 +834,7 @@ class Ui_MainWindow:
 
         # File menu
         menu_file = menubar.addMenu(_("File"))
-        menu_file.addAction(self.actionOpenFolder)
+        menu_file.addAction(self.actionOpenCurrentFolder)
         menu_file.addSeparator()
         menu_file.addAction(self.actionFileInfo)
         menu_file.addSeparator()

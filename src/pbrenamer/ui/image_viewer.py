@@ -358,9 +358,7 @@ class ImageViewer(GeometryMixin, QWidget):
         self._rotate_auto_btn.setEnabled(False)
         self._reset_exif_btn.setEnabled(False)
         file_buttons = [
-            self._tool_button(
-                "open", _("Open") + "  Ctrl+Return", self.open_requested.emit
-            ),
+            self._tool_button("open", _("Open") + "  Ctrl+O", self.open_requested.emit),
             self._tool_button(
                 "open-with",
                 _("Open with") + "  Ctrl+Shift+O",
@@ -427,7 +425,7 @@ class ImageViewer(GeometryMixin, QWidget):
             (QKeySequence(Qt.Key.Key_Left), self._act_prev),
             (QKeySequence(Qt.Key.Key_Down), self._act_next),
             (QKeySequence(Qt.Key.Key_Right), self._act_next),
-            (QKeySequence(ctrl | Qt.Key.Key_Return), self.open_requested),
+            (QKeySequence(ctrl | Qt.Key.Key_O), self.open_requested),
             (QKeySequence(ctrl | shift | Qt.Key.Key_O), self.open_with_requested),
             (QKeySequence(Qt.Key.Key_Delete), self.delete_requested),
             (QKeySequence(Qt.Key.Key_F6), lambda: self.rotate_requested.emit(-90)),

@@ -166,16 +166,14 @@ msgstr "Открытие папки"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Open folder…** (**Ctrl+O**), select a folder in the "
-"directory tree, or drag a directory onto the window to load its contents."
-"  Use the **Recursive** checkbox to include sub-directories.  The "
-"**Filter** field accepts a glob pattern (e.g. ``*.jpg``) to restrict the "
-"listing."
+"Select a folder in the directory tree, or drag a directory onto the "
+"window, to load its contents.  Use the **Recursive** checkbox to include "
+"sub-directories.  The **Filter** field accepts a glob pattern (e.g. "
+"``*.jpg``) to restrict the listing."
 msgstr ""
-"Выберите **Файл → Открыть папку…** (**Ctrl+O**), выберите папку в дереве "
-"или перетащите папку в окно, чтобы загрузить её содержимое.  Флажок "
-"**Рекурсивно** включает подпапки.  Поле **Фильтр** принимает glob-шаблон "
-"(например, ``*.jpg``) для ограничения списка."
+"Выберите папку в дереве или перетащите папку в окно, чтобы загрузить её "
+"содержимое.  Флажок **Рекурсивно** включает подпапки.  Поле **Фильтр** "
+"принимает glob-шаблон (например, ``*.jpg``) для ограничения списка."
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -190,6 +188,40 @@ msgstr ""
 "имени, а **Обратный** меняет порядок на обратный; папки всегда остаются "
 "вверху.  Список отслеживает изменения на диске, сделанные другими "
 "программами."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**File → Open current folder** (**Ctrl+Enter**) shows the folder selected"
+" in the tree in the file manager.  The context menu of the directory tree"
+" offers:"
+msgstr ""
+"**Файл → Открыть текущую папку** (**Ctrl+Enter**) показывает в файловом "
+"менеджере папку, выбранную в дереве.  Контекстное меню дерева каталогов "
+"предлагает:"
+
+# ==AUTO== Automatically translated
+msgid "**Open** (**Ctrl+Enter**)"
+msgstr "**Открыть** (**Ctrl+Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the folder in the file manager."
+msgstr "Показать папку в файловом менеджере."
+
+# ==AUTO== Automatically translated
+msgid "**Create folder…**"
+msgstr "**Создать папку…**"
+
+# ==AUTO== Automatically translated
+msgid "Create a new folder inside the folder that was right-clicked."
+msgstr "Создать новую папку внутри папки, по которой щёлкнули правой кнопкой."
+
+# ==AUTO== Automatically translated
+msgid "**Add as shortcut**"
+msgstr "**Добавить в ярлыки**"
+
+# ==AUTO== Automatically translated
+msgid "Add the folder to the **Shortcuts** menu (see :ref:`shortcuts-menu`)."
+msgstr "Добавить папку в меню **Ярлыки** (см. :ref:`shortcuts-menu`)."
 
 # ==AUTO== Automatically translated
 msgid "The file list"
@@ -244,12 +276,16 @@ msgid ""
 "You can select a subset of rows with the usual keyboard/mouse modifiers "
 "(Shift+click, Ctrl+click).  Renaming then applies only to the selected "
 "files; with no selection it applies to every listed file.  **Tab** moves "
-"the focus between the directory tree and the file list."
+"the focus between the directory tree and the file list; the one that has "
+"it is framed in the highlight color, and the selection of the other one "
+"turns grey."
 msgstr ""
 "Часть строк можно выделить обычными модификаторами клавиатуры и мыши "
 "(Shift+щелчок, Ctrl+щелчок).  Тогда переименование применяется только к "
 "выделенным файлам; без выделения — ко всем файлам списка.  **Tab** "
-"переключает фокус между деревом папок и списком файлов."
+"переключает фокус между деревом папок и списком файлов; та панель, у "
+"которой он есть, обводится цветом выделения, а выделение в другой "
+"становится серым."
 
 # ==AUTO== Automatically translated
 msgid "Drag and drop"
@@ -1155,10 +1191,12 @@ msgstr "**Схема**"
 # ==AUTO== Automatically translated
 msgid ""
 "Number of fields of the schema, the title of each field (shown above it "
-"in the Schema tab), and the video marker (see :ref:`schema-mode`)."
+"in the Schema tab), the video marker, and whether the schema renames "
+"directories too (see :ref:`schema-mode`)."
 msgstr ""
-"Число полей схемы, заголовок каждого поля (показывается над ним на "
-"вкладке «Схема») и видеомаркер (см. :ref:`schema-mode`)."
+"Число полей схемы, заголовок каждого поля (отображается над ним на "
+"вкладке «Схема»), маркер видео и то, переименовывает ли схема также папки"
+" (см. :ref:`schema-mode`)."
 
 # ==AUTO== Automatically translated
 msgid "**Display**"
@@ -1325,6 +1363,36 @@ msgstr ""
 "выводит их список (см. :ref:`image-tools`)."
 
 # ==AUTO== Automatically translated
+msgid "Directories in schema mode"
+msgstr "Папки в режиме схемы"
+
+# ==AUTO== Automatically translated
+msgid ""
+"When the list shows directories (**Directories only** or **Files and "
+"directories**), they are left alone by default: their preview reads "
+"*directory, not renamed*, and neither **Rename** nor **Renumber** touches"
+" them.  Check **Rename directories too** in **Profile configuration…** "
+"(*Schema* tab) to move and rename them like files."
+msgstr ""
+"Когда список показывает папки (**Только папки** или **Файлы и папки**), "
+"по умолчанию они не изменяются: их предпросмотр гласит *папка, не "
+"переименована*, и ни **Переименовать**, ни **Перенумеровать** их не "
+"затрагивают.  Отметьте **Переименовывать также папки** в **Настройка "
+"профиля…** (вкладка *Схема*), чтобы перемещать и переименовывать их как "
+"файлы."
+
+# ==AUTO== Automatically translated
+msgid ""
+"With **Recursive** checked, a warning in the Schema tab reminds you that "
+"the files of every sub-directory go into the same destination tree: files"
+" coming from different directories may collide or be numbered together."
+msgstr ""
+"Когда отмечено **Рекурсивно**, предупреждение на вкладке «Схема» "
+"напоминает, что файлы всех подпапок попадают в одно и то же дерево "
+"назначения: файлы из разных папок могут конфликтовать или нумероваться "
+"вместе."
+
+# ==AUTO== Automatically translated
 msgid "Renumber"
 msgstr "Перенумерация"
 
@@ -1457,8 +1525,8 @@ msgstr ""
 "действия применяются к выделенным файлам:"
 
 # ==AUTO== Automatically translated
-msgid "**Open** (**Ctrl+Enter**)"
-msgstr "**Открыть** (**Ctrl+Enter**)"
+msgid "**Open** (**Ctrl+O**)"
+msgstr "**Открыть** (**Ctrl+O**)"
 
 # ==AUTO== Automatically translated
 msgid "Open the files with their default application."
