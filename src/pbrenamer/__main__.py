@@ -283,6 +283,23 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         help="Print replacement-field help HTML and exit",
     )
 
+    # ── Status ───────────────────────────────────────────────────────────────
+    status_group = parser.add_argument_group(
+        "status",
+        "Print the configuration status and exit (no GUI).",
+    )
+    status_group.add_argument(
+        "--status",
+        action="store_true",
+        default=False,
+        help=(
+            "Print the version and the configuration (application settings, "
+            "including the profile chosen with --profile, else the default "
+            "profile, and the settings of every visible profile) as YAML, "
+            "in English, and exit"
+        ),
+    )
+
     # ── Desktop integration (Linux) ──────────────────────────────────────────
     desktop_group = parser.add_argument_group(
         "desktop integration",
@@ -832,6 +849,22 @@ def _headless_run(ns: argparse.Namespace) -> None:
 # ---------------------------------------------------------------------------
 
 
+def _exit_if_startup_profile_missing() -> None:
+    """Without --profile, exit with an error (code 2) when the default
+    profile (or the last profile used) no longer exists."""
+    from pbrenamer import profiles
+
+    missing = profiles.missing_startup()
+    if missing is not None:
+        kind = "default" if profiles.get_default() else "last used"
+        print(
+            f"error: {kind} profile '{missing}' not found "
+            f"(use --profile or set the default profile in the GUI)",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+
+
 def main() -> None:
     # Configure logging early so that module-level loggers are usable
     # from the first import. The level is a temporary floor until
@@ -860,7 +893,15 @@ def main() -> None:
             print(f"error: profile '{_ns.profile}' not found", file=sys.stderr)
             sys.exit(2)
         # A headless run never changes the profile the GUI opens next.
-        profiles.use(_ns.profile, remember=not headless)
+        profiles.use(_ns.profile, remember=not (headless or _ns.status))
+
+    if _ns.status:
+        if _ns.profile is None:
+            _exit_if_startup_profile_missing()
+        from pbrenamer import status
+
+        sys.stdout.write(status.to_yaml(status.collect()))
+        return
 
     if getattr(_ns, "auto_update", False):
         from pbrenamer.platform.auto_update import perform_auto_update
@@ -900,17 +941,7 @@ def main() -> None:
 
     if headless:
         if _ns.profile is None:
-            from pbrenamer import profiles
-
-            missing = profiles.missing_startup()
-            if missing is not None:
-                kind = "default" if profiles.get_default() else "last used"
-                print(
-                    f"error: {kind} profile '{missing}' not found "
-                    f"(use --profile or set the default profile in the GUI)",
-                    file=sys.stderr,
-                )
-                sys.exit(2)
+            _exit_if_startup_profile_missing()
         if _ns.log_level:
             logging.getLogger().setLevel(_ns.log_level)
         # Core messages (schema errors, sidecar ambiguities) use _(); the

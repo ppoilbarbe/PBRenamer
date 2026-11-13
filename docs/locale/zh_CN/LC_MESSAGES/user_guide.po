@@ -3112,11 +3112,12 @@ msgstr "``-p NAME`` / ``--profile NAME``"
 # ==AUTO== Automatically translated
 msgid ""
 "Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar "
-"configuration, schema defaults) instead of the last one used in the GUI."
-"  In GUI mode, open the window on that profile."
+"configuration, schema defaults) instead of the default profile set in the"
+" settings (by default, the last profile used in the GUI).  In GUI mode, "
+"open the window on that profile."
 msgstr ""
 "使用 :ref:`配置文件 <profiles>` *NAME*\\ （设置、保存项、Sidecar "
-"配置、模式结构默认值），而不是图形界面中上次使用的配置文件。在图形模式下，以该配置文件打开窗口。"
+"配置、模式结构默认值），而不是设置中指定的默认配置文件（默认为图形界面中上次使用的配置文件）。在图形模式下，以该配置文件打开窗口。"
 
 msgid "``--config-dir DIR``"
 msgstr "``--config-dir DIR``"
@@ -3160,6 +3161,34 @@ msgstr ""
 "下载与当前平台和架构匹配的最新版本，用它替换正在运行的可执行文件，然后退出。此选项仅在预构建的可执行文件（PyInstaller）中提供；源代码副本或通过"
 " ``pip``/PyPI 的安装没有可替换的单一可执行文件，因此 ``--help`` 中没有该选项，使用时会被当作未知参数拒绝。重新启动 "
 "PBRenamer 才能使用新版本；更新不会自动重新启动程序。"
+
+# ==AUTO== Automatically translated
+msgid "Status"
+msgstr "状态"
+
+# ==AUTO== Automatically translated
+msgid "``--status``"
+msgstr "``--status``"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Print the configuration status to stdout and exit, without opening a "
+"window: the version, the configuration directory, the application "
+"settings, including the selected profile (the one chosen with "
+"``--profile``, else the default profile, see :ref:`profiles`), and, under"
+" ``profiles``, the settings of every visible profile keyed by its name, "
+"including its sidecar configuration and the names of its saves; hidden "
+"profiles are left out.  The output is a YAML document, always in English "
+"whatever the interface language, so that it can be read by a script.  If "
+"the default profile does not exist, the command exits with an error, as "
+"in headless mode. The profile chosen with ``--profile`` does not become "
+"the last profile used."
+msgstr ""
+"将配置状态输出到标准输出后退出，不打开任何窗口：版本、配置目录、应用程序设置（包括所选配置文件，即通过 ``--profile`` "
+"选择的配置文件，否则为默认配置文件，参见 :ref:`profiles`\\ ），以及在 ``profiles`` "
+"下按名称列出的每个可见配置文件的设置，包括其 Sidecar 配置及其保存项的名称；隐藏的配置文件不会列出。输出为 YAML "
+"文档，无论界面语言如何始终为英文，以便脚本读取。如果默认配置文件不存在，命令将以错误退出，与无界面模式相同。通过 ``--profile`` "
+"选择的配置文件不会成为上次使用的配置文件。"
 
 # ==AUTO== Automatically translated
 msgid "Help export"

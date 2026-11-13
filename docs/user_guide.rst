@@ -1513,8 +1513,9 @@ Advanced
 
 ``-p NAME`` / ``--profile NAME``
     Use the :ref:`profile <profiles>` *NAME* (settings, presets, sidecar
-    configuration, schema defaults) instead of the last one used in the
-    GUI.  In GUI mode, open the window on that profile.
+    configuration, schema defaults) instead of the default profile set in
+    the settings (by default, the last profile used in the GUI).  In GUI
+    mode, open the window on that profile.
 
 ``--config-dir DIR``
     Override the configuration directory — see :ref:`config-files` for the
@@ -1538,6 +1539,22 @@ Self-update
     the option is absent from ``--help`` and rejected as an unknown
     argument there.  Restart PBRenamer to use the new build; the update
     does not relaunch it automatically.
+
+Status
+~~~~~~
+
+``--status``
+    Print the configuration status to stdout and exit, without opening a
+    window: the version, the configuration directory, the application
+    settings, including the selected profile (the one chosen with
+    ``--profile``, else the default profile, see :ref:`profiles`), and,
+    under ``profiles``, the settings of every visible profile keyed by its
+    name, including its sidecar configuration and the names of its saves;
+    hidden profiles are left out.  The output is a YAML document, always in English whatever the interface
+    language, so that it can be read by a script.  If the default profile
+    does not exist, the command exits with an error, as in headless mode.
+    The profile chosen with ``--profile`` does not become the last profile
+    used.
 
 Help export
 ~~~~~~~~~~~

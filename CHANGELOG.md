@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Command line: new `--status` option, which prints the version and the configuration as YAML,
+  always in English so that scripts can parse it, then exits without opening a window: the
+  application settings, including the selected profile (the one chosen with `--profile`, else the
+  default profile), and the settings of every visible profile keyed by its name, including its
+  sidecar configuration and the names of its saves. Hidden profiles are left out.
 - Settings: new **Default profile** option, the profile opened at start-up and used by the command
   line without `--profile`: **Last profile used** (default, the previous behaviour) or one of the
   visible profiles. A fixed default profile makes command-line runs predictable whatever profile

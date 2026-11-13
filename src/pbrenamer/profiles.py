@@ -212,10 +212,15 @@ def set_default(name: str) -> None:
     settings._settings().setValue(_DEFAULT_KEY, name)
 
 
+def last_used() -> str:
+    """Return the last profile used in the GUI ("" when none is remembered)."""
+    return _value(_LAST_KEY)
+
+
 def startup_name() -> str:
     """Return the profile to select at start-up: the default profile, else
     the last profile used ("" when nothing is remembered)."""
-    return get_default() or _value(_LAST_KEY)
+    return get_default() or last_used()
 
 
 def missing_startup() -> str | None:
