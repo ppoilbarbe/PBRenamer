@@ -8,12 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Settings: new **Default profile** option, the profile opened at start-up and used by the command
+  line without `--profile`: **Last profile used** (default, the previous behaviour) or one of the
+  visible profiles. A fixed default profile makes command-line runs predictable whatever profile
+  was last used in the GUI. Renaming the default profile from the Profile menu updates the
+  setting; deleting it warns that it is the default profile and keeps the setting, shown as
+  "not found" in the Settings dialog.
 - Start-up: when the PBRenamer 1.x files (`patterns/*.json`, `sidecar_config.json` at the top of
   the configuration directory) are still there after the migration to profiles, PBRenamer offers
   to delete them; the start that performs the migration stays silent. Deleting them also removes
   the 1.x keys `behaviour/last_dir` and `behaviour/toolbar_state` from `pbrenamer.conf`.
   Answering no creates `keep_v1_files` in the configuration directory, so the question is not
   asked again.
+
+### Changed
+
+- Start-up: when the default profile (or, with **Last profile used**, the last profile used) no
+  longer exists, the GUI asks which profile to open (cancelling quits) instead of silently opening
+  `default` or the first visible profile, and headless mode exits with an error (code 2), as with
+  an unknown `--profile`.
 
 ### Fixed
 

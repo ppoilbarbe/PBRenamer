@@ -509,6 +509,24 @@ class TestProfileMenu:
         assert profiles.exists(".hidden")
         assert profiles.current() == ".hidden"
 
+    @pytest.mark.parametrize("is_default", [True, False])
+    def test_delete_warns_about_default(self, window, monkeypatch, is_default):
+        profiles.create("p")
+        if is_default:
+            profiles.set_default("p")
+        questions = []
+
+        def question(_parent, _title, text, *_a, **_k):
+            questions.append(text)
+            return QMessageBox.StandardButton.Yes
+
+        monkeypatch.setattr(QInputDialog, "getItem", lambda *a: ("p", True))
+        monkeypatch.setattr(QMessageBox, "question", question)
+        window._ui.actionProfileDelete.trigger()
+        assert not profiles.exists("p")
+        assert ("--profile" in questions[0]) is is_default
+        assert profiles.get_default() == ("p" if is_default else "")
+
     def test_delete_other(self, window, monkeypatch):
         profiles.create("p")
         self._delete(window, monkeypatch, "p", QMessageBox.StandardButton.Yes)

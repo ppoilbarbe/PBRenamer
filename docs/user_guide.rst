@@ -44,7 +44,7 @@ Run the binary (or ``python -m pbrenamer`` from a development environment)::
 
 If *DIR* is omitted the current working directory is used as the starting
 folder.  ``--profile NAME`` opens the window on a given :ref:`profile
-<profiles>` instead of the last one used.  Qt platform options such as
+<profiles>` instead of the default one.  Qt platform options such as
 ``--style`` and ``--platform`` are forwarded to Qt and can be appended after
 the positional argument.
 
@@ -479,8 +479,19 @@ one visible profile always exists: the last one can be neither deleted nor
 hidden, and ``default`` is created again if none is left.  Apart from that,
 ``default`` is a profile like any other.
 
-PBRenamer reopens the last profile used.  ``--profile NAME`` selects another
-one, in the GUI as in headless mode.
+At start-up, PBRenamer opens the **default profile** chosen in
+:ref:`settings`: by default the last profile used, or always the same
+profile.  ``--profile NAME`` selects another one, in the GUI as in headless
+mode.  Choosing a fixed default profile makes command-line runs without
+``--profile`` predictable, whatever profile was last used in the GUI.
+
+When the default profile no longer exists (it was deleted, renamed outside
+PBRenamer or hidden), PBRenamer never picks another one by itself: the GUI
+asks which profile to open (cancelling quits), and headless mode exits with
+an error, as with an unknown ``--profile``.  Deleting the default profile
+from the **Profile** menu warns about it; the setting keeps its name, shown
+as *not found* in the Settings dialog, until another default profile is
+chosen.  Renaming the default profile from the menu updates the setting.
 
 Profile configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -732,6 +743,11 @@ Settings
     Controls diagnostic output written to the console.  Choices: ``DEBUG``,
     ``INFO`` (default), ``WARNING``, ``ERROR``, ``CRITICAL``.  Can be
     overridden at launch with ``--debug``, ``--verbose``, or ``--quiet``.
+
+**Default profile**
+    Profile opened at start-up and used by headless mode without
+    ``--profile``: **Last profile used** (default) or one of the visible
+    profiles (see :ref:`profiles`).
 
 **Restore last opened directory** *(Behaviour group)*
     When enabled, the app reopens the directory that was active in the
@@ -1336,7 +1352,9 @@ Headless CLI Reference
 Headless mode is activated when ``--search``, ``--saved`` or ``--schema`` is
 provided.  No window is opened; renames are performed and the process exits.
 Settings that are not given on the command line come from the profile chosen
-with ``--profile``, or from the last profile used in the GUI.
+with ``--profile``, or from the default profile set in the GUI settings (by
+default, the last profile used in the GUI).  If that profile does not exist,
+the command exits with an error.
 
 Renaming is atomic: if any target is in conflict, nothing is renamed and the
 command exits with an error listing the conflicts.

@@ -750,6 +750,15 @@ msgstr "Profile to delete:"
 msgid "Delete the profile “{name}” and all its settings? This cannot be undone."
 msgstr "Delete the profile “{name}” and all its settings? This cannot be undone."
 
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "Profile “{name}” deleted."
@@ -2165,6 +2174,23 @@ msgid "Files listed in the confirmation:"
 msgstr "Files listed in the confirmation:"
 
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "The default profile “{name}” was not found."
+
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "The last profile used, “{name}”, was not found."
+
+msgid "The default profile can be set in the settings."
+msgstr "The default profile can be set in the settings."
+
+msgid "Profile not found"
+msgstr "Profile not found"
+
+msgid "Profile to open:"
+msgstr "Profile to open:"
+
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ no destination for {dest}"
 
@@ -2264,6 +2290,13 @@ msgstr "(empty)"
 msgid "System default"
 msgstr "System default"
 
+msgid "Last profile used"
+msgstr "Last profile used"
+
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name} (not found)"
+
 msgid "Settings"
 msgstr "Settings"
 
@@ -2284,6 +2317,12 @@ msgstr "Set the application logging verbosity"
 
 msgid "Log level:"
 msgstr "Log level:"
+
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr "Profile opened at start-up and used by the command line without --profile"
+
+msgid "Default profile:"
+msgstr "Default profile:"
 
 msgid "Behaviour"
 msgstr "Behaviour"

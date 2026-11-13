@@ -983,6 +983,16 @@ msgstr ""
 " rückgängig gemacht werden."
 
 # ==AUTO== Automatically translated
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr ""
+"Dies ist das Standardprofil: Beim nächsten Start werden Sie aufgefordert,"
+" ein Profil zu wählen, und die Kommandozeile schlägt ohne --profile fehl,"
+" bis in den Einstellungen ein anderes Standardprofil festgelegt wird."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "Profil „{name}“ gelöscht."
@@ -2802,6 +2812,28 @@ msgstr "In der Bestätigung aufgelistete Dateien:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "Das Standardprofil „{name}“ wurde nicht gefunden."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "Das zuletzt verwendete Profil „{name}“ wurde nicht gefunden."
+
+# ==AUTO== Automatically translated
+msgid "The default profile can be set in the settings."
+msgstr "Das Standardprofil kann in den Einstellungen festgelegt werden."
+
+# ==AUTO== Automatically translated
+msgid "Profile not found"
+msgstr "Profil nicht gefunden"
+
+# ==AUTO== Automatically translated
+msgid "Profile to open:"
+msgstr "Zu öffnendes Profil:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ kein Ziel für {dest}"
 
@@ -2928,6 +2960,15 @@ msgid "System default"
 msgstr "Systemstandard"
 
 # ==AUTO== Automatically translated
+msgid "Last profile used"
+msgstr "Zuletzt verwendetes Profil"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name} (nicht gefunden)"
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2954,6 +2995,16 @@ msgstr "Die Protokollierungsausführlichkeit der Anwendung festlegen"
 # ==AUTO== Automatically translated
 msgid "Log level:"
 msgstr "Protokollierungsstufe:"
+
+# ==AUTO== Automatically translated
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr ""
+"Beim Start geöffnetes und von der Kommandozeile ohne --profile "
+"verwendetes Profil"
+
+# ==AUTO== Automatically translated
+msgid "Default profile:"
+msgstr "Standardprofil:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

@@ -15,6 +15,12 @@ last visible profile can be neither deleted nor hidden by a rename.  Apart
 from that, ``default`` is a profile like any other.  The ``profiles/`` tree
 is created on first access, after migrating the 1.x configuration into
 ``default`` and importing PBPicat's catalogues (``migration``).
+
+The profile selected at start-up is the *default profile* chosen in the
+application settings, or the last profile used when none is chosen.  When
+that profile no longer exists, the fallback is selected and its name is
+reported by ``missing_startup()``: the GUI asks for a profile and the
+command line fails instead of silently using another one.
 """
 
 from __future__ import annotations
@@ -39,6 +45,8 @@ _NAME_RE = re.compile(r"^\.?[\w-]+$")
 # Names typed in the interface: no ".", hidden profiles are not created there.
 _NEW_NAME_RE = re.compile(r"^[\w-]+$")
 _LAST_KEY = "profiles/last"
+# Profile selected at start-up; "" (or unset) means the last profile used.
+_DEFAULT_KEY = "profiles/default"
 
 DEFAULTS: dict = {
     "mode": "pattern",
@@ -80,6 +88,8 @@ _current: str | None = None
 _pbpicat_source: Path | None = pbpicat_config_dir()
 # True once this run has built profiles/ (1.x settings migrated).
 _created = False
+# Start-up profile that was not found (the fallback was selected instead).
+_missing: str | None = None
 
 
 class ProfileError(ValueError):
@@ -92,10 +102,11 @@ def reset(pbpicat_source: Path | None) -> None:
     *pbpicat_source* is the PBPicat directory imported when the profiles are
     created (None: no import).  Called by ``settings.configure``.
     """
-    global _current, _pbpicat_source, _created
+    global _current, _pbpicat_source, _created, _missing
     _current = None
     _pbpicat_source = pbpicat_source
     _created = False
+    _missing = None
 
 
 # ── Names ─────────────────────────────────────────────────────────────────────
@@ -160,8 +171,8 @@ def fallback(names: list[str]) -> str:
 
 def _ensure_init() -> None:
     """Create the profile tree on first use, make sure a visible profile
-    exists and select the last profile."""
-    global _current
+    exists and select the start-up profile (see ``startup_name``)."""
+    global _current, _missing
     if _current is not None:
         return
     root = _root()
@@ -171,10 +182,49 @@ def _ensure_init() -> None:
     if not visible:
         (root / DEFAULT).mkdir(parents=True, exist_ok=True)
         visible = [DEFAULT]
+    wanted = startup_name()
+    if wanted in visible:
+        _current = wanted
+    else:
+        _current = fallback(visible)
+        # Nothing remembered yet (first start) is not a missing profile.
+        _missing = wanted or None
+
+
+def _value(key: str) -> str:
     from pbrenamer import settings
 
-    last = str(settings._settings().value(_LAST_KEY, ""))
-    _current = last if last in visible else fallback(visible)
+    value = settings._settings().value(key, "")
+    return value if isinstance(value, str) else ""
+
+
+def get_default() -> str:
+    """Return the default profile set in the settings ("" = last used)."""
+    return _value(_DEFAULT_KEY)
+
+
+def set_default(name: str) -> None:
+    """Set the default profile; "" selects the last profile used."""
+    if name:
+        validate_name(name)
+    from pbrenamer import settings
+
+    settings._settings().setValue(_DEFAULT_KEY, name)
+
+
+def startup_name() -> str:
+    """Return the profile to select at start-up: the default profile, else
+    the last profile used ("" when nothing is remembered)."""
+    return get_default() or _value(_LAST_KEY)
+
+
+def missing_startup() -> str | None:
+    """Return the start-up profile if it was not found, else None.
+
+    The fallback profile is then current; an explicit ``use()`` clears it.
+    """
+    _ensure_init()
+    return _missing
 
 
 def _create_tree(root: Path) -> None:
@@ -261,7 +311,10 @@ def _forget_last(name: str) -> None:
 
 def delete(name: str) -> None:
     """Delete the profile *name*, unless it is the last visible one; the
-    current profile falls back to ``default`` or the first visible one."""
+    current profile falls back to ``default`` or the first visible one.
+
+    A deleted default profile stays the default (see ``missing_startup``).
+    """
     global _current
     _require(name)
     _require_other_visible(name)
@@ -282,6 +335,9 @@ def rename(name: str, new_name: str) -> None:
     (_root() / name).rename(_root() / new_name)
     if _current == name:
         _current = new_name
+    # The default profile follows its rename, unless it becomes hidden.
+    if get_default() == name and not is_hidden(new_name):
+        set_default(new_name)
     from pbrenamer import settings
 
     if settings._settings().value(_LAST_KEY) == name:
@@ -304,9 +360,10 @@ def use(name: str, *, remember: bool = True) -> None:
     With *remember* a non-hidden profile becomes the one selected at the
     next start.
     """
-    global _current
+    global _current, _missing
     _require(name)
     _current = name
+    _missing = None
     if remember and not is_hidden(name):
         from pbrenamer import settings
 

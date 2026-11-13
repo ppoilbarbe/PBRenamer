@@ -701,13 +701,20 @@ class MainWindow(QMainWindow):
         )
         if not ok:
             return
+        question = _(
+            "Delete the profile “{name}” and all its settings? This cannot be undone."
+        ).format(name=name)
+        if name == profiles.get_default():
+            question += "\n\n" + _(
+                "It is the default profile: at the next start you will be"
+                " asked to choose a profile, and the command line will fail"
+                " without --profile, until another default profile is set"
+                " in the settings."
+            )
         reply = QMessageBox.question(
             self,
             title,
-            _(
-                "Delete the profile “{name}” and all its settings?"
-                " This cannot be undone."
-            ).format(name=name),
+            question,
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
         if reply != QMessageBox.StandardButton.Yes:

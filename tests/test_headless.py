@@ -1829,6 +1829,47 @@ class TestProfileOption:
         assert code == 2
         assert f"error: profile '{name}' not found" in capsys.readouterr().err
 
+    def test_missing_default_profile(self, monkeypatch, capsys, src):
+        from pbrenamer import profiles
+
+        profiles.set_default("gone")
+        _settings.configure(_settings._dirs.config_home)
+        code = _main(monkeypatch, src, "--search", "a")
+        assert code == 2
+        assert "error: default profile 'gone' not found" in capsys.readouterr().err
+
+    def test_missing_last_profile(self, monkeypatch, capsys, src):
+        from pbrenamer import profiles
+
+        profiles.create("p")
+        profiles.use("p")
+        profiles.delete("default")
+        (_settings._dirs.config_home / "profiles" / "p").rename(
+            _settings._dirs.config_home / "profiles" / "q"
+        )
+        _settings.configure(_settings._dirs.config_home)
+        code = _main(monkeypatch, src, "--search", "a")
+        assert code == 2
+        assert "error: last used profile 'p' not found" in capsys.readouterr().err
+
+    def test_missing_default_with_profile_option(self, monkeypatch, src):
+        from pbrenamer import profiles
+
+        profiles.create("p")
+        profiles.set_default("gone")
+        _settings.configure(_settings._dirs.config_home)
+        assert _main(monkeypatch, src, "--profile", "p", "--search", "x") == 0
+        assert profiles.current() == "p"
+
+    def test_default_profile_used(self, monkeypatch, src):
+        from pbrenamer import profiles
+
+        profiles.create("p")
+        profiles.set_default("p")
+        _settings.configure(_settings._dirs.config_home)
+        assert _main(monkeypatch, src, "--search", "x") == 0
+        assert profiles.current() == "p"
+
     def test_headless_does_not_remember(self, monkeypatch, src):
         from pbrenamer import profiles
 

@@ -56,7 +56,8 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
             "Headless mode is activated when --search, --saved or --schema is "
             "provided; the three options are mutually exclusive. "
             "Settings come from the profile chosen with --profile, or from "
-            "the last profile used in the GUI. "
+            "the default profile set in the GUI settings (by default, the "
+            "last profile used in the GUI). "
             "Qt platform options (--style, --platform, …) are forwarded to Qt "
             "in GUI mode."
         ),
@@ -328,7 +329,8 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         default=None,
         help=(
             "Use the profile NAME (settings, presets, sidecar configuration, "
-            "schema defaults) instead of the last one used in the GUI"
+            "schema defaults) instead of the default profile set in the GUI "
+            "settings"
         ),
     )
 
@@ -897,6 +899,18 @@ def main() -> None:
         return
 
     if headless:
+        if _ns.profile is None:
+            from pbrenamer import profiles
+
+            missing = profiles.missing_startup()
+            if missing is not None:
+                kind = "default" if profiles.get_default() else "last used"
+                print(
+                    f"error: {kind} profile '{missing}' not found "
+                    f"(use --profile or set the default profile in the GUI)",
+                    file=sys.stderr,
+                )
+                sys.exit(2)
         if _ns.log_level:
             logging.getLogger().setLevel(_ns.log_level)
         # Core messages (schema errors, sidecar ambiguities) use _(); the
@@ -989,6 +1003,13 @@ def _gui_main(_ns):  # pragma: no cover
     _log.debug(
         "Effective log level: %s", logging.getLevelName(logging.getLogger().level)
     )
+
+    # A missing default profile is never replaced silently: ask for one.
+    if _ns.profile is None:
+        from pbrenamer.ui.profile_startup import resolve_startup_profile
+
+        if not resolve_startup_profile():
+            sys.exit(0)
 
     from pbrenamer.ui.main_window import MainWindow
 

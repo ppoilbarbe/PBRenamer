@@ -1,11 +1,12 @@
-"""Settings dialog — language, log level, and extension normalization."""
+"""Settings dialog — language, log level, default profile, and extension
+normalization."""
 
 from __future__ import annotations
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QListWidgetItem
 
-from pbrenamer import i18n, settings
+from pbrenamer import i18n, profiles, settings
 from pbrenamer.ui.geometry_mixin import GeometryMixin
 from pbrenamer.ui.settings_dialog_ui import Ui_SettingsDialog
 
@@ -35,6 +36,8 @@ class SettingsDialog(GeometryMixin, QDialog):
         if idx >= 0:
             self._ui.cmbLogLevel.setCurrentIndex(idx)
 
+        self._init_default_profile()
+
         self._ui.chkRestoreLastDir.setChecked(settings.get_restore_last_dir())
         self._ui.chkRestoreToolbarState.setChecked(settings.get_restore_toolbar_state())
         self._ui.spnPreviewDelay.setValue(settings.get_preview_delay())
@@ -53,10 +56,27 @@ class SettingsDialog(GeometryMixin, QDialog):
         level = self._ui.cmbLogLevel.currentText()
         settings.set_log_level(level)
         settings.apply_log_level(level)
+        profiles.set_default(self._ui.cmbDefaultProfile.currentData())
         settings.set_restore_last_dir(self._ui.chkRestoreLastDir.isChecked())
         settings.set_restore_toolbar_state(self._ui.chkRestoreToolbarState.isChecked())
         settings.set_preview_delay(self._ui.spnPreviewDelay.value())
         self.accept()
+
+    def _init_default_profile(self) -> None:
+        combo = self._ui.cmbDefaultProfile
+        combo.addItem(_("Last profile used"), userData="")
+        for name in profiles.list_profiles():
+            combo.addItem(name, userData=name)
+        saved = profiles.get_default()
+        if not saved:
+            return
+        idx = combo.findData(saved)
+        if idx < 0:
+            # Keep a deleted (or hidden) default visible, so that accepting
+            # the dialog does not silently change it.
+            combo.addItem(_("{name} (not found)").format(name=saved), userData=saved)
+            idx = combo.count() - 1
+        combo.setCurrentIndex(idx)
 
     # ── Extension normalization tab ──────────────────────────────────────────
 

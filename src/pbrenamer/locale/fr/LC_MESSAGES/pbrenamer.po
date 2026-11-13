@@ -757,6 +757,16 @@ msgstr ""
 "Supprimer le profil « {name} » et tous ses réglages ? Cette action est "
 "irréversible."
 
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr ""
+"C'est le profil par défaut : au prochain démarrage, il vous sera demandé "
+"de choisir un profil, et la ligne de commande échouera sans --profile, "
+"tant qu'un autre profil par défaut n'aura pas été défini dans les "
+"préférences."
+
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "Profil « {name} » supprimé."
@@ -2215,6 +2225,23 @@ msgid "Files listed in the confirmation:"
 msgstr "Fichiers listés dans la confirmation :"
 
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "Le profil par défaut « {name} » est introuvable."
+
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "Le dernier profil utilisé, « {name} », est introuvable."
+
+msgid "The default profile can be set in the settings."
+msgstr "Le profil par défaut peut être défini dans les préférences."
+
+msgid "Profile not found"
+msgstr "Profil introuvable"
+
+msgid "Profile to open:"
+msgstr "Profil à ouvrir :"
+
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ aucune destination pour {dest}"
 
@@ -2316,6 +2343,13 @@ msgstr "(vide)"
 msgid "System default"
 msgstr "Langue du système"
 
+msgid "Last profile used"
+msgstr "Dernier profil utilisé"
+
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name} (introuvable)"
+
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -2336,6 +2370,14 @@ msgstr "Définir le niveau de verbosité de la journalisation de l'application"
 
 msgid "Log level:"
 msgstr "Niveau de journalisation :"
+
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr ""
+"Profil ouvert au démarrage et utilisé par la ligne de commande sans "
+"--profile"
+
+msgid "Default profile:"
+msgstr "Profil par défaut :"
 
 msgid "Behaviour"
 msgstr "Comportement"

@@ -963,6 +963,13 @@ msgid "Delete the profile “{name}” and all its settings? This cannot be undo
 msgstr "删除配置文件“{name}”及其所有设置？此操作无法撤销。"
 
 # ==AUTO== Automatically translated
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr "这是默认配置文件：下次启动时将要求您选择一个配置文件；在设置中指定其他默认配置文件之前，不带 --profile 的命令行将会失败。"
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "已删除配置文件“{name}”。"
@@ -2659,6 +2666,28 @@ msgstr "确认框中列出的文件数："
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "未找到默认配置文件“{name}”。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "未找到上次使用的配置文件“{name}”。"
+
+# ==AUTO== Automatically translated
+msgid "The default profile can be set in the settings."
+msgstr "可以在设置中指定默认配置文件。"
+
+# ==AUTO== Automatically translated
+msgid "Profile not found"
+msgstr "未找到配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Profile to open:"
+msgstr "要打开的配置文件："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ {dest} 没有目标"
 
@@ -2778,6 +2807,15 @@ msgid "System default"
 msgstr "系统默认"
 
 # ==AUTO== Automatically translated
+msgid "Last profile used"
+msgstr "上次使用的配置文件"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name}（未找到）"
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "设置"
 
@@ -2804,6 +2842,14 @@ msgstr "设置应用程序日志记录详细程度"
 # ==AUTO== Automatically translated
 msgid "Log level:"
 msgstr "日志级别："
+
+# ==AUTO== Automatically translated
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr "启动时打开、且命令行在不带 --profile 时使用的配置文件"
+
+# ==AUTO== Automatically translated
+msgid "Default profile:"
+msgstr "默认配置文件："
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

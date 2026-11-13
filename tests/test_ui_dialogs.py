@@ -152,6 +152,53 @@ class TestSettingsDialog:
         assert _cfg.get_restore_last_dir() is True
         assert _cfg.get_preview_delay() == 300
 
+    def _profile_items(self, dlg):
+        combo = dlg._ui.cmbDefaultProfile
+        return [(combo.itemText(i), combo.itemData(i)) for i in range(combo.count())]
+
+    def test_default_profile_choices(self, qtbot: QtBot, window_state):
+        from pbrenamer import profiles
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        profiles.create("p")
+        profiles.create(".hidden")
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert self._profile_items(dlg) == [
+            ("Last profile used", ""),
+            ("default", "default"),
+            ("p", "p"),
+        ]
+        assert dlg._ui.cmbDefaultProfile.currentIndex() == 0
+
+    def test_default_profile_saved(self, qtbot: QtBot, window_state):
+        from pbrenamer import profiles
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        profiles.create("p")
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        dlg._ui.cmbDefaultProfile.setCurrentIndex(
+            dlg._ui.cmbDefaultProfile.findData("p")
+        )
+        dlg._save_and_accept()
+        assert profiles.get_default() == "p"
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert dlg._ui.cmbDefaultProfile.currentData() == "p"
+
+    def test_missing_default_profile_kept(self, qtbot: QtBot, window_state):
+        from pbrenamer import profiles
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        profiles.set_default("gone")
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        assert self._profile_items(dlg)[-1] == ("gone (not found)", "gone")
+        assert dlg._ui.cmbDefaultProfile.currentData() == "gone"
+        dlg._save_and_accept()
+        assert profiles.get_default() == "gone"
+
     def test_saved_language_override_is_selected(self, qtbot: QtBot, window_state):
         import pbrenamer.i18n as i18n
         from pbrenamer.ui.settings_dialog import SettingsDialog

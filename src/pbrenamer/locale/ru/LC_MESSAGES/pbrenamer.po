@@ -979,6 +979,16 @@ msgstr ""
 "отменить."
 
 # ==AUTO== Automatically translated
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr ""
+"Это профиль по умолчанию: при следующем запуске вам будет предложено "
+"выбрать профиль, а командная строка без --profile будет завершаться "
+"ошибкой, пока в настройках не будет задан другой профиль по умолчанию."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "Профиль «{name}» удалён."
@@ -2772,6 +2782,28 @@ msgstr "Файлов в списке подтверждения:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "Профиль по умолчанию «{name}» не найден."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "Последний использованный профиль «{name}» не найден."
+
+# ==AUTO== Automatically translated
+msgid "The default profile can be set in the settings."
+msgstr "Профиль по умолчанию можно задать в настройках."
+
+# ==AUTO== Automatically translated
+msgid "Profile not found"
+msgstr "Профиль не найден"
+
+# ==AUTO== Automatically translated
+msgid "Profile to open:"
+msgstr "Открыть профиль:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ нет назначения для {dest}"
 
@@ -2896,6 +2928,15 @@ msgid "System default"
 msgstr "Системный язык"
 
 # ==AUTO== Automatically translated
+msgid "Last profile used"
+msgstr "Последний использованный профиль"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name} (не найден)"
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Настройки"
 
@@ -2922,6 +2963,16 @@ msgstr "Установить уровень детализации журнал�
 # ==AUTO== Automatically translated
 msgid "Log level:"
 msgstr "Уровень журнала:"
+
+# ==AUTO== Automatically translated
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr ""
+"Профиль, открываемый при запуске и используемый командной строкой без "
+"--profile"
+
+# ==AUTO== Automatically translated
+msgid "Default profile:"
+msgstr "Профиль по умолчанию:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

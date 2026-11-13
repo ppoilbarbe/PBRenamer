@@ -978,6 +978,16 @@ msgstr ""
 "non può essere annullata."
 
 # ==AUTO== Automatically translated
+msgid ""
+"It is the default profile: at the next start you will be asked to choose "
+"a profile, and the command line will fail without --profile, until "
+"another default profile is set in the settings."
+msgstr ""
+"È il profilo predefinito: al prossimo avvio verrà chiesto di scegliere un"
+" profilo, e la riga di comando non funzionerà senza --profile finché non "
+"verrà impostato un altro profilo predefinito nelle impostazioni."
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "Profile “{name}” deleted."
 msgstr "Profilo «{name}» eliminato."
@@ -2803,6 +2813,28 @@ msgstr "File elencati nella conferma:"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid "The default profile “{name}” was not found."
+msgstr "Profilo predefinito «{name}» non trovato."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "The last profile used, “{name}”, was not found."
+msgstr "L'ultimo profilo usato, «{name}», non è stato trovato."
+
+# ==AUTO== Automatically translated
+msgid "The default profile can be set in the settings."
+msgstr "Il profilo predefinito si imposta nelle impostazioni."
+
+# ==AUTO== Automatically translated
+msgid "Profile not found"
+msgstr "Profilo non trovato"
+
+# ==AUTO== Automatically translated
+msgid "Profile to open:"
+msgstr "Profilo da aprire:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "⚠ no destination for {dest}"
 msgstr "⚠ nessuna destinazione per {dest}"
 
@@ -2929,6 +2961,15 @@ msgid "System default"
 msgstr "Predefinito di sistema"
 
 # ==AUTO== Automatically translated
+msgid "Last profile used"
+msgstr "Ultimo profilo usato"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{name} (not found)"
+msgstr "{name} (non trovato)"
+
+# ==AUTO== Automatically translated
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2955,6 +2996,14 @@ msgstr "Imposta la verbosità di registrazione dell'applicazione"
 # ==AUTO== Automatically translated
 msgid "Log level:"
 msgstr "Livello di log:"
+
+# ==AUTO== Automatically translated
+msgid "Profile opened at start-up and used by the command line without --profile"
+msgstr "Profilo aperto all'avvio e usato dalla riga di comando senza --profile"
+
+# ==AUTO== Automatically translated
+msgid "Default profile:"
+msgstr "Profilo predefinito:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

@@ -60,6 +60,15 @@ class Ui_SettingsDialog:
         self.cmbLogLevel.setToolTip(_("Set the application logging verbosity"))
         form.addRow(_("Log level:"), self.cmbLogLevel)
 
+        self.cmbDefaultProfile = QComboBox(tab)
+        self.cmbDefaultProfile.setToolTip(
+            _(
+                "Profile opened at start-up and used by the command line"
+                " without --profile"
+            )
+        )
+        form.addRow(_("Default profile:"), self.cmbDefaultProfile)
+
         layout.addLayout(form)
 
         # Behaviour group

@@ -254,6 +254,7 @@ class TestCurrent:
         _last(config_dir).setValue("profiles/last", last)
         settings.configure(config_dir)
         assert profiles.current() == "default"
+        assert profiles.missing_startup() == last
 
     def test_default_not_recreated_when_visible_profile(self, config_dir):
         profiles.create("p")
@@ -418,3 +419,89 @@ class TestInit:
         monkeypatch.setattr(settings, "pbpicat_config_dir", lambda: "PBPICAT")
         settings.configure()
         assert seen == ["PBPICAT"]
+
+
+# ---------------------------------------------------------------------------
+# Default profile
+# ---------------------------------------------------------------------------
+
+
+class TestDefaultProfile:
+    def test_last_used_by_default(self, config_dir):
+        assert profiles.get_default() == ""
+        profiles.create("p")
+        profiles.use("p")
+        settings.configure(config_dir)
+        assert profiles.current() == "p"
+        assert profiles.missing_startup() is None
+
+    def test_first_start_is_not_missing(self):
+        assert profiles.startup_name() == ""
+        assert profiles.current() == "default"
+        assert profiles.missing_startup() is None
+
+    def test_default_wins_over_last(self, config_dir):
+        profiles.create("p")
+        profiles.create("q")
+        profiles.use("q")
+        profiles.set_default("p")
+        assert _last(config_dir).value("profiles/default") == "p"
+        settings.configure(config_dir)
+        assert profiles.startup_name() == "p"
+        assert profiles.current() == "p"
+
+    def test_set_default_back_to_last(self, config_dir):
+        profiles.create("p")
+        profiles.use("p")
+        profiles.set_default("default")
+        profiles.set_default("")
+        settings.configure(config_dir)
+        assert profiles.current() == "p"
+
+    def test_set_default_invalid(self):
+        with pytest.raises(profiles.ProfileError):
+            profiles.set_default("a b")
+
+    @pytest.mark.parametrize("name", ["gone", ".h"])
+    def test_missing_default(self, config_dir, name):
+        profiles.create(".h")
+        profiles.create("p")
+        profiles.use("p")
+        profiles.set_default(name)
+        settings.configure(config_dir)
+        assert profiles.missing_startup() == name
+        assert profiles.current() == "default"
+
+    def test_use_clears_missing(self, config_dir):
+        profiles.set_default("gone")
+        settings.configure(config_dir)
+        assert profiles.missing_startup() == "gone"
+        profiles.use("default")
+        assert profiles.missing_startup() is None
+
+    def test_rename_follows(self):
+        profiles.create("p")
+        profiles.set_default("p")
+        profiles.rename("p", "q")
+        assert profiles.get_default() == "q"
+
+    def test_rename_hidden_does_not_follow(self):
+        profiles.create("p")
+        profiles.set_default("p")
+        profiles.rename("p", ".p")
+        assert profiles.get_default() == "p"
+
+    def test_rename_other_keeps_default(self):
+        profiles.create("p")
+        profiles.create("q")
+        profiles.set_default("p")
+        profiles.rename("q", "r")
+        assert profiles.get_default() == "p"
+
+    def test_delete_keeps_default(self, config_dir):
+        profiles.create("p")
+        profiles.set_default("p")
+        profiles.delete("p")
+        assert profiles.get_default() == "p"
+        settings.configure(config_dir)
+        assert profiles.missing_startup() == "p"
