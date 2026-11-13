@@ -263,9 +263,7 @@ class ImageActions(QObject):
             lambda: self._on_viewer(lambda p: _open_with.open_with(p, viewer))
         )
         viewer.template_requested.connect(lambda: self._on_viewer(self.template))
-        viewer.delete_requested.connect(
-            lambda: self._on_viewer(lambda p: self.delete([p], viewer))
-        )
+        viewer.delete_requested.connect(self._delete_from_viewer)
         viewer.rotate_requested.connect(self._rotate_from_viewer)
         viewer.field_requested.connect(self._files.field_requested)
         return viewer
@@ -347,16 +345,42 @@ class ImageActions(QObject):
     def delete_selected(self) -> None:
         self.delete(self.targets(), self._window)
 
-    def delete(self, paths: list[str], parent=None) -> None:
-        """Delete *paths* with their sidecars, then select the next row."""
+    def delete(self, paths: list[str], parent=None) -> list[str]:
+        """Delete *paths* with their sidecars, then select the next row;
+        return the deleted files."""
         if not paths:
-            return
+            return []
         sidecars = self._files.sidecars_map(paths)
         files = list(dict.fromkeys(f for p in paths for f in [p, *sidecars[p]]))
         next_path = self._files.next_path_after(files)
-        if self.delete_files(files, parent or self._window):
+        deleted = self.delete_files(files, parent or self._window)
+        if deleted:
             self._files.reload()
             self._files.select_after_change([], next_path)
+        return deleted
+
+    def _delete_from_viewer(self) -> None:
+        """Delete the file shown by the viewer.  Browsing a multiple
+        selection, it then shows the next file of the selection; after the
+        last one, the first in circular mode, else the new last one."""
+        viewer = self._viewer
+        path = viewer.current_path if viewer is not None else None
+        if path is None:
+            return
+        selection = viewer.selection_paths
+        index = selection.index(path) if path in selection else -1
+        deleted = set(self.delete([path], viewer))
+        remaining = [p for p in selection if p not in deleted]
+        if path not in deleted or index < 0 or not remaining:
+            return
+        if index < len(remaining):
+            current = remaining[index]
+        elif viewer.circular_navigation:
+            current = remaining[0]
+        else:
+            current = remaining[-1]
+        viewer.set_selection(remaining, current=current)
+        self._files.set_current_path(current)
 
     def delete_files(self, files: list[str], parent) -> list[str]:
         """Confirm (per profile), then delete *files*: to the trash or for

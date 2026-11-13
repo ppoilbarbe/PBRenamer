@@ -49,6 +49,19 @@ _PATTERN_TAB, _SCHEMA_TAB = 0, 1
 _TAB_OF_MODE = {"pattern": _PATTERN_TAB, "schema": _SCHEMA_TAB}
 
 
+def _nearest_existing_dir(path: str) -> str | None:
+    """Return *path* if it is a directory, else its nearest existing parent,
+    up to the root of the disk; None when not even the root exists (a
+    removed drive)."""
+    path = os.path.abspath(path)
+    while not os.path.isdir(path):
+        parent = os.path.dirname(path)
+        if parent == path:
+            return None
+        path = parent
+    return path
+
+
 def _open_folder(path: str) -> None:
     """Show *path* in the platform's file manager."""
     QDesktopServices.openUrl(QUrl.fromLocalFile(path))
@@ -142,7 +155,16 @@ class MainWindow(QMainWindow):
         QFileSystemModel hasn't populated the index for *path* yet (deep paths
         are loaded lazily in background threads; index() returns invalid until
         each ancestor has been fetched, so selectionChanged never fires and
-        the file list is never reloaded).  Fall back to a direct assignment."""
+        the file list is never reloaded).  Fall back to a direct assignment.
+
+        When *path* no longer exists, its nearest existing parent is shown."""
+        existing = _nearest_existing_dir(path)
+        if existing is None:
+            _log.warning("Start directory not found: %s", path)
+            return
+        if existing != os.path.abspath(path):
+            _log.info("Start directory %s not found, showing %s", path, existing)
+        path = existing
         self._navigate_to(path)
         if os.path.isdir(path) and self._files.current_dir != path:
             self._files.set_directory(path)

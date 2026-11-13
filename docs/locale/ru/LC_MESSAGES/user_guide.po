@@ -1802,12 +1802,15 @@ msgstr "**Восстановить последнюю открытую папк�
 msgid ""
 "When enabled, the app reopens the directory that was active in the "
 "previous session of the profile.  A directory passed on the command line "
-"always takes priority.  Default: disabled (current working directory is "
-"used)."
+"always takes priority.  If the directory to open no longer exists, its "
+"nearest existing parent folder is opened.  Default: disabled (current "
+"working directory is used)."
 msgstr ""
 "Если включено, приложение снова открывает папку, активную в предыдущем "
 "сеансе профиля.  Папка, переданная в командной строке, всегда имеет "
-"приоритет.  По умолчанию: выключено (используется текущая рабочая папка)."
+"приоритет.  Если открываемая папка больше не существует, открывается "
+"ближайшая существующая родительская папка.  По умолчанию: выключено "
+"(используется текущая рабочая папка)."
 
 # ==AUTO== Automatically translated
 msgid "**Restore toolbar state** *(Behaviour group)*"

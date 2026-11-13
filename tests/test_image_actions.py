@@ -356,6 +356,66 @@ class TestViewer:
         window._images._viewer.delete_requested.emit()
         assert not os.path.exists(a)
 
+    @pytest.mark.parametrize(
+        ("shown", "circular", "expected"),
+        [
+            ("b.png", False, "c.png"),  # next file of the selection
+            ("c.png", True, "a.png"),  # last one, circular: the first
+            ("c.png", False, "b.png"),  # last one, linear: the previous
+        ],
+    )
+    def test_delete_from_viewer_selection(
+        self, window, tmp_path, calls, monkeypatch, shown, circular, expected
+    ):
+        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
+        _load(window, tmp_path)
+        _select(window, "a.png", "b.png", "c.png")
+        window._images.show_in_viewer(p[shown])
+        viewer = window._images._viewer
+        viewer._circular = circular
+        viewer.delete_requested.emit()
+        remaining = [p[n] for n in ("a.png", "b.png", "c.png") if n != shown]
+        assert viewer.selection_paths == remaining
+        assert viewer.current_path == p[expected]
+        assert viewer._strip.isVisible()
+        current = window._ui.tblFiles.currentItem()
+        assert current.data(0, Qt.ItemDataRole.UserRole) == p[expected]
+
+    def test_delete_from_viewer_selection_of_two(
+        self, window, tmp_path, calls, monkeypatch
+    ):
+        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        a, b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
+        _load(window, tmp_path)
+        _select(window, "a.png", "b.png")
+        window._images.show_in_viewer(a)
+        viewer = window._images._viewer
+        viewer.delete_requested.emit()
+        assert viewer.selection_paths == [b]
+        assert viewer.current_path == b
+        assert not viewer._strip.isVisible()
+
+    def test_delete_from_viewer_declined(self, window, tmp_path, calls):
+        a, b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
+        _load(window, tmp_path)
+        _select(window, "a.png", "b.png")
+        window._images.show_in_viewer(a)
+        viewer = window._images._viewer
+        calls["answer"]["ask"] = False
+        viewer.delete_requested.emit()
+        assert os.path.exists(a)
+        assert viewer.selection_paths == [a, b]
+        assert viewer.current_path == a
+
+    def test_delete_from_viewer_nothing_shown(self, window, tmp_path, calls):
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        window._images.show_in_viewer(a)
+        window._images._viewer._current_path = None
+        window._images._viewer.delete_requested.emit()
+        assert os.path.exists(a)
+
     def test_reload_refreshes_viewer(self, window, tmp_path, monkeypatch):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)

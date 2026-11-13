@@ -752,8 +752,9 @@ Settings
 **Restore last opened directory** *(Behaviour group)*
     When enabled, the app reopens the directory that was active in the
     previous session of the profile.  A directory passed on the command line
-    always takes priority.  Default: disabled (current working directory is
-    used).
+    always takes priority.  If the directory to open no longer exists, its
+    nearest existing parent folder is opened.  Default: disabled (current
+    working directory is used).
 
 **Restore toolbar state** *(Behaviour group)*
     When enabled, the options of the option bar and of the Pattern tab are

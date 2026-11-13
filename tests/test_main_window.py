@@ -181,10 +181,30 @@ class TestNavigation:
         assert window._files.current_dir == str(tmp_path)
         assert called
 
-    def test_startup_navigate_nonexistent(self, window):
+    def test_startup_navigate_missing_goes_to_parent(self, window, tmp_path):
         window._files.current_dir = None
+        window._startup_navigate(str(tmp_path / "gone" / "deeper"))
+        assert window._files.current_dir == str(tmp_path)
+
+    def test_startup_navigate_missing_file_path(self, window, tmp_path):
+        # A path that is now a file: its folder is shown.
+        (tmp_path / "f.txt").write_text("x")
+        window._files.current_dir = None
+        window._startup_navigate(str(tmp_path / "f.txt"))
+        assert window._files.current_dir == str(tmp_path)
+
+    def test_startup_navigate_nothing_exists(self, window, monkeypatch):
+        # Not even the root (a removed drive): nothing is loaded.
+        window._files.current_dir = None
+        monkeypatch.setattr(_mwmod, "_nearest_existing_dir", lambda _p: None)
         window._startup_navigate("/nonexistent/path/xyz")
         assert window._files.current_dir is None
+
+    def test_nearest_existing_dir(self, tmp_path, monkeypatch):
+        assert _mwmod._nearest_existing_dir(str(tmp_path)) == str(tmp_path)
+        assert _mwmod._nearest_existing_dir(str(tmp_path / "a" / "b")) == str(tmp_path)
+        monkeypatch.setattr(_mwmod.os.path, "isdir", lambda _p: False)
+        assert _mwmod._nearest_existing_dir(str(tmp_path)) is None
 
     def test_navigate_to_nonexistent(self, window):
         window._navigate_to("/nonexistent/path/xyz")  # returns early, no crash

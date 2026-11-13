@@ -30,9 +30,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Start-up: when the directory to open (last opened directory, or the one given on the command
+  line) no longer exists, the GUI opens its nearest existing parent folder, up to the root of the
+  disk, instead of the root.
 - Directory tree: at start-up, the current directory is scrolled into view (centred) instead of
   leaving the tree at the top. The tree used to scroll before its parent folders were loaded in
   the background, so the rows loaded afterwards pushed the current directory out of view.
+- Image viewer: deleting the file shown while browsing a multiple selection now shows the next
+  file of the selection (after the last one, the first in circular navigation, else the new last
+  one) and updates the selection strip; the viewer used to keep showing the deleted file.
 
 ## [2.1.0] - 2026-11-11
 

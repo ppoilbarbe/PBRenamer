@@ -1531,9 +1531,10 @@ msgstr "**恢复上次打开的目录** *（行为组）*"
 msgid ""
 "When enabled, the app reopens the directory that was active in the "
 "previous session of the profile.  A directory passed on the command line "
-"always takes priority.  Default: disabled (current working directory is "
-"used)."
-msgstr "启用后，应用程序会重新打开该配置文件上一个会话中的当前目录。命令行中传入的目录始终优先。默认：禁用（使用当前工作目录）。"
+"always takes priority.  If the directory to open no longer exists, its "
+"nearest existing parent folder is opened.  Default: disabled (current "
+"working directory is used)."
+msgstr "启用后，应用程序会重新打开该配置文件上一个会话中的当前目录。命令行中传入的目录始终优先。如果要打开的目录已不存在，则打开离它最近的现有上级文件夹。默认：禁用（使用当前工作目录）。"
 
 # ==AUTO== Automatically translated
 msgid "**Restore toolbar state** *(Behaviour group)*"
