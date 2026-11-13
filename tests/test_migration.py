@@ -142,6 +142,76 @@ class TestMigrateV1:
         assert profiles.load()["toolbar_state"] == {}
 
 
+class TestV1Leftovers:
+    @pytest.fixture
+    def migrated(self, v1_config):
+        """1.x configuration migrated at a previous start."""
+        profiles.current()
+        settings.configure(v1_config)
+        return v1_config
+
+    def test_created_this_run(self, v1_config):
+        assert profiles.created_this_run()
+        settings.configure(v1_config)
+        assert not profiles.created_this_run()
+
+    def test_listed(self, migrated):
+        names = [p.relative_to(migrated) for p in migration.v1_leftovers(migrated)]
+        assert names == [
+            Path("patterns/search.json"),
+            Path("patterns/replace.json"),
+            Path("patterns/saves.json"),
+            Path("sidecar_config.json"),
+        ]
+
+    def test_none_in_new_config(self, config_dir):
+        assert migration.v1_leftovers(config_dir) == []
+
+    def test_kept(self, migrated):
+        migration.keep_v1_leftovers(migrated)
+        assert (migrated / migration.V1_KEEP_MARKER).is_file()
+        assert migration.v1_leftovers(migrated) == []
+        assert (migrated / "sidecar_config.json").is_file()
+
+    def test_removed(self, migrated):
+        leftovers = migration.v1_leftovers(migrated)
+        assert migration.remove_v1_leftovers(migrated, leftovers) == []
+        assert migration.v1_leftovers(migrated) == []
+        assert not (migrated / "patterns").exists()
+        qs = QSettings(str(migrated / "pbrenamer.conf"), QSettings.Format.IniFormat)
+        assert not qs.contains("behaviour/last_dir")
+        assert not qs.contains("behaviour/toolbar_state")
+        assert settings.get_restore_last_dir() is True
+        # The profile keeps the migrated settings.
+        assert settings.get_last_dir() == "/home/user/Catalogue/reel"
+        assert PatternPresets().get_replace() == ["20{1} - Bilan", "{1}"]
+
+    def test_other_pattern_files_kept(self, migrated):
+        (migrated / "patterns" / "mine.txt").write_text("x")
+        migration.remove_v1_leftovers(migrated, migration.v1_leftovers(migrated))
+        assert (migrated / "patterns" / "mine.txt").is_file()
+
+    def test_without_conf(self, config_dir):
+        (config_dir / "sidecar_config.json").write_text("{}")
+        leftovers = migration.v1_leftovers(config_dir)
+        assert migration.remove_v1_leftovers(config_dir, leftovers) == []
+        assert not (config_dir / "pbrenamer.conf").exists()
+
+    def test_failure_reported(self, migrated, monkeypatch):
+        target = migrated / "sidecar_config.json"
+        real_unlink = Path.unlink
+
+        def unlink(self, missing_ok=False):
+            if self == target:
+                raise PermissionError("denied")
+            real_unlink(self, missing_ok=missing_ok)
+
+        monkeypatch.setattr(Path, "unlink", unlink)
+        leftovers = migration.v1_leftovers(migrated)
+        assert migration.remove_v1_leftovers(migrated, leftovers) == [target]
+        assert migration.v1_leftovers(migrated) == [target]
+
+
 # ---------------------------------------------------------------------------
 # PBPicat
 # ---------------------------------------------------------------------------

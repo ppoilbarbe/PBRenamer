@@ -3113,3 +3113,35 @@ msgstr "Удалить выбранные общие суффиксы"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Восстановить общие суффиксы по умолчанию"
+
+# ==AUTO== Automatically translated
+msgid "Old settings"
+msgstr "Старые настройки"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+msgstr ""
+"Настройки PBRenamer 1.x скопированы в профиль «{profile}» и больше не "
+"используются:\n"
+"\n"
+"{files}\n"
+"\n"
+"Удалить эти файлы?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"
+msgstr ""
+"Не удалось удалить эти файлы:\n"
+"\n"
+"{files}"

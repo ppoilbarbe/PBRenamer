@@ -70,6 +70,11 @@ def configure(
     profiles.reset(pbpicat_dir)
 
 
+def config_home() -> Path:
+    """Return the configuration directory."""
+    return _dirs.config_home
+
+
 def _settings() -> QSettings:
     cfg = _dirs.config_home
     cfg.mkdir(parents=True, exist_ok=True)

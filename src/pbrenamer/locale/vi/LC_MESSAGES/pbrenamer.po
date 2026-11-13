@@ -3090,3 +3090,35 @@ msgstr "Xóa các hậu tố sidecar chung đã chọn"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Khôi phục hậu tố sidecar chung mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Old settings"
+msgstr "Cài đặt cũ"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+msgstr ""
+"Cài đặt của PBRenamer 1.x đã được sao chép vào hồ sơ “{profile}” và không"
+" còn được dùng:\n"
+"\n"
+"{files}\n"
+"\n"
+"Xóa các tệp này?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"
+msgstr ""
+"Không thể xóa các tệp này:\n"
+"\n"
+"{files}"

@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1930,6 +1930,22 @@ msgstr ""
 "đưa phần trạng thái tương ứng về mặc định ở lần khởi động PBRenamer tiếp "
 "theo.  Xóa thư mục ``profiles`` sẽ tạo lại các hồ sơ từ cấu hình 1.x và "
 "các danh mục của PBPicat, như ở lần khởi động đầu tiên của phiên bản 2."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The 1.x files (``patterns/`` and ``sidecar_config.json`` at the top of "
+"the configuration folder) are copied silently on the first start of "
+"version 2. At the following starts, while they are still there, PBRenamer"
+" offers to delete them, as they are no longer used.  Answering **No** "
+"creates the file ``keep_v1_files`` in the configuration folder and the "
+"question is not asked again; delete this file to be asked again."
+msgstr ""
+"Các tệp của 1.x (``patterns/`` và ``sidecar_config.json`` ở gốc thư mục "
+"cấu hình) được sao chép âm thầm trong lần khởi động đầu tiên của phiên "
+"bản 2. Ở các lần khởi động sau, khi chúng vẫn còn, PBRenamer đề nghị xóa "
+"chúng vì chúng không còn được dùng. Trả lời **Không** sẽ tạo tệp "
+"``keep_v1_files`` trong thư mục cấu hình và câu hỏi sẽ không được hỏi "
+"lại; hãy xóa tệp này để được hỏi lại."
 
 # ==AUTO== Automatically translated
 msgid "Migrating from PBPicat"

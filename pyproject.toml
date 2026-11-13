@@ -121,6 +121,7 @@ extend-select = [
 "src/pbrenamer/ui/orphan_sidecars_dialog.py" = ["F821"]
 "src/pbrenamer/ui/schema_proposal_dialog.py" = ["F821"]
 "src/pbrenamer/core/image_meta.py"        = ["F821"]
+"src/pbrenamer/ui/v1_cleanup.py"          = ["F821"]
 # *_ui.py: Qt naming conventions (Ui_Foo, setupUi) + _() builtin from gettext
 "src/pbrenamer/ui/*_ui.py"                = ["F821", "N801", "N802"]
 

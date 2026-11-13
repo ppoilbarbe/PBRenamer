@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1688,6 +1688,19 @@ msgid ""
 msgstr ""
 "这些文件都不是必需的：删除其中任何一个，只会在 PBRenamer 下次启动时将相应状态恢复为默认值。删除 ``profiles`` 文件夹会根据"
 " 1.x 的配置和 PBPicat 的目录重新创建配置文件，就像版本 2 首次启动时那样。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The 1.x files (``patterns/`` and ``sidecar_config.json`` at the top of "
+"the configuration folder) are copied silently on the first start of "
+"version 2. At the following starts, while they are still there, PBRenamer"
+" offers to delete them, as they are no longer used.  Answering **No** "
+"creates the file ``keep_v1_files`` in the configuration folder and the "
+"question is not asked again; delete this file to be asked again."
+msgstr ""
+"1.x 的文件（\\ ``patterns/`` 和位于配置文件夹顶层的 ``sidecar_config.json``\\ ）在版本 2 "
+"首次启动时会被静默复制。之后每次启动时，只要这些文件仍然存在，PBRenamer 都会提议删除它们，因为它们已不再使用。回答 **否** "
+"会在配置文件夹中创建文件 ``keep_v1_files``\\ ，此后不再询问；删除该文件即可再次收到询问。"
 
 # ==AUTO== Automatically translated
 msgid "Migrating from PBPicat"

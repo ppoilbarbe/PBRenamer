@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1994,6 +1994,22 @@ msgstr ""
 "siguiente inicio de PBRenamer.  Eliminar la carpeta ``profiles`` vuelve a"
 " crear los perfiles a partir de la configuración 1.x y de los catálogos "
 "de PBPicat, como en el primer inicio de la versión 2."
+
+# ==AUTO== Automatically translated
+msgid ""
+"The 1.x files (``patterns/`` and ``sidecar_config.json`` at the top of "
+"the configuration folder) are copied silently on the first start of "
+"version 2. At the following starts, while they are still there, PBRenamer"
+" offers to delete them, as they are no longer used.  Answering **No** "
+"creates the file ``keep_v1_files`` in the configuration folder and the "
+"question is not asked again; delete this file to be asked again."
+msgstr ""
+"Los archivos de 1.x (``patterns/`` y ``sidecar_config.json`` en la raíz "
+"de la carpeta de configuración) se copian sin aviso en el primer inicio "
+"de la versión 2. En los inicios siguientes, mientras sigan ahí, PBRenamer"
+" ofrece eliminarlos, ya que no se usan. Responder **No** crea el archivo "
+"``keep_v1_files`` en la carpeta de configuración y la pregunta no vuelve "
+"a hacerse; elimine este archivo para que se vuelva a preguntar."
 
 # ==AUTO== Automatically translated
 msgid "Migrating from PBPicat"

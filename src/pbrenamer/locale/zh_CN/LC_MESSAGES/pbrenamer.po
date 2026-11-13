@@ -2979,3 +2979,34 @@ msgstr "删除所选通用附属文件后缀"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "恢复通用附属文件后缀的默认值"
+
+# ==AUTO== Automatically translated
+msgid "Old settings"
+msgstr "旧设置"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+msgstr ""
+"PBRenamer 1.x 的设置已复制到配置文件“{profile}”中，不再使用：\n"
+"\n"
+"{files}\n"
+"\n"
+"删除这些文件？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"
+msgstr ""
+"无法删除这些文件：\n"
+"\n"
+"{files}"

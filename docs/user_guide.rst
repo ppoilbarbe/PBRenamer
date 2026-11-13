@@ -824,6 +824,13 @@ resets that piece of state to its default the next time PBRenamer starts.
 Deleting the ``profiles`` folder recreates the profiles from the 1.x
 configuration and PBPicat's catalogues, as on the first start of version 2.
 
+The 1.x files (``patterns/`` and ``sidecar_config.json`` at the top of the
+configuration folder) are copied silently on the first start of version 2.
+At the following starts, while they are still there, PBRenamer offers to
+delete them, as they are no longer used.  Answering **No** creates the file
+``keep_v1_files`` in the configuration folder and the question is not asked
+again; delete this file to be asked again.
+
 .. _pbpicat-migration:
 
 Migrating from PBPicat

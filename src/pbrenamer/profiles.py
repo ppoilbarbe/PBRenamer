@@ -78,6 +78,8 @@ DEFAULTS: dict = {
 
 _current: str | None = None
 _pbpicat_source: Path | None = pbpicat_config_dir()
+# True once this run has built profiles/ (1.x settings migrated).
+_created = False
 
 
 class ProfileError(ValueError):
@@ -90,9 +92,10 @@ def reset(pbpicat_source: Path | None) -> None:
     *pbpicat_source* is the PBPicat directory imported when the profiles are
     created (None: no import).  Called by ``settings.configure``.
     """
-    global _current, _pbpicat_source
+    global _current, _pbpicat_source, _created
     _current = None
     _pbpicat_source = pbpicat_source
+    _created = False
 
 
 # ── Names ─────────────────────────────────────────────────────────────────────
@@ -180,6 +183,7 @@ def _create_tree(root: Path) -> None:
     The tree is assembled next to its final place and renamed at the end,
     so an interrupted migration is simply replayed at the next start.
     """
+    global _created
     from pbrenamer import migration
 
     tmp = root.with_name(root.name + ".tmp")
@@ -190,6 +194,13 @@ def _create_tree(root: Path) -> None:
     if _pbpicat_source is not None and _pbpicat_source.is_dir():
         migration.import_pbpicat(_pbpicat_source, tmp, config_home)
     tmp.rename(root)
+    _created = True
+
+
+def created_this_run() -> bool:
+    """True if this run created the profile tree (migrating 1.x settings)."""
+    _ensure_init()
+    return _created
 
 
 def list_profiles(*, include_hidden: bool = False) -> list[str]:

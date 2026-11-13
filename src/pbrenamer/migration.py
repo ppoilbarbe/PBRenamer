@@ -2,7 +2,9 @@
 
 - ``migrate_v1`` copies the PBRenamer 1.x settings (pattern presets, sidecar
   configuration, last directory, toolbar state) into the ``default`` profile.
-  The original files are left in place.
+  The original files are left in place; at a later start the GUI offers
+  to delete them (``v1_leftovers``, ``remove_v1_leftovers``) unless the
+  user asked to keep them (``keep_v1_leftovers``).
 - ``import_pbpicat`` turns each PBPicat catalogue into a profile.  The
   PBPicat directory is only read, never modified.
 
@@ -29,6 +31,10 @@ _CONF_FILE = "pbrenamer.conf"
 _PATTERN_FILES = ("search.json", "replace.json", "saves.json")
 _SIDECAR_FILE = "sidecar_config.json"
 _OPEN_WITH_FILE = "open_with.json"
+# Created in the configuration directory when the user keeps the 1.x files.
+V1_KEEP_MARKER = "keep_v1_files"
+# pbrenamer.conf keys of the 1.x settings now stored in the profiles.
+_V1_CONF_KEYS = ("behaviour/last_dir", "behaviour/toolbar_state")
 
 # PBPicat settings.json keys copied as is into a profile.json section.
 _SECTION_KEYS = {
@@ -116,6 +122,49 @@ def migrate_v1(config_home: Path, profile_dir: Path) -> None:
         if isinstance(toolbar_state, dict):
             data["toolbar_state"] = toolbar_state
     profiles.write_profile(profile_dir, data)
+
+
+def v1_leftovers(config_home: Path) -> list[Path]:
+    """Return the 1.x files still present in *config_home*, or an empty list
+    if there are none or the user chose to keep them."""
+    if (config_home / V1_KEEP_MARKER).exists():
+        return []
+    candidates = [config_home / "patterns" / name for name in _PATTERN_FILES]
+    candidates.append(config_home / _SIDECAR_FILE)
+    return [path for path in candidates if path.is_file()]
+
+
+def remove_v1_leftovers(config_home: Path, paths: list[Path]) -> list[Path]:
+    """Delete the 1.x *paths*, the empty ``patterns`` directory and the 1.x
+    keys of ``pbrenamer.conf``.  Return the paths that could not be deleted."""
+    failed = []
+    for path in paths:
+        try:
+            path.unlink(missing_ok=True)
+        except OSError as exc:
+            _log.warning("cannot delete %s: %s", path, exc)
+            failed.append(path)
+    try:
+        (config_home / "patterns").rmdir()
+    except OSError:
+        pass  # absent, or holds other files
+    conf = config_home / _CONF_FILE
+    if conf.is_file():
+        qs = _ini(conf)
+        for key in _V1_CONF_KEYS:
+            qs.remove(key)
+        qs.sync()
+    return failed
+
+
+def keep_v1_leftovers(config_home: Path) -> None:
+    """Remember that the user keeps the 1.x files: no more question."""
+    config_home.mkdir(parents=True, exist_ok=True)
+    (config_home / V1_KEEP_MARKER).write_text(
+        "The PBRenamer 1.x files of this directory are kept on purpose.\n"
+        "Delete this file to be offered their deletion again.\n",
+        encoding="utf-8",
+    )
 
 
 # ── PBPicat ───────────────────────────────────────────────────────────────────

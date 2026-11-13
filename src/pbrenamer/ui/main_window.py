@@ -8,6 +8,7 @@ import os
 from PySide6.QtCore import QDir, Qt, QTimer, QUrl
 from PySide6.QtGui import QDesktopServices, QIcon, QKeySequence
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QApplication,
     QFileSystemModel,
     QInputDialog,
@@ -39,6 +40,7 @@ from pbrenamer.ui.rule_panel_schema import SchemaRulePanel
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 from pbrenamer.ui.sidecar_dialog import SidecarDialog
+from pbrenamer.ui.v1_cleanup import offer_v1_cleanup
 from pbrenamer.ui.window_state import WindowState
 
 _log = logging.getLogger(__name__)
@@ -107,6 +109,7 @@ class MainWindow(QMainWindow):
         else:
             initial_dir = os.getcwd()
         QTimer.singleShot(0, lambda: self._startup_navigate(initial_dir))
+        QTimer.singleShot(0, lambda: offer_v1_cleanup(self))
 
     # ── Initial setup ─────────────────────────────────────────────────────────
 
@@ -118,6 +121,21 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.setRootIndex(root_idx)
         for col in range(1, self._fs_model.columnCount()):
             self._ui.treeDirectory.hideColumn(col)
+        # Directory to keep centred while QFileSystemModel is still loading.
+        self._pending_reveal: str | None = None
+        self._reveal_timer = QTimer(self)
+        self._reveal_timer.setSingleShot(True)
+        self._reveal_timer.setInterval(20)
+        self._reveal_timer.timeout.connect(self._reveal_pending)
+        self._fs_model.rowsInserted.connect(
+            lambda parent, *_: self._on_fs_rows_changed([parent])
+        )
+        self._fs_model.layoutChanged.connect(
+            lambda parents=(), *_: self._on_fs_rows_changed(parents)
+        )
+        tree = self._ui.treeDirectory
+        tree.pressed.connect(self._cancel_reveal)
+        tree.verticalScrollBar().actionTriggered.connect(self._cancel_reveal)
 
     def _startup_navigate(self, path: str) -> None:
         """Navigate to *path* at startup, loading the file list even when the
@@ -136,6 +154,37 @@ class MainWindow(QMainWindow):
         self._ui.treeDirectory.setCurrentIndex(idx)
         self._ui.treeDirectory.scrollTo(idx)
         self._ui.treeDirectory.expand(idx)
+        # Its ancestors are fetched asynchronously: rows inserted (and sorted)
+        # above it afterwards push it out of view.  Keep it centred until the
+        # model settles or the user takes over the tree.
+        self._pending_reveal = self._fs_model.filePath(idx)
+
+    def _on_fs_rows_changed(self, parents) -> None:
+        target = self._pending_reveal
+        if target is None:
+            return
+        if not parents:  # layoutChanged without hint: may affect anything
+            self._reveal_timer.start()
+            return
+        for parent in parents:
+            loaded = self._fs_model.filePath(parent)
+            if target.startswith(loaded.rstrip("/") + "/"):
+                self._reveal_timer.start()
+                return
+
+    def _reveal_pending(self) -> None:
+        if self._pending_reveal is None:
+            return
+        tree = self._ui.treeDirectory
+        idx = self._fs_model.index(self._pending_reveal)
+        if not idx.isValid() or idx != tree.currentIndex():
+            self._pending_reveal = None
+            return
+        tree.scrollTo(idx, QAbstractItemView.ScrollHint.PositionAtCenter)
+
+    def _cancel_reveal(self, *_) -> None:
+        self._pending_reveal = None
+        self._reveal_timer.stop()
 
     def _connect_signals(self) -> None:
         self._ui.actionOpenCurrentFolder.triggered.connect(self._on_open_current_folder)

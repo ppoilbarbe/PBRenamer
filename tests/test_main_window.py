@@ -193,6 +193,71 @@ class TestNavigation:
         window._navigate_to(str(tmp_path))  # no crash
 
 
+class TestRevealCurrentDirectory:
+    """The tree keeps the startup directory in view while QFileSystemModel
+    loads its ancestors asynchronously."""
+
+    @staticmethod
+    def _visible(window, path: str) -> bool:
+        tree = window._ui.treeDirectory
+        rect = tree.visualRect(window._fs_model.index(path))
+        return rect.isValid() and tree.viewport().rect().intersects(rect)
+
+    def test_startup_dir_scrolled_into_view(self, qtbot, tmp_path):
+        target = tmp_path / "a" / "b" / "c"
+        target.mkdir(parents=True)
+        w = MainWindow(start_dir=str(target))
+        qtbot.addWidget(w)
+        w.resize(900, 300)
+        w.show()
+        qtbot.waitUntil(lambda: self._visible(w, str(target)), timeout=5000)
+
+    def test_rows_under_ancestor_trigger_reveal(self, window, tmp_path):
+        window._navigate_to(str(tmp_path))
+        window._reveal_timer.stop()
+        parent = window._fs_model.index(str(tmp_path.parent))
+        window._on_fs_rows_changed([parent])
+        assert window._reveal_timer.isActive()
+
+    def test_unrelated_rows_ignored(self, window, tmp_path, monkeypatch):
+        target = tmp_path / "x"
+        target.mkdir()
+        window._navigate_to(str(target))
+        window._reveal_timer.stop()
+        # A sibling of the target (not an ancestor): its rows cannot move it.
+        monkeypatch.setattr(window._fs_model, "filePath", lambda _i: f"{target}y")
+        window._on_fs_rows_changed([object()])
+        assert not window._reveal_timer.isActive()
+
+    def test_layout_changed_without_parents_triggers_reveal(self, window, tmp_path):
+        window._navigate_to(str(tmp_path))
+        window._reveal_timer.stop()
+        window._on_fs_rows_changed([])
+        assert window._reveal_timer.isActive()
+
+    def test_no_pending_is_noop(self, window):
+        window._pending_reveal = None
+        window._on_fs_rows_changed([])
+        assert not window._reveal_timer.isActive()
+        window._reveal_pending()  # no crash
+
+    def test_user_interaction_cancels(self, window, tmp_path):
+        window._navigate_to(str(tmp_path))
+        window._ui.treeDirectory.pressed.emit(window._fs_model.index(str(tmp_path)))
+        assert window._pending_reveal is None
+        assert not window._reveal_timer.isActive()
+
+    def test_selection_moved_elsewhere_drops_pending(self, window, tmp_path):
+        target = tmp_path / "x"
+        other = tmp_path / "y"
+        target.mkdir()
+        other.mkdir()
+        window._navigate_to(str(target))
+        window._ui.treeDirectory.setCurrentIndex(window._fs_model.index(str(other)))
+        window._reveal_pending()
+        assert window._pending_reveal is None
+
+
 # ---------------------------------------------------------------------------
 # File → Open current folder
 # ---------------------------------------------------------------------------

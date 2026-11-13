@@ -3154,3 +3154,35 @@ msgstr "Eliminar los sufijos sidecar comunes seleccionados"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Restaurar los sufijos sidecar comunes predeterminados"
+
+# ==AUTO== Automatically translated
+msgid "Old settings"
+msgstr "Ajustes antiguos"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+msgstr ""
+"Los ajustes de PBRenamer 1.x se copiaron en el perfil «{profile}» y ya no"
+" se usan:\n"
+"\n"
+"{files}\n"
+"\n"
+"¿Eliminar estos archivos?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"
+msgstr ""
+"No se pudieron eliminar estos archivos:\n"
+"\n"
+"{files}"

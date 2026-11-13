@@ -2429,3 +2429,32 @@ msgstr "Remove selected common sidecar suffixes"
 
 msgid "Restore default common sidecar suffixes"
 msgstr "Restore default common sidecar suffixes"
+
+msgid "Old settings"
+msgstr "Old settings"
+
+#, python-brace-format
+msgid ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+msgstr ""
+"The settings of PBRenamer 1.x were copied into the profile “{profile}” "
+"and are no longer used:\n"
+"\n"
+"{files}\n"
+"\n"
+"Delete these files?"
+
+#, python-brace-format
+msgid ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"
+msgstr ""
+"These files could not be deleted:\n"
+"\n"
+"{files}"

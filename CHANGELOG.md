@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Start-up: when the PBRenamer 1.x files (`patterns/*.json`, `sidecar_config.json` at the top of
+  the configuration directory) are still there after the migration to profiles, PBRenamer offers
+  to delete them; the start that performs the migration stays silent. Deleting them also removes
+  the 1.x keys `behaviour/last_dir` and `behaviour/toolbar_state` from `pbrenamer.conf`.
+  Answering no creates `keep_v1_files` in the configuration directory, so the question is not
+  asked again.
+
+### Fixed
+
+- Directory tree: at start-up, the current directory is scrolled into view (centred) instead of
+  leaving the tree at the top. The tree used to scroll before its parent folders were loaded in
+  the background, so the rows loaded afterwards pushed the current directory out of view.
+
 ## [2.1.0] - 2026-11-11
 
 ### Added
