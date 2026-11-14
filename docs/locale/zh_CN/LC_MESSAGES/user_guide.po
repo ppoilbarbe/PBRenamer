@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  PBRenamer\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1362,8 +1362,10 @@ msgstr "**删除**\\ （**Del**）"
 # ==AUTO== Automatically translated
 msgid ""
 "Delete the files and their sidecars, to the trash or permanently, after a"
-" confirmation, as set in the profile."
-msgstr "按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除。"
+" confirmation, as set in the profile.  The next file of the list is then "
+"selected (the previous one after the last row)."
+msgstr ""
+"按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除。随后选中列表中的下一个文件（若为最后一行，则选中上一个）。"
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"
@@ -1467,8 +1469,13 @@ msgstr "元数据面板（**I**），显示图像的 EXIF、IPTC 和 XMP 数据�
 msgid ""
 "the image actions: open, open with, delete, rotations and EXIF "
 "orientation, with the same shortcuts as in the main window; **Esc** "
-"closes the viewer."
-msgstr "图像操作：打开、打开方式、删除、旋转和 EXIF 方向，快捷键与主窗口相同；**Esc** 关闭查看器。"
+"closes the viewer. After deleting the file shown, the viewer shows the "
+"next file of the selection or, for a single file, the next image or video"
+" of the list (the previous one after the last); it closes when none is "
+"left."
+msgstr ""
+"图像操作：打开、打开方式、删除、旋转和 EXIF 方向，快捷键与主窗口相同；**Esc** "
+"关闭查看器。删除当前显示的文件后，查看器显示所选内容中的下一个文件；若只有单个文件，则显示列表中的下一个图像或视频（若为最后一个，则显示上一个）；没有剩余文件时查看器关闭。"
 
 # ==AUTO== Automatically translated
 msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."

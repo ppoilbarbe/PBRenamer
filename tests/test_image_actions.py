@@ -96,6 +96,12 @@ def _select(window, *names):
             item.setSelected(True)
 
 
+def _selected_names(window):
+    tree = window._ui.tblFiles
+    items = sorted(tree.selectedItems(), key=tree.indexOfTopLevelItem)
+    return [item.text(0) for item in items]
+
+
 def _names(window):
     tree = window._ui.tblFiles
     return [
@@ -521,6 +527,77 @@ class TestDelete:
         assert calls["ask"] == ["Move to trash:\na.png\na.xmp"]
         assert _names(window) == ["b.png"]
         assert window._ui.tblFiles.currentItem().data(0, Qt.ItemDataRole.UserRole) == b
+
+    @staticmethod
+    def _selected(window):
+        return [n.split("\n")[0] for n in _selected_names(window)]
+
+    @pytest.mark.parametrize(
+        ("deleted", "expected"),
+        [("b.png", "c.png"), ("c.png", "b.png")],  # next, or previous at the end
+    )
+    def test_selects_neighbour(self, window, tmp_path, calls, trash, deleted, expected):
+        for name in ("a.png", "b.png", "c.png"):
+            _png(tmp_path / name)
+        _load(window, tmp_path)
+        _select(window, deleted)
+        window._ui.actionImgDelete.trigger()
+        assert self._selected(window) == [expected]
+
+    def test_viewer_follows_list_deletion(self, window, tmp_path, calls, trash):
+        a = _png(tmp_path / "a.png")
+        (tmp_path / "b.txt").write_text("x")
+        c = _png(tmp_path / "c.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._images.show_in_viewer(a)
+        viewer = window._images._viewer
+        window._ui.actionImgDelete.trigger()
+        # b.txt is selected, but the viewer shows the nearest media file.
+        assert self._selected(window) == ["b.txt"]
+        assert viewer.current_path == c
+
+    @pytest.mark.parametrize(
+        ("deleted", "expected"),
+        [("a.png", "c.png"), ("c.png", "a.png")],  # b.txt is no media
+    )
+    def test_from_viewer_selects_neighbour_media(
+        self, window, tmp_path, calls, trash, deleted, expected
+    ):
+        p = {n: _png(tmp_path / n) for n in ("a.png", "c.png")}
+        (tmp_path / "b.txt").write_text("x")
+        _load(window, tmp_path)
+        _select(window, deleted)
+        window._images.show_in_viewer(p[deleted])
+        viewer = window._images._viewer
+        viewer.delete_requested.emit()
+        assert self._selected(window) == [expected]
+        assert viewer.current_path == p[expected]
+        assert viewer.isVisible()
+
+    def test_from_viewer_navigation_still_works(self, window, tmp_path, calls, trash):
+        p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._images.show_in_viewer(p["a.png"])
+        viewer = window._images._viewer
+        viewer.delete_requested.emit()
+        assert viewer.current_path == p["b.png"]
+        viewer.navigate_next.emit()
+        assert viewer.current_path == p["c.png"]
+        viewer.navigate_prev.emit()
+        assert viewer.current_path == p["b.png"]
+
+    def test_from_viewer_last_media_closes_it(self, window, tmp_path, calls, trash):
+        a = _png(tmp_path / "a.png")
+        (tmp_path / "b.txt").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._images.show_in_viewer(a)
+        viewer = window._images._viewer
+        viewer.delete_requested.emit()
+        assert not viewer.isVisible()
+        assert self._selected(window) == ["b.txt"]
 
     def test_declined(self, window, tmp_path, calls, trash):
         a = _png(tmp_path / "a.png")

@@ -346,32 +346,84 @@ class ImageActions(QObject):
         self.delete(self.targets(), self._window)
 
     def delete(self, paths: list[str], parent=None) -> list[str]:
-        """Delete *paths* with their sidecars, then select the next row;
-        return the deleted files."""
+        """Delete *paths* with their sidecars; return the deleted files.
+
+        When nothing stays selected, the next file of the list is selected
+        (the previous one after the last row), and the viewer follows."""
         if not paths:
             return []
+        files = self._with_sidecars(paths)
+        return self._delete_and_select(
+            files, parent or self._window, self._files.next_path_after(files)
+        )
+
+    def _with_sidecars(self, paths: list[str]) -> list[str]:
         sidecars = self._files.sidecars_map(paths)
-        files = list(dict.fromkeys(f for p in paths for f in [p, *sidecars[p]]))
-        next_path = self._files.next_path_after(files)
-        deleted = self.delete_files(files, parent or self._window)
-        if deleted:
-            self._files.reload()
-            self._files.select_after_change([], next_path)
+        return list(dict.fromkeys(f for p in paths for f in [p, *sidecars[p]]))
+
+    def _delete_and_select(
+        self, files: list[str], parent, next_path: str | None
+    ) -> list[str]:
+        """Delete *files*, then select *next_path* unless part of the
+        selection remains.  A viewer left on a deleted file (the selected
+        file is no media) moves to the nearest media file, or closes."""
+        viewer = self._viewer
+        if viewer is not None and not viewer.isVisible():
+            viewer = None
+        shown = viewer.current_path if viewer is not None else None
+        fallback = self._neighbour_media(shown, set(files)) if shown in files else None
+        deleted = self.delete_files(files, parent)
+        if not deleted:
+            return deleted
+        self._files.reload()
+        if self._files.selected_paths():
+            self._files.set_current_path(next_path)
+        elif next_path is not None:
+            self._files.select_paths([next_path])
+        if viewer is not None and viewer.current_path in deleted:
+            if fallback is None:
+                viewer.close()
+            else:
+                viewer.set_selection([fallback])
         return deleted
+
+    def _neighbour_media(self, path: str, gone: set[str]) -> str | None:
+        """The media file of the list following *path*, else the one
+        preceding it, ignoring the files of *gone*."""
+        listed = self._files.listed_paths()
+        if path not in listed:
+            return None
+        row = listed.index(path)
+        media = set(self._media(listed)) - gone
+        after = [p for p in listed[row + 1 :] if p in media]
+        if after:
+            return after[0]
+        before = [p for p in listed[:row] if p in media]
+        return before[-1] if before else None
 
     def _delete_from_viewer(self) -> None:
         """Delete the file shown by the viewer.  Browsing a multiple
         selection, it then shows the next file of the selection; after the
-        last one, the first in circular mode, else the new last one."""
+        last one, the first in circular mode, else the new last one.
+        Showing a single file, the next media file of the list is selected
+        (the previous one after the last), and the viewer shows it; without
+        any media file left, the next file is selected and the viewer closes."""
         viewer = self._viewer
         path = viewer.current_path if viewer is not None else None
         if path is None:
             return
         selection = viewer.selection_paths
-        index = selection.index(path) if path in selection else -1
+        if len(selection) < 2 or path not in selection:
+            files = self._with_sidecars([path])
+            target = self._neighbour_media(path, set(files))
+            if target is None:
+                target = self._files.next_path_after(files)
+            self._delete_and_select(files, viewer, target)
+            return
+        index = selection.index(path)
         deleted = set(self.delete([path], viewer))
         remaining = [p for p in selection if p not in deleted]
-        if path not in deleted or index < 0 or not remaining:
+        if path not in deleted or not remaining:
             return
         if index < len(remaining):
             current = remaining[index]

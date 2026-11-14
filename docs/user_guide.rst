@@ -674,7 +674,8 @@ apply to the selected files:
 
 **Delete** (**Del**)
     Delete the files and their sidecars, to the trash or permanently,
-    after a confirmation, as set in the profile.
+    after a confirmation, as set in the profile.  The next file of the list
+    is then selected (the previous one after the last row).
 
 **Orphan sidecars…**
     List the sidecar files of the folder that have no base file, then
@@ -723,6 +724,9 @@ file list.  It offers:
   double-click a field to insert it into the replacement pattern;
 * the image actions: open, open with, delete, rotations and EXIF orientation,
   with the same shortcuts as in the main window; **Esc** closes the viewer.
+  After deleting the file shown, the viewer shows the next file of the
+  selection or, for a single file, the next image or video of the list (the
+  previous one after the last); it closes when none is left.
 
 The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**).
 

@@ -35,6 +35,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Deletion: deleting files from the file list now selects the next file of the list (the previous
+  one after the last row); before, nothing was selected, so the viewer kept showing the deleted
+  file. Deleting the single file shown by the viewer now selects and shows the next image or
+  video of the list (the previous one after the last), so its previous/next keys work again; the
+  viewer closes when no image or video is left.
 - File list: in sidecar mode, the Up and Down arrow keys move from one base file to the next,
   skipping its sidecars, instead of stopping on every sidecar row.
 - Start-up: when the directory to open (last opened directory, or the one given on the command
