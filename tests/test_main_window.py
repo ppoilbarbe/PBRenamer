@@ -2508,6 +2508,39 @@ class TestSidecarSelectionLinking:
         }
         assert selected_paths == {str(tmp_path / "img.jpg")}
 
+    @staticmethod
+    def _arrow(window, key) -> str:
+        from PySide6.QtTest import QTest
+
+        QTest.keyClick(window._ui.tblFiles, key)
+        return window._ui.tblFiles.currentItem().data(0, Qt.ItemDataRole.UserRole)
+
+    def test_arrow_keys_skip_sidecars(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        (tmp_path / "next.jpg").write_text("x")
+        (tmp_path / "next.xmp").write_text("x")
+        window._files.reload()
+        tree = window._ui.tblFiles
+        tree.setCurrentItem(_find_item(window, str(tmp_path / "img.jpg")))
+        assert self._arrow(window, Qt.Key.Key_Down) == str(tmp_path / "next.jpg")
+        # Nothing further down: stay on the last base file.
+        assert self._arrow(window, Qt.Key.Key_Down) == str(tmp_path / "next.jpg")
+        assert self._arrow(window, Qt.Key.Key_Up) == str(tmp_path / "img.jpg")
+        selected = {i.data(0, Qt.ItemDataRole.UserRole) for i in tree.selectedItems()}
+        assert selected == {
+            str(tmp_path / "img.jpg"),
+            str(tmp_path / "img.xmp"),
+            str(tmp_path / "img.info.json"),
+        }
+
+    def test_arrow_keys_visit_sidecars_without_sidecar_mode(self, window, tmp_path):
+        self._setup_group(window, tmp_path)
+        window._ui.chkSidecarMode.setChecked(False)
+        tree = window._ui.tblFiles
+        tree.setCurrentItem(tree.topLevelItem(0))
+        self._arrow(window, Qt.Key.Key_Down)
+        assert tree.currentItem() is tree.topLevelItem(1)
+
     def test_linking_flag_reset_after_call(self, window, tmp_path):
         self._setup_group(window, tmp_path)
         base_item = _find_item(window, str(tmp_path / "img.jpg"))

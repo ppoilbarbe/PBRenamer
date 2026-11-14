@@ -35,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- File list: in sidecar mode, the Up and Down arrow keys move from one base file to the next,
+  skipping its sidecars, instead of stopping on every sidecar row.
 - Start-up: when the directory to open (last opened directory, or the one given on the command
   line) no longer exists, the GUI opens its nearest existing parent folder, up to the root of the
   disk, instead of the root.

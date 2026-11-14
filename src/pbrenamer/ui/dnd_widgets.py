@@ -107,6 +107,8 @@ class FileListWidget(QTreeWidget):
 
     Dragged files take their sidecars along (*sidecars_of*).  Tab and
     Shift+Tab give the focus back to *tab_partner* (the directory tree).
+    Up and Down skip the rows *is_follower* reports (the sidecars that
+    follow their base file in sidecar mode), moving from base to base.
     """
 
     files_dropped = Signal(list, str, bool)  # paths, target_dir, is_move
@@ -115,6 +117,7 @@ class FileListWidget(QTreeWidget):
         super().__init__(parent)
         self.current_dir_getter: Callable[[], str | None] | None = None
         self.sidecars_of: Callable[[str], list[str]] = lambda _path: []
+        self.is_follower: Callable[[str], bool] = lambda _path: False
         self.tab_partner: QWidget | None = None
         self.setDragEnabled(True)
         self.setAcceptDrops(True)
@@ -134,6 +137,27 @@ class FileListWidget(QTreeWidget):
 
     def event(self, e) -> bool:
         return _toggle_focus(self, e) or super().event(e)
+
+    def moveCursor(self, action, modifiers):  # noqa: N802
+        index = super().moveCursor(action, modifiers)
+        cursor = QAbstractItemView.CursorAction
+        if action not in (cursor.MoveUp, cursor.MoveDown):
+            return index
+        current = self.currentItem()
+        row = self.indexOfTopLevelItem(current) if current else -1
+        if row < 0:
+            return index
+        step = 1 if action == cursor.MoveDown else -1
+        row += step
+        while 0 <= row < self.topLevelItemCount():
+            item = self.topLevelItem(row)
+            if not item.isHidden() and not self.is_follower(
+                item.data(0, Qt.ItemDataRole.UserRole)
+            ):
+                return self.indexFromItem(item)
+            row += step
+        # No base file further on: stay on the current row.
+        return self.currentIndex()
 
     def focusInEvent(self, event) -> None:  # noqa: N802
         # Qt would make the first row current *and selected*; an empty

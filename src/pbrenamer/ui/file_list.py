@@ -146,6 +146,7 @@ class FileListController(QObject):
         self._ui.tblFiles.files_dropped.connect(self._on_files_dropped)
         self._ui.tblFiles.current_dir_getter = lambda: self.current_dir
         self._ui.tblFiles.sidecars_of = self._sidecars_of
+        self._ui.tblFiles.is_follower = self._is_follower
 
         # Options that trigger a file list reload
         self._ui.chkSidecarMode.toggled.connect(self.reload)
@@ -671,6 +672,12 @@ class FileListController(QObject):
         config = _cfg.get_sidecar_config()
         self._groups = sidecar.build_sidecar_groups(entries, config)
         self._sidecar_result = self._groups if self.sidecar_mode_active() else None
+
+    def _is_follower(self, path: str) -> bool:
+        """True when *path* is a sidecar grouped with its base file (sidecar
+        mode active): keyboard navigation skips it."""
+        result = self._sidecar_result
+        return result is not None and path in result.sidecar_of
 
     def _sidecars_of(self, path: str) -> list[str]:
         """Sidecars of the listed file *path* (empty if none or unknown)."""
