@@ -407,11 +407,20 @@ class ImageActions(QObject):
         last one, the first in circular mode, else the new last one.
         Showing a single file, the next media file of the list is selected
         (the previous one after the last), and the viewer shows it; without
-        any media file left, the next file is selected and the viewer closes."""
+        any media file left, the next file is selected and the viewer closes.
+
+        The viewer is then activated again: the confirmation box leaves no
+        active window behind, and its keyboard shortcuts need one."""
         viewer = self._viewer
         path = viewer.current_path if viewer is not None else None
         if path is None:
             return
+        self._delete_viewer_file(viewer, path)
+        if viewer.isVisible():
+            viewer.raise_()
+            viewer.activateWindow()
+
+    def _delete_viewer_file(self, viewer: ImageViewer, path: str) -> None:
         selection = viewer.selection_paths
         if len(selection) < 2 or path not in selection:
             files = self._with_sidecars([path])

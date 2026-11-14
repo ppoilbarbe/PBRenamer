@@ -8,8 +8,9 @@ import os
 
 import pytest
 from PIL import Image
-from PySide6.QtCore import QFile, QItemSelectionModel, Qt
-from PySide6.QtWidgets import QDialog, QMessageBox
+from PySide6.QtCore import QFile, QItemSelectionModel, Qt, QTimer
+from PySide6.QtTest import QTest
+from PySide6.QtWidgets import QApplication, QDialog, QMessageBox
 
 from pbrenamer import profiles
 from pbrenamer.core import image_ops
@@ -587,6 +588,39 @@ class TestDelete:
         assert viewer.current_path == p["c.png"]
         viewer.navigate_prev.emit()
         assert viewer.current_path == p["b.png"]
+
+    def test_from_viewer_keeps_keyboard(
+        self, window, qtbot, tmp_path, trash, monkeypatch
+    ):
+        """Through the real confirmation box: once it is closed, the viewer
+        is the active window again, so its arrow keys still work."""
+
+        def accept_box():
+            box = QApplication.activeModalWidget()
+            if isinstance(box, QMessageBox):
+                box.button(QMessageBox.StandardButton.Yes).click()
+            else:
+                QTimer.singleShot(20, accept_box)
+
+        real_ask = image_actions._ask
+
+        def ask(*args):
+            QTimer.singleShot(20, accept_box)
+            return real_ask(*args)
+
+        monkeypatch.setattr(image_actions, "_ask", ask)
+        p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._images.show_in_viewer(p["a.png"])
+        viewer = window._images._viewer
+        viewer.activateWindow()
+        qtbot.waitUntil(viewer.isActiveWindow)
+        QTest.keyClick(viewer, Qt.Key.Key_Delete)
+        assert viewer.current_path == p["b.png"]
+        qtbot.waitUntil(viewer.isActiveWindow)
+        QTest.keyClick(viewer, Qt.Key.Key_Right)
+        assert viewer.current_path == p["c.png"]
 
     def test_from_viewer_last_media_closes_it(self, window, tmp_path, calls, trash):
         a = _png(tmp_path / "a.png")
