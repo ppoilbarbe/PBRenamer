@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Status bar: file counts at its right end, as in PBPicat: `SS/TT`, selected / listed files; in
+  sidecar mode `XX/YY (SS/TT)`, where `XX/YY` counts the main files only (selected / listed,
+  sidecars left out) and `SS/TT` every file, sidecars included.
 - Command line: new `--status` option, which prints the version and the configuration as YAML,
   always in English so that scripts can parse it, then exits without opening a window: the
   application settings, including the selected profile (the one chosen with `--profile`, else the
@@ -32,7 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   session trash left by a PBRenamer that stopped unexpectedly is removed at the next start.
 - Undo: deletions to the system trash or to the session trash are recorded on the undo stack;
   **Undo** moves the files back to their place, recreating their folder if needed.
-
 - Profile configuration, **Files** tab: new **Remove the folders left empty** options, all off
   by default: **After a deletion** (any deletion mode), **After a rename** (rename, renumber or
   move into a schema tree), and **Also their parents left empty**, which then removes the parent

@@ -321,6 +321,16 @@ msgstr "Thumbnail"
 msgid "Sidecar"
 msgstr "Sidecar"
 
+msgid "Selected files / listed files"
+msgstr "Selected files / listed files"
+
+msgid ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+msgstr ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+
 msgid "No sidecar: double-click to create one"
 msgstr "No sidecar: double-click to create one"
 

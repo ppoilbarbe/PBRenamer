@@ -326,6 +326,16 @@ msgstr "Miniature"
 msgid "Sidecar"
 msgstr "Sidecar"
 
+msgid "Selected files / listed files"
+msgstr "Fichiers sélectionnés / fichiers listés"
+
+msgid ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+msgstr ""
+"Fichiers principaux sélectionnés / fichiers principaux (fichiers "
+"sélectionnés / fichiers listés, sidecars compris)"
+
 msgid "No sidecar: double-click to create one"
 msgstr "Aucun sidecar : double-cliquez pour en créer un"
 

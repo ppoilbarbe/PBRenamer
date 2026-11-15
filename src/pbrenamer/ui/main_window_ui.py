@@ -830,6 +830,9 @@ class Ui_MainWindow:
     def _setup_statusbar(self, window):
         self.statusbar = QStatusBar(window)
         window.setStatusBar(self.statusbar)
+        # File counts, right-aligned (filled by FileListController)
+        self.lblFileCount = QLabel(self.statusbar)
+        self.statusbar.addPermanentWidget(self.lblFileCount)
 
     # ── Menu bar ──────────────────────────────────────────────────────────────
 

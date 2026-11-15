@@ -849,3 +849,42 @@ class TestSelectedBases:
         _item(ui, "b.jpg").setSelected(True)
         ctrl._refresh_file_info()
         assert shown[-1] == "multiple"
+
+
+class TestFileCount:
+    """File counts of the status bar: "XX/YY (SS/TT)" in sidecar mode."""
+
+    def test_sidecar_mode(self, files, tmp_path):
+        ctrl, ui, _ = files
+        _photos(tmp_path)
+        ui.chkSidecarMode.setChecked(True)
+        ctrl.set_directory(str(tmp_path))
+        assert ui.lblFileCount.text() == "0/4 (0/7)"
+        assert "main files" in ui.lblFileCount.toolTip()
+        _item(ui, "a.xmp").setSelected(True)  # selects the group of a.jpg
+        assert ui.lblFileCount.text() == "1/4 (3/7)"
+        _item(ui, "n.txt").setSelected(True)
+        assert ui.lblFileCount.text() == "2/4 (4/7)"
+
+    def test_without_sidecar_mode(self, files, tmp_path):
+        ctrl, ui, _ = files
+        _photos(tmp_path)
+        ctrl.set_directory(str(tmp_path))
+        assert ui.lblFileCount.text() == "0/7"
+        _item(ui, "a.jpg").setSelected(True)
+        _item(ui, "a.xmp").setSelected(True)
+        assert ui.lblFileCount.text() == "2/7"
+        assert ui.lblFileCount.toolTip() == "Selected files / listed files"
+
+    def test_follows_sidecar_mode_toggle(self, files, tmp_path):
+        ctrl, ui, _ = files
+        _photos(tmp_path)
+        ctrl.set_directory(str(tmp_path))
+        ui.chkSidecarMode.setChecked(True)
+        assert ui.lblFileCount.text() == "0/4 (0/7)"
+        ui.chkSidecarMode.setChecked(False)
+        assert ui.lblFileCount.text() == "0/7"
+
+    def test_right_of_the_status_bar(self, files):
+        _ctrl, ui, _ = files
+        assert ui.lblFileCount.parent() is ui.statusbar

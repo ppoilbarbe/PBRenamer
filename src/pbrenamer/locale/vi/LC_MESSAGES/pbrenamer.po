@@ -397,6 +397,18 @@ msgid "Sidecar"
 msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
+msgid "Selected files / listed files"
+msgstr "Tệp đã chọn / tệp được liệt kê"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+msgstr ""
+"Tệp chính đã chọn / tệp chính (tệp đã chọn / tệp được liệt kê, kể cả "
+"sidecar)"
+
+# ==AUTO== Automatically translated
 msgid "No sidecar: double-click to create one"
 msgstr "Không có sidecar: nhấp đúp để tạo"
 

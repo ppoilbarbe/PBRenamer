@@ -402,6 +402,18 @@ msgid "Sidecar"
 msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
+msgid "Selected files / listed files"
+msgstr "Ausgewählte Dateien / aufgelistete Dateien"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+msgstr ""
+"Ausgewählte Hauptdateien / Hauptdateien (ausgewählte Dateien / "
+"aufgelistete Dateien, Sidecar-Dateien eingeschlossen)"
+
+# ==AUTO== Automatically translated
 msgid "No sidecar: double-click to create one"
 msgstr "Keine Sidecar-Datei: Doppelklick zum Erstellen"
 

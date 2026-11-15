@@ -386,6 +386,16 @@ msgid "Sidecar"
 msgstr "Sidecar"
 
 # ==AUTO== Automatically translated
+msgid "Selected files / listed files"
+msgstr "已选文件 / 列出的文件"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Selected main files / main files (selected files / listed files, sidecars"
+" included)"
+msgstr "已选主文件 / 主文件（已选文件 / 列出的文件，包括 Sidecar 文件）"
+
+# ==AUTO== Automatically translated
 msgid "No sidecar: double-click to create one"
 msgstr "无 Sidecar 文件：双击以创建"
 

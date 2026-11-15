@@ -161,6 +161,20 @@ msgstr ""
 ":ref:`Profils <profiles>` steht in der Titelleiste."
 
 # ==AUTO== Automatically translated
+msgid ""
+"The right end of the status bar counts the files: ``SS/TT``, the number "
+"of selected files out of the listed ones.  In :ref:`sidecar mode "
+"<sidecar-files>`, it reads ``XX/YY (SS/TT)``: ``XX/YY`` counts the main "
+"files only (selected / listed), sidecars left out, and ``SS/TT`` every "
+"file, sidecars included."
+msgstr ""
+"Das rechte Ende der Statusleiste zählt die Dateien: ``SS/TT``, die Anzahl"
+" der ausgewählten von den aufgelisteten Dateien.  Im :ref:`Sidecar-Modus "
+"<sidecar-files>` lautet sie ``XX/YY (SS/TT)``: ``XX/YY`` zählt nur die "
+"Hauptdateien (ausgewählt / aufgelistet), ohne Sidecar-Dateien, und "
+"``SS/TT`` alle Dateien, Sidecar-Dateien eingeschlossen."
+
+# ==AUTO== Automatically translated
 msgid "Opening a folder"
 msgstr "Einen Ordner öffnen"
 

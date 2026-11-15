@@ -401,6 +401,7 @@ class FileListController(QObject):
             self.current_dir,
         )
         self.rename_count_changed.emit(0)
+        self.update_file_count()
         self.files_reloaded.emit()
 
     # ── Selection and current row ─────────────────────────────────────────────
@@ -734,6 +735,33 @@ class FileListController(QObject):
 
     def listed_paths(self) -> list[str]:
         return [i.data(0, Qt.ItemDataRole.UserRole) for i in self.all_items()]
+
+    def file_count_text(self) -> tuple[str, str]:
+        """Text and tooltip of the file counts of the status bar.
+
+        "SS/TT": selected / listed entries.  In sidecar mode, prefixed with
+        "XX/YY" for the main files, sidecars not counted: "XX/YY (SS/TT)".
+        """
+        listed = self.listed_paths()
+        selected = self.selected_paths()
+        counts = f"{len(selected)}/{len(listed)}"
+        result = self._sidecar_result
+        if result is None:
+            return counts, _("Selected files / listed files")
+        bases = [p for p in listed if p not in result.sidecar_of]
+        text = f"{len(self.selected_bases())}/{len(bases)} ({counts})"
+        tip = _(
+            "Selected main files / main files (selected files / listed files, "
+            "sidecars included)"
+        )
+        return text, tip
+
+    def update_file_count(self) -> None:
+        """Show the file counts in the status bar."""
+        text, tip = self.file_count_text()
+        label = self._ui.lblFileCount
+        label.setText(text)
+        label.setToolTip(tip)
 
     def _show_sidecar_indicators(self) -> None:
         """Fill the sidecar column: "● suffixes" on base files having
@@ -1093,6 +1121,7 @@ class FileListController(QObject):
             self._link_group_selection()
         if self._file_info is not None and self._file_info.isVisible():
             self._refresh_file_info()
+        self.update_file_count()
         self.selection_changed.emit()
 
     def show_file_info(self) -> None:

@@ -72,6 +72,12 @@ action bar at the bottom holds the **Undo**, **Preview**, **Clear**,
 **Profile**, **Images**, **Shortcuts** and **Help**; the name of the current
 :ref:`profile <profiles>` is shown in the window title.
 
+The right end of the status bar counts the files: ``SS/TT``, the number of
+selected files out of the listed ones.  In :ref:`sidecar mode
+<sidecar-files>`, it reads ``XX/YY (SS/TT)``: ``XX/YY`` counts the main
+files only (selected / listed), sidecars left out, and ``SS/TT`` every
+file, sidecars included.
+
 Opening a folder
 ~~~~~~~~~~~~~~~~
 
