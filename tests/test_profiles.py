@@ -328,30 +328,63 @@ class TestProfileData:
         assert profiles.load()["schema"] == profiles.DEFAULTS["schema"]
 
     def test_extra_keys_preserved(self):
-        self._write({"future": [1], "images": {"other": True}})
+        self._write({"future": [1], "files": {"other": True}})
         data = profiles.load()
         assert data["future"] == [1]
-        assert data["images"]["other"] is True
+        assert data["files"]["other"] is True
 
     def test_unknown_mode_falls_back(self):
         self._write({"mode": "bogus"})
         assert profiles.load()["mode"] == "pattern"
 
     def test_deletion_mode_default_is_system_trash(self):
-        assert profiles.load()["images"]["deletion_mode"] == "system"
+        assert profiles.load()["files"]["deletion_mode"] == "system"
 
     def test_unknown_deletion_mode_falls_back(self):
-        self._write({"images": {"deletion_mode": "bogus"}})
-        assert profiles.load()["images"]["deletion_mode"] == "system"
+        self._write({"files": {"deletion_mode": "bogus"}})
+        assert profiles.load()["files"]["deletion_mode"] == "system"
 
     def test_old_trash_setting_ignored_and_dropped(self):
         self._write({"images": {"use_trash": False}})
         data = profiles.load()
-        assert data["images"]["deletion_mode"] == "system"
-        assert "use_trash" not in data["images"]
+        assert data["files"]["deletion_mode"] == "system"
+        assert "use_trash" not in data["files"]
         profiles.save(data)
         stored = (profiles.profile_dir() / profiles.PROFILE_FILE).read_text()
         assert "use_trash" not in stored
+
+    def test_old_images_section_split(self):
+        self._write(
+            {
+                "images": {
+                    "zoom_step_percent": 10,
+                    "metadata_panel_side": "left",
+                    "deletion_mode": "session",
+                    "sidecar_new_extension": "txt",
+                    "unknown": 1,
+                },
+                "files": {"confirm_deletions": False, "deletion_mode": "delete"},
+            }
+        )
+        data = profiles.load()
+        assert "images" not in data
+        assert data["viewer"]["zoom_step_percent"] == 10
+        assert data["viewer"]["metadata_panel_side"] == "left"
+        assert data["files"]["sidecar_new_extension"] == "txt"
+        assert data["files"]["confirm_deletions"] is False
+        # A value already in the new section wins.
+        assert data["files"]["deletion_mode"] == "delete"
+        assert "unknown" not in data["files"]
+
+    def test_old_images_section_not_a_dict(self):
+        self._write({"images": "oops", "viewer": "oops"})
+        data = profiles.load()
+        assert "images" not in data
+        assert data["viewer"] == profiles.DEFAULTS["viewer"]
+
+    def test_old_images_section_into_bad_new_section(self):
+        self._write({"images": {"zoom_step_percent": 10}, "viewer": "oops"})
+        assert profiles.load()["viewer"]["zoom_step_percent"] == 10
 
     @pytest.mark.parametrize("content", ["not json", "[1, 2]"])
     def test_invalid_file(self, content):

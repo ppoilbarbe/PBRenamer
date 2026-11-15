@@ -404,8 +404,8 @@ The **Shortcuts** menu provides one-click navigation to common directories.
 File information
 ~~~~~~~~~~~~~~~~
 
-Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) to
-display a non-modal window listing the actual values of every replacement
+Choose **File → Information** (**Ctrl+I**, also in the context menu of the
+file list) to display a non-modal window listing the actual values of every replacement
 field for the selected file.  Double-click a field to insert it into the
 replacement pattern.
 
@@ -446,8 +446,8 @@ A profile holds:
   position, fill gaps);
 * the :ref:`sidecar <sidecar-files>` categories and suffixes;
 * the display options (thumbnails and their size, sidecar column, sidecar
-  filter, sort by date, history length) and the image options (viewer zoom,
-  EXIF orientation, metadata panel, deletion);
+  filter, sort by date, history length), the file options (deletion) and
+  the image viewer options (zoom, EXIF orientation, metadata panel);
 * the histories (search, replacement, schema fields, sidecar filter) and the
   named saves;
 * the last folder and the state of the option bar.
@@ -511,13 +511,15 @@ Profile configuration
     deleted when a folder is loaded, and the maximum number of entries kept
     in each history.
 
-**Images**
-    Image viewer: zoom step, maximum zoom, side of the metadata panel, and
-    whether images are shown turned as their EXIF orientation says (also
-    applies to the thumbnails).  Deletion: what happens to the deleted
-    files (see :ref:`deletion-modes`), whether to ask for a confirmation,
-    and the number of files above which the confirmation only gives their
-    count.
+**Files**
+    Deletion: what happens to the deleted files (see
+    :ref:`deletion-modes`), whether to ask for a confirmation, and the
+    number of files above which the confirmation only gives their count.
+
+**Image viewer**
+    Zoom step, maximum zoom, side of the metadata panel, and whether images
+    are shown turned as their EXIF orientation says (also applies to the
+    thumbnails).
 
 .. _deletion-modes:
 
@@ -598,8 +600,8 @@ Sidecars in schema mode
 Sidecar mode is always on in the Schema tab: each sidecar follows its base
 file and takes its new name.  A sidecar without a base file (an *orphan*) is
 neither renamed nor renumbered; its preview reads *orphan sidecar, not
-renamed*.  **Images → Orphan sidecars…** lists them (see
-:ref:`image-tools`).
+renamed*.  **File → Orphan sidecars…** lists them (see
+:ref:`file-tools`).
 
 Directories in schema mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -626,7 +628,7 @@ safe.
 Template
 ~~~~~~~~
 
-**Images → Template** fills the schema from the name of the selected file
+**File → Template** fills the schema from the name of the selected file
 and up to three of its parent folders: the parts of the name found in a
 field's history go to that field, and a trailing number goes to the counter
 field.  A dialog shows the proposed fields before they are filled in.
@@ -635,13 +637,15 @@ In headless mode, the same schema is given with ``--schema``, for instance
 ``--schema 'Paris,2024,,Street,,###' --dest ~/Photos`` (see
 :ref:`cli-reference`).
 
-.. _image-tools:
+.. _file-tools:
 
-Image Tools
------------
+File Tools
+----------
 
-PBRenamer includes tools to look at and tidy up photos and videos before
-sorting them.  Some depend on optional libraries (see
+PBRenamer includes tools to look at and tidy up the listed files before
+renaming or sorting them.  Most of them apply to any file; the image
+viewer, the rotations and the EXIF orientation apply to images and videos
+only.  Some depend on optional libraries (see
 :ref:`optional-dependencies`); an action that cannot work is disabled.
 
 .. _thumbnails:
@@ -678,11 +682,14 @@ lines), together with their sidecars.  The list is filtered as you type;
 **Enter** also adds the expression to the filter's own history.  Empty the
 field to list every file again.
 
-The Images menu
-~~~~~~~~~~~~~~~
+The File and Images menus
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The **Images** menu is also the context menu of the file list.  Its actions
-apply to the selected files:
+The **File** menu holds the actions that apply to any file, the **Images**
+menu those that apply to images and videos only.  The context menu of the
+file list holds the actions of both.  They apply to the selected files.
+
+In the **File** menu:
 
 **Open** (**Ctrl+O**)
     Open the files with their default application.
@@ -692,9 +699,6 @@ apply to the selected files:
 
 **Open sidecar**
     Open one of the sidecars of the file.
-
-**View** (**Enter**)
-    Show the selected images and videos in the image viewer.
 
 **Template**
     Fill the schema from the file name (see :ref:`schema-mode`).
@@ -708,6 +712,14 @@ apply to the selected files:
     List the sidecar files of the folder that have no base file, then
     delete the selected ones or all of them.
 
+**Information** (**Ctrl+I**) and **Refresh** (**F5**)
+    Show the file information window; read the folder again.
+
+In the **Images** menu:
+
+**View** (**Enter**)
+    Show the selected images and videos in the image viewer.
+
 **Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)
     Rotate the images without loss.
 
@@ -716,9 +728,6 @@ apply to the selected files:
 
 **Force EXIF orientation to 0°** (**F10**)
     Set the EXIF orientation tag to normal without rotating the pixels.
-
-**Information** (**Ctrl+I**) and **Refresh** (**F5**)
-    Show the file information window; read the folder again.
 
 .. _image-rotation:
 
@@ -930,7 +939,9 @@ Where things are now
      - **Renumber** (Schema tab with a counter field)
    * - Tooltip preview of the new name
      - **Preview** column
-   * - Rotations, EXIF, open, open with, delete, template, orphan sidecars
+   * - Open, open with, delete, template, orphan sidecars
+     - **File** menu and context menu of the file list
+   * - Rotations, EXIF
      - **Images** menu and context menu of the file list
    * - Image viewer
      - **Images → View** (**Enter**)

@@ -186,6 +186,100 @@ msgstr "Annuler"
 msgid "Undo last rename batch"
 msgstr "Annuler le dernier lot de renommage"
 
+msgid "Template"
+msgstr "Modèle"
+
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Impossible de déterminer un modèle pour « {name} ».\n"
+"Aucune partie du nom de fichier ne correspond à l'historique d'un champ."
+
+msgid "Confirm deletion"
+msgstr "Confirmer la suppression"
+
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Impossible de déplacer vers la corbeille : {name}"
+
+msgid "Deletion error"
+msgstr "Erreur de suppression"
+
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} fichiers sont sur un autre système de fichiers que la corbeille "
+"de session et ne peuvent pas y être déplacés.\n"
+"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
+
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Ces fichiers sont sur un autre système de fichiers que la corbeille de "
+"session et ne peuvent pas y être déplacés :\n"
+"{names}\n"
+"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
+
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Déplacer {count} fichiers vers la corbeille ?"
+
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Déplacer vers la corbeille :\n"
+"{names}"
+
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Déplacer {count} fichiers vers la corbeille de session ?"
+
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Déplacer vers la corbeille de session :\n"
+"{names}"
+
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Supprimer définitivement {count} fichiers ?"
+
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Supprimer définitivement :\n"
+"{names}"
+
+msgid "Rotation unavailable"
+msgstr "Rotation indisponible"
+
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} fichier(s) n'ont pas pu être pivotés."
+
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} fichier(s) pivoté(s)."
+
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} tag(s) d'orientation EXIF réinitialisé(s)."
+
 msgid "File information"
 msgstr "Informations sur le fichier"
 
@@ -368,100 +462,6 @@ msgstr "Supprimer toutes les entrées de l'historique de remplacement"
 
 msgid "Delete the entire replacement pattern history"
 msgstr "Supprimer tout l'historique des motifs de remplacement"
-
-msgid "Template"
-msgstr "Modèle"
-
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"Impossible de déterminer un modèle pour « {name} ».\n"
-"Aucune partie du nom de fichier ne correspond à l'historique d'un champ."
-
-msgid "Confirm deletion"
-msgstr "Confirmer la suppression"
-
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "Impossible de déplacer vers la corbeille : {name}"
-
-msgid "Deletion error"
-msgstr "Erreur de suppression"
-
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} fichiers sont sur un autre système de fichiers que la corbeille "
-"de session et ne peuvent pas y être déplacés.\n"
-"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
-
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Ces fichiers sont sur un autre système de fichiers que la corbeille de "
-"session et ne peuvent pas y être déplacés :\n"
-"{names}\n"
-"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
-
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "Déplacer {count} fichiers vers la corbeille ?"
-
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Déplacer vers la corbeille :\n"
-"{names}"
-
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "Déplacer {count} fichiers vers la corbeille de session ?"
-
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Déplacer vers la corbeille de session :\n"
-"{names}"
-
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Supprimer définitivement {count} fichiers ?"
-
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Supprimer définitivement :\n"
-"{names}"
-
-msgid "Rotation unavailable"
-msgstr "Rotation indisponible"
-
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "{n} fichier(s) n'ont pas pu être pivotés."
-
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} fichier(s) pivoté(s)."
-
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} tag(s) d'orientation EXIF réinitialisé(s)."
 
 msgid "Fit window  0 / X"
 msgstr "Adapter à la fenêtre  0 / X"
@@ -1002,10 +1002,10 @@ msgstr ""
 msgid "Delete the selected files"
 msgstr "Supprimer les fichiers sélectionnés"
 
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
 msgstr ""
-"Supprimer les fichiers sélectionnés et leurs sidecars (vers la corbeille "
-"si elle est activée)"
+"Supprimer les fichiers sélectionnés et leurs sidecars, comme le prévoit "
+"le profil"
 
 msgid "Orphan sidecars…"
 msgstr "Sidecars orphelins…"
@@ -1509,6 +1509,9 @@ msgstr ""
 "listés si aucun n'est sélectionné) comme indiqué dans la colonne Aperçu "
 "(actif uniquement en l'absence de conflit)"
 
+msgid "Open sidecar"
+msgstr "Ouvrir le sidecar"
+
 msgid "File"
 msgstr "Fichier"
 
@@ -1520,9 +1523,6 @@ msgstr "Profil"
 
 msgid "Images"
 msgstr "Images"
-
-msgid "Open sidecar"
-msgstr "Ouvrir le sidecar"
 
 msgid "Shortcuts"
 msgstr "Raccourcis"
@@ -2117,6 +2117,9 @@ msgstr "Champ {n} :"
 
 msgid "Display"
 msgstr "Affichage"
+
+msgid "Files"
+msgstr "Fichiers"
 
 msgid "Number of fields of the rename schema"
 msgstr "Nombre de champs du schéma de renommage"

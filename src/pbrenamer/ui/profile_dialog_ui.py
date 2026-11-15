@@ -28,7 +28,8 @@ class Ui_ProfileDialog:
         self.tabs = QTabWidget(dialog)
         self.tabs.addTab(self._make_schema_tab(dialog), _("Schema"))
         self.tabs.addTab(self._make_display_tab(dialog), _("Display"))
-        self.tabs.addTab(self._make_images_tab(dialog), _("Images"))
+        self.tabs.addTab(self._make_files_tab(dialog), _("Files"))
+        self.tabs.addTab(self._make_viewer_tab(dialog), _("Image viewer"))
         layout.addWidget(self.tabs)
 
         self.buttonBox = QDialogButtonBox(
@@ -148,14 +149,15 @@ class Ui_ProfileDialog:
         layout.addStretch()
         return tab
 
-    # ── Images tab ────────────────────────────────────────────────────────────
+    # ── Image viewer tab ──────────────────────────────────────────────────────
 
-    def _make_images_tab(self, dialog):
+    def _make_viewer_tab(self, dialog):
         tab = QWidget(dialog)
         layout = QVBoxLayout(tab)
 
-        viewer = QGroupBox(_("Image viewer"), tab)
+        viewer = QWidget(tab)
         form = QFormLayout(viewer)
+        form.setContentsMargins(0, 0, 0, 0)
         self.spnZoomStep = QSpinBox(viewer)
         self.spnZoomStep.setRange(5, 100)
         self.spnZoomStep.setSuffix(" %")
@@ -181,6 +183,14 @@ class Ui_ProfileDialog:
         )
         form.addRow(self.chkExifAutoRotate)
         layout.addWidget(viewer)
+        layout.addStretch()
+        return tab
+
+    # ── Files tab ─────────────────────────────────────────────────────────────
+
+    def _make_files_tab(self, dialog):
+        tab = QWidget(dialog)
+        layout = QVBoxLayout(tab)
 
         deletion = QGroupBox(_("Deletion"), tab)
         form = QFormLayout(deletion)

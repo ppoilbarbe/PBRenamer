@@ -64,10 +64,10 @@ the first start (see
   candidate base file) is flagged as an explicit, unrenamable error; an
   optional sidecar column opens or creates sidecars, and a filter keeps the
   files whose sidecar content matches a regular expression
-- **Image tools** — Images menu and context menu: viewer (zoom, selection
-  strip, metadata panel), lossless rotation (jpegtran or Pillow), apply or
-  reset the EXIF orientation, Open with, delete with sidecars (to the trash),
-  orphan sidecars
+- **File tools** — File menu and context menu, for any file: Open with,
+  delete with sidecars (undoable to a trash), orphan sidecars; Images menu,
+  for images and videos: viewer (zoom, selection strip, metadata panel),
+  lossless rotation (jpegtran or Pillow), apply or reset the EXIF orientation
 - **Drag'n'drop** — copy or move files and directories between the directory
   tree, the file list, and external applications, with a batched
   Overwrite/Skip/Cancel confirmation on collisions; sidecars follow their file

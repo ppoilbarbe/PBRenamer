@@ -39,12 +39,14 @@ _V1_CONF_KEYS = ("behaviour/last_dir", "behaviour/toolbar_state")
 # PBPicat settings.json keys copied as is into a profile.json section.
 _SECTION_KEYS = {
     "display": ("thumbnail_max_width", "thumbnail_max_height", "history_max"),
-    "images": (
-        "zoom_step_percent",
-        "zoom_max_percent",
+    "files": (
         "delete_empty_sidecars",
         "delete_list_max_files",
         "confirm_deletions",
+    ),
+    "viewer": (
+        "zoom_step_percent",
+        "zoom_max_percent",
         "exif_auto_rotate",
         "metadata_panel_side",
     ),
@@ -210,10 +212,10 @@ def _catalogue_profile(settings: dict, ui: QSettings | None) -> dict:
     # PBPicat always shows thumbnails, the sidecar column and the sidecar
     # filter, and deletes empty sidecars unless told otherwise.
     raw["display"].update(thumbnails=True, sidecar_column=True, sidecar_filter=True)
-    raw["images"].setdefault("delete_empty_sidecars", True)
+    raw["files"].setdefault("delete_empty_sidecars", True)
     new_ext = settings.get("sidecar_new_extension")
     if isinstance(new_ext, str) and new_ext.strip("."):
-        raw["images"]["sidecar_new_extension"] = new_ext.lstrip(".")
+        raw["files"]["sidecar_new_extension"] = new_ext.lstrip(".")
     if ui is not None:
         pos = _to_int(ui.value("schema/video_marker_pos", ""))
         if pos is not None:

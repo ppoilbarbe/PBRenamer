@@ -999,15 +999,15 @@ msgstr "Informazioni sul file"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) "
-"to display a non-modal window listing the actual values of every "
-"replacement field for the selected file.  Double-click a field to insert "
-"it into the replacement pattern."
+"Choose **File → Information** (**Ctrl+I**, also in the context menu of "
+"the file list) to display a non-modal window listing the actual values of"
+" every replacement field for the selected file.  Double-click a field to "
+"insert it into the replacement pattern."
 msgstr ""
-"Scegliere **File → Informazioni** (**Ctrl+I**, anche nel menu "
-"**Immagini**) per aprire una finestra non modale che elenca i valori "
-"reali di ogni campo di sostituzione per il file selezionato.  Fare doppio"
-" clic su un campo per inserirlo nel pattern di sostituzione."
+"Scegliere **File → Informazioni** (**Ctrl+I**, anche nel menu contestuale"
+" dell'elenco dei file) per aprire una finestra non modale che elenca i "
+"valori reali di ogni campo di sostituzione per il file selezionato.  Fare"
+" doppio clic su un campo per inserirlo nel pattern di sostituzione."
 
 # ==AUTO== Automatically translated
 msgid "The window has three groups:"
@@ -1099,13 +1099,14 @@ msgstr "le categorie e i suffissi :ref:`sidecar <sidecar-files>`;"
 # ==AUTO== Automatically translated
 msgid ""
 "the display options (thumbnails and their size, sidecar column, sidecar "
-"filter, sort by date, history length) and the image options (viewer zoom,"
-" EXIF orientation, metadata panel, deletion);"
+"filter, sort by date, history length), the file options (deletion) and "
+"the image viewer options (zoom, EXIF orientation, metadata panel);"
 msgstr ""
 "le opzioni di visualizzazione (miniature e loro dimensione, colonna "
 "sidecar, filtro sidecar, ordinamento per data, lunghezza delle "
-"cronologie) e le opzioni delle immagini (zoom del visualizzatore, "
-"orientamento EXIF, pannello dei metadati, eliminazione);"
+"cronologie), le opzioni dei file (eliminazione) e quelle del "
+"visualizzatore di immagini (zoom, orientamento EXIF, pannello dei "
+"metadati);"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1266,23 +1267,32 @@ msgstr ""
 " conservate in ogni cronologia."
 
 # ==AUTO== Automatically translated
-msgid "**Images**"
-msgstr "**Immagini**"
+msgid "**Files**"
+msgstr "**File**"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
-"whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: what happens to the deleted files "
-"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
-"number of files above which the confirmation only gives their count."
+"Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
+"whether to ask for a confirmation, and the number of files above which "
+"the confirmation only gives their count."
 msgstr ""
-"Visualizzatore di immagini: passo dello zoom, zoom massimo, lato del "
-"pannello dei metadati e se mostrare le immagini ruotate secondo il loro "
-"orientamento EXIF (vale anche per le miniature).  Eliminazione: cosa "
-"succede ai file eliminati (vedere :ref:`deletion-modes`), se chiedere una"
-" conferma, e il numero di file oltre il quale la conferma ne indica solo "
-"il numero."
+"Eliminazione: cosa succede ai file eliminati (vedere :ref:`deletion-"
+"modes`), se chiedere una conferma, e il numero di file oltre il quale la "
+"conferma ne indica solo il numero."
+
+# ==AUTO== Automatically translated
+msgid "**Image viewer**"
+msgstr "**Visualizzatore di immagini**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Zoom step, maximum zoom, side of the metadata panel, and whether images "
+"are shown turned as their EXIF orientation says (also applies to the "
+"thumbnails)."
+msgstr ""
+"Passo dello zoom, zoom massimo, lato del pannello dei metadati e se "
+"mostrare le immagini ruotate secondo il loro orientamento EXIF (vale "
+"anche per le miniature)."
 
 # ==AUTO== Automatically translated
 msgid "Deleted files"
@@ -1459,14 +1469,14 @@ msgid ""
 "Sidecar mode is always on in the Schema tab: each sidecar follows its "
 "base file and takes its new name.  A sidecar without a base file (an "
 "*orphan*) is neither renamed nor renumbered; its preview reads *orphan "
-"sidecar, not renamed*.  **Images → Orphan sidecars…** lists them (see "
-":ref:`image-tools`)."
+"sidecar, not renamed*.  **File → Orphan sidecars…** lists them (see :ref"
+":`file-tools`)."
 msgstr ""
 "Nella scheda Schema la modalità sidecar è sempre attiva: ogni sidecar "
 "segue il proprio file principale e ne prende il nuovo nome.  Un sidecar "
 "senza file principale (un *orfano*) non viene né rinominato né "
 "rinumerato; la sua anteprima indica *sidecar orfano, non rinominato*.  "
-"**Immagini → Sidecar orfani…** li elenca (vedere :ref:`image-tools`)."
+"**File → Sidecar orfani…** li elenca (vedere :ref:`file-tools`)."
 
 # ==AUTO== Automatically translated
 msgid "Directories in schema mode"
@@ -1522,13 +1532,13 @@ msgstr "Modello"
 
 # ==AUTO== Automatically translated
 msgid ""
-"**Images → Template** fills the schema from the name of the selected file"
-" and up to three of its parent folders: the parts of the name found in a "
+"**File → Template** fills the schema from the name of the selected file "
+"and up to three of its parent folders: the parts of the name found in a "
 "field's history go to that field, and a trailing number goes to the "
 "counter field.  A dialog shows the proposed fields before they are filled"
 " in."
 msgstr ""
-"**Immagini → Modello** compila lo schema a partire dal nome del file "
+"**File → Modello** compila lo schema a partire dal nome del file "
 "selezionato e da un massimo di tre delle sue cartelle superiori: le parti"
 " del nome presenti nella cronologia di un campo vanno in quel campo, e un"
 " numero finale va nel campo contatore.  Una finestra mostra i campi "
@@ -1545,19 +1555,23 @@ msgstr ""
 "~/Photos`` (vedere :ref:`cli-reference`)."
 
 # ==AUTO== Automatically translated
-msgid "Image Tools"
-msgstr "Strumenti per le immagini"
+msgid "File Tools"
+msgstr "Strumenti per i file"
 
 # ==AUTO== Automatically translated
 msgid ""
-"PBRenamer includes tools to look at and tidy up photos and videos before "
-"sorting them.  Some depend on optional libraries (see :ref:`optional-"
+"PBRenamer includes tools to look at and tidy up the listed files before "
+"renaming or sorting them.  Most of them apply to any file; the image "
+"viewer, the rotations and the EXIF orientation apply to images and videos"
+" only.  Some depend on optional libraries (see :ref:`optional-"
 "dependencies`); an action that cannot work is disabled."
 msgstr ""
-"PBRenamer include strumenti per esaminare e riordinare foto e video prima"
-" di ordinarli.  Alcuni dipendono da librerie facoltative (vedere :ref"
-":`optional-dependencies`); un'azione che non può funzionare è "
-"disattivata."
+"PBRenamer include strumenti per esaminare e riordinare i file elencati "
+"prima di rinominarli o ordinarli.  La maggior parte vale per qualsiasi "
+"file; il visualizzatore di immagini, le rotazioni e l'orientamento EXIF "
+"solo per immagini e video.  Alcuni dipendono da librerie facoltative "
+"(vedere :ref:`optional-dependencies`); un'azione che non può funzionare è"
+" disattivata."
 
 # ==AUTO== Automatically translated
 msgid "Thumbnails"
@@ -1622,16 +1636,24 @@ msgstr ""
 "file."
 
 # ==AUTO== Automatically translated
-msgid "The Images menu"
-msgstr "Il menu Immagini"
+msgid "The File and Images menus"
+msgstr "I menu File e Immagini"
 
 # ==AUTO== Automatically translated
 msgid ""
-"The **Images** menu is also the context menu of the file list.  Its "
-"actions apply to the selected files:"
+"The **File** menu holds the actions that apply to any file, the "
+"**Images** menu those that apply to images and videos only.  The context "
+"menu of the file list holds the actions of both.  They apply to the "
+"selected files."
 msgstr ""
-"Il menu **Immagini** è anche il menu contestuale dell'elenco dei file.  "
-"Le sue azioni si applicano ai file selezionati:"
+"Il menu **File** raccoglie le azioni che valgono per qualsiasi file, il "
+"menu **Immagini** quelle che riguardano solo immagini e video.  Il menu "
+"contestuale dell'elenco dei file contiene le azioni di entrambi.  Si "
+"applicano ai file selezionati."
+
+# ==AUTO== Automatically translated
+msgid "In the **File** menu:"
+msgstr "Nel menu **File**:"
 
 # ==AUTO== Automatically translated
 msgid "**Open** (**Ctrl+O**)"
@@ -1656,14 +1678,6 @@ msgstr "**Apri sidecar**"
 # ==AUTO== Automatically translated
 msgid "Open one of the sidecars of the file."
 msgstr "Apre uno dei sidecar del file."
-
-# ==AUTO== Automatically translated
-msgid "**View** (**Enter**)"
-msgstr "**Visualizza** (**Invio**)"
-
-# ==AUTO== Automatically translated
-msgid "Show the selected images and videos in the image viewer."
-msgstr "Mostra le immagini e i video selezionati nel visualizzatore di immagini."
 
 # ==AUTO== Automatically translated
 msgid "**Template**"
@@ -1702,6 +1716,26 @@ msgstr ""
 "poi elimina quelli selezionati o tutti."
 
 # ==AUTO== Automatically translated
+msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
+msgstr "**Informazioni** (**Ctrl+I**) e **Aggiorna** (**F5**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the file information window; read the folder again."
+msgstr "Mostra la finestra delle informazioni sul file; rilegge la cartella."
+
+# ==AUTO== Automatically translated
+msgid "In the **Images** menu:"
+msgstr "Nel menu **Immagini**:"
+
+# ==AUTO== Automatically translated
+msgid "**View** (**Enter**)"
+msgstr "**Visualizza** (**Invio**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer."
+msgstr "Mostra le immagini e i video selezionati nel visualizzatore di immagini."
+
+# ==AUTO== Automatically translated
 msgid "**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)"
 msgstr ""
 "**Ruota di 90° a sinistra / 180° / 90° a destra** (**F6** / **F7** / "
@@ -1726,14 +1760,6 @@ msgstr "**Forza orientamento EXIF a 0°** (**F10**)"
 # ==AUTO== Automatically translated
 msgid "Set the EXIF orientation tag to normal without rotating the pixels."
 msgstr "Imposta il tag di orientamento EXIF su normale senza ruotare i pixel."
-
-# ==AUTO== Automatically translated
-msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
-msgstr "**Informazioni** (**Ctrl+I**) e **Aggiorna** (**F5**)"
-
-# ==AUTO== Automatically translated
-msgid "Show the file information window; read the folder again."
-msgstr "Mostra la finestra delle informazioni sul file; rilegge la cartella."
 
 # ==AUTO== Automatically translated
 msgid "Rotation and EXIF orientation"
@@ -2270,8 +2296,16 @@ msgid "**Preview** column"
 msgstr "Colonna **Anteprima**"
 
 # ==AUTO== Automatically translated
-msgid "Rotations, EXIF, open, open with, delete, template, orphan sidecars"
-msgstr "Rotazioni, EXIF, apri, apri con, elimina, modello, sidecar orfani"
+msgid "Open, open with, delete, template, orphan sidecars"
+msgstr "Apri, apri con, elimina, modello, sidecar orfani"
+
+# ==AUTO== Automatically translated
+msgid "**File** menu and context menu of the file list"
+msgstr "Menu **File** e menu contestuale dell'elenco dei file"
+
+# ==AUTO== Automatically translated
+msgid "Rotations, EXIF"
+msgstr "Rotazioni, EXIF"
 
 # ==AUTO== Automatically translated
 msgid "**Images** menu and context menu of the file list"

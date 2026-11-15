@@ -77,7 +77,8 @@ class TestDisplayTab:
         assert [ui.tabs.tabText(i) for i in range(ui.tabs.count())] == [
             "Schema",
             "Display",
-            "Images",
+            "Files",
+            "Image viewer",
         ]
         assert not ui.chkThumbnails.isChecked()
         assert ui.spnThumbWidth.value() == 128
@@ -114,8 +115,8 @@ class TestDisplayTab:
             "sort_by_date": False,
             "sort_reverse": False,
         }
-        assert data["images"]["sidecar_new_extension"] == "prompt.txt"
-        assert data["images"]["delete_empty_sidecars"] is True
+        assert data["files"]["sidecar_new_extension"] == "prompt.txt"
+        assert data["files"]["delete_empty_sidecars"] is True
 
 
 class TestImagesTab:
@@ -139,18 +140,19 @@ class TestImagesTab:
         ui.chkConfirmDeletions.setChecked(False)
         ui.spnDeleteListMax.setValue(3)
         ui.buttonBox.accepted.emit()
-        images = profiles.load()["images"]
-        assert images["zoom_step_percent"] == 50
-        assert images["zoom_max_percent"] == 800
-        assert images["metadata_panel_side"] == "left"
-        assert images["exif_auto_rotate"] is False
-        assert images["deletion_mode"] == "session"
-        assert images["confirm_deletions"] is False
-        assert images["delete_list_max_files"] == 3
+        data = profiles.load()
+        viewer, files = data["viewer"], data["files"]
+        assert viewer["zoom_step_percent"] == 50
+        assert viewer["zoom_max_percent"] == 800
+        assert viewer["metadata_panel_side"] == "left"
+        assert viewer["exif_auto_rotate"] is False
+        assert files["deletion_mode"] == "session"
+        assert files["confirm_deletions"] is False
+        assert files["delete_list_max_files"] == 3
 
     def test_unknown_side_falls_back_to_right(self, qtbot):
         data = profiles.load()
-        data["images"]["metadata_panel_side"] = "top"
+        data["viewer"]["metadata_panel_side"] = "top"
         profiles.save(data)
         dlg = ProfileDialog(MagicMock(**{"load_geometry.return_value": None}))
         qtbot.addWidget(dlg)

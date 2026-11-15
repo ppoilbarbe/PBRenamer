@@ -229,6 +229,117 @@ msgid "Undo last rename batch"
 msgstr "Deshacer el último lote de renombrado"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Plantilla"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"No se pudo determinar una plantilla para «{name}».\n"
+"Ninguna parte del nombre de archivo coincide con el historial de un campo."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Confirmar eliminación"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "No se pudo mover a la papelera: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Error de eliminación"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} archivos están en un sistema de archivos distinto del de la "
+"papelera de sesión y no se pueden mover a ella.\n"
+"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Estos archivos están en un sistema de archivos distinto del de la "
+"papelera de sesión y no se pueden mover a ella:\n"
+"{names}\n"
+"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "¿Mover {count} archivos a la papelera?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Mover a la papelera:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "¿Mover {count} archivos a la papelera de sesión?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Mover a la papelera de sesión:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Eliminar permanentemente {count} archivos?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Eliminar definitivamente:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Rotación no disponible"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "No se pudieron rotar {n} archivo(s)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} archivo(s) rotado(s)."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} etiqueta(s) de orientación EXIF restablecida(s)."
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Información del archivo"
 
@@ -469,117 +580,6 @@ msgstr "Eliminar todas las entradas del historial de reemplazo"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Eliminar todo el historial de patrones de reemplazo"
-
-# ==AUTO== Automatically translated
-msgid "Template"
-msgstr "Plantilla"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"No se pudo determinar una plantilla para «{name}».\n"
-"Ninguna parte del nombre de archivo coincide con el historial de un campo."
-
-# ==AUTO== Automatically translated
-msgid "Confirm deletion"
-msgstr "Confirmar eliminación"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "No se pudo mover a la papelera: {name}"
-
-# ==AUTO== Automatically translated
-msgid "Deletion error"
-msgstr "Error de eliminación"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} archivos están en un sistema de archivos distinto del de la "
-"papelera de sesión y no se pueden mover a ella.\n"
-"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Estos archivos están en un sistema de archivos distinto del de la "
-"papelera de sesión y no se pueden mover a ella:\n"
-"{names}\n"
-"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "¿Mover {count} archivos a la papelera?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Mover a la papelera:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "¿Mover {count} archivos a la papelera de sesión?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Mover a la papelera de sesión:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Eliminar permanentemente {count} archivos?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Eliminar definitivamente:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-msgid "Rotation unavailable"
-msgstr "Rotación no disponible"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "No se pudieron rotar {n} archivo(s)."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} archivo(s) rotado(s)."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} etiqueta(s) de orientación EXIF restablecida(s)."
 
 # ==AUTO== Automatically translated
 msgid "Fit window  0 / X"
@@ -1288,10 +1288,8 @@ msgid "Delete the selected files"
 msgstr "Eliminar los archivos seleccionados"
 
 # ==AUTO== Automatically translated
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr ""
-"Eliminar los archivos seleccionados y sus sidecars (a la papelera si está"
-" activada)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "Eliminar los archivos seleccionados y sus sidecars, según el perfil"
 
 # ==AUTO== Automatically translated
 msgid "Orphan sidecars…"
@@ -1914,6 +1912,10 @@ msgstr ""
 "Vista previa (solo activo si no hay conflictos)"
 
 # ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Abrir sidecar"
+
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "Archivo"
 
@@ -1928,10 +1930,6 @@ msgstr "Perfil"
 # ==AUTO== Automatically translated
 msgid "Images"
 msgstr "Imágenes"
-
-# ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Abrir sidecar"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -2675,6 +2673,10 @@ msgstr "Campo {n}:"
 # ==AUTO== Automatically translated
 msgid "Display"
 msgstr "Visualización"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "Archivos"
 
 # ==AUTO== Automatically translated
 msgid "Number of fields of the rename schema"

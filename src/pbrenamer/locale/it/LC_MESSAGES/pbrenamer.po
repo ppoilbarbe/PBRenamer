@@ -227,6 +227,117 @@ msgid "Undo last rename batch"
 msgstr "Annulla l'ultimo batch di rinominazione"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Modello"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Impossibile determinare un modello per «{name}».\n"
+"Nessuna parte del nome del file corrisponde alla cronologia di un campo."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Conferma eliminazione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Impossibile spostare nel cestino: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Errore di eliminazione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} file si trovano su un file system diverso da quello del cestino "
+"di sessione e non possono esservi spostati.\n"
+"Eliminarli definitivamente? L'operazione non può essere annullata."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Questi file si trovano su un file system diverso da quello del cestino di"
+" sessione e non possono esservi spostati:\n"
+"{names}\n"
+"Eliminarli definitivamente? L'operazione non può essere annullata."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Spostare {count} file nel cestino?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Sposta nel cestino:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Spostare {count} file nel cestino di sessione?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Sposta nel cestino di sessione:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Eliminare definitivamente {count} file?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Eliminare definitivamente:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Rotazione non disponibile"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Impossibile ruotare {n} file."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} file ruotati."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} tag di orientamento EXIF reimpostato/i."
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Informazioni sul file"
 
@@ -467,117 +578,6 @@ msgstr "Rimuovi tutte le voci della cronologia di sostituzione"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Elimina l'intera cronologia dei pattern di sostituzione"
-
-# ==AUTO== Automatically translated
-msgid "Template"
-msgstr "Modello"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"Impossibile determinare un modello per «{name}».\n"
-"Nessuna parte del nome del file corrisponde alla cronologia di un campo."
-
-# ==AUTO== Automatically translated
-msgid "Confirm deletion"
-msgstr "Conferma eliminazione"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "Impossibile spostare nel cestino: {name}"
-
-# ==AUTO== Automatically translated
-msgid "Deletion error"
-msgstr "Errore di eliminazione"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} file si trovano su un file system diverso da quello del cestino "
-"di sessione e non possono esservi spostati.\n"
-"Eliminarli definitivamente? L'operazione non può essere annullata."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Questi file si trovano su un file system diverso da quello del cestino di"
-" sessione e non possono esservi spostati:\n"
-"{names}\n"
-"Eliminarli definitivamente? L'operazione non può essere annullata."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "Spostare {count} file nel cestino?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Sposta nel cestino:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "Spostare {count} file nel cestino di sessione?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Sposta nel cestino di sessione:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Eliminare definitivamente {count} file?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Eliminare definitivamente:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-msgid "Rotation unavailable"
-msgstr "Rotazione non disponibile"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "Impossibile ruotare {n} file."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} file ruotati."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} tag di orientamento EXIF reimpostato/i."
 
 # ==AUTO== Automatically translated
 msgid "Fit window  0 / X"
@@ -1284,8 +1284,8 @@ msgid "Delete the selected files"
 msgstr "Elimina i file selezionati"
 
 # ==AUTO== Automatically translated
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr "Elimina i file selezionati e i loro sidecar (nel cestino se attivato)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "Elimina i file selezionati e i loro sidecar, come impostato nel profilo"
 
 # ==AUTO== Automatically translated
 msgid "Orphan sidecars…"
@@ -1906,6 +1906,10 @@ msgstr ""
 " in assenza di conflitti)"
 
 # ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Apri sidecar"
+
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "File"
 
@@ -1920,10 +1924,6 @@ msgstr "Profilo"
 # ==AUTO== Automatically translated
 msgid "Images"
 msgstr "Immagini"
-
-# ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Apri sidecar"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -2670,6 +2670,10 @@ msgstr "Campo {n}:"
 # ==AUTO== Automatically translated
 msgid "Display"
 msgstr "Visualizzazione"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "File"
 
 # ==AUTO== Automatically translated
 msgid "Number of fields of the rename schema"

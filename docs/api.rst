@@ -264,10 +264,10 @@ schema\_proposal\_dialog
    :members:
    :undoc-members:
 
-image\_actions
-~~~~~~~~~~~~~~
+file\_actions
+~~~~~~~~~~~~~
 
-.. automodule:: pbrenamer.ui.image_actions
+.. automodule:: pbrenamer.ui.file_actions
    :members:
    :undoc-members:
 

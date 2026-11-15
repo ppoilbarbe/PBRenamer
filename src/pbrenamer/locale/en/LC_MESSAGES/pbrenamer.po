@@ -181,6 +181,100 @@ msgstr "Undo"
 msgid "Undo last rename batch"
 msgstr "Undo last rename batch"
 
+msgid "Template"
+msgstr "Template"
+
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+
+msgid "Confirm deletion"
+msgstr "Confirm deletion"
+
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Could not move to trash: {name}"
+
+msgid "Deletion error"
+msgstr "Deletion error"
+
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Move {count} files to trash?"
+
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Move to trash:\n"
+"{names}"
+
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Move {count} files to the session trash?"
+
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Move to the session trash:\n"
+"{names}"
+
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Permanently delete {count} files?"
+
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Permanently delete:\n"
+"{names}"
+
+msgid "Rotation unavailable"
+msgstr "Rotation unavailable"
+
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} file(s) could not be rotated."
+
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} file(s) rotated."
+
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} EXIF orientation tag(s) reset."
+
 msgid "File information"
 msgstr "File information"
 
@@ -363,100 +457,6 @@ msgstr "Remove all replacement history entries"
 
 msgid "Delete the entire replacement pattern history"
 msgstr "Delete the entire replacement pattern history"
-
-msgid "Template"
-msgstr "Template"
-
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-
-msgid "Confirm deletion"
-msgstr "Confirm deletion"
-
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "Could not move to trash: {name}"
-
-msgid "Deletion error"
-msgstr "Deletion error"
-
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "Move {count} files to trash?"
-
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Move to trash:\n"
-"{names}"
-
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "Move {count} files to the session trash?"
-
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Move to the session trash:\n"
-"{names}"
-
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Permanently delete {count} files?"
-
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Permanently delete:\n"
-"{names}"
-
-msgid "Rotation unavailable"
-msgstr "Rotation unavailable"
-
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "{n} file(s) could not be rotated."
-
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} file(s) rotated."
-
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} EXIF orientation tag(s) reset."
 
 msgid "Fit window  0 / X"
 msgstr "Fit window  0 / X"
@@ -982,8 +982,8 @@ msgstr "Infer the schema fields from the selected file name and its folders"
 msgid "Delete the selected files"
 msgstr "Delete the selected files"
 
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr "Delete the selected files and their sidecars (to the trash if enabled)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "Delete the selected files and their sidecars, as set in the profile"
 
 msgid "Orphan sidecars…"
 msgstr "Orphan sidecars…"
@@ -1478,6 +1478,9 @@ msgstr ""
 "selected) as shown in the Preview column (only enabled when there are no "
 "conflicts)"
 
+msgid "Open sidecar"
+msgstr "Open sidecar"
+
 msgid "File"
 msgstr "File"
 
@@ -1489,9 +1492,6 @@ msgstr "Profile"
 
 msgid "Images"
 msgstr "Images"
-
-msgid "Open sidecar"
-msgstr "Open sidecar"
 
 msgid "Shortcuts"
 msgstr "Shortcuts"
@@ -2070,6 +2070,9 @@ msgstr "Field {n}:"
 
 msgid "Display"
 msgstr "Display"
+
+msgid "Files"
+msgstr "Files"
 
 msgid "Number of fields of the rename schema"
 msgstr "Number of fields of the rename schema"

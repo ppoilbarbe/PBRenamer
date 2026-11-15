@@ -302,7 +302,7 @@ class TestOpenCurrentFolder:
     def test_shortcuts(self, window):
         keys = [k.toString() for k in window._ui.actionOpenCurrentFolder.shortcuts()]
         assert keys == ["Ctrl+Enter", "Ctrl+Return"]
-        assert window._ui.actionImgOpen.shortcut().toString() == "Ctrl+O"
+        assert window._ui.actionFileOpen.shortcut().toString() == "Ctrl+O"
 
     def test_open_folder_uses_desktop_services(self, monkeypatch):
         urls = []
@@ -1956,7 +1956,7 @@ class TestFileInfoWindow:
         shown = []
         monkeypatch.setattr(file_list, "_exec_menu", lambda m, p: shown.append(m))
         window._files._on_context_menu(window._ui.tblFiles.pos())
-        assert shown == [window._ui.menuImages]
+        assert shown == [window._ui.menuContext]
 
 
 # ---------------------------------------------------------------------------

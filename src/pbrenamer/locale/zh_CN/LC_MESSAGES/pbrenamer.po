@@ -216,6 +216,115 @@ msgid "Undo last rename batch"
 msgstr "撤销上一批重命名"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "模板"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"无法确定“{name}”的模板。\n"
+"文件名的任何部分都不匹配字段历史记录。"
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "确认删除"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "无法移至回收站：{name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "删除错误"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} 个文件与会话回收站不在同一文件系统上，无法移入其中。\n"
+"要永久删除它们吗？此操作无法撤销。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"以下文件与会话回收站不在同一文件系统上，无法移入其中：\n"
+"{names}\n"
+"要永久删除它们吗？此操作无法撤销。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "将 {count} 个文件移至回收站？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"移至回收站：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "将 {count} 个文件移到会话回收站？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"移到会话回收站：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "永久删除 {count} 个文件？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"永久删除：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "旋转不可用"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "{n} 个文件无法旋转。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "已旋转{n}个文件。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "已重置 {n} 个 EXIF 方向标签。"
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "文件信息"
 
@@ -456,115 +565,6 @@ msgstr "删除所有替换历史记录条目"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "删除整个替换模式历史记录"
-
-# ==AUTO== Automatically translated
-msgid "Template"
-msgstr "模板"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"无法确定“{name}”的模板。\n"
-"文件名的任何部分都不匹配字段历史记录。"
-
-# ==AUTO== Automatically translated
-msgid "Confirm deletion"
-msgstr "确认删除"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "无法移至回收站：{name}"
-
-# ==AUTO== Automatically translated
-msgid "Deletion error"
-msgstr "删除错误"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} 个文件与会话回收站不在同一文件系统上，无法移入其中。\n"
-"要永久删除它们吗？此操作无法撤销。"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"以下文件与会话回收站不在同一文件系统上，无法移入其中：\n"
-"{names}\n"
-"要永久删除它们吗？此操作无法撤销。"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "将 {count} 个文件移至回收站？"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"移至回收站：\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "将 {count} 个文件移到会话回收站？"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"移到会话回收站：\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "永久删除 {count} 个文件？"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"永久删除：\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-msgid "Rotation unavailable"
-msgstr "旋转不可用"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "{n} 个文件无法旋转。"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "已旋转{n}个文件。"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "已重置 {n} 个 EXIF 方向标签。"
 
 # ==AUTO== Automatically translated
 msgid "Fit window  0 / X"
@@ -1256,8 +1256,8 @@ msgid "Delete the selected files"
 msgstr "删除所选文件"
 
 # ==AUTO== Automatically translated
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr "删除所选文件及其 Sidecar 文件（如已启用则移至回收站）"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "按配置文件的设置删除所选文件及其 Sidecar 文件"
 
 # ==AUTO== Automatically translated
 msgid "Orphan sidecars…"
@@ -1820,6 +1820,10 @@ msgid ""
 msgstr "按“预览”列所示永久重命名所选文件（未选择时为所有列出的文件）（仅在无冲突时可用）"
 
 # ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "打开 Sidecar 文件"
+
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "文件"
 
@@ -1834,10 +1838,6 @@ msgstr "配置文件"
 # ==AUTO== Automatically translated
 msgid "Images"
 msgstr "图像"
-
-# ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "打开 Sidecar 文件"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -2531,6 +2531,10 @@ msgstr "字段 {n}："
 # ==AUTO== Automatically translated
 msgid "Display"
 msgstr "显示"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "文件"
 
 # ==AUTO== Automatically translated
 msgid "Number of fields of the rename schema"

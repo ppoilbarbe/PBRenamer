@@ -110,7 +110,7 @@ from pbrenamer.ui import file_list as file_list_mod  # noqa: E402
 def _display(ctrl, **values):
     data = profiles.load()
     for key, value in values.items():
-        section = "images" if key in data["images"] else "display"
+        section = next((s for s in ("files", "viewer") if key in data[s]), "display")
         data[section][key] = value
     profiles.save(data)
     ctrl.apply_display()

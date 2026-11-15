@@ -28,9 +28,9 @@ from pbrenamer.platform import system_bookmarks
 from pbrenamer.resources import path as _resource
 from pbrenamer.ui.about_dialog import AboutDialog
 from pbrenamer.ui.action_bar import ActionBar
+from pbrenamer.ui.file_actions import FileActions
 from pbrenamer.ui.file_list import FileListController, PreviewEntry
 from pbrenamer.ui.history_dialog import HistoryDialog
-from pbrenamer.ui.image_actions import ImageActions
 from pbrenamer.ui.keyboard_help import keyboard_html
 from pbrenamer.ui.main_window_ui import OPEN_FOLDER_KEYS, Ui_MainWindow
 from pbrenamer.ui.pattern_help import PatternHelpDialog
@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
             self._ui, self._presets, self._window_state, self._files, self
         )
         self._actions = ActionBar(self._ui, self._undo, self)
-        self._images = ImageActions(
+        self._file_actions = FileActions(
             self._ui, self._files, self._undo, self._window_state, self, self._trash
         )
         self._profile_actions: list = []
@@ -238,9 +238,9 @@ class MainWindow(QMainWindow):
         self._files.rename_count_changed.connect(self._update_renumber_button)
         self._files.undo_stack_changed.connect(self._actions.refresh_undo)
         self._files.field_requested.connect(self._pattern.insert_field)
-        self._images.undo_stack_changed.connect(self._actions.refresh_undo)
-        self._images.status_message.connect(self.statusBar().showMessage)
-        self._images.template_accepted.connect(self._on_template_accepted)
+        self._file_actions.undo_stack_changed.connect(self._actions.refresh_undo)
+        self._file_actions.status_message.connect(self.statusBar().showMessage)
+        self._file_actions.template_accepted.connect(self._on_template_accepted)
 
         # Menu bar
         self._ui.actionQuit.triggered.connect(self._on_quit)
@@ -777,7 +777,7 @@ class MainWindow(QMainWindow):
             self._files.current_dir = last_dir
             self._navigate_to(last_dir)
         self._files.clear_preview()
-        self._images.apply_profile()
+        self._file_actions.apply_profile()
         self._files.apply_display()
         self.statusBar().showMessage(_("Profile “{name}” loaded.").format(name=name))
 
@@ -792,7 +792,7 @@ class MainWindow(QMainWindow):
         self._schema.reload_profile()
         self._schema.set_fields(values)
         self._apply_mode_state()
-        self._images.apply_profile()
+        self._file_actions.apply_profile()
         self._files.apply_display()
         self._actions.request_auto_preview()
 

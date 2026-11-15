@@ -126,7 +126,7 @@ class FileListController(QObject):
         self._sidecar_column = False
         self._filter_shown = False
         self._delete_empty_sidecars = False
-        self._new_sidecar_ext = profiles.DEFAULTS["images"]["sidecar_new_extension"]
+        self._new_sidecar_ext = profiles.DEFAULTS["files"]["sidecar_new_extension"]
         self._sort_by_date = False
         self._sort_reverse = False
         self._thumbs = ThumbnailLoader(self._ui.tblFiles, self)
@@ -208,11 +208,11 @@ class FileListController(QObject):
     def apply_display(self) -> None:
         """Apply the display settings of the current profile and reload."""
         data = profiles.load()
-        display, images = data["display"], data["images"]
+        display, files, viewer = data["display"], data["files"], data["viewer"]
         self._sidecar_column = display["sidecar_column"]
         self._filter_shown = display["sidecar_filter"]
-        self._delete_empty_sidecars = images["delete_empty_sidecars"]
-        self._new_sidecar_ext = images["sidecar_new_extension"]
+        self._delete_empty_sidecars = files["delete_empty_sidecars"]
+        self._new_sidecar_ext = files["sidecar_new_extension"]
         self._sort_by_date = display["sort_by_date"]
         self._sort_reverse = display["sort_reverse"]
         for box, value in (
@@ -227,7 +227,7 @@ class FileListController(QObject):
             display["thumbnails"],
             display["thumbnail_max_width"],
             display["thumbnail_max_height"],
-            images["exif_auto_rotate"],
+            viewer["exif_auto_rotate"],
             config.base_extensions.get("image", frozenset()),
             config.base_extensions.get("video", frozenset()),
         )
@@ -1140,4 +1140,4 @@ class FileListController(QObject):
 
     def _on_context_menu(self, pos) -> None:
         """The context menu is the Images menu."""
-        _exec_menu(self._ui.menuImages, self._ui.tblFiles.viewport().mapToGlobal(pos))
+        _exec_menu(self._ui.menuContext, self._ui.tblFiles.viewport().mapToGlobal(pos))

@@ -1,4 +1,4 @@
-"""Tests for pbrenamer.ui.image_actions — the Images menu, the viewer
+"""Tests for pbrenamer.ui.file_actions — the Images menu, the viewer
 wiring, deletion, orphan sidecars, Template and rotations."""
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from pbrenamer import profiles
 from pbrenamer.core import image_ops
 from pbrenamer.core.undo import DeleteEntry, ExifResetEntry, RotationEntry
 from pbrenamer.platform import trash as system_trash
-from pbrenamer.ui import image_actions
+from pbrenamer.ui import file_actions
 from pbrenamer.ui.main_window import MainWindow
 
 _SCHEMA_TAB = 1
@@ -46,17 +46,17 @@ def calls(monkeypatch):
         record["ask"].append(text)
         return answer["ask"]
 
-    monkeypatch.setattr(image_actions, "_ask", ask)
+    monkeypatch.setattr(file_actions, "_ask", ask)
     monkeypatch.setattr(
-        image_actions,
+        file_actions,
         "_warn",
         lambda _p, title, text, details="": record["warn"].append(
             (title, text, details)
         ),
     )
-    monkeypatch.setattr(image_actions, "_open_path", record["open"].append)
+    monkeypatch.setattr(file_actions, "_open_path", record["open"].append)
     monkeypatch.setattr(
-        image_actions._open_with,
+        file_actions._open_with,
         "open_with",
         lambda p, _w: record["open_with"].append(p),
     )
@@ -128,36 +128,36 @@ class TestTargets:
         _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png")
-        assert window._images.targets() == [a]
+        assert window._file_actions.targets() == [a]
 
     def test_current_row_without_selection(self, window, tmp_path):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
         window._ui.tblFiles.clearSelection()
-        assert window._images.targets() == [a]
+        assert window._file_actions.targets() == [a]
 
     def test_nothing(self, window):
         window._ui.tblFiles.clear()
-        assert window._images.targets() == []
+        assert window._file_actions.targets() == []
 
     def test_directories_ignored(self, window, tmp_path):
         (tmp_path / "sub").mkdir()
         window._ui.cmbMode.setCurrentIndex(2)
         _load(window, tmp_path)
         _select(window, "sub")
-        assert window._images.targets() == []
+        assert window._file_actions.targets() == []
 
 
 class TestUpdateEnabled:
     def test_no_target(self, window):
         window._ui.tblFiles.clear()
-        window._images.update_enabled()
+        window._file_actions.update_enabled()
         ui = window._ui
         for act in (
-            ui.actionImgOpen,
-            ui.actionImgView,
-            ui.actionImgTemplate,
-            ui.actionImgDelete,
+            ui.actionFileOpen,
+            ui.actionImageView,
+            ui.actionFileTemplate,
+            ui.actionFileDelete,
             ui.actionRotateLeft,
             ui.actionRotateExif,
         ):
@@ -168,9 +168,9 @@ class TestUpdateEnabled:
         _load(window, tmp_path)
         _select(window, "a.png")
         ui = window._ui
-        assert ui.actionImgOpen.isEnabled()
-        assert ui.actionImgView.isEnabled()
-        assert ui.actionImgTemplate.isEnabled()
+        assert ui.actionFileOpen.isEnabled()
+        assert ui.actionImageView.isEnabled()
+        assert ui.actionFileTemplate.isEnabled()
         assert ui.actionRotateLeft.isEnabled()
         assert not ui.actionRotateExif.isEnabled()
         assert not ui.actionResetExif.isEnabled()
@@ -181,9 +181,9 @@ class TestUpdateEnabled:
         _load(window, tmp_path)
         _select(window, "a.txt", "b.txt")
         ui = window._ui
-        assert ui.actionImgOpen.isEnabled()
-        assert not ui.actionImgView.isEnabled()
-        assert not ui.actionImgTemplate.isEnabled()
+        assert ui.actionFileOpen.isEnabled()
+        assert not ui.actionImageView.isEnabled()
+        assert not ui.actionFileTemplate.isEnabled()
         assert not ui.actionRotateLeft.isEnabled()
 
     @needs_pyexiv2
@@ -197,7 +197,7 @@ class TestUpdateEnabled:
     def test_many_images_not_read(self, window, tmp_path, monkeypatch):
         for i in range(3):
             _png(tmp_path / f"{i}.png")
-        monkeypatch.setattr(image_actions, "_EXIF_CHECK_MAX", 0)
+        monkeypatch.setattr(file_actions, "_EXIF_CHECK_MAX", 0)
         _load(window, tmp_path)
         monkeypatch.setattr(
             image_ops, "get_exif_orientation", lambda _p: pytest.fail("read")
@@ -225,11 +225,11 @@ class TestUpdateEnabled:
     def test_orphans_on_menu_show(self, window, tmp_path):
         (tmp_path / "lone.xmp").write_text("x")
         _load(window, tmp_path)
-        window._ui.menuImages.aboutToShow.emit()
-        assert window._ui.actionImgOrphans.isEnabled()
+        window._ui.menuFile.aboutToShow.emit()
+        assert window._ui.actionFileOrphans.isEnabled()
         os.remove(tmp_path / "lone.xmp")
-        window._ui.menuImages.aboutToShow.emit()
-        assert not window._ui.actionImgOrphans.isEnabled()
+        window._ui.menuContext.aboutToShow.emit()
+        assert not window._ui.actionFileOrphans.isEnabled()
 
 
 # ---------------------------------------------------------------------------
@@ -241,8 +241,8 @@ def test_open_and_open_with(window, tmp_path, calls):
     a = _png(tmp_path / "a.png")
     _load(window, tmp_path)
     _select(window, "a.png")
-    window._ui.actionImgOpen.trigger()
-    window._ui.actionImgOpenWith.trigger()
+    window._ui.actionFileOpen.trigger()
+    window._ui.actionFileOpenWith.trigger()
     assert calls["open"] == [a]
     assert calls["open_with"] == [a]
 
@@ -258,8 +258,8 @@ class TestViewer:
         b = _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png", "b.png")
-        window._ui.actionImgView.trigger()
-        viewer = window._images._viewer
+        window._ui.actionImageView.trigger()
+        viewer = window._file_actions._viewer
         assert viewer.isVisible()
         assert viewer.current_path == a
         assert viewer._selection_paths == [a, b]
@@ -267,8 +267,8 @@ class TestViewer:
     def test_view_without_media(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")
         _load(window, tmp_path)
-        window._images.view_selected()
-        assert window._images._viewer is None
+        window._file_actions.view_selected()
+        assert window._file_actions._viewer is None
 
     def test_double_click_reuses_viewer(self, window, tmp_path):
         _png(tmp_path / "a.png")
@@ -276,20 +276,20 @@ class TestViewer:
         _load(window, tmp_path)
         tree = window._ui.tblFiles
         window._files._on_item_double_clicked(tree.topLevelItem(0), 2)
-        viewer = window._images._viewer
+        viewer = window._file_actions._viewer
         window._files._on_item_double_clicked(tree.topLevelItem(1), 2)
-        assert window._images._viewer is viewer
+        assert window._file_actions._viewer is viewer
         assert viewer.current_path == b
         assert viewer._selection_paths == [b]
 
     def test_viewer_settings_from_profile(self, window, tmp_path):
         data = profiles.load()
-        data["images"].update(metadata_panel_side="left", zoom_max_percent=100)
+        data["viewer"].update(metadata_panel_side="left", zoom_max_percent=100)
         profiles.save(data)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         assert viewer._splitter.widget(0) is viewer._metadata_panel
         assert viewer._zoom_max == 1.0
 
@@ -298,8 +298,8 @@ class TestViewer:
         (tmp_path / "b.txt").write_text("x")
         c = _png(tmp_path / "c.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         viewer.navigate_next.emit()
         assert viewer.current_path == c
         assert window._files.selected_paths() == [c]
@@ -314,8 +314,8 @@ class TestViewer:
     def test_navigation_file_gone_from_list(self, window, tmp_path):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         viewer._current_path = str(tmp_path / "elsewhere.png")
         viewer.navigate_next.emit()
         assert viewer.current_path == str(tmp_path / "elsewhere.png")
@@ -325,14 +325,14 @@ class TestViewer:
     def test_requests_from_viewer(self, window, tmp_path, calls, monkeypatch):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         viewer.open_requested.emit()
         viewer.open_with_requested.emit()
         assert calls["open"] == [a]
         assert calls["open_with"] == [a]
         templates = []
-        monkeypatch.setattr(window._images, "template", templates.append)
+        monkeypatch.setattr(window._file_actions, "template", templates.append)
         viewer.template_requested.emit()
         assert templates == [a]
         fields = []
@@ -343,11 +343,15 @@ class TestViewer:
     def test_rotate_from_viewer(self, window, tmp_path, monkeypatch):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         done = []
-        monkeypatch.setattr(window._images, "rotate", lambda p, op: done.append(op))
-        monkeypatch.setattr(window._images, "reset_exif", lambda p: done.append("r"))
+        monkeypatch.setattr(
+            window._file_actions, "rotate", lambda p, op: done.append(op)
+        )
+        monkeypatch.setattr(
+            window._file_actions, "reset_exif", lambda p: done.append("r")
+        )
         viewer.rotate_requested.emit(90)
         viewer.rotate_requested.emit("reset_exif")
         assert done == [90, "r"]
@@ -360,8 +364,8 @@ class TestViewer:
         monkeypatch.setattr(system_trash, "move_to_trash", lambda p: os.remove(p) or p)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        window._images._viewer.delete_requested.emit()
+        window._file_actions.show_in_viewer(a)
+        window._file_actions._viewer.delete_requested.emit()
         assert not os.path.exists(a)
 
     @pytest.mark.parametrize(
@@ -379,8 +383,8 @@ class TestViewer:
         p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
         _load(window, tmp_path)
         _select(window, "a.png", "b.png", "c.png")
-        window._images.show_in_viewer(p[shown])
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(p[shown])
+        viewer = window._file_actions._viewer
         viewer._circular = circular
         viewer.delete_requested.emit()
         remaining = [p[n] for n in ("a.png", "b.png", "c.png") if n != shown]
@@ -397,8 +401,8 @@ class TestViewer:
         a, b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png", "b.png")
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         viewer.delete_requested.emit()
         assert viewer.selection_paths == [b]
         assert viewer.current_path == b
@@ -408,8 +412,8 @@ class TestViewer:
         a, b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png", "b.png")
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         calls["answer"]["ask"] = False
         viewer.delete_requested.emit()
         assert os.path.exists(a)
@@ -419,27 +423,29 @@ class TestViewer:
     def test_delete_from_viewer_nothing_shown(self, window, tmp_path, calls):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        window._images._viewer._current_path = None
-        window._images._viewer.delete_requested.emit()
+        window._file_actions.show_in_viewer(a)
+        window._file_actions._viewer._current_path = None
+        window._file_actions._viewer.delete_requested.emit()
         assert os.path.exists(a)
 
     def test_reload_refreshes_viewer(self, window, tmp_path, monkeypatch):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
+        window._file_actions.show_in_viewer(a)
         refreshed = []
-        monkeypatch.setattr(window._images._viewer, "refresh_paths", refreshed.append)
+        monkeypatch.setattr(
+            window._file_actions._viewer, "refresh_paths", refreshed.append
+        )
         window._files.reload()
         assert refreshed == [{a}]
 
     def test_profile_change_closes_viewer(self, window, tmp_path):
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.show_in_viewer(a)
-        window._images.apply_profile()
-        assert window._images._viewer is None
-        window._images.apply_profile()  # no viewer: no-op
+        window._file_actions.show_in_viewer(a)
+        window._file_actions.apply_profile()
+        assert window._file_actions._viewer is None
+        window._file_actions.apply_profile()  # no viewer: no-op
 
 
 # ---------------------------------------------------------------------------
@@ -463,9 +469,9 @@ class TestTemplate:
             shown.append(dialog.windowTitle())
             return QDialog.DialogCode.Accepted
 
-        monkeypatch.setattr(image_actions, "_exec_dialog", accept)
+        monkeypatch.setattr(file_actions, "_exec_dialog", accept)
         window._ui.tabRules.setCurrentIndex(0)
-        window._ui.actionImgTemplate.trigger()
+        window._ui.actionFileTemplate.trigger()
         assert shown == ["Proposed template"]
         assert window._schema.fields() == ["Nature", "", "", "", "", "###"]
         assert window._ui.tabRules.currentIndex() == _SCHEMA_TAB
@@ -474,16 +480,16 @@ class TestTemplate:
         self._history()
         a = _png(tmp_path / "Nature_001.png")
         monkeypatch.setattr(
-            image_actions, "_exec_dialog", lambda d: QDialog.DialogCode.Rejected
+            file_actions, "_exec_dialog", lambda d: QDialog.DialogCode.Rejected
         )
         accepted = []
-        window._images.template_accepted.connect(accepted.append)
-        window._images.template(a)
+        window._file_actions.template_accepted.connect(accepted.append)
+        window._file_actions.template(a)
         assert accepted == []
 
     def test_no_match(self, window, tmp_path, calls):
         a = _png(tmp_path / "x.png")
-        window._images.template(a)
+        window._file_actions.template(a)
         assert "x.png" in calls["info"][0]
 
     def test_needs_one_file(self, window, tmp_path, monkeypatch):
@@ -491,8 +497,8 @@ class TestTemplate:
         _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png", "b.png")
-        monkeypatch.setattr(window._images, "template", lambda p: pytest.fail(p))
-        window._images.template_selected()
+        monkeypatch.setattr(window._file_actions, "template", lambda p: pytest.fail(p))
+        window._file_actions.template_selected()
 
 
 # ---------------------------------------------------------------------------
@@ -519,9 +525,9 @@ class TestDelete:
         monkeypatch.setattr(system_trash, "move_to_trash", move)
         return trashed
 
-    def _set(self, **images):
+    def _set(self, **options):
         data = profiles.load()
-        data["images"].update(images)
+        data["files"].update(options)
         profiles.save(data)
 
     def test_to_trash_with_sidecars(self, window, tmp_path, calls, trash):
@@ -530,7 +536,7 @@ class TestDelete:
         b = _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._ui.actionImgDelete.trigger()
+        window._ui.actionFileDelete.trigger()
         assert trash == [a, str(tmp_path / "a.xmp")]
         assert calls["ask"] == ["Move to trash:\na.png\na.xmp"]
         assert _names(window) == ["b.png"]
@@ -549,7 +555,7 @@ class TestDelete:
             _png(tmp_path / name)
         _load(window, tmp_path)
         _select(window, deleted)
-        window._ui.actionImgDelete.trigger()
+        window._ui.actionFileDelete.trigger()
         assert self._selected(window) == [expected]
 
     def test_viewer_follows_list_deletion(self, window, tmp_path, calls, trash):
@@ -558,9 +564,9 @@ class TestDelete:
         c = _png(tmp_path / "c.png")
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
-        window._ui.actionImgDelete.trigger()
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
+        window._ui.actionFileDelete.trigger()
         # b.txt is selected, but the viewer shows the nearest media file.
         assert self._selected(window) == ["b.txt"]
         assert viewer.current_path == c
@@ -576,8 +582,8 @@ class TestDelete:
         (tmp_path / "b.txt").write_text("x")
         _load(window, tmp_path)
         _select(window, deleted)
-        window._images.show_in_viewer(p[deleted])
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(p[deleted])
+        viewer = window._file_actions._viewer
         viewer.delete_requested.emit()
         assert self._selected(window) == [expected]
         assert viewer.current_path == p[expected]
@@ -587,8 +593,8 @@ class TestDelete:
         p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._images.show_in_viewer(p["a.png"])
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(p["a.png"])
+        viewer = window._file_actions._viewer
         viewer.delete_requested.emit()
         assert viewer.current_path == p["b.png"]
         viewer.navigate_next.emit()
@@ -609,18 +615,18 @@ class TestDelete:
             else:
                 QTimer.singleShot(20, accept_box)
 
-        real_ask = image_actions._ask
+        real_ask = file_actions._ask
 
         def ask(*args):
             QTimer.singleShot(20, accept_box)
             return real_ask(*args)
 
-        monkeypatch.setattr(image_actions, "_ask", ask)
+        monkeypatch.setattr(file_actions, "_ask", ask)
         p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._images.show_in_viewer(p["a.png"])
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(p["a.png"])
+        viewer = window._file_actions._viewer
         viewer.activateWindow()
         qtbot.waitUntil(viewer.isActiveWindow)
         QTest.keyClick(viewer, Qt.Key.Key_Delete)
@@ -634,8 +640,8 @@ class TestDelete:
         (tmp_path / "b.txt").write_text("x")
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._images.show_in_viewer(a)
-        viewer = window._images._viewer
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
         viewer.delete_requested.emit()
         assert not viewer.isVisible()
         assert self._selected(window) == ["b.txt"]
@@ -644,7 +650,7 @@ class TestDelete:
         a = _png(tmp_path / "a.png")
         calls["answer"]["ask"] = False
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert trash == []
         assert os.path.exists(a)
 
@@ -652,7 +658,7 @@ class TestDelete:
         self._set(confirm_deletions=False)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert trash == [a]
         assert calls["ask"] == []
 
@@ -660,14 +666,14 @@ class TestDelete:
         self._set(delete_list_max_files=1)
         paths = [_png(tmp_path / "a.png"), _png(tmp_path / "b.png")]
         _load(window, tmp_path)
-        window._images.delete(paths)
+        window._file_actions.delete(paths)
         assert calls["ask"] == ["Move 2 files to trash?"]
 
     def test_trash_failure(self, window, tmp_path, calls, monkeypatch):
         monkeypatch.setattr(system_trash, "move_to_trash", lambda p: None)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert calls["warn"][0][1] == "Could not move to trash: a.png"
 
     def test_permanent(self, window, tmp_path, calls):
@@ -677,7 +683,7 @@ class TestDelete:
         a = _png(sub / "a.png")
         window._ui.chkRecursive.setChecked(True)
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert calls["ask"] == ["Permanently delete:\na.png"]
         assert not (tmp_path / "sub").exists()
         assert tmp_path.exists()
@@ -694,28 +700,28 @@ class TestDelete:
                 raise OSError("busy")
             real_remove(path)
 
-        monkeypatch.setattr(image_actions.os, "remove", remove)
-        window._images.delete(paths)
+        monkeypatch.setattr(file_actions.os, "remove", remove)
+        window._file_actions.delete(paths)
         assert calls["ask"] == ["Permanently delete 2 files?"]
         assert calls["warn"][0][1] == "b.png: busy"
         assert _names(window) == ["b.png", "keep.txt"]
 
     def test_nothing(self, window, calls):
-        window._images.delete([])
+        window._file_actions.delete([])
         assert calls["ask"] == []
 
     def test_permanent_not_undoable(self, window, tmp_path, calls):
         self._set(deletion_mode="delete")
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert not window._undo.can_undo()
 
     def test_system_trash_undo(self, window, tmp_path, calls, trash):
         a = _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert not os.path.exists(a)
         assert window._ui.btnUndo.isEnabled()
         window._on_undo()
@@ -729,7 +735,7 @@ class TestDelete:
         a = _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         assert calls["ask"] == ["Move to the session trash:\na.png\na.xmp"]
         trash_dir = window._trash.directory
         assert sorted(p.name for p in trash_dir.iterdir()) == [
@@ -747,7 +753,7 @@ class TestDelete:
         self._set(deletion_mode="session", confirm_deletions=False)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
-        window._images.delete([a])
+        window._file_actions.delete([a])
         trash_dir = window._trash.directory
         assert trash_dir.exists()
         window.close()
@@ -763,11 +769,11 @@ class TestDelete:
         _load(window, tmp_path)
 
         def put(path):
-            raise image_actions.CrossDeviceError(18, "cross-device", path)
+            raise file_actions.CrossDeviceError(18, "cross-device", path)
 
         monkeypatch.setattr(window._trash, "put", put)
-        monkeypatch.setattr(image_actions, "_ask", lambda p, t, text: accept)
-        deleted = window._images.delete_files([a], window)
+        monkeypatch.setattr(file_actions, "_ask", lambda p, t, text: accept)
+        deleted = window._file_actions.delete_files([a], window)
         assert deleted == ([a] if accept else [])
         assert os.path.exists(a) is not accept
         assert not window._undo.can_undo()
@@ -781,20 +787,20 @@ class TestDelete:
             raise OSError("busy")
 
         monkeypatch.setattr(window._trash, "put", put)
-        assert window._images.delete_files([a], window) == []
+        assert window._file_actions.delete_files([a], window) == []
         assert calls["warn"][0][1] == "a.png: busy"
         assert not window._undo.can_undo()
 
     def test_session_trash_other_filesystem_text(self):
         images = {"delete_list_max_files": 1}
-        text = image_actions.ImageActions._foreign_text(["/x/a.png"], images)
+        text = file_actions.FileActions._foreign_text(["/x/a.png"], images)
         assert "a.png" in text and "cannot be undone" in text
-        text = image_actions.ImageActions._foreign_text(["/a", "/b"], images)
+        text = file_actions.FileActions._foreign_text(["/a", "/b"], images)
         assert text.startswith("2 files")
 
     def test_session_count_only_above_limit(self):
         images = {"delete_list_max_files": 1, "deletion_mode": "session"}
-        text = image_actions.ImageActions._confirm_text(["a", "b"], images)
+        text = file_actions.FileActions._confirm_text(["a", "b"], images)
         assert text == "Move 2 files to the session trash?"
 
 
@@ -817,9 +823,9 @@ class TestOrphans:
             dialog._delete_all()
             return dialog.result()
 
-        monkeypatch.setattr(image_actions, "_exec_dialog", run)
-        window._ui.actionImgOrphans.setEnabled(True)
-        window._ui.actionImgOrphans.trigger()
+        monkeypatch.setattr(file_actions, "_exec_dialog", run)
+        window._ui.actionFileOrphans.setEnabled(True)
+        window._ui.actionFileOrphans.trigger()
         assert shown == [1]
         assert not (tmp_path / "lone.xmp").exists()
         assert (tmp_path / "a.xmp").exists()
@@ -887,7 +893,7 @@ class TestRotate:
             raise RuntimeError("jpegtran: broken")
 
         monkeypatch.setattr(image_ops, "rotate_lossless", fail)
-        window._images.rotate([a], 90)
+        window._file_actions.rotate([a], 90)
         title, text, details = calls["warn"][0]
         assert text == "1 file(s) could not be rotated."
         assert "jpegtran: broken" in details
@@ -922,7 +928,7 @@ class TestRotate:
 
     def test_reset_exif_nothing(self, window, tmp_path):
         a = _png(tmp_path / "a.png")
-        window._images.reset_exif([a])
+        window._file_actions.reset_exif([a])
         assert len(window._undo) == 0
 
 
@@ -943,9 +949,9 @@ class TestSidecarGroupTargets:
         window._ui.chkSidecarMode.setChecked(True)
         _load(window, tmp_path)
         _select(window, "a.xmp")
-        assert window._images.targets() == [str(tmp_path / "a.png")]
-        assert window._ui.actionImgTemplate.isEnabled()
-        window._images.open_selected()
+        assert window._file_actions.targets() == [str(tmp_path / "a.png")]
+        assert window._ui.actionFileTemplate.isEnabled()
+        window._file_actions.open_selected()
         assert calls["open"] == [str(tmp_path / "a.png")]
 
 
@@ -953,7 +959,7 @@ class TestOpenSidecarMenu:
     """ "Open sidecar" submenu: one entry per suffix (7.2 #3)."""
 
     def _entries(self, window):
-        window._images._fill_open_sidecar_menu()
+        window._file_actions._fill_open_sidecar_menu()
         return [a.text() for a in window._ui.menuOpenSidecar.actions()]
 
     def test_disabled_without_sidecar(self, window, tmp_path):
@@ -988,12 +994,34 @@ class TestOpenSidecarMenu:
         (tmp_path / "a.xmp").write_text("x")
         _load(window, tmp_path)
         _select(window, "a.png")
-        window._ui.menuImages.aboutToShow.emit()
+        window._ui.menuContext.aboutToShow.emit()
         assert window._ui.menuOpenSidecar.menuAction().isEnabled()
 
-    def test_in_images_menu(self, window):
-        actions = window._ui.menuImages.actions()
-        assert window._ui.menuOpenSidecar.menuAction() in actions
+    def test_in_file_and_context_menus(self, window):
+        sidecar = window._ui.menuOpenSidecar.menuAction()
+        assert sidecar in window._ui.menuFile.actions()
+        assert sidecar in window._ui.menuContext.actions()
+        assert sidecar not in window._ui.menuImages.actions()
+
+
+class TestMenus:
+    """File: any file; Images: images and videos; context menu: both."""
+
+    def test_split(self, window):
+        ui = window._ui
+        file_menu = ui.menuFile.actions()
+        images_menu = ui.menuImages.actions()
+        context = ui.menuContext.actions()
+        for act in (ui.actionFileOpen, ui.actionFileDelete, ui.actionFileOrphans):
+            assert act in file_menu
+            assert act not in images_menu
+            assert act in context
+        for act in (ui.actionImageView, ui.actionRotateLeft, ui.actionResetExif):
+            assert act in images_menu
+            assert act not in file_menu
+            assert act in context
+        assert ui.actionQuit in file_menu
+        assert ui.actionQuit not in context
 
 
 class TestViewerFollowsSelection:
@@ -1003,8 +1031,8 @@ class TestViewerFollowsSelection:
         paths = {n: _png(tmp_path / n) for n in names}
         (tmp_path / "t.txt").write_text("x")
         _load(window, tmp_path)
-        window._images.show_in_viewer(paths[names[0]])
-        return window._images._viewer, paths
+        window._file_actions.show_in_viewer(paths[names[0]])
+        return window._file_actions._viewer, paths
 
     def _current(self, window, name):
         tree = window._ui.tblFiles

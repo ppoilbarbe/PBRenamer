@@ -42,7 +42,7 @@ class Ui_MainWindow:
         window.setWindowTitle("PBRenamer")
 
         self._setup_actions(window)
-        self._setup_image_actions(window)
+        self._setup_file_actions(window)
         self._setup_central_widget(window)
         self._setup_statusbar(window)
         self._setup_menubar(window)
@@ -169,9 +169,9 @@ class Ui_MainWindow:
             _("Configure the schema fields and options of the current profile")
         )
 
-    def _setup_image_actions(self, window):
-        """Actions of the Images menu, also in the file list context menu
-        and (rotations, open, delete…) in the image viewer."""
+    def _setup_file_actions(self, window):
+        """Actions of the File and Images menus, shared with the file list
+        context menu and (rotations, open, delete…) the image viewer."""
 
         def action(icon, text, shortcut, tip, status):
             act = QAction(QIcon(_resource(icon)) if icon else QIcon(), text, window)
@@ -182,42 +182,42 @@ class Ui_MainWindow:
             act.setEnabled(False)
             return act
 
-        self.actionImgOpen = action(
+        self.actionFileOpen = action(
             "open.svg",
             _("Open"),
             "Ctrl+O",
             _("Open with the default application"),
             _("Open the selected files with their default application"),
         )
-        self.actionImgOpenWith = action(
+        self.actionFileOpenWith = action(
             "open-with.svg",
             _("Open with…"),
             "Ctrl+Shift+O",
             _("Open with a chosen application"),
             _("Choose the application that opens the selected file"),
         )
-        self.actionImgView = action(
+        self.actionImageView = action(
             "zoom-fit.svg",
             _("View"),
             "Return",
             _("Show in the image viewer"),
             _("Show the selected images and videos in the image viewer"),
         )
-        self.actionImgTemplate = action(
+        self.actionFileTemplate = action(
             "rename-template.svg",
             _("Template"),
             "",
             _("Fill the schema from the file name"),
             _("Infer the schema fields from the selected file name and its folders"),
         )
-        self.actionImgDelete = action(
+        self.actionFileDelete = action(
             "delete.svg",
             _("Delete"),
             "Delete",
             _("Delete the selected files"),
-            _("Delete the selected files and their sidecars (to the trash if enabled)"),
+            _("Delete the selected files and their sidecars, as set in the profile"),
         )
-        self.actionImgOrphans = action(
+        self.actionFileOrphans = action(
             "sidecars.svg",
             _("Orphan sidecars…"),
             "",
@@ -268,7 +268,7 @@ class Ui_MainWindow:
         )
         self.actionRefresh.setEnabled(True)
         # Return and Delete also edit text fields: only on the file list.
-        for act in (self.actionImgView, self.actionImgDelete, self.actionImgOpen):
+        for act in (self.actionImageView, self.actionFileDelete, self.actionFileOpen):
             act.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
 
     # ── Central widget ────────────────────────────────────────────────────────
@@ -828,17 +828,43 @@ class Ui_MainWindow:
 
     # ── Menu bar ──────────────────────────────────────────────────────────────
 
+    @staticmethod
+    def _add_actions(menu, *actions):
+        """Add *actions* to *menu*, None standing for a separator."""
+        for act in actions:
+            if act is None:
+                menu.addSeparator()
+            else:
+                menu.addAction(act)
+
     def _setup_menubar(self, window):
         menubar = QMenuBar(window)
         window.setMenuBar(menubar)
 
-        # File menu
-        menu_file = menubar.addMenu(_("File"))
-        menu_file.addAction(self.actionOpenCurrentFolder)
-        menu_file.addSeparator()
-        menu_file.addAction(self.actionFileInfo)
-        menu_file.addSeparator()
-        menu_file.addAction(self.actionQuit)
+        # Open sidecar: filled by FileActions when a menu holding it is shown,
+        # one entry per sidecar suffix of the targeted files.
+        self.menuOpenSidecar = QMenu(_("Open sidecar"), window)
+        self.menuOpenSidecar.menuAction().setEnabled(False)
+
+        # File menu: the actions that apply to any file
+        self.menuFile = menubar.addMenu(_("File"))
+        self._add_actions(
+            self.menuFile,
+            self.actionOpenCurrentFolder,
+            None,
+            self.actionFileOpen,
+            self.actionFileOpenWith,
+            self.menuOpenSidecar.menuAction(),
+            self.actionFileTemplate,
+            None,
+            self.actionFileDelete,
+            self.actionFileOrphans,
+            None,
+            self.actionFileInfo,
+            self.actionRefresh,
+            None,
+            self.actionQuit,
+        )
 
         # Edit menu
         menu_edit = menubar.addMenu(_("Edit"))
@@ -857,21 +883,31 @@ class Ui_MainWindow:
         self.menuProfile.addAction(self.actionProfileConfig)
         self.menuProfile.addSeparator()
 
-        # Images menu (also the file list context menu)
+        # Images menu: the actions on images and videos only
         self.menuImages = menubar.addMenu(_("Images"))
-        # Filled by ImageActions when the menu is shown: one entry per
-        # sidecar suffix of the targeted files.
-        self.menuOpenSidecar = QMenu(_("Open sidecar"), self.menuImages)
-        self.menuOpenSidecar.menuAction().setEnabled(False)
-        for act in (
-            self.actionImgOpen,
-            self.actionImgOpenWith,
-            self.menuOpenSidecar.menuAction(),
-            self.actionImgView,
-            self.actionImgTemplate,
+        self._add_actions(
+            self.menuImages,
+            self.actionImageView,
             None,
-            self.actionImgDelete,
-            self.actionImgOrphans,
+            self.actionRotateLeft,
+            self.actionRotate180,
+            self.actionRotateRight,
+            self.actionRotateExif,
+            self.actionResetExif,
+        )
+
+        # Context menu of the file list: the actions of both menus
+        self.menuContext = QMenu(window)
+        self._add_actions(
+            self.menuContext,
+            self.actionFileOpen,
+            self.actionFileOpenWith,
+            self.menuOpenSidecar.menuAction(),
+            self.actionImageView,
+            self.actionFileTemplate,
+            None,
+            self.actionFileDelete,
+            self.actionFileOrphans,
             None,
             self.actionRotateLeft,
             self.actionRotate180,
@@ -881,12 +917,8 @@ class Ui_MainWindow:
             None,
             self.actionFileInfo,
             self.actionRefresh,
-        ):
-            if act is None:
-                self.menuImages.addSeparator()
-            else:
-                self.menuImages.addAction(act)
-        for act in (self.actionImgView, self.actionImgDelete, self.actionImgOpen):
+        )
+        for act in (self.actionImageView, self.actionFileDelete, self.actionFileOpen):
             self.tblFiles.addAction(act)
 
         # Shortcuts menu (populated dynamically by MainWindow._build_shortcuts_menu)

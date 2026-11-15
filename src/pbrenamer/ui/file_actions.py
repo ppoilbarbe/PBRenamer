@@ -1,9 +1,10 @@
-"""Image tools of the file list (ported from PBPicat): the Images menu,
-which is also the file list context menu, and the image viewer.
+"""Actions on the listed files (ported from PBPicat): the File menu, the
+Images menu, the file list context menu, and the image viewer.
 
-Open, Open with, Open sidecar, View, Template, Delete, Orphan sidecars, lossless
-rotations and EXIF orientation (undoable), Refresh.  The actions apply to
-the selected files, or to the current row when nothing is selected.
+Any file: Open, Open with, Open sidecar, Template, Delete, Orphan sidecars,
+Refresh.  Images and videos only: View (image viewer), lossless rotations
+and EXIF orientation (undoable).  The actions apply to the selected files,
+or to the current row when nothing is selected.
 """
 
 from __future__ import annotations
@@ -65,8 +66,8 @@ def _ext(path: str) -> str:
     return os.path.splitext(path)[1][1:].lower()
 
 
-class ImageActions(QObject):
-    """Wire the image actions of *ui* to the file list *files*."""
+class FileActions(QObject):
+    """Wire the file and image actions of *ui* to the file list *files*."""
 
     undo_stack_changed = Signal()
     template_accepted = Signal(list)
@@ -90,20 +91,22 @@ class ImageActions(QObject):
         self._window = parent
         self._viewer: ImageViewer | None = None
 
-        ui.actionImgOpen.triggered.connect(self.open_selected)
-        ui.actionImgOpenWith.triggered.connect(self.open_with_selected)
-        ui.actionImgView.triggered.connect(self.view_selected)
-        ui.actionImgTemplate.triggered.connect(self.template_selected)
-        ui.actionImgDelete.triggered.connect(self.delete_selected)
-        ui.actionImgOrphans.triggered.connect(self.show_orphans)
+        ui.actionFileOpen.triggered.connect(self.open_selected)
+        ui.actionFileOpenWith.triggered.connect(self.open_with_selected)
+        ui.actionImageView.triggered.connect(self.view_selected)
+        ui.actionFileTemplate.triggered.connect(self.template_selected)
+        ui.actionFileDelete.triggered.connect(self.delete_selected)
+        ui.actionFileOrphans.triggered.connect(self.show_orphans)
         ui.actionRotateLeft.triggered.connect(lambda: self.rotate_selected(-90))
         ui.actionRotate180.triggered.connect(lambda: self.rotate_selected(180))
         ui.actionRotateRight.triggered.connect(lambda: self.rotate_selected(90))
         ui.actionRotateExif.triggered.connect(lambda: self.rotate_selected("auto"))
         ui.actionResetExif.triggered.connect(self.reset_exif_selected)
         ui.actionRefresh.triggered.connect(self._files.reload)
-        ui.menuImages.aboutToShow.connect(self._update_orphans_action)
-        ui.menuImages.aboutToShow.connect(self._fill_open_sidecar_menu)
+        # Menus holding Orphan sidecars and Open sidecar.
+        for menu in (ui.menuFile, ui.menuContext):
+            menu.aboutToShow.connect(self._update_orphans_action)
+            menu.aboutToShow.connect(self._fill_open_sidecar_menu)
         files.selection_changed.connect(self.update_enabled)
         files.selection_changed.connect(self._sync_viewer)
         files.files_reloaded.connect(self._on_files_reloaded)
@@ -144,10 +147,10 @@ class ImageActions(QObject):
         """Enable the actions according to the targets."""
         ui = self._ui
         paths = self.targets()
-        for act in (ui.actionImgOpen, ui.actionImgOpenWith, ui.actionImgDelete):
+        for act in (ui.actionFileOpen, ui.actionFileOpenWith, ui.actionFileDelete):
             act.setEnabled(bool(paths))
-        ui.actionImgView.setEnabled(bool(self._media(paths)))
-        ui.actionImgTemplate.setEnabled(len(paths) == 1)
+        ui.actionImageView.setEnabled(bool(self._media(paths)))
+        ui.actionFileTemplate.setEnabled(len(paths) == 1)
         rotatable = self._rotatable(self._images(paths))
         for act in (ui.actionRotateLeft, ui.actionRotate180, ui.actionRotateRight):
             act.setEnabled(bool(rotatable))
@@ -159,7 +162,7 @@ class ImageActions(QObject):
         ui.actionResetExif.setEnabled(has_exif and image_ops.pyexiv2_available())
 
     def _update_orphans_action(self) -> None:
-        self._ui.actionImgOrphans.setEnabled(bool(self._files.orphan_sidecars()))
+        self._ui.actionFileOrphans.setEnabled(bool(self._files.orphan_sidecars()))
 
     def _on_files_reloaded(self) -> None:
         self.update_enabled()
@@ -254,14 +257,14 @@ class ImageActions(QObject):
         viewer.set_selection(media, current=current)
 
     def _create_viewer(self) -> ImageViewer:
-        images = profiles.load()["images"]
+        options = profiles.load()["viewer"]
         viewer = ImageViewer(
             self._window_state,
             self._window,
-            zoom_step_percent=images["zoom_step_percent"],
-            zoom_max_percent=images["zoom_max_percent"],
-            auto_rotate=images["exif_auto_rotate"],
-            metadata_panel_side=images["metadata_panel_side"],
+            zoom_step_percent=options["zoom_step_percent"],
+            zoom_max_percent=options["zoom_max_percent"],
+            auto_rotate=options["exif_auto_rotate"],
+            metadata_panel_side=options["metadata_panel_side"],
             video_extensions=self._extensions("video"),
             sidecars_of=lambda p: self._files.sidecars_map([p])[p],
         )
@@ -458,10 +461,10 @@ class ImageActions(QObject):
 
         Files moved to a trash (system or session) form one undoable batch.
         Errors are reported together."""
-        images = profiles.load()["images"]
-        mode = images["deletion_mode"]
-        if images["confirm_deletions"] and not _ask(
-            parent, _("Confirm deletion"), self._confirm_text(files, images)
+        options = profiles.load()["files"]
+        mode = options["deletion_mode"]
+        if options["confirm_deletions"] and not _ask(
+            parent, _("Confirm deletion"), self._confirm_text(files, options)
         ):
             return []
         done: set[str] = set()
@@ -490,7 +493,7 @@ class ImageActions(QObject):
                 continue
             self._remove_file(path, done, errors)
         if foreign and _ask(
-            parent, _("Confirm deletion"), self._foreign_text(foreign, images)
+            parent, _("Confirm deletion"), self._foreign_text(foreign, options)
         ):
             for path in foreign:
                 self._remove_file(path, done, errors)
@@ -514,8 +517,8 @@ class ImageActions(QObject):
             errors.append(f"{os.path.basename(path)}: {exc}")
 
     @staticmethod
-    def _foreign_text(files: list[str], images: dict) -> str:
-        if len(files) > images["delete_list_max_files"]:
+    def _foreign_text(files: list[str], options: dict) -> str:
+        if len(files) > options["delete_list_max_files"]:
             text = _(
                 "{count} files are on another file system than the session "
                 "trash and cannot be moved to it.\n"
@@ -531,10 +534,10 @@ class ImageActions(QObject):
         return text.format(names=names)
 
     @staticmethod
-    def _confirm_text(files: list[str], images: dict) -> str:
-        many = len(files) > images["delete_list_max_files"]
+    def _confirm_text(files: list[str], options: dict) -> str:
+        many = len(files) > options["delete_list_max_files"]
         names = "\n".join(os.path.basename(f) for f in files)
-        mode = images["deletion_mode"]
+        mode = options["deletion_mode"]
         if mode == "system":
             if many:
                 return _("Move {count} files to trash?").format(count=len(files))

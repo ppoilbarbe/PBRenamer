@@ -960,14 +960,15 @@ msgstr "Thông tin tệp"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Choose **File → Information** (**Ctrl+I**, also in the **Images** menu) "
-"to display a non-modal window listing the actual values of every "
-"replacement field for the selected file.  Double-click a field to insert "
-"it into the replacement pattern."
+"Choose **File → Information** (**Ctrl+I**, also in the context menu of "
+"the file list) to display a non-modal window listing the actual values of"
+" every replacement field for the selected file.  Double-click a field to "
+"insert it into the replacement pattern."
 msgstr ""
-"Chọn **Tệp → Thông tin** (**Ctrl+I**, cũng có trong menu **Ảnh**) để mở "
-"một cửa sổ không chặn liệt kê giá trị thực của mọi trường thay thế cho "
-"tệp được chọn.  Nhấp đúp vào một trường để chèn nó vào mẫu thay thế."
+"Chọn **Tệp → Thông tin** (**Ctrl+I**, cũng có trong menu ngữ cảnh của "
+"danh sách tệp) để mở một cửa sổ không chặn liệt kê giá trị thực của mọi "
+"trường thay thế cho tệp được chọn.  Nhấp đúp vào một trường để chèn nó "
+"vào mẫu thay thế."
 
 # ==AUTO== Automatically translated
 msgid "The window has three groups:"
@@ -1057,12 +1058,12 @@ msgstr "các loại và hậu tố :ref:`sidecar <sidecar-files>`;"
 # ==AUTO== Automatically translated
 msgid ""
 "the display options (thumbnails and their size, sidecar column, sidecar "
-"filter, sort by date, history length) and the image options (viewer zoom,"
-" EXIF orientation, metadata panel, deletion);"
+"filter, sort by date, history length), the file options (deletion) and "
+"the image viewer options (zoom, EXIF orientation, metadata panel);"
 msgstr ""
 "các tùy chọn hiển thị (hình thu nhỏ và kích thước, cột sidecar, bộ lọc "
-"sidecar, sắp xếp theo ngày, độ dài lịch sử) và tùy chọn ảnh (thu phóng "
-"của trình xem, định hướng EXIF, bảng siêu dữ liệu, xóa);"
+"sidecar, sắp xếp theo ngày, độ dài lịch sử), tùy chọn tệp (xóa) và tùy "
+"chọn của trình xem ảnh (thu phóng, định hướng EXIF, bảng siêu dữ liệu);"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1220,22 +1221,32 @@ msgstr ""
 "tải thư mục hay không, và số mục tối đa giữ trong mỗi lịch sử."
 
 # ==AUTO== Automatically translated
-msgid "**Images**"
-msgstr "**Ảnh**"
+msgid "**Files**"
+msgstr "**Tệp**"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
-"whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: what happens to the deleted files "
-"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
-"number of files above which the confirmation only gives their count."
+"Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
+"whether to ask for a confirmation, and the number of files above which "
+"the confirmation only gives their count."
 msgstr ""
-"Trình xem ảnh: bước thu phóng, mức thu phóng tối đa, phía của bảng siêu "
-"dữ liệu, và có hiển thị ảnh đã xoay theo định hướng EXIF hay không (cũng "
-"áp dụng cho hình thu nhỏ).  Xóa: điều gì xảy ra với các tệp bị xóa (xem "
-":ref:`deletion-modes`), có yêu cầu xác nhận hay không, và số tệp mà từ đó"
-" hộp xác nhận chỉ nêu số lượng."
+"Xóa: điều gì xảy ra với các tệp bị xóa (xem :ref:`deletion-modes`), có "
+"yêu cầu xác nhận hay không, và số tệp mà từ đó hộp xác nhận chỉ nêu số "
+"lượng."
+
+# ==AUTO== Automatically translated
+msgid "**Image viewer**"
+msgstr "**Trình xem ảnh**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Zoom step, maximum zoom, side of the metadata panel, and whether images "
+"are shown turned as their EXIF orientation says (also applies to the "
+"thumbnails)."
+msgstr ""
+"Bước thu phóng, mức thu phóng tối đa, phía của bảng siêu dữ liệu, và có "
+"hiển thị ảnh đã xoay theo định hướng EXIF hay không (cũng áp dụng cho "
+"hình thu nhỏ)."
 
 # ==AUTO== Automatically translated
 msgid "Deleted files"
@@ -1406,14 +1417,14 @@ msgid ""
 "Sidecar mode is always on in the Schema tab: each sidecar follows its "
 "base file and takes its new name.  A sidecar without a base file (an "
 "*orphan*) is neither renamed nor renumbered; its preview reads *orphan "
-"sidecar, not renamed*.  **Images → Orphan sidecars…** lists them (see "
-":ref:`image-tools`)."
+"sidecar, not renamed*.  **File → Orphan sidecars…** lists them (see :ref"
+":`file-tools`)."
 msgstr ""
 "Trong thẻ Lược đồ, chế độ sidecar luôn bật: mỗi sidecar đi theo tệp chính"
 " và nhận tên mới của nó.  Một sidecar không có tệp chính (sidecar *mồ "
 "côi*) không được đổi tên hay đánh số lại; bản xem trước của nó ghi "
-"*sidecar mồ côi, không được đổi tên*.  **Ảnh → Sidecar mồ côi…** liệt kê "
-"chúng (xem :ref:`image-tools`)."
+"*sidecar mồ côi, không được đổi tên*.  **Tệp → Sidecar mồ côi…** liệt kê "
+"chúng (xem :ref:`file-tools`)."
 
 # ==AUTO== Automatically translated
 msgid "Directories in schema mode"
@@ -1466,13 +1477,13 @@ msgstr "Mẫu"
 
 # ==AUTO== Automatically translated
 msgid ""
-"**Images → Template** fills the schema from the name of the selected file"
-" and up to three of its parent folders: the parts of the name found in a "
+"**File → Template** fills the schema from the name of the selected file "
+"and up to three of its parent folders: the parts of the name found in a "
 "field's history go to that field, and a trailing number goes to the "
 "counter field.  A dialog shows the proposed fields before they are filled"
 " in."
 msgstr ""
-"**Ảnh → Mẫu** điền lược đồ từ tên của tệp được chọn và tối đa ba thư mục "
+"**Tệp → Mẫu** điền lược đồ từ tên của tệp được chọn và tối đa ba thư mục "
 "cha của nó: các phần của tên có trong lịch sử của một trường sẽ vào "
 "trường đó, và số ở cuối sẽ vào trường bộ đếm.  Một hộp thoại hiển thị các"
 " trường đề xuất trước khi điền."
@@ -1488,18 +1499,22 @@ msgstr ""
 "reference`)."
 
 # ==AUTO== Automatically translated
-msgid "Image Tools"
-msgstr "Công cụ ảnh"
+msgid "File Tools"
+msgstr "Công cụ tệp"
 
 # ==AUTO== Automatically translated
 msgid ""
-"PBRenamer includes tools to look at and tidy up photos and videos before "
-"sorting them.  Some depend on optional libraries (see :ref:`optional-"
+"PBRenamer includes tools to look at and tidy up the listed files before "
+"renaming or sorting them.  Most of them apply to any file; the image "
+"viewer, the rotations and the EXIF orientation apply to images and videos"
+" only.  Some depend on optional libraries (see :ref:`optional-"
 "dependencies`); an action that cannot work is disabled."
 msgstr ""
-"PBRenamer có các công cụ để xem và dọn dẹp ảnh và video trước khi sắp "
-"xếp.  Một số phụ thuộc vào thư viện tùy chọn (xem :ref:`optional-"
-"dependencies`); thao tác nào không thể hoạt động sẽ bị tắt."
+"PBRenamer có các công cụ để xem và dọn dẹp các tệp trong danh sách trước "
+"khi đổi tên hoặc sắp xếp.  Phần lớn áp dụng cho mọi tệp; trình xem ảnh, "
+"xoay và định hướng EXIF chỉ áp dụng cho ảnh và video.  Một số phụ thuộc "
+"vào thư viện tùy chọn (xem :ref:`optional-dependencies`); thao tác nào "
+"không thể hoạt động sẽ bị tắt."
 
 # ==AUTO== Automatically translated
 msgid "Thumbnails"
@@ -1560,16 +1575,23 @@ msgstr ""
 "lọc.  Xóa trống trường để liệt kê lại mọi tệp."
 
 # ==AUTO== Automatically translated
-msgid "The Images menu"
-msgstr "Menu Ảnh"
+msgid "The File and Images menus"
+msgstr "Menu Tệp và Ảnh"
 
 # ==AUTO== Automatically translated
 msgid ""
-"The **Images** menu is also the context menu of the file list.  Its "
-"actions apply to the selected files:"
+"The **File** menu holds the actions that apply to any file, the "
+"**Images** menu those that apply to images and videos only.  The context "
+"menu of the file list holds the actions of both.  They apply to the "
+"selected files."
 msgstr ""
-"Menu **Ảnh** cũng là menu ngữ cảnh của danh sách tệp.  Các thao tác của "
-"nó áp dụng cho các tệp được chọn:"
+"Menu **Tệp** chứa các thao tác áp dụng cho mọi tệp, menu **Ảnh** chứa các"
+" thao tác chỉ dành cho ảnh và video.  Menu ngữ cảnh của danh sách tệp "
+"chứa thao tác của cả hai.  Chúng áp dụng cho các tệp được chọn."
+
+# ==AUTO== Automatically translated
+msgid "In the **File** menu:"
+msgstr "Trong menu **Tệp**:"
 
 # ==AUTO== Automatically translated
 msgid "**Open** (**Ctrl+O**)"
@@ -1594,14 +1616,6 @@ msgstr "**Mở sidecar**"
 # ==AUTO== Automatically translated
 msgid "Open one of the sidecars of the file."
 msgstr "Mở một trong các sidecar của tệp."
-
-# ==AUTO== Automatically translated
-msgid "**View** (**Enter**)"
-msgstr "**Xem** (**Enter**)"
-
-# ==AUTO== Automatically translated
-msgid "Show the selected images and videos in the image viewer."
-msgstr "Hiển thị ảnh và video được chọn trong trình xem ảnh."
 
 # ==AUTO== Automatically translated
 msgid "**Template**"
@@ -1639,6 +1653,26 @@ msgstr ""
 "tệp được chọn hoặc tất cả."
 
 # ==AUTO== Automatically translated
+msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
+msgstr "**Thông tin** (**Ctrl+I**) và **Làm mới** (**F5**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the file information window; read the folder again."
+msgstr "Hiển thị cửa sổ thông tin tệp; đọc lại thư mục."
+
+# ==AUTO== Automatically translated
+msgid "In the **Images** menu:"
+msgstr "Trong menu **Ảnh**:"
+
+# ==AUTO== Automatically translated
+msgid "**View** (**Enter**)"
+msgstr "**Xem** (**Enter**)"
+
+# ==AUTO== Automatically translated
+msgid "Show the selected images and videos in the image viewer."
+msgstr "Hiển thị ảnh và video được chọn trong trình xem ảnh."
+
+# ==AUTO== Automatically translated
 msgid "**Rotate 90° left / 180° / 90° right** (**F6** / **F7** / **F8**)"
 msgstr "**Xoay trái 90° / 180° / phải 90°** (**F6** / **F7** / **F8**)"
 
@@ -1661,14 +1695,6 @@ msgstr "**Buộc hướng EXIF về 0°** (**F10**)"
 # ==AUTO== Automatically translated
 msgid "Set the EXIF orientation tag to normal without rotating the pixels."
 msgstr "Đặt thẻ định hướng EXIF về bình thường mà không xoay điểm ảnh."
-
-# ==AUTO== Automatically translated
-msgid "**Information** (**Ctrl+I**) and **Refresh** (**F5**)"
-msgstr "**Thông tin** (**Ctrl+I**) và **Làm mới** (**F5**)"
-
-# ==AUTO== Automatically translated
-msgid "Show the file information window; read the folder again."
-msgstr "Hiển thị cửa sổ thông tin tệp; đọc lại thư mục."
 
 # ==AUTO== Automatically translated
 msgid "Rotation and EXIF orientation"
@@ -2185,8 +2211,16 @@ msgid "**Preview** column"
 msgstr "Cột **Xem trước**"
 
 # ==AUTO== Automatically translated
-msgid "Rotations, EXIF, open, open with, delete, template, orphan sidecars"
-msgstr "Xoay, EXIF, mở, mở bằng, xóa, mẫu, sidecar mồ côi"
+msgid "Open, open with, delete, template, orphan sidecars"
+msgstr "Mở, mở bằng, xóa, mẫu, sidecar mồ côi"
+
+# ==AUTO== Automatically translated
+msgid "**File** menu and context menu of the file list"
+msgstr "Menu **Tệp** và menu ngữ cảnh của danh sách tệp"
+
+# ==AUTO== Automatically translated
+msgid "Rotations, EXIF"
+msgstr "Xoay, EXIF"
 
 # ==AUTO== Automatically translated
 msgid "**Images** menu and context menu of the file list"

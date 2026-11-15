@@ -260,7 +260,7 @@ class TestImportPbpicat:
         )
         assert parties["last_dir"] == "/home/user/Documents/Video party 2026/original"
 
-    def test_display_and_images(self, imported):
+    def test_display_files_and_viewer(self, imported):
         ia = _profile(imported, ".IA")
         assert ia["schema"]["field_count"] == 8
         assert ia["display"] == {
@@ -273,14 +273,16 @@ class TestImportPbpicat:
             "sort_by_date": False,
             "sort_reverse": False,
         }
-        assert ia["images"] == {
-            "zoom_step_percent": 10,
-            "zoom_max_percent": 400,
+        assert ia["files"] == {
             "sidecar_new_extension": "prompt.txt",
             "delete_empty_sidecars": True,
             "delete_list_max_files": 12,
             "confirm_deletions": True,
             "deletion_mode": "system",
+        }
+        assert ia["viewer"] == {
+            "zoom_step_percent": 10,
+            "zoom_max_percent": 400,
             "exif_auto_rotate": False,
             "metadata_panel_side": "right",
         }
@@ -290,11 +292,11 @@ class TestImportPbpicat:
         assert not data["display"]["thumbnails"]
         assert not data["display"]["sidecar_column"]
         assert not data["display"]["sidecar_filter"]
-        assert not data["images"]["delete_empty_sidecars"]
+        assert not data["files"]["delete_empty_sidecars"]
 
     def test_missing_keys_take_defaults(self, imported):
         # The parties catalogue predates metadata_panel_side.
-        assert _profile(imported, "parties")["images"]["metadata_panel_side"] == "right"
+        assert _profile(imported, "parties")["viewer"]["metadata_panel_side"] == "right"
 
     def test_sidecar_config(self, imported):
         data = _sidecars("Icons")
@@ -437,7 +439,7 @@ class TestImportDetails:
         data = profiles.read_profile(root / "c")
         assert data["schema"]["field_titles"] == []
         assert data["schema"]["field_count"] == 6
-        assert data["images"]["sidecar_new_extension"] == "xmp"
+        assert data["files"]["sidecar_new_extension"] == "xmp"
         sidecars = json.loads((root / "c" / "sidecar_config.json").read_text())
         assert sidecars == {"base_extensions": {"image": ["jpg"]}}
 
@@ -483,5 +485,5 @@ class TestImportDetails:
 
 def test_catalogue_without_delete_option_deletes_empty_sidecars():
     data = migration._catalogue_profile({}, None)
-    assert data["images"]["delete_empty_sidecars"] is True
+    assert data["files"]["delete_empty_sidecars"] is True
     assert data["display"]["thumbnails"] is True

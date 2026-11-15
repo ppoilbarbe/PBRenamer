@@ -38,7 +38,7 @@ _log = logging.getLogger(__name__)
 
 DEFAULT = "default"
 MODES = ("pattern", "schema")
-# images.deletion_mode: permanent removal, system trash, session trash.
+# files.deletion_mode: permanent removal, system trash, session trash.
 DELETION_MODES = ("delete", "system", "session")
 PROFILE_FILE = "profile.json"
 HISTORY_FILE = "history.json"
@@ -71,14 +71,16 @@ DEFAULTS: dict = {
         "sort_by_date": False,
         "sort_reverse": False,
     },
-    "images": {
-        "zoom_step_percent": 25,
-        "zoom_max_percent": 400,
+    "files": {
         "sidecar_new_extension": "xmp",
         "delete_empty_sidecars": False,
         "delete_list_max_files": 12,
         "confirm_deletions": True,
         "deletion_mode": "system",
+    },
+    "viewer": {
+        "zoom_step_percent": 25,
+        "zoom_max_percent": 400,
         "exif_auto_rotate": True,
         "metadata_panel_side": "right",
     },
@@ -415,16 +417,33 @@ def _write_json(path: Path, data: object) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _split_images_section(raw: object) -> None:
+    """Spread the "images" section of 2.1.0 and earlier over "files" and
+    "viewer"; it is dropped on the next write (and its old "use_trash")."""
+    if not isinstance(raw, dict):
+        return
+    images = raw.pop("images", None)
+    if not isinstance(images, dict):
+        return
+    for section in ("files", "viewer"):
+        target = raw.get(section)
+        if not isinstance(target, dict):
+            target = raw[section] = {}
+        for key in DEFAULTS[section]:
+            if key in images:
+                target.setdefault(key, images[key])
+
+
 def read_profile(directory: Path) -> dict:
     """Return the settings stored in the profile *directory*, with defaults."""
-    data = merge_defaults(_read_json(directory / PROFILE_FILE))
+    raw = _read_json(directory / PROFILE_FILE)
+    _split_images_section(raw)
+    data = merge_defaults(raw)
     if data["mode"] not in MODES:
         data["mode"] = DEFAULTS["mode"]
-    images = data["images"]
-    if images["deletion_mode"] not in DELETION_MODES:
-        images["deletion_mode"] = DEFAULTS["images"]["deletion_mode"]
-    # Replaced by deletion_mode: not read, dropped on the next write.
-    images.pop("use_trash", None)
+    files = data["files"]
+    if files["deletion_mode"] not in DELETION_MODES:
+        files["deletion_mode"] = DEFAULTS["files"]["deletion_mode"]
     return data
 
 

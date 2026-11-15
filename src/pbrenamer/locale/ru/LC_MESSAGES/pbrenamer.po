@@ -228,6 +228,117 @@ msgid "Undo last rename batch"
 msgstr "Отменить последний пакет переименований"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Шаблон"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Не удалось определить шаблон для «{name}».\n"
+"Ни одна часть имени файла не совпадает с историей полей."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Подтвердить удаление"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Не удалось переместить в корзину: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Ошибка удаления"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Файлов: {count}. Они находятся в другой файловой системе, чем корзина "
+"сеанса, и не могут быть в неё перемещены.\n"
+"Удалить их безвозвратно? Это действие нельзя отменить."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Эти файлы находятся в другой файловой системе, чем корзина сеанса, и не "
+"могут быть в неё перемещены:\n"
+"{names}\n"
+"Удалить их безвозвратно? Это действие нельзя отменить."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Переместить {count} файлов в корзину?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Переместить в корзину:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Переместить файлы ({count}) в корзину сеанса?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Переместить в корзину сеанса:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Удалить {count} файлов безвозвратно?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Удалить безвозвратно:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Поворот недоступен"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Не удалось повернуть файлов: {n}."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} файл(ов) повернуто."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} тег(ов) ориентации EXIF сброшено."
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Информация о файле"
 
@@ -468,117 +579,6 @@ msgstr "Удалить все записи истории замены"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Удалить весь журнал шаблонов замены"
-
-# ==AUTO== Automatically translated
-msgid "Template"
-msgstr "Шаблон"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"Не удалось определить шаблон для «{name}».\n"
-"Ни одна часть имени файла не совпадает с историей полей."
-
-# ==AUTO== Automatically translated
-msgid "Confirm deletion"
-msgstr "Подтвердить удаление"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "Не удалось переместить в корзину: {name}"
-
-# ==AUTO== Automatically translated
-msgid "Deletion error"
-msgstr "Ошибка удаления"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Файлов: {count}. Они находятся в другой файловой системе, чем корзина "
-"сеанса, и не могут быть в неё перемещены.\n"
-"Удалить их безвозвратно? Это действие нельзя отменить."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Эти файлы находятся в другой файловой системе, чем корзина сеанса, и не "
-"могут быть в неё перемещены:\n"
-"{names}\n"
-"Удалить их безвозвратно? Это действие нельзя отменить."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "Переместить {count} файлов в корзину?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Переместить в корзину:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "Переместить файлы ({count}) в корзину сеанса?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Переместить в корзину сеанса:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Удалить {count} файлов безвозвратно?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Удалить безвозвратно:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-msgid "Rotation unavailable"
-msgstr "Поворот недоступен"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "Не удалось повернуть файлов: {n}."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} файл(ов) повернуто."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} тег(ов) ориентации EXIF сброшено."
 
 # ==AUTO== Automatically translated
 msgid "Fit window  0 / X"
@@ -1279,8 +1279,8 @@ msgid "Delete the selected files"
 msgstr "Удалить выбранные файлы"
 
 # ==AUTO== Automatically translated
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr "Удалить выбранные файлы и их sidecar-файлы (в корзину, если она включена)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "Удалить выбранные файлы и их sidecar-файлы согласно профилю"
 
 # ==AUTO== Automatically translated
 msgid "Orphan sidecars…"
@@ -1892,6 +1892,10 @@ msgstr ""
 "отсутствии конфликтов)"
 
 # ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Открыть sidecar-файл"
+
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "Файл"
 
@@ -1906,10 +1910,6 @@ msgstr "Профиль"
 # ==AUTO== Automatically translated
 msgid "Images"
 msgstr "Изображения"
-
-# ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Открыть sidecar-файл"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -2641,6 +2641,10 @@ msgstr "Поле {n}:"
 # ==AUTO== Automatically translated
 msgid "Display"
 msgstr "Отображение"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "Файлы"
 
 # ==AUTO== Automatically translated
 msgid "Number of fields of the rename schema"

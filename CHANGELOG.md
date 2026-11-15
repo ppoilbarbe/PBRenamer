@@ -44,6 +44,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   **Move to the session trash**. The former setting (`use_trash`) is no longer read: every profile
   starts with the system trash, and the setting is dropped from `profile.json` at the next save.
   The PBPicat import no longer copies it either.
+- Menus: the actions that apply to any file (Open, Open with, Open sidecar, Template, Delete,
+  Orphan sidecars, Refresh) move from the **Images** menu to the **File** menu; the **Images** menu
+  keeps the actions on images and videos only (View, rotations, EXIF orientation). The context
+  menu of the file list is unchanged and still holds both.
+- Profile configuration: the **Images** tab is split into a **Files** tab (deletion) and an
+  **Image viewer** tab (zoom, metadata panel, EXIF orientation). In `profile.json`, the `images`
+  section is likewise split into `files` and `viewer`; the settings of an existing `images`
+  section are carried over when the profile is read, and the section is dropped at the next save.
 
 ### Fixed
 

@@ -225,6 +225,117 @@ msgid "Undo last rename batch"
 msgstr "Hoàn tác lô đổi tên cuối cùng"
 
 # ==AUTO== Automatically translated
+msgid "Template"
+msgstr "Mẫu"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Could not determine a template for “{name}”.\n"
+"No part of the file name matches any field history."
+msgstr ""
+"Không xác định được mẫu cho “{name}”.\n"
+"Không phần nào của tên tệp khớp với lịch sử của trường."
+
+# ==AUTO== Automatically translated
+msgid "Confirm deletion"
+msgstr "Xác nhận xóa"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Could not move to trash: {name}"
+msgstr "Không thể chuyển vào thùng rác: {name}"
+
+# ==AUTO== Automatically translated
+msgid "Deletion error"
+msgstr "Lỗi xóa"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} tệp nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
+"chuyển vào đó.\n"
+"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Các tệp này nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
+"chuyển vào đó:\n"
+"{names}\n"
+"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to trash?"
+msgstr "Chuyển {count} tệp vào thùng rác?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to trash:\n"
+"{names}"
+msgstr ""
+"Chuyển vào thùng rác:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Chuyển {count} tệp vào thùng rác phiên?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Chuyển vào thùng rác phiên:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Permanently delete {count} files?"
+msgstr "Xóa vĩnh viễn {count} tệp?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Permanently delete:\n"
+"{names}"
+msgstr ""
+"Xóa vĩnh viễn:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+msgid "Rotation unavailable"
+msgstr "Không thể xoay"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) could not be rotated."
+msgstr "Không thể xoay {n} tệp."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} file(s) rotated."
+msgstr "{n} tệp đã được xoay."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{n} EXIF orientation tag(s) reset."
+msgstr "{n} thẻ hướng EXIF đã được đặt lại."
+
+# ==AUTO== Automatically translated
 msgid "File information"
 msgstr "Thông tin tệp"
 
@@ -465,117 +576,6 @@ msgstr "Xóa tất cả mục lịch sử thay thế"
 # ==AUTO== Automatically translated
 msgid "Delete the entire replacement pattern history"
 msgstr "Xóa toàn bộ lịch sử mẫu thay thế"
-
-# ==AUTO== Automatically translated
-msgid "Template"
-msgstr "Mẫu"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Could not determine a template for “{name}”.\n"
-"No part of the file name matches any field history."
-msgstr ""
-"Không xác định được mẫu cho “{name}”.\n"
-"Không phần nào của tên tệp khớp với lịch sử của trường."
-
-# ==AUTO== Automatically translated
-msgid "Confirm deletion"
-msgstr "Xác nhận xóa"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Could not move to trash: {name}"
-msgstr "Không thể chuyển vào thùng rác: {name}"
-
-# ==AUTO== Automatically translated
-msgid "Deletion error"
-msgstr "Lỗi xóa"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"{count} files are on another file system than the session trash and "
-"cannot be moved to it.\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"{count} tệp nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
-"chuyển vào đó.\n"
-"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"These files are on another file system than the session trash and cannot "
-"be moved to it:\n"
-"{names}\n"
-"Delete them permanently? This cannot be undone."
-msgstr ""
-"Các tệp này nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
-"chuyển vào đó:\n"
-"{names}\n"
-"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to trash?"
-msgstr "Chuyển {count} tệp vào thùng rác?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to trash:\n"
-"{names}"
-msgstr ""
-"Chuyển vào thùng rác:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Move {count} files to the session trash?"
-msgstr "Chuyển {count} tệp vào thùng rác phiên?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Move to the session trash:\n"
-"{names}"
-msgstr ""
-"Chuyển vào thùng rác phiên:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "Permanently delete {count} files?"
-msgstr "Xóa vĩnh viễn {count} tệp?"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid ""
-"Permanently delete:\n"
-"{names}"
-msgstr ""
-"Xóa vĩnh viễn:\n"
-"{names}"
-
-# ==AUTO== Automatically translated
-msgid "Rotation unavailable"
-msgstr "Không thể xoay"
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) could not be rotated."
-msgstr "Không thể xoay {n} tệp."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} file(s) rotated."
-msgstr "{n} tệp đã được xoay."
-
-# ==AUTO== Automatically translated
-#, python-brace-format
-msgid "{n} EXIF orientation tag(s) reset."
-msgstr "{n} thẻ hướng EXIF đã được đặt lại."
 
 # ==AUTO== Automatically translated
 msgid "Fit window  0 / X"
@@ -1272,8 +1272,8 @@ msgid "Delete the selected files"
 msgstr "Xóa các tệp đã chọn"
 
 # ==AUTO== Automatically translated
-msgid "Delete the selected files and their sidecars (to the trash if enabled)"
-msgstr "Xóa các tệp đã chọn và sidecar của chúng (vào thùng rác nếu được bật)"
+msgid "Delete the selected files and their sidecars, as set in the profile"
+msgstr "Xóa các tệp đã chọn và sidecar của chúng, theo thiết lập của hồ sơ"
 
 # ==AUTO== Automatically translated
 msgid "Orphan sidecars…"
@@ -1875,6 +1875,10 @@ msgstr ""
 "đột)"
 
 # ==AUTO== Automatically translated
+msgid "Open sidecar"
+msgstr "Mở sidecar"
+
+# ==AUTO== Automatically translated
 msgid "File"
 msgstr "Tệp"
 
@@ -1889,10 +1893,6 @@ msgstr "Hồ sơ"
 # ==AUTO== Automatically translated
 msgid "Images"
 msgstr "Ảnh"
-
-# ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Mở sidecar"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -2620,6 +2620,10 @@ msgstr "Trường {n}:"
 # ==AUTO== Automatically translated
 msgid "Display"
 msgstr "Hiển thị"
+
+# ==AUTO== Automatically translated
+msgid "Files"
+msgstr "Tệp"
 
 # ==AUTO== Automatically translated
 msgid "Number of fields of the rename schema"

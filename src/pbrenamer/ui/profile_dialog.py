@@ -33,7 +33,11 @@ class ProfileDialog(GeometryMixin, QDialog):
         )
         self._ui.edtVideoMarker.setText(schema_cfg["video_marker"])
         self._ui.chkRenameDirs.setChecked(schema_cfg["rename_dirs"])
-        display, images = self._data["display"], self._data["images"]
+        display, files, viewer = (
+            self._data["display"],
+            self._data["files"],
+            self._data["viewer"],
+        )
         self._ui.spnHistoryMax.setValue(display["history_max"])
         self._ui.chkThumbnails.setChecked(display["thumbnails"])
         self._ui.spnThumbWidth.setValue(display["thumbnail_max_width"])
@@ -41,17 +45,17 @@ class ProfileDialog(GeometryMixin, QDialog):
         self._ui.chkSidecarColumn.setChecked(display["sidecar_column"])
         self._ui.chkSidecarFilter.setChecked(display["sidecar_filter"])
         self._ui.edtSidecarExtension.setValidator(ForbiddenCharValidator("/\\ ", self))
-        self._ui.edtSidecarExtension.setText(images["sidecar_new_extension"])
-        self._ui.chkDeleteEmptySidecars.setChecked(images["delete_empty_sidecars"])
-        self._ui.spnZoomStep.setValue(images["zoom_step_percent"])
-        self._ui.spnZoomMax.setValue(images["zoom_max_percent"])
-        side = self._ui.cmbMetadataSide.findData(images["metadata_panel_side"])
+        self._ui.edtSidecarExtension.setText(files["sidecar_new_extension"])
+        self._ui.chkDeleteEmptySidecars.setChecked(files["delete_empty_sidecars"])
+        self._ui.spnZoomStep.setValue(viewer["zoom_step_percent"])
+        self._ui.spnZoomMax.setValue(viewer["zoom_max_percent"])
+        side = self._ui.cmbMetadataSide.findData(viewer["metadata_panel_side"])
         self._ui.cmbMetadataSide.setCurrentIndex(max(0, side))
-        self._ui.chkExifAutoRotate.setChecked(images["exif_auto_rotate"])
-        mode = self._ui.cmbDeletionMode.findData(images["deletion_mode"])
+        self._ui.chkExifAutoRotate.setChecked(viewer["exif_auto_rotate"])
+        mode = self._ui.cmbDeletionMode.findData(files["deletion_mode"])
         self._ui.cmbDeletionMode.setCurrentIndex(max(0, mode))
-        self._ui.chkConfirmDeletions.setChecked(images["confirm_deletions"])
-        self._ui.spnDeleteListMax.setValue(images["delete_list_max_files"])
+        self._ui.chkConfirmDeletions.setChecked(files["confirm_deletions"])
+        self._ui.spnDeleteListMax.setValue(files["delete_list_max_files"])
         self._ui.spnFieldCount.setValue(max(1, schema_cfg["field_count"]))
         self._rebuild_titles(self._ui.spnFieldCount.value())
         self._ui.spnFieldCount.valueChanged.connect(self._rebuild_titles)
@@ -84,23 +88,27 @@ class ProfileDialog(GeometryMixin, QDialog):
         ]
         schema_cfg["video_marker"] = self._ui.edtVideoMarker.text().strip()
         schema_cfg["rename_dirs"] = self._ui.chkRenameDirs.isChecked()
-        display, images = self._data["display"], self._data["images"]
+        display, files, viewer = (
+            self._data["display"],
+            self._data["files"],
+            self._data["viewer"],
+        )
         display["history_max"] = self._ui.spnHistoryMax.value()
         display["thumbnails"] = self._ui.chkThumbnails.isChecked()
         display["thumbnail_max_width"] = self._ui.spnThumbWidth.value()
         display["thumbnail_max_height"] = self._ui.spnThumbHeight.value()
         display["sidecar_column"] = self._ui.chkSidecarColumn.isChecked()
         display["sidecar_filter"] = self._ui.chkSidecarFilter.isChecked()
-        images["sidecar_new_extension"] = (
+        files["sidecar_new_extension"] = (
             self._ui.edtSidecarExtension.text().strip().lstrip(".")
         )
-        images["delete_empty_sidecars"] = self._ui.chkDeleteEmptySidecars.isChecked()
-        images["zoom_step_percent"] = self._ui.spnZoomStep.value()
-        images["zoom_max_percent"] = self._ui.spnZoomMax.value()
-        images["metadata_panel_side"] = self._ui.cmbMetadataSide.currentData()
-        images["exif_auto_rotate"] = self._ui.chkExifAutoRotate.isChecked()
-        images["deletion_mode"] = self._ui.cmbDeletionMode.currentData()
-        images["confirm_deletions"] = self._ui.chkConfirmDeletions.isChecked()
-        images["delete_list_max_files"] = self._ui.spnDeleteListMax.value()
+        files["delete_empty_sidecars"] = self._ui.chkDeleteEmptySidecars.isChecked()
+        viewer["zoom_step_percent"] = self._ui.spnZoomStep.value()
+        viewer["zoom_max_percent"] = self._ui.spnZoomMax.value()
+        viewer["metadata_panel_side"] = self._ui.cmbMetadataSide.currentData()
+        viewer["exif_auto_rotate"] = self._ui.chkExifAutoRotate.isChecked()
+        files["deletion_mode"] = self._ui.cmbDeletionMode.currentData()
+        files["confirm_deletions"] = self._ui.chkConfirmDeletions.isChecked()
+        files["delete_list_max_files"] = self._ui.spnDeleteListMax.value()
         profiles.save(self._data)
         self.accept()
