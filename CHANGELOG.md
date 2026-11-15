@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-15
+
+This version fixes problems that followed the merge of PBPicat into PBRenamer: bugs, and PBPicat
+features that were missing or badly integrated (file counts missing for example).
+
 ### Added
 
 - Status bar: file counts at its right end, as in PBPicat: `SS/TT`, selected / listed files; in
