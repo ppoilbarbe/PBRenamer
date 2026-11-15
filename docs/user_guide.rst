@@ -288,11 +288,13 @@ While sidecar mode is active:
   sidecars are renamed together, recorded as one batch on the undo stack, so
   **Undo** restores the whole group at once.
 
+.. _sidecar-categories:
+
 Configuring categories
 """""""""""""""""""""""
 
-Open **Edit → Sidecar Files…** to configure the base extensions and sidecar
-suffixes for each category. The dialog has one tab per base category
+Open **Profile → Sidecar Files…** to configure the base extensions and
+sidecar suffixes for each category; they belong to the current profile. The dialog has one tab per base category
 (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:
 
 * Each *base extensions* list (Images/Video/Audio only — *Other* has no such
@@ -345,8 +347,8 @@ Presets
 
 The search and replace combos keep a history of the patterns used (most
 recent first); the button next to each combo adds the current pattern to it.
-**Edit → History…** edits the search, replacement and :ref:`sidecar filter
-<sidecar-filter>` histories: add, remove, reorder, sort, or clear.
+**Profile → Histories…** edits the search, replacement and :ref:`sidecar
+filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear.
 
 The **Save** field gives the current settings a name: type a name and click
 **Save**, pick it later from the same drop-down to restore it, or click
@@ -365,8 +367,9 @@ reports how many files were renamed.
 Renaming is atomic: every target is checked first, and if one of them fails
 during the operation, the renames already done are rolled back.  When the new
 name contains a folder (a :ref:`schema <schema-mode>` or a ``{dest}``
-template), missing folders are created, and source folders left empty below
-the listed folder are removed.  After a rename the Preview column is cleared.
+template), missing folders are created; the source folders left empty can
+be removed (see :ref:`empty-folders`).  After a rename the Preview column
+is cleared.
 
 Undo
 ~~~~
@@ -473,6 +476,14 @@ offers:
 **Profile configuration…** (**Ctrl+,**)
     Configure the current profile (see below).
 
+**Sidecar Files…**
+    Configure the :ref:`sidecar file <sidecar-files>` categories of the
+    current profile (see :ref:`sidecar-categories`).
+
+**Histories…**
+    Edit the histories of the current profile: search, replacement, sidecar
+    filter and schema fields.
+
 Profile names may contain letters, digits, ``-`` and ``_``.  A profile whose
 name starts with ``-`` is **hidden**: it is not listed in the menu and is
 never reopened at start-up, but it can be used with ``--profile``.  At least
@@ -497,7 +508,7 @@ chosen.  Renaming the default profile from the menu updates the setting.
 Profile configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
-**Profile → Profile configuration…** has three tabs.
+**Profile → Profile configuration…** has four tabs.
 
 **Schema**
     Number of fields of the schema, the title of each field (shown above it
@@ -515,6 +526,9 @@ Profile configuration
     Deletion: what happens to the deleted files (see
     :ref:`deletion-modes`), whether to ask for a confirmation, and the
     number of files above which the confirmation only gives their count.
+    Folders left empty: whether to remove them after a deletion, after a
+    rename, and their parents left empty in turn (see
+    :ref:`empty-folders`).
 
 **Image viewer**
     Zoom step, maximum zoom, side of the metadata panel, and whether images
@@ -543,8 +557,32 @@ The **Deleted files** setting of the profile offers three choices:
     be deleted permanently, after a confirmation that is always asked.
 
 **Delete permanently**
-    The files are removed at once and cannot be restored.  The folders left
-    empty below the displayed one are removed as well.
+    The files are removed at once and cannot be restored.
+
+.. _empty-folders:
+
+Folders left empty
+~~~~~~~~~~~~~~~~~~
+
+The **Remove the folders left empty** options of the profile are off by
+default:
+
+**After a deletion**
+    The folders that deleting files leaves empty are removed, whatever the
+    deletion mode.  This happens when the list shows the files of
+    sub-folders (**Recursive**).
+
+**After a rename**
+    The folders that renaming or moving files leaves empty are removed, for
+    instance after sorting files into a :ref:`schema <schema-mode>` tree.
+
+**Also their parents left empty**
+    The parent folders that become empty in turn are removed too.  Without
+    this option, only the folders that held the files are removed.
+
+Only the folders below the displayed one are removed, never the displayed
+folder itself.  **Undo** recreates the removed folders along with the
+files.  The command line follows the options of the profile it uses.
 
 .. _schema-mode:
 
@@ -583,7 +621,8 @@ Destination
 
 The **Destination** field is the root of the folder tree.  It must be an
 absolute path; **Browse…** chooses it.  Missing folders are created when
-renaming, and source folders left empty are removed.
+renaming; the source folders left empty can be removed (see
+:ref:`empty-folders`).
 
 Video marker
 ~~~~~~~~~~~~
@@ -868,7 +907,7 @@ One folder per profile, ``profiles/NAME/``:
 ``sidecar_config.json``
     :ref:`Sidecar file <sidecar-files>` category configuration (base
     extensions / sidecar suffixes per category), managed from
-    **Edit → Sidecar Files…**.
+    **Profile → Sidecar Files…**.
 
 ``patterns/search.json`` / ``patterns/replace.json``
     Most-recently-used search and replacement patterns.
@@ -1500,7 +1539,7 @@ Rename options
     renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,
     ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` is
     an error.  Category configuration (base extensions, sidecar suffixes) is
-    shared with the GUI's **Edit → Sidecar Files…** dialog.
+    shared with the GUI's **Profile → Sidecar Files…** dialog.
 
 ``--filter GLOB``
     Glob pattern to restrict the file listing (e.g. ``'*.jpg'``).

@@ -1,4 +1,4 @@
-"""Tests for pbrenamer.ui.file_actions — the Images menu, the viewer
+"""Tests for pbrenamer.ui.file_actions — the File and Images menus, the viewer
 wiring, deletion, orphan sidecars, Template and rotations."""
 
 from __future__ import annotations
@@ -678,15 +678,50 @@ class TestDelete:
 
     def test_permanent(self, window, tmp_path, calls):
         self._set(deletion_mode="delete")
-        sub = tmp_path / "sub" / "deeper"
-        sub.mkdir(parents=True)
+        sub = tmp_path / "sub"
+        sub.mkdir()
         a = _png(sub / "a.png")
         window._ui.chkRecursive.setChecked(True)
         _load(window, tmp_path)
         window._file_actions.delete([a])
         assert calls["ask"] == ["Permanently delete:\na.png"]
-        assert not (tmp_path / "sub").exists()
-        assert tmp_path.exists()
+        assert not os.path.exists(a)
+        assert sub.is_dir()  # empty folders kept by default
+
+    @pytest.mark.parametrize("mode", ["delete", "system", "session"])
+    @pytest.mark.parametrize(("parents", "kept"), [(False, True), (True, False)])
+    def test_emptied_folders_removed(
+        self, window, tmp_path, calls, trash, mode, parents, kept
+    ):
+        self._set(
+            deletion_mode=mode, prune_dirs_on_delete=True, prune_parent_dirs=parents
+        )
+        deep = tmp_path / "sub" / "deep"
+        deep.mkdir(parents=True)
+        other = tmp_path / "other"
+        other.mkdir()
+        a = _png(deep / "a.png")
+        b = _png(other / "b.png")
+        _png(other / "c.png")
+        window._ui.chkRecursive.setChecked(True)
+        _load(window, tmp_path)
+        window._file_actions.delete([a, b])
+        assert not deep.exists()
+        assert (tmp_path / "sub").exists() is kept
+        assert other.is_dir()  # not empty
+        assert tmp_path.is_dir()  # the displayed folder is never removed
+
+    def test_emptied_folder_restored_by_undo(self, window, tmp_path, calls, trash):
+        self._set(deletion_mode="session", prune_dirs_on_delete=True)
+        sub = tmp_path / "sub"
+        sub.mkdir()
+        a = _png(sub / "a.png")
+        window._ui.chkRecursive.setChecked(True)
+        _load(window, tmp_path)
+        window._file_actions.delete([a])
+        assert not sub.exists()
+        window._on_undo()
+        assert os.path.isfile(a)
 
     def test_permanent_count_and_error(self, window, tmp_path, calls, monkeypatch):
         self._set(deletion_mode="delete", delete_list_max_files=1)

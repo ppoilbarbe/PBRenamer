@@ -578,12 +578,13 @@ msgstr "配置类别"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Open **Edit → Sidecar Files…** to configure the base extensions and "
-"sidecar suffixes for each category. The dialog has one tab per base "
-"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+"Open **Profile → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category; they belong to the current profile. "
+"The dialog has one tab per base category (*Images*, *Video*, *Audio*, "
+"*Other*) plus a *Common* tab:"
 msgstr ""
-"打开 **编辑 → 附属文件…** 配置每个类别的主扩展名和 Sidecar "
-"后缀。对话框为每个主类别（*图像*、*视频*、*音频*、*其他*）各设一个选项卡，另有一个 *通用* 选项卡："
+"打开 **配置文件 → 附属文件…** 配置每个类别的主扩展名和 Sidecar "
+"后缀；这些设置属于当前配置文件。对话框为每个主类别（*图像*、*视频*、*音频*、*其他*）各设一个选项卡，另有一个 *通用* 选项卡："
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -715,11 +716,12 @@ msgstr "保存项"
 msgid ""
 "The search and replace combos keep a history of the patterns used (most "
 "recent first); the button next to each combo adds the current pattern to "
-"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
-"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+"it. **Profile → Histories…** edits the search, replacement and "
+":ref:`sidecar filter <sidecar-filter>` histories: add, remove, reorder, "
+"sort, or clear."
 msgstr ""
-"搜索和替换下拉框会保留所用模式的历史记录（最近的在前）；每个下拉框旁的按钮会把当前模式加入其中。**编辑 → 历史记录…** 可编辑搜索、替换和 "
-":ref:`Sidecar 过滤器 <sidecar-filter>` 的历史记录：添加、删除、调整顺序、排序或清空。"
+"搜索和替换下拉框会保留所用模式的历史记录（最近的在前）；每个下拉框旁的按钮会把当前模式加入其中。**配置文件 → 各项历史记录…** "
+"可编辑搜索、替换和 :ref:`Sidecar 过滤器 <sidecar-filter>` 的历史记录：添加、删除、调整顺序、排序或清空。"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -753,12 +755,13 @@ msgid ""
 "Renaming is atomic: every target is checked first, and if one of them "
 "fails during the operation, the renames already done are rolled back.  "
 "When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
-"``{dest}`` template), missing folders are created, and source folders "
-"left empty below the listed folder are removed.  After a rename the "
-"Preview column is cleared."
+"``{dest}`` template), missing folders are created; the source folders "
+"left empty can be removed (see :ref:`empty-folders`).  After a rename the"
+" Preview column is cleared."
 msgstr ""
 "重命名是原子操作：先检查所有目标，若其中之一在操作过程中失败，已完成的重命名会被回滚。当新名称包含文件夹时（:ref:`模式结构 <schema-"
-"mode>` 或带 ``{dest}`` 的模板），会创建缺少的文件夹，并删除所列文件夹下变为空的源文件夹。重命名后，“预览”列会被清空。"
+"mode>` 或带 ``{dest}`` 的模板），会创建缺少的文件夹；变为空的源文件夹可以被删除（见 :ref:`empty-"
+"folders`\\ ）。重命名后，“预览”列会被清空。"
 
 # ==AUTO== Automatically translated
 msgid "Undo"
@@ -984,6 +987,26 @@ msgid "Configure the current profile (see below)."
 msgstr "配置当前配置文件（见下文）。"
 
 # ==AUTO== Automatically translated
+msgid "**Sidecar Files…**"
+msgstr "**附属文件…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Configure the :ref:`sidecar file <sidecar-files>` categories of the "
+"current profile (see :ref:`sidecar-categories`)."
+msgstr "配置当前配置文件的 :ref:`附属文件 <sidecar-files>` 类别（见 :ref:`sidecar-categories`\\ ）。"
+
+# ==AUTO== Automatically translated
+msgid "**Histories…**"
+msgstr "**各项历史记录…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Edit the histories of the current profile: search, replacement, sidecar "
+"filter and schema fields."
+msgstr "编辑当前配置文件的各项历史记录：搜索、替换、Sidecar 过滤器和模式结构字段。"
+
+# ==AUTO== Automatically translated
 msgid ""
 "Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
 "whose name starts with ``-`` is **hidden**: it is not listed in the menu "
@@ -1032,8 +1055,8 @@ msgid "Profile configuration"
 msgstr "配置文件设置"
 
 # ==AUTO== Automatically translated
-msgid "**Profile → Profile configuration…** has three tabs."
-msgstr "**配置文件 → 配置文件设置…** 有三个选项卡。"
+msgid "**Profile → Profile configuration…** has four tabs."
+msgstr "**配置文件 → 配置文件设置…** 有四个选项卡。"
 
 # ==AUTO== Automatically translated
 msgid "**Schema**"
@@ -1071,8 +1094,13 @@ msgstr "**文件**"
 msgid ""
 "Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
 "whether to ask for a confirmation, and the number of files above which "
-"the confirmation only gives their count."
-msgstr "删除：被删除文件的去向（参见 :ref:`deletion-modes`\\ ）、是否要求确认，以及超过多少个文件时确认对话框只显示数量。"
+"the confirmation only gives their count. Folders left empty: whether to "
+"remove them after a deletion, after a rename, and their parents left "
+"empty in turn (see :ref:`empty-folders`)."
+msgstr ""
+"删除：被删除文件的去向（参见 :ref:`deletion-modes`\\ "
+"）、是否要求确认，以及超过多少个文件时确认对话框只显示数量。变空的文件夹：是否在删除文件后、重命名后删除它们，以及随之依次变空的上级文件夹（见 "
+":ref:`empty-folders`\\ ）。"
 
 # ==AUTO== Automatically translated
 msgid "**Image viewer**"
@@ -1128,10 +1156,56 @@ msgid "**Delete permanently**"
 msgstr "**永久删除**"
 
 # ==AUTO== Automatically translated
+msgid "The files are removed at once and cannot be restored."
+msgstr "文件被立即删除，无法恢复。"
+
+# ==AUTO== Automatically translated
+msgid "Folders left empty"
+msgstr "变空的文件夹"
+
+# ==AUTO== Automatically translated
 msgid ""
-"The files are removed at once and cannot be restored.  The folders left "
-"empty below the displayed one are removed as well."
-msgstr "文件被立即删除，无法恢复。当前显示文件夹下因此变空的文件夹也会被删除。"
+"The **Remove the folders left empty** options of the profile are off by "
+"default:"
+msgstr "配置文件的 **删除变空的文件夹** 选项默认关闭："
+
+# ==AUTO== Automatically translated
+msgid "**After a deletion**"
+msgstr "**删除文件后**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that deleting files leaves empty are removed, whatever the "
+"deletion mode.  This happens when the list shows the files of sub-folders"
+" (**Recursive**)."
+msgstr "无论采用哪种删除方式，因删除文件而变空的文件夹都会被删除。当列表显示子文件夹中的文件时（**递归**）会出现这种情况。"
+
+# ==AUTO== Automatically translated
+msgid "**After a rename**"
+msgstr "**重命名后**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that renaming or moving files leaves empty are removed, for "
+"instance after sorting files into a :ref:`schema <schema-mode>` tree."
+msgstr "因重命名或移动文件而变空的文件夹会被删除，例如在把文件归类到 :ref:`模式结构 <schema-mode>` 树之后。"
+
+# ==AUTO== Automatically translated
+msgid "**Also their parents left empty**"
+msgstr "**以及随之变空的上级文件夹**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The parent folders that become empty in turn are removed too.  Without "
+"this option, only the folders that held the files are removed."
+msgstr "依次变空的上级文件夹也会被删除。不启用此选项时，只删除原先存放文件的文件夹。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself.  **Undo** recreates the removed folders along with the "
+"files.  The command line follows the options of the profile it uses."
+msgstr "只删除当前显示文件夹之下的文件夹，绝不删除当前显示的文件夹本身。**撤销** 会连同文件一起重新创建被删除的文件夹。命令行遵循其所用配置文件的选项。"
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1202,8 +1276,11 @@ msgstr "目标"
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
 "absolute path; **Browse…** chooses it.  Missing folders are created when "
-"renaming, and source folders left empty are removed."
-msgstr "**目标** 字段是文件夹树的根。它必须是绝对路径；可用 **浏览…** 选择。重命名时会创建缺少的文件夹，并删除变为空的源文件夹。"
+"renaming; the source folders left empty can be removed (see :ref:`empty-"
+"folders`)."
+msgstr ""
+"**目标** 字段是文件夹树的根。它必须是绝对路径；可用 **浏览…** 选择。重命名时会创建缺少的文件夹；变为空的源文件夹可以被删除（见 "
+":ref:`empty-folders`\\ ）。"
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -1776,11 +1853,11 @@ msgstr "``sidecar_config.json``"
 # ==AUTO== Automatically translated
 msgid ""
 ":ref:`Sidecar file <sidecar-files>` category configuration (base "
-"extensions / sidecar suffixes per category), managed from **Edit → "
+"extensions / sidecar suffixes per category), managed from **Profile → "
 "Sidecar Files…**."
 msgstr ""
-":ref:`Sidecar 文件 <sidecar-files>` 的类别配置（每个类别的主扩展名和 Sidecar 后缀），通过 **编辑 → "
-"附属文件…** 管理。"
+":ref:`Sidecar 文件 <sidecar-files>` 的类别配置（每个类别的主扩展名和 Sidecar 后缀），通过 **配置文件 "
+"→ 附属文件…** 管理。"
 
 msgid "``patterns/search.json`` / ``patterns/replace.json``"
 msgstr "``patterns/search.json`` / ``patterns/replace.json``"
@@ -3081,11 +3158,11 @@ msgid ""
 "renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
 " ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
 "is an error.  Category configuration (base extensions, sidecar suffixes) "
-"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+"is shared with the GUI's **Profile → Sidecar Files…** dialog."
 msgstr ""
 "重命名时把 :ref:`Sidecar 文件 <sidecar-files>` 与其主文件分为一组（默认：``--no-sidecar-"
 "mode``）。需要 ``--ext-mode keep``、``lower`` 或 ``upper``；与 ``normalize`` 或 "
-"``modify`` 组合会报错。类别配置（主扩展名、Sidecar 后缀）与图形界面的 **编辑 → 附属文件…** 对话框共用。"
+"``modify`` 组合会报错。类别配置（主扩展名、Sidecar 后缀）与图形界面的 **配置文件 → 附属文件…** 对话框共用。"
 
 msgid "``--filter GLOB``"
 msgstr "``--filter GLOB``"

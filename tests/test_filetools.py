@@ -1654,13 +1654,23 @@ class TestExecuteRenames:
     def test_prunes_emptied_source_dirs_below_root(self, tmp_path):
         make_tree(tmp_path, {"sub": {"deep": {"a": None}}})
         result = filetools.execute_renames(
-            _pairs(tmp_path, ("sub/deep/a", "a")), prune_root=str(tmp_path)
+            _pairs(tmp_path, ("sub/deep/a", "a")),
+            prune_root=str(tmp_path),
+            prune_ancestors=True,
         )
         assert os.listdir(tmp_path) == ["a"]
         assert result.pruned_dirs == [
             str(tmp_path / "sub" / "deep"),
             str(tmp_path / "sub"),
         ]
+
+    def test_prunes_only_the_source_dirs_without_ancestors(self, tmp_path):
+        make_tree(tmp_path, {"sub": {"deep": {"a": None}}})
+        result = filetools.execute_renames(
+            _pairs(tmp_path, ("sub/deep/a", "a")), prune_root=str(tmp_path)
+        )
+        assert result.pruned_dirs == [str(tmp_path / "sub" / "deep")]
+        assert (tmp_path / "sub").is_dir()
 
     def test_never_prunes_root(self, tmp_path):
         make_tree(tmp_path, {"src": {"a": None}})
@@ -1676,6 +1686,19 @@ class TestExecuteRenames:
             _pairs(tmp_path, ("sub/a", "a")), prune_root=str(tmp_path)
         )
         assert result.pruned_dirs == []
+
+    def test_prune_failure_logged(self, tmp_path, monkeypatch, caplog):
+        make_tree(tmp_path, {"sub": {"a": None}})
+
+        def rmdir(path):
+            raise OSError("busy")
+
+        monkeypatch.setattr(filetools.os, "rmdir", rmdir)
+        result = filetools.execute_renames(
+            _pairs(tmp_path, ("sub/a", "a")), prune_root=str(tmp_path)
+        )
+        assert result.pruned_dirs == []
+        assert "Could not remove the empty folder" in caplog.text
 
     def test_no_pruning_without_root(self, tmp_path):
         make_tree(tmp_path, {"sub": {"a": None}})

@@ -483,8 +483,8 @@ msgid "Sidecar filter"
 msgstr "Filtro sidecar"
 
 # ==AUTO== Automatically translated
-msgid "History"
-msgstr "Historial"
+msgid "Histories"
+msgstr "Historiales"
 
 # ==AUTO== Automatically translated
 msgid "Patterns"
@@ -796,8 +796,8 @@ msgid "Right-click on the file list"
 msgstr "Clic derecho en la lista de archivos"
 
 # ==AUTO== Automatically translated
-msgid "Images menu"
-msgstr "Menú Imágenes"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Acciones de los menús Archivo e Imágenes sobre los archivos seleccionados"
 
 # ==AUTO== Automatically translated
 msgid "Right-click on the directory tree"
@@ -1096,18 +1096,20 @@ msgid "Exit the application"
 msgstr "Cerrar la aplicación"
 
 # ==AUTO== Automatically translated
-msgid "History…"
-msgstr "Historial…"
+msgid "Histories…"
+msgstr "Historiales…"
 
 # ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "Gestionar el historial de patrones"
+msgid "Manage the histories of the current profile"
+msgstr "Gestionar los historiales del perfil actual"
 
 # ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
 msgstr ""
-"Añadir o eliminar entradas del historial de patrones de búsqueda y "
-"reemplazo"
+"Añadir o quitar entradas de los historiales de búsqueda, reemplazo, "
+"filtro sidecar y campos del esquema"
 
 # ==AUTO== Automatically translated
 msgid "Settings…"
@@ -1126,8 +1128,8 @@ msgid "Sidecar Files…"
 msgstr "Archivos sidecar…"
 
 # ==AUTO== Automatically translated
-msgid "Configure sidecar file categories"
-msgstr "Configurar categorías de archivos sidecar"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Configurar las categorías de archivos sidecar del perfil actual"
 
 # ==AUTO== Automatically translated
 msgid "Configure base-file extensions and sidecar suffixes for each category"
@@ -2873,6 +2875,48 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Files listed in the confirmation:"
 msgstr "Archivos listados en la confirmación:"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders left empty"
+msgstr "Eliminar las carpetas vaciadas"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Solo se eliminan las carpetas situadas bajo la carpeta mostrada, nunca la"
+" propia carpeta mostrada"
+
+# ==AUTO== Automatically translated
+msgid "After a deletion"
+msgstr "Tras una eliminación"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Eliminar las carpetas que la eliminación de archivos deja vacías"
+
+# ==AUTO== Automatically translated
+msgid "After a rename"
+msgstr "Tras un renombrado"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr ""
+"Eliminar las carpetas que el renombrado o el traslado de archivos deja "
+"vacías"
+
+# ==AUTO== Automatically translated
+msgid "Also their parents left empty"
+msgstr "También sus carpetas superiores vaciadas"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Eliminar después las carpetas superiores que quedan vacías a su vez, "
+"hasta la carpeta mostrada"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

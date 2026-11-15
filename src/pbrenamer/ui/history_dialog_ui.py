@@ -22,7 +22,7 @@ class Ui_HistoryDialog:
     def setupUi(self, dialog):
         dialog.setMinimumSize(620, 360)
         dialog.resize(640, 400)
-        dialog.setWindowTitle(_("History"))
+        dialog.setWindowTitle(_("Histories"))
 
         layout = QVBoxLayout(dialog)
 

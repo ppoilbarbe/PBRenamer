@@ -1729,7 +1729,16 @@ class TestSchemaRun:
         assert _tree(src) == []
         assert src.is_dir()  # the listed directory is never pruned
 
+    @staticmethod
+    def _prune(on_rename, parents=False):
+        from pbrenamer import profiles
+
+        data = profiles.load()
+        data["files"].update(prune_dirs_on_rename=on_rename, prune_parent_dirs=parents)
+        profiles.save(data)
+
     def test_source_sub_directory_pruned(self, tmp_path, monkeypatch):
+        self._prune(True)
         src = tmp_path / "src"
         (src / "sub").mkdir(parents=True)
         _make_files(src / "sub", "a.jpg")
@@ -1738,6 +1747,30 @@ class TestSchemaRun:
         assert code == 0
         assert _tree(dest) == ["A/A_1.jpg"]
         assert not (src / "sub").exists() and src.is_dir()
+
+    @pytest.mark.parametrize(("parents", "kept"), [(False, True), (True, False)])
+    def test_source_parent_pruned_on_request(
+        self, tmp_path, monkeypatch, parents, kept
+    ):
+        self._prune(True, parents)
+        src = tmp_path / "src"
+        (src / "sub" / "deep").mkdir(parents=True)
+        _make_files(src / "sub" / "deep", "a.jpg")
+        dest = tmp_path / "out"
+        code = _main(monkeypatch, src, "--recurse", "--schema", "A,#", "--dest", dest)
+        assert code == 0
+        assert not (src / "sub" / "deep").exists()
+        assert (src / "sub").exists() is kept
+        assert src.is_dir()
+
+    def test_source_sub_directory_kept_by_default(self, tmp_path, monkeypatch):
+        src = tmp_path / "src"
+        (src / "sub").mkdir(parents=True)
+        _make_files(src / "sub", "a.jpg")
+        dest = tmp_path / "out"
+        code = _main(monkeypatch, src, "--recurse", "--schema", "A,#", "--dest", dest)
+        assert code == 0
+        assert (src / "sub").is_dir()
 
     def test_second_batch_continues_numbering(self, tmp_path, monkeypatch):
         dest = tmp_path / "out"

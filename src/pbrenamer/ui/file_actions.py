@@ -502,8 +502,11 @@ class FileActions(QObject):
         if trashed:
             self._undo.add(DeleteEntry(trashed, system=mode == "system"))
             self.undo_stack_changed.emit()
-        if mode == "delete":
-            self._remove_empty_dirs(deleted)
+        root = self._files.current_dir
+        if options["prune_dirs_on_delete"] and root:
+            filetools.prune_empty_dirs(
+                deleted, root, ancestors=options["prune_parent_dirs"]
+            )
         if errors:
             _warn(parent, _("Deletion error"), "\n".join(errors))
         return deleted
@@ -550,19 +553,6 @@ class FileActions(QObject):
         if many:
             return _("Permanently delete {count} files?").format(count=len(files))
         return _("Permanently delete:\n{names}").format(names=names)
-
-    def _remove_empty_dirs(self, deleted: list[str]) -> None:
-        """Remove the folders left empty below the displayed one."""
-        root = os.path.abspath(self._files.current_dir or "")
-        dirs: set[str] = set()
-        for path in deleted:
-            directory = os.path.dirname(os.path.abspath(path))
-            while directory != root and directory.startswith(root + os.sep):
-                dirs.add(directory)
-                directory = os.path.dirname(directory)
-        for directory in sorted(dirs, key=len, reverse=True):
-            if not os.listdir(directory):
-                filetools.remove_empty_dirs([directory])
 
     # ── Orphan sidecars ───────────────────────────────────────────────────────
 

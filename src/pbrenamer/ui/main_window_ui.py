@@ -69,11 +69,14 @@ class Ui_MainWindow:
         self.actionQuit.setStatusTip(_("Exit the application"))
 
         self.actionHistory = QAction(
-            QIcon(_resource("history.svg")), _("History…"), window
+            QIcon(_resource("history.svg")), _("Histories…"), window
         )
-        self.actionHistory.setToolTip(_("Manage pattern history"))
+        self.actionHistory.setToolTip(_("Manage the histories of the current profile"))
         self.actionHistory.setStatusTip(
-            _("Add or remove entries from the search and replacement pattern history")
+            _(
+                "Add or remove entries from the search, replacement, sidecar "
+                "filter and schema field histories"
+            )
         )
 
         self.actionSettings = QAction(
@@ -85,7 +88,9 @@ class Ui_MainWindow:
         self.actionSidecarFiles = QAction(
             QIcon(_resource("sidecars.svg")), _("Sidecar Files…"), window
         )
-        self.actionSidecarFiles.setToolTip(_("Configure sidecar file categories"))
+        self.actionSidecarFiles.setToolTip(
+            _("Configure the sidecar file categories of the current profile")
+        )
         self.actionSidecarFiles.setStatusTip(
             _("Configure base-file extensions and sidecar suffixes for each category")
         )
@@ -868,9 +873,6 @@ class Ui_MainWindow:
 
         # Edit menu
         menu_edit = menubar.addMenu(_("Edit"))
-        menu_edit.addAction(self.actionHistory)
-        menu_edit.addSeparator()
-        menu_edit.addAction(self.actionSidecarFiles)
         menu_edit.addAction(self.actionSettings)
 
         # Profile menu (profile list appended by MainWindow._build_profile_menu)
@@ -881,6 +883,8 @@ class Ui_MainWindow:
         self.menuProfile.addAction(self.actionProfileDelete)
         self.menuProfile.addSeparator()
         self.menuProfile.addAction(self.actionProfileConfig)
+        self.menuProfile.addAction(self.actionSidecarFiles)
+        self.menuProfile.addAction(self.actionHistory)
         self.menuProfile.addSeparator()
 
         # Images menu: the actions on images and videos only

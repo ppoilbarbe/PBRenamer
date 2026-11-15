@@ -468,8 +468,8 @@ msgid "Sidecar filter"
 msgstr "Sidecar 过滤器"
 
 # ==AUTO== Automatically translated
-msgid "History"
-msgstr "历史记录"
+msgid "Histories"
+msgstr "各项历史记录"
 
 # ==AUTO== Automatically translated
 msgid "Patterns"
@@ -779,8 +779,8 @@ msgid "Right-click on the file list"
 msgstr "右键单击文件列表"
 
 # ==AUTO== Automatically translated
-msgid "Images menu"
-msgstr "“图像”菜单"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "对所选文件执行“文件”和“图像”菜单中的操作"
 
 # ==AUTO== Automatically translated
 msgid "Right-click on the directory tree"
@@ -1072,16 +1072,18 @@ msgid "Exit the application"
 msgstr "关闭应用程序"
 
 # ==AUTO== Automatically translated
-msgid "History…"
-msgstr "历史记录…"
+msgid "Histories…"
+msgstr "各项历史记录…"
 
 # ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "管理模式历史记录"
+msgid "Manage the histories of the current profile"
+msgstr "管理当前配置文件的各项历史记录"
 
 # ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "从搜索和替换模式历史记录中添加或删除条目"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
+msgstr "在搜索、替换、Sidecar 过滤器和模式结构字段的历史记录中添加或删除条目"
 
 # ==AUTO== Automatically translated
 msgid "Settings…"
@@ -1100,8 +1102,8 @@ msgid "Sidecar Files…"
 msgstr "附属文件…"
 
 # ==AUTO== Automatically translated
-msgid "Configure sidecar file categories"
-msgstr "配置附属文件类别"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "配置当前配置文件的附属文件类别"
 
 # ==AUTO== Automatically translated
 msgid "Configure base-file extensions and sidecar suffixes for each category"
@@ -2718,6 +2720,42 @@ msgstr "超过此文件数时，确认框只显示数量"
 # ==AUTO== Automatically translated
 msgid "Files listed in the confirmation:"
 msgstr "确认框中列出的文件数："
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders left empty"
+msgstr "删除变空的文件夹"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr "只删除当前显示文件夹之下的文件夹，绝不删除当前显示的文件夹本身"
+
+# ==AUTO== Automatically translated
+msgid "After a deletion"
+msgstr "删除文件后"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "删除因删除文件而变空的文件夹"
+
+# ==AUTO== Automatically translated
+msgid "After a rename"
+msgstr "重命名后"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr "删除因重命名或移动文件而变空的文件夹"
+
+# ==AUTO== Automatically translated
+msgid "Also their parents left empty"
+msgstr "以及随之变空的上级文件夹"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr "随后删除依次变空的上级文件夹，直至当前显示的文件夹"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

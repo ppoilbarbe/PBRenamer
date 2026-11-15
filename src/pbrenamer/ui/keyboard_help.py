@@ -103,7 +103,10 @@ def keyboard_html() -> str:
         (_("Double-click on a thumbnail"), _("Show the image in the viewer")),
         (_("Double-click on a name"), _("Open the file with its default application")),
         (_("Double-click on a sidecar"), _("Open the sidecar file")),
-        (_("Right-click on the file list"), _("Images menu")),
+        (
+            _("Right-click on the file list"),
+            _("Actions of the File and Images menus on the selected files"),
+        ),
         (
             _("Right-click on the directory tree"),
             _("Open the folder, create a folder, add the folder as a shortcut"),

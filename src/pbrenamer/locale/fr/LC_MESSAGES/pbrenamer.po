@@ -388,8 +388,8 @@ msgstr "Effacer toutes les valeurs de cet historique ?"
 msgid "Sidecar filter"
 msgstr "Filtre sidecar"
 
-msgid "History"
-msgstr "Historique"
+msgid "Histories"
+msgstr "Historiques"
 
 msgid "Patterns"
 msgstr "Motifs"
@@ -622,8 +622,8 @@ msgstr "Ouvrir le fichier sidecar"
 msgid "Right-click on the file list"
 msgstr "Clic droit sur la liste des fichiers"
 
-msgid "Images menu"
-msgstr "Menu Images"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Actions des menus Fichier et Images sur les fichiers sélectionnés"
 
 msgid "Right-click on the directory tree"
 msgstr "Clic droit sur l'arborescence"
@@ -854,16 +854,18 @@ msgstr "Quitter PBRenamer"
 msgid "Exit the application"
 msgstr "Fermer l'application"
 
-msgid "History…"
-msgstr "Historique…"
+msgid "Histories…"
+msgstr "Historiques…"
 
-msgid "Manage pattern history"
-msgstr "Gérer l'historique des motifs"
+msgid "Manage the histories of the current profile"
+msgstr "Gérer les historiques du profil courant"
 
-msgid "Add or remove entries from the search and replacement pattern history"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
 msgstr ""
-"Ajouter ou supprimer des entrées de l'historique des motifs de recherche "
-"et de remplacement"
+"Ajouter ou retirer des entrées des historiques de recherche, de "
+"remplacement, du filtre sidecar et des champs du schéma"
 
 msgid "Settings…"
 msgstr "Préférences…"
@@ -877,8 +879,8 @@ msgstr "Configurer la langue et les autres préférences"
 msgid "Sidecar Files…"
 msgstr "Fichiers sidecar…"
 
-msgid "Configure sidecar file categories"
-msgstr "Configurer les catégories de fichiers sidecar"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Configurer les catégories de fichiers sidecar du profil courant"
 
 msgid "Configure base-file extensions and sidecar suffixes for each category"
 msgstr ""
@@ -2274,6 +2276,40 @@ msgstr ""
 
 msgid "Files listed in the confirmation:"
 msgstr "Fichiers listés dans la confirmation :"
+
+msgid "Remove the folders left empty"
+msgstr "Supprimer les dossiers vidés"
+
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Seuls les dossiers situés sous le dossier affiché sont supprimés, jamais "
+"le dossier affiché lui-même"
+
+msgid "After a deletion"
+msgstr "Après une suppression"
+
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Supprimer les dossiers que la suppression de fichiers laisse vides"
+
+msgid "After a rename"
+msgstr "Après un renommage"
+
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr ""
+"Supprimer les dossiers que le renommage ou le déplacement de fichiers "
+"laisse vides"
+
+msgid "Also their parents left empty"
+msgstr "Ainsi que leurs parents devenus vides"
+
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Supprimer ensuite les dossiers parents qui deviennent vides à leur tour, "
+"jusqu'au dossier affiché"
 
 #, python-brace-format
 msgid "The default profile “{name}” was not found."

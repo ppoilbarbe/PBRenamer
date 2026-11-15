@@ -119,7 +119,7 @@ class TestDisplayTab:
         assert data["files"]["delete_empty_sidecars"] is True
 
 
-class TestImagesTab:
+class TestFilesAndViewerTabs:
     def test_loads_defaults(self, dialog):
         ui = dialog._ui
         assert ui.spnZoomStep.value() == 25
@@ -129,6 +129,30 @@ class TestImagesTab:
         assert ui.cmbDeletionMode.currentData() == "system"
         assert ui.chkConfirmDeletions.isChecked()
         assert ui.spnDeleteListMax.value() == 12
+        assert not ui.chkPruneOnDelete.isChecked()
+        assert not ui.chkPruneOnRename.isChecked()
+        assert not ui.chkPruneParents.isChecked()
+        assert not ui.chkPruneParents.isEnabled()
+
+    def test_parents_option_enabled_by_either_option(self, dialog):
+        ui = dialog._ui
+        ui.chkPruneOnDelete.setChecked(True)
+        assert ui.chkPruneParents.isEnabled()
+        ui.chkPruneOnDelete.setChecked(False)
+        ui.chkPruneOnRename.setChecked(True)
+        assert ui.chkPruneParents.isEnabled()
+        ui.chkPruneOnRename.setChecked(False)
+        assert not ui.chkPruneParents.isEnabled()
+
+    def test_prune_options_saved(self, dialog):
+        ui = dialog._ui
+        ui.chkPruneOnDelete.setChecked(True)
+        ui.chkPruneParents.setChecked(True)
+        ui.buttonBox.accepted.emit()
+        files = profiles.load()["files"]
+        assert files["prune_dirs_on_delete"] is True
+        assert files["prune_dirs_on_rename"] is False
+        assert files["prune_parent_dirs"] is True
 
     def test_ok_saves(self, dialog):
         ui = dialog._ui

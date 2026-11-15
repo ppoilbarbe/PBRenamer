@@ -827,8 +827,15 @@ def _headless_run(ns: argparse.Namespace) -> None:
     pairs = [
         (path, os.path.join(os.path.dirname(path), new)) for path, _name, new in changes
     ]
+    from pbrenamer import profiles
+
+    options = profiles.load()["files"]
     try:
-        filetools.execute_renames(pairs, prune_root=directory)
+        filetools.execute_renames(
+            pairs,
+            prune_root=directory if options["prune_dirs_on_rename"] else None,
+            prune_ancestors=options["prune_parent_dirs"],
+        )
     except filetools.RenameError as exc:
         if exc.conflicts:  # pragma: no cover — disk changed since the check
             _report_conflicts(changes, {src for src, _dst in exc.conflicts})

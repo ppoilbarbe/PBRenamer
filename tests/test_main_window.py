@@ -444,6 +444,49 @@ class TestReloadFiles:
 # ---------------------------------------------------------------------------
 
 
+def test_profile_data_in_profile_menu(window):
+    """Sidecar categories and histories belong to the profile: Profile menu."""
+    ui = window._ui
+    actions = ui.menuProfile.actions()
+    assert actions.index(ui.actionSidecarFiles) == (
+        actions.index(ui.actionProfileConfig) + 1
+    )
+    window._build_profile_menu()
+    assert ui.actionSidecarFiles in ui.menuProfile.actions()
+    assert actions.index(ui.actionHistory) == actions.index(ui.actionSidecarFiles) + 1
+    menus = {a.text(): a.menu() for a in window.menuBar().actions()}
+    assert menus["Edit"].actions() == [ui.actionSettings]
+
+
+class TestRenamePrunesFolders:
+    """Folders left empty by a rename, removed as the profile says."""
+
+    @pytest.mark.parametrize(
+        ("on_rename", "parents", "deep_kept", "sub_kept"),
+        [
+            (False, True, True, True),
+            (True, False, False, True),
+            (True, True, False, False),
+        ],
+    )
+    def test_options(self, window, tmp_path, on_rename, parents, deep_kept, sub_kept):
+        from pbrenamer import profiles
+
+        data = profiles.load()
+        data["files"].update(prune_dirs_on_rename=on_rename, prune_parent_dirs=parents)
+        profiles.save(data)
+        deep = tmp_path / "sub" / "deep"
+        deep.mkdir(parents=True)
+        src = deep / "f.txt"
+        src.write_text("x")
+        window._files.current_dir = str(tmp_path)
+        assert window._execute([(str(src), str(tmp_path / "g.txt"))], "t")
+        assert (tmp_path / "g.txt").is_file()
+        assert deep.exists() is deep_kept
+        assert (tmp_path / "sub").exists() is sub_kept
+        assert tmp_path.is_dir()
+
+
 class TestListingUnchanged:
     def test_true_when_listing_matches(self, window, tmp_path):
         (tmp_path / "a.txt").write_text("x")

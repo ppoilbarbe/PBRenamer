@@ -2,8 +2,8 @@
 
 Each profile is a directory ``<config>/profiles/<name>/`` holding::
 
-    profile.json        mode, schema settings, display and image options,
-                        last directory, toolbar state
+    profile.json        mode, schema settings, display, file and image
+                        viewer options, last directory, toolbar state
     history.json        input histories ({key: [str, ...]}, PBPicat format)
     sidecar_config.json sidecar categories and suffixes (see ``settings``)
     patterns/           search/replace histories and named saves (``PatternPresets``)
@@ -77,6 +77,11 @@ DEFAULTS: dict = {
         "delete_list_max_files": 12,
         "confirm_deletions": True,
         "deletion_mode": "system",
+        # Folders left empty below the displayed one: removed after a
+        # deletion, after a rename, and their parents left empty in turn.
+        "prune_dirs_on_delete": False,
+        "prune_dirs_on_rename": False,
+        "prune_parent_dirs": False,
     },
     "viewer": {
         "zoom_step_percent": 25,

@@ -33,6 +33,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Undo: deletions to the system trash or to the session trash are recorded on the undo stack;
   **Undo** moves the files back to their place, recreating their folder if needed.
 
+- Profile configuration, **Files** tab: new **Remove the folders left empty** options, all off
+  by default: **After a deletion** (any deletion mode), **After a rename** (rename, renumber or
+  move into a schema tree), and **Also their parents left empty**, which then removes the parent
+  folders that become empty in turn. Only folders below the displayed one are removed, never the
+  displayed folder itself; **Undo** recreates them. The command line follows the options of its
+  profile.
+
 ### Changed
 
 - Start-up: when the default profile (or, with **Last profile used**, the last profile used) no
@@ -48,13 +55,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Orphan sidecars, Refresh) move from the **Images** menu to the **File** menu; the **Images** menu
   keeps the actions on images and videos only (View, rotations, EXIF orientation). The context
   menu of the file list is unchanged and still holds both.
+- Menus: **Sidecar Files…** and **History…**, renamed **Histories…** (its dialog edits several
+  independent histories), move from the **Edit** menu to the **Profile** menu, after **Profile
+  configuration…**: the sidecar categories and the histories belong to the current profile. The
+  **Edit** menu keeps **Settings…**.
 - Profile configuration: the **Images** tab is split into a **Files** tab (deletion) and an
   **Image viewer** tab (zoom, metadata panel, EXIF orientation). In `profile.json`, the `images`
   section is likewise split into `files` and `viewer`; the settings of an existing `images`
   section are carried over when the profile is read, and the section is dropped at the next save.
+- Rename and deletion: the folders left empty are no longer removed unless the new options ask
+  for it. A rename used to remove every source folder left empty, and **Delete permanently** the
+  folders left empty with their parents.
 
 ### Fixed
 
+- Deletion: the folders left empty by deleting files to the system trash or the session trash
+  were never removed; they now are when **After a deletion** is checked.
 - Deletion: deleting files from the file list now selects the next file of the list (the previous
   one after the last row); before, nothing was selected, so the viewer kept showing the deleted
   file. Deleting the single file shown by the viewer now selects and shows the next image or

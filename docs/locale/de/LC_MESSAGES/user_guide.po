@@ -711,14 +711,15 @@ msgstr "Kategorien einstellen"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Open **Edit → Sidecar Files…** to configure the base extensions and "
-"sidecar suffixes for each category. The dialog has one tab per base "
-"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+"Open **Profile → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category; they belong to the current profile. "
+"The dialog has one tab per base category (*Images*, *Video*, *Audio*, "
+"*Other*) plus a *Common* tab:"
 msgstr ""
-"Öffnen Sie **Bearbeiten → Sidecar-Dateien…**, um die Haupterweiterungen "
-"und Sidecar-Suffixe jeder Kategorie einzustellen.  Der Dialog hat eine "
-"Registerkarte je Hauptkategorie (*Bilder*, *Video*, *Audio*, *Sonstige*) "
-"und eine Registerkarte *Gemeinsam*:"
+"Öffnen Sie **Profil → Sidecar-Dateien…**, um die Haupterweiterungen und "
+"Sidecar-Suffixe jeder Kategorie einzustellen; sie gehören zum aktuellen "
+"Profil.  Der Dialog hat eine Registerkarte je Hauptkategorie (*Bilder*, "
+"*Video*, *Audio*, *Sonstige*) und eine Registerkarte *Gemeinsam*:"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -865,15 +866,16 @@ msgstr "Speicherungen"
 msgid ""
 "The search and replace combos keep a history of the patterns used (most "
 "recent first); the button next to each combo adds the current pattern to "
-"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
-"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+"it. **Profile → Histories…** edits the search, replacement and "
+":ref:`sidecar filter <sidecar-filter>` histories: add, remove, reorder, "
+"sort, or clear."
 msgstr ""
 "Die Auswahllisten für Suche und Ersetzung führen einen Verlauf der "
 "verwendeten Muster (die neuesten zuerst); die Schaltfläche neben jeder "
-"Liste fügt das aktuelle Muster hinzu.  **Bearbeiten → Verlauf…** "
-"bearbeitet die Verläufe der Suche, der Ersetzung und des :ref:`Sidecar-"
-"Filters <sidecar-filter>`: hinzufügen, entfernen, umordnen, sortieren "
-"oder leeren."
+"Liste fügt das aktuelle Muster hinzu.  **Profil → Verläufe…** bearbeitet "
+"die Verläufe der Suche, der Ersetzung und des :ref:`Sidecar-Filters "
+"<sidecar-filter>`: hinzufügen, entfernen, umordnen, sortieren oder "
+"leeren."
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -913,17 +915,17 @@ msgid ""
 "Renaming is atomic: every target is checked first, and if one of them "
 "fails during the operation, the renames already done are rolled back.  "
 "When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
-"``{dest}`` template), missing folders are created, and source folders "
-"left empty below the listed folder are removed.  After a rename the "
-"Preview column is cleared."
+"``{dest}`` template), missing folders are created; the source folders "
+"left empty can be removed (see :ref:`empty-folders`).  After a rename the"
+" Preview column is cleared."
 msgstr ""
 "Das Umbenennen ist atomar: Alle Ziele werden zuerst geprüft, und schlägt "
 "eines davon während des Vorgangs fehl, werden die bereits ausgeführten "
 "Umbenennungen zurückgenommen.  Enthält der neue Name einen Ordner (ein "
 ":ref:`Schema <schema-mode>` oder eine Vorlage mit ``{dest}``), werden "
-"fehlende Ordner angelegt und Quellordner, die unterhalb des aufgelisteten"
-" Ordners leer zurückbleiben, entfernt.  Nach dem Umbenennen wird die "
-"Spalte Vorschau geleert."
+"fehlende Ordner angelegt; leer zurückbleibende Quellordner können "
+"entfernt werden (siehe :ref:`empty-folders`).  Nach dem Umbenennen wird "
+"die Spalte Vorschau geleert."
 
 # ==AUTO== Automatically translated
 msgid "Undo"
@@ -1187,6 +1189,30 @@ msgid "Configure the current profile (see below)."
 msgstr "Konfiguriert das aktuelle Profil (siehe unten)."
 
 # ==AUTO== Automatically translated
+msgid "**Sidecar Files…**"
+msgstr "**Sidecar-Dateien…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Configure the :ref:`sidecar file <sidecar-files>` categories of the "
+"current profile (see :ref:`sidecar-categories`)."
+msgstr ""
+"Die Kategorien der :ref:`Sidecar-Dateien <sidecar-files>` des aktuellen "
+"Profils einstellen (siehe :ref:`sidecar-categories`)."
+
+# ==AUTO== Automatically translated
+msgid "**Histories…**"
+msgstr "**Verläufe…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Edit the histories of the current profile: search, replacement, sidecar "
+"filter and schema fields."
+msgstr ""
+"Die Verläufe des aktuellen Profils bearbeiten: Suche, Ersetzung, Sidecar-"
+"Filter und Schemafelder."
+
+# ==AUTO== Automatically translated
 msgid ""
 "Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
 "whose name starts with ``-`` is **hidden**: it is not listed in the menu "
@@ -1247,8 +1273,8 @@ msgid "Profile configuration"
 msgstr "Profilkonfiguration"
 
 # ==AUTO== Automatically translated
-msgid "**Profile → Profile configuration…** has three tabs."
-msgstr "**Profil → Profilkonfiguration…** hat drei Registerkarten."
+msgid "**Profile → Profile configuration…** has four tabs."
+msgstr "**Profil → Profilkonfiguration…** hat vier Registerkarten."
 
 # ==AUTO== Automatically translated
 msgid "**Schema**"
@@ -1290,11 +1316,16 @@ msgstr "**Dateien**"
 msgid ""
 "Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
 "whether to ask for a confirmation, and the number of files above which "
-"the confirmation only gives their count."
+"the confirmation only gives their count. Folders left empty: whether to "
+"remove them after a deletion, after a rename, and their parents left "
+"empty in turn (see :ref:`empty-folders`)."
 msgstr ""
 "Löschen: was mit gelöschten Dateien geschieht (siehe :ref:`deletion-"
 "modes`), ob eine Bestätigung verlangt wird, und die Anzahl der Dateien, "
-"ab der die Bestätigung nur noch ihre Anzahl nennt."
+"ab der die Bestätigung nur noch ihre Anzahl nennt.  Leer gewordene "
+"Ordner: ob sie nach dem Löschen oder nach dem Umbenennen entfernt werden,"
+" und mit ihnen die übergeordneten Ordner, die ihrerseits leer werden "
+"(siehe :ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "**Image viewer**"
@@ -1364,13 +1395,73 @@ msgid "**Delete permanently**"
 msgstr "**Endgültig löschen**"
 
 # ==AUTO== Automatically translated
-msgid ""
-"The files are removed at once and cannot be restored.  The folders left "
-"empty below the displayed one are removed as well."
+msgid "The files are removed at once and cannot be restored."
 msgstr ""
 "Die Dateien werden sofort entfernt und können nicht wiederhergestellt "
-"werden.  Ordner unterhalb des angezeigten, die dadurch leer werden, "
-"werden ebenfalls entfernt."
+"werden."
+
+# ==AUTO== Automatically translated
+msgid "Folders left empty"
+msgstr "Leer gewordene Ordner"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The **Remove the folders left empty** options of the profile are off by "
+"default:"
+msgstr ""
+"Die Optionen **Leer gewordene Ordner entfernen** des Profils sind "
+"standardmäßig ausgeschaltet:"
+
+# ==AUTO== Automatically translated
+msgid "**After a deletion**"
+msgstr "**Nach dem Löschen**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that deleting files leaves empty are removed, whatever the "
+"deletion mode.  This happens when the list shows the files of sub-folders"
+" (**Recursive**)."
+msgstr ""
+"Ordner, die durch das Löschen von Dateien leer werden, werden entfernt, "
+"unabhängig vom Löschmodus.  Das kommt vor, wenn die Liste die Dateien der"
+" Unterordner zeigt (**Rekursiv**)."
+
+# ==AUTO== Automatically translated
+msgid "**After a rename**"
+msgstr "**Nach dem Umbenennen**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that renaming or moving files leaves empty are removed, for "
+"instance after sorting files into a :ref:`schema <schema-mode>` tree."
+msgstr ""
+"Ordner, die durch das Umbenennen oder Verschieben von Dateien leer "
+"werden, werden entfernt, etwa nach dem Einsortieren von Dateien in einen "
+":ref:`Schema <schema-mode>`-Baum."
+
+# ==AUTO== Automatically translated
+msgid "**Also their parents left empty**"
+msgstr "**Auch ihre leer gewordenen übergeordneten Ordner**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The parent folders that become empty in turn are removed too.  Without "
+"this option, only the folders that held the files are removed."
+msgstr ""
+"Übergeordnete Ordner, die ihrerseits leer werden, werden ebenfalls "
+"entfernt.  Ohne diese Option werden nur die Ordner entfernt, die die "
+"Dateien enthielten."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself.  **Undo** recreates the removed folders along with the "
+"files.  The command line follows the options of the profile it uses."
+msgstr ""
+"Nur Ordner unterhalb des angezeigten Ordners werden entfernt, nie der "
+"angezeigte Ordner selbst.  **Rückgängig** legt die entfernten Ordner "
+"zusammen mit den Dateien wieder an.  Die Befehlszeile folgt den Optionen "
+"des verwendeten Profils."
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1453,11 +1544,13 @@ msgstr "Ziel"
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
 "absolute path; **Browse…** chooses it.  Missing folders are created when "
-"renaming, and source folders left empty are removed."
+"renaming; the source folders left empty can be removed (see :ref:`empty-"
+"folders`)."
 msgstr ""
 "Das Feld **Ziel** ist die Wurzel des Ordnerbaums.  Es muss ein absoluter "
 "Pfad sein; **Durchsuchen…** wählt ihn aus.  Fehlende Ordner werden beim "
-"Umbenennen angelegt, leer zurückbleibende Quellordner entfernt."
+"Umbenennen angelegt; leer zurückbleibende Quellordner können entfernt "
+"werden (siehe :ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -2136,12 +2229,12 @@ msgstr "``sidecar_config.json``"
 # ==AUTO== Automatically translated
 msgid ""
 ":ref:`Sidecar file <sidecar-files>` category configuration (base "
-"extensions / sidecar suffixes per category), managed from **Edit → "
+"extensions / sidecar suffixes per category), managed from **Profile → "
 "Sidecar Files…**."
 msgstr ""
 "Konfiguration der Kategorien der :ref:`Sidecar-Dateien <sidecar-files>` "
 "(Haupterweiterungen und Sidecar-Suffixe je Kategorie), verwaltet über "
-"**Bearbeiten → Sidecar-Dateien…**."
+"**Profil → Sidecar-Dateien…**."
 
 msgid "``patterns/search.json`` / ``patterns/replace.json``"
 msgstr "``patterns/search.json`` / ``patterns/replace.json``"
@@ -3538,13 +3631,13 @@ msgid ""
 "renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
 " ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
 "is an error.  Category configuration (base extensions, sidecar suffixes) "
-"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+"is shared with the GUI's **Profile → Sidecar Files…** dialog."
 msgstr ""
 "Gruppiert :ref:`Sidecar-Dateien <sidecar-files>` beim Umbenennen mit "
 "ihrer Hauptdatei (Standard: ``--no-sidecar-mode``).  Erfordert ``--ext-"
 "mode keep``, ``lower`` oder ``upper``; die Kombination mit ``normalize`` "
 "oder ``modify`` ist ein Fehler.  Die Kategorienkonfiguration "
-"(Haupterweiterungen, Sidecar-Suffixe) wird mit dem Dialog **Bearbeiten → "
+"(Haupterweiterungen, Sidecar-Suffixe) wird mit dem Dialog **Profil → "
 "Sidecar-Dateien…** der grafischen Oberfläche geteilt."
 
 msgid "``--filter GLOB``"

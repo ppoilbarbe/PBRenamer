@@ -383,8 +383,8 @@ msgstr "Clear all values from this history?"
 msgid "Sidecar filter"
 msgstr "Sidecar filter"
 
-msgid "History"
-msgstr "History"
+msgid "Histories"
+msgstr "Histories"
 
 msgid "Patterns"
 msgstr "Patterns"
@@ -617,8 +617,8 @@ msgstr "Open the sidecar file"
 msgid "Right-click on the file list"
 msgstr "Right-click on the file list"
 
-msgid "Images menu"
-msgstr "Images menu"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Actions of the File and Images menus on the selected files"
 
 msgid "Right-click on the directory tree"
 msgstr "Right-click on the directory tree"
@@ -844,14 +844,18 @@ msgstr "Quit PBRenamer"
 msgid "Exit the application"
 msgstr "Exit the application"
 
-msgid "History…"
-msgstr "History…"
+msgid "Histories…"
+msgstr "Histories…"
 
-msgid "Manage pattern history"
-msgstr "Manage pattern history"
+msgid "Manage the histories of the current profile"
+msgstr "Manage the histories of the current profile"
 
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "Add or remove entries from the search and replacement pattern history"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
+msgstr ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
 
 msgid "Settings…"
 msgstr "Settings…"
@@ -865,8 +869,8 @@ msgstr "Configure language and other preferences"
 msgid "Sidecar Files…"
 msgstr "Sidecar Files…"
 
-msgid "Configure sidecar file categories"
-msgstr "Configure sidecar file categories"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Configure the sidecar file categories of the current profile"
 
 msgid "Configure base-file extensions and sidecar suffixes for each category"
 msgstr "Configure base-file extensions and sidecar suffixes for each category"
@@ -2224,6 +2228,38 @@ msgstr "Above this number of files, the confirmation only gives the count"
 
 msgid "Files listed in the confirmation:"
 msgstr "Files listed in the confirmation:"
+
+msgid "Remove the folders left empty"
+msgstr "Remove the folders left empty"
+
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+
+msgid "After a deletion"
+msgstr "After a deletion"
+
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Remove the folders that deleting files leaves empty"
+
+msgid "After a rename"
+msgstr "After a rename"
+
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr "Remove the folders that renaming or moving files leaves empty"
+
+msgid "Also their parents left empty"
+msgstr "Also their parents left empty"
+
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
 
 #, python-brace-format
 msgid "The default profile “{name}” was not found."

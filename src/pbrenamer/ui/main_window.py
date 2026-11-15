@@ -384,9 +384,14 @@ class MainWindow(QMainWindow):
         that followed them); on failure show why under *title*.  Return
         True on success."""
         next_path = self._files.next_path_after([src for src, _dst in pairs])
+        options = profiles.load()["files"]
         try:
             result = filetools.execute_renames(
-                pairs, prune_root=self._files.current_dir
+                pairs,
+                prune_root=(
+                    self._files.current_dir if options["prune_dirs_on_rename"] else None
+                ),
+                prune_ancestors=options["prune_parent_dirs"],
             )
         except filetools.RenameError as exc:
             _log.warning("Rename refused or rolled back: %s", exc)

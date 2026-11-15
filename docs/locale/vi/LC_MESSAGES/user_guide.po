@@ -677,13 +677,15 @@ msgstr "Cấu hình các loại"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Open **Edit → Sidecar Files…** to configure the base extensions and "
-"sidecar suffixes for each category. The dialog has one tab per base "
-"category (*Images*, *Video*, *Audio*, *Other*) plus a *Common* tab:"
+"Open **Profile → Sidecar Files…** to configure the base extensions and "
+"sidecar suffixes for each category; they belong to the current profile. "
+"The dialog has one tab per base category (*Images*, *Video*, *Audio*, "
+"*Other*) plus a *Common* tab:"
 msgstr ""
-"Mở **Chỉnh sửa → Tệp sidecar…** để cấu hình phần mở rộng chính và hậu tố "
-"sidecar của từng loại.  Hộp thoại có một thẻ cho mỗi loại chính (*Ảnh*, "
-"*Video*, *Âm thanh*, *Khác*) cùng một thẻ *Chung*:"
+"Mở **Hồ sơ → Tệp sidecar…** để cấu hình phần mở rộng chính và hậu tố "
+"sidecar của từng loại; chúng thuộc về hồ sơ hiện tại.  Hộp thoại có một "
+"thẻ cho mỗi loại chính (*Ảnh*, *Video*, *Âm thanh*, *Khác*) cùng một thẻ "
+"*Chung*:"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -824,12 +826,13 @@ msgstr "Bản lưu"
 msgid ""
 "The search and replace combos keep a history of the patterns used (most "
 "recent first); the button next to each combo adds the current pattern to "
-"it. **Edit → History…** edits the search, replacement and :ref:`sidecar "
-"filter <sidecar-filter>` histories: add, remove, reorder, sort, or clear."
+"it. **Profile → Histories…** edits the search, replacement and "
+":ref:`sidecar filter <sidecar-filter>` histories: add, remove, reorder, "
+"sort, or clear."
 msgstr ""
 "Các danh sách tìm kiếm và thay thế giữ lịch sử các mẫu đã dùng (mới nhất "
-"trước); nút cạnh mỗi danh sách thêm mẫu hiện tại vào đó.  **Chỉnh sửa → "
-"Lịch sử…** chỉnh sửa lịch sử tìm kiếm, thay thế và :ref:`bộ lọc sidecar "
+"trước); nút cạnh mỗi danh sách thêm mẫu hiện tại vào đó.  **Hồ sơ → Các "
+"lịch sử…** chỉnh sửa lịch sử tìm kiếm, thay thế và :ref:`bộ lọc sidecar "
 "<sidecar-filter>`: thêm, xóa, sắp xếp lại, sắp thứ tự hoặc xóa hết."
 
 # ==AUTO== Automatically translated
@@ -868,15 +871,15 @@ msgid ""
 "Renaming is atomic: every target is checked first, and if one of them "
 "fails during the operation, the renames already done are rolled back.  "
 "When the new name contains a folder (a :ref:`schema <schema-mode>` or a "
-"``{dest}`` template), missing folders are created, and source folders "
-"left empty below the listed folder are removed.  After a rename the "
-"Preview column is cleared."
+"``{dest}`` template), missing folders are created; the source folders "
+"left empty can be removed (see :ref:`empty-folders`).  After a rename the"
+" Preview column is cleared."
 msgstr ""
 "Việc đổi tên là nguyên tử: mọi đích được kiểm tra trước, và nếu một đích "
 "thất bại giữa chừng, các thao tác đổi tên đã làm sẽ được hoàn lại.  Khi "
 "tên mới chứa một thư mục (một :ref:`lược đồ <schema-mode>` hoặc một mẫu "
-"có ``{dest}``), các thư mục còn thiếu được tạo, và các thư mục nguồn bị "
-"bỏ trống bên dưới thư mục đang liệt kê sẽ bị xóa.  Sau khi đổi tên, cột "
+"có ``{dest}``), các thư mục còn thiếu được tạo; các thư mục nguồn bị bỏ "
+"trống có thể được xóa (xem :ref:`empty-folders`).  Sau khi đổi tên, cột "
 "Xem trước được làm trống."
 
 # ==AUTO== Automatically translated
@@ -1130,6 +1133,30 @@ msgid "Configure the current profile (see below)."
 msgstr "Cấu hình hồ sơ hiện tại (xem bên dưới)."
 
 # ==AUTO== Automatically translated
+msgid "**Sidecar Files…**"
+msgstr "**Tệp sidecar…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Configure the :ref:`sidecar file <sidecar-files>` categories of the "
+"current profile (see :ref:`sidecar-categories`)."
+msgstr ""
+"Cấu hình các loại :ref:`tệp sidecar <sidecar-files>` của hồ sơ hiện tại "
+"(xem :ref:`sidecar-categories`)."
+
+# ==AUTO== Automatically translated
+msgid "**Histories…**"
+msgstr "**Các lịch sử…**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Edit the histories of the current profile: search, replacement, sidecar "
+"filter and schema fields."
+msgstr ""
+"Chỉnh sửa các lịch sử của hồ sơ hiện tại: tìm kiếm, thay thế, bộ lọc "
+"sidecar và các trường lược đồ."
+
+# ==AUTO== Automatically translated
 msgid ""
 "Profile names may contain letters, digits, ``-`` and ``_``.  A profile "
 "whose name starts with ``-`` is **hidden**: it is not listed in the menu "
@@ -1186,8 +1213,8 @@ msgid "Profile configuration"
 msgstr "Cấu hình hồ sơ"
 
 # ==AUTO== Automatically translated
-msgid "**Profile → Profile configuration…** has three tabs."
-msgstr "**Hồ sơ → Cấu hình hồ sơ…** có ba thẻ."
+msgid "**Profile → Profile configuration…** has four tabs."
+msgstr "**Hồ sơ → Cấu hình hồ sơ…** có bốn thẻ."
 
 # ==AUTO== Automatically translated
 msgid "**Schema**"
@@ -1228,11 +1255,15 @@ msgstr "**Tệp**"
 msgid ""
 "Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
 "whether to ask for a confirmation, and the number of files above which "
-"the confirmation only gives their count."
+"the confirmation only gives their count. Folders left empty: whether to "
+"remove them after a deletion, after a rename, and their parents left "
+"empty in turn (see :ref:`empty-folders`)."
 msgstr ""
 "Xóa: điều gì xảy ra với các tệp bị xóa (xem :ref:`deletion-modes`), có "
 "yêu cầu xác nhận hay không, và số tệp mà từ đó hộp xác nhận chỉ nêu số "
-"lượng."
+"lượng.  Thư mục bị bỏ trống: có xóa chúng sau khi xóa tệp, sau khi đổi "
+"tên hay không, và cả các thư mục cha lần lượt trở nên trống (xem :ref"
+":`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "**Image viewer**"
@@ -1297,12 +1328,66 @@ msgid "**Delete permanently**"
 msgstr "**Xóa vĩnh viễn**"
 
 # ==AUTO== Automatically translated
+msgid "The files are removed at once and cannot be restored."
+msgstr "Các tệp bị xóa ngay và không thể khôi phục."
+
+# ==AUTO== Automatically translated
+msgid "Folders left empty"
+msgstr "Thư mục bị bỏ trống"
+
+# ==AUTO== Automatically translated
 msgid ""
-"The files are removed at once and cannot be restored.  The folders left "
-"empty below the displayed one are removed as well."
+"The **Remove the folders left empty** options of the profile are off by "
+"default:"
+msgstr "Các tùy chọn **Xóa các thư mục bị bỏ trống** của hồ sơ mặc định bị tắt:"
+
+# ==AUTO== Automatically translated
+msgid "**After a deletion**"
+msgstr "**Sau khi xóa**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that deleting files leaves empty are removed, whatever the "
+"deletion mode.  This happens when the list shows the files of sub-folders"
+" (**Recursive**)."
 msgstr ""
-"Các tệp bị xóa ngay và không thể khôi phục.  Các thư mục trở nên trống "
-"bên dưới thư mục đang hiển thị cũng bị xóa."
+"Các thư mục trở nên trống sau khi xóa tệp sẽ bị xóa, bất kể chế độ xóa.  "
+"Điều này xảy ra khi danh sách hiển thị tệp của các thư mục con (**Đệ "
+"quy**)."
+
+# ==AUTO== Automatically translated
+msgid "**After a rename**"
+msgstr "**Sau khi đổi tên**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that renaming or moving files leaves empty are removed, for "
+"instance after sorting files into a :ref:`schema <schema-mode>` tree."
+msgstr ""
+"Các thư mục trở nên trống sau khi đổi tên hoặc di chuyển tệp sẽ bị xóa, "
+"chẳng hạn sau khi sắp xếp tệp vào cây :ref:`lược đồ <schema-mode>`."
+
+# ==AUTO== Automatically translated
+msgid "**Also their parents left empty**"
+msgstr "**Cả các thư mục cha trở nên trống**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The parent folders that become empty in turn are removed too.  Without "
+"this option, only the folders that held the files are removed."
+msgstr ""
+"Các thư mục cha lần lượt trở nên trống cũng bị xóa.  Không có tùy chọn "
+"này, chỉ các thư mục chứa tệp bị xóa."
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself.  **Undo** recreates the removed folders along with the "
+"files.  The command line follows the options of the profile it uses."
+msgstr ""
+"Chỉ các thư mục nằm dưới thư mục đang hiển thị bị xóa, không bao giờ xóa "
+"chính thư mục đang hiển thị.  **Hoàn tác** tạo lại các thư mục đã xóa "
+"cùng với các tệp.  Dòng lệnh tuân theo các tùy chọn của hồ sơ mà nó dùng."
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1383,11 +1468,12 @@ msgstr "Đích"
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
 "absolute path; **Browse…** chooses it.  Missing folders are created when "
-"renaming, and source folders left empty are removed."
+"renaming; the source folders left empty can be removed (see :ref:`empty-"
+"folders`)."
 msgstr ""
 "Trường **Đích** là gốc của cây thư mục.  Nó phải là đường dẫn tuyệt đối; "
-"**Duyệt…** cho phép chọn.  Các thư mục còn thiếu được tạo khi đổi tên, và"
-" các thư mục nguồn bị bỏ trống sẽ bị xóa."
+"**Duyệt…** cho phép chọn.  Các thư mục còn thiếu được tạo khi đổi tên; "
+"các thư mục nguồn bị bỏ trống có thể được xóa (xem :ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -2032,11 +2118,11 @@ msgstr "``sidecar_config.json``"
 # ==AUTO== Automatically translated
 msgid ""
 ":ref:`Sidecar file <sidecar-files>` category configuration (base "
-"extensions / sidecar suffixes per category), managed from **Edit → "
+"extensions / sidecar suffixes per category), managed from **Profile → "
 "Sidecar Files…**."
 msgstr ""
 "Cấu hình các loại :ref:`tệp sidecar <sidecar-files>` (phần mở rộng chính "
-"và hậu tố sidecar theo loại), quản lý từ **Chỉnh sửa → Tệp sidecar…**."
+"và hậu tố sidecar theo loại), quản lý từ **Hồ sơ → Tệp sidecar…**."
 
 msgid "``patterns/search.json`` / ``patterns/replace.json``"
 msgstr "``patterns/search.json`` / ``patterns/replace.json``"
@@ -3407,13 +3493,13 @@ msgid ""
 "renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,"
 " ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` "
 "is an error.  Category configuration (base extensions, sidecar suffixes) "
-"is shared with the GUI's **Edit → Sidecar Files…** dialog."
+"is shared with the GUI's **Profile → Sidecar Files…** dialog."
 msgstr ""
 "Nhóm các :ref:`tệp sidecar <sidecar-files>` với tệp chính của chúng khi "
 "đổi tên (mặc định: ``--no-sidecar-mode``).  Cần ``--ext-mode keep``, "
 "``lower`` hoặc ``upper``; kết hợp với ``normalize`` hoặc ``modify`` là "
 "lỗi.  Cấu hình loại (phần mở rộng chính, hậu tố sidecar) được dùng chung "
-"với hộp thoại **Chỉnh sửa → Tệp sidecar…** của giao diện đồ họa."
+"với hộp thoại **Hồ sơ → Tệp sidecar…** của giao diện đồ họa."
 
 msgid "``--filter GLOB``"
 msgstr "``--filter GLOB``"

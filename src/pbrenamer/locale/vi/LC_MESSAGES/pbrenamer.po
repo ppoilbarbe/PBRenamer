@@ -479,8 +479,8 @@ msgid "Sidecar filter"
 msgstr "Bộ lọc sidecar"
 
 # ==AUTO== Automatically translated
-msgid "History"
-msgstr "Lịch sử"
+msgid "Histories"
+msgstr "Các lịch sử"
 
 # ==AUTO== Automatically translated
 msgid "Patterns"
@@ -790,8 +790,8 @@ msgid "Right-click on the file list"
 msgstr "Nhấp chuột phải vào danh sách tệp"
 
 # ==AUTO== Automatically translated
-msgid "Images menu"
-msgstr "Menu Ảnh"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Các thao tác của menu Tệp và Ảnh trên các tệp được chọn"
 
 # ==AUTO== Automatically translated
 msgid "Right-click on the directory tree"
@@ -1088,16 +1088,20 @@ msgid "Exit the application"
 msgstr "Đóng ứng dụng"
 
 # ==AUTO== Automatically translated
-msgid "History…"
-msgstr "Lịch sử…"
+msgid "Histories…"
+msgstr "Các lịch sử…"
 
 # ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "Quản lý lịch sử mẫu"
+msgid "Manage the histories of the current profile"
+msgstr "Quản lý các lịch sử của hồ sơ hiện tại"
 
 # ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "Thêm hoặc xóa mục khỏi lịch sử mẫu tìm kiếm và thay thế"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
+msgstr ""
+"Thêm hoặc xóa mục trong các lịch sử tìm kiếm, thay thế, bộ lọc sidecar và"
+" trường lược đồ"
 
 # ==AUTO== Automatically translated
 msgid "Settings…"
@@ -1116,8 +1120,8 @@ msgid "Sidecar Files…"
 msgstr "Tệp sidecar…"
 
 # ==AUTO== Automatically translated
-msgid "Configure sidecar file categories"
-msgstr "Cấu hình danh mục tệp sidecar"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Cấu hình các loại tệp sidecar của hồ sơ hiện tại"
 
 # ==AUTO== Automatically translated
 msgid "Configure base-file extensions and sidecar suffixes for each category"
@@ -2816,6 +2820,46 @@ msgstr "Vượt quá số tệp này, hộp xác nhận chỉ hiển thị số 
 # ==AUTO== Automatically translated
 msgid "Files listed in the confirmation:"
 msgstr "Số tệp liệt kê trong hộp xác nhận:"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders left empty"
+msgstr "Xóa các thư mục bị bỏ trống"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Chỉ xóa các thư mục nằm dưới thư mục đang hiển thị, không bao giờ xóa "
+"chính thư mục đang hiển thị"
+
+# ==AUTO== Automatically translated
+msgid "After a deletion"
+msgstr "Sau khi xóa"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Xóa các thư mục trở nên trống sau khi xóa tệp"
+
+# ==AUTO== Automatically translated
+msgid "After a rename"
+msgstr "Sau khi đổi tên"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr "Xóa các thư mục trở nên trống sau khi đổi tên hoặc di chuyển tệp"
+
+# ==AUTO== Automatically translated
+msgid "Also their parents left empty"
+msgstr "Cả các thư mục cha trở nên trống"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Sau đó xóa các thư mục cha lần lượt trở nên trống, cho đến thư mục đang "
+"hiển thị"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

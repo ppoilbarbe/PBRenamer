@@ -279,6 +279,9 @@ class TestImportPbpicat:
             "delete_list_max_files": 12,
             "confirm_deletions": True,
             "deletion_mode": "system",
+            "prune_dirs_on_delete": False,
+            "prune_dirs_on_rename": False,
+            "prune_parent_dirs": False,
         }
         assert ia["viewer"] == {
             "zoom_step_percent": 10,

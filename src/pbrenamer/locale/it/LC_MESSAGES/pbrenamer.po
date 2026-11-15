@@ -481,8 +481,8 @@ msgid "Sidecar filter"
 msgstr "Filtro sidecar"
 
 # ==AUTO== Automatically translated
-msgid "History"
-msgstr "Cronologia"
+msgid "Histories"
+msgstr "Cronologie"
 
 # ==AUTO== Automatically translated
 msgid "Patterns"
@@ -794,8 +794,8 @@ msgid "Right-click on the file list"
 msgstr "Clic destro sull'elenco dei file"
 
 # ==AUTO== Automatically translated
-msgid "Images menu"
-msgstr "Menu Immagini"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Azioni dei menu File e Immagini sui file selezionati"
 
 # ==AUTO== Automatically translated
 msgid "Right-click on the directory tree"
@@ -1092,18 +1092,20 @@ msgid "Exit the application"
 msgstr "Chiudi l'applicazione"
 
 # ==AUTO== Automatically translated
-msgid "History…"
-msgstr "Cronologia…"
+msgid "Histories…"
+msgstr "Cronologie…"
 
 # ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "Gestisci la cronologia dei pattern"
+msgid "Manage the histories of the current profile"
+msgstr "Gestisci le cronologie del profilo corrente"
 
 # ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
 msgstr ""
-"Aggiungere o rimuovere voci dalla cronologia dei pattern di ricerca e "
-"sostituzione"
+"Aggiungi o rimuovi voci dalle cronologie di ricerca, sostituzione, filtro"
+" sidecar e campi dello schema"
 
 # ==AUTO== Automatically translated
 msgid "Settings…"
@@ -1122,8 +1124,8 @@ msgid "Sidecar Files…"
 msgstr "File sidecar…"
 
 # ==AUTO== Automatically translated
-msgid "Configure sidecar file categories"
-msgstr "Configura le categorie di file sidecar"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Configura le categorie di file sidecar del profilo corrente"
 
 # ==AUTO== Automatically translated
 msgid "Configure base-file extensions and sidecar suffixes for each category"
@@ -2870,6 +2872,46 @@ msgstr "Oltre questo numero di file, la conferma indica solo il loro numero"
 # ==AUTO== Automatically translated
 msgid "Files listed in the confirmation:"
 msgstr "File elencati nella conferma:"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders left empty"
+msgstr "Elimina le cartelle svuotate"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Vengono eliminate solo le cartelle sotto quella visualizzata, mai la "
+"cartella visualizzata stessa"
+
+# ==AUTO== Automatically translated
+msgid "After a deletion"
+msgstr "Dopo un'eliminazione"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Elimina le cartelle che l'eliminazione dei file lascia vuote"
+
+# ==AUTO== Automatically translated
+msgid "After a rename"
+msgstr "Dopo una rinomina"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr "Elimina le cartelle che la rinomina o lo spostamento dei file lascia vuote"
+
+# ==AUTO== Automatically translated
+msgid "Also their parents left empty"
+msgstr "Anche le loro cartelle superiori svuotate"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Elimina poi le cartelle superiori che diventano vuote a loro volta, fino "
+"alla cartella visualizzata"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

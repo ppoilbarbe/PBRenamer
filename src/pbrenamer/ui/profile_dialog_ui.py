@@ -218,5 +218,33 @@ class Ui_ProfileDialog:
         )
         form.addRow(_("Files listed in the confirmation:"), self.spnDeleteListMax)
         layout.addWidget(deletion)
+
+        empty = QGroupBox(_("Remove the folders left empty"), tab)
+        empty.setToolTip(
+            _(
+                "Only the folders below the displayed one are removed, "
+                "never the displayed folder itself"
+            )
+        )
+        form = QFormLayout(empty)
+        self.chkPruneOnDelete = QCheckBox(_("After a deletion"), empty)
+        self.chkPruneOnDelete.setToolTip(
+            _("Remove the folders that deleting files leaves empty")
+        )
+        form.addRow(self.chkPruneOnDelete)
+        self.chkPruneOnRename = QCheckBox(_("After a rename"), empty)
+        self.chkPruneOnRename.setToolTip(
+            _("Remove the folders that renaming or moving files leaves empty")
+        )
+        form.addRow(self.chkPruneOnRename)
+        self.chkPruneParents = QCheckBox(_("Also their parents left empty"), empty)
+        self.chkPruneParents.setToolTip(
+            _(
+                "Then remove the parent folders that become empty in turn, "
+                "up to the displayed folder"
+            )
+        )
+        form.addRow(self.chkPruneParents)
+        layout.addWidget(empty)
         layout.addStretch()
         return tab

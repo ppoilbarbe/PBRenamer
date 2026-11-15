@@ -482,8 +482,8 @@ msgid "Sidecar filter"
 msgstr "Фильтр sidecar"
 
 # ==AUTO== Automatically translated
-msgid "History"
-msgstr "История"
+msgid "Histories"
+msgstr "Истории"
 
 # ==AUTO== Automatically translated
 msgid "Patterns"
@@ -795,8 +795,8 @@ msgid "Right-click on the file list"
 msgstr "Щелчок правой кнопкой по списку файлов"
 
 # ==AUTO== Automatically translated
-msgid "Images menu"
-msgstr "Меню «Изображения»"
+msgid "Actions of the File and Images menus on the selected files"
+msgstr "Действия меню «Файл» и «Изображения» для выделенных файлов"
 
 # ==AUTO== Automatically translated
 msgid "Right-click on the directory tree"
@@ -1093,16 +1093,20 @@ msgid "Exit the application"
 msgstr "Закрыть приложение"
 
 # ==AUTO== Automatically translated
-msgid "History…"
-msgstr "История…"
+msgid "Histories…"
+msgstr "Истории…"
 
 # ==AUTO== Automatically translated
-msgid "Manage pattern history"
-msgstr "Управление историей шаблонов"
+msgid "Manage the histories of the current profile"
+msgstr "Управлять историями текущего профиля"
 
 # ==AUTO== Automatically translated
-msgid "Add or remove entries from the search and replacement pattern history"
-msgstr "Добавлять или удалять записи из истории шаблонов поиска и замены"
+msgid ""
+"Add or remove entries from the search, replacement, sidecar filter and "
+"schema field histories"
+msgstr ""
+"Добавлять или удалять записи в историях поиска, замены, фильтра sidecar и"
+" полей схемы"
 
 # ==AUTO== Automatically translated
 msgid "Settings…"
@@ -1121,8 +1125,8 @@ msgid "Sidecar Files…"
 msgstr "Сопутствующие файлы…"
 
 # ==AUTO== Automatically translated
-msgid "Configure sidecar file categories"
-msgstr "Настроить категории сопутствующих файлов"
+msgid "Configure the sidecar file categories of the current profile"
+msgstr "Настроить категории сопутствующих файлов текущего профиля"
 
 # ==AUTO== Automatically translated
 msgid "Configure base-file extensions and sidecar suffixes for each category"
@@ -2839,6 +2843,48 @@ msgstr "При большем числе файлов подтверждение
 # ==AUTO== Automatically translated
 msgid "Files listed in the confirmation:"
 msgstr "Файлов в списке подтверждения:"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders left empty"
+msgstr "Удалять опустевшие папки"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Only the folders below the displayed one are removed, never the displayed"
+" folder itself"
+msgstr ""
+"Удаляются только папки внутри отображаемой папки, но никогда не сама "
+"отображаемая папка"
+
+# ==AUTO== Automatically translated
+msgid "After a deletion"
+msgstr "После удаления"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that deleting files leaves empty"
+msgstr "Удалять папки, которые опустели после удаления файлов"
+
+# ==AUTO== Automatically translated
+msgid "After a rename"
+msgstr "После переименования"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that renaming or moving files leaves empty"
+msgstr ""
+"Удалять папки, которые опустели после переименования или перемещения "
+"файлов"
+
+# ==AUTO== Automatically translated
+msgid "Also their parents left empty"
+msgstr "А также их опустевшие родительские папки"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Then remove the parent folders that become empty in turn, up to the "
+"displayed folder"
+msgstr ""
+"Затем удалять родительские папки, которые в свою очередь опустели, вплоть"
+" до отображаемой папки"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

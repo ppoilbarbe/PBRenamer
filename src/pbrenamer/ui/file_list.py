@@ -1139,5 +1139,5 @@ class FileListController(QObject):
         return ext in media and os.path.isfile(path)
 
     def _on_context_menu(self, pos) -> None:
-        """The context menu is the Images menu."""
+        """The context menu holds the actions of the File and Images menus."""
         _exec_menu(self._ui.menuContext, self._ui.tblFiles.viewport().mapToGlobal(pos))

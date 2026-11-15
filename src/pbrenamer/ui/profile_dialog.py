@@ -56,11 +56,24 @@ class ProfileDialog(GeometryMixin, QDialog):
         self._ui.cmbDeletionMode.setCurrentIndex(max(0, mode))
         self._ui.chkConfirmDeletions.setChecked(files["confirm_deletions"])
         self._ui.spnDeleteListMax.setValue(files["delete_list_max_files"])
+        self._ui.chkPruneOnDelete.setChecked(files["prune_dirs_on_delete"])
+        self._ui.chkPruneOnRename.setChecked(files["prune_dirs_on_rename"])
+        self._ui.chkPruneParents.setChecked(files["prune_parent_dirs"])
+        for box in (self._ui.chkPruneOnDelete, self._ui.chkPruneOnRename):
+            box.toggled.connect(self._update_prune_parents)
+        self._update_prune_parents()
         self._ui.spnFieldCount.setValue(max(1, schema_cfg["field_count"]))
         self._rebuild_titles(self._ui.spnFieldCount.value())
         self._ui.spnFieldCount.valueChanged.connect(self._rebuild_titles)
 
         self._ui.buttonBox.accepted.connect(self._save_and_accept)
+
+    def _update_prune_parents(self) -> None:
+        """The parents option only matters when empty folders are removed."""
+        self._ui.chkPruneParents.setEnabled(
+            self._ui.chkPruneOnDelete.isChecked()
+            or self._ui.chkPruneOnRename.isChecked()
+        )
 
     def _rebuild_titles(self, count: int) -> None:
         """Show *count* title rows, keeping the titles already typed."""
@@ -110,5 +123,8 @@ class ProfileDialog(GeometryMixin, QDialog):
         files["deletion_mode"] = self._ui.cmbDeletionMode.currentData()
         files["confirm_deletions"] = self._ui.chkConfirmDeletions.isChecked()
         files["delete_list_max_files"] = self._ui.spnDeleteListMax.value()
+        files["prune_dirs_on_delete"] = self._ui.chkPruneOnDelete.isChecked()
+        files["prune_dirs_on_rename"] = self._ui.chkPruneOnRename.isChecked()
+        files["prune_parent_dirs"] = self._ui.chkPruneParents.isChecked()
         profiles.save(self._data)
         self.accept()
