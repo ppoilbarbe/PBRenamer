@@ -184,11 +184,18 @@ class Ui_ProfileDialog:
 
         deletion = QGroupBox(_("Deletion"), tab)
         form = QFormLayout(deletion)
-        self.chkUseTrash = QCheckBox(_("Move deleted files to the trash"), deletion)
-        self.chkUseTrash.setToolTip(
-            _("When unchecked, deleted files are removed permanently")
+        self.cmbDeletionMode = QComboBox(deletion)
+        self.cmbDeletionMode.addItem(_("Delete permanently"), userData="delete")
+        self.cmbDeletionMode.addItem(_("Move to the system trash"), userData="system")
+        self.cmbDeletionMode.addItem(_("Move to the session trash"), userData="session")
+        self.cmbDeletionMode.setToolTip(
+            _(
+                "Deletions to a trash can be undone. The session trash is "
+                "private to PBRenamer and emptied when it closes; files on "
+                "another file system than it can only be deleted permanently"
+            )
         )
-        form.addRow(self.chkUseTrash)
+        form.addRow(_("Deleted files:"), self.cmbDeletionMode)
         self.chkConfirmDeletions = QCheckBox(_("Confirm deletions"), deletion)
         self.chkConfirmDeletions.setToolTip(
             _("Ask for a confirmation before deleting files")

@@ -499,6 +499,30 @@ msgstr "Löschfehler"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} Dateien liegen auf einem anderen Dateisystem als der "
+"Sitzungspapierkorb und können nicht dorthin verschoben werden.\n"
+"Endgültig löschen? Dies kann nicht rückgängig gemacht werden."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Diese Dateien liegen auf einem anderen Dateisystem als der "
+"Sitzungspapierkorb und können nicht dorthin verschoben werden:\n"
+"{names}\n"
+"Endgültig löschen? Dies kann nicht rückgängig gemacht werden."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "{count} Dateien in den Papierkorb verschieben?"
 
@@ -509,6 +533,20 @@ msgid ""
 "{names}"
 msgstr ""
 "In den Papierkorb verschieben:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "{count} Dateien in den Sitzungspapierkorb verschieben?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"In den Sitzungspapierkorb verschieben:\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2787,12 +2825,31 @@ msgid "Deletion"
 msgstr "Löschen"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "Gelöschte Dateien in den Papierkorb verschieben"
+msgid "Delete permanently"
+msgstr "Endgültig löschen"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "Wenn deaktiviert, werden gelöschte Dateien endgültig entfernt"
+msgid "Move to the system trash"
+msgstr "In den Systempapierkorb verschieben"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "In den Sitzungspapierkorb verschieben"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Löschvorgänge in einen Papierkorb können rückgängig gemacht werden. Der "
+"Sitzungspapierkorb gehört nur PBRenamer und wird beim Beenden geleert; "
+"Dateien auf einem anderen Dateisystem können nur endgültig gelöscht "
+"werden"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "Gelöschte Dateien:"
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

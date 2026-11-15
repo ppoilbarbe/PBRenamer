@@ -497,6 +497,30 @@ msgstr "Ошибка удаления"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Файлов: {count}. Они находятся в другой файловой системе, чем корзина "
+"сеанса, и не могут быть в неё перемещены.\n"
+"Удалить их безвозвратно? Это действие нельзя отменить."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Эти файлы находятся в другой файловой системе, чем корзина сеанса, и не "
+"могут быть в неё перемещены:\n"
+"{names}\n"
+"Удалить их безвозвратно? Это действие нельзя отменить."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "Переместить {count} файлов в корзину?"
 
@@ -507,6 +531,20 @@ msgid ""
 "{names}"
 msgstr ""
 "Переместить в корзину:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Переместить файлы ({count}) в корзину сеанса?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Переместить в корзину сеанса:\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2757,12 +2795,30 @@ msgid "Deletion"
 msgstr "Удаление"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "Перемещать удалённые файлы в корзину"
+msgid "Delete permanently"
+msgstr "Удалить безвозвратно"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "Если флажок снят, удалённые файлы стираются безвозвратно"
+msgid "Move to the system trash"
+msgstr "Переместить в системную корзину"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "Переместить в корзину сеанса"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Удаление в корзину можно отменить. Корзина сеанса принадлежит только "
+"PBRenamer и очищается при его закрытии; файлы из другой файловой системы "
+"можно удалить только безвозвратно"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "Удалённые файлы:"
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

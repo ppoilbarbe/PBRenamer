@@ -125,7 +125,7 @@ class TestImagesTab:
         assert ui.spnZoomMax.value() == 400
         assert ui.cmbMetadataSide.currentData() == "right"
         assert ui.chkExifAutoRotate.isChecked()
-        assert ui.chkUseTrash.isChecked()
+        assert ui.cmbDeletionMode.currentData() == "system"
         assert ui.chkConfirmDeletions.isChecked()
         assert ui.spnDeleteListMax.value() == 12
 
@@ -135,7 +135,7 @@ class TestImagesTab:
         ui.spnZoomMax.setValue(800)
         ui.cmbMetadataSide.setCurrentIndex(ui.cmbMetadataSide.findData("left"))
         ui.chkExifAutoRotate.setChecked(False)
-        ui.chkUseTrash.setChecked(False)
+        ui.cmbDeletionMode.setCurrentIndex(ui.cmbDeletionMode.findData("session"))
         ui.chkConfirmDeletions.setChecked(False)
         ui.spnDeleteListMax.setValue(3)
         ui.buttonBox.accepted.emit()
@@ -144,7 +144,7 @@ class TestImagesTab:
         assert images["zoom_max_percent"] == 800
         assert images["metadata_panel_side"] == "left"
         assert images["exif_auto_rotate"] is False
-        assert images["use_trash"] is False
+        assert images["deletion_mode"] == "session"
         assert images["confirm_deletions"] is False
         assert images["delete_list_max_files"] == 3
 

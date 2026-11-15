@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -911,13 +911,15 @@ msgid ""
 "recorded on an undo stack; the button label shows the number of available"
 " batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
 " drag and drop, :ref:`rotations and EXIF orientation resets <image-"
-"rotation>` are recorded on the same stack."
+"rotation>` and deletions to a trash (see :ref:`deletion-modes`) are "
+"recorded on the same stack."
 msgstr ""
 "Нажмите **Отменить**, чтобы откатить последний пакет.  Каждый пакет "
 "переименований записывается в стек отмены; надпись на кнопке показывает "
 "число доступных пакетов (например, **Отменить (3)**), если их больше "
 "одного.  Перемещения перетаскиванием, :ref:`повороты и сброс ориентации "
-"EXIF <image-rotation>` записываются в тот же стек."
+"EXIF <image-rotation>` и удаления в корзину (см. :ref:`deletion-modes`) "
+"записываются в тот же стек."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1253,16 +1255,73 @@ msgstr "**Изображения**"
 msgid ""
 "Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
 "whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: move deleted files to the trash "
-"instead of removing them permanently, ask for a confirmation, and the "
+"applies to the thumbnails).  Deletion: what happens to the deleted files "
+"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
 "number of files above which the confirmation only gives their count."
 msgstr ""
 "Просмотрщик изображений: шаг масштабирования, максимальный масштаб, "
 "сторона панели метаданных и показ изображений повёрнутыми согласно их "
-"ориентации EXIF (действует и на миниатюры).  Удаление: перемещать "
-"удаляемые файлы в корзину вместо окончательного удаления, запрашивать "
+"ориентации EXIF (действует и на миниатюры).  Удаление: что происходит с "
+"удаляемыми файлами (см. :ref:`deletion-modes`), запрашивать ли "
 "подтверждение и число файлов, начиная с которого подтверждение показывает"
 " только их количество."
+
+# ==AUTO== Automatically translated
+msgid "Deleted files"
+msgstr "Удалённые файлы"
+
+# ==AUTO== Automatically translated
+msgid "The **Deleted files** setting of the profile offers three choices:"
+msgstr "Параметр профиля **Удалённые файлы** предлагает три варианта:"
+
+# ==AUTO== Automatically translated
+msgid "**Move to the system trash** (default)"
+msgstr "**Переместить в системную корзину** (по умолчанию)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to the trash of the desktop, where they stay until it is "
+"emptied.  The deletion can be undone with **Undo**."
+msgstr ""
+"Файлы попадают в корзину рабочего стола и остаются там, пока её не "
+"очистят.  Удаление можно отменить кнопкой **Отменить**."
+
+# ==AUTO== Automatically translated
+msgid "**Move to the session trash**"
+msgstr "**Переместить в корзину сеанса**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to a trash of PBRenamer's own, in its cache folder.  The "
+"deletion can be undone with **Undo** as long as PBRenamer is open: the "
+"session trash is emptied when it closes, which deletes the files for "
+"good.  Each running PBRenamer has its own session trash; the one left by "
+"a PBRenamer that stopped unexpectedly is removed at the next start. The "
+"files are moved, never copied: those on another file system than the "
+"session trash (another disk, a USB drive, a network share) can only be "
+"deleted permanently, after a confirmation that is always asked."
+msgstr ""
+"Файлы попадают в собственную корзину PBRenamer в его папке кэша.  "
+"Удаление можно отменить кнопкой **Отменить**, пока PBRenamer открыт: "
+"корзина сеанса очищается при его закрытии, и файлы удаляются "
+"окончательно.  У каждого запущенного PBRenamer своя корзина сеанса; "
+"корзина, оставшаяся после неожиданно остановленного PBRenamer, удаляется "
+"при следующем запуске. Файлы перемещаются, а не копируются: файлы из "
+"другой файловой системы, чем корзина сеанса (другой диск, USB-накопитель,"
+" сетевой ресурс), можно удалить только безвозвратно, после подтверждения,"
+" которое запрашивается всегда."
+
+# ==AUTO== Automatically translated
+msgid "**Delete permanently**"
+msgstr "**Удалить безвозвратно**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files are removed at once and cannot be restored.  The folders left "
+"empty below the displayed one are removed as well."
+msgstr ""
+"Файлы удаляются сразу и не могут быть восстановлены.  Папки, оставшиеся "
+"пустыми внутри показанной папки, также удаляются."
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1599,13 +1658,14 @@ msgstr "**Удалить** (**Del**)"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Delete the files and their sidecars, to the trash or permanently, after a"
-" confirmation, as set in the profile.  The next file of the list is then "
-"selected (the previous one after the last row)."
+"Delete the files and their sidecars, to a trash or permanently, after a "
+"confirmation, as set in the profile (see :ref:`deletion-modes`).  The "
+"next file of the list is then selected (the previous one after the last "
+"row)."
 msgstr ""
 "Удаляет файлы и их sidecar-файлы в корзину или окончательно, после "
-"подтверждения, как задано в профиле. Затем выбирается следующий файл списка"
-" (после последней строки — предыдущий)."
+"подтверждения, как задано в профиле (см. :ref:`deletion-modes`).  Затем "
+"выбирается следующий файл списка (после последней строки — предыдущий)."
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"
@@ -1736,12 +1796,12 @@ msgid ""
 " of the list (the previous one after the last); it closes when none is "
 "left."
 msgstr ""
-"действия с изображениями: открыть, открыть с помощью, удалить, повороты и "
-"ориентация EXIF, с теми же сочетаниями клавиш, что и в главном окне; "
-"**Esc** закрывает просмотрщик. После удаления показанного файла просмотрщик"
-" показывает следующий файл выделения или, для одного файла, следующее "
-"изображение или видео списка (после последнего — предыдущее); он "
-"закрывается, когда их не остаётся."
+"действия с изображениями: открыть, открыть с помощью, удалить, повороты и"
+" ориентация EXIF, с теми же сочетаниями клавиш, что и в главном окне; "
+"**Esc** закрывает просмотрщик. После удаления показанного файла "
+"просмотрщик показывает следующий файл выделения или, для одного файла, "
+"следующее изображение или видео списка (после последнего — предыдущее); "
+"он закрывается, когда их не остаётся."
 
 # ==AUTO== Automatically translated
 msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."
@@ -2228,10 +2288,12 @@ msgid "A sidecar without a base file is not renamed in schema mode."
 msgstr "В режиме схемы sidecar-файл без основного файла не переименовывается."
 
 # ==AUTO== Automatically translated
-msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgid ""
+"Every rename can be undone with **Undo**, like rotations, EXIF resets and"
+" deletions to a trash."
 msgstr ""
-"Любое переименование можно отменить кнопкой **Отменить**, как и повороты "
-"и сброс EXIF."
+"Любое переименование можно отменить кнопкой **Отменить**, как и повороты,"
+" сброс EXIF и удаления в корзину."
 
 # ==AUTO== Automatically translated
 msgid "Schemas can also be applied without the GUI, with ``--schema``."

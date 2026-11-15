@@ -45,7 +45,6 @@ _SECTION_KEYS = {
         "delete_empty_sidecars",
         "delete_list_max_files",
         "confirm_deletions",
-        "use_trash",
         "exif_auto_rotate",
         "metadata_panel_side",
     ),

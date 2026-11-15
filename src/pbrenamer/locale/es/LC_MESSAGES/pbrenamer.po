@@ -498,6 +498,30 @@ msgstr "Error de eliminación"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} archivos están en un sistema de archivos distinto del de la "
+"papelera de sesión y no se pueden mover a ella.\n"
+"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Estos archivos están en un sistema de archivos distinto del de la "
+"papelera de sesión y no se pueden mover a ella:\n"
+"{names}\n"
+"¿Eliminarlos definitivamente? Esta acción no se puede deshacer."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "¿Mover {count} archivos a la papelera?"
 
@@ -508,6 +532,20 @@ msgid ""
 "{names}"
 msgstr ""
 "Mover a la papelera:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "¿Mover {count} archivos a la papelera de sesión?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Mover a la papelera de sesión:\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2791,12 +2829,30 @@ msgid "Deletion"
 msgstr "Eliminación"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "Mover los archivos eliminados a la papelera"
+msgid "Delete permanently"
+msgstr "Eliminar definitivamente"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "Si no está marcado, los archivos eliminados se borran definitivamente"
+msgid "Move to the system trash"
+msgstr "Mover a la papelera del sistema"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "Mover a la papelera de sesión"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Las eliminaciones a una papelera se pueden deshacer. La papelera de "
+"sesión es propia de PBRenamer y se vacía al cerrarlo; los archivos de "
+"otro sistema de archivos solo se pueden eliminar definitivamente"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "Archivos eliminados:"
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

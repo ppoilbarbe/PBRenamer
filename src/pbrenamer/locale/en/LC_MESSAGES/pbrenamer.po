@@ -386,6 +386,28 @@ msgid "Deletion error"
 msgstr "Deletion error"
 
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "Move {count} files to trash?"
 
@@ -395,6 +417,18 @@ msgid ""
 "{names}"
 msgstr ""
 "Move to trash:\n"
+"{names}"
+
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Move {count} files to the session trash?"
+
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Move to the session trash:\n"
 "{names}"
 
 #, python-brace-format
@@ -2155,11 +2189,26 @@ msgstr "Applies to the thumbnails and to the image viewer"
 msgid "Deletion"
 msgstr "Deletion"
 
-msgid "Move deleted files to the trash"
-msgstr "Move deleted files to the trash"
+msgid "Delete permanently"
+msgstr "Delete permanently"
 
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "When unchecked, deleted files are removed permanently"
+msgid "Move to the system trash"
+msgstr "Move to the system trash"
+
+msgid "Move to the session trash"
+msgstr "Move to the session trash"
+
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+
+msgid "Deleted files:"
+msgstr "Deleted files:"
 
 msgid "Confirm deletions"
 msgstr "Confirm deletions"

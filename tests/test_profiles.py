@@ -337,6 +337,22 @@ class TestProfileData:
         self._write({"mode": "bogus"})
         assert profiles.load()["mode"] == "pattern"
 
+    def test_deletion_mode_default_is_system_trash(self):
+        assert profiles.load()["images"]["deletion_mode"] == "system"
+
+    def test_unknown_deletion_mode_falls_back(self):
+        self._write({"images": {"deletion_mode": "bogus"}})
+        assert profiles.load()["images"]["deletion_mode"] == "system"
+
+    def test_old_trash_setting_ignored_and_dropped(self):
+        self._write({"images": {"use_trash": False}})
+        data = profiles.load()
+        assert data["images"]["deletion_mode"] == "system"
+        assert "use_trash" not in data["images"]
+        profiles.save(data)
+        stored = (profiles.profile_dir() / profiles.PROFILE_FILE).read_text()
+        assert "use_trash" not in stored
+
     @pytest.mark.parametrize("content", ["not json", "[1, 2]"])
     def test_invalid_file(self, content):
         (profiles.profile_dir() / profiles.PROFILE_FILE).write_text(content)

@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -918,14 +918,16 @@ msgid ""
 "recorded on an undo stack; the button label shows the number of available"
 " batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
 " drag and drop, :ref:`rotations and EXIF orientation resets <image-"
-"rotation>` are recorded on the same stack."
+"rotation>` and deletions to a trash (see :ref:`deletion-modes`) are "
+"recorded on the same stack."
 msgstr ""
 "Haga clic en **Deshacer** para revertir el último lote.  Cada lote de "
 "renombrados se registra en una pila de deshacer; la etiqueta del botón "
 "muestra el número de lotes disponibles (p. ej. **Deshacer (3)**) cuando "
 "hay más de uno.  Los movimientos por arrastrar y soltar, las "
 ":ref:`rotaciones y los restablecimientos de la orientación EXIF <image-"
-"rotation>` se registran en la misma pila."
+"rotation>` y las eliminaciones a una papelera (véase :ref:`deletion-"
+"modes`) se registran en la misma pila."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1262,16 +1264,74 @@ msgstr "**Imágenes**"
 msgid ""
 "Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
 "whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: move deleted files to the trash "
-"instead of removing them permanently, ask for a confirmation, and the "
+"applies to the thumbnails).  Deletion: what happens to the deleted files "
+"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
 "number of files above which the confirmation only gives their count."
 msgstr ""
 "Visor de imágenes: paso del zoom, zoom máximo, lado del panel de "
 "metadatos y si las imágenes se muestran giradas según su orientación EXIF"
-" (se aplica también a las miniaturas).  Eliminación: mover los archivos "
-"eliminados a la papelera en lugar de borrarlos definitivamente, pedir "
+" (se aplica también a las miniaturas).  Eliminación: qué ocurre con los "
+"archivos eliminados (véase :ref:`deletion-modes`), si se pide "
 "confirmación, y el número de archivos a partir del cual la confirmación "
 "solo indica cuántos son."
+
+# ==AUTO== Automatically translated
+msgid "Deleted files"
+msgstr "Archivos eliminados"
+
+# ==AUTO== Automatically translated
+msgid "The **Deleted files** setting of the profile offers three choices:"
+msgstr "El ajuste **Archivos eliminados** del perfil ofrece tres opciones:"
+
+# ==AUTO== Automatically translated
+msgid "**Move to the system trash** (default)"
+msgstr "**Mover a la papelera del sistema** (predeterminado)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to the trash of the desktop, where they stay until it is "
+"emptied.  The deletion can be undone with **Undo**."
+msgstr ""
+"Los archivos van a la papelera del escritorio, donde permanecen hasta que"
+" se vacía.  La eliminación puede deshacerse con **Deshacer**."
+
+# ==AUTO== Automatically translated
+msgid "**Move to the session trash**"
+msgstr "**Mover a la papelera de sesión**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to a trash of PBRenamer's own, in its cache folder.  The "
+"deletion can be undone with **Undo** as long as PBRenamer is open: the "
+"session trash is emptied when it closes, which deletes the files for "
+"good.  Each running PBRenamer has its own session trash; the one left by "
+"a PBRenamer that stopped unexpectedly is removed at the next start. The "
+"files are moved, never copied: those on another file system than the "
+"session trash (another disk, a USB drive, a network share) can only be "
+"deleted permanently, after a confirmation that is always asked."
+msgstr ""
+"Los archivos van a una papelera propia de PBRenamer, en su carpeta de "
+"caché.  La eliminación puede deshacerse con **Deshacer** mientras "
+"PBRenamer esté abierto: la papelera de sesión se vacía al cerrarlo, lo "
+"que elimina los archivos definitivamente.  Cada PBRenamer en ejecución "
+"tiene su propia papelera de sesión; la que deja un PBRenamer detenido de "
+"forma inesperada se elimina en el siguiente inicio. Los archivos se "
+"mueven, nunca se copian: los que están en un sistema de archivos distinto"
+" del de la papelera de sesión (otro disco, una memoria USB, un recurso de"
+" red) solo pueden eliminarse definitivamente, tras una confirmación que "
+"siempre se pide."
+
+# ==AUTO== Automatically translated
+msgid "**Delete permanently**"
+msgstr "**Eliminar definitivamente**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files are removed at once and cannot be restored.  The folders left "
+"empty below the displayed one are removed as well."
+msgstr ""
+"Los archivos se borran de inmediato y no pueden recuperarse.  Las "
+"carpetas que quedan vacías bajo la carpeta mostrada también se eliminan."
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1611,14 +1671,15 @@ msgstr "**Eliminar** (**Supr**)"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Delete the files and their sidecars, to the trash or permanently, after a"
-" confirmation, as set in the profile.  The next file of the list is then "
-"selected (the previous one after the last row)."
+"Delete the files and their sidecars, to a trash or permanently, after a "
+"confirmation, as set in the profile (see :ref:`deletion-modes`).  The "
+"next file of the list is then selected (the previous one after the last "
+"row)."
 msgstr ""
-"Elimina los archivos y sus sidecars, a la papelera o definitivamente, tras "
-"una confirmación, según los ajustes del perfil. A continuación se "
-"selecciona el siguiente archivo de la lista (el anterior tras la última "
-"fila)."
+"Elimina los archivos y sus sidecars, a una papelera o definitivamente, "
+"tras una confirmación, según los ajustes del perfil (véase :ref"
+":`deletion-modes`).  A continuación se selecciona el siguiente archivo de"
+" la lista (el anterior tras la última fila)."
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"
@@ -2247,10 +2308,13 @@ msgid "A sidecar without a base file is not renamed in schema mode."
 msgstr "En modo esquema, un sidecar sin archivo principal no se renombra."
 
 # ==AUTO== Automatically translated
-msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgid ""
+"Every rename can be undone with **Undo**, like rotations, EXIF resets and"
+" deletions to a trash."
 msgstr ""
 "Todo renombrado puede deshacerse con **Deshacer**, igual que las "
-"rotaciones y los restablecimientos EXIF."
+"rotaciones, los restablecimientos EXIF y las eliminaciones a una "
+"papelera."
 
 # ==AUTO== Automatically translated
 msgid "Schemas can also be applied without the GUI, with ``--schema``."

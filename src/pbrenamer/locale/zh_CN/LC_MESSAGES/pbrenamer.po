@@ -485,6 +485,28 @@ msgstr "删除错误"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} 个文件与会话回收站不在同一文件系统上，无法移入其中。\n"
+"要永久删除它们吗？此操作无法撤销。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"以下文件与会话回收站不在同一文件系统上，无法移入其中：\n"
+"{names}\n"
+"要永久删除它们吗？此操作无法撤销。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "将 {count} 个文件移至回收站？"
 
@@ -495,6 +517,20 @@ msgid ""
 "{names}"
 msgstr ""
 "移至回收站：\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "将 {count} 个文件移到会话回收站？"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"移到会话回收站：\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2641,12 +2677,27 @@ msgid "Deletion"
 msgstr "删除"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "将删除的文件移至回收站"
+msgid "Delete permanently"
+msgstr "永久删除"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "取消勾选时，删除的文件将被永久移除"
+msgid "Move to the system trash"
+msgstr "移到系统回收站"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "移到会话回收站"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr "移到回收站的删除操作可以撤销。会话回收站为 PBRenamer 专用，并在程序关闭时清空；与其不在同一文件系统上的文件只能永久删除"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "已删除的文件："
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

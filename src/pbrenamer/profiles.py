@@ -38,6 +38,8 @@ _log = logging.getLogger(__name__)
 
 DEFAULT = "default"
 MODES = ("pattern", "schema")
+# images.deletion_mode: permanent removal, system trash, session trash.
+DELETION_MODES = ("delete", "system", "session")
 PROFILE_FILE = "profile.json"
 HISTORY_FILE = "history.json"
 
@@ -76,7 +78,7 @@ DEFAULTS: dict = {
         "delete_empty_sidecars": False,
         "delete_list_max_files": 12,
         "confirm_deletions": True,
-        "use_trash": True,
+        "deletion_mode": "system",
         "exif_auto_rotate": True,
         "metadata_panel_side": "right",
     },
@@ -418,6 +420,11 @@ def read_profile(directory: Path) -> dict:
     data = merge_defaults(_read_json(directory / PROFILE_FILE))
     if data["mode"] not in MODES:
         data["mode"] = DEFAULTS["mode"]
+    images = data["images"]
+    if images["deletion_mode"] not in DELETION_MODES:
+        images["deletion_mode"] = DEFAULTS["images"]["deletion_mode"]
+    # Replaced by deletion_mode: not read, dropped on the next write.
+    images.pop("use_trash", None)
     return data
 
 

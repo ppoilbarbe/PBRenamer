@@ -494,6 +494,30 @@ msgstr "Lỗi xóa"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} tệp nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
+"chuyển vào đó.\n"
+"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Các tệp này nằm trên hệ thống tệp khác với thùng rác phiên và không thể "
+"chuyển vào đó:\n"
+"{names}\n"
+"Xóa vĩnh viễn các tệp này? Thao tác này không thể hoàn tác."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "Chuyển {count} tệp vào thùng rác?"
 
@@ -504,6 +528,20 @@ msgid ""
 "{names}"
 msgstr ""
 "Chuyển vào thùng rác:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Chuyển {count} tệp vào thùng rác phiên?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Chuyển vào thùng rác phiên:\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2734,12 +2772,30 @@ msgid "Deletion"
 msgstr "Xóa"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "Chuyển tệp đã xóa vào thùng rác"
+msgid "Delete permanently"
+msgstr "Xóa vĩnh viễn"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "Khi bỏ chọn, tệp đã xóa bị xóa vĩnh viễn"
+msgid "Move to the system trash"
+msgstr "Chuyển vào thùng rác hệ thống"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "Chuyển vào thùng rác phiên"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Có thể hoàn tác việc xóa vào thùng rác. Thùng rác phiên là riêng của "
+"PBRenamer và được dọn sạch khi đóng chương trình; tệp trên hệ thống tệp "
+"khác chỉ có thể bị xóa vĩnh viễn"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "Tệp đã xóa:"
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

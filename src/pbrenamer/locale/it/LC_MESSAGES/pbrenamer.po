@@ -496,6 +496,30 @@ msgstr "Errore di eliminazione"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} file si trovano su un file system diverso da quello del cestino "
+"di sessione e non possono esservi spostati.\n"
+"Eliminarli definitivamente? L'operazione non può essere annullata."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Questi file si trovano su un file system diverso da quello del cestino di"
+" sessione e non possono esservi spostati:\n"
+"{names}\n"
+"Eliminarli definitivamente? L'operazione non può essere annullata."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "Spostare {count} file nel cestino?"
 
@@ -506,6 +530,20 @@ msgid ""
 "{names}"
 msgstr ""
 "Sposta nel cestino:\n"
+"{names}"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Spostare {count} file nel cestino di sessione?"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Sposta nel cestino di sessione:\n"
 "{names}"
 
 # ==AUTO== Automatically translated
@@ -2788,12 +2826,30 @@ msgid "Deletion"
 msgstr "Eliminazione"
 
 # ==AUTO== Automatically translated
-msgid "Move deleted files to the trash"
-msgstr "Sposta i file eliminati nel cestino"
+msgid "Delete permanently"
+msgstr "Elimina definitivamente"
 
 # ==AUTO== Automatically translated
-msgid "When unchecked, deleted files are removed permanently"
-msgstr "Se non selezionato, i file eliminati vengono rimossi definitivamente"
+msgid "Move to the system trash"
+msgstr "Sposta nel cestino di sistema"
+
+# ==AUTO== Automatically translated
+msgid "Move to the session trash"
+msgstr "Sposta nel cestino di sessione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
+msgstr ""
+"Le eliminazioni verso un cestino possono essere annullate. Il cestino di "
+"sessione è riservato a PBRenamer e viene svuotato alla chiusura; i file "
+"su un altro file system possono solo essere eliminati definitivamente"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files:"
+msgstr "File eliminati:"
 
 # ==AUTO== Automatically translated
 msgid "Confirm deletions"

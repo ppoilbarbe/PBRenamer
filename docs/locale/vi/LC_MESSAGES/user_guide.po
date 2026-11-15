@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -889,13 +889,14 @@ msgid ""
 "recorded on an undo stack; the button label shows the number of available"
 " batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
 " drag and drop, :ref:`rotations and EXIF orientation resets <image-"
-"rotation>` are recorded on the same stack."
+"rotation>` and deletions to a trash (see :ref:`deletion-modes`) are "
+"recorded on the same stack."
 msgstr ""
 "Nhấp **Hoàn tác** để hoàn lại lô gần nhất.  Mỗi lô đổi tên được ghi vào "
 "ngăn xếp hoàn tác; nhãn nút hiển thị số lô có sẵn (ví dụ **Hoàn tác "
 "(3)**) khi có nhiều hơn một.  Các thao tác di chuyển bằng kéo và thả, "
-":ref:`xoay ảnh và đặt lại định hướng EXIF <image-rotation>` được ghi vào "
-"cùng ngăn xếp."
+":ref:`xoay ảnh và đặt lại định hướng EXIF <image-rotation>` và việc xóa "
+"vào thùng rác (xem :ref:`deletion-modes`) được ghi vào cùng ngăn xếp."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1226,15 +1227,71 @@ msgstr "**Ảnh**"
 msgid ""
 "Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
 "whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: move deleted files to the trash "
-"instead of removing them permanently, ask for a confirmation, and the "
+"applies to the thumbnails).  Deletion: what happens to the deleted files "
+"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
 "number of files above which the confirmation only gives their count."
 msgstr ""
 "Trình xem ảnh: bước thu phóng, mức thu phóng tối đa, phía của bảng siêu "
 "dữ liệu, và có hiển thị ảnh đã xoay theo định hướng EXIF hay không (cũng "
-"áp dụng cho hình thu nhỏ).  Xóa: chuyển tệp bị xóa vào thùng rác thay vì "
-"xóa vĩnh viễn, yêu cầu xác nhận, và số tệp mà từ đó hộp xác nhận chỉ nêu "
-"số lượng."
+"áp dụng cho hình thu nhỏ).  Xóa: điều gì xảy ra với các tệp bị xóa (xem "
+":ref:`deletion-modes`), có yêu cầu xác nhận hay không, và số tệp mà từ đó"
+" hộp xác nhận chỉ nêu số lượng."
+
+# ==AUTO== Automatically translated
+msgid "Deleted files"
+msgstr "Tệp đã xóa"
+
+# ==AUTO== Automatically translated
+msgid "The **Deleted files** setting of the profile offers three choices:"
+msgstr "Thiết lập **Tệp đã xóa** của hồ sơ có ba lựa chọn:"
+
+# ==AUTO== Automatically translated
+msgid "**Move to the system trash** (default)"
+msgstr "**Chuyển vào thùng rác hệ thống** (mặc định)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to the trash of the desktop, where they stay until it is "
+"emptied.  The deletion can be undone with **Undo**."
+msgstr ""
+"Các tệp được chuyển vào thùng rác của môi trường làm việc và ở đó cho đến"
+" khi thùng rác được dọn.  Có thể hoàn tác việc xóa bằng **Hoàn tác**."
+
+# ==AUTO== Automatically translated
+msgid "**Move to the session trash**"
+msgstr "**Chuyển vào thùng rác phiên**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to a trash of PBRenamer's own, in its cache folder.  The "
+"deletion can be undone with **Undo** as long as PBRenamer is open: the "
+"session trash is emptied when it closes, which deletes the files for "
+"good.  Each running PBRenamer has its own session trash; the one left by "
+"a PBRenamer that stopped unexpectedly is removed at the next start. The "
+"files are moved, never copied: those on another file system than the "
+"session trash (another disk, a USB drive, a network share) can only be "
+"deleted permanently, after a confirmation that is always asked."
+msgstr ""
+"Các tệp được chuyển vào thùng rác riêng của PBRenamer, trong thư mục bộ "
+"nhớ đệm của nó.  Có thể hoàn tác việc xóa bằng **Hoàn tác** khi PBRenamer"
+" còn mở: thùng rác phiên được dọn sạch khi đóng chương trình, khiến các "
+"tệp bị xóa vĩnh viễn.  Mỗi PBRenamer đang chạy có thùng rác phiên riêng; "
+"thùng rác do một PBRenamer bị dừng đột ngột để lại sẽ được xóa ở lần khởi"
+" động sau. Các tệp được di chuyển, không bao giờ sao chép: tệp nằm trên "
+"hệ thống tệp khác với thùng rác phiên (ổ đĩa khác, ổ USB, thư mục chia sẻ"
+" qua mạng) chỉ có thể bị xóa vĩnh viễn, sau một xác nhận luôn được hỏi."
+
+# ==AUTO== Automatically translated
+msgid "**Delete permanently**"
+msgstr "**Xóa vĩnh viễn**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files are removed at once and cannot be restored.  The folders left "
+"empty below the displayed one are removed as well."
+msgstr ""
+"Các tệp bị xóa ngay và không thể khôi phục.  Các thư mục trở nên trống "
+"bên dưới thư mục đang hiển thị cũng bị xóa."
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1560,13 +1617,14 @@ msgstr "**Xóa** (**Del**)"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Delete the files and their sidecars, to the trash or permanently, after a"
-" confirmation, as set in the profile.  The next file of the list is then "
-"selected (the previous one after the last row)."
+"Delete the files and their sidecars, to a trash or permanently, after a "
+"confirmation, as set in the profile (see :ref:`deletion-modes`).  The "
+"next file of the list is then selected (the previous one after the last "
+"row)."
 msgstr ""
-"Xóa các tệp và sidecar của chúng, vào thùng rác hoặc vĩnh viễn, sau khi xác"
-" nhận, theo cài đặt của hồ sơ. Sau đó tệp kế tiếp trong danh sách được chọn"
-" (tệp trước đó nếu là dòng cuối)."
+"Xóa các tệp và sidecar của chúng, vào thùng rác hoặc vĩnh viễn, sau khi "
+"xác nhận, theo cài đặt của hồ sơ (xem :ref:`deletion-modes`).  Sau đó tệp"
+" kế tiếp trong danh sách được chọn (tệp trước đó nếu là dòng cuối)."
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"
@@ -1692,11 +1750,11 @@ msgid ""
 " of the list (the previous one after the last); it closes when none is "
 "left."
 msgstr ""
-"các thao tác ảnh: mở, mở bằng, xóa, xoay và định hướng EXIF, với cùng phím "
-"tắt như ở cửa sổ chính; **Esc** đóng trình xem. Sau khi xóa tệp đang hiển "
-"thị, trình xem hiển thị tệp kế tiếp của vùng chọn hoặc, với một tệp đơn lẻ,"
-" ảnh hoặc video kế tiếp trong danh sách (ảnh trước đó nếu là cuối cùng); "
-"trình xem sẽ đóng khi không còn tệp nào."
+"các thao tác ảnh: mở, mở bằng, xóa, xoay và định hướng EXIF, với cùng "
+"phím tắt như ở cửa sổ chính; **Esc** đóng trình xem. Sau khi xóa tệp đang"
+" hiển thị, trình xem hiển thị tệp kế tiếp của vùng chọn hoặc, với một tệp"
+" đơn lẻ, ảnh hoặc video kế tiếp trong danh sách (ảnh trước đó nếu là cuối"
+" cùng); trình xem sẽ đóng khi không còn tệp nào."
 
 # ==AUTO== Automatically translated
 msgid "The full list is in **Help → Keyboard and mouse shortcuts…** (**F1**)."
@@ -2174,10 +2232,12 @@ msgid "A sidecar without a base file is not renamed in schema mode."
 msgstr "Trong chế độ lược đồ, sidecar không có tệp chính sẽ không được đổi tên."
 
 # ==AUTO== Automatically translated
-msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
+msgid ""
+"Every rename can be undone with **Undo**, like rotations, EXIF resets and"
+" deletions to a trash."
 msgstr ""
 "Mọi thao tác đổi tên đều có thể hoàn tác bằng **Hoàn tác**, cũng như xoay"
-" ảnh và đặt lại EXIF."
+" ảnh, đặt lại EXIF và xóa vào thùng rác."
 
 # ==AUTO== Automatically translated
 msgid "Schemas can also be applied without the GUI, with ``--schema``."

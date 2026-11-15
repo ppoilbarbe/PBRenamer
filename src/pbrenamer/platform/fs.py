@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import errno
 import os
 import sys
 import tempfile
@@ -52,3 +53,14 @@ def conflict_key(path: str, directory: str) -> str:
     ``File.txt`` and ``file.txt`` collide as expected.
     """
     return path if is_case_sensitive(directory) else path.lower()
+
+
+# Windows error code raised by a rename between two volumes.
+_ERROR_NOT_SAME_DEVICE = 17
+
+
+def is_cross_device(exc: OSError) -> bool:
+    """Return True if *exc* is a rename refused between two filesystems."""
+    if getattr(exc, "winerror", None) == _ERROR_NOT_SAME_DEVICE:
+        return True
+    return exc.errno == errno.EXDEV

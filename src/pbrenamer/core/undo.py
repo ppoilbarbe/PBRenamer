@@ -8,6 +8,7 @@ import shutil
 from dataclasses import dataclass, field
 
 from pbrenamer.core import filetools, image_ops
+from pbrenamer.platform import trash as system_trash
 
 _log = logging.getLogger(__name__)
 
@@ -112,6 +113,34 @@ class ExifResetEntry(UndoEntry):
     def undo(self) -> None:
         for path, orientation in self.items:
             image_ops.set_exif_orientation(path, orientation)
+
+
+@dataclass
+class DeleteEntry(UndoEntry):
+    """Files moved to a trash: each item is (original path, path in the
+    trash).  *system* tells the system trash from the session trash."""
+
+    items: list[tuple[str, str]]
+    system: bool
+
+    def undo(self) -> None:
+        errors: list[str] = []
+        for original, trashed in reversed(self.items):
+            name = os.path.basename(original)
+            try:
+                if self.system:
+                    system_trash.restore(trashed, original)
+                    continue
+                if not os.path.lexists(trashed):
+                    raise FileNotFoundError(f"no longer in the trash: {trashed}")
+                if os.path.lexists(original):
+                    raise FileExistsError(f"already exists: {original}")
+                os.makedirs(os.path.dirname(original) or ".", exist_ok=True)
+                os.rename(trashed, original)
+            except OSError as exc:
+                errors.append(f"{name}: {exc}")
+        if errors:
+            raise UndoError("\n".join(errors))
 
 
 class UndoManager:

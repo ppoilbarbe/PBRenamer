@@ -11,14 +11,21 @@ from __future__ import annotations
 import logging
 import os
 
-from PySide6.QtCore import QFile, QObject, Qt, Signal
+from PySide6.QtCore import QObject, Qt, Signal
 from PySide6.QtWidgets import QDialog, QMessageBox
 
 import pbrenamer.settings as _cfg
 from pbrenamer import profiles
 from pbrenamer.core import filetools, image_ops, schema
-from pbrenamer.core.undo import ExifResetEntry, RotationEntry, UndoManager
+from pbrenamer.core.trash import CrossDeviceError, SessionTrash
+from pbrenamer.core.undo import (
+    DeleteEntry,
+    ExifResetEntry,
+    RotationEntry,
+    UndoManager,
+)
 from pbrenamer.platform import open_with as _open_with
+from pbrenamer.platform import trash as system_trash
 from pbrenamer.ui.file_list import FileListController, _open_path
 from pbrenamer.ui.image_viewer import ImageViewer
 from pbrenamer.ui.orphan_sidecars_dialog import OrphanSidecarsDialog
@@ -72,8 +79,10 @@ class ImageActions(QObject):
         undo: UndoManager,
         window_state,
         parent,
+        trash: SessionTrash | None = None,
     ) -> None:
         super().__init__(parent)
+        self._trash = trash or SessionTrash(_cfg.cache_home() / "trash")
         self._ui = ui
         self._files = files
         self._undo = undo
@@ -444,45 +453,97 @@ class ImageActions(QObject):
         self._files.set_current_path(current)
 
     def delete_files(self, files: list[str], parent) -> list[str]:
-        """Confirm (per profile), then delete *files*: to the trash or for
-        good; return the deleted ones.  Errors are reported together."""
+        """Confirm (per profile), then delete *files* as the profile's
+        deletion mode says; return the deleted ones.
+
+        Files moved to a trash (system or session) form one undoable batch.
+        Errors are reported together."""
         images = profiles.load()["images"]
-        trash = images["use_trash"]
+        mode = images["deletion_mode"]
         if images["confirm_deletions"] and not _ask(
             parent, _("Confirm deletion"), self._confirm_text(files, images)
         ):
             return []
-        deleted: list[str] = []
+        done: set[str] = set()
+        trashed: list[tuple[str, str]] = []
+        foreign: list[str] = []
         errors: list[str] = []
         for path in files:
             name = os.path.basename(path)
-            if trash:
-                if QFile.moveToTrash(path):
-                    deleted.append(path)
-                else:
+            if mode == "system":
+                where = system_trash.move_to_trash(path)
+                if where is None:
                     message = _("Could not move to trash: {name}")
                     errors.append(message.format(name=name))
+                else:
+                    trashed.append((os.path.abspath(path), where))
+                    done.add(path)
                 continue
-            try:
-                os.remove(path)
-                deleted.append(path)
-            except OSError as exc:
-                errors.append(f"{name}: {exc}")
-        _log.info("Deleted %d file(s), trash=%s", len(deleted), trash)
-        if not trash:
+            if mode == "session":
+                try:
+                    trashed.append((os.path.abspath(path), self._trash.put(path)))
+                    done.add(path)
+                except CrossDeviceError:
+                    foreign.append(path)
+                except OSError as exc:
+                    errors.append(f"{name}: {exc}")
+                continue
+            self._remove_file(path, done, errors)
+        if foreign and _ask(
+            parent, _("Confirm deletion"), self._foreign_text(foreign, images)
+        ):
+            for path in foreign:
+                self._remove_file(path, done, errors)
+        deleted = [path for path in files if path in done]
+        _log.info("Deleted %d file(s), mode=%s", len(deleted), mode)
+        if trashed:
+            self._undo.add(DeleteEntry(trashed, system=mode == "system"))
+            self.undo_stack_changed.emit()
+        if mode == "delete":
             self._remove_empty_dirs(deleted)
         if errors:
             _warn(parent, _("Deletion error"), "\n".join(errors))
         return deleted
 
     @staticmethod
+    def _remove_file(path: str, done: set[str], errors: list[str]) -> None:
+        try:
+            os.remove(path)
+            done.add(path)
+        except OSError as exc:
+            errors.append(f"{os.path.basename(path)}: {exc}")
+
+    @staticmethod
+    def _foreign_text(files: list[str], images: dict) -> str:
+        if len(files) > images["delete_list_max_files"]:
+            text = _(
+                "{count} files are on another file system than the session "
+                "trash and cannot be moved to it.\n"
+                "Delete them permanently? This cannot be undone."
+            )
+            return text.format(count=len(files))
+        names = "\n".join(os.path.basename(f) for f in files)
+        text = _(
+            "These files are on another file system than the session trash "
+            "and cannot be moved to it:\n{names}\n"
+            "Delete them permanently? This cannot be undone."
+        )
+        return text.format(names=names)
+
+    @staticmethod
     def _confirm_text(files: list[str], images: dict) -> str:
         many = len(files) > images["delete_list_max_files"]
         names = "\n".join(os.path.basename(f) for f in files)
-        if images["use_trash"]:
+        mode = images["deletion_mode"]
+        if mode == "system":
             if many:
                 return _("Move {count} files to trash?").format(count=len(files))
             return _("Move to trash:\n{names}").format(names=names)
+        if mode == "session":
+            if many:
+                text = _("Move {count} files to the session trash?")
+                return text.format(count=len(files))
+            return _("Move to the session trash:\n{names}").format(names=names)
         if many:
             return _("Permanently delete {count} files?").format(count=len(files))
         return _("Permanently delete:\n{names}").format(names=names)

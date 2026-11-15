@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (
 import pbrenamer.settings as _cfg
 from pbrenamer import i18n, profiles
 from pbrenamer.core import filetools
+from pbrenamer.core.trash import SessionTrash
 from pbrenamer.core.undo import RenameEntry, UndoError, UndoManager
 from pbrenamer.platform import system_bookmarks
 from pbrenamer.resources import path as _resource
@@ -81,6 +82,8 @@ class MainWindow(QMainWindow):
         self._ui.setupUi(self)
 
         self._undo = UndoManager()
+        self._trash = SessionTrash(_cfg.cache_home() / "trash")
+        self._trash.cleanup_stale()
         self._presets = PatternPresets()
         self._window_state = WindowState()
         self._keyboard_help: PatternHelpDialog | None = None
@@ -101,7 +104,7 @@ class MainWindow(QMainWindow):
         )
         self._actions = ActionBar(self._ui, self._undo, self)
         self._images = ImageActions(
-            self._ui, self._files, self._undo, self._window_state, self
+            self._ui, self._files, self._undo, self._window_state, self, self._trash
         )
         self._profile_actions: list = []
 
@@ -521,6 +524,9 @@ class MainWindow(QMainWindow):
             list(self._ui.splitterRight.sizes()),
         )
         self._save_profile_state()
+        # Its deletions can no longer be undone.
+        self._undo.clear()
+        self._trash.close()
         super().closeEvent(event)
 
     def _save_profile_state(self) -> None:

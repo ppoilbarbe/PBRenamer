@@ -280,7 +280,7 @@ class TestImportPbpicat:
             "delete_empty_sidecars": True,
             "delete_list_max_files": 12,
             "confirm_deletions": True,
-            "use_trash": False,
+            "deletion_mode": "system",
             "exif_auto_rotate": False,
             "metadata_panel_side": "right",
         }

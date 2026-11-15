@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the 1.x keys `behaviour/last_dir` and `behaviour/toolbar_state` from `pbrenamer.conf`.
   Answering no creates `keep_v1_files` in the configuration directory, so the question is not
   asked again.
+- Deletion: new **Move to the session trash** mode, a trash of PBRenamer's own in its cache
+  directory (with `--config-dir`, in that directory), private to each running PBRenamer and
+  emptied when it closes. Files are moved, never copied: files on another file system than the
+  session trash can only be deleted permanently, after a confirmation that is always asked. The
+  session trash left by a PBRenamer that stopped unexpectedly is removed at the next start.
+- Undo: deletions to the system trash or to the session trash are recorded on the undo stack;
+  **Undo** moves the files back to their place, recreating their folder if needed.
 
 ### Changed
 
@@ -32,6 +39,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   longer exists, the GUI asks which profile to open (cancelling quits) instead of silently opening
   `default` or the first visible profile, and headless mode exits with an error (code 2), as with
   an unknown `--profile`.
+- Profile configuration: the **Move deleted files to the trash** check box becomes the
+  **Deleted files** choice: **Delete permanently**, **Move to the system trash** (default) or
+  **Move to the session trash**. The former setting (`use_trash`) is no longer read: every profile
+  starts with the system trash, and the setting is dropped from `profile.json` at the next save.
+  The PBPicat import no longer copies it either.
 
 ### Fixed
 

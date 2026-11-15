@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PBRenamer\n"
+"Project-Id-Version:  PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -770,10 +770,12 @@ msgid ""
 "recorded on an undo stack; the button label shows the number of available"
 " batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
 " drag and drop, :ref:`rotations and EXIF orientation resets <image-"
-"rotation>` are recorded on the same stack."
+"rotation>` and deletions to a trash (see :ref:`deletion-modes`) are "
+"recorded on the same stack."
 msgstr ""
 "点击 **撤销** 可撤回最近一批操作。每批重命名都会记录到撤销栈中；当有多批可撤销时，按钮标签会显示数量（例如 **撤销 "
-"(3)**）。拖放产生的移动、:ref:`旋转和 EXIF 方向重置 <image-rotation>` 也记录在同一个栈中。"
+"(3)**）。拖放产生的移动、:ref:`旋转和 EXIF 方向重置 <image-rotation>` 以及移到回收站的删除（参见 :ref"
+":`deletion-modes`\\ ）也记录在同一个栈中。"
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1069,12 +1071,60 @@ msgstr "**图像**"
 msgid ""
 "Image viewer: zoom step, maximum zoom, side of the metadata panel, and "
 "whether images are shown turned as their EXIF orientation says (also "
-"applies to the thumbnails).  Deletion: move deleted files to the trash "
-"instead of removing them permanently, ask for a confirmation, and the "
+"applies to the thumbnails).  Deletion: what happens to the deleted files "
+"(see :ref:`deletion-modes`), whether to ask for a confirmation, and the "
 "number of files above which the confirmation only gives their count."
 msgstr ""
-"图片查看器：缩放步长、最大缩放、元数据面板所在的一侧，以及是否按 EXIF "
-"方向旋转显示图像（也适用于缩略图）。删除：将删除的文件移到回收站而不是永久删除、要求确认，以及超过多少个文件时确认对话框只显示数量。"
+"图片查看器：缩放步长、最大缩放、元数据面板所在的一侧，以及是否按 EXIF 方向旋转显示图像（也适用于缩略图）。删除：被删除文件的去向（参见 "
+":ref:`deletion-modes`\\ ）、是否要求确认，以及超过多少个文件时确认对话框只显示数量。"
+
+# ==AUTO== Automatically translated
+msgid "Deleted files"
+msgstr "已删除的文件"
+
+# ==AUTO== Automatically translated
+msgid "The **Deleted files** setting of the profile offers three choices:"
+msgstr "配置文件中的 **已删除的文件** 设置提供三种选择："
+
+# ==AUTO== Automatically translated
+msgid "**Move to the system trash** (default)"
+msgstr "**移到系统回收站**\\ （默认）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to the trash of the desktop, where they stay until it is "
+"emptied.  The deletion can be undone with **Undo**."
+msgstr "文件被移到桌面环境的回收站，在清空回收站之前一直保留在那里。删除操作可以用 **撤销** 撤回。"
+
+# ==AUTO== Automatically translated
+msgid "**Move to the session trash**"
+msgstr "**移到会话回收站**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files go to a trash of PBRenamer's own, in its cache folder.  The "
+"deletion can be undone with **Undo** as long as PBRenamer is open: the "
+"session trash is emptied when it closes, which deletes the files for "
+"good.  Each running PBRenamer has its own session trash; the one left by "
+"a PBRenamer that stopped unexpectedly is removed at the next start. The "
+"files are moved, never copied: those on another file system than the "
+"session trash (another disk, a USB drive, a network share) can only be "
+"deleted permanently, after a confirmation that is always asked."
+msgstr ""
+"文件被移到 PBRenamer 自己的回收站，位于其缓存文件夹中。只要 PBRenamer 未关闭，删除操作都可以用 **撤销** "
+"撤回：会话回收站在程序关闭时清空，文件随之被永久删除。每个正在运行的 PBRenamer 都有自己的会话回收站；意外终止的 PBRenamer "
+"留下的会话回收站会在下次启动时删除。文件只会被移动，从不复制：与会话回收站不在同一文件系统上的文件（其他磁盘、U "
+"盘、网络共享）只能在确认后永久删除，且此确认总会询问。"
+
+# ==AUTO== Automatically translated
+msgid "**Delete permanently**"
+msgstr "**永久删除**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The files are removed at once and cannot be restored.  The folders left "
+"empty below the displayed one are removed as well."
+msgstr "文件被立即删除，无法恢复。当前显示文件夹下因此变空的文件夹也会被删除。"
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1361,11 +1411,13 @@ msgstr "**删除**\\ （**Del**）"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Delete the files and their sidecars, to the trash or permanently, after a"
-" confirmation, as set in the profile.  The next file of the list is then "
-"selected (the previous one after the last row)."
+"Delete the files and their sidecars, to a trash or permanently, after a "
+"confirmation, as set in the profile (see :ref:`deletion-modes`).  The "
+"next file of the list is then selected (the previous one after the last "
+"row)."
 msgstr ""
-"按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除。随后选中列表中的下一个文件（若为最后一行，则选中上一个）。"
+"按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除（参见 :ref:`deletion-modes`\\ "
+"）。随后选中列表中的下一个文件（若为最后一行，则选中上一个）。"
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"
@@ -1912,8 +1964,10 @@ msgid "A sidecar without a base file is not renamed in schema mode."
 msgstr "在模式结构模式下，没有主文件的 Sidecar 文件不会被重命名。"
 
 # ==AUTO== Automatically translated
-msgid "Every rename can be undone with **Undo**, like rotations and EXIF resets."
-msgstr "每次重命名都可以用 **撤销** 撤回，旋转和 EXIF 重置也一样。"
+msgid ""
+"Every rename can be undone with **Undo**, like rotations, EXIF resets and"
+" deletions to a trash."
+msgstr "每次重命名都可以用 **撤销** 撤回，旋转、EXIF 重置和移到回收站的删除也一样。"
 
 # ==AUTO== Automatically translated
 msgid "Schemas can also be applied without the GUI, with ``--schema``."

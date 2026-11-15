@@ -374,8 +374,9 @@ Undo
 Click **Undo** to revert the most recent batch.  Each rename batch is
 recorded on an undo stack; the button label shows the number of available
 batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by drag
-and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` are
-recorded on the same stack.
+and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` and
+deletions to a trash (see :ref:`deletion-modes`) are recorded on the same
+stack.
 
 .. _shortcuts-menu:
 
@@ -513,9 +514,35 @@ Profile configuration
 **Images**
     Image viewer: zoom step, maximum zoom, side of the metadata panel, and
     whether images are shown turned as their EXIF orientation says (also
-    applies to the thumbnails).  Deletion: move deleted files to the trash
-    instead of removing them permanently, ask for a confirmation, and the
-    number of files above which the confirmation only gives their count.
+    applies to the thumbnails).  Deletion: what happens to the deleted
+    files (see :ref:`deletion-modes`), whether to ask for a confirmation,
+    and the number of files above which the confirmation only gives their
+    count.
+
+.. _deletion-modes:
+
+Deleted files
+~~~~~~~~~~~~~
+
+The **Deleted files** setting of the profile offers three choices:
+
+**Move to the system trash** (default)
+    The files go to the trash of the desktop, where they stay until it is
+    emptied.  The deletion can be undone with **Undo**.
+
+**Move to the session trash**
+    The files go to a trash of PBRenamer's own, in its cache folder.  The
+    deletion can be undone with **Undo** as long as PBRenamer is open: the
+    session trash is emptied when it closes, which deletes the files for
+    good.  Each running PBRenamer has its own session trash; the one left
+    by a PBRenamer that stopped unexpectedly is removed at the next start.
+    The files are moved, never copied: those on another file system than
+    the session trash (another disk, a USB drive, a network share) can only
+    be deleted permanently, after a confirmation that is always asked.
+
+**Delete permanently**
+    The files are removed at once and cannot be restored.  The folders left
+    empty below the displayed one are removed as well.
 
 .. _schema-mode:
 
@@ -673,8 +700,8 @@ apply to the selected files:
     Fill the schema from the file name (see :ref:`schema-mode`).
 
 **Delete** (**Del**)
-    Delete the files and their sidecars, to the trash or permanently,
-    after a confirmation, as set in the profile.  The next file of the list
+    Delete the files and their sidecars, to a trash or permanently, after
+    a confirmation, as set in the profile (see :ref:`deletion-modes`).  The next file of the list
     is then selected (the previous one after the last row).
 
 **Orphan sidecars…**
@@ -918,7 +945,8 @@ What changes
 * **Rename** and **Renumber** apply what the Preview column shows: compute
   the preview first (or check **Auto-preview**).
 * A sidecar without a base file is not renamed in schema mode.
-* Every rename can be undone with **Undo**, like rotations and EXIF resets.
+* Every rename can be undone with **Undo**, like rotations, EXIF resets and
+  deletions to a trash.
 * Schemas can also be applied without the GUI, with ``--schema``.
 
 .. _search-patterns:

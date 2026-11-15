@@ -8,13 +8,14 @@ import os
 
 import pytest
 from PIL import Image
-from PySide6.QtCore import QFile, QItemSelectionModel, Qt, QTimer
+from PySide6.QtCore import QItemSelectionModel, Qt, QTimer
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QDialog, QMessageBox
 
 from pbrenamer import profiles
 from pbrenamer.core import image_ops
-from pbrenamer.core.undo import ExifResetEntry, RotationEntry
+from pbrenamer.core.undo import DeleteEntry, ExifResetEntry, RotationEntry
+from pbrenamer.platform import trash as system_trash
 from pbrenamer.ui import image_actions
 from pbrenamer.ui.main_window import MainWindow
 
@@ -356,7 +357,7 @@ class TestViewer:
         assert done == [90, "r"]
 
     def test_delete_from_viewer(self, window, tmp_path, calls, monkeypatch):
-        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        monkeypatch.setattr(system_trash, "move_to_trash", lambda p: os.remove(p) or p)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
         window._images.show_in_viewer(a)
@@ -374,7 +375,7 @@ class TestViewer:
     def test_delete_from_viewer_selection(
         self, window, tmp_path, calls, monkeypatch, shown, circular, expected
     ):
-        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        monkeypatch.setattr(system_trash, "move_to_trash", lambda p: os.remove(p) or p)
         p = {n: _png(tmp_path / n) for n in ("a.png", "b.png", "c.png")}
         _load(window, tmp_path)
         _select(window, "a.png", "b.png", "c.png")
@@ -392,7 +393,7 @@ class TestViewer:
     def test_delete_from_viewer_selection_of_two(
         self, window, tmp_path, calls, monkeypatch
     ):
-        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        monkeypatch.setattr(system_trash, "move_to_trash", lambda p: os.remove(p) or p)
         a, b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
         _load(window, tmp_path)
         _select(window, "a.png", "b.png")
@@ -501,15 +502,21 @@ class TestTemplate:
 
 class TestDelete:
     @pytest.fixture
-    def trash(self, monkeypatch):
+    def trash(self, monkeypatch, tmp_path_factory):
+        """Fake freedesktop system trash: files moved to Trash/files."""
+        root = tmp_path_factory.mktemp("Trash")
+        (root / "files").mkdir()
+        (root / "info").mkdir()
         trashed = []
 
         def move(path):
             trashed.append(path)
-            os.remove(path)
-            return True
+            where = root / "files" / f"{len(trashed)}-{os.path.basename(path)}"
+            os.rename(path, where)
+            (root / "info" / f"{where.name}.trashinfo").write_text("[Trash Info]")
+            return str(where)
 
-        monkeypatch.setattr(QFile, "moveToTrash", move)
+        monkeypatch.setattr(system_trash, "move_to_trash", move)
         return trashed
 
     def _set(self, **images):
@@ -657,14 +664,14 @@ class TestDelete:
         assert calls["ask"] == ["Move 2 files to trash?"]
 
     def test_trash_failure(self, window, tmp_path, calls, monkeypatch):
-        monkeypatch.setattr(QFile, "moveToTrash", lambda p: False)
+        monkeypatch.setattr(system_trash, "move_to_trash", lambda p: None)
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
         window._images.delete([a])
         assert calls["warn"][0][1] == "Could not move to trash: a.png"
 
     def test_permanent(self, window, tmp_path, calls):
-        self._set(use_trash=False)
+        self._set(deletion_mode="delete")
         sub = tmp_path / "sub" / "deeper"
         sub.mkdir(parents=True)
         a = _png(sub / "a.png")
@@ -676,7 +683,7 @@ class TestDelete:
         assert tmp_path.exists()
 
     def test_permanent_count_and_error(self, window, tmp_path, calls, monkeypatch):
-        self._set(use_trash=False, delete_list_max_files=1)
+        self._set(deletion_mode="delete", delete_list_max_files=1)
         paths = [_png(tmp_path / "a.png"), _png(tmp_path / "b.png")]
         (tmp_path / "keep.txt").write_text("x")
         _load(window, tmp_path)
@@ -697,6 +704,99 @@ class TestDelete:
         window._images.delete([])
         assert calls["ask"] == []
 
+    def test_permanent_not_undoable(self, window, tmp_path, calls):
+        self._set(deletion_mode="delete")
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        window._images.delete([a])
+        assert not window._undo.can_undo()
+
+    def test_system_trash_undo(self, window, tmp_path, calls, trash):
+        a = _png(tmp_path / "a.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        window._images.delete([a])
+        assert not os.path.exists(a)
+        assert window._ui.btnUndo.isEnabled()
+        window._on_undo()
+        assert os.path.exists(a)
+        assert (tmp_path / "a.xmp").exists()
+        assert _names(window) == ["a.png", "a.xmp"]
+        assert calls["warn"] == []
+
+    def test_session_trash_undo(self, window, tmp_path, calls):
+        self._set(deletion_mode="session")
+        a = _png(tmp_path / "a.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        window._images.delete([a])
+        assert calls["ask"] == ["Move to the session trash:\na.png\na.xmp"]
+        trash_dir = window._trash.directory
+        assert sorted(p.name for p in trash_dir.iterdir()) == [
+            "000001.cache",
+            "000002.cache",
+        ]
+        entry = window._undo._history[-1]
+        assert isinstance(entry, DeleteEntry) and not entry.system
+        window._on_undo()
+        assert os.path.exists(a)
+        assert (tmp_path / "a.xmp").read_text() == "x"
+        assert list(trash_dir.iterdir()) == []
+
+    def test_session_trash_removed_on_close(self, window, tmp_path, calls):
+        self._set(deletion_mode="session", confirm_deletions=False)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        window._images.delete([a])
+        trash_dir = window._trash.directory
+        assert trash_dir.exists()
+        window.close()
+        assert not trash_dir.exists()
+        assert not window._undo.can_undo()
+
+    @pytest.mark.parametrize("accept", [True, False])
+    def test_session_trash_other_filesystem(
+        self, window, tmp_path, calls, monkeypatch, accept
+    ):
+        self._set(deletion_mode="session", confirm_deletions=False)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+
+        def put(path):
+            raise image_actions.CrossDeviceError(18, "cross-device", path)
+
+        monkeypatch.setattr(window._trash, "put", put)
+        monkeypatch.setattr(image_actions, "_ask", lambda p, t, text: accept)
+        deleted = window._images.delete_files([a], window)
+        assert deleted == ([a] if accept else [])
+        assert os.path.exists(a) is not accept
+        assert not window._undo.can_undo()
+
+    def test_session_trash_error(self, window, tmp_path, calls, monkeypatch):
+        self._set(deletion_mode="session", confirm_deletions=False)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+
+        def put(path):
+            raise OSError("busy")
+
+        monkeypatch.setattr(window._trash, "put", put)
+        assert window._images.delete_files([a], window) == []
+        assert calls["warn"][0][1] == "a.png: busy"
+        assert not window._undo.can_undo()
+
+    def test_session_trash_other_filesystem_text(self):
+        images = {"delete_list_max_files": 1}
+        text = image_actions.ImageActions._foreign_text(["/x/a.png"], images)
+        assert "a.png" in text and "cannot be undone" in text
+        text = image_actions.ImageActions._foreign_text(["/a", "/b"], images)
+        assert text.startswith("2 files")
+
+    def test_session_count_only_above_limit(self):
+        images = {"delete_list_max_files": 1, "deletion_mode": "session"}
+        text = image_actions.ImageActions._confirm_text(["a", "b"], images)
+        assert text == "Move 2 files to the session trash?"
+
 
 # ---------------------------------------------------------------------------
 # Orphan sidecars
@@ -705,7 +805,7 @@ class TestDelete:
 
 class TestOrphans:
     def test_delete_all(self, window, tmp_path, calls, monkeypatch):
-        monkeypatch.setattr(QFile, "moveToTrash", lambda p: os.remove(p) or True)
+        monkeypatch.setattr(system_trash, "move_to_trash", lambda p: os.remove(p) or p)
         _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
         (tmp_path / "lone.xmp").write_text("x")

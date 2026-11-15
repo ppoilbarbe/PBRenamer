@@ -391,6 +391,28 @@ msgid "Deletion error"
 msgstr "Erreur de suppression"
 
 #, python-brace-format
+msgid ""
+"{count} files are on another file system than the session trash and "
+"cannot be moved to it.\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"{count} fichiers sont sur un autre système de fichiers que la corbeille "
+"de session et ne peuvent pas y être déplacés.\n"
+"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
+
+#, python-brace-format
+msgid ""
+"These files are on another file system than the session trash and cannot "
+"be moved to it:\n"
+"{names}\n"
+"Delete them permanently? This cannot be undone."
+msgstr ""
+"Ces fichiers sont sur un autre système de fichiers que la corbeille de "
+"session et ne peuvent pas y être déplacés :\n"
+"{names}\n"
+"Les supprimer définitivement ? Cette opération ne pourra pas être annulée."
+
+#, python-brace-format
 msgid "Move {count} files to trash?"
 msgstr "Déplacer {count} fichiers vers la corbeille ?"
 
@@ -400,6 +422,18 @@ msgid ""
 "{names}"
 msgstr ""
 "Déplacer vers la corbeille :\n"
+"{names}"
+
+#, python-brace-format
+msgid "Move {count} files to the session trash?"
+msgstr "Déplacer {count} fichiers vers la corbeille de session ?"
+
+#, python-brace-format
+msgid ""
+"Move to the session trash:\n"
+"{names}"
+msgstr ""
+"Déplacer vers la corbeille de session :\n"
 "{names}"
 
 #, python-brace-format
@@ -2202,13 +2236,27 @@ msgstr "S'applique aux miniatures et au visualiseur d'images"
 msgid "Deletion"
 msgstr "Suppression"
 
-msgid "Move deleted files to the trash"
-msgstr "Déplacer les fichiers supprimés vers la corbeille"
+msgid "Delete permanently"
+msgstr "Supprimer définitivement"
 
-msgid "When unchecked, deleted files are removed permanently"
+msgid "Move to the system trash"
+msgstr "Déplacer vers la corbeille système"
+
+msgid "Move to the session trash"
+msgstr "Déplacer vers la corbeille de session"
+
+msgid ""
+"Deletions to a trash can be undone. The session trash is private to "
+"PBRenamer and emptied when it closes; files on another file system than "
+"it can only be deleted permanently"
 msgstr ""
-"Si la case est décochée, les fichiers supprimés sont effacés "
-"définitivement"
+"Les suppressions vers une corbeille peuvent être annulées. La corbeille "
+"de session est propre à PBRenamer et vidée à sa fermeture ; les fichiers "
+"situés sur un autre système de fichiers qu'elle ne peuvent être que "
+"supprimés définitivement"
+
+msgid "Deleted files:"
+msgstr "Fichiers supprimés :"
 
 msgid "Confirm deletions"
 msgstr "Confirmation des suppressions"

@@ -7,6 +7,7 @@ import pytest
 from pbrenamer.core import filetools
 from pbrenamer.core.undo import (
     CopyEntry,
+    DeleteEntry,
     MoveEntry,
     RenameEntry,
     UndoError,
@@ -189,3 +190,40 @@ class TestCopyEntry:
         entry = CopyEntry([(str(tmp_path / "a"), str(tmp_path / "gone"))])
         with pytest.raises(UndoError, match="gone"):
             entry.undo()
+
+
+class TestDeleteEntry:
+    def test_session_restores_in_place(self, tmp_path):
+        trash = tmp_path / "trash"
+        (tmp_path / "sub").mkdir()
+        trash.mkdir()
+        (trash / "000001.cache").write_text("a")
+        original = str(tmp_path / "sub" / "gone" / "a.txt")
+        DeleteEntry([(original, str(trash / "000001.cache"))], system=False).undo()
+        assert open(original).read() == "a"
+
+    def test_session_missing_or_taken(self, tmp_path):
+        trash = tmp_path / "trash"
+        trash.mkdir()
+        (trash / "000002.cache").write_text("b")
+        (tmp_path / "b.txt").write_text("other")
+        entry = DeleteEntry(
+            [
+                (str(tmp_path / "a.txt"), str(trash / "000001.cache")),
+                (str(tmp_path / "b.txt"), str(trash / "000002.cache")),
+            ],
+            system=False,
+        )
+        with pytest.raises(UndoError) as info:
+            entry.undo()
+        assert "a.txt" in str(info.value) and "b.txt" in str(info.value)
+        assert (tmp_path / "b.txt").read_text() == "other"
+        assert (trash / "000002.cache").exists()
+
+    def test_system_uses_platform_restore(self, tmp_path, monkeypatch):
+        from pbrenamer.platform import trash as system_trash
+
+        done = []
+        monkeypatch.setattr(system_trash, "restore", lambda t, o: done.append((t, o)))
+        DeleteEntry([("/o/a", "/t/1"), ("/o/b", "/t/2")], system=True).undo()
+        assert done == [("/t/2", "/o/b"), ("/t/1", "/o/a")]

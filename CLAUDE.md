@@ -55,12 +55,12 @@ pixi.lock                   pinned lockfile — commit this
 
 ## Translations
 
-Catalogues: `src/pbrenamer/locale/{en,fr}/LC_MESSAGES/pbrenamer.{po,mo}` — both committed.
-Python strings: wrap with `_("…")`. UI strings (`text`, `toolTip`, `statusTip`, `placeholderText`): set in `main_window.ui`, extracted automatically.
+Catalogues: `src/pbrenamer/locale/<lang>/LC_MESSAGES/pbrenamer.po` for `de`, `en`, `es`, `fr`, `it`, `ru`, `vi`, `zh_CN` (+ `pbrenamer.pot`) — `.po` committed; `.mo` are git-ignored build outputs (`make translate`, CI compiles them).
+Strings, including UI ones in the hand-written `*_ui.py`: wrap with `_("…")`, extracted automatically.
 
 **After any user-visible string change:**
 1. `make translate` — updates `.pot`, merges `.po`, compiles `.mo`
-2. Fill every new `msgstr ""` in `en` and `fr` `.po` files (keyboard shortcuts stay empty)
+2. Fill every new `msgstr ""` in all `.po` files (keyboard shortcuts stay empty); non-`en`/`fr` entries get the `# ==AUTO== Automatically translated` comment
 3. `make translate` again to compile the filled entries
 4. Verify: `python tools/po_check.py --empty` — only shortcut msgids should remain untranslated
 
