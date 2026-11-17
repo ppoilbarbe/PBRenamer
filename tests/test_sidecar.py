@@ -520,3 +520,40 @@ class TestSidecarNamedOtherFiles:
         config = _config(other_suf=("note",))
         result = sidecar.build_sidecar_groups(files, config)
         assert result.sidecar_of == {_p("doc.note"): _p("doc.pdf")}
+
+
+class TestSidecarNames:
+    cfg = sidecar.SidecarConfig.defaults()
+
+    @pytest.mark.parametrize(
+        ("name", "expected"),
+        [("a.xmp", True), ("a.XMP", True), ("a.png", False), ("xmp", False)],
+    )
+    def test_is_sidecar_name(self, name, expected):
+        assert sidecar.is_sidecar_name(name, self.cfg) is expected
+
+    def test_suffixes_for_base_file(self):
+        assert sidecar.suffixes_for("a.PNG", self.cfg) == ["info", "xmp"]
+
+    def test_suffixes_for_sidecar_or_other_file(self):
+        assert sidecar.suffixes_for("a.xmp", self.cfg) == []
+        assert sidecar.suffixes_for("notes.txt", self.cfg) == []
+
+    def test_sidecar_path_missing(self, tmp_path):
+        base = str(tmp_path / "a.png")
+        assert sidecar.sidecar_path(base, "xmp") == str(tmp_path / "a.xmp")
+
+    def test_sidecar_path_existing_other_case(self, tmp_path):
+        (tmp_path / "a.XMP").write_text("x")
+        base = str(tmp_path / "a.png")
+        assert sidecar.sidecar_path(base, "xmp") == str(tmp_path / "a.XMP")
+
+    def test_sidecar_path_exact_name_preferred(self, tmp_path):
+        (tmp_path / "a.XMP").write_text("x")
+        (tmp_path / "a.xmp").write_text("x")
+        base = str(tmp_path / "a.png")
+        assert sidecar.sidecar_path(base, "xmp") == str(tmp_path / "a.xmp")
+
+    def test_sidecar_path_unreadable_directory(self, tmp_path):
+        base = str(tmp_path / "missing" / "a.png")
+        assert sidecar.sidecar_path(base, "xmp") == str(tmp_path / "missing" / "a.xmp")

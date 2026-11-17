@@ -16,7 +16,7 @@ from pbrenamer import profiles
 from pbrenamer.core import image_ops
 from pbrenamer.core.undo import DeleteEntry, ExifResetEntry, RotationEntry
 from pbrenamer.platform import trash as system_trash
-from pbrenamer.ui import file_actions
+from pbrenamer.ui import file_actions, file_list
 from pbrenamer.ui.main_window import MainWindow
 
 _SCHEMA_TAB = 1
@@ -55,6 +55,7 @@ def calls(monkeypatch):
         ),
     )
     monkeypatch.setattr(file_actions, "_open_path", record["open"].append)
+    monkeypatch.setattr(file_list, "_open_path", record["open"].append)
     monkeypatch.setattr(
         file_actions._open_with,
         "open_with",
@@ -1008,38 +1009,76 @@ class TestSidecarGroupTargets:
 
 
 class TestOpenSidecarMenu:
-    """ "Open sidecar" submenu: one entry per suffix (7.2 #3)."""
+    """ "Open or create sidecar" submenu: one entry per sidecar suffix of the
+    category of the targeted files, existing or not, in any sidecar mode."""
 
     def _entries(self, window):
         window._file_actions._fill_open_sidecar_menu()
         return [a.text() for a in window._ui.menuOpenSidecar.actions()]
 
-    def test_disabled_without_sidecar(self, window, tmp_path):
+    def test_every_suffix_of_the_category(self, window, tmp_path):
+        _png(tmp_path / "a.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        assert self._entries(window) == ["info (new)", "xmp"]
+        assert window._ui.menuOpenSidecar.menuAction().isEnabled()
+
+    def test_missing_sidecar_created_then_opened(self, window, tmp_path, calls):
         _png(tmp_path / "a.png")
         _load(window, tmp_path)
         _select(window, "a.png")
+        self._entries(window)
+        window._ui.menuOpenSidecar.actions()[0].trigger()  # info (new)
+        created = tmp_path / "a.info"
+        assert created.read_text() == ""
+        assert calls["open"] == [str(created)]
+        assert "a.info" in _names(window)
+
+    def test_existing_sidecar_found_in_any_case(self, window, tmp_path, calls):
+        _png(tmp_path / "a.png")
+        (tmp_path / "a.XMP").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        assert self._entries(window) == ["info (new)", "xmp"]
+        window._ui.menuOpenSidecar.actions()[1].trigger()
+        assert calls["open"] == [str(tmp_path / "a.XMP")]
+        assert sorted(p.name for p in tmp_path.iterdir()) == ["a.XMP", "a.png"]
+
+    def test_several_files(self, window, tmp_path, calls):
+        _png(tmp_path / "a.png")
+        _png(tmp_path / "b.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.png", "b.png")
+        assert self._entries(window) == ["info (2)", "xmp (2)"]
+        window._ui.menuOpenSidecar.actions()[1].trigger()
+        assert calls["open"] == [str(tmp_path / "a.xmp"), str(tmp_path / "b.xmp")]
+        assert (tmp_path / "b.xmp").read_text() == ""
+
+    def test_disabled_for_a_sidecar_outside_sidecar_mode(self, window, tmp_path):
+        _png(tmp_path / "a.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.xmp")
         assert self._entries(window) == []
         assert not window._ui.menuOpenSidecar.menuAction().isEnabled()
 
-    def test_one_entry_per_suffix(self, window, tmp_path, calls):
-        _png(tmp_path / "a.png")
-        _png(tmp_path / "b.png")
-        for name in ("a.xmp", "a.info", "b.xmp"):
-            (tmp_path / name).write_text("x")
+    def test_disabled_without_sidecar_suffix(self, window, tmp_path):
+        # The "other" category has no sidecar suffix by default.
+        (tmp_path / "notes.txt").write_text("x")
         _load(window, tmp_path)
-        _select(window, "a.png", "b.png")
-        assert self._entries(window) == ["info", "xmp (2)"]
-        assert window._ui.menuOpenSidecar.menuAction().isEnabled()
-        window._ui.menuOpenSidecar.actions()[1].trigger()
-        assert calls["open"] == [str(tmp_path / "a.xmp"), str(tmp_path / "b.xmp")]
+        _select(window, "notes.txt")
+        assert self._entries(window) == []
+        assert not window._ui.menuOpenSidecar.menuAction().isEnabled()
 
-    def test_sidecar_selected_in_sidecar_mode(self, window, tmp_path, calls):
+    def test_sidecar_selected_in_sidecar_mode_targets_base(self, window, tmp_path):
         _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
         window._ui.chkSidecarMode.setChecked(True)
         _load(window, tmp_path)
         _select(window, "a.xmp")
-        assert self._entries(window) == ["xmp"]
+        assert self._entries(window) == ["info (new)", "xmp"]
 
     def test_filled_when_menu_shown(self, window, tmp_path):
         _png(tmp_path / "a.png")

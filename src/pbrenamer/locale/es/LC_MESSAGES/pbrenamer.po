@@ -241,6 +241,11 @@ msgid "Undo last rename batch"
 msgstr "Deshacer el último lote de renombrado"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (nuevo)"
+
+# ==AUTO== Automatically translated
 msgid "Template"
 msgstr "Plantilla"
 
@@ -1938,8 +1943,8 @@ msgstr ""
 "Vista previa (solo activo si no hay conflictos)"
 
 # ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Abrir sidecar"
+msgid "Open or create sidecar"
+msgstr "Abrir o crear sidecar"
 
 # ==AUTO== Automatically translated
 msgid "File"

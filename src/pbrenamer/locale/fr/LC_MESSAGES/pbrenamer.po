@@ -195,6 +195,10 @@ msgstr "Annuler"
 msgid "Undo last rename batch"
 msgstr "Annuler le dernier lot de renommage"
 
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (nouveau)"
+
 msgid "Template"
 msgstr "Modèle"
 
@@ -1530,8 +1534,8 @@ msgstr ""
 "listés si aucun n'est sélectionné) comme indiqué dans la colonne Aperçu "
 "(actif uniquement en l'absence de conflit)"
 
-msgid "Open sidecar"
-msgstr "Ouvrir le sidecar"
+msgid "Open or create sidecar"
+msgstr "Ouvrir ou créer un sidecar"
 
 msgid "File"
 msgstr "Fichier"

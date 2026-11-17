@@ -301,6 +301,40 @@ def all_suffixes(config: SidecarConfig) -> frozenset[str]:
     return frozenset(suffixes)
 
 
+def is_sidecar_name(name: str, config: SidecarConfig) -> bool:
+    """True if *name* ends with one of the sidecar suffixes of *config*
+    (case-insensitively), whether or not its base file exists."""
+    folded = name.lower()
+    return _named_like_sidecar(folded, ["." + s.lower() for s in all_suffixes(config)])
+
+
+def suffixes_for(name: str, config: SidecarConfig) -> list[str]:
+    """Sidecar suffixes *name* can have, sorted: those of the category of
+    its extension; none when *name* is itself a sidecar."""
+    if is_sidecar_name(name, config):
+        return []
+    ext = os.path.splitext(name)[1][1:]
+    return sorted(config.effective_suffixes(config.category_of_extension(ext)))
+
+
+def sidecar_path(base: str, suffix: str) -> str:
+    """Path of the sidecar of *base* with *suffix*, whether it exists or not:
+    an existing file of that name in any letter case, else the stem of *base*
+    followed by *suffix*."""
+    directory = os.path.dirname(base)
+    wanted = f"{os.path.splitext(os.path.basename(base))[0]}.{suffix}"
+    try:
+        names = os.listdir(directory or ".")
+    except OSError:
+        names = []
+    if wanted in names:
+        return os.path.join(directory, wanted)
+    for name in sorted(names):
+        if name.lower() == wanted.lower():
+            return os.path.join(directory, name)
+    return os.path.join(directory, wanted)
+
+
 BLANK_FILE_MAX_SIZE = 16
 """Files larger than this many bytes are never blank (see :func:`is_blank_file`)."""
 

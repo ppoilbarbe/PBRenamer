@@ -749,8 +749,13 @@ In the **File** menu:
 **Open with…** (**Ctrl+Shift+O**)
     Choose the application that opens the file.
 
-**Open sidecar**
-    Open one of the sidecars of the file.
+**Open or create sidecar**
+    One entry per sidecar suffix of the category of the file (see
+    :ref:`sidecar-categories`), whether that sidecar exists or not, and
+    whatever the sidecar mode.  An existing sidecar is opened; a missing one,
+    marked *(new)*, is created empty and opened, as by a double-click in the
+    :ref:`Sidecar column <sidecar-column>`.  The menu is greyed out when the
+    file is itself a sidecar or when its category has no sidecar suffix.
 
 **Template**
     Fill the schema from the file name (see :ref:`schema-mode`).

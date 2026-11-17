@@ -228,6 +228,11 @@ msgid "Undo last rename batch"
 msgstr "撤销上一批重命名"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix}（新建）"
+
+# ==AUTO== Automatically translated
 msgid "Template"
 msgstr "模板"
 
@@ -1844,8 +1849,8 @@ msgid ""
 msgstr "按“预览”列所示永久重命名所选文件（未选择时为所有列出的文件）（仅在无冲突时可用）"
 
 # ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "打开 Sidecar 文件"
+msgid "Open or create sidecar"
+msgstr "打开或创建附属文件"
 
 # ==AUTO== Automatically translated
 msgid "File"

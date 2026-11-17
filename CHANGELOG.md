@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sidecar mode is available with every extension mode, including *Normalize extension* and
   *Modify extension*: a sidecar always takes the new stem of its base file followed by its own
   suffix, so rewriting the base extension never affected it.
+- The *Open sidecar* menu becomes *Open or create sidecar*: it lists every sidecar suffix of the
+  category of the file, whatever the sidecar mode, instead of only the existing sidecars. An
+  existing sidecar is opened (found in any letter case); a missing one, marked *(new)*, is created
+  empty and opened, as by a double-click in the Sidecar column. The menu is greyed out only when
+  the file is itself a sidecar or when its category has no sidecar suffix.
 
 ### Fixed
 

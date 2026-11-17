@@ -1504,12 +1504,22 @@ msgid "Choose the application that opens the file."
 msgstr "选择用于打开文件的应用程序。"
 
 # ==AUTO== Automatically translated
-msgid "**Open sidecar**"
-msgstr "**打开 Sidecar 文件**"
+msgid "**Open or create sidecar**"
+msgstr "**打开或创建附属文件**"
 
 # ==AUTO== Automatically translated
-msgid "Open one of the sidecars of the file."
-msgstr "打开该文件的某个 Sidecar 文件。"
+msgid ""
+"One entry per sidecar suffix of the category of the file (see :ref"
+":`sidecar-categories`), whether that sidecar exists or not, and whatever "
+"the sidecar mode.  An existing sidecar is opened; a missing one, marked "
+"*(new)*, is created empty and opened, as by a double-click in the "
+":ref:`Sidecar column <sidecar-column>`.  The menu is greyed out when the "
+"file is itself a sidecar or when its category has no sidecar suffix."
+msgstr ""
+"文件所属类别的每个 Sidecar 后缀对应一项（参见 :ref:`sidecar-categories`\\ ），无论该 Sidecar "
+"文件是否存在，也无论是否处于附属文件模式。已存在的 Sidecar 文件会被打开；不存在的则标记为 *（新建）*\\ ，会先创建空文件再打开，与在"
+" :ref:`Sidecar 列 <sidecar-column>` 中双击的效果相同。当文件本身就是 Sidecar 文件，或其类别没有任何 "
+"Sidecar 后缀时，该菜单显示为灰色。"
 
 # ==AUTO== Automatically translated
 msgid "**Template**"

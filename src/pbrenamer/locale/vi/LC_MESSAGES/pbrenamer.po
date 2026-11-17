@@ -237,6 +237,11 @@ msgid "Undo last rename batch"
 msgstr "Hoàn tác lô đổi tên cuối cùng"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (mới)"
+
+# ==AUTO== Automatically translated
 msgid "Template"
 msgstr "Mẫu"
 
@@ -1903,8 +1908,8 @@ msgstr ""
 "đột)"
 
 # ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Mở sidecar"
+msgid "Open or create sidecar"
+msgstr "Mở hoặc tạo sidecar"
 
 # ==AUTO== Automatically translated
 msgid "File"

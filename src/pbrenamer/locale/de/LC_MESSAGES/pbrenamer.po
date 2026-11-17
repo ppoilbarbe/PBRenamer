@@ -242,6 +242,11 @@ msgid "Undo last rename batch"
 msgstr "Letzten Umbenennungsstapel rückgängig machen"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (neu)"
+
+# ==AUTO== Automatically translated
 msgid "Template"
 msgstr "Vorlage"
 
@@ -1939,8 +1944,8 @@ msgstr ""
 " (nur aktiv, wenn es keine Konflikte gibt)"
 
 # ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Sidecar-Datei öffnen"
+msgid "Open or create sidecar"
+msgstr "Sidecar-Datei öffnen oder erstellen"
 
 # ==AUTO== Automatically translated
 msgid "File"

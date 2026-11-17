@@ -190,6 +190,10 @@ msgstr "Undo"
 msgid "Undo last rename batch"
 msgstr "Undo last rename batch"
 
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (new)"
+
 msgid "Template"
 msgstr "Template"
 
@@ -1501,8 +1505,8 @@ msgstr ""
 "selected) as shown in the Preview column (only enabled when there are no "
 "conflicts)"
 
-msgid "Open sidecar"
-msgstr "Open sidecar"
+msgid "Open or create sidecar"
+msgstr "Open or create sidecar"
 
 msgid "File"
 msgstr "File"

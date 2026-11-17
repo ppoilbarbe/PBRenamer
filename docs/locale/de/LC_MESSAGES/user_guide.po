@@ -1818,12 +1818,25 @@ msgid "Choose the application that opens the file."
 msgstr "Wählt die Anwendung, die die Datei öffnet."
 
 # ==AUTO== Automatically translated
-msgid "**Open sidecar**"
-msgstr "**Sidecar-Datei öffnen**"
+msgid "**Open or create sidecar**"
+msgstr "**Sidecar-Datei öffnen oder erstellen**"
 
 # ==AUTO== Automatically translated
-msgid "Open one of the sidecars of the file."
-msgstr "Öffnet eine der Sidecar-Dateien der Datei."
+msgid ""
+"One entry per sidecar suffix of the category of the file (see :ref"
+":`sidecar-categories`), whether that sidecar exists or not, and whatever "
+"the sidecar mode.  An existing sidecar is opened; a missing one, marked "
+"*(new)*, is created empty and opened, as by a double-click in the "
+":ref:`Sidecar column <sidecar-column>`.  The menu is greyed out when the "
+"file is itself a sidecar or when its category has no sidecar suffix."
+msgstr ""
+"Ein Eintrag pro Sidecar-Suffix der Kategorie der Datei (siehe :ref"
+":`sidecar-categories`), ob diese Sidecar-Datei existiert oder nicht, und "
+"unabhängig vom Sidecar-Modus.  Eine vorhandene Sidecar-Datei wird "
+"geöffnet; eine fehlende, mit *(neu)* gekennzeichnet, wird leer erstellt "
+"und geöffnet, wie bei einem Doppelklick in der :ref:`Spalte Sidecar "
+"<sidecar-column>`.  Das Menü ist ausgegraut, wenn die Datei selbst eine "
+"Sidecar-Datei ist oder ihre Kategorie kein Sidecar-Suffix hat."
 
 # ==AUTO== Automatically translated
 msgid "**Template**"

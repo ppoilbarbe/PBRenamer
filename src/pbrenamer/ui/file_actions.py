@@ -1,7 +1,7 @@
 """Actions on the listed files (ported from PBPicat): the File menu, the
 Images menu, the file list context menu, and the image viewer.
 
-Any file: Open, Open with, Open sidecar, Template, Delete, Orphan sidecars,
+Any file: Open, Open with, Open or create sidecar, Template, Delete, Orphan sidecars,
 Refresh.  Images and videos only: View (image viewer), lossless rotations
 and EXIF orientation (undoable).  The actions apply to the selected files,
 or to the current row when nothing is selected.
@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QDialog, QMessageBox
 
 import pbrenamer.settings as _cfg
 from pbrenamer import profiles
-from pbrenamer.core import filetools, image_ops, schema
+from pbrenamer.core import filetools, image_ops, schema, sidecar
 from pbrenamer.core.trash import CrossDeviceError, SessionTrash
 from pbrenamer.core.undo import (
     DeleteEntry,
@@ -182,24 +182,31 @@ class FileActions(QObject):
             _open_with.open_with(path, self._window)
 
     def sidecars_by_suffix(self) -> dict[str, list[str]]:
-        """Sidecars of the targeted files, grouped by suffix (``xmp``,
-        ``info.json``…), suffixes and paths sorted."""
-        bases = self.targets()
+        """Sidecars the targeted files can have, existing or not, grouped by
+        suffix (``xmp``, ``info.json``…): every suffix of the category of
+        each file, whatever the sidecar mode; nothing for a file that is
+        itself a sidecar.  Suffixes and paths sorted."""
+        config = _cfg.get_sidecar_config()
         found: dict[str, list[str]] = {}
-        for base, sidecars in self._files.sidecars_map(bases).items():
-            stem = os.path.splitext(os.path.basename(base))[0]
-            for path in sidecars:
-                suffix = os.path.basename(path)[len(stem) + 1 :]
+        for base in self.targets():
+            for suffix in sidecar.suffixes_for(os.path.basename(base), config):
+                path = sidecar.sidecar_path(base, suffix)
                 found.setdefault(suffix.lower(), []).append(path)
         return {s: sorted(found[s]) for s in sorted(found)}
 
     def _fill_open_sidecar_menu(self) -> None:
-        """One "Open sidecar" entry per suffix; disabled without sidecars."""
+        """One "Open or create sidecar" entry per suffix; disabled when the
+        targeted files have no sidecar suffix or are sidecars themselves."""
         menu = self._ui.menuOpenSidecar
         menu.clear()
         by_suffix = self.sidecars_by_suffix()
         for suffix, paths in by_suffix.items():
-            label = suffix if len(paths) == 1 else f"{suffix} ({len(paths)})"
+            if len(paths) > 1:
+                label = f"{suffix} ({len(paths)})"
+            elif os.path.isfile(paths[0]):
+                label = suffix
+            else:
+                label = _("{suffix} (new)").format(suffix=suffix)
             action = menu.addAction(label)
             action.setStatusTip(", ".join(os.path.basename(p) for p in paths))
             action.triggered.connect(
@@ -208,8 +215,8 @@ class FileActions(QObject):
         menu.menuAction().setEnabled(bool(by_suffix))
 
     def open_sidecars(self, paths: list[str]) -> None:
-        for path in paths:
-            _open_path(path)
+        """Open the sidecars *paths*, creating the missing ones empty."""
+        self._files.open_or_create_sidecars(paths)
 
     # ── Viewer ────────────────────────────────────────────────────────────────
 

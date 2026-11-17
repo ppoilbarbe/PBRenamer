@@ -240,6 +240,11 @@ msgid "Undo last rename batch"
 msgstr "Отменить последний пакет переименований"
 
 # ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{suffix} (new)"
+msgstr "{suffix} (новый)"
+
+# ==AUTO== Automatically translated
 msgid "Template"
 msgstr "Шаблон"
 
@@ -1920,8 +1925,8 @@ msgstr ""
 "отсутствии конфликтов)"
 
 # ==AUTO== Automatically translated
-msgid "Open sidecar"
-msgstr "Открыть sidecar-файл"
+msgid "Open or create sidecar"
+msgstr "Открыть или создать сопутствующий файл"
 
 # ==AUTO== Automatically translated
 msgid "File"

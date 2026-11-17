@@ -1726,12 +1726,24 @@ msgid "Choose the application that opens the file."
 msgstr "Chọn ứng dụng để mở tệp."
 
 # ==AUTO== Automatically translated
-msgid "**Open sidecar**"
-msgstr "**Mở sidecar**"
+msgid "**Open or create sidecar**"
+msgstr "**Mở hoặc tạo sidecar**"
 
 # ==AUTO== Automatically translated
-msgid "Open one of the sidecars of the file."
-msgstr "Mở một trong các sidecar của tệp."
+msgid ""
+"One entry per sidecar suffix of the category of the file (see :ref"
+":`sidecar-categories`), whether that sidecar exists or not, and whatever "
+"the sidecar mode.  An existing sidecar is opened; a missing one, marked "
+"*(new)*, is created empty and opened, as by a double-click in the "
+":ref:`Sidecar column <sidecar-column>`.  The menu is greyed out when the "
+"file is itself a sidecar or when its category has no sidecar suffix."
+msgstr ""
+"Mỗi hậu tố sidecar của danh mục tệp là một mục (xem :ref:`sidecar-"
+"categories`), dù sidecar đó đã tồn tại hay chưa, và bất kể chế độ "
+"sidecar.  Sidecar đã có sẽ được mở; sidecar chưa có, được đánh dấu "
+"*(mới)*, sẽ được tạo rỗng rồi mở, như khi nhấp đúp trong :ref:`cột "
+"Sidecar <sidecar-column>`.  Menu bị làm mờ khi tệp tự nó là một sidecar "
+"hoặc khi danh mục của nó không có hậu tố sidecar nào."
 
 # ==AUTO== Automatically translated
 msgid "**Template**"

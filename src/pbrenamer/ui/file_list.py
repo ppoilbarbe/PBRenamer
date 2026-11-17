@@ -798,23 +798,35 @@ class FileListController(QObject):
             return
         if item.text(_SIDECAR_COLUMN) != "○" or not self._new_sidecar_ext:
             return
-        new = f"{os.path.splitext(path)[0]}.{self._new_sidecar_ext}"
-        try:
-            with open(new, "x"):
-                pass
-        except OSError as exc:
-            QMessageBox.warning(
-                self._window,
-                _("Sidecar"),
-                _("Cannot create {name}: {error}").format(
-                    name=os.path.basename(new), error=exc
-                ),
-            )
-            return
-        _log.info("Sidecar created: %s", new)
-        self._pending_edit.add(new)
-        _open_path(new)
-        self.reload()
+        self.open_or_create_sidecars(
+            [f"{os.path.splitext(path)[0]}.{self._new_sidecar_ext}"]
+        )
+
+    def open_or_create_sidecars(self, paths: list[str]) -> None:
+        """Open the sidecar files *paths*, first creating empty the missing
+        ones (kept until edited, see :meth:`_delete_empty_sidecars_now`);
+        the list is read again when any was created."""
+        created = False
+        for path in paths:
+            if not os.path.isfile(path):
+                try:
+                    with open(path, "x"):
+                        pass
+                except OSError as exc:
+                    QMessageBox.warning(
+                        self._window,
+                        _("Sidecar"),
+                        _("Cannot create {name}: {error}").format(
+                            name=os.path.basename(path), error=exc
+                        ),
+                    )
+                    continue
+                _log.info("Sidecar created: %s", path)
+                self._pending_edit.add(path)
+                created = True
+            _open_path(path)
+        if created:
+            self.reload()
 
     # ── Sidecar content filter ────────────────────────────────────────────────
 

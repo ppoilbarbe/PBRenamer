@@ -851,7 +851,7 @@ class Ui_MainWindow:
 
         # Open sidecar: filled by FileActions when a menu holding it is shown,
         # one entry per sidecar suffix of the targeted files.
-        self.menuOpenSidecar = QMenu(_("Open sidecar"), window)
+        self.menuOpenSidecar = QMenu(_("Open or create sidecar"), window)
         self.menuOpenSidecar.menuAction().setEnabled(False)
 
         # File menu: the actions that apply to any file
