@@ -137,6 +137,8 @@ a = Analysis(
         # try/except, so PyInstaller's static analysis misses it and the
         # frozen build fails HTTPS requests with "unknown url type: https"
         "ssl",
+        # CA bundle for HTTPS: see platform/auto_update.py:_ssl_context()
+        "certifi",
     ],
     hookspath=[],
     runtime_hooks=["hooks/pyi_rth_env.py", "hooks/pyi_rth_fonts.py"],

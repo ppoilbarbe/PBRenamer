@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.2] - 2026-11-17
+
+> **Warning:** download this version manually from the
+> [GitHub releases page](https://github.com/ppoilbarbe/PBRenamer/releases): `--auto-update` does
+> not work in the previous versions, so they cannot update themselves to this one. From this
+> version on, `--auto-update` works again.
+
+### Fixed
+
+- `--auto-update` in the release executables: every request to GitHub failed with
+  `CERTIFICATE_VERIFY_FAILED`, because the bundled OpenSSL looked for its CA certificates under
+  the build machine's prefix. The update now trusts the CA bundle of `certifi`, shipped with the
+  executable; `certifi` becomes an explicit dependency of the environment
+  ([#15](https://github.com/ppoilbarbe/PBRenamer/issues/15)).
+
 ## [2.2.1] - 2026-11-17
 
 ### Fixed

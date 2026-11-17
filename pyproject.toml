@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pbrenamer"
-version = "2.2.1"
+version = "2.2.2"
 description = "A graphical batch file renaming utility"
 readme = "README.md"
 license = "GPL-3.0-only"
@@ -161,6 +161,7 @@ pymediainfo            = ">=7.0.1,<8"
 pyinstaller            = ">=6.22.3,<7"
 python-build           = ">=1.6.1,<2"
 twine                  = ">=7.0.0,<8"
+certifi                = ">=2026.10.23"
 pixi-pycharm = ">=0.0.12,<0.0.13"
 
 [tool.pixi.pypi-dependencies]

@@ -17,6 +17,7 @@ import json
 import os
 import platform
 import shutil
+import ssl
 import sys
 import tempfile
 import urllib.error
@@ -182,11 +183,30 @@ def _updater_for_platform() -> _BaseUpdater:
 # ---------------------------------------------------------------------------
 
 
+def _ssl_context() -> ssl.SSLContext:
+    """TLS context trusting the CA bundle shipped with ``certifi``.
+
+    The OpenSSL bundled in the PyInstaller executable looks for its CA
+    certificates under the build machine's prefix, which does not exist on the
+    target machine, so the default context fails every HTTPS request with
+    CERTIFICATE_VERIFY_FAILED.  certifi's ``cacert.pem`` is bundled with the
+    executable (PyInstaller's certifi hook); fall back to the default context
+    when certifi is not installed (source runs).
+    """
+    try:
+        import certifi
+    except ImportError:
+        return ssl.create_default_context()
+    return ssl.create_default_context(cafile=certifi.where())
+
+
 def _fetch_latest_release() -> dict:
     req = urllib.request.Request(
         _API_URL, headers={"Accept": "application/vnd.github+json"}
     )
-    with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:  # noqa: S310
+    with urllib.request.urlopen(  # noqa: S310
+        req, timeout=_TIMEOUT, context=_ssl_context()
+    ) as resp:
         return json.load(resp)
 
 
@@ -201,7 +221,9 @@ def _find_asset(release: dict, suffix: str) -> dict | None:
 def _download(url: str, dest: Path) -> None:
     req = urllib.request.Request(url, headers={"Accept": "application/octet-stream"})
     with (
-        urllib.request.urlopen(req, timeout=_TIMEOUT) as resp,  # noqa: S310
+        urllib.request.urlopen(  # noqa: S310
+            req, timeout=_TIMEOUT, context=_ssl_context()
+        ) as resp,
         open(dest, "wb") as f,
     ):
         shutil.copyfileobj(resp, f)

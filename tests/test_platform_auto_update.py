@@ -113,11 +113,27 @@ class TestFetchLatestRelease:
         monkeypatch.setattr(
             auto_update.urllib.request,
             "urlopen",
-            lambda req, timeout=None: _FakeResponse(data),
+            lambda req, timeout=None, context=None: _FakeResponse(data),
         )
         release = auto_update._fetch_latest_release()
         assert release["tag_name"] == "v1.8.0"
         assert release["assets"][0]["name"] == "pbrenamer-1.8.0-linux-x86_64"
+
+
+class TestSslContext:
+    def test_uses_certifi_bundle(self, monkeypatch):
+        import certifi
+
+        seen = {}
+        real = auto_update.ssl.create_default_context
+
+        def spy(*args, **kwargs):
+            seen.update(kwargs)
+            return real(*args, **kwargs)
+
+        monkeypatch.setattr(auto_update.ssl, "create_default_context", spy)
+        auto_update._ssl_context()
+        assert seen["cafile"] == certifi.where()
 
 
 class TestDownload:
@@ -125,7 +141,7 @@ class TestDownload:
         monkeypatch.setattr(
             auto_update.urllib.request,
             "urlopen",
-            lambda req, timeout=None: _FakeResponse(b"binary payload"),
+            lambda req, timeout=None, context=None: _FakeResponse(b"binary payload"),
         )
         dest = tmp_path / "out.bin"
         auto_update._download("https://example.invalid/asset", dest)
