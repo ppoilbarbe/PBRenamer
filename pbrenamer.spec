@@ -139,7 +139,7 @@ a = Analysis(
         "ssl",
     ],
     hookspath=[],
-    runtime_hooks=["hooks/pyi_rth_fonts.py"],
+    runtime_hooks=["hooks/pyi_rth_env.py", "hooks/pyi_rth_fonts.py"],
     # Exclude heavy stdlib modules that PBRenamer never uses.
     # http is not excluded: urllib.request (used by --auto-update) imports
     # http.client at module load time.

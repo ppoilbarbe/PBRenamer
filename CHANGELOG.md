@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-11-17
+
+### Fixed
+
+- Linux executable: opening a folder in the file manager, opening a file or opening the user guide
+  did nothing (`gio`: `Failed to execute child process "gio-launch-desktop"`). The programs
+  PBRenamer starts inherited the library path of the bundled executable and loaded its libraries
+  instead of the system ones; a new PyInstaller runtime hook restores the original
+  `LD_LIBRARY_PATH` for them ([#14](https://github.com/ppoilbarbe/PBRenamer/issues/14)).
+
 ## [2.2.0] - 2026-11-15
 
 This version fixes problems that followed the merge of PBPicat into PBRenamer: bugs, and PBPicat
