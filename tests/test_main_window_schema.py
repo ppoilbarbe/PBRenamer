@@ -69,7 +69,6 @@ class TestModeTabs:
         assert not window._ui.cmbExtensionMode.isEnabled()
         assert not window._ui.chkSidecarMode.isEnabled()
         assert window._files.sidecar_mode_active()
-        assert window._extension_mode() == "lower"
         window._ui.tabRules.setCurrentIndex(0)
         assert profiles.load()["mode"] == "pattern"
         assert window._ui.cmbExtensionMode.isEnabled()
@@ -338,20 +337,23 @@ class TestRenumber:
         assert profiles.get_history("field_0")[0] == "Bx"
         assert profiles.get_history("field_1")[0] == "###"
 
-    def test_preview_stays_empty_with_auto_preview(self, window, numbered, monkeypatch):
-        """After a renumber the preview is empty, auto-preview or not
-        (7.2 #12)."""
+    def test_preview_recomputed_with_auto_preview(self, window, numbered, monkeypatch):
+        """After a renumber, auto-preview shows what Rename would now do."""
         _schema_window(window, numbered, "/unused", "A", "###")
         window._actions.set_auto_preview(True)
         _answer(monkeypatch, QMessageBox.StandardButton.Yes)
         window._on_renumber()
+        assert (numbered / "A_001.jpg").exists()
+        assert all(i.text(1) for i in window._files.all_items())
+        assert window._ui.btnRename.isEnabled()
+        window._actions.set_auto_preview(False)
+
+    def test_preview_empty_without_auto_preview(self, window, numbered, monkeypatch):
+        _schema_window(window, numbered, "/unused", "A", "###")
+        _answer(monkeypatch, QMessageBox.StandardButton.Yes)
+        window._on_renumber()
         assert [i.text(1) for i in window._files.all_items()] == ["", "", ""]
         assert not window._ui.btnRename.isEnabled()
-        assert not window._ui.btnRenumber.isEnabled()
-        window._schema.set_fields(["B", "###", "", "", "", ""])
-        window._actions.request_auto_preview()
-        assert all(i.text(1) for i in window._files.all_items())
-        window._actions.set_auto_preview(False)
 
     def test_declined(self, window, numbered, monkeypatch):
         _schema_window(window, numbered, "/unused", "A", "###")

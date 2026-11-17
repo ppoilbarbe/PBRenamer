@@ -409,8 +409,8 @@ class TestReloadFiles:
         assert called
         window._ui.chkAutoPreview.setChecked(False)
 
-    def test_no_auto_preview_after_rename(self, window, tmp_path, monkeypatch):
-        """The reload following a rename leaves the preview empty (7.2 #12)."""
+    def test_single_auto_preview_after_rename(self, window, tmp_path, monkeypatch):
+        """After a rename, auto-preview runs once, for the final selection."""
         from pbrenamer.core import filetools
 
         src = tmp_path / "f.txt"
@@ -426,8 +426,6 @@ class TestReloadFiles:
             lambda pairs, **_k: filetools.RenameResult(list(pairs)),
         )
         assert window._execute([(str(src), str(tmp_path / "g.txt"))], "t")
-        assert called == []
-        window._files.reload()
         assert called == [1]
         window._ui.chkAutoPreview.setChecked(False)
 
@@ -2318,56 +2316,27 @@ class TestOnPreview:
 
 
 class TestSidecarModeGating:
-    def test_disabled_under_normalize_mode(self, window):
-        window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("normalize")
-        )
-        assert not window._ui.chkSidecarMode.isEnabled()
-
-    def test_disabled_under_modify_mode(self, window):
-        window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("modify")
-        )
-        assert not window._ui.chkSidecarMode.isEnabled()
-
-    def test_enabled_under_keep_lower_upper(self, window):
-        for mode in ("keep", "lower", "upper"):
+    def test_enabled_under_every_extension_mode(self, window):
+        window._ui.chkSidecarMode.setChecked(True)
+        for mode in ("keep", "lower", "upper", "normalize", "modify"):
             window._ui.cmbExtensionMode.setCurrentIndex(
                 window._ui.cmbExtensionMode.findData(mode)
             )
             assert window._ui.chkSidecarMode.isEnabled()
+            assert window._files.sidecar_mode_active() is True
 
-    def test_checked_but_disabled_is_inactive(self, window):
-        window._ui.chkSidecarMode.setChecked(True)
-        window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("normalize")
-        )
-        assert window._ui.chkSidecarMode.isChecked()
-        assert not window._ui.chkSidecarMode.isEnabled()
-        assert window._files.sidecar_mode_active() is False
-
-    def test_reenabling_keeps_checked_state_active(self, window):
-        window._ui.chkSidecarMode.setChecked(True)
-        window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("normalize")
-        )
-        window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("lower")
-        )
-        assert window._ui.chkSidecarMode.isEnabled()
-        assert window._files.sidecar_mode_active() is True
-
-    def test_extension_mode_change_reloads_when_checkbox_checked(
-        self, window, tmp_path, monkeypatch
+    def test_extension_mode_change_previews_when_checked_and_auto_preview(
+        self, window, monkeypatch
     ):
-        window._files.current_dir = str(tmp_path)
         window._ui.chkSidecarMode.setChecked(True)
+        window._ui.chkAutoPreview.setChecked(True)
         called = []
-        monkeypatch.setattr(window._files, "reload", lambda: called.append(1))
+        monkeypatch.setattr(window, "_on_preview", lambda: called.append(1))
         window._ui.cmbExtensionMode.setCurrentIndex(
-            window._ui.cmbExtensionMode.findData("lower")
+            window._ui.cmbExtensionMode.findData("normalize")
         )
         assert called
+        window._ui.chkAutoPreview.setChecked(False)
 
     def test_extension_mode_change_previews_when_unchecked_and_auto_preview(
         self, window, monkeypatch
@@ -2836,6 +2805,30 @@ class TestSidecarRenameEndToEnd:
         window._on_undo()
         assert (tmp_path / "img.jpg").exists()
         assert (tmp_path / "img.xmp").exists()
+
+    @pytest.mark.parametrize(
+        ("mode", "search"), [("normalize", "img"), ("modify", "img.jpeg")]
+    )
+    def test_group_rename_with_rewritten_extension(
+        self, window, tmp_path, mode, search
+    ):
+        set_extension_normalization([("jpeg", "jpg")])
+        (tmp_path / "img.jpeg").write_text("x")
+        (tmp_path / "img.xmp").write_text("y")
+        window._files.current_dir = str(tmp_path)
+        window._ui.chkSidecarMode.setChecked(True)
+        window._files.reload()
+        window._ui.radPlainText.setChecked(True)
+        window._ui.cmbExtensionMode.setCurrentIndex(
+            window._ui.cmbExtensionMode.findData(mode)
+        )
+        window._ui.cmbPatternSearch.setCurrentText(search)
+        window._ui.cmbPatternDest.setCurrentText(
+            "photo" if mode == "normalize" else "photo.jpg"
+        )
+        window._on_preview()
+        window._on_rename()
+        assert sorted(p.name for p in tmp_path.iterdir()) == ["photo.jpg", "photo.xmp"]
 
 
 # ---------------------------------------------------------------------------

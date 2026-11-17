@@ -105,7 +105,8 @@ class DirectoryTreeView(QTreeView):
 class FileListWidget(QTreeWidget):
     """File list with drag-out (real file URLs) and drag-in support.
 
-    Dragged files take their sidecars along (*sidecars_of*).  Tab and
+    Dragged files take along the sidecars *sidecars_of* returns (none
+    outside sidecar mode).  Tab and
     Shift+Tab give the focus back to *tab_partner* (the directory tree).
     Up and Down skip the rows *is_follower* reports (the sidecars that
     follow their base file in sidecar mode), moving from base to base.

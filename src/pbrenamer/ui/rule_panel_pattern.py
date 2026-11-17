@@ -398,11 +398,7 @@ class PatternRulePanel(QObject):
         self.changed.emit()
 
     def _on_extension_mode_changed(self) -> None:
-        self._files.update_sidecar_checkbox_state()
-        if self._ui.chkSidecarMode.isChecked():
-            self._files.reload()
-        else:
-            self.changed.emit()
+        self.changed.emit()
 
     # ── Pattern history ───────────────────────────────────────────────────────
 

@@ -95,7 +95,6 @@ class MainWindow(QMainWindow):
             self._ui,
             self._undo,
             self._window_state,
-            self._extension_mode,
             self,
             sidecars_forced=self._schema_mode,
         )
@@ -296,10 +295,6 @@ class MainWindow(QMainWindow):
     def _schema_mode(self) -> bool:
         return self._ui.tabRules.currentIndex() == _SCHEMA_TAB
 
-    def _extension_mode(self) -> str | None:
-        """Extension mode of the active rule (the schema lowercases it)."""
-        return "lower" if self._schema_mode() else self._pattern.extension_mode()
-
     def _on_mode_changed(self, index: int) -> None:
         data = profiles.load()
         data["mode"] = "schema" if index == _SCHEMA_TAB else "pattern"
@@ -410,17 +405,23 @@ class MainWindow(QMainWindow):
             )
             self._files.clear_preview()
             self._files.reload()
+            self._ui.tblFiles.setFocus()
             return False
         _log.info("Renamed %d file(s)", len(result.pairs))
         self._undo.add(RenameEntry.from_result(result))
         self._actions.refresh_undo()
-        # The preview stays empty after a rename, even with auto-preview on.
+        # The reload and the new selection each request an auto-preview:
+        # hold them, then compute it once for the final selection.
         with self._actions.auto_preview_held():
             self._files.clear_preview()
             self._files.reload()
             self._files.select_after_change(
                 [dst for _src, dst in result.pairs], next_path
             )
+        # The Rename button had the focus: give it back to the list, so the
+        # selection is shown as active and the keyboard acts on it.
+        self._ui.tblFiles.setFocus()
+        self._actions.request_auto_preview()
         self.statusBar().showMessage(
             _("{n} file(s) renamed.").format(n=len(result.pairs))
         )
@@ -487,6 +488,7 @@ class MainWindow(QMainWindow):
             )
         self._actions.refresh_undo()
         self._files.reload()
+        self._ui.tblFiles.setFocus()
 
     # ── Window state (geometry + splitters) ──────────────────────────────────
 

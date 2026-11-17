@@ -78,6 +78,8 @@ source = ["src"]
 line-length    = 88
 target-version = "py312"
 src            = ["src"]
+# _() is installed into builtins by gettext at runtime (see i18n.py)
+builtins       = ["_"]
 
 [tool.ruff.lint]
 select = [
@@ -94,37 +96,8 @@ extend-select = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-# _() is installed into builtins by gettext at runtime — not a real F821
-"src/pbrenamer/ui/main_window.py"         = ["F821"]
-"src/pbrenamer/ui/action_bar.py"          = ["F821"]
-"src/pbrenamer/ui/file_list.py"           = ["F821"]
-"src/pbrenamer/ui/rule_panel_pattern.py"  = ["F821"]
-"src/pbrenamer/ui/settings_dialog.py"     = ["F821"]
-"src/pbrenamer/ui/pattern_help.py"        = ["F821"]
-"src/pbrenamer/ui/keyboard_help.py"       = ["F821"]
-"src/pbrenamer/ui/shortcuts_dialog.py"    = ["F821"]
-"src/pbrenamer/ui/file_info_window.py"    = ["F821"]
-"src/pbrenamer/platform/bookmarks.py"     = ["F821"]
-"src/pbrenamer/core/sidecar.py"           = ["F821"]
-"src/pbrenamer/core/schema.py"            = ["F821"]
-"src/pbrenamer/profiles.py"               = ["F821"]
-"src/pbrenamer/ui/sidecar_dialog.py"      = ["F821"]
-"src/pbrenamer/ui/rule_panel_schema.py"   = ["F821"]
-"src/pbrenamer/ui/profile_dialog.py"      = ["F821"]
-"src/pbrenamer/ui/history_dialog.py"      = ["F821"]
-"src/pbrenamer/core/image_ops.py"         = ["F821"]
-"src/pbrenamer/platform/_open_linux.py"   = ["F821"]
-"src/pbrenamer/platform/_open_macos.py"   = ["F821"]
-"src/pbrenamer/ui/file_actions.py"        = ["F821"]
-"src/pbrenamer/ui/image_viewer.py"        = ["F821"]
-"src/pbrenamer/ui/metadata_view.py"       = ["F821"]
-"src/pbrenamer/ui/orphan_sidecars_dialog.py" = ["F821"]
-"src/pbrenamer/ui/schema_proposal_dialog.py" = ["F821"]
-"src/pbrenamer/core/image_meta.py"        = ["F821"]
-"src/pbrenamer/ui/v1_cleanup.py"          = ["F821"]
-"src/pbrenamer/ui/profile_startup.py"     = ["F821"]
-# *_ui.py: Qt naming conventions (Ui_Foo, setupUi) + _() builtin from gettext
-"src/pbrenamer/ui/*_ui.py"                = ["F821", "N801", "N802"]
+# *_ui.py: Qt naming conventions (Ui_Foo, setupUi)
+"src/pbrenamer/ui/*_ui.py"                = ["N801", "N802"]
 
 [tool.ruff.format]
 # Black-compatible defaults (double quotes, trailing commas, magic trailing comma)

@@ -358,7 +358,8 @@ class FileActions(QObject):
         self.delete(self.targets(), self._window)
 
     def delete(self, paths: list[str], parent=None) -> list[str]:
-        """Delete *paths* with their sidecars; return the deleted files.
+        """Delete *paths*, with their sidecars in sidecar mode; return the
+        deleted files.
 
         When nothing stays selected, the next file of the list is selected
         (the previous one after the last row), and the viewer follows."""
@@ -370,6 +371,10 @@ class FileActions(QObject):
         )
 
     def _with_sidecars(self, paths: list[str]) -> list[str]:
+        """*paths* followed by their sidecars in sidecar mode; outside it,
+        sidecars are independent files and *paths* alone are returned."""
+        if not self._files.sidecar_mode_active():
+            return list(dict.fromkeys(paths))
         sidecars = self._files.sidecars_map(paths)
         return list(dict.fromkeys(f for p in paths for f in [p, *sidecars[p]]))
 

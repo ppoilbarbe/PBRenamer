@@ -48,8 +48,9 @@ class ActionBar(QObject):
 
     @contextmanager
     def auto_preview_held(self) -> Iterator[None]:
-        """Ignore the auto-preview triggers inside the block: after a rename,
-        the reload and the new selection must leave the preview empty."""
+        """Ignore the auto-preview triggers inside the block, so that a
+        sequence of changes (reload, then new selection) can be followed by a
+        single explicit request."""
         self._held = True
         try:
             yield

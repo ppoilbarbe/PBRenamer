@@ -173,6 +173,14 @@ msgstr ""
 "скрыть."
 
 # ==AUTO== Automatically translated
+msgid "Not installed"
+msgstr "Не установлено"
+
+# ==AUTO== Automatically translated
+msgid "MediaInfo library not found"
+msgstr "Библиотека MediaInfo не найдена"
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "О PBRenamer"
 
@@ -199,6 +207,10 @@ msgstr "Версия Python:"
 # ==AUTO== Automatically translated
 msgid "PySide6 version:"
 msgstr "Версия PySide6:"
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "Необязательные зависимости"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

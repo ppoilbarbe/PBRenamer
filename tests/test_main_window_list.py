@@ -106,6 +106,33 @@ class TestSelectionAfterRename:
         assert window._ui.tblFiles.selectedItems() == []
         assert _current(window) == "b.jpg"
 
+    def test_focus_returns_to_list(self, window, tmp_path):
+        """The Rename button had the focus: the list gets it back, so the
+        restored selection is active."""
+        (tmp_path / "a.txt").write_text("a")
+        window._files.set_directory(str(tmp_path))
+        window._ui.btnRename.setFocus()
+        assert window._execute(
+            [(str(tmp_path / "a.txt"), str(tmp_path / "z.txt"))], "t"
+        )
+        assert window.focusWidget() is window._ui.tblFiles
+
+    def test_auto_preview_follows_rename(self, window, tmp_path):
+        """With auto-preview on, the preview is recomputed for the files
+        left selected after the rename."""
+        for name in ("a.txt", "b.txt"):
+            (tmp_path / name).write_text(name)
+        window._files.set_directory(str(tmp_path))
+        window._ui.cmbPatternSearch.setCurrentText("{X}")
+        window._ui.cmbPatternDest.setCurrentText("{1}_x")
+        window._ui.chkAutoPreview.setChecked(True)
+        window._files.select_paths([str(tmp_path / "a.txt")])
+        window._on_rename()
+        item = window._ui.tblFiles.selectedItems()[0]
+        assert item.text(0) == "a_x.txt"
+        assert item.text(1) == "a_x_x.txt"
+        window._ui.chkAutoPreview.setChecked(False)
+
     def test_failure_keeps_list(self, window, tmp_path, monkeypatch):
         (tmp_path / "a.txt").write_text("a")
         (tmp_path / "b.txt").write_text("b")

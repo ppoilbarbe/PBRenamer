@@ -21,12 +21,9 @@ def panel(qtbot):
     ui.setupUi(win)
     presets = PatternPresets()
     state = WindowState()
-    holder = {}
-    files = FileListController(
-        ui, UndoManager(), state, lambda: holder["panel"].extension_mode(), win
-    )
-    holder["panel"] = PatternRulePanel(ui, presets, state, files, win)
-    yield holder["panel"], ui, presets
+    files = FileListController(ui, UndoManager(), state, win)
+    panel = PatternRulePanel(ui, presets, state, files, win)
+    yield panel, ui, presets
     win.close()
 
 

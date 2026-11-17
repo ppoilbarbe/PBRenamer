@@ -534,6 +534,7 @@ class TestDelete:
         a = _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
         b = _png(tmp_path / "b.png")
+        window._ui.chkSidecarMode.setChecked(True)
         _load(window, tmp_path)
         _select(window, "a.png")
         window._ui.actionFileDelete.trigger()
@@ -541,6 +542,21 @@ class TestDelete:
         assert calls["ask"] == ["Move to trash:\na.png\na.xmp"]
         assert _names(window) == ["b.png"]
         assert window._ui.tblFiles.currentItem().data(0, Qt.ItemDataRole.UserRole) == b
+
+    def test_sidecars_independent_outside_sidecar_mode(
+        self, window, tmp_path, calls, trash
+    ):
+        # The sidecar is left behind, orphaned: outside sidecar mode it is
+        # an ordinary file, deleted only when selected itself.
+        a = _png(tmp_path / "a.png")
+        _png(tmp_path / "b.png")
+        (tmp_path / "a.xmp").write_text("x")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._ui.actionFileDelete.trigger()
+        assert trash == [a]
+        assert calls["ask"] == ["Move to trash:\na.png"]
+        assert sorted(_names(window)) == ["a.xmp", "b.png"]
 
     @staticmethod
     def _selected(window):
@@ -769,6 +785,7 @@ class TestDelete:
         self._set(deletion_mode="session")
         a = _png(tmp_path / "a.png")
         (tmp_path / "a.xmp").write_text("x")
+        window._ui.chkSidecarMode.setChecked(True)
         _load(window, tmp_path)
         window._file_actions.delete([a])
         assert calls["ask"] == ["Move to the session trash:\na.png\na.xmp"]

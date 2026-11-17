@@ -6,6 +6,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- About dialog: an *Optional dependencies* section lists Pillow, pillow-heif, pyexiv2, mutagen
+  and pymediainfo, each with its version or *Not installed*. Native libraries are shown alongside
+  their wrapper (libheif, Exiv2), and a missing MediaInfo library is reported.
+
+### Changed
+
+- Ruff configuration: `_` is declared as a builtin (`builtins = ["_"]`) instead of disabling the
+  `F821` (undefined name) check in about thirty files, so real undefined names are reported again.
+- After a rename or a renumber, auto-preview (when enabled) now recomputes the preview for the
+  resulting selection instead of leaving it empty, in both pattern and schema modes.
+- Sidecar mode is available with every extension mode, including *Normalize extension* and
+  *Modify extension*: a sidecar always takes the new stem of its base file followed by its own
+  suffix, so rewriting the base extension never affected it.
+
+### Fixed
+
+- After a rename, renumber or undo, the file list gets the keyboard focus back from the button
+  that was clicked: the restored selection was shown as inactive and the keyboard still acted on
+  the button.
+- Release executables: pymediainfo could not be imported because the PyInstaller build excluded
+  the standard `xml` package, so the `{vi:…}` video metadata fields were always empty.
+- Outside sidecar mode, sidecars are fully independent files, as the selection already treated
+  them: a dragged file no longer takes its sidecars along when copied or moved (from the list or
+  from another application), and deleting a file (from the list or the image viewer) no longer
+  deletes its sidecars. These operations can leave orphan sidecars behind, which the user guide
+  now states.
+
 ## [2.2.2] - 2026-11-17
 
 > **Warning:** download this version manually from the

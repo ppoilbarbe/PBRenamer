@@ -293,6 +293,15 @@ msgstr ""
 
 # ==AUTO== Automatically translated
 msgid ""
+"In :ref:`sidecar mode <sidecar-files>`, a dragged file takes its sidecars"
+" along.  Otherwise sidecars are independent files: only the dragged files"
+" are copied or moved."
+msgstr ""
+"在 :ref:`附属文件模式 <sidecar-files>` 下，被拖动的文件会带上它的 Sidecar 文件。否则 Sidecar "
+"文件是独立的文件：只复制或移动被拖动的文件。"
+
+# ==AUTO== Automatically translated
+msgid ""
 "If any dropped item would overwrite an existing file or directory, a "
 "single confirmation dialog lists how many collide and offers "
 "**Overwrite**, **Skip** (collisions only — everything else still "
@@ -446,18 +455,24 @@ msgstr "启用附属文件模式"
 # ==AUTO== Automatically translated
 msgid ""
 "The **Sidecar mode** checkbox, next to the Extension mode combo, turns "
-"the feature on.  It is only selectable when Extension mode is *Keep "
-"extension*, *Extension in lowercase*, or *Extension in uppercase* — "
-"sidecar suffixes are never re-derived, so a mode that rewrites the "
-"extension (*Normalize extension*, *Modify extension*) would make the "
-"relationship ambiguous.  The checkbox is greyed out (and treated as "
-"unchecked) for those two modes; its checked/unchecked state is otherwise "
-"remembered like the Extension mode itself, both in the toolbar state and "
-"in named presets."
+"the feature on, whatever the Extension mode.  Its checked/unchecked state"
+" is remembered like the Extension mode itself, both in the toolbar state "
+"and in named presets."
 msgstr ""
-"扩展名模式下拉框旁的 **附属文件模式** 复选框用于开启此功能。只有当扩展名模式为 *保留扩展名*、*扩展名小写* 或 *扩展名大写* "
-"时才可选择：Sidecar "
-"后缀从不重新推导，因此会改写扩展名的模式（*标准化扩展名*、*修改扩展名*）会使关系变得含糊。在这两种模式下，复选框显示为灰色（并视为未勾选）；其他情况下，它的状态与扩展名模式一样会被记住，包括工具栏状态和命名保存中。"
+"扩展名模式列表旁的 **附属文件模式** "
+"复选框用于开启此功能，与扩展名模式无关。它的勾选状态与扩展名模式本身一样会被记住，既保存在工具栏状态中，也保存在命名预设中。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Outside sidecar mode, sidecar suffixes are just noise: a sidecar is an "
+"ordinary file, fully independent of its base file.  Selecting, renaming, "
+"moving, copying or deleting a file never involves its sidecars, so these "
+"operations can leave orphan sidecars behind (**File → Orphan sidecars…** "
+"lists them, see :ref:`file-tools`)."
+msgstr ""
+"在附属文件模式之外，Sidecar 后缀只是噪音：Sidecar "
+"文件是普通文件，与其主文件完全独立。选择、重命名、移动、复制或删除文件时从不涉及其 Sidecar 文件，因此这些操作可能留下孤立的 "
+"Sidecar 文件（\\ **文件 → 孤立 Sidecar 文件…**\\ 会列出它们，参见 :ref:`file-tools`\\ ）。"
 
 # ==AUTO== Automatically translated
 msgid "How grouping works"
@@ -569,13 +584,14 @@ msgstr "选择组中的任何文件（主文件或其任一 Sidecar 文件）都
 
 # ==AUTO== Automatically translated
 msgid ""
-"The rename pattern is applied to the base file's *stem* only, exactly as "
-"under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same"
-" transformed stem, followed verbatim by its own sidecar suffix (case "
-"preserved as found on disk) — the suffix itself is never altered."
+"The rename pattern is applied to the base file as usual, according to the"
+" Extension mode; each sidecar reuses the new stem of its base file, "
+"followed verbatim by its own sidecar suffix (case preserved as found on "
+"disk), whatever happens to the base extension: the suffix itself is never"
+" altered."
 msgstr ""
-"重命名模式只作用于主文件的 *主干*，与 *保留扩展名*、*扩展名小写* 或 *扩展名大写* 完全相同；每个 Sidecar "
-"文件沿用同一个转换后的主干，后面原样接上它自己的 Sidecar 后缀（保留磁盘上的大小写）：后缀本身从不改变。"
+"重命名模式照常按扩展名模式作用于主文件；每个 Sidecar 文件沿用其主文件的新主干，后面原样接上它自己的 Sidecar "
+"后缀（保留磁盘上的大小写），无论主文件的扩展名如何变化：后缀本身从不改变。"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1509,13 +1525,13 @@ msgstr "**删除**\\ （**Del**）"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Delete the files and their sidecars, to a trash or permanently, after a "
-"confirmation, as set in the profile (see :ref:`deletion-modes`).  The "
-"next file of the list is then selected (the previous one after the last "
-"row)."
+"Delete the files (with their sidecars in sidecar mode), to a trash or "
+"permanently, after a confirmation, as set in the profile (see :ref"
+":`deletion-modes`).  The next file of the list is then selected (the "
+"previous one after the last row)."
 msgstr ""
-"按配置文件中的设置，在确认后将文件及其 Sidecar 文件删除到回收站或永久删除（参见 :ref:`deletion-modes`\\ "
-"）。随后选中列表中的下一个文件（若为最后一行，则选中上一个）。"
+"按配置文件中的设置，在确认后将文件（在附属文件模式下连同其 Sidecar 文件）删除到回收站或永久删除（参见 :ref:`deletion-"
+"modes`\\ ）。随后选中列表中的下一个文件（若为最后一行，则选中上一个）。"
 
 # ==AUTO== Automatically translated
 msgid "**Orphan sidecars…**"

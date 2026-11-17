@@ -142,6 +142,10 @@ OS/Qt drag modifier keys — the default action is a move; hold the platform's
 copy modifier (e.g. **Ctrl** on Linux/Windows) to force a copy instead.
 Custom cursors indicate the resulting action while dragging.
 
+In :ref:`sidecar mode <sidecar-files>`, a dragged file takes its sidecars
+along.  Otherwise sidecars are independent files: only the dragged files are
+copied or moved.
+
 If any dropped item would overwrite an existing file or directory, a single
 confirmation dialog lists how many collide and offers **Overwrite**, **Skip**
 (collisions only — everything else still proceeds), or **Cancel** (nothing is
@@ -224,13 +228,15 @@ Enabling sidecar mode
 """"""""""""""""""""""
 
 The **Sidecar mode** checkbox, next to the Extension mode combo, turns the
-feature on.  It is only selectable when Extension mode is *Keep extension*,
-*Extension in lowercase*, or *Extension in uppercase* — sidecar suffixes are
-never re-derived, so a mode that rewrites the extension (*Normalize
-extension*, *Modify extension*) would make the relationship ambiguous.  The
-checkbox is greyed out (and treated as unchecked) for those two modes; its
-checked/unchecked state is otherwise remembered like the Extension mode
-itself, both in the toolbar state and in named presets.
+feature on, whatever the Extension mode.  Its checked/unchecked state is
+remembered like the Extension mode itself, both in the toolbar state and in
+named presets.
+
+Outside sidecar mode, sidecar suffixes are just noise: a sidecar is an
+ordinary file, fully independent of its base file.  Selecting, renaming,
+moving, copying or deleting a file never involves its sidecars, so these
+operations can leave orphan sidecars behind (**File → Orphan sidecars…**
+lists them, see :ref:`file-tools`).
 
 How grouping works
 """""""""""""""""""
@@ -286,10 +292,11 @@ While sidecar mode is active:
   **Rename** button until resolved.
 * Selecting any file in a group — the base or any of its sidecars —
   automatically selects the whole group.
-* The rename pattern is applied to the base file's *stem* only, exactly as
-  under *Keep/Lowercase/Uppercase extension*; each sidecar reuses that same
-  transformed stem, followed verbatim by its own sidecar suffix (case
-  preserved as found on disk) — the suffix itself is never altered.
+* The rename pattern is applied to the base file as usual, according to the
+  Extension mode; each sidecar reuses the new stem of its base file,
+  followed verbatim by its own sidecar suffix (case preserved as found on
+  disk), whatever happens to the base extension: the suffix itself is never
+  altered.
 * Renaming a group is a single operation: the base file and all its
   sidecars are renamed together, recorded as one batch on the undo stack, so
   **Undo** restores the whole group at once.
@@ -749,8 +756,8 @@ In the **File** menu:
     Fill the schema from the file name (see :ref:`schema-mode`).
 
 **Delete** (**Del**)
-    Delete the files and their sidecars, to a trash or permanently, after
-    a confirmation, as set in the profile (see :ref:`deletion-modes`).  The next file of the list
+    Delete the files (with their sidecars in sidecar mode), to a trash or
+    permanently, after a confirmation, as set in the profile (see :ref:`deletion-modes`).  The next file of the list
     is then selected (the previous one after the last row).
 
 **Orphan sidecars…**

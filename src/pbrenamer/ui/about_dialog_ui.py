@@ -16,7 +16,7 @@ from PySide6.QtWidgets import (
 class Ui_AboutDialog:
     def setupUi(self, dialog):
         dialog.setMinimumWidth(380)
-        dialog.resize(420, 320)
+        dialog.resize(420, 440)
         dialog.setWindowTitle(_("About PBRenamer"))
 
         layout = QVBoxLayout(dialog)
@@ -84,6 +84,15 @@ class Ui_AboutDialog:
 
         self.lblPySideVersion = QLabel(frame)
         form.addRow(_("PySide6 version:"), self.lblPySideVersion)
+
+        # ── Optional dependencies: rows appended to the same form by AboutDialog,
+        # so their columns line up with the ones above ─────────────────────────
+        self.lblOptionalTitle = QLabel(
+            "<b>" + _("Optional dependencies") + "</b>", frame
+        )
+        self.lblOptionalTitle.setAlignment(Qt.AlignCenter)
+        form.addRow(self.lblOptionalTitle)
+        self.formOptional = form
 
         frame_layout.addLayout(form)
 

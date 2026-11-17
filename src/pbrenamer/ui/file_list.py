@@ -46,7 +46,6 @@ _ERROR_COLOR = QColor("#cc0000")
 _SIDECAR_COLOR = QColor("#0099aa")
 _INDICATOR_COLOR = QColor("#0066cc")
 _NO_SIDECAR_COLOR = QColor("#888888")
-_SIDECAR_ACTIVE_EXT_MODES = ("keep", "lower", "upper")
 # Column 1 data: UserRole = error flag, _TARGET_ROLE = absolute target path,
 # _SKIPPED_ROLE = informative preview of a file that is not renamed.
 _TARGET_ROLE = Qt.ItemDataRole.UserRole + 1
@@ -83,8 +82,6 @@ def _exec_menu(menu: QMenu, pos=None) -> None:  # pragma: no cover — modal
 class FileListController(QObject):
     """Own the file list: listing, sidecar groups, previews and conflicts.
 
-    *extension_mode* returns the extension mode of the active rule; sidecar
-    grouping is only possible when it leaves extensions untouched.
     *sidecars_forced* returns True when the active rule always groups
     sidecars (schema mode), whatever the Sidecar mode checkbox.
     """
@@ -101,7 +98,6 @@ class FileListController(QObject):
         ui,
         undo: UndoManager,
         window_state: WindowState,
-        extension_mode: Callable[[], str | None],
         parent: QMainWindow,
         sidecars_forced: Callable[[], bool] = lambda: False,
     ) -> None:
@@ -110,7 +106,6 @@ class FileListController(QObject):
         self._window = parent
         self._undo = undo
         self._window_state = window_state
-        self._extension_mode = extension_mode
         self._sidecars_forced = sidecars_forced
 
         self.current_dir: str | None = None
@@ -145,7 +140,7 @@ class FileListController(QObject):
         self._ui.treeDirectory.files_dropped.connect(self._on_files_dropped)
         self._ui.tblFiles.files_dropped.connect(self._on_files_dropped)
         self._ui.tblFiles.current_dir_getter = lambda: self.current_dir
-        self._ui.tblFiles.sidecars_of = self._sidecars_of
+        self._ui.tblFiles.sidecars_of = self._dragged_sidecars_of
         self._ui.tblFiles.is_follower = self._is_follower
 
         # Options that trigger a file list reload
@@ -651,19 +646,14 @@ class FileListController(QObject):
 
     def sidecar_mode_active(self) -> bool:
         """True if sidecar grouping should be applied: always in schema
-        mode, otherwise when the checkbox is checked and the current
-        extension mode is compatible with it (Keep/Lowercase/Uppercase —
-        Normalize/Modify rewrite the extension, which is incompatible with
-        leaving sidecar suffixes untouched)."""
-        if self._sidecars_forced():
-            return True
-        if not self._ui.chkSidecarMode.isChecked():
-            return False
-        return self._extension_mode() in _SIDECAR_ACTIVE_EXT_MODES
+        mode, otherwise when the checkbox is checked.  The extension mode
+        does not matter: a sidecar takes the new stem of its base file
+        followed by its own suffix, whatever happens to the base extension."""
+        return self._sidecars_forced() or self._ui.chkSidecarMode.isChecked()
 
     def update_sidecar_checkbox_state(self) -> None:
-        allowed = self._extension_mode() in _SIDECAR_ACTIVE_EXT_MODES
-        self._ui.chkSidecarMode.setEnabled(allowed and not self._sidecars_forced())
+        """The checkbox is meaningless when grouping is forced (schema mode)."""
+        self._ui.chkSidecarMode.setEnabled(not self._sidecars_forced())
 
     def _recompute_sidecar_grouping(self, entries: list[tuple[str, str]]) -> None:
         self._prev_group_selection = set()
@@ -999,12 +989,20 @@ class FileListController(QObject):
 
     # ── Drag'n'drop ───────────────────────────────────────────────────────────
 
+    def _dragged_sidecars_of(self, path: str) -> list[str]:
+        """Sidecars dragged along with *path*: only in sidecar mode, where a
+        sidecar follows its base file; otherwise every file is independent."""
+        return self._sidecars_of(path) if self.sidecar_mode_active() else []
+
     def _with_sidecars(self, paths: list[str]) -> list[list[str]]:
         """Group dropped *paths* with the sidecars that follow them: each
         unit is [path, *sidecars], moved or skipped as a whole.  Sidecars
         come from the listing, or from the disk for files dropped from
-        another application."""
+        another application.  Outside sidecar mode, each file is a unit of
+        its own and no sidecar follows it."""
         paths = list(dict.fromkeys(paths))
+        if not self.sidecar_mode_active():
+            return [[p] for p in paths]
         listed = self._items_by_path()
         on_disk = sidecar.sidecars_on_disk(
             [p for p in paths if self._groups is None or p not in listed],

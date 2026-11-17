@@ -145,7 +145,9 @@ a = Analysis(
     # Exclude heavy stdlib modules that PBRenamer never uses.
     # http is not excluded: urllib.request (used by --auto-update) imports
     # http.client at module load time.
-    excludes=["tkinter", "unittest", "xml", "numpy", "matplotlib"],
+    # xml is not excluded: pymediainfo imports xml.etree.ElementTree at
+    # module load time ({vi:…} fields), and Pillow's getxmp() needs it.
+    excludes=["tkinter", "unittest", "numpy", "matplotlib"],
     noarchive=False,
 )
 

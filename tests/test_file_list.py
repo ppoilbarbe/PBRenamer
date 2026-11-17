@@ -20,11 +20,8 @@ def files(qtbot):
     qtbot.addWidget(win)
     ui = Ui_MainWindow()
     ui.setupUi(win)
-    ext_mode = {"value": "keep"}
-    ctrl = FileListController(
-        ui, UndoManager(), WindowState(), lambda: ext_mode["value"], win
-    )
-    yield ctrl, ui, ext_mode
+    ctrl = FileListController(ui, UndoManager(), WindowState(), win)
+    yield ctrl, ui
     win.close()
 
 
@@ -37,7 +34,7 @@ def _paths(ui):
 
 
 def test_set_directory_lists_files_and_signals(files, tmp_path, qtbot):
-    ctrl, ui, _ = files
+    ctrl, ui = files
     (tmp_path / "a.txt").write_text("x")
     (tmp_path / "b.txt").write_text("x")
     with qtbot.waitSignal(ctrl.files_reloaded, timeout=1000):
@@ -47,7 +44,7 @@ def test_set_directory_lists_files_and_signals(files, tmp_path, qtbot):
 
 
 def test_show_previews_allows_rename(files, tmp_path, qtbot):
-    ctrl, _ui, _ = files
+    ctrl, _ui = files
     (tmp_path / "a.txt").write_text("x")
     ctrl.set_directory(str(tmp_path))
     items = ctrl.active_items()
@@ -59,7 +56,7 @@ def test_show_previews_allows_rename(files, tmp_path, qtbot):
 
 
 def test_show_previews_conflict_blocks_rename(files, tmp_path, qtbot):
-    ctrl, _ui, _ = files
+    ctrl, _ui = files
     (tmp_path / "a.txt").write_text("x")
     (tmp_path / "b.txt").write_text("x")
     ctrl.set_directory(str(tmp_path))
@@ -69,7 +66,7 @@ def test_show_previews_conflict_blocks_rename(files, tmp_path, qtbot):
 
 
 def test_error_entry_is_not_renamed(files, tmp_path):
-    ctrl, _ui, _ = files
+    ctrl, _ui = files
     (tmp_path / "a.txt").write_text("x")
     ctrl.set_directory(str(tmp_path))
     ctrl.show_previews(ctrl.active_items(), [PreviewEntry("⚠ boom", error=True)])
@@ -77,7 +74,7 @@ def test_error_entry_is_not_renamed(files, tmp_path):
 
 
 def test_clear_preview_disallows_rename(files, tmp_path, qtbot):
-    ctrl, ui, _ = files
+    ctrl, ui = files
     (tmp_path / "a.txt").write_text("x")
     ctrl.set_directory(str(tmp_path))
     ctrl.show_previews(ctrl.active_items(), [PreviewEntry("z.txt")])
@@ -86,14 +83,13 @@ def test_clear_preview_disallows_rename(files, tmp_path, qtbot):
     assert ui.tblFiles.topLevelItem(0).text(1) == ""
 
 
-def test_sidecar_mode_follows_extension_mode(files):
-    ctrl, ui, ext_mode = files
-    ui.chkSidecarMode.setChecked(True)
-    assert ctrl.sidecar_mode_active()
-    ext_mode["value"] = "normalize"
-    ctrl.update_sidecar_checkbox_state()
-    assert not ui.chkSidecarMode.isEnabled()
+def test_sidecar_mode_follows_checkbox(files):
+    ctrl, ui = files
     assert not ctrl.sidecar_mode_active()
+    ui.chkSidecarMode.setChecked(True)
+    ctrl.update_sidecar_checkbox_state()
+    assert ui.chkSidecarMode.isEnabled()
+    assert ctrl.sidecar_mode_active()
 
 
 # ---------------------------------------------------------------------------
@@ -142,7 +138,7 @@ def _names(ui):
 
 class TestApplyDisplay:
     def test_defaults_hide_everything(self, files):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ctrl.apply_display()
         assert ui.tblFiles.isColumnHidden(2)
         assert ui.tblFiles.isColumnHidden(3)
@@ -150,7 +146,7 @@ class TestApplyDisplay:
         assert not ui.chkThumbnails.isChecked()
 
     def test_options_shown(self, files):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _display(ctrl, thumbnails=True, sidecar_column=True, sidecar_filter=True)
         assert not ui.tblFiles.isColumnHidden(2)
         assert not ui.tblFiles.isColumnHidden(3)
@@ -158,12 +154,12 @@ class TestApplyDisplay:
         assert ui.chkThumbnails.isChecked()
 
     def test_column_order(self, files):
-        _ctrl, ui, _ = files
+        _ctrl, ui = files
         header = ui.tblFiles.header()
         assert [header.logicalIndex(v) for v in range(4)] == [2, 0, 3, 1]
 
     def test_hiding_filter_clears_it(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_filter=True)
         ctrl.set_directory(str(tmp_path))
@@ -177,7 +173,7 @@ class TestApplyDisplay:
 
 class TestSidecarColumn:
     def test_indicators(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -192,7 +188,7 @@ class TestSidecarColumn:
         assert "a.xmp" in _names(ui)
 
     def test_hidden_column_not_filled(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.apply_display()
         ctrl.set_directory(str(tmp_path))
@@ -208,7 +204,7 @@ class TestSidecarColumn:
         return urls
 
     def test_double_click_opens_single_sidecar(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -216,7 +212,7 @@ class TestSidecarColumn:
         assert [u.toLocalFile() for u in opened] == [str(tmp_path / "c.xmp")]
 
     def test_double_click_thumbnail_requests_viewer(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -228,7 +224,7 @@ class TestSidecarColumn:
 
     @pytest.mark.parametrize("column", [0, 1])
     def test_double_click_image_name_opens_it(self, files, tmp_path, opened, column):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         requested = []
@@ -240,14 +236,14 @@ class TestSidecarColumn:
     def test_double_click_thumbnail_of_other_file_opens_it(
         self, files, tmp_path, opened
     ):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         ctrl._on_item_double_clicked(_item(ui, "n.txt"), 2)
         assert [u.toLocalFile() for u in opened] == [str(tmp_path / "n.txt")]
 
     def test_double_click_other_file_opens_it(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -257,7 +253,7 @@ class TestSidecarColumn:
     def test_double_click_chooses_among_several(
         self, files, tmp_path, opened, monkeypatch
     ):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -274,7 +270,7 @@ class TestSidecarColumn:
         assert [u.toLocalFile() for u in opened] == [str(tmp_path / "a.xmp")]
 
     def test_double_click_creates_sidecar(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True, sidecar_new_extension="pp3")
         ctrl.set_directory(str(tmp_path))
@@ -286,7 +282,7 @@ class TestSidecarColumn:
         assert "b.pp3" in _names(ui)
 
     def test_no_creation_for_other_files(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -295,7 +291,7 @@ class TestSidecarColumn:
         assert opened == []
 
     def test_no_creation_without_extension(self, files, tmp_path, opened):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True, sidecar_new_extension="")
         ctrl.set_directory(str(tmp_path))
@@ -303,7 +299,7 @@ class TestSidecarColumn:
         assert opened == []
 
     def test_creation_error(self, files, tmp_path, opened, monkeypatch):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(tmp_path))
@@ -319,7 +315,7 @@ class TestSidecarColumn:
 
 class TestEmptySidecars:
     def test_deleted_on_load_when_enabled(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         (tmp_path / "a.jpg").write_text("x")
         (tmp_path / "a.xmp").write_bytes(b"")
         (tmp_path / "orphan.xmp").write_bytes(b"")
@@ -329,14 +325,14 @@ class TestEmptySidecars:
         assert _names(ui) == ["a.jpg", "empty.txt"]
 
     def test_kept_when_disabled(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         (tmp_path / "a.xmp").write_bytes(b"")
         ctrl.apply_display()
         ctrl.set_directory(str(tmp_path))
         assert _names(ui) == ["a.xmp"]
 
     def test_created_sidecar_kept_while_empty(self, files, tmp_path, monkeypatch):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         monkeypatch.setattr(QDesktopServices, "openUrl", staticmethod(lambda u: None))
         (tmp_path / "a.jpg").write_text("x")
         _display(ctrl, sidecar_column=True, delete_empty_sidecars=True)
@@ -357,7 +353,7 @@ class TestEmptySidecars:
         assert not (tmp_path / "a.xmp").exists()
 
     def test_deletion_error_logged(self, files, tmp_path, monkeypatch, caplog):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         (tmp_path / "a.xmp").write_bytes(b"")
 
         def boom(_path):
@@ -370,7 +366,7 @@ class TestEmptySidecars:
         assert _names(ui) == ["a.xmp"]
 
     def test_unreadable_directory(self, files, tmp_path, monkeypatch):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         ctrl.current_dir = str(tmp_path)
         monkeypatch.setattr(
             file_list_mod.os, "listdir", lambda _p: (_ for _ in ()).throw(OSError())
@@ -381,7 +377,7 @@ class TestEmptySidecars:
 class TestContentFilter:
     @pytest.fixture
     def shown(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         _display(ctrl, sidecar_filter=True)
         ctrl.set_directory(str(tmp_path))
@@ -458,14 +454,14 @@ class TestContentFilter:
 
 class TestSelectionState:
     def test_new_directory_current_without_selection(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         assert ui.tblFiles.currentItem() is _all(ui)[0]
         assert ui.tblFiles.selectedItems() == []
 
     def test_reload_keeps_selection_and_current(self, files, tmp_path, qtbot):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "b.jpg").setSelected(True)
@@ -480,7 +476,7 @@ class TestSelectionState:
         assert ui.tblFiles.currentItem().text(0) == "c.jpg"
 
     def test_reload_current_falls_back_to_selection(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "c.jpg").setSelected(True)
@@ -490,7 +486,7 @@ class TestSelectionState:
         assert ui.tblFiles.currentItem().text(0) == "c.jpg"
 
     def test_fs_change_keeps_current(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         ctrl.set_current_path(str(tmp_path / "c.jpg"))
@@ -500,7 +496,7 @@ class TestSelectionState:
         assert ui.tblFiles.currentItem().text(0) == "c.jpg"
 
     def test_select_paths(self, files, tmp_path, qtbot):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         with qtbot.waitSignal(ctrl.selection_changed):
@@ -509,7 +505,7 @@ class TestSelectionState:
         assert not ctrl.select_paths([str(tmp_path / "gone")])
 
     def test_next_path_after(self, files, tmp_path):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         p = {n: str(tmp_path / n) for n in _names(_ui)}
@@ -519,7 +515,7 @@ class TestSelectionState:
         assert ctrl.next_path_after(["/elsewhere"]) is None
 
     def test_select_after_change(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         ctrl.select_after_change(["/moved/away"], str(tmp_path / "c.jpg"))
@@ -529,7 +525,7 @@ class TestSelectionState:
         assert [i.text(0) for i in ui.tblFiles.selectedItems()] == ["b.jpg"]
 
     def test_set_current_path_unknown(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         ctrl.set_current_path(None)
@@ -546,8 +542,12 @@ class TestDropWithSidecars:
         _photos(src)
         return src, dst
 
+    @pytest.fixture(autouse=True)
+    def _sidecar_mode(self, files):
+        files[1].chkSidecarMode.setChecked(True)
+
     def test_listed_file_takes_its_sidecars(self, files, dirs):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         src, dst = dirs
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(src))
@@ -557,7 +557,7 @@ class TestDropWithSidecars:
         assert ui.tblFiles.currentItem().text(0) == "b.jpg"
 
     def test_external_file_takes_its_sidecars(self, files, dirs, tmp_path):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         src, dst = dirs
         ctrl.set_directory(str(dst))
         ctrl._on_files_dropped([str(src / "c.jpg")], str(dst), False)
@@ -565,7 +565,7 @@ class TestDropWithSidecars:
         assert (src / "c.xmp").exists()
 
     def test_sidecar_dropped_with_base_not_duplicated(self, files, dirs):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         src, dst = dirs
         ctrl.set_directory(str(src))
         ctrl._on_files_dropped([str(src / "c.xmp"), str(src / "c.jpg")], str(dst), True)
@@ -573,7 +573,7 @@ class TestDropWithSidecars:
         assert len(ctrl._undo) == 1
 
     def test_skip_drops_whole_unit(self, files, dirs, monkeypatch):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         src, dst = dirs
         (dst / "a.xmp").write_text("old")
         ctrl.set_directory(str(src))
@@ -591,7 +591,7 @@ class TestDropWithSidecars:
         assert (src / "a.jpg").exists()
 
     def test_overwritten_copy_not_undoable(self, files, dirs, monkeypatch):
-        ctrl, _ui, _ = files
+        ctrl, _ui = files
         src, dst = dirs
         (dst / "b.jpg").write_text("old")
         ctrl.set_directory(str(src))
@@ -611,7 +611,7 @@ class TestDropWithSidecars:
         assert entry.pairs == [(str(src / "n.txt"), str(dst / "n.txt"))]
 
     def test_sidecars_of_feeds_drag(self, files, dirs):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         src, _dst = dirs
         _display(ctrl, sidecar_column=True)
         ctrl.set_directory(str(src))
@@ -621,6 +621,51 @@ class TestDropWithSidecars:
             str(src / "a.jpg"),
             str(src / "a.xmp"),
         ]
+
+
+class TestDropWithoutSidecarMode:
+    """Outside sidecar mode, sidecars are independent files: neither a drag
+    nor a drop takes them along."""
+
+    @pytest.fixture
+    def dirs(self, tmp_path):
+        src, dst = tmp_path / "src", tmp_path / "dst"
+        src.mkdir()
+        dst.mkdir()
+        _photos(src)
+        return src, dst
+
+    def test_listed_file_moves_alone(self, files, dirs):
+        ctrl, ui = files
+        src, dst = dirs
+        _display(ctrl, sidecar_column=True)
+        ctrl.set_directory(str(src))
+        ctrl._on_files_dropped([str(src / "a.jpg")], str(dst), True)
+        assert [p.name for p in dst.iterdir()] == ["a.jpg"]
+        assert (src / "a.xmp").exists()
+        assert (src / "a.info").exists()
+
+    def test_external_file_copied_alone(self, files, dirs):
+        ctrl, _ui = files
+        src, dst = dirs
+        ctrl.set_directory(str(dst))
+        ctrl._on_files_dropped([str(src / "c.jpg")], str(dst), False)
+        assert [p.name for p in dst.iterdir()] == ["c.jpg"]
+
+    def test_sidecar_dropped_with_base_moved_once(self, files, dirs):
+        ctrl, _ui = files
+        src, dst = dirs
+        ctrl.set_directory(str(src))
+        ctrl._on_files_dropped([str(src / "c.xmp"), str(src / "c.jpg")], str(dst), True)
+        assert sorted(p.name for p in dst.iterdir()) == ["c.jpg", "c.xmp"]
+
+    def test_drag_carries_only_selected_files(self, files, dirs):
+        ctrl, ui = files
+        src, _dst = dirs
+        _display(ctrl, sidecar_column=True)
+        ctrl.set_directory(str(src))
+        mime = ui.tblFiles.mimeData([_item(ui, "a.jpg")])
+        assert [u.toLocalFile() for u in mime.urls()] == [str(src / "a.jpg")]
 
 
 class TestSort:
@@ -634,13 +679,13 @@ class TestSort:
         return tmp_path
 
     def test_by_name_default(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ui.cmbMode.setCurrentIndex(2)
         ctrl.set_directory(str(self._files(tmp_path)))
         assert _names(ui) == ["a.txt", "b.txt", "c.txt", "d1", "d2"]
 
     def test_by_date_and_reversed_saved(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ui.cmbMode.setCurrentIndex(2)
         ctrl.set_directory(str(self._files(tmp_path)))
         ui.chkSortByDate.setChecked(True)
@@ -653,14 +698,14 @@ class TestSort:
         assert _names(ui) == ["d2", "d1", "c.txt", "b.txt", "a.txt"]
 
     def test_profile_applied(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ctrl.current_dir = str(self._files(tmp_path))
         _display(ctrl, sort_by_date=True)
         assert ui.chkSortByDate.isChecked()
         assert _names(ui) == ["b.txt", "c.txt", "a.txt"]
 
     def test_vanished_file_sorts_first(self, files, tmp_path, monkeypatch):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ctrl._sort_by_date = True
 
         def mtime(path):
@@ -673,7 +718,7 @@ class TestSort:
 
 class TestAccessors:
     def test_sidecars_map_from_groups_or_disk(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         a, b = str(tmp_path / "a.jpg"), str(tmp_path / "b.jpg")
@@ -686,7 +731,7 @@ class TestAccessors:
         )
 
     def test_selected_and_listed_paths(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "c.jpg").setSelected(True)
@@ -698,7 +743,7 @@ class TestAccessors:
         assert len(ctrl.listed_paths()) == 7
 
     def test_double_click_row_without_path(self, files, monkeypatch):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         monkeypatch.setattr(file_list_mod, "_open_path", pytest.fail)
         item = QTreeWidgetItem(["x"])
         ui.tblFiles.addTopLevelItem(item)
@@ -723,18 +768,18 @@ class TestSidecarModeOrder:
         return tmp_path
 
     def test_without_sidecar_mode_by_name(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ctrl.set_directory(str(self._files(tmp_path)))
         assert _names(ui) == ["a.info", "a.jpg", "a.xmp", "b.jpg", "c.txt"]
 
     def test_sidecars_follow_their_base(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(self._files(tmp_path)))
         assert _names(ui) == ["a.jpg", "a.info", "a.xmp", "b.jpg", "c.txt"]
 
     def test_sort_options_order_base_files_only(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(self._files(tmp_path)))
         ui.chkSortByDate.setChecked(True)
@@ -745,7 +790,7 @@ class TestSidecarModeOrder:
         assert _names(ui) == ["c.txt", "b.jpg", "a.jpg", "a.info", "a.xmp"]
 
     def test_base_of(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         ctrl.set_directory(str(self._files(tmp_path)))
         xmp = str(tmp_path / "a.xmp")
         assert ctrl.base_of(xmp) == xmp
@@ -760,7 +805,7 @@ class TestSidecarModeSelection:
         return sorted(i.text(0) for i in ui.tblFiles.selectedItems())
 
     def test_base_pulls_its_sidecars(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "a.jpg").setSelected(True)
@@ -768,7 +813,7 @@ class TestSidecarModeSelection:
         assert self._selected(ui) == ["a.info", "a.jpg", "a.xmp"]
 
     def test_sidecar_pulls_base_and_siblings(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "a.xmp").setSelected(True)
@@ -786,7 +831,6 @@ class TestSidecarModeSelection:
             ui,
             UndoManager(),
             WindowState(),
-            lambda: "keep",
             win,
             sidecars_forced=lambda: forced["value"],
         )
@@ -802,7 +846,7 @@ class TestSidecarModeSelection:
         }
 
     def test_leaving_sidecar_mode_keeps_selection(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(tmp_path))
@@ -816,7 +860,7 @@ class TestSelectedBases:
     """A selected sidecar group counts as its main file (7.2 #2)."""
 
     def test_group_reduced_to_base(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(tmp_path))
@@ -825,7 +869,7 @@ class TestSelectedBases:
         assert ctrl.selected_bases() == [str(tmp_path / "a.jpg")]
 
     def test_without_sidecar_mode_every_file(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "a.jpg").setSelected(True)
@@ -833,7 +877,7 @@ class TestSelectedBases:
         assert len(ctrl.selected_bases()) == 2
 
     def test_file_info_shows_the_base(self, files, tmp_path, monkeypatch):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(tmp_path))
@@ -855,7 +899,7 @@ class TestFileCount:
     """File counts of the status bar: "XX/YY (SS/TT)" in sidecar mode."""
 
     def test_sidecar_mode(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ui.chkSidecarMode.setChecked(True)
         ctrl.set_directory(str(tmp_path))
@@ -867,7 +911,7 @@ class TestFileCount:
         assert ui.lblFileCount.text() == "2/4 (4/7)"
 
     def test_without_sidecar_mode(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         assert ui.lblFileCount.text() == "0/7"
@@ -877,7 +921,7 @@ class TestFileCount:
         assert ui.lblFileCount.toolTip() == "Selected files / listed files"
 
     def test_follows_sidecar_mode_toggle(self, files, tmp_path):
-        ctrl, ui, _ = files
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         ui.chkSidecarMode.setChecked(True)
@@ -886,5 +930,5 @@ class TestFileCount:
         assert ui.lblFileCount.text() == "0/7"
 
     def test_right_of_the_status_bar(self, files):
-        _ctrl, ui, _ = files
+        _ctrl, ui = files
         assert ui.lblFileCount.parent() is ui.statusbar

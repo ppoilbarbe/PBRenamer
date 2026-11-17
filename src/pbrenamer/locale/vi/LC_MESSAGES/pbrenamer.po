@@ -170,6 +170,14 @@ msgid ""
 msgstr "Hồ sơ “{name}” là hồ sơ hiển thị cuối cùng: không thể xóa hoặc ẩn."
 
 # ==AUTO== Automatically translated
+msgid "Not installed"
+msgstr "Chưa cài đặt"
+
+# ==AUTO== Automatically translated
+msgid "MediaInfo library not found"
+msgstr "Không tìm thấy thư viện MediaInfo"
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "Giới thiệu về PBRenamer"
 
@@ -196,6 +204,10 @@ msgstr "Phiên bản Python:"
 # ==AUTO== Automatically translated
 msgid "PySide6 version:"
 msgstr "Phiên bản PySide6:"
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "Phụ thuộc tùy chọn"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

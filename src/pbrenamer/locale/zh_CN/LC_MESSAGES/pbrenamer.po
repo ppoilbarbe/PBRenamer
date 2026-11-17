@@ -161,6 +161,14 @@ msgid ""
 msgstr "配置文件“{name}”是最后一个可见的配置文件：不能删除或隐藏。"
 
 # ==AUTO== Automatically translated
+msgid "Not installed"
+msgstr "未安装"
+
+# ==AUTO== Automatically translated
+msgid "MediaInfo library not found"
+msgstr "未找到 MediaInfo 库"
+
+# ==AUTO== Automatically translated
 msgid "About PBRenamer"
 msgstr "关于 PBRenamer"
 
@@ -187,6 +195,10 @@ msgstr "Python 版本："
 # ==AUTO== Automatically translated
 msgid "PySide6 version:"
 msgstr "PySide6 版本："
+
+# ==AUTO== Automatically translated
+msgid "Optional dependencies"
+msgstr "可选依赖项"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

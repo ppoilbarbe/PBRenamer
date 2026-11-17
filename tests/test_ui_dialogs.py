@@ -49,6 +49,82 @@ class TestAboutDialog:
         qtbot.addWidget(dlg)
         assert dlg._ui.lblPySideVersion.text() == pyside_version
 
+    def test_optional_dependencies_rows(self, qtbot: QtBot):
+        from pbrenamer.ui.about_dialog import AboutDialog, optional_dependencies
+
+        dlg = AboutDialog()
+        qtbot.addWidget(dlg)
+        # License, Python, PySide6 and the section title come first.
+        assert dlg._ui.formOptional.rowCount() == 4 + len(optional_dependencies())
+
+
+class TestOptionalDependencies:
+    def test_lists_all_packages(self):
+        from pbrenamer.ui.about_dialog import optional_dependencies
+
+        names = [name for name, _ in optional_dependencies()]
+        assert names == ["Pillow", "pillow-heif", "pyexiv2", "mutagen", "pymediainfo"]
+
+    def test_installed_package_shows_version(self):
+        import PIL
+
+        from pbrenamer.ui.about_dialog import optional_dependencies
+
+        deps = dict(optional_dependencies())
+        assert deps["Pillow"] == PIL.__version__
+
+    def test_missing_package_is_none(self):
+        import importlib
+
+        from pbrenamer.ui import about_dialog
+
+        real = importlib.import_module
+
+        def fake_import(name, *args, **kwargs):
+            if name == "mutagen":
+                raise ImportError(name)
+            return real(name, *args, **kwargs)
+
+        with patch.object(about_dialog.importlib, "import_module", fake_import):
+            deps = dict(about_dialog.optional_dependencies())
+        assert deps["mutagen"] is None
+
+    def test_native_library_version_appended(self):
+        pillow_heif = pytest.importorskip("pillow_heif")
+
+        from pbrenamer.ui.about_dialog import optional_dependencies
+
+        deps = dict(optional_dependencies())
+        assert f"libheif {pillow_heif.libheif_version()}" in deps["pillow-heif"]
+
+    def test_missing_mediainfo_library_reported(self):
+        pymediainfo = pytest.importorskip("pymediainfo")
+
+        from pbrenamer.ui.about_dialog import optional_dependencies
+
+        with patch.object(pymediainfo.MediaInfo, "can_parse", return_value=False):
+            deps = dict(optional_dependencies())
+        assert "MediaInfo library not found" in deps["pymediainfo"]
+
+    def test_version_falls_back_to_metadata(self):
+        from types import SimpleNamespace
+
+        from pbrenamer.ui.about_dialog import _module_version
+
+        with patch("pbrenamer.ui.about_dialog.version", return_value="1.2.3"):
+            assert _module_version(SimpleNamespace(), "x") == "1.2.3"
+
+    def test_unknown_version(self):
+        from importlib.metadata import PackageNotFoundError
+        from types import SimpleNamespace
+
+        from pbrenamer.ui.about_dialog import _module_version
+
+        with patch(
+            "pbrenamer.ui.about_dialog.version", side_effect=PackageNotFoundError
+        ):
+            assert _module_version(SimpleNamespace(), "x") == "?"
+
 
 class TestAuthorsHtml:
     def test_returns_string(self):

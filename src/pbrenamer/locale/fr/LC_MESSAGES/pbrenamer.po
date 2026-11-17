@@ -144,6 +144,12 @@ msgstr ""
 "Le profil « {name} » est le dernier profil visible : il ne peut être ni "
 "supprimé ni masqué."
 
+msgid "Not installed"
+msgstr "Non installé"
+
+msgid "MediaInfo library not found"
+msgstr "Bibliothèque MediaInfo introuvable"
+
 msgid "About PBRenamer"
 msgstr "À propos de PBRenamer"
 
@@ -164,6 +170,9 @@ msgstr "Version Python :"
 
 msgid "PySide6 version:"
 msgstr "Version PySide6 :"
+
+msgid "Optional dependencies"
+msgstr "Dépendances facultatives"
 
 #, python-brace-format
 msgid "Rename ({n})"
