@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-11-21
+
 ### Added
 
 - About dialog: an *Optional dependencies* section lists Pillow, pillow-heif, pyexiv2, mutagen
@@ -30,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   existing sidecar is opened (found in any letter case); a missing one, marked *(new)*, is created
   empty and opened, as by a double-click in the Sidecar column. The menu is greyed out only when
   the file is itself a sidecar or when its category has no sidecar suffix.
+- GitHub issue templates become issue forms: required fields, dropdowns for the operating system,
+  the installation and the affected area, a field for the `--debug` log, and automatic `bug` /
+  `enhancement` labels. Blank issues are disabled and the chooser links to the user guide.
 
 ### Fixed
 
