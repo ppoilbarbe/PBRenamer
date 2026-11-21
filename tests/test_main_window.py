@@ -1213,7 +1213,7 @@ class TestRenameUndo:
     def test_on_undo(self, window, tmp_path, monkeypatch):
         window._files.current_dir = str(tmp_path)
         called = []
-        monkeypatch.setattr(window._undo, "undo", lambda: called.append(1))
+        monkeypatch.setattr(window._undo, "undo", lambda step=None: called.append(1))
         window._on_undo()
         assert called
 
@@ -1270,7 +1270,7 @@ class TestRenameUndo:
     def test_on_undo_error_shows_warning(self, window, tmp_path, monkeypatch):
         window._files.current_dir = str(tmp_path)
 
-        def _fail():
+        def _fail(step=None):
             raise _mwmod.UndoError("gone")
 
         monkeypatch.setattr(window._undo, "undo", _fail)

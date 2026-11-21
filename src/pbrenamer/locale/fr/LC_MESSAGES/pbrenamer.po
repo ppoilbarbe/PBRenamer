@@ -278,6 +278,9 @@ msgstr ""
 "Supprimer définitivement :\n"
 "{names}"
 
+msgid "Rotating images…"
+msgstr "Rotation des images…"
+
 msgid "Rotation unavailable"
 msgstr "Rotation indisponible"
 
@@ -288,6 +291,9 @@ msgstr "{n} fichier(s) n'ont pas pu être pivotés."
 #, python-brace-format
 msgid "{n} file(s) rotated."
 msgstr "{n} fichier(s) pivoté(s)."
+
+msgid "Resetting EXIF orientations…"
+msgstr "Réinitialisation des orientations EXIF…"
 
 #, python-brace-format
 msgid "{n} EXIF orientation tag(s) reset."
@@ -770,6 +776,9 @@ msgstr "Renuméroter {n} fichier(s) à partir de 1 ?"
 
 msgid "Renumber errors"
 msgstr "Erreurs de renumérotation"
+
+msgid "Undoing…"
+msgstr "Annulation en cours…"
 
 msgid "Undo errors"
 msgstr "Erreurs d'annulation"
@@ -2350,6 +2359,16 @@ msgstr "Profil introuvable"
 
 msgid "Profile to open:"
 msgstr "Profil à ouvrir :"
+
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+#, python-brace-format
+msgid "{done} / {total} file(s)"
+msgstr "{done} / {total} fichier(s)"
 
 #, python-brace-format
 msgid "⚠ no destination for {dest}"

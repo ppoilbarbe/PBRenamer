@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  PBRenamer\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1886,6 +1886,20 @@ msgstr ""
 "который поворачивает их без повторного сжатия; другие форматы сохраняет "
 "Pillow, без потерь, если формат это позволяет.  Повороты и сброс "
 "ориентации EXIF можно отменить кнопкой **Отменить**."
+
+# ==AUTO== Automatically translated
+msgid ""
+"From 50 files on, a progress window shows how many files are done (in "
+"sidecar mode, only the main files are counted).  **Cancel** stops after "
+"the current file: the files already processed stay changed and can be "
+"undone.  An interrupted undo leaves the files not reverted yet on the "
+"undo stack."
+msgstr ""
+"Начиная с 50 файлов, окно хода выполнения показывает, сколько файлов "
+"обработано (в режиме сопутствующих файлов учитываются только основные "
+"файлы). **Отмена** останавливает работу после текущего файла: уже "
+"обработанные файлы остаются изменёнными, и эти изменения можно отменить. "
+"Прерванная отмена оставляет ещё не восстановленные файлы в стеке отмены."
 
 # ==AUTO== Automatically translated
 msgid "The image viewer"

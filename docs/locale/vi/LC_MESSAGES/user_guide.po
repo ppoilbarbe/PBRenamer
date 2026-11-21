@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  PBRenamer\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1840,6 +1840,19 @@ msgstr ""
 "không nén lại; các định dạng khác được Pillow lưu, không mất dữ liệu khi "
 "định dạng cho phép.  Các thao tác xoay và đặt lại định hướng EXIF có thể "
 "hoàn tác bằng **Hoàn tác**."
+
+# ==AUTO== Automatically translated
+msgid ""
+"From 50 files on, a progress window shows how many files are done (in "
+"sidecar mode, only the main files are counted).  **Cancel** stops after "
+"the current file: the files already processed stay changed and can be "
+"undone.  An interrupted undo leaves the files not reverted yet on the "
+"undo stack."
+msgstr ""
+"Từ 50 tệp trở lên, một cửa sổ tiến trình cho biết số tệp đã xử lý (trong chế"
+" độ sidecar, chỉ các tệp chính được đếm). **Hủy** dừng lại sau tệp hiện tại:"
+" các tệp đã xử lý vẫn giữ thay đổi và có thể hoàn tác. Một lần hoàn tác bị "
+"gián đoạn sẽ để lại các tệp chưa được khôi phục trong ngăn xếp hoàn tác."
 
 # ==AUTO== Automatically translated
 msgid "The image viewer"

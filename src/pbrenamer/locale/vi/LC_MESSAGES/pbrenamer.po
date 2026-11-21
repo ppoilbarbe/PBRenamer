@@ -334,6 +334,10 @@ msgstr ""
 "{names}"
 
 # ==AUTO== Automatically translated
+msgid "Rotating images…"
+msgstr "Đang xoay ảnh…"
+
+# ==AUTO== Automatically translated
 msgid "Rotation unavailable"
 msgstr "Không thể xoay"
 
@@ -346,6 +350,10 @@ msgstr "Không thể xoay {n} tệp."
 #, python-brace-format
 msgid "{n} file(s) rotated."
 msgstr "{n} tệp đã được xoay."
+
+# ==AUTO== Automatically translated
+msgid "Resetting EXIF orientations…"
+msgstr "Đang đặt lại hướng EXIF…"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -984,6 +992,10 @@ msgstr "Đánh số lại {n} tệp bắt đầu từ 1?"
 # ==AUTO== Automatically translated
 msgid "Renumber errors"
 msgstr "Lỗi đánh số lại"
+
+# ==AUTO== Automatically translated
+msgid "Undoing…"
+msgstr "Đang hoàn tác…"
 
 # ==AUTO== Automatically translated
 msgid "Undo errors"
@@ -2911,6 +2923,19 @@ msgstr "Không tìm thấy hồ sơ"
 # ==AUTO== Automatically translated
 msgid "Profile to open:"
 msgstr "Hồ sơ cần mở:"
+
+# ==AUTO== Automatically translated
+msgid "Please wait"
+msgstr "Vui lòng chờ"
+
+# ==AUTO== Automatically translated
+msgid "Cancel"
+msgstr "Hủy"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{done} / {total} file(s)"
+msgstr "{done} / {total} tệp"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

@@ -30,6 +30,7 @@ from pbrenamer.platform import trash as system_trash
 from pbrenamer.ui.file_list import FileListController, _open_path
 from pbrenamer.ui.image_viewer import ImageViewer
 from pbrenamer.ui.orphan_sidecars_dialog import OrphanSidecarsDialog
+from pbrenamer.ui.progress import FileProgress
 from pbrenamer.ui.rule_panel_schema import field_title
 from pbrenamer.ui.schema_proposal_dialog import SchemaProposalDialog
 
@@ -587,16 +588,20 @@ class FileActions(QObject):
         """Rotate *paths* without loss (undoable); report the failures."""
         done: list[tuple[str, image_ops.Op, int | None]] = []
         errors: list[str] = []
-        for path in paths:
-            orientation = image_ops.get_exif_orientation(path)
-            if op == "auto" and orientation is None:
-                continue
-            try:
-                inverse = image_ops.rotate_lossless(path, op)
-            except (OSError, RuntimeError, ValueError) as exc:
-                errors.append(f"{os.path.basename(path)}\n{exc}")
-                continue
-            done.append((path, inverse, orientation))
+        label = _("Rotating images…")
+        with FileProgress(self._window, label, len(paths)) as progress:
+            for path in paths:
+                if not progress.step():
+                    break
+                orientation = image_ops.get_exif_orientation(path)
+                if op == "auto" and orientation is None:
+                    continue
+                try:
+                    inverse = image_ops.rotate_lossless(path, op)
+                except (OSError, RuntimeError, ValueError) as exc:
+                    errors.append(f"{os.path.basename(path)}\n{exc}")
+                    continue
+                done.append((path, inverse, orientation))
         if errors:
             _warn(
                 self._window,
@@ -616,12 +621,16 @@ class FileActions(QObject):
     def reset_exif(self, paths: list[str]) -> None:
         """Set the EXIF orientation of *paths* to 1 (undoable)."""
         done: list[tuple[str, int]] = []
-        for path in paths:
-            orientation = image_ops.get_exif_orientation(path)
-            if orientation is None:
-                continue
-            image_ops.set_exif_orientation(path, 1)
-            done.append((path, orientation))
+        label = _("Resetting EXIF orientations…")
+        with FileProgress(self._window, label, len(paths)) as progress:
+            for path in paths:
+                if not progress.step():
+                    break
+                orientation = image_ops.get_exif_orientation(path)
+                if orientation is None:
+                    continue
+                image_ops.set_exif_orientation(path, 1)
+                done.append((path, orientation))
         if done:
             self._undo.add(ExifResetEntry(done))
             self.undo_stack_changed.emit()

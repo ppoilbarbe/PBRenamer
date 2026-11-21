@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - About dialog: an *Optional dependencies* section lists Pillow, pillow-heif, pyexiv2, mutagen
   and pymediainfo, each with its version or *Not installed*. Native libraries are shown alongside
   their wrapper (libheif, Exiv2), and a missing MediaInfo library is reported.
+- Progress window with a *Cancel* button for the operations that rewrite file contents
+  (rotations, *Apply EXIF orientation*, *Force EXIF orientation to 0°*, and their undo), shown
+  from 50 files on; in sidecar mode only the main files are counted. Cancelling keeps the files
+  already processed, undoable; an interrupted undo leaves the remaining files on the undo stack.
 
 ### Changed
 

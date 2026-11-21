@@ -323,6 +323,10 @@ msgstr ""
 "{names}"
 
 # ==AUTO== Automatically translated
+msgid "Rotating images…"
+msgstr "正在旋转图像…"
+
+# ==AUTO== Automatically translated
 msgid "Rotation unavailable"
 msgstr "旋转不可用"
 
@@ -335,6 +339,10 @@ msgstr "{n} 个文件无法旋转。"
 #, python-brace-format
 msgid "{n} file(s) rotated."
 msgstr "已旋转{n}个文件。"
+
+# ==AUTO== Automatically translated
+msgid "Resetting EXIF orientations…"
+msgstr "正在重置 EXIF 方向…"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -971,6 +979,10 @@ msgstr "从 1 开始重新编号 {n} 个文件？"
 # ==AUTO== Automatically translated
 msgid "Renumber errors"
 msgstr "重新编号错误"
+
+# ==AUTO== Automatically translated
+msgid "Undoing…"
+msgstr "正在撤销…"
 
 # ==AUTO== Automatically translated
 msgid "Undo errors"
@@ -2805,6 +2817,19 @@ msgstr "未找到配置文件"
 # ==AUTO== Automatically translated
 msgid "Profile to open:"
 msgstr "要打开的配置文件："
+
+# ==AUTO== Automatically translated
+msgid "Please wait"
+msgstr "请稍候"
+
+# ==AUTO== Automatically translated
+msgid "Cancel"
+msgstr "取消"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{done} / {total} file(s)"
+msgstr "{done} / {total} 个文件"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

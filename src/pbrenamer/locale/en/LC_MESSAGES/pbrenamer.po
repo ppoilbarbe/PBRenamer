@@ -273,6 +273,9 @@ msgstr ""
 "Permanently delete:\n"
 "{names}"
 
+msgid "Rotating images…"
+msgstr "Rotating images…"
+
 msgid "Rotation unavailable"
 msgstr "Rotation unavailable"
 
@@ -283,6 +286,9 @@ msgstr "{n} file(s) could not be rotated."
 #, python-brace-format
 msgid "{n} file(s) rotated."
 msgstr "{n} file(s) rotated."
+
+msgid "Resetting EXIF orientations…"
+msgstr "Resetting EXIF orientations…"
 
 #, python-brace-format
 msgid "{n} EXIF orientation tag(s) reset."
@@ -765,6 +771,9 @@ msgstr "Renumber {n} file(s) starting from 1?"
 
 msgid "Renumber errors"
 msgstr "Renumber errors"
+
+msgid "Undoing…"
+msgstr "Undoing…"
 
 msgid "Undo errors"
 msgstr "Undo errors"
@@ -2300,6 +2309,16 @@ msgstr "Profile not found"
 
 msgid "Profile to open:"
 msgstr "Profile to open:"
+
+msgid "Please wait"
+msgstr "Please wait"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+#, python-brace-format
+msgid "{done} / {total} file(s)"
+msgstr "{done} / {total} file(s)"
 
 #, python-brace-format
 msgid "⚠ no destination for {dest}"

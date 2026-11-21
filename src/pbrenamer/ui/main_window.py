@@ -36,6 +36,7 @@ from pbrenamer.ui.main_window_ui import OPEN_FOLDER_KEYS, Ui_MainWindow
 from pbrenamer.ui.pattern_help import PatternHelpDialog
 from pbrenamer.ui.presets import PatternPresets
 from pbrenamer.ui.profile_dialog import ProfileDialog
+from pbrenamer.ui.progress import FileProgress
 from pbrenamer.ui.rule_panel_pattern import PatternRulePanel, resolve_extension_mode
 from pbrenamer.ui.rule_panel_schema import SchemaRulePanel
 from pbrenamer.ui.settings_dialog import SettingsDialog
@@ -476,8 +477,10 @@ class MainWindow(QMainWindow):
 
     def _on_undo(self) -> None:
         _log.info("Undoing last batch")
+        total = self._undo.next_content_files()
         try:
-            self._undo.undo()
+            with FileProgress(self, _("Undoing…"), total) as progress:
+                self._undo.undo(progress.step if total else None)
         except UndoError as exc:
             _log.warning("Undo failed: %s", exc)
             QMessageBox.warning(

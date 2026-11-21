@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  PBRenamer\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1907,6 +1907,20 @@ msgstr ""
 " pérdida cuando el formato lo permite.  Las rotaciones y los "
 "restablecimientos de la orientación EXIF pueden deshacerse con "
 "**Deshacer**."
+
+# ==AUTO== Automatically translated
+msgid ""
+"From 50 files on, a progress window shows how many files are done (in "
+"sidecar mode, only the main files are counted).  **Cancel** stops after "
+"the current file: the files already processed stay changed and can be "
+"undone.  An interrupted undo leaves the files not reverted yet on the "
+"undo stack."
+msgstr ""
+"A partir de 50 archivos, una ventana de progreso muestra cuántos archivos se"
+" han procesado (en modo sidecar, solo se cuentan los archivos principales). "
+"**Cancelar** se detiene tras el archivo en curso: los archivos ya procesados"
+" quedan modificados y pueden deshacerse. Un deshacer interrumpido deja en la"
+" pila de deshacer los archivos aún no restaurados."
 
 # ==AUTO== Automatically translated
 msgid "The image viewer"

@@ -336,6 +336,10 @@ msgstr ""
 "{names}"
 
 # ==AUTO== Automatically translated
+msgid "Rotating images…"
+msgstr "Rotazione delle immagini…"
+
+# ==AUTO== Automatically translated
 msgid "Rotation unavailable"
 msgstr "Rotazione non disponibile"
 
@@ -348,6 +352,10 @@ msgstr "Impossibile ruotare {n} file."
 #, python-brace-format
 msgid "{n} file(s) rotated."
 msgstr "{n} file ruotati."
+
+# ==AUTO== Automatically translated
+msgid "Resetting EXIF orientations…"
+msgstr "Ripristino degli orientamenti EXIF…"
 
 # ==AUTO== Automatically translated
 #, python-brace-format
@@ -988,6 +996,10 @@ msgstr "Rinumerare {n} file a partire da 1?"
 # ==AUTO== Automatically translated
 msgid "Renumber errors"
 msgstr "Errori di rinumerazione"
+
+# ==AUTO== Automatically translated
+msgid "Undoing…"
+msgstr "Annullamento in corso…"
 
 # ==AUTO== Automatically translated
 msgid "Undo errors"
@@ -2963,6 +2975,19 @@ msgstr "Profilo non trovato"
 # ==AUTO== Automatically translated
 msgid "Profile to open:"
 msgstr "Profilo da aprire:"
+
+# ==AUTO== Automatically translated
+msgid "Please wait"
+msgstr "Attendere prego"
+
+# ==AUTO== Automatically translated
+msgid "Cancel"
+msgstr "Annulla"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{done} / {total} file(s)"
+msgstr "{done} / {total} file"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

@@ -4,12 +4,14 @@ import os
 
 import pytest
 
-from pbrenamer.core import filetools
+from pbrenamer.core import filetools, image_ops
 from pbrenamer.core.undo import (
     CopyEntry,
     DeleteEntry,
+    ExifResetEntry,
     MoveEntry,
     RenameEntry,
+    RotationEntry,
     UndoError,
     UndoManager,
 )
@@ -227,3 +229,64 @@ class TestDeleteEntry:
         monkeypatch.setattr(system_trash, "restore", lambda t, o: done.append((t, o)))
         DeleteEntry([("/o/a", "/t/1"), ("/o/b", "/t/2")], system=True).undo()
         assert done == [("/t/2", "/o/b"), ("/t/1", "/o/a")]
+
+
+# ── Entries that rewrite file contents: progress and stop ────────────────────
+
+
+class TestContentEntries:
+    def test_move_entries_have_no_content_files(self):
+        assert MoveEntry([("a", "b")]).content_files() == 0
+
+    def test_rotation_undo_steps_and_stops(self, monkeypatch):
+        done = []
+        monkeypatch.setattr(
+            image_ops, "rotate_lossless", lambda p, op: done.append((p, op))
+        )
+        monkeypatch.setattr(image_ops, "set_exif_orientation", lambda p, o: None)
+        manager = UndoManager()
+        manager.add(RotationEntry([("a", 90, None), ("b", 90, None), ("c", 90, 6)]))
+        assert manager.next_content_files() == 3
+        budget = iter([True, False])
+        manager.undo(lambda: next(budget))
+        # Reverted in reverse order; the stop keeps the rest on the stack.
+        assert done == [("c", 90)]
+        assert manager.next_content_files() == 2
+        manager.undo(lambda: True)
+        assert [p for p, _ in done] == ["c", "b", "a"]
+        assert len(manager) == 0
+
+    def test_rotation_undo_without_step(self, monkeypatch):
+        done = []
+        monkeypatch.setattr(image_ops, "rotate_lossless", lambda p, op: done.append(p))
+        manager = UndoManager()
+        manager.add(RotationEntry([("a", 90, None), ("b", 90, None)]))
+        manager.undo()
+        assert done == ["b", "a"]
+        assert len(manager) == 0
+
+    def test_exif_reset_undo_stops(self, monkeypatch):
+        done = []
+        monkeypatch.setattr(
+            image_ops, "set_exif_orientation", lambda p, o: done.append((p, o))
+        )
+        manager = UndoManager()
+        manager.add(ExifResetEntry([("a", 6), ("b", 8)]))
+        manager.undo(lambda: False)
+        assert done == []
+        assert manager.next_content_files() == 2
+        manager.undo(lambda: True)
+        assert sorted(done) == [("a", 6), ("b", 8)]
+        assert manager.next_content_files() == 0
+
+    def test_errors_still_keep_remaining_files(self, monkeypatch):
+        def fail(p, _op):
+            raise OSError("broken")
+
+        monkeypatch.setattr(image_ops, "rotate_lossless", fail)
+        manager = UndoManager()
+        manager.add(RotationEntry([("a", 90, None), ("b", 90, None)]))
+        budget = iter([True, False])
+        with pytest.raises(UndoError):
+            manager.undo(lambda: next(budget))
+        assert manager.next_content_files() == 1

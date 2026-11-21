@@ -979,6 +979,61 @@ class TestRotate:
         window._on_undo()
         assert image_ops.get_exif_orientation(a) == 6
 
+    def test_progress_window_cancel(self, window, tmp_path, monkeypatch):
+        """From the threshold on, the progress window shows; Cancel keeps the
+        files already rotated, undoable."""
+        from pbrenamer.ui import progress as progress_mod
+
+        paths = [str(tmp_path / f"{i:03}.png") for i in range(60)]
+        shown = []
+        rotated = []
+
+        real_step = progress_mod.FileProgress.step
+
+        def step(self):
+            shown.append(self.visible)
+            if len(rotated) == 5:
+                self.cancel()
+            return real_step(self)
+
+        monkeypatch.setattr(progress_mod.FileProgress, "step", step)
+        monkeypatch.setattr(image_ops, "get_exif_orientation", lambda p: None)
+        monkeypatch.setattr(
+            image_ops, "rotate_lossless", lambda p, op: rotated.append(p) or -90
+        )
+        window._file_actions.rotate(paths, 90)
+        assert all(shown)
+        assert rotated == paths[:5]
+        assert window._undo._history[-1].items == [(p, -90, None) for p in paths[:5]]
+
+    def test_no_progress_window_below_threshold(self, window, tmp_path, monkeypatch):
+        from pbrenamer.ui import progress as progress_mod
+
+        shown = []
+        real_step = progress_mod.FileProgress.step
+
+        def step(self):
+            shown.append(self.visible)
+            return real_step(self)
+
+        monkeypatch.setattr(progress_mod.FileProgress, "step", step)
+        monkeypatch.setattr(image_ops, "get_exif_orientation", lambda p: None)
+        monkeypatch.setattr(image_ops, "rotate_lossless", lambda p, op: -90)
+        window._file_actions.rotate([str(tmp_path / f"{i}.png") for i in range(49)], 90)
+        assert shown == [False] * 49
+
+    def test_reset_exif_cancel(self, window, tmp_path, monkeypatch):
+        from pbrenamer.ui import progress as progress_mod
+
+        monkeypatch.setattr(progress_mod.FileProgress, "step", lambda self: False)
+        reset = []
+        monkeypatch.setattr(
+            image_ops, "set_exif_orientation", lambda p, o: reset.append(p)
+        )
+        window._file_actions.reset_exif([str(tmp_path / f"{i}.jpg") for i in range(60)])
+        assert reset == []
+        assert len(window._undo) == 0
+
     def test_reset_exif_nothing(self, window, tmp_path):
         a = _png(tmp_path / "a.png")
         window._file_actions.reset_exif([a])

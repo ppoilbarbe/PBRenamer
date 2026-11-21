@@ -5,12 +5,16 @@ from __future__ import annotations
 import logging
 import os
 import shutil
+from collections.abc import Callable
 from dataclasses import dataclass, field
 
 from pbrenamer.core import filetools, image_ops
 from pbrenamer.platform import trash as system_trash
 
 _log = logging.getLogger(__name__)
+
+# Progress callback, called before each file of a long undo; False stops it.
+Step = Callable[[], bool]
 
 
 class UndoError(OSError):
@@ -22,6 +26,12 @@ class UndoEntry:
 
     def undo(self) -> None:  # pragma: no cover — abstract
         raise NotImplementedError
+
+    def content_files(self) -> int:
+        """Number of files whose contents the undo rewrites (0 for the
+        entries that only move files).  Such entries accept a Step in
+        undo(): on a stop, the files not reverted yet stay in the entry."""
+        return 0
 
 
 @dataclass
@@ -91,9 +101,15 @@ class RotationEntry(UndoEntry):
 
     items: list[tuple[str, image_ops.Op, int | None]]
 
-    def undo(self) -> None:
+    def content_files(self) -> int:
+        return len(self.items)
+
+    def undo(self, step: Step | None = None) -> None:
         errors: list[str] = []
-        for path, inverse, orientation in reversed(self.items):
+        while self.items:
+            if step is not None and not step():
+                break
+            path, inverse, orientation = self.items.pop()
             try:
                 image_ops.rotate_lossless(path, inverse)
                 if orientation is not None:
@@ -110,8 +126,14 @@ class ExifResetEntry(UndoEntry):
 
     items: list[tuple[str, int]]
 
-    def undo(self) -> None:
-        for path, orientation in self.items:
+    def content_files(self) -> int:
+        return len(self.items)
+
+    def undo(self, step: Step | None = None) -> None:
+        while self.items:
+            if step is not None and not step():
+                break
+            path, orientation = self.items.pop()
             image_ops.set_exif_orientation(path, orientation)
 
 
@@ -156,17 +178,30 @@ class UndoManager:
         """Record a batch of moves [(original_path, new_path), ...]."""
         self.add(MoveEntry(moves))
 
-    def undo(self) -> None:
+    def undo(self, step: Step | None = None) -> None:
         """Revert the most recent batch.
 
         The entry is dropped even when the undo fails (UndoError), so that a
-        broken entry cannot block the older ones.
+        broken entry cannot block the older ones.  *step* is passed to the
+        entries that rewrite file contents; when it stops the undo, the
+        files not reverted yet stay on the stack.
         """
         if not self._history:
             return
         entry = self._history.pop()
         _log.info("Undoing %s", type(entry).__name__)
-        entry.undo()
+        if step is None or not entry.content_files():
+            entry.undo()
+            return
+        try:
+            entry.undo(step)
+        finally:
+            if entry.content_files():
+                self._history.append(entry)
+
+    def next_content_files(self) -> int:
+        """content_files() of the entry the next undo() reverts."""
+        return self._history[-1].content_files() if self._history else 0
 
     def can_undo(self) -> bool:
         return bool(self._history)

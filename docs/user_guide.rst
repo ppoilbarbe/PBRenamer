@@ -796,6 +796,11 @@ them without recompressing; other formats are saved by Pillow, without loss
 where the format allows it.  Rotations and EXIF resets can be undone with
 **Undo**.
 
+From 50 files on, a progress window shows how many files are done (in sidecar
+mode, only the main files are counted).  **Cancel** stops after the current
+file: the files already processed stay changed and can be undone.  An
+interrupted undo leaves the files not reverted yet on the undo stack.
+
 The image viewer
 ~~~~~~~~~~~~~~~~
 

@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version:  PBRenamer\n"
+"Project-Id-Version: PBRenamer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2001-01-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -1610,6 +1610,17 @@ msgid ""
 msgstr ""
 "JPEG 文件用 ``jpegtran``\\ （来自 libjpeg-turbo）旋转，不会重新压缩；其他格式由 Pillow "
 "保存，在格式允许时无损。旋转和 EXIF 方向重置可以用 **撤销** 撤回。"
+
+# ==AUTO== Automatically translated
+msgid ""
+"From 50 files on, a progress window shows how many files are done (in "
+"sidecar mode, only the main files are counted).  **Cancel** stops after "
+"the current file: the files already processed stay changed and can be "
+"undone.  An interrupted undo leaves the files not reverted yet on the "
+"undo stack."
+msgstr ""
+"从 50 个文件起，会显示一个进度窗口，指示已处理的文件数（在附属文件模式下，只计算主文件）。\\ **取消**\\ 会在当"
+"前文件处理完后停止：已处理的文件保持修改状态，并可撤销。被中断的撤销会把尚未恢复的文件保留在撤销栈中。"
 
 # ==AUTO== Automatically translated
 msgid "The image viewer"
