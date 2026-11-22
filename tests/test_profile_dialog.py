@@ -143,15 +143,19 @@ class TestFilesAndViewerTabs:
         assert ui.chkPruneParents.isEnabled()
         ui.chkPruneOnRename.setChecked(False)
         assert not ui.chkPruneParents.isEnabled()
+        ui.chkPruneOnMove.setChecked(True)
+        assert ui.chkPruneParents.isEnabled()
 
     def test_prune_options_saved(self, dialog):
         ui = dialog._ui
         ui.chkPruneOnDelete.setChecked(True)
+        ui.chkPruneOnMove.setChecked(True)
         ui.chkPruneParents.setChecked(True)
         ui.buttonBox.accepted.emit()
         files = profiles.load()["files"]
         assert files["prune_dirs_on_delete"] is True
         assert files["prune_dirs_on_rename"] is False
+        assert files["prune_dirs_on_move"] is True
         assert files["prune_parent_dirs"] is True
 
     def test_ok_saves(self, dialog):

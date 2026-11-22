@@ -73,6 +73,8 @@ class FileActions(QObject):
     undo_stack_changed = Signal()
     template_accepted = Signal(list)
     status_message = Signal(str)
+    # The folder shown was removed because a deletion left it empty.
+    current_dir_removed = Signal()
 
     def __init__(
         self,
@@ -94,6 +96,7 @@ class FileActions(QObject):
 
         ui.actionFileOpen.triggered.connect(self.open_selected)
         ui.actionFileOpenWith.triggered.connect(self.open_with_selected)
+        ui.actionFileOpenWithLast.triggered.connect(self.open_with_last_selected)
         ui.actionImageView.triggered.connect(self.view_selected)
         ui.actionFileTemplate.triggered.connect(self.template_selected)
         ui.actionFileDelete.triggered.connect(self.delete_selected)
@@ -108,6 +111,7 @@ class FileActions(QObject):
         for menu in (ui.menuFile, ui.menuContext):
             menu.aboutToShow.connect(self._update_orphans_action)
             menu.aboutToShow.connect(self._fill_open_sidecar_menu)
+            menu.aboutToShow.connect(self._update_open_with_last)
         files.selection_changed.connect(self.update_enabled)
         files.selection_changed.connect(self._sync_viewer)
         files.files_reloaded.connect(self._on_files_reloaded)
@@ -181,6 +185,26 @@ class FileActions(QObject):
     def open_with_selected(self) -> None:
         for path in self.targets():
             _open_with.open_with(path, self._window)
+
+    def open_with_last_selected(self) -> None:
+        """Open each targeted file with the application last chosen for its
+        type; the files without one are left alone."""
+        for path in self.targets():
+            _open_with.open_with_last(path)
+
+    def _update_open_with_last(self) -> None:
+        """Name the application last chosen for the first targeted file;
+        disabled when there is none.  Checked when a menu is shown only:
+        finding the type of a file may run a program."""
+        paths = self.targets()
+        app = _open_with.last_app(paths[0]) if paths else None
+        action = self._ui.actionFileOpenWithLast
+        action.setEnabled(app is not None)
+        if app is None:
+            action.setText(_("Open with the last application"))
+        else:
+            # "&" would mark a mnemonic in a menu.
+            action.setText(_("Open with {app}").format(app=app.replace("&", "&&")))
 
     def sidecars_by_suffix(self) -> dict[str, list[str]]:
         """Sidecars the targeted files can have, existing or not, grouped by
@@ -290,6 +314,7 @@ class FileActions(QObject):
             lambda: self._on_viewer(lambda p: _open_with.open_with(p, viewer))
         )
         viewer.template_requested.connect(lambda: self._on_viewer(self.template))
+        viewer.deselect_requested.connect(lambda p: self._files.deselect_paths([p]))
         viewer.delete_requested.connect(self._delete_from_viewer)
         viewer.rotate_requested.connect(self._rotate_from_viewer)
         viewer.field_requested.connect(self._files.field_requested)
@@ -544,11 +569,11 @@ class FileActions(QObject):
         if trashed:
             self._undo.add(DeleteEntry(trashed, system=mode == "system"))
             self.undo_stack_changed.emit()
-        root = self._files.current_dir
-        if options["prune_dirs_on_delete"] and root:
-            filetools.prune_empty_dirs(
-                deleted, root, ancestors=options["prune_parent_dirs"]
-            )
+        if options["prune_dirs_on_delete"]:
+            filetools.prune_empty_dirs(deleted, ancestors=options["prune_parent_dirs"])
+            shown = self._files.current_dir
+            if shown and not os.path.isdir(shown):
+                self.current_dir_removed.emit()
         if errors:
             _warn(parent, _("Deletion error"), "\n".join(errors))
         return deleted

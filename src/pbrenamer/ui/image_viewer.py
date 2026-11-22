@@ -58,10 +58,14 @@ class _ZoomMode(Enum):
 
 class _ClickableLabel(QLabel):
     clicked = Signal()
+    ctrl_clicked = Signal()
 
     def mousePressEvent(self, event) -> None:  # noqa: N802
         if event.button() == Qt.MouseButton.LeftButton:
-            self.clicked.emit()
+            if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+                self.ctrl_clicked.emit()
+            else:
+                self.clicked.emit()
         super().mousePressEvent(event)
 
 
@@ -75,12 +79,14 @@ class _SelectionStrip(QScrollArea):
     """Horizontal strip of thumbnails for a multi-file selection.
 
     Highlights the displayed file; a click on a thumbnail jumps to it, in
-    addition to the viewer's arrow key shortcuts.  Thumbnails are loaded
+    addition to the viewer's arrow key shortcuts, and a Ctrl+click asks to
+    remove it from the selection.  Thumbnails are loaded
     lazily, a few at a time, for the visible part of the strip only, so
     that a large selection opens at once.
     """
 
     thumbnail_clicked = Signal(int)
+    thumbnail_ctrl_clicked = Signal(int)
 
     _MARGIN = 4
     _SPACING = 4
@@ -141,6 +147,9 @@ class _SelectionStrip(QScrollArea):
             label.setCursor(Qt.CursorShape.PointingHandCursor)
             label.setToolTip(os.path.basename(path))
             label.clicked.connect(lambda i=index: self.thumbnail_clicked.emit(i))
+            label.ctrl_clicked.connect(
+                lambda i=index: self.thumbnail_ctrl_clicked.emit(i)
+            )
             self._layout.insertWidget(self._layout.count() - 1, label)
             self._labels.append(label)
 
@@ -209,6 +218,8 @@ class ImageViewer(GeometryMixin, QWidget):
     navigate_next = Signal()
     open_requested = Signal()
     open_with_requested = Signal()
+    # A file removed from the selection by a Ctrl+click on its thumbnail.
+    deselect_requested = Signal(str)
     template_requested = Signal()
     delete_requested = Signal()
     rotate_requested = Signal(object)  # 90, -90, 180, "auto" or "reset_exif"
@@ -294,6 +305,7 @@ class ImageViewer(GeometryMixin, QWidget):
         self._strip = _SelectionStrip()
         self._strip.setVisible(False)
         self._strip.thumbnail_clicked.connect(self._act_selection_goto)
+        self._strip.thumbnail_ctrl_clicked.connect(self._remove_from_selection)
         root.addWidget(self._strip)
 
     def _tool_button(self, icon: str, tip: str, slot, *, checkable=False):
@@ -558,6 +570,21 @@ class ImageViewer(GeometryMixin, QWidget):
         index = index % count if self._circular else max(0, min(count - 1, index))
         if index != self._selection_index:
             self._act_selection_goto(index)
+
+    def _remove_from_selection(self, index: int) -> None:
+        """Ctrl+click on a thumbnail: drop its file from the browsed files
+        (the next one is shown when it was displayed) and ask the window to
+        deselect it.  The strip only shows for two files or more."""
+        paths = self._selection_paths
+        if len(paths) < 2 or not 0 <= index < len(paths):
+            return
+        removed = paths[index]
+        rest = paths[:index] + paths[index + 1 :]
+        current = self._current_path
+        if current not in rest:
+            current = rest[min(index, len(rest) - 1)]
+        self.set_selection(rest, current=current)
+        self.deselect_requested.emit(removed)
 
     def _act_selection_goto(self, index: int) -> None:
         if not 0 <= index < len(self._selection_paths):

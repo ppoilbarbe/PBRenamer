@@ -11,14 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Image viewer: a toolbar button (**Ctrl+Del**), before *Show metadata panel*, chooses whether
   deleting from the viewer asks for confirmation. It starts from the profile's *Confirm
   deletions* setting each time the viewer opens and never changes the profile.
+- Image viewer: **Ctrl+click** on a thumbnail of the selection strip removes it from the strip
+  and deselects its file in the list.
 - Settings: *Toolbar icon size* sets the size of the toolbar button icons (currently those of the
   image viewer): *System* (default, the desktop environment's toolbar icon size) or 16 to 128
   pixels. The change applies at once.
+- Edit menu: *Preview* (**Ctrl+R**), *Clear preview*, *Undo* (**Ctrl+Z**), *Renumber* and
+  *Rename* (**F2**) at the top, matching the buttons of the action bar. These actions and
+  buttons get icons, and the Preview and Undo button tooltips show their shortcut.
+- File menu and file list context menu: *Open with* followed by the name of the application
+  last chosen with *Open with…* for the type of the file, which opens it directly; greyed out
+  when there is none (always on Windows). On macOS, *Open with…* now remembers the
+  application typed and offers it the next time.
+- Profile: *After a move by drag and drop* (off by default) removes the folders that moving
+  files by drag and drop leaves empty. **Undo** recreates them.
 
 ### Changed
 
 - Image viewer: the linear / circular navigation button now shows the current mode instead of
   the mode a click switches to; its tooltip states the current mode and what a click does.
+- Folders left empty: the displayed folder is no longer spared. When a deletion, a rename or a
+  move leaves it empty, it is removed too (with its parents left empty, when that option is on),
+  and the nearest parent folder still there is displayed. The home folder and the root of a disk
+  are never removed.
 
 ## [2.3.0] - 2026-11-21
 

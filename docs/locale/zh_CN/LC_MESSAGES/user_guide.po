@@ -132,13 +132,14 @@ msgid ""
 "replace, described in this chapter) and **Schema** (see :ref:`schema-"
 "mode`).  The action bar at the bottom holds the **Undo**, **Preview**, "
 "**Clear**, **Renumber** and **Rename** buttons.  The menus are **File**, "
-"**Edit**, **Profile**, **Images**, **Shortcuts** and **Help**; the name "
-"of the current :ref:`profile <profiles>` is shown in the window title."
+"**Edit**, **Profile**, **Images**, **Shortcuts** and **Help**; the "
+"**Edit** menu starts with the actions of these buttons.  The name of the "
+"current :ref:`profile <profiles>` is shown in the window title."
 msgstr ""
 "窗口左侧是目录树，右侧是文件列表，下方是包含两个选项卡的规则面板：**模式**\\ （搜索和替换，本章介绍）和 **模式结构**\\ （见 "
 ":ref:`schema-mode`）。底部的操作栏包含 **撤销**、**预览**、**清除**、**重新编号** 和 **重命名** "
-"按钮。菜单包括 **文件**、**编辑**、**配置文件**、**图像**、**快捷方式** 和 **帮助**；当前 :ref:`配置文件 "
-"<profiles>` 的名称显示在窗口标题中。"
+"按钮。菜单包括 **文件**、**编辑**、**配置文件**、**图像**、**快捷方式** 和 **帮助**；**编辑** "
+"菜单开头是这些按钮对应的操作。当前 :ref:`配置文件 <profiles>` 的名称显示在窗口标题中。"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -237,12 +238,13 @@ msgstr "**预览**：重命名后的名称。当前模式与文件不匹配时�
 
 # ==AUTO== Automatically translated
 msgid ""
-"Click **Preview** to compute the Preview column, or check **Auto-"
-"preview** to recompute it whenever the pattern or an option changes (the "
-"delay is set in :ref:`settings`).  **Clear** empties the column."
+"Click **Preview** (**Ctrl+R**) to compute the Preview column, or check "
+"**Auto-preview** to recompute it whenever the pattern or an option "
+"changes (the delay is set in :ref:`settings`).  **Clear** empties the "
+"column."
 msgstr ""
-"点击 **预览** 计算“预览”列，或勾选 **自动预览**，使其在模式或任一选项改变时自动重新计算（延迟在 :ref:`settings` "
-"中设置）。**清除** 清空该列。"
+"点击 **预览**\\ （**Ctrl+R**）计算“预览”列，或勾选 **自动预览**，使其在模式或任一选项改变时自动重新计算（延迟在 "
+":ref:`settings` 中设置）。**清除** 清空该列。"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -797,14 +799,16 @@ msgstr "撤销"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Click **Undo** to revert the most recent batch.  Each rename batch is "
+"Click **Undo** (**Ctrl+Z**) to revert the most recent batch; in a text "
+"field, **Ctrl+Z** undoes the typing instead.  Each rename batch is "
 "recorded on an undo stack; the button label shows the number of available"
 " batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by"
 " drag and drop, :ref:`rotations and EXIF orientation resets <image-"
 "rotation>` and deletions to a trash (see :ref:`deletion-modes`) are "
 "recorded on the same stack."
 msgstr ""
-"点击 **撤销** 可撤回最近一批操作。每批重命名都会记录到撤销栈中；当有多批可撤销时，按钮标签会显示数量（例如 **撤销 "
+"点击 **撤销**\\ （**Ctrl+Z**）可撤回最近一批操作；在文本框中，**Ctrl+Z** "
+"则撤销输入的文字。每批重命名都会记录到撤销栈中；当有多批可撤销时，按钮标签会显示数量（例如 **撤销 "
 "(3)**）。拖放产生的移动、:ref:`旋转和 EXIF 方向重置 <image-rotation>` 以及移到回收站的删除（参见 :ref"
 ":`deletion-modes`\\ ）也记录在同一个栈中。"
 
@@ -1123,12 +1127,12 @@ msgid ""
 "Deletion: what happens to the deleted files (see :ref:`deletion-modes`), "
 "whether to ask for a confirmation, and the number of files above which "
 "the confirmation only gives their count. Folders left empty: whether to "
-"remove them after a deletion, after a rename, and their parents left "
-"empty in turn (see :ref:`empty-folders`)."
+"remove them after a deletion, after a rename, after a move by drag and "
+"drop, and their parents left empty in turn (see :ref:`empty-folders`)."
 msgstr ""
 "删除：被删除文件的去向（参见 :ref:`deletion-modes`\\ "
-"）、是否要求确认，以及超过多少个文件时确认对话框只显示数量。变空的文件夹：是否在删除文件后、重命名后删除它们，以及随之依次变空的上级文件夹（见 "
-":ref:`empty-folders`\\ ）。"
+"）、是否要求确认，以及超过多少个文件时确认对话框只显示数量。变空的文件夹：是否在删除文件后、重命名后、拖放移动后删除它们，以及随之依次变空的上级文件夹（见"
+" :ref:`empty-folders`\\ ）。"
 
 # ==AUTO== Automatically translated
 msgid "**Image viewer**"
@@ -1204,9 +1208,8 @@ msgstr "**删除文件后**"
 # ==AUTO== Automatically translated
 msgid ""
 "The folders that deleting files leaves empty are removed, whatever the "
-"deletion mode.  This happens when the list shows the files of sub-folders"
-" (**Recursive**)."
-msgstr "无论采用哪种删除方式，因删除文件而变空的文件夹都会被删除。当列表显示子文件夹中的文件时（**递归**）会出现这种情况。"
+"deletion mode."
+msgstr "无论采用哪种删除方式，因删除文件而变空的文件夹都会被删除。"
 
 # ==AUTO== Automatically translated
 msgid "**After a rename**"
@@ -1217,6 +1220,16 @@ msgid ""
 "The folders that renaming or moving files leaves empty are removed, for "
 "instance after sorting files into a :ref:`schema <schema-mode>` tree."
 msgstr "因重命名或移动文件而变空的文件夹会被删除，例如在把文件归类到 :ref:`模式结构 <schema-mode>` 树之后。"
+
+# ==AUTO== Automatically translated
+msgid "**After a move by drag and drop**"
+msgstr "**拖放移动后**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"The folders that moving files by drag and drop leaves empty are removed."
+"  It is off by default, like in a file manager."
+msgstr "因拖放移动文件而变空的文件夹会被删除。默认关闭，与文件管理器一致。"
 
 # ==AUTO== Automatically translated
 msgid "**Also their parents left empty**"
@@ -1230,10 +1243,14 @@ msgstr "依次变空的上级文件夹也会被删除。不启用此选项时，
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself.  **Undo** recreates the removed folders along with the "
-"files.  The command line follows the options of the profile it uses."
-msgstr "只删除当前显示文件夹之下的文件夹，绝不删除当前显示的文件夹本身。**撤销** 会连同文件一起重新创建被删除的文件夹。命令行遵循其所用配置文件的选项。"
+"The displayed folder is removed too when it is left empty; the nearest "
+"parent folder still there is then displayed.  The home folder and the "
+"root of a disk are never removed.  **Undo** recreates the removed folders"
+" along with the files.  The command line follows the options of the "
+"profile it uses."
+msgstr ""
+"当前显示的文件夹变空时也会被删除，随后显示仍然存在的最近的上级文件夹。用户主文件夹和磁盘根目录永远不会被删除。**撤销** "
+"会连同文件一起重新创建被删除的文件夹。命令行遵循其所用配置文件的选项。"
 
 # ==AUTO== Automatically translated
 msgid "Schema Mode"
@@ -1504,6 +1521,20 @@ msgid "Choose the application that opens the file."
 msgstr "选择用于打开文件的应用程序。"
 
 # ==AUTO== Automatically translated
+msgid "**Open with** *application*"
+msgstr "**用** *应用程序* **打开**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open the files with the application last chosen with **Open with…** for "
+"their type, named in the menu.  The entry is greyed out when there is "
+"none, and always on Windows, whose dialog does not tell the application "
+"chosen."
+msgstr ""
+"用上次通过 **打开方式…** 为该类文件选择的应用程序打开文件，菜单中会显示其名称。没有这样的应用程序时该项变灰；在 Windows "
+"上始终变灰，因为其对话框不会告知所选的应用程序。"
+
+# ==AUTO== Automatically translated
 msgid "**Open or create sidecar**"
 msgstr "**打开或创建附属文件**"
 
@@ -1656,8 +1687,9 @@ msgstr "用方向键导航：选择了多个文件时在所选文件之间切换
 # ==AUTO== Automatically translated
 msgid ""
 "a strip of thumbnails of the selection, when several files are selected: "
-"click one to show it;"
-msgstr "选择了多个文件时，显示所选文件的缩略图条：单击其中一个即可显示；"
+"click one to show it, **Ctrl+click** one to remove it from the strip and "
+"deselect its file in the list;"
+msgstr "选择了多个文件时，显示所选文件的缩略图条：单击其中一个即可显示，**Ctrl+单击** 其中一个可将其移出缩略图条并在列表中取消选择其文件；"
 
 # ==AUTO== Automatically translated
 msgid ""

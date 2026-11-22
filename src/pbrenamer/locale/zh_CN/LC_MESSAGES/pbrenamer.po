@@ -228,6 +228,15 @@ msgid "Undo last rename batch"
 msgstr "撤销上一批重命名"
 
 # ==AUTO== Automatically translated
+msgid "Open with the last application"
+msgstr "用上次的应用程序打开"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Open with {app}"
+msgstr "用 {app} 打开"
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{suffix} (new)"
 msgstr "{suffix}（新建）"
@@ -742,6 +751,14 @@ msgid "Keyboard and mouse shortcuts (this window)"
 msgstr "键盘和鼠标快捷操作（本窗口）"
 
 # ==AUTO== Automatically translated
+msgid "Preview the new names"
+msgstr "预览新名称"
+
+# ==AUTO== Automatically translated
+msgid "Undo the last operation"
+msgstr "撤销上一次操作"
+
+# ==AUTO== Automatically translated
 msgid "Rename as shown in the Preview column"
 msgstr "按“预览”列所示重命名"
 
@@ -936,6 +953,14 @@ msgstr "单击缩略图条中的缩略图"
 # ==AUTO== Automatically translated
 msgid "Show this image"
 msgstr "显示此图像"
+
+# ==AUTO== Automatically translated
+msgid "click on a thumbnail of the strip"
+msgstr "单击缩略图条中的缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Remove the file from the selection"
+msgstr "将该文件移出选择"
 
 # ==AUTO== Automatically translated
 msgid "Main window"
@@ -1289,6 +1314,16 @@ msgid "Choose the application that opens the selected file"
 msgstr "选择用于打开所选文件的应用程序"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "用上次为此类文件选择的应用程序打开"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+msgstr "用上次通过“打开方式…”为该类文件选择的应用程序打开所选文件"
+
+# ==AUTO== Automatically translated
 msgid "View"
 msgstr "查看"
 
@@ -1383,6 +1418,53 @@ msgstr "刷新"
 # ==AUTO== Automatically translated
 msgid "Read the folder again and refresh the thumbnails"
 msgstr "重新读取文件夹并刷新缩略图"
+
+# ==AUTO== Automatically translated
+msgid "Compute rename preview"
+msgstr "计算重命名预览"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr "将当前模式应用于所有列出的文件，并在预览列中显示结果"
+
+# ==AUTO== Automatically translated
+msgid "Clear preview"
+msgstr "清除预览"
+
+# ==AUTO== Automatically translated
+msgid "Clear the preview"
+msgstr "清除预览"
+
+# ==AUTO== Automatically translated
+msgid "Remove all preview values from the Preview column"
+msgstr "从预览列中删除所有预览值"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "撤销磁盘上执行的最后一批重命名"
+
+# ==AUTO== Automatically translated
+msgid "Renumber from 1 in place"
+msgstr "从 1 开始就地重新编号"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr "按模式结构从 1 开始就地重新编号所选文件（未选择时为所有列出的文件）"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "在磁盘上应用重命名（F2）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr "按“预览”列所示永久重命名所选文件（未选择时为所有列出的文件）（仅在无冲突时可用）"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -1830,51 +1912,8 @@ msgid "Permanently delete the named save matching the current name"
 msgstr "永久删除与当前名称匹配的命名保存"
 
 # ==AUTO== Automatically translated
-msgid "Compute rename preview"
-msgstr "计算重命名预览"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr "将当前模式应用于所有列出的文件，并在预览列中显示结果"
-
-# ==AUTO== Automatically translated
 msgid "Clear"
 msgstr "清除"
-
-# ==AUTO== Automatically translated
-msgid "Clear the preview"
-msgstr "清除预览"
-
-# ==AUTO== Automatically translated
-msgid "Remove all preview values from the Preview column"
-msgstr "从预览列中删除所有预览值"
-
-# ==AUTO== Automatically translated
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "撤销磁盘上执行的最后一批重命名"
-
-# ==AUTO== Automatically translated
-msgid "Renumber from 1 in place"
-msgstr "从 1 开始就地重新编号"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-msgstr "按模式结构从 1 开始就地重新编号所选文件（未选择时为所有列出的文件）"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk (F2)"
-msgstr "在磁盘上应用重命名（F2）"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
-msgstr "按“预览”列所示永久重命名所选文件（未选择时为所有列出的文件）（仅在无冲突时可用）"
 
 # ==AUTO== Automatically translated
 msgid "Open or create sidecar"
@@ -2782,9 +2821,9 @@ msgstr "删除变空的文件夹"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
-msgstr "只删除当前显示文件夹之下的文件夹，绝不删除当前显示的文件夹本身"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
+msgstr "当前显示的文件夹变空时也会被删除；用户主文件夹和磁盘根目录永远不会"
 
 # ==AUTO== Automatically translated
 msgid "After a deletion"
@@ -2799,18 +2838,24 @@ msgid "After a rename"
 msgstr "重命名后"
 
 # ==AUTO== Automatically translated
-msgid "Remove the folders that renaming or moving files leaves empty"
-msgstr "删除因重命名或移动文件而变空的文件夹"
+msgid "Remove the folders that renaming files leaves empty, schema mode included"
+msgstr "删除因重命名文件而变空的文件夹，包括模式结构"
+
+# ==AUTO== Automatically translated
+msgid "After a move by drag and drop"
+msgstr "拖放移动后"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that moving files by drag and drop leaves empty"
+msgstr "删除因拖放移动文件而变空的文件夹"
 
 # ==AUTO== Automatically translated
 msgid "Also their parents left empty"
 msgstr "以及随之变空的上级文件夹"
 
 # ==AUTO== Automatically translated
-msgid ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
-msgstr "随后删除依次变空的上级文件夹，直至当前显示的文件夹"
+msgid "Then remove the parent folders that become empty in turn"
+msgstr "随后删除依次变空的上级文件夹"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

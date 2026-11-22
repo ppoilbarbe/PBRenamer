@@ -453,7 +453,26 @@ def test_profile_data_in_profile_menu(window):
     assert ui.actionSidecarFiles in ui.menuProfile.actions()
     assert actions.index(ui.actionHistory) == actions.index(ui.actionSidecarFiles) + 1
     menus = {a.text(): a.menu() for a in window.menuBar().actions()}
-    assert menus["Edit"].actions() == [ui.actionSettings]
+    edit = [a for a in menus["Edit"].actions() if not a.isSeparator()]
+    assert edit == [
+        ui.actionPreview,
+        ui.actionClearPreview,
+        ui.actionUndo,
+        ui.actionRenumber,
+        ui.actionRename,
+        ui.actionSettings,
+    ]
+
+
+def test_ctrl_z_in_a_text_field_undoes_the_typing(window, qtbot):
+    window.show()
+    qtbot.waitExposed(window)
+    edit = window._ui.edtFilter
+    edit.setFocus()
+    qtbot.keyClicks(edit, "abc")
+    with qtbot.assertNotEmitted(window._actions.undo_requested):
+        qtbot.keyClick(edit, Qt.Key.Key_Z, Qt.KeyboardModifier.ControlModifier)
+    assert edit.text() == ""
 
 
 class TestRenamePrunesFolders:
@@ -483,6 +502,21 @@ class TestRenamePrunesFolders:
         assert deep.exists() is deep_kept
         assert (tmp_path / "sub").exists() is sub_kept
         assert tmp_path.is_dir()
+
+    def test_emptied_displayed_folder_removed(self, window, tmp_path):
+        from pbrenamer import profiles
+
+        data = profiles.load()
+        data["files"].update(prune_dirs_on_rename=True, prune_parent_dirs=True)
+        profiles.save(data)
+        folder = tmp_path / "top" / "shown"
+        folder.mkdir(parents=True)
+        src = folder / "f.txt"
+        src.write_text("x")
+        window._files.current_dir = str(folder)
+        assert window._execute([(str(src), str(tmp_path / "g.txt"))], "t")
+        assert not (tmp_path / "top").exists()
+        assert window._files.current_dir == str(tmp_path)
 
 
 class TestListingUnchanged:
@@ -1337,6 +1371,38 @@ class TestFilesDropped:
         assert (dst_dir / "a.txt").exists()
         assert len(window._undo) == 1
 
+    def test_move_keeps_emptied_source_by_default(self, window, tmp_path):
+        src_dir = tmp_path / "src"
+        (tmp_path / "dst").mkdir()
+        src_dir.mkdir()
+        (src_dir / "a.txt").write_text("x")
+        window._files._on_files_dropped(
+            [str(src_dir / "a.txt")], str(tmp_path / "dst"), True
+        )
+        assert src_dir.is_dir()
+
+    @pytest.mark.parametrize(("parents", "shown"), [(False, "top"), (True, "")])
+    def test_move_prunes_emptied_displayed_folder(
+        self, window, tmp_path, parents, shown
+    ):
+        from pbrenamer import profiles
+
+        data = profiles.load()
+        data["files"].update(prune_dirs_on_move=True, prune_parent_dirs=parents)
+        profiles.save(data)
+        folder = tmp_path / "top" / "shown"
+        folder.mkdir(parents=True)
+        dst_dir = tmp_path / "dst"
+        dst_dir.mkdir()
+        f = folder / "a.txt"
+        f.write_text("x")
+        window._files.current_dir = str(folder)
+        window._files._on_files_dropped([str(f)], str(dst_dir), True)
+        assert not folder.exists()
+        assert window._files.current_dir == str(tmp_path / shown)
+        window._on_undo()
+        assert f.read_text() == "x"
+
     def test_copy_success_undoable(self, window, tmp_path):
         src_dir = tmp_path / "src"
         dst_dir = tmp_path / "dst"
@@ -1707,6 +1773,8 @@ class TestKeyboardHelp:
             "F1",
             "F2",
             "Rename as shown in the Preview column",
+            "Ctrl+R",
+            "Preview the new names",
             "Fit window",
             "Show / hide the metadata",
             "Open the sidecar file",

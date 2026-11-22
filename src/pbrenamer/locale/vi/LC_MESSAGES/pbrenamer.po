@@ -237,6 +237,15 @@ msgid "Undo last rename batch"
 msgstr "Hoàn tác lô đổi tên cuối cùng"
 
 # ==AUTO== Automatically translated
+msgid "Open with the last application"
+msgstr "Mở bằng ứng dụng gần nhất"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Open with {app}"
+msgstr "Mở bằng {app}"
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{suffix} (new)"
 msgstr "{suffix} (mới)"
@@ -759,6 +768,14 @@ msgid "Keyboard and mouse shortcuts (this window)"
 msgstr "Phím tắt bàn phím và chuột (cửa sổ này)"
 
 # ==AUTO== Automatically translated
+msgid "Preview the new names"
+msgstr "Xem trước tên mới"
+
+# ==AUTO== Automatically translated
+msgid "Undo the last operation"
+msgstr "Hoàn tác thao tác gần nhất"
+
+# ==AUTO== Automatically translated
 msgid "Rename as shown in the Preview column"
 msgstr "Đổi tên như hiển thị trong cột Xem trước"
 
@@ -953,6 +970,14 @@ msgstr "Nhấp vào ảnh thu nhỏ trên dải"
 # ==AUTO== Automatically translated
 msgid "Show this image"
 msgstr "Hiển thị ảnh này"
+
+# ==AUTO== Automatically translated
+msgid "click on a thumbnail of the strip"
+msgstr "nhấp vào ảnh thu nhỏ trên dải"
+
+# ==AUTO== Automatically translated
+msgid "Remove the file from the selection"
+msgstr "Bỏ tệp khỏi vùng chọn"
 
 # ==AUTO== Automatically translated
 msgid "Main window"
@@ -1313,6 +1338,18 @@ msgid "Choose the application that opens the selected file"
 msgstr "Chọn ứng dụng để mở tệp đã chọn"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "Mở bằng ứng dụng được chọn gần nhất cho loại tệp này"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+msgstr ""
+"Mở các tệp đã chọn bằng ứng dụng được chọn gần nhất qua “Mở bằng…” cho "
+"loại của chúng"
+
+# ==AUTO== Automatically translated
 msgid "View"
 msgstr "Xem"
 
@@ -1407,6 +1444,60 @@ msgstr "Làm mới"
 # ==AUTO== Automatically translated
 msgid "Read the folder again and refresh the thumbnails"
 msgstr "Đọc lại thư mục và làm mới hình thu nhỏ"
+
+# ==AUTO== Automatically translated
+msgid "Compute rename preview"
+msgstr "Tính toán xem trước đổi tên"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Áp dụng mẫu hiện tại cho tất cả tệp được liệt kê và hiển thị kết quả "
+"trong cột Xem trước"
+
+# ==AUTO== Automatically translated
+msgid "Clear preview"
+msgstr "Xóa bản xem trước"
+
+# ==AUTO== Automatically translated
+msgid "Clear the preview"
+msgstr "Xóa bản xem trước"
+
+# ==AUTO== Automatically translated
+msgid "Remove all preview values from the Preview column"
+msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Đảo ngược lô đổi tên cuối cùng được thực hiện trên đĩa"
+
+# ==AUTO== Automatically translated
+msgid "Renumber from 1 in place"
+msgstr "Đánh số lại từ 1 tại chỗ"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr ""
+"Đánh số lại các tệp đã chọn (mọi tệp trong danh sách nếu không chọn tệp "
+"nào) từ 1, tại chỗ, theo lược đồ"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "Áp dụng đổi tên trên đĩa (F2)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Đổi tên vĩnh viễn các tệp đã chọn (mọi tệp trong danh sách nếu không chọn"
+" tệp nào) như hiển thị trong cột Xem trước (chỉ bật khi không có xung "
+"đột)"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -1886,58 +1977,8 @@ msgid "Permanently delete the named save matching the current name"
 msgstr "Xóa vĩnh viễn bản lưu có tên khớp với tên hiện tại"
 
 # ==AUTO== Automatically translated
-msgid "Compute rename preview"
-msgstr "Tính toán xem trước đổi tên"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Áp dụng mẫu hiện tại cho tất cả tệp được liệt kê và hiển thị kết quả "
-"trong cột Xem trước"
-
-# ==AUTO== Automatically translated
 msgid "Clear"
 msgstr "Xóa"
-
-# ==AUTO== Automatically translated
-msgid "Clear the preview"
-msgstr "Xóa bản xem trước"
-
-# ==AUTO== Automatically translated
-msgid "Remove all preview values from the Preview column"
-msgstr "Xóa tất cả giá trị xem trước khỏi cột Xem trước"
-
-# ==AUTO== Automatically translated
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Đảo ngược lô đổi tên cuối cùng được thực hiện trên đĩa"
-
-# ==AUTO== Automatically translated
-msgid "Renumber from 1 in place"
-msgstr "Đánh số lại từ 1 tại chỗ"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-msgstr ""
-"Đánh số lại các tệp đã chọn (mọi tệp trong danh sách nếu không chọn tệp "
-"nào) từ 1, tại chỗ, theo lược đồ"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk (F2)"
-msgstr "Áp dụng đổi tên trên đĩa (F2)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
-msgstr ""
-"Đổi tên vĩnh viễn các tệp đã chọn (mọi tệp trong danh sách nếu không chọn"
-" tệp nào) như hiển thị trong cột Xem trước (chỉ bật khi không có xung "
-"đột)"
 
 # ==AUTO== Automatically translated
 msgid "Open or create sidecar"
@@ -2888,11 +2929,11 @@ msgstr "Xóa các thư mục bị bỏ trống"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
 msgstr ""
-"Chỉ xóa các thư mục nằm dưới thư mục đang hiển thị, không bao giờ xóa "
-"chính thư mục đang hiển thị"
+"Thư mục đang hiển thị cũng bị xóa khi trở nên trống; thư mục người dùng "
+"và thư mục gốc của ổ đĩa thì không bao giờ"
 
 # ==AUTO== Automatically translated
 msgid "After a deletion"
@@ -2907,20 +2948,24 @@ msgid "After a rename"
 msgstr "Sau khi đổi tên"
 
 # ==AUTO== Automatically translated
-msgid "Remove the folders that renaming or moving files leaves empty"
-msgstr "Xóa các thư mục trở nên trống sau khi đổi tên hoặc di chuyển tệp"
+msgid "Remove the folders that renaming files leaves empty, schema mode included"
+msgstr "Xóa các thư mục trở nên trống sau khi đổi tên tệp, kể cả chế độ lược đồ"
+
+# ==AUTO== Automatically translated
+msgid "After a move by drag and drop"
+msgstr "Sau khi di chuyển bằng kéo thả"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that moving files by drag and drop leaves empty"
+msgstr "Xóa các thư mục trở nên trống sau khi di chuyển tệp bằng kéo thả"
 
 # ==AUTO== Automatically translated
 msgid "Also their parents left empty"
 msgstr "Cả các thư mục cha trở nên trống"
 
 # ==AUTO== Automatically translated
-msgid ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
-msgstr ""
-"Sau đó xóa các thư mục cha lần lượt trở nên trống, cho đến thư mục đang "
-"hiển thị"
+msgid "Then remove the parent folders that become empty in turn"
+msgstr "Sau đó xóa các thư mục cha lần lượt trở nên trống"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

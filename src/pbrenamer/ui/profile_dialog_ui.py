@@ -222,8 +222,8 @@ class Ui_ProfileDialog:
         empty = QGroupBox(_("Remove the folders left empty"), tab)
         empty.setToolTip(
             _(
-                "Only the folders below the displayed one are removed, "
-                "never the displayed folder itself"
+                "The displayed folder is removed too when it is left empty; "
+                "the home folder and the root of a disk never are"
             )
         )
         form = QFormLayout(empty)
@@ -234,15 +234,20 @@ class Ui_ProfileDialog:
         form.addRow(self.chkPruneOnDelete)
         self.chkPruneOnRename = QCheckBox(_("After a rename"), empty)
         self.chkPruneOnRename.setToolTip(
-            _("Remove the folders that renaming or moving files leaves empty")
+            _(
+                "Remove the folders that renaming files leaves empty, "
+                "schema mode included"
+            )
         )
         form.addRow(self.chkPruneOnRename)
+        self.chkPruneOnMove = QCheckBox(_("After a move by drag and drop"), empty)
+        self.chkPruneOnMove.setToolTip(
+            _("Remove the folders that moving files by drag and drop leaves empty")
+        )
+        form.addRow(self.chkPruneOnMove)
         self.chkPruneParents = QCheckBox(_("Also their parents left empty"), empty)
         self.chkPruneParents.setToolTip(
-            _(
-                "Then remove the parent folders that become empty in turn, "
-                "up to the displayed folder"
-            )
+            _("Then remove the parent folders that become empty in turn")
         )
         form.addRow(self.chkPruneParents)
         layout.addWidget(empty)

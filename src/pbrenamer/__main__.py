@@ -833,7 +833,7 @@ def _headless_run(ns: argparse.Namespace) -> None:
     try:
         filetools.execute_renames(
             pairs,
-            prune_root=directory if options["prune_dirs_on_rename"] else None,
+            prune=options["prune_dirs_on_rename"],
             prune_ancestors=options["prune_parent_dirs"],
         )
     except filetools.RenameError as exc:

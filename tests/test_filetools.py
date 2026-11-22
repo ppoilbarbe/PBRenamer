@@ -1651,11 +1651,11 @@ class TestExecuteRenames:
             filetools.execute_renames(_pairs(tmp_path, ("a", "c"), ("b", "d")))
         assert "Rollback failed" in caplog.text
 
-    def test_prunes_emptied_source_dirs_below_root(self, tmp_path):
+    def test_prunes_emptied_source_dirs(self, tmp_path):
         make_tree(tmp_path, {"sub": {"deep": {"a": None}}})
         result = filetools.execute_renames(
             _pairs(tmp_path, ("sub/deep/a", "a")),
-            prune_root=str(tmp_path),
+            prune=True,
             prune_ancestors=True,
         )
         assert os.listdir(tmp_path) == ["a"]
@@ -1667,24 +1667,55 @@ class TestExecuteRenames:
     def test_prunes_only_the_source_dirs_without_ancestors(self, tmp_path):
         make_tree(tmp_path, {"sub": {"deep": {"a": None}}})
         result = filetools.execute_renames(
-            _pairs(tmp_path, ("sub/deep/a", "a")), prune_root=str(tmp_path)
+            _pairs(tmp_path, ("sub/deep/a", "a")), prune=True
         )
         assert result.pruned_dirs == [str(tmp_path / "sub" / "deep")]
         assert (tmp_path / "sub").is_dir()
 
-    def test_never_prunes_root(self, tmp_path):
-        make_tree(tmp_path, {"src": {"a": None}})
-        root = tmp_path / "src"
-        filetools.execute_renames(
-            [(str(root / "a"), str(tmp_path / "a"))], prune_root=str(root)
+    def test_prunes_the_listed_folder_and_its_parents(self, tmp_path):
+        make_tree(tmp_path, {"top": {"src": {"a": None}}, "keep": None})
+        root = tmp_path / "top" / "src"
+        result = filetools.execute_renames(
+            [(str(root / "a"), str(tmp_path / "a"))],
+            prune=True,
+            prune_ancestors=True,
         )
-        assert root.is_dir()
+        assert result.pruned_dirs == [str(root), str(tmp_path / "top")]
+        assert tmp_path.is_dir()  # not empty
+
+    def test_never_prunes_home_or_mount_points(self, tmp_path, monkeypatch):
+        home = tmp_path / "home"
+        home.mkdir()
+        make_tree(home, {"sub": {"a": None}})
+        monkeypatch.setenv("HOME", str(home))
+        monkeypatch.setenv("USERPROFILE", str(home))
+        monkeypatch.setattr(
+            filetools.os.path, "ismount", lambda path: path == str(tmp_path)
+        )
+        dest = tmp_path / "out"
+        result = filetools.execute_renames(
+            [(str(home / "sub" / "a"), str(dest / "a"))],
+            prune=True,
+            prune_ancestors=True,
+        )
+        assert result.pruned_dirs == [str(home / "sub")]
+        assert home.is_dir()
+
+    def test_mount_point_stops_the_climb(self, tmp_path, monkeypatch):
+        make_tree(tmp_path, {"mnt": {"sub": {"a": None}}})
+        mnt = tmp_path / "mnt"
+        monkeypatch.setattr(filetools.os.path, "ismount", lambda path: path == str(mnt))
+        result = filetools.execute_renames(
+            [(str(mnt / "sub" / "a"), str(tmp_path / "a"))],
+            prune=True,
+            prune_ancestors=True,
+        )
+        assert result.pruned_dirs == [str(mnt / "sub")]
+        assert mnt.is_dir()
 
     def test_keeps_non_empty_source_dirs(self, tmp_path):
         make_tree(tmp_path, {"sub": {"a": None, "b": None}})
-        result = filetools.execute_renames(
-            _pairs(tmp_path, ("sub/a", "a")), prune_root=str(tmp_path)
-        )
+        result = filetools.execute_renames(_pairs(tmp_path, ("sub/a", "a")), prune=True)
         assert result.pruned_dirs == []
 
     def test_prune_failure_logged(self, tmp_path, monkeypatch, caplog):
@@ -1694,13 +1725,11 @@ class TestExecuteRenames:
             raise OSError("busy")
 
         monkeypatch.setattr(filetools.os, "rmdir", rmdir)
-        result = filetools.execute_renames(
-            _pairs(tmp_path, ("sub/a", "a")), prune_root=str(tmp_path)
-        )
+        result = filetools.execute_renames(_pairs(tmp_path, ("sub/a", "a")), prune=True)
         assert result.pruned_dirs == []
         assert "Could not remove the empty folder" in caplog.text
 
-    def test_no_pruning_without_root(self, tmp_path):
+    def test_no_pruning_by_default(self, tmp_path):
         make_tree(tmp_path, {"sub": {"a": None}})
         filetools.execute_renames(_pairs(tmp_path, ("sub/a", "a")))
         assert (tmp_path / "sub").is_dir()

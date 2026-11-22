@@ -172,6 +172,18 @@ class MainWindow(QMainWindow):
         if os.path.isdir(path) and self._files.current_dir != path:
             self._files.set_directory(path)
 
+    def _leave_removed_dir(self) -> None:
+        """The folder shown no longer exists (removed because a deletion or a
+        rename or a move left it empty): show its nearest existing parent."""
+        current = self._files.current_dir
+        if not current or os.path.isdir(current):
+            return
+        existing = _nearest_existing_dir(current)
+        if existing is None:
+            return
+        _log.info("Folder %s removed, showing %s", current, existing)
+        self._startup_navigate(existing)
+
     def _navigate_to(self, path: str) -> None:
         if not os.path.isdir(path):
             return
@@ -223,6 +235,7 @@ class MainWindow(QMainWindow):
         self._actions.undo_requested.connect(self._on_undo)
         self._actions.rename_requested.connect(self._on_rename)
         self._ui.btnRenumber.clicked.connect(self._on_renumber)
+        self._ui.actionRenumber.triggered.connect(self._on_renumber)
         self._ui.tabRules.currentChanged.connect(self._on_mode_changed)
         self._ui.chkThumbnails.toggled.connect(self._on_thumbnails_toggled)
         self._pattern.edited.connect(self._actions.schedule_preview)
@@ -237,9 +250,11 @@ class MainWindow(QMainWindow):
         self._files.rename_count_changed.connect(self._actions.set_rename_count)
         self._files.rename_count_changed.connect(self._update_renumber_button)
         self._files.undo_stack_changed.connect(self._actions.refresh_undo)
+        self._files.current_dir_removed.connect(self._leave_removed_dir)
         self._files.field_requested.connect(self._pattern.insert_field)
         self._file_actions.undo_stack_changed.connect(self._actions.refresh_undo)
         self._file_actions.status_message.connect(self.statusBar().showMessage)
+        self._file_actions.current_dir_removed.connect(self._leave_removed_dir)
         self._file_actions.template_accepted.connect(self._on_template_accepted)
 
         # Menu bar
@@ -320,12 +335,11 @@ class MainWindow(QMainWindow):
     def _update_renumber_button(self) -> None:
         """Renumber shows with a schema counter and, like Rename, stays
         disabled until a preview is displayed."""
-        self._ui.btnRenumber.setVisible(
-            self._schema_mode() and self._schema.has_counter()
-        )
-        self._ui.btnRenumber.setEnabled(
-            any(item.text(1) for item in self._files.all_items())
-        )
+        visible = self._schema_mode() and self._schema.has_counter()
+        enabled = any(item.text(1) for item in self._files.all_items())
+        for widget in (self._ui.btnRenumber, self._ui.actionRenumber):
+            widget.setVisible(visible)
+            widget.setEnabled(enabled)
 
     # ── Preview / Rename / Undo ───────────────────────────────────────────────
 
@@ -384,9 +398,7 @@ class MainWindow(QMainWindow):
         try:
             result = filetools.execute_renames(
                 pairs,
-                prune_root=(
-                    self._files.current_dir if options["prune_dirs_on_rename"] else None
-                ),
+                prune=options["prune_dirs_on_rename"],
                 prune_ancestors=options["prune_parent_dirs"],
             )
         except filetools.RenameError as exc:
@@ -415,6 +427,7 @@ class MainWindow(QMainWindow):
         # hold them, then compute it once for the final selection.
         with self._actions.auto_preview_held():
             self._files.clear_preview()
+            self._leave_removed_dir()
             self._files.reload()
             self._files.select_after_change(
                 [dst for _src, dst in result.pairs], next_path

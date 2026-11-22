@@ -132,7 +132,7 @@ class TestRenameEntry:
         dest = tmp_path / "dest"
         result = filetools.execute_renames(
             [(str(src / "sub" / "a.jpg"), str(dest / "x" / "A_1.jpg"))],
-            prune_root=str(src),
+            prune=True,
         )
         assert not (src / "sub").exists()
 
@@ -167,6 +167,18 @@ class TestRenameEntry:
 
 
 class TestMoveEntry:
+    def test_recreates_removed_source_folder(self, tmp_path):
+        (tmp_path / "a").write_text("A")
+        MoveEntry([(str(tmp_path / "gone" / "a"), str(tmp_path / "a"))]).undo()
+        assert (tmp_path / "gone" / "a").read_text() == "A"
+
+    def test_folder_creation_failure_reported(self, tmp_path):
+        (tmp_path / "file").touch()
+        (tmp_path / "a").touch()
+        entry = MoveEntry([(str(tmp_path / "file" / "a"), str(tmp_path / "a"))])
+        with pytest.raises(UndoError, match="a"):
+            entry.undo()
+
     def test_failure_reported(self, tmp_path):
         entry = MoveEntry([(str(tmp_path / "a"), str(tmp_path / "missing"))])
         with pytest.raises(UndoError, match="missing"):

@@ -655,28 +655,30 @@ def remove_empty_dirs(directories: list[str]) -> list[str]:
     return removed
 
 
-def prune_empty_dirs(
-    paths: list[str], root: str, *, ancestors: bool = False
-) -> list[str]:
-    """Remove the directories of *paths* left empty, strictly below *root*.
+def _never_pruned(directory: str) -> bool:
+    """The home folder and the mount points (disk roots included) are kept
+    even when empty."""
+    return os.path.ismount(directory) or directory == os.path.abspath(
+        os.path.expanduser("~")
+    )
 
-    With *ancestors*, their parents left empty in turn are removed too, up
-    to *root* (never removed itself).  Returns the removed directories,
-    deepest first.
+
+def prune_empty_dirs(paths: list[str], *, ancestors: bool = False) -> list[str]:
+    """Remove the directories of *paths* left empty.
+
+    With *ancestors*, their parents left empty in turn are removed too.  The
+    home folder and the mount points are never removed.  Returns the removed
+    directories, deepest first.
     """
-    root = os.path.abspath(root)
-
-    def below_root(directory: str) -> bool:
-        return directory != root and os.path.commonpath([root, directory]) == root
-
     candidates: set[str] = set()
     for path in paths:
         directory = os.path.dirname(os.path.abspath(path))
-        while below_root(directory):
+        while not _never_pruned(directory):
             candidates.add(directory)
-            if not ancestors:
+            parent = os.path.dirname(directory)
+            if not ancestors or parent == directory:
                 break
-            directory = os.path.dirname(directory)
+            directory = parent
     pruned: list[str] = []
     for directory in sorted(candidates, key=len, reverse=True):
         try:
@@ -691,7 +693,7 @@ def prune_empty_dirs(
 def execute_renames(
     pairs: list[tuple[str, str]],
     *,
-    prune_root: str | None = None,
+    prune: bool = False,
     prune_ancestors: bool = False,
 ) -> RenameResult:
     """Rename every (src, dst) pair, all or nothing.
@@ -701,9 +703,8 @@ def execute_renames(
     another pair (chain or cycle, e.g. a renumbering), sources are first moved
     to temporary names.  Any error rolls back the moves already done and the
     directories created, then raises RenameError.  Finally, source
-    directories left empty are removed, strictly below *prune_root* (no
-    pruning when it is None), with their parents left empty in turn when
-    *prune_ancestors* (see prune_empty_dirs).
+    directories left empty are removed when *prune*, with their parents
+    left empty in turn when *prune_ancestors* (see prune_empty_dirs).
     """
     pairs = [(src, dst) for src, dst in pairs if src != dst]
     if not pairs:
@@ -745,10 +746,8 @@ def execute_renames(
         raise RenameError(str(exc)) from exc
 
     pruned = (
-        prune_empty_dirs(
-            [src for src, _dst in pairs], prune_root, ancestors=prune_ancestors
-        )
-        if prune_root is not None
+        prune_empty_dirs([src for src, _dst in pairs], ancestors=prune_ancestors)
+        if prune
         else []
     )
     return RenameResult(pairs, created, pruned)

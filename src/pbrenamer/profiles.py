@@ -77,10 +77,11 @@ DEFAULTS: dict = {
         "delete_list_max_files": 12,
         "confirm_deletions": True,
         "deletion_mode": "system",
-        # Folders left empty below the displayed one: removed after a
-        # deletion, after a rename, and their parents left empty in turn.
+        # Folders left empty: removed after a deletion, after a rename,
+        # after a move by drag and drop, and their parents left empty in turn.
         "prune_dirs_on_delete": False,
         "prune_dirs_on_rename": False,
+        "prune_dirs_on_move": False,
         "prune_parent_dirs": False,
     },
     "viewer": {

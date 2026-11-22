@@ -82,9 +82,12 @@ class TestModeTabs:
     def test_renumber_button_visibility(self, window, photos, tmp_path):
         _schema_window(window, photos, tmp_path / "d", "A")
         assert window._ui.btnRenumber.isHidden()
+        assert not window._ui.actionRenumber.isVisible()
         window._schema.set_fields(["A", "###"])
         assert not window._ui.btnRenumber.isHidden()
         assert window._ui.btnRenumber.isEnabled()
+        assert window._ui.actionRenumber.isVisible()
+        assert window._ui.actionRenumber.isEnabled()
 
     def test_renumber_disabled_without_preview(self, window, photos, tmp_path):
         """Like Rename, Renumber waits for a preview (7.2 #10)."""

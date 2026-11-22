@@ -58,8 +58,13 @@ class ProfileDialog(GeometryMixin, QDialog):
         self._ui.spnDeleteListMax.setValue(files["delete_list_max_files"])
         self._ui.chkPruneOnDelete.setChecked(files["prune_dirs_on_delete"])
         self._ui.chkPruneOnRename.setChecked(files["prune_dirs_on_rename"])
+        self._ui.chkPruneOnMove.setChecked(files["prune_dirs_on_move"])
         self._ui.chkPruneParents.setChecked(files["prune_parent_dirs"])
-        for box in (self._ui.chkPruneOnDelete, self._ui.chkPruneOnRename):
+        for box in (
+            self._ui.chkPruneOnDelete,
+            self._ui.chkPruneOnRename,
+            self._ui.chkPruneOnMove,
+        ):
             box.toggled.connect(self._update_prune_parents)
         self._update_prune_parents()
         self._ui.spnFieldCount.setValue(max(1, schema_cfg["field_count"]))
@@ -73,6 +78,7 @@ class ProfileDialog(GeometryMixin, QDialog):
         self._ui.chkPruneParents.setEnabled(
             self._ui.chkPruneOnDelete.isChecked()
             or self._ui.chkPruneOnRename.isChecked()
+            or self._ui.chkPruneOnMove.isChecked()
         )
 
     def _rebuild_titles(self, count: int) -> None:
@@ -125,6 +131,7 @@ class ProfileDialog(GeometryMixin, QDialog):
         files["delete_list_max_files"] = self._ui.spnDeleteListMax.value()
         files["prune_dirs_on_delete"] = self._ui.chkPruneOnDelete.isChecked()
         files["prune_dirs_on_rename"] = self._ui.chkPruneOnRename.isChecked()
+        files["prune_dirs_on_move"] = self._ui.chkPruneOnMove.isChecked()
         files["prune_parent_dirs"] = self._ui.chkPruneParents.isChecked()
         profiles.save(self._data)
         self.accept()

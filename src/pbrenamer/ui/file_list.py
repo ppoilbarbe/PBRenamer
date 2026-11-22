@@ -90,6 +90,8 @@ class FileListController(QObject):
     selection_changed = Signal()
     rename_count_changed = Signal(int)
     undo_stack_changed = Signal()
+    # The folder shown was removed because a move left it empty.
+    current_dir_removed = Signal()
     field_requested = Signal(str)
     view_requested = Signal(str)
 
@@ -451,6 +453,24 @@ class FileListController(QObject):
     def all_items(self) -> list[QTreeWidgetItem]:
         root = self._ui.tblFiles.invisibleRootItem()
         return [root.child(i) for i in range(root.childCount())]
+
+    def deselect_paths(self, paths) -> None:
+        """Deselect the rows of *paths*, with their sidecars in sidecar
+        mode."""
+        group = set(paths)
+        if self.sidecar_mode_active():
+            for sidecars in self.sidecars_map(list(paths)).values():
+                group.update(sidecars)
+        items = self._items_by_path()
+        found = [items[p] for p in group if p in items and items[p].isSelected()]
+        if not found:
+            return
+        tree = self._ui.tblFiles
+        tree.blockSignals(True)
+        for item in found:
+            item.setSelected(False)
+        tree.blockSignals(False)
+        self._on_selection_changed()
 
     def select_paths(self, paths) -> bool:
         """Select the listed rows of *paths* (first one current); return
@@ -1110,6 +1130,8 @@ class FileListController(QObject):
         if done:
             self._undo.add(MoveEntry(done) if move else CopyEntry(done))
             self.undo_stack_changed.emit()
+        if move and done:
+            self._prune_after_move([src for src, _dest in done])
 
         if errors:
             QMessageBox.warning(
@@ -1123,6 +1145,16 @@ class FileListController(QObject):
             self.reload()
             if move and not self._ui.tblFiles.selectedItems():
                 self.set_current_path(next_path)
+
+    def _prune_after_move(self, sources: list[str]) -> None:
+        """Remove the folders the move left empty, as the profile says; when
+        the folder shown is one of them, tell the window."""
+        options = profiles.load()["files"]
+        if not options["prune_dirs_on_move"]:
+            return
+        filetools.prune_empty_dirs(sources, ancestors=options["prune_parent_dirs"])
+        if self.current_dir and not os.path.isdir(self.current_dir):
+            self.current_dir_removed.emit()
 
     # ── Selection, context menu, file information window ─────────────────────
 

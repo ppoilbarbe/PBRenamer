@@ -76,6 +76,8 @@ def keyboard_html() -> str:
         (_key("Ctrl+Shift+D"), _("Duplicate profile")),
         (_key("Ctrl+,"), _("Profile configuration")),
         (_key("F1"), _("Keyboard and mouse shortcuts (this window)")),
+        (_key("Ctrl+R"), _("Preview the new names")),
+        (_key("Ctrl+Z"), _("Undo the last operation")),
         (_key("F2"), _("Rename as shown in the Preview column")),
         (_key("F5"), _("Reload the file list")),
         (
@@ -138,6 +140,10 @@ def keyboard_html() -> str:
         (ctrl + _("left-click"), _("Zoom in centered on point")),
         (ctrl + _("right-click"), _("Zoom out centered on point")),
         (_("Click on a thumbnail of the strip"), _("Show this image")),
+        (
+            ctrl + _("click on a thumbnail of the strip"),
+            _("Remove the file from the selection"),
+        ),
     ]
     return (
         f"<html><head>{_STYLE}</head><body>"

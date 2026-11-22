@@ -190,6 +190,13 @@ msgstr "Undo"
 msgid "Undo last rename batch"
 msgstr "Undo last rename batch"
 
+msgid "Open with the last application"
+msgstr "Open with the last application"
+
+#, python-brace-format
+msgid "Open with {app}"
+msgstr "Open with {app}"
+
 #, python-brace-format
 msgid "{suffix} (new)"
 msgstr "{suffix} (new)"
@@ -597,6 +604,12 @@ msgstr "Profile configuration"
 msgid "Keyboard and mouse shortcuts (this window)"
 msgstr "Keyboard and mouse shortcuts (this window)"
 
+msgid "Preview the new names"
+msgstr "Preview the new names"
+
+msgid "Undo the last operation"
+msgstr "Undo the last operation"
+
 msgid "Rename as shown in the Preview column"
 msgstr "Rename as shown in the Preview column"
 
@@ -743,6 +756,12 @@ msgstr "Click on a thumbnail of the strip"
 
 msgid "Show this image"
 msgstr "Show this image"
+
+msgid "click on a thumbnail of the strip"
+msgstr "click on a thumbnail of the strip"
+
+msgid "Remove the file from the selection"
+msgstr "Remove the file from the selection"
 
 msgid "Main window"
 msgstr "Main window"
@@ -1017,6 +1036,16 @@ msgstr "Open with a chosen application"
 msgid "Choose the application that opens the selected file"
 msgstr "Choose the application that opens the selected file"
 
+msgid "Open with the application last chosen for this type of file"
+msgstr "Open with the application last chosen for this type of file"
+
+msgid ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+msgstr ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+
 msgid "View"
 msgstr "View"
 
@@ -1088,6 +1117,52 @@ msgstr "Refresh"
 
 msgid "Read the folder again and refresh the thumbnails"
 msgstr "Read the folder again and refresh the thumbnails"
+
+msgid "Compute rename preview"
+msgstr "Compute rename preview"
+
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview columnApply the current pattern to all listed files and show the "
+"result in the Preview columnApply the current pattern to all listed files"
+" and show the result in the Preview column"
+
+msgid "Clear preview"
+msgstr "Clear preview"
+
+msgid "Clear the preview"
+msgstr "Clear the preview"
+
+msgid "Remove all preview values from the Preview column"
+msgstr "Remove all preview values from the Preview column"
+
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Reverse the last batch of renames performed on disk"
+
+msgid "Renumber from 1 in place"
+msgstr "Renumber from 1 in place"
+
+msgid ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+
+msgid "Apply renames on disk (F2)"
+msgstr "Apply renames on disk (F2)"
+
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
 
 msgid "Browse the filesystem"
 msgstr "Browse the filesystem"
@@ -1485,51 +1560,8 @@ msgstr "Delete this named save"
 msgid "Permanently delete the named save matching the current name"
 msgstr "Permanently delete the named save matching the current name"
 
-msgid "Compute rename preview"
-msgstr "Compute rename preview"
-
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview columnApply the current pattern to all listed files and show the "
-"result in the Preview columnApply the current pattern to all listed files"
-" and show the result in the Preview column"
-
 msgid "Clear"
 msgstr "Clear"
-
-msgid "Clear the preview"
-msgstr "Clear the preview"
-
-msgid "Remove all preview values from the Preview column"
-msgstr "Remove all preview values from the Preview column"
-
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Reverse the last batch of renames performed on disk"
-
-msgid "Renumber from 1 in place"
-msgstr "Renumber from 1 in place"
-
-msgid ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-msgstr ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-
-msgid "Apply renames on disk (F2)"
-msgstr "Apply renames on disk (F2)"
-
-msgid ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
-msgstr ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
 
 msgid "Open or create sidecar"
 msgstr "Open or create sidecar"
@@ -2282,11 +2314,11 @@ msgid "Remove the folders left empty"
 msgstr "Remove the folders left empty"
 
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
 msgstr ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
 
 msgid "After a deletion"
 msgstr "After a deletion"
@@ -2297,18 +2329,20 @@ msgstr "Remove the folders that deleting files leaves empty"
 msgid "After a rename"
 msgstr "After a rename"
 
-msgid "Remove the folders that renaming or moving files leaves empty"
-msgstr "Remove the folders that renaming or moving files leaves empty"
+msgid "Remove the folders that renaming files leaves empty, schema mode included"
+msgstr "Remove the folders that renaming files leaves empty, schema mode included"
+
+msgid "After a move by drag and drop"
+msgstr "After a move by drag and drop"
+
+msgid "Remove the folders that moving files by drag and drop leaves empty"
+msgstr "Remove the folders that moving files by drag and drop leaves empty"
 
 msgid "Also their parents left empty"
 msgstr "Also their parents left empty"
 
-msgid ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
-msgstr ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
+msgid "Then remove the parent folders that become empty in turn"
+msgstr "Then remove the parent folders that become empty in turn"
 
 #, python-brace-format
 msgid "The default profile “{name}” was not found."

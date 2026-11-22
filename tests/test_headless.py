@@ -1727,7 +1727,7 @@ class TestSchemaRun:
             "A/A_VID_001.mp4",
         ]
         assert _tree(src) == []
-        assert src.is_dir()  # the listed directory is never pruned
+        assert src.is_dir()  # pruning is off by default
 
     @staticmethod
     def _prune(on_rename, parents=False):
@@ -1746,7 +1746,19 @@ class TestSchemaRun:
         code = _main(monkeypatch, src, "--recurse", "--schema", "A,#", "--dest", dest)
         assert code == 0
         assert _tree(dest) == ["A/A_1.jpg"]
-        assert not (src / "sub").exists() and src.is_dir()
+        assert not (src / "sub").exists()
+        assert src.is_dir()  # not a folder of the renamed files
+
+    def test_listed_directory_pruned(self, tmp_path, monkeypatch):
+        self._prune(True)
+        src = tmp_path / "src"
+        src.mkdir()
+        _make_files(src, "a.jpg")
+        dest = tmp_path / "out"
+        code = _main(monkeypatch, src, "--schema", "A,#", "--dest", dest)
+        assert code == 0
+        assert _tree(dest) == ["A/A_1.jpg"]
+        assert not src.exists()
 
     @pytest.mark.parametrize(("parents", "kept"), [(False, True), (True, False)])
     def test_source_parent_pruned_on_request(
@@ -1761,7 +1773,7 @@ class TestSchemaRun:
         assert code == 0
         assert not (src / "sub" / "deep").exists()
         assert (src / "sub").exists() is kept
-        assert src.is_dir()
+        assert src.exists() is kept
 
     def test_source_sub_directory_kept_by_default(self, tmp_path, monkeypatch):
         src = tmp_path / "src"

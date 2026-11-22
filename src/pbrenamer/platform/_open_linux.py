@@ -55,6 +55,40 @@ def open_with(path: str | Path, parent=None) -> None:
         _launch(desktop_file, path)
 
 
+def _last_desktop_file(path: Path) -> str | None:
+    """The application last chosen for the MIME type of *path*, when it is
+    still installed."""
+    mime = _mime_type(path)
+    if not mime:
+        return None
+    from pbrenamer import settings
+
+    for desktop_file in settings.get_open_with_lru().get(mime, [])[:1]:
+        if any((d / desktop_file).is_file() for d in _app_dirs()):
+            return desktop_file
+    return None
+
+
+def last_app(path: str | Path) -> str | None:
+    """Name of the application last chosen with "Open with" for the type of
+    *path*, or None."""
+    desktop_file = _last_desktop_file(Path(path))
+    if desktop_file is None:
+        return None
+    return _desktop_name(desktop_file) or desktop_file.removesuffix(".desktop")
+
+
+def open_with_last(path: str | Path) -> bool:
+    """Open *path* with the application of last_app(); False when there is
+    none."""
+    path = Path(path)
+    desktop_file = _last_desktop_file(path)
+    if desktop_file is None:
+        return False
+    _launch(desktop_file, path)
+    return True
+
+
 # ---------------------------------------------------------------------------
 # MIME type
 # ---------------------------------------------------------------------------

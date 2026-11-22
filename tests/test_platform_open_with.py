@@ -512,6 +512,64 @@ def test_remember_choice_no_mime_is_noop(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# last_app / open_with_last (Linux)
+# ---------------------------------------------------------------------------
+
+
+def _installed(tmp_path, monkeypatch, *names):
+    for name in names:
+        (tmp_path / name).write_text(
+            f"[Desktop Entry]\nName={name.removesuffix('.desktop').upper()}\n"
+        )
+    monkeypatch.setattr(_open_linux, "_app_dirs", lambda: [tmp_path])
+    monkeypatch.setattr(_open_linux, "_mime_type", lambda p: "image/png")
+
+
+def test_last_app_is_first_of_lru(tmp_path, monkeypatch):
+    _installed(tmp_path, monkeypatch, "gimp.desktop", "eog.desktop")
+    settings.set_open_with_lru({"image/png": ["gimp.desktop", "eog.desktop"]})
+    assert _open_linux.last_app(tmp_path / "a.png") == "GIMP"
+
+
+def test_last_app_none_without_lru(tmp_path, monkeypatch):
+    _installed(tmp_path, monkeypatch, "gimp.desktop")
+    assert _open_linux.last_app(tmp_path / "a.png") is None
+
+
+def test_last_app_none_when_uninstalled(tmp_path, monkeypatch):
+    _installed(tmp_path, monkeypatch, "eog.desktop")
+    settings.set_open_with_lru({"image/png": ["gimp.desktop", "eog.desktop"]})
+    assert _open_linux.last_app(tmp_path / "a.png") is None
+
+
+def test_last_app_none_without_mime(tmp_path, monkeypatch):
+    monkeypatch.setattr(_open_linux, "_mime_type", lambda p: "")
+    assert _open_linux.last_app(tmp_path / "a") is None
+
+
+def test_last_app_without_name_uses_stem(tmp_path, monkeypatch):
+    (tmp_path / "tool.desktop").write_text("[Desktop Entry]\nExec=tool\n")
+    monkeypatch.setattr(_open_linux, "_app_dirs", lambda: [tmp_path])
+    monkeypatch.setattr(_open_linux, "_mime_type", lambda p: "image/png")
+    settings.set_open_with_lru({"image/png": ["tool.desktop"]})
+    assert _open_linux.last_app(tmp_path / "a.png") == "tool"
+
+
+def test_open_with_last_launches(tmp_path, monkeypatch):
+    _installed(tmp_path, monkeypatch, "gimp.desktop")
+    settings.set_open_with_lru({"image/png": ["gimp.desktop"]})
+    launched = []
+    monkeypatch.setattr(_open_linux, "_launch", lambda df, p: launched.append(df))
+    assert _open_linux.open_with_last(tmp_path / "a.png") is True
+    assert launched == ["gimp.desktop"]
+
+
+def test_open_with_last_without_app(tmp_path, monkeypatch):
+    _installed(tmp_path, monkeypatch)
+    assert _open_linux.open_with_last(tmp_path / "a.png") is False
+
+
+# ---------------------------------------------------------------------------
 # open_default
 # ---------------------------------------------------------------------------
 
@@ -751,6 +809,44 @@ def test_macos_open_with_empty_app_falls_back(tmp_path, monkeypatch):
     with patch("PySide6.QtWidgets.QInputDialog.getText", return_value=("   ", True)):
         _open_macos.open_with(f)
     assert len(open_calls) == 1
+
+
+def test_macos_open_with_remembers_and_prefills(tmp_path, monkeypatch):
+    from unittest.mock import patch
+
+    f = tmp_path / "test.png"
+    monkeypatch.setattr(_open_macos.subprocess, "Popen", lambda cmd: None)
+    with patch(
+        "PySide6.QtWidgets.QInputDialog.getText", return_value=("Preview", True)
+    ) as get_text:
+        _open_macos.open_with(f)
+        assert get_text.call_args.kwargs["text"] == ""
+        _open_macos.open_with(f)
+        assert get_text.call_args.kwargs["text"] == "Preview"
+    assert _open_macos.last_app(tmp_path / "other.PNG") == "Preview"
+
+
+def test_macos_open_with_last(tmp_path, monkeypatch):
+    popen_calls = []
+    monkeypatch.setattr(
+        _open_macos.subprocess, "Popen", lambda cmd: popen_calls.append(cmd)
+    )
+    f = tmp_path / "test.png"
+    assert _open_macos.open_with_last(f) is False
+    settings.set_open_with_lru({"image/png": ["Preview", "GIMP"]})
+    assert _open_macos.open_with_last(f) is True
+    assert popen_calls == [["open", "-a", "Preview", str(f)]]
+
+
+def test_macos_last_app_by_extension_without_mime(tmp_path):
+    settings.set_open_with_lru({".zzq": ["Tool"]})
+    assert _open_macos.last_app(tmp_path / "a.ZZQ") == "Tool"
+    assert _open_macos.last_app(tmp_path / "noext") is None
+
+
+def test_windows_has_no_last_app(tmp_path):
+    assert _open_windows.last_app(tmp_path / "a.png") is None
+    assert _open_windows.open_with_last(tmp_path / "a.png") is False
 
 
 # ---------------------------------------------------------------------------

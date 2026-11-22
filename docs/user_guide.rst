@@ -69,7 +69,8 @@ below them the rule panel with two tabs, **Pattern** (search and replace,
 described in this chapter) and **Schema** (see :ref:`schema-mode`).  The
 action bar at the bottom holds the **Undo**, **Preview**, **Clear**,
 **Renumber** and **Rename** buttons.  The menus are **File**, **Edit**,
-**Profile**, **Images**, **Shortcuts** and **Help**; the name of the current
+**Profile**, **Images**, **Shortcuts** and **Help**; the **Edit** menu
+starts with the actions of these buttons.  The name of the current
 :ref:`profile <profiles>` is shown in the window title.
 
 The right end of the status bar counts the files: ``SS/TT``, the number of
@@ -115,9 +116,9 @@ The main table shows:
   pattern does not match the file.  Rows shown in a distinct colour are
   directories.
 
-Click **Preview** to compute the Preview column, or check **Auto-preview** to
-recompute it whenever the pattern or an option changes (the delay is set in
-:ref:`settings`).  **Clear** empties the column.
+Click **Preview** (**Ctrl+R**) to compute the Preview column, or check
+**Auto-preview** to recompute it whenever the pattern or an option changes
+(the delay is set in :ref:`settings`).  **Clear** empties the column.
 
 Rows with a naming conflict are highlighted in red.  The **Rename** button is
 disabled until all conflicts are resolved.
@@ -387,7 +388,8 @@ is cleared.
 Undo
 ~~~~
 
-Click **Undo** to revert the most recent batch.  Each rename batch is
+Click **Undo** (**Ctrl+Z**) to revert the most recent batch; in a text
+field, **Ctrl+Z** undoes the typing instead.  Each rename batch is
 recorded on an undo stack; the button label shows the number of available
 batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by drag
 and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` and
@@ -540,8 +542,8 @@ Profile configuration
     :ref:`deletion-modes`), whether to ask for a confirmation, and the
     number of files above which the confirmation only gives their count.
     Folders left empty: whether to remove them after a deletion, after a
-    rename, and their parents left empty in turn (see
-    :ref:`empty-folders`).
+    rename, after a move by drag and drop, and their parents left empty in
+    turn (see :ref:`empty-folders`).
 
 **Image viewer**
     Zoom step, maximum zoom, side of the metadata panel, and whether images
@@ -582,20 +584,25 @@ default:
 
 **After a deletion**
     The folders that deleting files leaves empty are removed, whatever the
-    deletion mode.  This happens when the list shows the files of
-    sub-folders (**Recursive**).
+    deletion mode.
 
 **After a rename**
     The folders that renaming or moving files leaves empty are removed, for
     instance after sorting files into a :ref:`schema <schema-mode>` tree.
 
+**After a move by drag and drop**
+    The folders that moving files by drag and drop leaves empty are
+    removed.  It is off by default, like in a file manager.
+
 **Also their parents left empty**
     The parent folders that become empty in turn are removed too.  Without
     this option, only the folders that held the files are removed.
 
-Only the folders below the displayed one are removed, never the displayed
-folder itself.  **Undo** recreates the removed folders along with the
-files.  The command line follows the options of the profile it uses.
+The displayed folder is removed too when it is left empty; the nearest
+parent folder still there is then displayed.  The home folder and the
+root of a disk are never removed.  **Undo** recreates the removed folders
+along with the files.  The command line follows the options of the profile
+it uses.
 
 .. _schema-mode:
 
@@ -749,6 +756,12 @@ In the **File** menu:
 **Open with…** (**Ctrl+Shift+O**)
     Choose the application that opens the file.
 
+**Open with** *application*
+    Open the files with the application last chosen with **Open with…** for
+    their type, named in the menu.  The entry is greyed out when there is
+    none, and always on Windows, whose dialog does not tell the application
+    chosen.
+
 **Open or create sidecar**
     One entry per sidecar suffix of the category of the file (see
     :ref:`sidecar-categories`), whether that sidecar exists or not, and
@@ -817,7 +830,8 @@ file list.  It offers:
   toolbar button, whose icon shows the current mode, switches between linear
   navigation (stop at the ends) and circular navigation (wrap around);
 * a strip of thumbnails of the selection, when several files are selected:
-  click one to show it;
+  click one to show it, **Ctrl+click** one to remove it from the strip and
+  deselect its file in the list;
 * a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the image;
   double-click a field to insert it into the replacement pattern;
 * the image actions: open, open with, delete, rotations and EXIF orientation,

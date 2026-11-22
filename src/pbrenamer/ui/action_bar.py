@@ -1,4 +1,5 @@
-"""Action bar: Preview / Clear / Undo / Rename buttons and auto-preview."""
+"""Action bar: Preview / Clear / Undo / Rename buttons, their Edit menu
+actions, and auto-preview."""
 
 from __future__ import annotations
 
@@ -6,9 +7,17 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 
 from PySide6.QtCore import QObject, QTimer, Signal
+from PySide6.QtGui import QAction, QKeySequence
 
 import pbrenamer.settings as _cfg
 from pbrenamer.core.undo import UndoManager
+
+
+def _with_shortcut(text: str, action: QAction) -> str:
+    """*text* followed by the shortcut of *action*, in the platform's
+    notation (⌘ on macOS)."""
+    keys = action.shortcut().toString(QKeySequence.SequenceFormat.NativeText)
+    return f"{text} ({keys})" if keys else text
 
 
 class ActionBar(QObject):
@@ -38,7 +47,17 @@ class ActionBar(QObject):
         self._ui.btnClearPreview.clicked.connect(self.clear_requested)
         self._ui.btnUndo.clicked.connect(self.undo_requested)
         self._ui.btnRename.clicked.connect(self.rename_requested)
+        self._ui.actionPreview.triggered.connect(self.preview_requested)
+        self._ui.actionClearPreview.triggered.connect(self.clear_requested)
+        self._ui.actionUndo.triggered.connect(self.undo_requested)
+        self._ui.actionRename.triggered.connect(self.rename_requested)
         self._ui.chkAutoPreview.toggled.connect(self._on_auto_preview_toggled)
+        self._ui.btnPreview.setToolTip(
+            _with_shortcut(self._ui.btnPreview.toolTip(), self._ui.actionPreview)
+        )
+        self._ui.btnUndo.setToolTip(
+            _with_shortcut(self._ui.btnUndo.toolTip(), self._ui.actionUndo)
+        )
 
     def auto_preview(self) -> bool:
         return self._ui.chkAutoPreview.isChecked()
@@ -69,20 +88,23 @@ class ActionBar(QObject):
 
     def set_rename_count(self, n: int) -> None:
         """Show the number of files Rename would rename; 0 disables it."""
-        self._ui.btnRename.setEnabled(n > 0)
-        self._ui.btnRename.setText(_("Rename ({n})").format(n=n) if n else _("Rename"))
+        text = _("Rename ({n})").format(n=n) if n else _("Rename")
+        for widget in (self._ui.btnRename, self._ui.actionRename):
+            widget.setEnabled(n > 0)
+            widget.setText(text)
 
     def refresh_undo(self) -> None:
         n = len(self._undo)
-        self._ui.btnUndo.setEnabled(n > 0)
         if n > 0:
-            self._ui.btnUndo.setText(_("Undo (%d)") % n)
-            self._ui.btnUndo.setToolTip(
-                _("Undo last rename batch (%d level(s) available)") % n
-            )
+            text = _("Undo (%d)") % n
+            tip = _("Undo last rename batch (%d level(s) available)") % n
         else:
-            self._ui.btnUndo.setText(_("Undo"))
-            self._ui.btnUndo.setToolTip(_("Undo last rename batch"))
+            text, tip = _("Undo"), _("Undo last rename batch")
+        for widget in (self._ui.btnUndo, self._ui.actionUndo):
+            widget.setEnabled(n > 0)
+            widget.setText(text)
+        self._ui.actionUndo.setToolTip(tip)
+        self._ui.btnUndo.setToolTip(_with_shortcut(tip, self._ui.actionUndo))
 
     def _on_auto_preview_toggled(self, checked: bool) -> None:
         if checked:

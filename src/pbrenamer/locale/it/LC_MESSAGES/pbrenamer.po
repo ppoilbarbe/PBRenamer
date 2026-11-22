@@ -239,6 +239,15 @@ msgid "Undo last rename batch"
 msgstr "Annulla l'ultimo batch di rinominazione"
 
 # ==AUTO== Automatically translated
+msgid "Open with the last application"
+msgstr "Apri con l'ultima applicazione"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "Open with {app}"
+msgstr "Apri con {app}"
+
+# ==AUTO== Automatically translated
 #, python-brace-format
 msgid "{suffix} (new)"
 msgstr "{suffix} (nuovo)"
@@ -761,6 +770,14 @@ msgid "Keyboard and mouse shortcuts (this window)"
 msgstr "Scorciatoie da tastiera e mouse (questa finestra)"
 
 # ==AUTO== Automatically translated
+msgid "Preview the new names"
+msgstr "Anteprima dei nuovi nomi"
+
+# ==AUTO== Automatically translated
+msgid "Undo the last operation"
+msgstr "Annulla l'ultima operazione"
+
+# ==AUTO== Automatically translated
 msgid "Rename as shown in the Preview column"
 msgstr "Rinomina come mostrato nella colonna Anteprima"
 
@@ -955,6 +972,14 @@ msgstr "Clic su una miniatura della striscia"
 # ==AUTO== Automatically translated
 msgid "Show this image"
 msgstr "Mostra questa immagine"
+
+# ==AUTO== Automatically translated
+msgid "click on a thumbnail of the strip"
+msgstr "clic su una miniatura della striscia"
+
+# ==AUTO== Automatically translated
+msgid "Remove the file from the selection"
+msgstr "Togli il file dalla selezione"
 
 # ==AUTO== Automatically translated
 msgid "Main window"
@@ -1319,6 +1344,18 @@ msgid "Choose the application that opens the selected file"
 msgstr "Scegli l'applicazione che apre il file selezionato"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "Apri con l'ultima applicazione scelta per questo tipo di file"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+msgstr ""
+"Apri i file selezionati con l'ultima applicazione scelta con «Apri con…» "
+"per il loro tipo"
+
+# ==AUTO== Automatically translated
 msgid "View"
 msgstr "Visualizza"
 
@@ -1415,6 +1452,60 @@ msgstr "Aggiorna"
 # ==AUTO== Automatically translated
 msgid "Read the folder again and refresh the thumbnails"
 msgstr "Rileggi la cartella e aggiorna le miniature"
+
+# ==AUTO== Automatically translated
+msgid "Compute rename preview"
+msgstr "Calcola anteprima rinominazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Applica il pattern corrente a tutti i file elencati e mostra il risultato"
+" nella colonna Anteprima"
+
+# ==AUTO== Automatically translated
+msgid "Clear preview"
+msgstr "Cancella l'anteprima"
+
+# ==AUTO== Automatically translated
+msgid "Clear the preview"
+msgstr "Cancella l'anteprima"
+
+# ==AUTO== Automatically translated
+msgid "Remove all preview values from the Preview column"
+msgstr "Rimuovi tutti i valori di anteprima dalla colonna Anteprima"
+
+# ==AUTO== Automatically translated
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Annulla l'ultimo batch di rinominazioni eseguite su disco"
+
+# ==AUTO== Automatically translated
+msgid "Renumber from 1 in place"
+msgstr "Rinumera da 1 sul posto"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr ""
+"Rinumera i file selezionati (tutti i file elencati se nessuno è "
+"selezionato) da 1, sul posto, secondo lo schema"
+
+# ==AUTO== Automatically translated
+msgid "Apply renames on disk (F2)"
+msgstr "Applica le rinomine sul disco (F2)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Rinomina definitivamente i file selezionati (tutti i file elencati se "
+"nessuno è selezionato) come mostrato nella colonna Anteprima (attivo solo"
+" in assenza di conflitti)"
 
 # ==AUTO== Automatically translated
 msgid "Browse the filesystem"
@@ -1913,58 +2004,8 @@ msgstr ""
 "corrente"
 
 # ==AUTO== Automatically translated
-msgid "Compute rename preview"
-msgstr "Calcola anteprima rinominazione"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Applica il pattern corrente a tutti i file elencati e mostra il risultato"
-" nella colonna Anteprima"
-
-# ==AUTO== Automatically translated
 msgid "Clear"
 msgstr "Cancella"
-
-# ==AUTO== Automatically translated
-msgid "Clear the preview"
-msgstr "Cancella l'anteprima"
-
-# ==AUTO== Automatically translated
-msgid "Remove all preview values from the Preview column"
-msgstr "Rimuovi tutti i valori di anteprima dalla colonna Anteprima"
-
-# ==AUTO== Automatically translated
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Annulla l'ultimo batch di rinominazioni eseguite su disco"
-
-# ==AUTO== Automatically translated
-msgid "Renumber from 1 in place"
-msgstr "Rinumera da 1 sul posto"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-msgstr ""
-"Rinumera i file selezionati (tutti i file elencati se nessuno è "
-"selezionato) da 1, sul posto, secondo lo schema"
-
-# ==AUTO== Automatically translated
-msgid "Apply renames on disk (F2)"
-msgstr "Applica le rinomine sul disco (F2)"
-
-# ==AUTO== Automatically translated
-msgid ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
-msgstr ""
-"Rinomina definitivamente i file selezionati (tutti i file elencati se "
-"nessuno è selezionato) come mostrato nella colonna Anteprima (attivo solo"
-" in assenza di conflitti)"
 
 # ==AUTO== Automatically translated
 msgid "Open or create sidecar"
@@ -2938,11 +2979,11 @@ msgstr "Elimina le cartelle svuotate"
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
 msgstr ""
-"Vengono eliminate solo le cartelle sotto quella visualizzata, mai la "
-"cartella visualizzata stessa"
+"Anche la cartella visualizzata viene eliminata quando resta vuota; mai la"
+" cartella home né la radice di un disco"
 
 # ==AUTO== Automatically translated
 msgid "After a deletion"
@@ -2957,20 +2998,28 @@ msgid "After a rename"
 msgstr "Dopo una rinomina"
 
 # ==AUTO== Automatically translated
-msgid "Remove the folders that renaming or moving files leaves empty"
-msgstr "Elimina le cartelle che la rinomina o lo spostamento dei file lascia vuote"
+msgid "Remove the folders that renaming files leaves empty, schema mode included"
+msgstr ""
+"Elimina le cartelle che la rinomina dei file lascia vuote, modalità "
+"schema compresa"
+
+# ==AUTO== Automatically translated
+msgid "After a move by drag and drop"
+msgstr "Dopo uno spostamento con trascinamento"
+
+# ==AUTO== Automatically translated
+msgid "Remove the folders that moving files by drag and drop leaves empty"
+msgstr ""
+"Elimina le cartelle che lo spostamento dei file con trascinamento lascia "
+"vuote"
 
 # ==AUTO== Automatically translated
 msgid "Also their parents left empty"
 msgstr "Anche le loro cartelle superiori svuotate"
 
 # ==AUTO== Automatically translated
-msgid ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
-msgstr ""
-"Elimina poi le cartelle superiori che diventano vuote a loro volta, fino "
-"alla cartella visualizzata"
+msgid "Then remove the parent folders that become empty in turn"
+msgstr "Elimina poi le cartelle superiori che a loro volta restano vuote"
 
 # ==AUTO== Automatically translated
 #, python-brace-format

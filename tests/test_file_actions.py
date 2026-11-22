@@ -248,6 +248,44 @@ def test_open_and_open_with(window, tmp_path, calls):
     assert calls["open_with"] == [a]
 
 
+class TestOpenWithLast:
+    def test_disabled_without_last_application(self, window, tmp_path, monkeypatch):
+        monkeypatch.setattr(file_actions._open_with, "last_app", lambda p: None)
+        _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._file_actions._update_open_with_last()
+        action = window._ui.actionFileOpenWithLast
+        assert not action.isEnabled()
+        assert action.text() == "Open with the last application"
+
+    def test_disabled_without_target(self, window, tmp_path):
+        _load(window, tmp_path)
+        window._file_actions._update_open_with_last()
+        assert not window._ui.actionFileOpenWithLast.isEnabled()
+
+    def test_names_the_application_and_opens(self, window, tmp_path, monkeypatch):
+        opened = []
+        monkeypatch.setattr(file_actions._open_with, "last_app", lambda p: "A&B")
+        monkeypatch.setattr(file_actions._open_with, "open_with_last", opened.append)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._ui.menuFile.aboutToShow.emit()
+        action = window._ui.actionFileOpenWithLast
+        assert action.isEnabled()
+        assert action.text() == "Open with A&&B"
+        action.trigger()
+        assert opened == [a]
+
+    def test_in_file_and_context_menus(self, window):
+        ui = window._ui
+        for menu in (ui.menuFile, ui.menuContext):
+            actions = menu.actions()
+            index = actions.index(ui.actionFileOpenWith)
+            assert actions[index + 1] is ui.actionFileOpenWithLast
+
+
 # ---------------------------------------------------------------------------
 # Viewer
 # ---------------------------------------------------------------------------
@@ -783,7 +821,23 @@ class TestDelete:
         assert not deep.exists()
         assert (tmp_path / "sub").exists() is kept
         assert other.is_dir()  # not empty
-        assert tmp_path.is_dir()  # the displayed folder is never removed
+        assert tmp_path.is_dir()  # not empty
+
+    @pytest.mark.parametrize(("parents", "shown"), [(False, "top"), (True, "")])
+    def test_emptied_displayed_folder_removed(
+        self, window, tmp_path, calls, parents, shown
+    ):
+        self._set(
+            deletion_mode="delete", prune_dirs_on_delete=True, prune_parent_dirs=parents
+        )
+        folder = tmp_path / "top" / "shown"
+        folder.mkdir(parents=True)
+        (tmp_path / "keep").touch()
+        a = _png(folder / "a.png")
+        _load(window, folder)
+        window._file_actions.delete([a])
+        assert not folder.exists()
+        assert window._files.current_dir == str(tmp_path / shown)
 
     def test_emptied_folder_restored_by_undo(self, window, tmp_path, calls, trash):
         self._set(deletion_mode="session", prune_dirs_on_delete=True)
@@ -1119,6 +1173,16 @@ class TestSidecarGroupTargets:
         window._file_actions.open_selected()
         assert calls["open"] == [str(tmp_path / "a.png")]
 
+    def test_deselect_takes_the_group(self, window, tmp_path):
+        a = _png(tmp_path / "a.png")
+        (tmp_path / "a.xmp").write_text("x")
+        b = _png(tmp_path / "b.png")
+        window._ui.chkSidecarMode.setChecked(True)
+        _load(window, tmp_path)
+        _select(window, "a.png", "a.xmp", "b.png")
+        window._files.deselect_paths([a])
+        assert window._files.selected_paths() == [b]
+
 
 class TestOpenSidecarMenu:
     """ "Open or create sidecar" submenu: one entry per sidecar suffix of the
@@ -1243,6 +1307,34 @@ class TestViewerFollowsSelection:
             item = tree.topLevelItem(i)
             if item.text(0) == name:
                 tree.setCurrentItem(item, 0, QItemSelectionModel.SelectionFlag.NoUpdate)
+
+    def test_ctrl_click_on_thumbnail_deselects(self, window, tmp_path, qtbot):
+        viewer, p = self._open(window, tmp_path, "a.png", "b.png", "c.png")
+        self._current(window, "a.png")
+        _select(window, "a.png", "b.png", "c.png")
+        assert viewer.current_path == p["a.png"]
+        qtbot.mouseClick(
+            viewer._strip._labels[1],
+            Qt.MouseButton.LeftButton,
+            Qt.KeyboardModifier.ControlModifier,
+        )
+        assert viewer.selection_paths == [p["a.png"], p["c.png"]]
+        assert viewer.current_path == p["a.png"]
+        assert window._files.selected_paths() == [p["a.png"], p["c.png"]]
+
+    def test_ctrl_click_on_shown_thumbnail_shows_next(self, window, tmp_path):
+        viewer, p = self._open(window, tmp_path, "a.png", "b.png", "c.png")
+        self._current(window, "b.png")
+        _select(window, "a.png", "b.png", "c.png")
+        assert viewer.current_path == p["b.png"]
+        viewer._strip.thumbnail_ctrl_clicked.emit(1)
+        assert viewer.current_path == p["c.png"]
+        assert window._files.selected_paths() == [p["a.png"], p["c.png"]]
+        viewer._strip.thumbnail_ctrl_clicked.emit(1)  # the last one: previous
+        assert viewer.current_path == p["a.png"]
+        assert viewer.selection_paths == [p["a.png"]]
+        assert viewer._strip.isHidden()
+        assert window._files.selected_paths() == [p["a.png"]]
 
     def test_other_file_selected(self, window, tmp_path):
         viewer, p = self._open(window, tmp_path, "a.png", "b.png")

@@ -728,6 +728,27 @@ def test_set_selection_multiple_shows_strip_and_first_file(qtbot, sample_png, tm
     assert len(viewer._strip._labels) == 2
 
 
+def test_remove_from_selection_needs_two_files(qtbot, sample_png):
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    viewer.set_selection([sample_png])
+    with qtbot.assertNotEmitted(viewer.deselect_requested):
+        viewer._remove_from_selection(0)
+    assert viewer.selection_paths == [sample_png]
+
+
+def test_plain_click_on_thumbnail_does_not_remove(qtbot, sample_png, tmp_path):
+    other = tmp_path / "other.png"
+    Image.new("RGB", (5, 5)).save(str(other))
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    viewer.set_selection([sample_png, str(other)])
+    with qtbot.assertNotEmitted(viewer.deselect_requested):
+        qtbot.mouseClick(viewer._strip._labels[1], Qt.MouseButton.LeftButton)
+    assert viewer.current_path == str(other)
+    assert len(viewer.selection_paths) == 2
+
+
 def test_set_selection_with_current_displays_and_highlights_it(
     qtbot, sample_png, tmp_path
 ):

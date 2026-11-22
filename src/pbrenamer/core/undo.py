@@ -60,13 +60,19 @@ class RenameEntry(UndoEntry):
 
 @dataclass
 class MoveEntry(UndoEntry):
-    """Files or trees moved by drag and drop, moved back one by one."""
+    """Files or trees moved by drag and drop, moved back one by one (their
+    source folders, removed when left empty, are recreated)."""
 
     pairs: list[tuple[str, str]]
 
     def undo(self) -> None:
         errors: list[str] = []
         for src, dst in reversed(self.pairs):
+            try:
+                os.makedirs(os.path.dirname(src), exist_ok=True)
+            except OSError as exc:
+                errors.append(f"{os.path.basename(dst)}: {exc}")
+                continue
             ok, err = filetools.move_path(dst, src)
             if not ok:
                 errors.append(f"{os.path.basename(dst)}: {err}")

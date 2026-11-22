@@ -281,6 +281,7 @@ class TestImportPbpicat:
             "deletion_mode": "system",
             "prune_dirs_on_delete": False,
             "prune_dirs_on_rename": False,
+            "prune_dirs_on_move": False,
             "prune_parent_dirs": False,
         }
         assert ia["viewer"] == {

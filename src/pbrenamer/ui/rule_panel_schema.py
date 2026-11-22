@@ -332,7 +332,7 @@ class SchemaRulePanel(QWidget):
         rule = self.rule()
         if rule is None:
             return None
-        _log.info("Schema preview: %d item(s), template=%r", len(paths), rule.replace)
+        _log.debug("Schema preview: %d item(s), template=%r", len(paths), rule.replace)
         entries: list[PreviewEntry] = []
         for entry in planner.compute_names(rule, paths, followers=followers):
             if entry.error is not None:

@@ -33,6 +33,20 @@ def test_buttons_emit_requests(bar, qtbot):
             button.click()
 
 
+def test_edit_menu_actions_emit_requests(bar, qtbot):
+    actions, ui, _undo = bar
+    ui.actionRename.setEnabled(True)
+    ui.actionUndo.setEnabled(True)
+    for action, signal in (
+        (ui.actionPreview, actions.preview_requested),
+        (ui.actionClearPreview, actions.clear_requested),
+        (ui.actionUndo, actions.undo_requested),
+        (ui.actionRename, actions.rename_requested),
+    ):
+        with qtbot.waitSignal(signal, timeout=1000):
+            action.trigger()
+
+
 def test_request_auto_preview_only_when_enabled(bar, qtbot):
     actions, _ui, _undo = bar
     with qtbot.assertNotEmitted(actions.preview_requested):
@@ -56,14 +70,21 @@ def test_set_rename_count(bar):
     actions.set_rename_count(12)
     assert ui.btnRename.isEnabled()
     assert ui.btnRename.text() == "Rename (12)"
+    assert ui.actionRename.isEnabled()
+    assert ui.actionRename.text() == "Rename (12)"
     actions.set_rename_count(0)
     assert not ui.btnRename.isEnabled()
     assert ui.btnRename.text() == "Rename"
+    assert not ui.actionRename.isEnabled()
 
 
-def test_rename_shortcut_is_f2(bar):
+@pytest.mark.parametrize(
+    ("name", "keys"),
+    [("actionRename", "F2"), ("actionPreview", "Ctrl+R"), ("actionUndo", "Ctrl+Z")],
+)
+def test_edit_menu_shortcuts(bar, name, keys):
     _actions, ui, _undo = bar
-    assert ui.btnRename.shortcut().toString() == "F2"
+    assert getattr(ui, name).shortcut().toString() == keys
 
 
 def test_refresh_undo_reflects_stack_depth(bar, tmp_path):
@@ -74,3 +95,12 @@ def test_refresh_undo_reflects_stack_depth(bar, tmp_path):
     actions.refresh_undo()
     assert ui.btnUndo.isEnabled()
     assert "1" in ui.btnUndo.text()
+    assert ui.actionUndo.isEnabled()
+    assert ui.actionUndo.text() == ui.btnUndo.text()
+    assert ui.btnUndo.toolTip().endswith("(Ctrl+Z)")
+
+
+def test_button_tooltips_show_shortcuts(bar):
+    _actions, ui, _undo = bar
+    assert ui.btnPreview.toolTip() == "Compute rename preview (Ctrl+R)"
+    assert ui.btnUndo.toolTip() == "Undo last rename batch (Ctrl+Z)"

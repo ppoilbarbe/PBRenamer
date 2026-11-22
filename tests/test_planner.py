@@ -438,7 +438,7 @@ class TestEndToEnd:
             for sc, suffix in scs:
                 pairs.append((sc, planner.sidecar_target(plan[base].target, suffix)))
 
-        result = filetools.execute_renames(pairs, prune_root=str(tmp_path))
+        result = filetools.execute_renames(pairs, prune=True)
 
         assert sorted(os.listdir(dest / "Paris")) == [
             "Paris_001.png",

@@ -43,6 +43,7 @@ class Ui_MainWindow:
 
         self._setup_actions(window)
         self._setup_file_actions(window)
+        self._setup_edit_actions(window)
         self._setup_central_widget(window)
         self._setup_statusbar(window)
         self._setup_menubar(window)
@@ -201,6 +202,17 @@ class Ui_MainWindow:
             _("Open with a chosen application"),
             _("Choose the application that opens the selected file"),
         )
+        # Text and state set when a menu holding it is shown (FileActions).
+        self.actionFileOpenWithLast = action(
+            "open-with.svg",
+            _("Open with the last application"),
+            "",
+            _("Open with the application last chosen for this type of file"),
+            _(
+                "Open the selected files with the application last chosen"
+                " with “Open with…” for their type"
+            ),
+        )
         self.actionImageView = action(
             "zoom-fit.svg",
             _("View"),
@@ -275,6 +287,67 @@ class Ui_MainWindow:
         # Return and Delete also edit text fields: only on the file list.
         for act in (self.actionImageView, self.actionFileDelete, self.actionFileOpen):
             act.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+
+    def _setup_edit_actions(self, window):
+        """Edit menu actions matching the Preview, Clear, Undo, Renumber and
+        Rename buttons; ActionBar and MainWindow keep them in step."""
+
+        def action(icon, text, shortcut, tip, status):
+            act = QAction(QIcon(_resource(icon)), text, window)
+            if shortcut:
+                act.setShortcut(QKeySequence(shortcut))
+            act.setToolTip(tip)
+            act.setStatusTip(status)
+            return act
+
+        self.actionPreview = action(
+            "view.svg",
+            _("Preview"),
+            "Ctrl+R",
+            _("Compute rename preview"),
+            _(
+                "Apply the current pattern to all listed files"
+                " and show the result in the Preview column"
+            ),
+        )
+        self.actionClearPreview = action(
+            "view-close.svg",
+            _("Clear preview"),
+            "",
+            _("Clear the preview"),
+            _("Remove all preview values from the Preview column"),
+        )
+        self.actionUndo = action(
+            "undo.svg",
+            _("Undo"),
+            "Ctrl+Z",
+            _("Undo last rename batch"),
+            _("Reverse the last batch of renames performed on disk"),
+        )
+        self.actionUndo.setEnabled(False)
+        self.actionRenumber = action(
+            "renumber.svg",
+            _("Renumber"),
+            "",
+            _("Renumber from 1 in place"),
+            _(
+                "Renumber the selected files (all listed files if none is"
+                " selected) from 1, in place, following the schema"
+            ),
+        )
+        self.actionRenumber.setVisible(False)
+        self.actionRename = action(
+            "pbrenamer.svg",
+            _("Rename"),
+            "F2",
+            _("Apply renames on disk (F2)"),
+            _(
+                "Permanently rename the selected files (all listed files if"
+                " none is selected) as shown in the Preview column"
+                " (only enabled when there are no conflicts)"
+            ),
+        )
+        self.actionRename.setEnabled(False)
 
     # ── Central widget ────────────────────────────────────────────────────────
 
@@ -768,7 +841,9 @@ class Ui_MainWindow:
         """Vertical column of action buttons: Preview, Clear, [spacer], Undo, Rename."""
         col = QVBoxLayout()
 
-        self.btnPreview = QPushButton(_("Preview"), parent)
+        self.btnPreview = QPushButton(
+            QIcon(_resource("view.svg")), _("Preview"), parent
+        )
         self.btnPreview.setToolTip(_("Compute rename preview"))
         self.btnPreview.setStatusTip(
             _(
@@ -778,7 +853,9 @@ class Ui_MainWindow:
         )
         col.addWidget(self.btnPreview)
 
-        self.btnClearPreview = QPushButton(_("Clear"), parent)
+        self.btnClearPreview = QPushButton(
+            QIcon(_resource("view-close.svg")), _("Clear"), parent
+        )
         self.btnClearPreview.setToolTip(_("Clear the preview"))
         self.btnClearPreview.setStatusTip(
             _("Remove all preview values from the Preview column")
@@ -791,7 +868,7 @@ class Ui_MainWindow:
             )
         )
 
-        self.btnUndo = QPushButton(_("Undo"), parent)
+        self.btnUndo = QPushButton(QIcon(_resource("undo.svg")), _("Undo"), parent)
         self.btnUndo.setEnabled(False)
         self.btnUndo.setToolTip(_("Undo last rename batch"))
         self.btnUndo.setStatusTip(
@@ -799,7 +876,9 @@ class Ui_MainWindow:
         )
         col.addWidget(self.btnUndo)
 
-        self.btnRenumber = QPushButton(_("Renumber"), parent)
+        self.btnRenumber = QPushButton(
+            QIcon(_resource("renumber.svg")), _("Renumber"), parent
+        )
         self.btnRenumber.setVisible(False)
         self.btnRenumber.setToolTip(_("Renumber from 1 in place"))
         self.btnRenumber.setStatusTip(
@@ -810,9 +889,10 @@ class Ui_MainWindow:
         )
         col.addWidget(self.btnRenumber)
 
-        self.btnRename = QPushButton(_("Rename"), parent)
+        self.btnRename = QPushButton(
+            QIcon(_resource("pbrenamer.svg")), _("Rename"), parent
+        )
         self.btnRename.setEnabled(False)
-        self.btnRename.setShortcut(QKeySequence("F2"))
         self.btnRename.setToolTip(_("Apply renames on disk (F2)"))
         self.btnRename.setStatusTip(
             _(
@@ -862,6 +942,7 @@ class Ui_MainWindow:
             None,
             self.actionFileOpen,
             self.actionFileOpenWith,
+            self.actionFileOpenWithLast,
             self.menuOpenSidecar.menuAction(),
             self.actionFileTemplate,
             None,
@@ -876,7 +957,17 @@ class Ui_MainWindow:
 
         # Edit menu
         menu_edit = menubar.addMenu(_("Edit"))
-        menu_edit.addAction(self.actionSettings)
+        self._add_actions(
+            menu_edit,
+            self.actionPreview,
+            self.actionClearPreview,
+            None,
+            self.actionUndo,
+            self.actionRenumber,
+            self.actionRename,
+            None,
+            self.actionSettings,
+        )
 
         # Profile menu (profile list appended by MainWindow._build_profile_menu)
         self.menuProfile = menubar.addMenu(_("Profile"))
@@ -909,6 +1000,7 @@ class Ui_MainWindow:
             self.menuContext,
             self.actionFileOpen,
             self.actionFileOpenWith,
+            self.actionFileOpenWithLast,
             self.menuOpenSidecar.menuAction(),
             self.actionImageView,
             self.actionFileTemplate,

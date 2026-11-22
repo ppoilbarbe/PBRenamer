@@ -195,6 +195,13 @@ msgstr "Annuler"
 msgid "Undo last rename batch"
 msgstr "Annuler le dernier lot de renommage"
 
+msgid "Open with the last application"
+msgstr "Ouvrir avec la dernière application"
+
+#, python-brace-format
+msgid "Open with {app}"
+msgstr "Ouvrir avec {app}"
+
 #, python-brace-format
 msgid "{suffix} (new)"
 msgstr "{suffix} (nouveau)"
@@ -602,6 +609,12 @@ msgstr "Configuration du profil"
 msgid "Keyboard and mouse shortcuts (this window)"
 msgstr "Raccourcis clavier et souris (cette fenêtre)"
 
+msgid "Preview the new names"
+msgstr "Afficher l'aperçu des nouveaux noms"
+
+msgid "Undo the last operation"
+msgstr "Annuler la dernière opération"
+
 msgid "Rename as shown in the Preview column"
 msgstr "Renommer comme indiqué dans la colonne Aperçu"
 
@@ -748,6 +761,12 @@ msgstr "Clic sur une vignette du bandeau"
 
 msgid "Show this image"
 msgstr "Afficher cette image"
+
+msgid "click on a thumbnail of the strip"
+msgstr "clic sur une vignette du bandeau"
+
+msgid "Remove the file from the selection"
+msgstr "Retirer le fichier de la sélection"
 
 msgid "Main window"
 msgstr "Fenêtre principale"
@@ -1033,6 +1052,16 @@ msgstr "Ouvrir avec une application choisie"
 msgid "Choose the application that opens the selected file"
 msgstr "Choisir l'application qui ouvre le fichier sélectionné"
 
+msgid "Open with the application last chosen for this type of file"
+msgstr "Ouvrir avec l'application choisie en dernier pour ce type de fichier"
+
+msgid ""
+"Open the selected files with the application last chosen with “Open "
+"with…” for their type"
+msgstr ""
+"Ouvrir les fichiers sélectionnés avec l'application choisie en dernier "
+"avec « Ouvrir avec… » pour leur type"
+
 msgid "View"
 msgstr "Visualiser"
 
@@ -1114,6 +1143,50 @@ msgstr "Actualiser"
 
 msgid "Read the folder again and refresh the thumbnails"
 msgstr "Relire le dossier et actualiser les miniatures"
+
+msgid "Compute rename preview"
+msgstr "Calculer l'aperçu de renommage"
+
+msgid ""
+"Apply the current pattern to all listed files and show the result in the "
+"Preview column"
+msgstr ""
+"Appliquer le motif actuel à tous les fichiers listés et afficher le "
+"résultat dans la colonne Aperçu"
+
+msgid "Clear preview"
+msgstr "Effacer l'aperçu"
+
+msgid "Clear the preview"
+msgstr "Effacer l'aperçu"
+
+msgid "Remove all preview values from the Preview column"
+msgstr "Supprimer toutes les valeurs d'aperçu de la colonne Aperçu"
+
+msgid "Reverse the last batch of renames performed on disk"
+msgstr "Inverser le dernier lot de renommages effectués sur le disque"
+
+msgid "Renumber from 1 in place"
+msgstr "Renuméroter à partir de 1 sur place"
+
+msgid ""
+"Renumber the selected files (all listed files if none is selected) from "
+"1, in place, following the schema"
+msgstr ""
+"Renuméroter les fichiers sélectionnés (tous les fichiers listés si aucun "
+"n'est sélectionné) à partir de 1, sur place, selon le schéma"
+
+msgid "Apply renames on disk (F2)"
+msgstr "Appliquer les renommages sur le disque (F2)"
+
+msgid ""
+"Permanently rename the selected files (all listed files if none is "
+"selected) as shown in the Preview column (only enabled when there are no "
+"conflicts)"
+msgstr ""
+"Renommer définitivement les fichiers sélectionnés (tous les fichiers "
+"listés si aucun n'est sélectionné) comme indiqué dans la colonne Aperçu "
+"(actif uniquement en l'absence de conflit)"
 
 msgid "Browse the filesystem"
 msgstr "Parcourir le système de fichiers"
@@ -1516,49 +1589,8 @@ msgstr "Supprimer cette sauvegarde nommée"
 msgid "Permanently delete the named save matching the current name"
 msgstr "Supprimer définitivement la sauvegarde nommée correspondant au nom actuel"
 
-msgid "Compute rename preview"
-msgstr "Calculer l'aperçu de renommage"
-
-msgid ""
-"Apply the current pattern to all listed files and show the result in the "
-"Preview column"
-msgstr ""
-"Appliquer le motif actuel à tous les fichiers listés et afficher le "
-"résultat dans la colonne Aperçu"
-
 msgid "Clear"
 msgstr "Effacer"
-
-msgid "Clear the preview"
-msgstr "Effacer l'aperçu"
-
-msgid "Remove all preview values from the Preview column"
-msgstr "Supprimer toutes les valeurs d'aperçu de la colonne Aperçu"
-
-msgid "Reverse the last batch of renames performed on disk"
-msgstr "Inverser le dernier lot de renommages effectués sur le disque"
-
-msgid "Renumber from 1 in place"
-msgstr "Renuméroter à partir de 1 sur place"
-
-msgid ""
-"Renumber the selected files (all listed files if none is selected) from "
-"1, in place, following the schema"
-msgstr ""
-"Renuméroter les fichiers sélectionnés (tous les fichiers listés si aucun "
-"n'est sélectionné) à partir de 1, sur place, selon le schéma"
-
-msgid "Apply renames on disk (F2)"
-msgstr "Appliquer les renommages sur le disque (F2)"
-
-msgid ""
-"Permanently rename the selected files (all listed files if none is "
-"selected) as shown in the Preview column (only enabled when there are no "
-"conflicts)"
-msgstr ""
-"Renommer définitivement les fichiers sélectionnés (tous les fichiers "
-"listés si aucun n'est sélectionné) comme indiqué dans la colonne Aperçu "
-"(actif uniquement en l'absence de conflit)"
 
 msgid "Open or create sidecar"
 msgstr "Ouvrir ou créer un sidecar"
@@ -2330,11 +2362,11 @@ msgid "Remove the folders left empty"
 msgstr "Supprimer les dossiers vidés"
 
 msgid ""
-"Only the folders below the displayed one are removed, never the displayed"
-" folder itself"
+"The displayed folder is removed too when it is left empty; the home "
+"folder and the root of a disk never are"
 msgstr ""
-"Seuls les dossiers situés sous le dossier affiché sont supprimés, jamais "
-"le dossier affiché lui-même"
+"Le dossier affiché est lui aussi supprimé lorsqu'il reste vide ; jamais "
+"le dossier personnel ni la racine d'un disque"
 
 msgid "After a deletion"
 msgstr "Après une suppression"
@@ -2345,20 +2377,24 @@ msgstr "Supprimer les dossiers que la suppression de fichiers laisse vides"
 msgid "After a rename"
 msgstr "Après un renommage"
 
-msgid "Remove the folders that renaming or moving files leaves empty"
+msgid "Remove the folders that renaming files leaves empty, schema mode included"
 msgstr ""
-"Supprimer les dossiers que le renommage ou le déplacement de fichiers "
-"laisse vides"
+"Supprimer les dossiers que le renommage de fichiers laisse vides, mode "
+"schéma compris"
+
+msgid "After a move by drag and drop"
+msgstr "Après un déplacement par glisser-déposer"
+
+msgid "Remove the folders that moving files by drag and drop leaves empty"
+msgstr ""
+"Supprimer les dossiers que le déplacement de fichiers par glisser-déposer"
+" laisse vides"
 
 msgid "Also their parents left empty"
 msgstr "Ainsi que leurs parents devenus vides"
 
-msgid ""
-"Then remove the parent folders that become empty in turn, up to the "
-"displayed folder"
-msgstr ""
-"Supprimer ensuite les dossiers parents qui deviennent vides à leur tour, "
-"jusqu'au dossier affiché"
+msgid "Then remove the parent folders that become empty in turn"
+msgstr "Supprimer ensuite les dossiers parents qui deviennent vides à leur tour"
 
 #, python-brace-format
 msgid "The default profile “{name}” was not found."
