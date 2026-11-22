@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Image viewer: a toolbar button (**Ctrl+Del**), before *Show metadata panel*, chooses whether
+  deleting from the viewer asks for confirmation. It starts from the profile's *Confirm
+  deletions* setting each time the viewer opens and never changes the profile.
+- Settings: *Toolbar icon size* sets the size of the toolbar button icons (currently those of the
+  image viewer): *System* (default, the desktop environment's toolbar icon size) or 16 to 128
+  pixels. The change applies at once.
+
+### Changed
+
+- Image viewer: the linear / circular navigation button now shows the current mode instead of
+  the mode a click switches to; its tooltip states the current mode and what a click does.
+
 ## [2.3.0] - 2026-11-21
 
 ### Added

@@ -4,9 +4,23 @@ from __future__ import annotations
 
 import math
 
-from PySide6.QtCore import QPointF, QRect, Qt
+from PySide6.QtCore import QPointF, QRect, QSize, Qt
 from PySide6.QtGui import QColor, QFontDatabase, QPainter, QTextLayout
-from PySide6.QtWidgets import QLineEdit, QStyle, QStyleOptionFrame
+from PySide6.QtWidgets import QLineEdit, QStyle, QStyleOptionFrame, QWidget
+
+from pbrenamer import settings
+
+
+def toolbar_icon_size(widget: QWidget) -> QSize:
+    """Icon size of the toolbar buttons of *widget*: the one chosen in the
+    settings or, for *System*, the toolbar icon size of the style and
+    platform theme."""
+    size = settings.get_toolbar_icon_size()
+    if not size:
+        size = widget.style().pixelMetric(
+            QStyle.PixelMetric.PM_ToolBarIconSize, None, widget
+        )
+    return QSize(size, size)
 
 
 class WhitespaceLineEdit(QLineEdit):

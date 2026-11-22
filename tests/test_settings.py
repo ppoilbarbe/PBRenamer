@@ -6,6 +6,8 @@ import json
 import logging
 from unittest.mock import MagicMock
 
+import pytest
+
 import pbrenamer.settings as settings
 from pbrenamer import profiles
 from pbrenamer.settings import (
@@ -311,6 +313,31 @@ class TestToolbarState:
     def test_stored_in_current_profile(self):
         set_toolbar_state({"mode": 1})
         assert profiles.load()["toolbar_state"] == {"mode": 1}
+
+
+class TestToolbarIconSize:
+    def test_default_is_system(self):
+        assert settings.get_toolbar_icon_size() == 0
+
+    @pytest.mark.parametrize("size", settings.TOOLBAR_ICON_SIZES)
+    def test_set_and_get(self, size):
+        settings.set_toolbar_icon_size(size)
+        assert settings.get_toolbar_icon_size() == size
+
+    def test_back_to_system(self):
+        settings.set_toolbar_icon_size(48)
+        settings.set_toolbar_icon_size(0)
+        assert settings.get_toolbar_icon_size() == 0
+
+    def test_unknown_size_is_system(self):
+        settings.set_toolbar_icon_size(20)
+        assert settings.get_toolbar_icon_size() == 0
+
+    def test_invalid_stored_value_is_system(self):
+        settings._settings().setValue("appearance/toolbar_icon_size", "huge")
+        assert settings.get_toolbar_icon_size() == 0
+        settings._settings().setValue("appearance/toolbar_icon_size", 20)
+        assert settings.get_toolbar_icon_size() == 0
 
 
 class TestPreviewDelay:

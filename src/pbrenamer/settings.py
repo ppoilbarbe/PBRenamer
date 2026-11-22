@@ -372,6 +372,29 @@ def set_preview_delay(ms: int) -> None:
     )
 
 
+# Toolbar icon sizes offered in the settings; 0 means the environment's size.
+TOOLBAR_ICON_SIZES = (16, 24, 32, 48, 64, 96, 128)
+_TOOLBAR_ICON_SIZE_KEY = "appearance/toolbar_icon_size"
+
+
+def get_toolbar_icon_size() -> int:
+    """Return the toolbar icon size in pixels, or 0 for the system size."""
+    try:
+        val = int(_settings().value(_TOOLBAR_ICON_SIZE_KEY, 0))
+    except (TypeError, ValueError):
+        return 0
+    return val if val in TOOLBAR_ICON_SIZES else 0
+
+
+def set_toolbar_icon_size(size: int) -> None:
+    """Persist the toolbar icon size (0: system size; other values must be
+    one of :data:`TOOLBAR_ICON_SIZES`, else the system size is stored)."""
+    size = int(size)
+    _settings().setValue(
+        _TOOLBAR_ICON_SIZE_KEY, size if size in TOOLBAR_ICON_SIZES else 0
+    )
+
+
 def apply_log_level(level: str | None = None) -> None:
     """Set the root logger level to *level* (or the saved level if None).
 

@@ -228,6 +228,20 @@ class TestSettingsDialog:
         assert _cfg.get_restore_last_dir() is True
         assert _cfg.get_preview_delay() == 300
 
+    def test_toolbar_icon_size_choices(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        _cfg.set_toolbar_icon_size(64)
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        combo = dlg._ui.cmbToolbarIconSize
+        data = [combo.itemData(i) for i in range(combo.count())]
+        assert data == [0, 16, 24, 32, 48, 64, 96, 128]
+        assert combo.currentData() == 64
+        combo.setCurrentIndex(0)
+        dlg._save_and_accept()
+        assert _cfg.get_toolbar_icon_size() == 0
+
     def _profile_items(self, dlg):
         combo = dlg._ui.cmbDefaultProfile
         return [(combo.itemText(i), combo.itemData(i)) for i in range(combo.count())]

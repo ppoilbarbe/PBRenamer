@@ -69,6 +69,15 @@ class Ui_SettingsDialog:
         )
         form.addRow(_("Default profile:"), self.cmbDefaultProfile)
 
+        self.cmbToolbarIconSize = QComboBox(tab)
+        self.cmbToolbarIconSize.setToolTip(
+            _(
+                "Size of the icons of the toolbar buttons; System uses the size"
+                " set by the desktop environment"
+            )
+        )
+        form.addRow(_("Toolbar icon size:"), self.cmbToolbarIconSize)
+
         layout.addLayout(form)
 
         # Behaviour group

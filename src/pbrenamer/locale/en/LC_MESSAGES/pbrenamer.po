@@ -529,11 +529,25 @@ msgstr "Show metadata panel"
 msgid "Cannot load image."
 msgstr "Cannot load image."
 
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Switch to linear navigation (stop at the ends of the list)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Confirm deletions (click to delete without asking)"
 
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Switch to circular navigation (wrap around at the ends of the list)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Delete without confirmation (click to ask first)"
+
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
 
 msgid " (max)"
 msgstr " (max)"
@@ -693,6 +707,9 @@ msgstr "Open with the default application"
 
 msgid "Delete current image and its sidecars"
 msgstr "Delete current image and its sidecars"
+
+msgid "Ask / do not ask before deleting"
+msgstr "Ask / do not ask before deleting"
 
 msgid "Close image viewer"
 msgstr "Close image viewer"
@@ -2420,6 +2437,9 @@ msgstr "(empty)"
 msgid "System default"
 msgstr "System default"
 
+msgid "System"
+msgstr "System"
+
 msgid "Last profile used"
 msgstr "Last profile used"
 
@@ -2453,6 +2473,16 @@ msgstr "Profile opened at start-up and used by the command line without --profil
 
 msgid "Default profile:"
 msgstr "Default profile:"
+
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+
+msgid "Toolbar icon size:"
+msgstr "Toolbar icon size:"
 
 msgid "Behaviour"
 msgstr "Behaviour"

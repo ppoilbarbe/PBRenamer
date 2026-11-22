@@ -675,12 +675,28 @@ msgid "Cannot load image."
 msgstr "No se puede cargar la imagen."
 
 # ==AUTO== Automatically translated
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Cambiar a navegación lineal (detenerse en los extremos de la lista)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Confirmar eliminaciones (clic para eliminar sin preguntar)"
 
 # ==AUTO== Automatically translated
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Cambiar a navegación circular (volver al otro extremo de la lista)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Eliminar sin confirmación (clic para preguntar antes)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Navegación circular, vuelve al principio en los extremos de la lista "
+"(clic para navegación lineal)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Navegación lineal, se detiene en los extremos de la lista (clic para "
+"navegación circular)"
 
 # ==AUTO== Automatically translated
 msgid " (max)"
@@ -895,6 +911,10 @@ msgstr "Abrir con la aplicación predeterminada"
 # ==AUTO== Automatically translated
 msgid "Delete current image and its sidecars"
 msgstr "Eliminar la imagen actual y sus sidecars"
+
+# ==AUTO== Automatically translated
+msgid "Ask / do not ask before deleting"
+msgstr "Preguntar / no preguntar antes de eliminar"
 
 # ==AUTO== Automatically translated
 msgid "Close image viewer"
@@ -3124,6 +3144,10 @@ msgid "System default"
 msgstr "Predeterminado del sistema"
 
 # ==AUTO== Automatically translated
+msgid "System"
+msgstr "Sistema"
+
+# ==AUTO== Automatically translated
 msgid "Last profile used"
 msgstr "Último perfil usado"
 
@@ -3167,6 +3191,18 @@ msgstr "Perfil abierto al inicio y usado por la línea de comandos sin --profile
 # ==AUTO== Automatically translated
 msgid "Default profile:"
 msgstr "Perfil predeterminado:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Tamaño de los iconos de los botones de las barras de herramientas; "
+"Sistema usa el tamaño definido por el entorno de escritorio"
+
+# ==AUTO== Automatically translated
+msgid "Toolbar icon size:"
+msgstr "Tamaño de iconos de las barras de herramientas:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

@@ -799,7 +799,7 @@ def test_circular_mode_defaults_to_linear(qtbot, sample_png):
     viewer = ImageViewer(sample_png)
     qtbot.addWidget(viewer)
     assert viewer.circular_navigation is False
-    assert "circular" in viewer._circular_btn.toolTip()
+    assert viewer._circular_btn.toolTip().startswith("Linear navigation")
 
 
 def test_toggle_circular_updates_button_and_persists(qtbot, sample_png):
@@ -807,7 +807,7 @@ def test_toggle_circular_updates_button_and_persists(qtbot, sample_png):
     qtbot.addWidget(viewer)
     viewer._circular_btn.click()
     assert viewer.circular_navigation is True
-    assert "linear" in viewer._circular_btn.toolTip()
+    assert viewer._circular_btn.toolTip().startswith("Circular navigation")
 
     reopened = ImageViewer(sample_png)
     qtbot.addWidget(reopened)
@@ -815,7 +815,25 @@ def test_toggle_circular_updates_button_and_persists(qtbot, sample_png):
 
     reopened._circular_btn.click()
     assert reopened.circular_navigation is False
-    assert "circular" in reopened._circular_btn.toolTip()
+    assert reopened._circular_btn.toolTip().startswith("Linear navigation")
+
+
+@pytest.mark.parametrize(
+    ("circular", "shown", "other"),
+    [(False, "list-linear", "list-circular"), (True, "list-circular", "list-linear")],
+)
+def test_circular_button_shows_current_mode(qtbot, sample_png, circular, shown, other):
+    settings = image_viewer.settings
+    with patch.object(settings, "get_viewer_circular", return_value=circular):
+        viewer = ImageViewer(sample_png)
+        qtbot.addWidget(viewer)
+
+    def image(icon):
+        return icon.pixmap(32, 32).toImage()
+
+    assert viewer.circular_navigation is circular
+    assert image(viewer._circular_btn.icon()) == image(image_viewer._icon(shown))
+    assert image(viewer._circular_btn.icon()) != image(image_viewer._icon(other))
 
 
 def _arrow(viewer, key):
@@ -1068,3 +1086,86 @@ class TestLazyStrip:
         viewer.set_selection(paths[:2])
         assert strip._loaded == set()
         qtbot.waitUntil(lambda: strip._loaded == {0, 1})
+
+
+# ---------------------------------------------------------------------------
+# Deletion confirmation toggle
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("confirm", [True, False])
+def test_confirm_button_starts_from_argument(qtbot, sample_png, confirm):
+    viewer = ImageViewer(sample_png, confirm_deletions=confirm)
+    qtbot.addWidget(viewer)
+    assert viewer.confirm_deletions is confirm
+    assert viewer._confirm_btn.isChecked() is confirm
+
+
+def test_confirm_button_toggles_and_changes_icon(qtbot, sample_png):
+    with patch.object(image_viewer, "_icon", wraps=image_viewer._icon) as icon:
+        viewer = ImageViewer(sample_png)
+        qtbot.addWidget(viewer)
+        icon.assert_any_call("delete-ask")
+        assert "Confirm deletions" in viewer._confirm_btn.toolTip()
+        icon.reset_mock()
+        viewer._act_toggle_confirm()
+        assert viewer.confirm_deletions is False
+        icon.assert_called_with("delete-noask")
+        assert "without confirmation" in viewer._confirm_btn.toolTip()
+        viewer.set_confirm_deletions(True)
+        icon.assert_called_with("delete-ask")
+        assert viewer.confirm_deletions is True
+
+
+def test_confirm_button_shortcut(qtbot, sample_png):
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    viewer.show()
+    viewer.activateWindow()
+    qtbot.waitUntil(viewer.isActiveWindow)
+    qtbot.keyClick(viewer, Qt.Key.Key_Delete, Qt.KeyboardModifier.ControlModifier)
+    assert viewer.confirm_deletions is False
+
+
+def test_confirm_icon_resource_exists():
+    for name in ("delete-ask.svg", "delete-noask.svg"):
+        assert os.path.exists(image_viewer._resource(name))
+
+
+# ---------------------------------------------------------------------------
+# Toolbar icon size
+# ---------------------------------------------------------------------------
+
+
+def test_icon_size_from_settings(qtbot, sample_png):
+    from PySide6.QtCore import QSize
+
+    from pbrenamer import settings
+
+    settings.set_toolbar_icon_size(32)
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    assert {b.iconSize() for b in viewer._icon_buttons} == {QSize(32, 32)}
+    assert viewer._metadata_btn in viewer._icon_buttons
+    assert viewer._circular_btn in viewer._icon_buttons
+
+
+def test_icon_size_system_follows_style(qtbot, sample_png):
+    from PySide6.QtWidgets import QStyle
+
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    expected = viewer.style().pixelMetric(QStyle.PixelMetric.PM_ToolBarIconSize)
+    assert viewer._zoom_buttons[0].iconSize().width() == expected
+
+
+def test_apply_icon_size(qtbot, sample_png):
+    from PySide6.QtCore import QSize
+
+    from pbrenamer import settings
+
+    viewer = ImageViewer(sample_png)
+    qtbot.addWidget(viewer)
+    settings.set_toolbar_icon_size(128)
+    viewer.apply_icon_size()
+    assert {b.iconSize() for b in viewer._icon_buttons} == {QSize(128, 128)}

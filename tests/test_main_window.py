@@ -1594,6 +1594,27 @@ class TestMenuHandlers:
         monkeypatch.setattr(SettingsDialog, "exec", lambda self: 0)
         window._on_settings()
 
+    def test_on_settings_resizes_viewer_icons(self, window, monkeypatch, tmp_path):
+        from PIL import Image
+        from PySide6.QtCore import QSize
+
+        from pbrenamer import settings
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        path = tmp_path / "a.png"
+        Image.new("RGB", (4, 4)).save(path)
+        window._file_actions.show_in_viewer(str(path))
+        viewer = window._file_actions._viewer
+
+        def exec_(_self):
+            settings.set_toolbar_icon_size(48)
+            return 1
+
+        monkeypatch.setattr(SettingsDialog, "exec", exec_)
+        window._on_settings()
+        assert viewer._confirm_btn.iconSize() == QSize(48, 48)
+        assert viewer._zoom_buttons[0].iconSize() == QSize(48, 48)
+
     def test_on_settings_refreshes_preview_when_normalize_mode(
         self, window, monkeypatch, tmp_path
     ):

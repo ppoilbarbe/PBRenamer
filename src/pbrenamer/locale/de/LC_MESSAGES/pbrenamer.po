@@ -676,12 +676,28 @@ msgid "Cannot load image."
 msgstr "Bild kann nicht geladen werden."
 
 # ==AUTO== Automatically translated
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Zur linearen Navigation wechseln (an den Listenenden anhalten)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Löschungen bestätigen (klicken, um ohne Nachfrage zu löschen)"
 
 # ==AUTO== Automatically translated
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Zur zirkulären Navigation wechseln (an den Listenenden umlaufen)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Ohne Bestätigung löschen (klicken, um vorher nachzufragen)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Zirkuläre Navigation, beginnt an den Enden der Liste von vorn (klicken "
+"für lineare Navigation)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Lineare Navigation, hält an den Enden der Liste an (klicken für zirkuläre"
+" Navigation)"
 
 # ==AUTO== Automatically translated
 msgid " (max)"
@@ -896,6 +912,10 @@ msgstr "Mit der Standardanwendung öffnen"
 # ==AUTO== Automatically translated
 msgid "Delete current image and its sidecars"
 msgstr "Aktuelles Bild und seine Sidecar-Dateien löschen"
+
+# ==AUTO== Automatically translated
+msgid "Ask / do not ask before deleting"
+msgstr "Vor dem Löschen nachfragen / nicht nachfragen"
 
 # ==AUTO== Automatically translated
 msgid "Close image viewer"
@@ -3121,6 +3141,10 @@ msgid "System default"
 msgstr "Systemstandard"
 
 # ==AUTO== Automatically translated
+msgid "System"
+msgstr "System"
+
+# ==AUTO== Automatically translated
 msgid "Last profile used"
 msgstr "Zuletzt verwendetes Profil"
 
@@ -3166,6 +3190,18 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Default profile:"
 msgstr "Standardprofil:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Größe der Symbole der Werkzeugleisten-Schaltflächen; System verwendet die"
+" von der Desktop-Umgebung festgelegte Größe"
+
+# ==AUTO== Automatically translated
+msgid "Toolbar icon size:"
+msgstr "Symbolgröße der Werkzeugleisten:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

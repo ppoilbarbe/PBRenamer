@@ -534,11 +534,25 @@ msgstr "Afficher le panneau des métadonnées"
 msgid "Cannot load image."
 msgstr "Impossible de charger l'image."
 
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Passer en navigation linéaire (arrêt aux extrémités de la liste)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Confirmation des suppressions (cliquer pour supprimer sans demander)"
 
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Passer en navigation circulaire (bouclage aux extrémités de la liste)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Suppression sans confirmation (cliquer pour demander avant)"
+
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Navigation circulaire, bouclage aux extrémités de la liste (cliquer pour "
+"la navigation linéaire)"
+
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Navigation linéaire, arrêt aux extrémités de la liste (cliquer pour la "
+"navigation circulaire)"
 
 msgid " (max)"
 msgstr " (max)"
@@ -698,6 +712,9 @@ msgstr "Ouvrir avec l'application par défaut"
 
 msgid "Delete current image and its sidecars"
 msgstr "Supprimer l'image affichée et ses sidecars"
+
+msgid "Ask / do not ask before deleting"
+msgstr "Demander ou non avant de supprimer"
 
 msgid "Close image viewer"
 msgstr "Fermer le visualiseur d'images"
@@ -2472,6 +2489,9 @@ msgstr "(vide)"
 msgid "System default"
 msgstr "Langue du système"
 
+msgid "System"
+msgstr "Système"
+
 msgid "Last profile used"
 msgstr "Dernier profil utilisé"
 
@@ -2507,6 +2527,16 @@ msgstr ""
 
 msgid "Default profile:"
 msgstr "Profil par défaut :"
+
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Taille des icônes des boutons des barres d'outils ; Système utilise la "
+"taille définie par l'environnement de bureau"
+
+msgid "Toolbar icon size:"
+msgstr "Taille des icônes des barres d'outils :"
 
 msgid "Behaviour"
 msgstr "Comportement"

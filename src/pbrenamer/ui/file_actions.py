@@ -232,6 +232,12 @@ class FileActions(QObject):
         media = self._media(self._files.selected_bases())
         if self._viewer is None:
             self._viewer = self._create_viewer()
+        elif not self._viewer.isVisible():
+            # Reopened: the deletion confirmation starts again from the
+            # profile, whatever the toolbar button was set to last time.
+            self._viewer.set_confirm_deletions(
+                profiles.load()["files"]["confirm_deletions"]
+            )
         if path in media and len(media) > 1:
             self._viewer.set_selection(media, current=path)
         else:
@@ -275,6 +281,7 @@ class FileActions(QObject):
             metadata_panel_side=options["metadata_panel_side"],
             video_extensions=self._extensions("video"),
             sidecars_of=lambda p: self._files.sidecars_map([p])[p],
+            confirm_deletions=profiles.load()["files"]["confirm_deletions"],
         )
         viewer.navigate_prev.connect(lambda: self._navigate_viewer(-1))
         viewer.navigate_next.connect(lambda: self._navigate_viewer(+1))
@@ -287,6 +294,11 @@ class FileActions(QObject):
         viewer.rotate_requested.connect(self._rotate_from_viewer)
         viewer.field_requested.connect(self._files.field_requested)
         return viewer
+
+    def apply_icon_size(self) -> None:
+        """Settings changed: the viewer resizes its toolbar icons."""
+        if self._viewer is not None:
+            self._viewer.apply_icon_size()
 
     def apply_profile(self) -> None:
         """Profile changed: the viewer is rebuilt with its settings."""
@@ -365,9 +377,12 @@ class FileActions(QObject):
     def delete_selected(self) -> None:
         self.delete(self.targets(), self._window)
 
-    def delete(self, paths: list[str], parent=None) -> list[str]:
+    def delete(
+        self, paths: list[str], parent=None, *, confirm: bool | None = None
+    ) -> list[str]:
         """Delete *paths*, with their sidecars in sidecar mode; return the
-        deleted files.
+        deleted files.  *confirm*, when given, overrides the profile's
+        deletion confirmation.
 
         When nothing stays selected, the next file of the list is selected
         (the previous one after the last row), and the viewer follows."""
@@ -375,7 +390,10 @@ class FileActions(QObject):
             return []
         files = self._with_sidecars(paths)
         return self._delete_and_select(
-            files, parent or self._window, self._files.next_path_after(files)
+            files,
+            parent or self._window,
+            self._files.next_path_after(files),
+            confirm=confirm,
         )
 
     def _with_sidecars(self, paths: list[str]) -> list[str]:
@@ -387,7 +405,12 @@ class FileActions(QObject):
         return list(dict.fromkeys(f for p in paths for f in [p, *sidecars[p]]))
 
     def _delete_and_select(
-        self, files: list[str], parent, next_path: str | None
+        self,
+        files: list[str],
+        parent,
+        next_path: str | None,
+        *,
+        confirm: bool | None = None,
     ) -> list[str]:
         """Delete *files*, then select *next_path* unless part of the
         selection remains.  A viewer left on a deleted file (the selected
@@ -397,7 +420,7 @@ class FileActions(QObject):
             viewer = None
         shown = viewer.current_path if viewer is not None else None
         fallback = self._neighbour_media(shown, set(files)) if shown in files else None
-        deleted = self.delete_files(files, parent)
+        deleted = self.delete_files(files, parent, confirm=confirm)
         if not deleted:
             return deleted
         self._files.reload()
@@ -447,15 +470,16 @@ class FileActions(QObject):
 
     def _delete_viewer_file(self, viewer: ImageViewer, path: str) -> None:
         selection = viewer.selection_paths
+        confirm = viewer.confirm_deletions
         if len(selection) < 2 or path not in selection:
             files = self._with_sidecars([path])
             target = self._neighbour_media(path, set(files))
             if target is None:
                 target = self._files.next_path_after(files)
-            self._delete_and_select(files, viewer, target)
+            self._delete_and_select(files, viewer, target, confirm=confirm)
             return
         index = selection.index(path)
-        deleted = set(self.delete([path], viewer))
+        deleted = set(self.delete([path], viewer, confirm=confirm))
         remaining = [p for p in selection if p not in deleted]
         if path not in deleted or not remaining:
             return
@@ -468,15 +492,20 @@ class FileActions(QObject):
         viewer.set_selection(remaining, current=current)
         self._files.set_current_path(current)
 
-    def delete_files(self, files: list[str], parent) -> list[str]:
-        """Confirm (per profile), then delete *files* as the profile's
-        deletion mode says; return the deleted ones.
+    def delete_files(
+        self, files: list[str], parent, *, confirm: bool | None = None
+    ) -> list[str]:
+        """Confirm (per profile, unless *confirm* is given), then delete
+        *files* as the profile's deletion mode says; return the deleted ones.
+        Permanently deleting the files a trash cannot take is always asked.
 
         Files moved to a trash (system or session) form one undoable batch.
         Errors are reported together."""
         options = profiles.load()["files"]
         mode = options["deletion_mode"]
-        if options["confirm_deletions"] and not _ask(
+        if confirm is None:
+            confirm = options["confirm_deletions"]
+        if confirm and not _ask(
             parent, _("Confirm deletion"), self._confirm_text(files, options)
         ):
             return []

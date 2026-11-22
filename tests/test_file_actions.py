@@ -652,6 +652,63 @@ class TestDelete:
         QTest.keyClick(viewer, Qt.Key.Key_Right)
         assert viewer.current_path == p["c.png"]
 
+    def test_from_viewer_without_confirmation(self, window, tmp_path, calls, trash):
+        """The viewer's button skips the question, the profile is unchanged."""
+        a, _b = _png(tmp_path / "a.png"), _png(tmp_path / "b.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
+        assert viewer.confirm_deletions is True
+        viewer._act_toggle_confirm()
+        viewer.delete_requested.emit()
+        assert trash == [a]
+        assert calls["ask"] == []
+        assert profiles.load()["files"]["confirm_deletions"] is True
+
+    def test_from_viewer_confirmation_without_profile_one(
+        self, window, tmp_path, calls, trash
+    ):
+        self._set(confirm_deletions=False)
+        a = _png(tmp_path / "a.png")
+        _png(tmp_path / "b.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
+        assert viewer.confirm_deletions is False
+        viewer._act_toggle_confirm()
+        viewer.delete_requested.emit()
+        assert calls["ask"] == ["Move to trash:\na.png"]
+        assert profiles.load()["files"]["confirm_deletions"] is False
+
+    def test_from_viewer_selection_without_confirmation(
+        self, window, tmp_path, calls, trash
+    ):
+        a = _png(tmp_path / "a.png")
+        _png(tmp_path / "b.png")
+        _load(window, tmp_path)
+        _select(window, "a.png", "b.png")
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
+        viewer.set_confirm_deletions(False)
+        viewer.delete_requested.emit()
+        assert trash == [a]
+        assert calls["ask"] == []
+
+    def test_viewer_confirmation_reset_on_reopen(self, window, tmp_path, calls):
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        window._file_actions.show_in_viewer(a)
+        viewer = window._file_actions._viewer
+        viewer.set_confirm_deletions(False)
+        window._file_actions.show_in_viewer(a)  # still open: kept
+        assert viewer.confirm_deletions is False
+        viewer.close()
+        window._file_actions.show_in_viewer(a)
+        assert window._file_actions._viewer is viewer
+        assert viewer.confirm_deletions is True
+
     def test_from_viewer_last_media_closes_it(self, window, tmp_path, calls, trash):
         a = _png(tmp_path / "a.png")
         (tmp_path / "b.txt").write_text("x")

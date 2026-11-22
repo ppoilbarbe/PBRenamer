@@ -658,12 +658,24 @@ msgid "Cannot load image."
 msgstr "无法加载图像。"
 
 # ==AUTO== Automatically translated
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "切换到线性浏览（在列表两端停止）"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "删除前确认（点击以不询问直接删除）"
 
 # ==AUTO== Automatically translated
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "切换到循环浏览（到达列表一端时跳到另一端）"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "删除时不确认（点击以在删除前询问）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr "循环导航，在列表两端回到开头（点击切换为线性导航）"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr "线性导航，在列表两端停止（点击切换为循环导航）"
 
 # ==AUTO== Automatically translated
 msgid " (max)"
@@ -876,6 +888,10 @@ msgstr "用默认应用程序打开"
 # ==AUTO== Automatically translated
 msgid "Delete current image and its sidecars"
 msgstr "删除当前图像及其 Sidecar 文件"
+
+# ==AUTO== Automatically translated
+msgid "Ask / do not ask before deleting"
+msgstr "删除前询问 / 不询问"
 
 # ==AUTO== Automatically translated
 msgid "Close image viewer"
@@ -2952,6 +2968,10 @@ msgid "System default"
 msgstr "系统默认"
 
 # ==AUTO== Automatically translated
+msgid "System"
+msgstr "系统"
+
+# ==AUTO== Automatically translated
 msgid "Last profile used"
 msgstr "上次使用的配置文件"
 
@@ -2995,6 +3015,16 @@ msgstr "启动时打开、且命令行在不带 --profile 时使用的配置文�
 # ==AUTO== Automatically translated
 msgid "Default profile:"
 msgstr "默认配置文件："
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr "工具栏按钮图标的大小；“系统”使用桌面环境设定的大小"
+
+# ==AUTO== Automatically translated
+msgid "Toolbar icon size:"
+msgstr "工具栏图标大小："
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

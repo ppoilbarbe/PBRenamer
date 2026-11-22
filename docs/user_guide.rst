@@ -814,14 +814,18 @@ file list.  It offers:
   **Ctrl+click** and **Ctrl+right-click** to zoom on a point;
 * navigation with the arrow keys: within the selection when several files
   are selected, otherwise to the previous or next file of the list; a
-  toolbar button switches between linear navigation (stop at the ends) and
-  circular navigation (wrap around);
+  toolbar button, whose icon shows the current mode, switches between linear
+  navigation (stop at the ends) and circular navigation (wrap around);
 * a strip of thumbnails of the selection, when several files are selected:
   click one to show it;
 * a metadata panel (**I**) showing the EXIF, IPTC and XMP data of the image;
   double-click a field to insert it into the replacement pattern;
 * the image actions: open, open with, delete, rotations and EXIF orientation,
   with the same shortcuts as in the main window; **Esc** closes the viewer.
+  A toolbar button (**Ctrl+Del**) chooses whether deleting from the viewer
+  asks for confirmation: it starts from the *Confirm deletions* setting of
+  the profile each time the viewer opens, and changing it leaves the profile
+  untouched.
   After deleting the file shown, the viewer shows the next file of the
   selection or, for a single file, the next image or video of the list (the
   previous one after the last); it closes when none is left.
@@ -850,6 +854,12 @@ Settings
     Profile opened at start-up and used by headless mode without
     ``--profile``: **Last profile used** (default) or one of the visible
     profiles (see :ref:`profiles`).
+
+**Toolbar icon size**
+    Size of the icons of the toolbar buttons (currently those of the image
+    viewer): **System** (default) uses the toolbar icon size of the desktop
+    environment; the other choices go from 16 × 16 to 128 × 128 pixels.  The
+    change applies at once.
 
 **Restore last opened directory** *(Behaviour group)*
     When enabled, the app reopens the directory that was active in the

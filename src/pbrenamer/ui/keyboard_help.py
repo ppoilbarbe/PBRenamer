@@ -128,6 +128,7 @@ def keyboard_html() -> str:
         (_key("Ctrl+O"), _("Open with the default application")),
         (_key("Ctrl+Shift+O"), _("Open with…")),
         (_key("Del"), _("Delete current image and its sidecars")),
+        (_key("Ctrl+Del"), _("Ask / do not ask before deleting")),
         *rotations,
         (_key("Esc"), _("Close image viewer")),
     ]

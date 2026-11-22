@@ -674,12 +674,28 @@ msgid "Cannot load image."
 msgstr "Не удаётся загрузить изображение."
 
 # ==AUTO== Automatically translated
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Перейти к линейной навигации (остановка на концах списка)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Подтверждать удаление (нажмите, чтобы удалять без вопроса)"
 
 # ==AUTO== Automatically translated
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Перейти к циклической навигации (переход с конца списка на начало)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Удаление без подтверждения (нажмите, чтобы спрашивать)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Круговая навигация, переход к началу на концах списка (нажмите для "
+"линейной навигации)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Линейная навигация, остановка на концах списка (нажмите для круговой "
+"навигации)"
 
 # ==AUTO== Automatically translated
 msgid " (max)"
@@ -894,6 +910,10 @@ msgstr "Открыть в приложении по умолчанию"
 # ==AUTO== Automatically translated
 msgid "Delete current image and its sidecars"
 msgstr "Удалить текущее изображение и его sidecar-файлы"
+
+# ==AUTO== Automatically translated
+msgid "Ask / do not ask before deleting"
+msgstr "Спрашивать / не спрашивать перед удалением"
 
 # ==AUTO== Automatically translated
 msgid "Close image viewer"
@@ -3088,6 +3108,10 @@ msgid "System default"
 msgstr "Системный язык"
 
 # ==AUTO== Automatically translated
+msgid "System"
+msgstr "Системный"
+
+# ==AUTO== Automatically translated
 msgid "Last profile used"
 msgstr "Последний использованный профиль"
 
@@ -3133,6 +3157,18 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Default profile:"
 msgstr "Профиль по умолчанию:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Размер значков кнопок панелей инструментов; «Системный» использует "
+"размер, заданный средой рабочего стола"
+
+# ==AUTO== Automatically translated
+msgid "Toolbar icon size:"
+msgstr "Размер значков панелей инструментов:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"

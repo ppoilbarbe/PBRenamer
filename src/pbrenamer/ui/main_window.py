@@ -596,6 +596,7 @@ class MainWindow(QMainWindow):
 
     def _on_settings(self) -> None:
         SettingsDialog(self._window_state, self).exec()
+        self._file_actions.apply_icon_size()
         if self._pattern.extension_mode() == "normalize":
             self._actions.request_auto_preview()
 

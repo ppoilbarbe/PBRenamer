@@ -32,8 +32,8 @@ from pbrenamer.core.image_io import load_pixmap, load_qimage
 from pbrenamer.resources import path as _resource
 from pbrenamer.ui.geometry_mixin import GeometryMixin
 from pbrenamer.ui.metadata_view import MetadataView
+from pbrenamer.ui.widgets import toolbar_icon_size
 
-_ICON_SIZE = 22
 _METADATA_PANEL_DEFAULT_WIDTH = 320
 _SELECTION_STRIP_THUMB = 56
 _VIDEO_PLACEHOLDER_SIZE = 512
@@ -225,6 +225,7 @@ class ImageViewer(GeometryMixin, QWidget):
         metadata_panel_side: str = "right",
         video_extensions: frozenset[str] = frozenset(),
         sidecars_of: Callable[[str], list[str]] = lambda _path: [],
+        confirm_deletions: bool = True,
     ) -> None:
         super().__init__(parent, Qt.WindowType.Window)
         self.setMinimumSize(300, 200)
@@ -242,6 +243,7 @@ class ImageViewer(GeometryMixin, QWidget):
         self._metadata_side = metadata_panel_side
         self._video_extensions = video_extensions
         self._sidecars_of = sidecars_of
+        self._confirm_deletions = confirm_deletions
         self._video_mode = False
         self._selection_paths: list[str] = []
         self._selection_index = 0
@@ -297,7 +299,8 @@ class ImageViewer(GeometryMixin, QWidget):
     def _tool_button(self, icon: str, tip: str, slot, *, checkable=False):
         btn = QToolButton()
         btn.setIcon(_icon(icon))
-        btn.setIconSize(QSize(_ICON_SIZE, _ICON_SIZE))
+        btn.setIconSize(toolbar_icon_size(self))
+        self._icon_buttons.append(btn)
         btn.setToolTip(tip)
         btn.setCheckable(checkable)
         btn.clicked.connect(lambda _checked=False: slot())
@@ -311,6 +314,7 @@ class ImageViewer(GeometryMixin, QWidget):
         return sep
 
     def _build_toolbar(self) -> QHBoxLayout:
+        self._icon_buttons: list[QToolButton] = []
         tb = QHBoxLayout()
         tb.setSpacing(2)
 
@@ -371,6 +375,12 @@ class ImageViewer(GeometryMixin, QWidget):
                 "delete", _("Delete") + "  Del", self.delete_requested.emit
             ),
         ]
+        self._confirm_btn = self._tool_button(
+            "delete-ask", "", lambda: None, checkable=True
+        )
+        self._confirm_btn.setChecked(self._confirm_deletions)
+        self._confirm_btn.toggled.connect(self._on_confirm_toggled)
+        self._update_confirm_button()
         self._metadata_btn = self._tool_button(
             "document-properties",
             _("Show metadata panel") + "  I",
@@ -393,6 +403,7 @@ class ImageViewer(GeometryMixin, QWidget):
             for btn in group:
                 tb.addWidget(btn)
             tb.addWidget(self._separator())
+        tb.addWidget(self._confirm_btn)
         tb.addWidget(self._metadata_btn)
         tb.addWidget(self._circular_btn)
 
@@ -428,6 +439,7 @@ class ImageViewer(GeometryMixin, QWidget):
             (QKeySequence(ctrl | Qt.Key.Key_O), self.open_requested),
             (QKeySequence(ctrl | shift | Qt.Key.Key_O), self.open_with_requested),
             (QKeySequence(Qt.Key.Key_Delete), self.delete_requested),
+            (QKeySequence(ctrl | Qt.Key.Key_Delete), self._act_toggle_confirm),
             (QKeySequence(Qt.Key.Key_F6), lambda: self.rotate_requested.emit(-90)),
             (QKeySequence(Qt.Key.Key_F7), lambda: self.rotate_requested.emit(180)),
             (QKeySequence(Qt.Key.Key_F8), lambda: self.rotate_requested.emit(90)),
@@ -568,18 +580,54 @@ class ImageViewer(GeometryMixin, QWidget):
         settings.set_viewer_circular(self._circular)
         self._update_circular_button()
 
+    def apply_icon_size(self) -> None:
+        """Resize the toolbar icons after a change of the settings."""
+        size = toolbar_icon_size(self)
+        for btn in self._icon_buttons:
+            btn.setIconSize(size)
+
+    @property
+    def confirm_deletions(self) -> bool:
+        """Whether a deletion from the viewer asks for confirmation.  It
+        starts from the profile when the viewer opens; the toolbar button
+        changes it for this viewing only, never the profile."""
+        return self._confirm_deletions
+
+    def set_confirm_deletions(self, confirm: bool) -> None:
+        self._confirm_btn.setChecked(confirm)
+
+    def _on_confirm_toggled(self, checked: bool) -> None:
+        self._confirm_deletions = checked
+        self._update_confirm_button()
+
+    def _act_toggle_confirm(self) -> None:
+        self._confirm_btn.toggle()
+
+    def _update_confirm_button(self) -> None:
+        # Checked: deleting asks first (delete-ask icon); unchecked: it does not.
+        if self._confirm_deletions:
+            self._confirm_btn.setIcon(_icon("delete-ask"))
+            tip = _("Confirm deletions (click to delete without asking)")
+        else:
+            self._confirm_btn.setIcon(_icon("delete-noask"))
+            tip = _("Delete without confirmation (click to ask first)")
+        self._confirm_btn.setToolTip(tip + "  Ctrl+Del")
+
     def _update_circular_button(self) -> None:
-        # The button shows the mode a click switches to, not the current one.
+        # The button shows the current mode; the tooltip says what a click does.
         if self._circular:
-            self._circular_btn.setIcon(_icon("list-linear"))
-            self._circular_btn.setToolTip(
-                _("Switch to linear navigation (stop at the ends of the list)")
+            self._circular_btn.setIcon(_icon("list-circular"))
+            tip = _(
+                "Circular navigation, wraps around at the ends of the list"
+                " (click for linear navigation)"
             )
         else:
-            self._circular_btn.setIcon(_icon("list-circular"))
-            self._circular_btn.setToolTip(
-                _("Switch to circular navigation (wrap around at the ends of the list)")
+            self._circular_btn.setIcon(_icon("list-linear"))
+            tip = _(
+                "Linear navigation, stops at the ends of the list"
+                " (click for circular navigation)"
             )
+        self._circular_btn.setToolTip(tip)
 
     def set_metadata_panel_side(self, side: str) -> None:
         if side != self._metadata_side:

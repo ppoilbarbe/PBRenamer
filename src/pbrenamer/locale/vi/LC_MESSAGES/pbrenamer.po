@@ -671,12 +671,28 @@ msgid "Cannot load image."
 msgstr "Không thể tải hình ảnh."
 
 # ==AUTO== Automatically translated
-msgid "Switch to linear navigation (stop at the ends of the list)"
-msgstr "Chuyển sang điều hướng tuyến tính (dừng ở hai đầu danh sách)"
+msgid "Confirm deletions (click to delete without asking)"
+msgstr "Xác nhận khi xóa (nhấp để xóa mà không hỏi)"
 
 # ==AUTO== Automatically translated
-msgid "Switch to circular navigation (wrap around at the ends of the list)"
-msgstr "Chuyển sang điều hướng vòng tròn (quay vòng ở hai đầu danh sách)"
+msgid "Delete without confirmation (click to ask first)"
+msgstr "Xóa không cần xác nhận (nhấp để hỏi trước)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Circular navigation, wraps around at the ends of the list (click for "
+"linear navigation)"
+msgstr ""
+"Điều hướng vòng, quay lại từ đầu ở hai đầu danh sách (nhấp để chuyển sang"
+" điều hướng tuyến tính)"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Linear navigation, stops at the ends of the list (click for circular "
+"navigation)"
+msgstr ""
+"Điều hướng tuyến tính, dừng ở hai đầu danh sách (nhấp để chuyển sang điều"
+" hướng vòng)"
 
 # ==AUTO== Automatically translated
 msgid " (max)"
@@ -889,6 +905,10 @@ msgstr "Mở bằng ứng dụng mặc định"
 # ==AUTO== Automatically translated
 msgid "Delete current image and its sidecars"
 msgstr "Xóa ảnh hiện tại và sidecar của nó"
+
+# ==AUTO== Automatically translated
+msgid "Ask / do not ask before deleting"
+msgstr "Hỏi / không hỏi trước khi xóa"
 
 # ==AUTO== Automatically translated
 msgid "Close image viewer"
@@ -3065,6 +3085,10 @@ msgid "System default"
 msgstr "Mặc định hệ thống"
 
 # ==AUTO== Automatically translated
+msgid "System"
+msgstr "Hệ thống"
+
+# ==AUTO== Automatically translated
 msgid "Last profile used"
 msgstr "Hồ sơ dùng lần cuối"
 
@@ -3108,6 +3132,18 @@ msgstr "Hồ sơ được mở khi khởi động và được dòng lệnh dùn
 # ==AUTO== Automatically translated
 msgid "Default profile:"
 msgstr "Hồ sơ mặc định:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the toolbar buttons; System uses the size set by the"
+" desktop environment"
+msgstr ""
+"Kích thước biểu tượng của các nút trên thanh công cụ; Hệ thống dùng kích "
+"thước do môi trường máy tính để bàn quy định"
+
+# ==AUTO== Automatically translated
+msgid "Toolbar icon size:"
+msgstr "Kích thước biểu tượng thanh công cụ:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
