@@ -116,6 +116,7 @@ class FileActions(QObject):
         files.selection_changed.connect(self.update_enabled)
         files.selection_changed.connect(self._sync_viewer)
         files.files_reloaded.connect(self._on_files_reloaded)
+        files.directory_loaded.connect(lambda: self._sync_viewer(first_listed=True))
         files.view_requested.connect(self.show_in_viewer)
 
     # ── Targets ───────────────────────────────────────────────────────────────
@@ -282,15 +283,19 @@ class FileActions(QObject):
         self._viewer.raise_()
         self._viewer.activateWindow()
 
-    def _sync_viewer(self) -> None:
+    def _sync_viewer(self, first_listed: bool = False) -> None:
         """Selection changed while the viewer is shown: it browses the
         selected media files.  It shows the current row when selected (the
         file just added), else keeps its file if still selected, else the
-        first one.  An empty or media-less selection leaves it unchanged."""
+        first one.  An empty or media-less selection leaves it unchanged,
+        except with *first_listed* (a folder just opened, nothing selected):
+        the viewer then shows the first media file listed."""
         viewer = self._viewer
         if viewer is None or not viewer.isVisible():
             return
         media = self._media(self._files.selected_bases())
+        if first_listed and not self._files.selected_paths():
+            media = self._media(self._files.listed_bases())[:1]
         if not media:
             return
         item = self._ui.tblFiles.currentItem()

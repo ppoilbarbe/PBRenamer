@@ -1427,6 +1427,26 @@ class TestViewerFollowsSelection:
         _select(window, "t.txt")
         assert viewer.selection_paths == [p["b.png"]]
 
+    def test_new_directory_shows_its_first_media(self, window, tmp_path):
+        viewer, _ = self._open(window, tmp_path, "a.png")
+        other = tmp_path / "other"
+        (other / "sub").mkdir(parents=True)
+        (other / "0.txt").write_text("x")
+        first = _png(other / "m.png")
+        _png(other / "n.png")
+        _load(window, other)
+        assert window._files.selected_paths() == []
+        assert viewer.selection_paths == [first]
+        assert viewer.current_path == first
+
+    def test_new_directory_without_media_ignored(self, window, tmp_path):
+        viewer, p = self._open(window, tmp_path, "a.png")
+        other = tmp_path / "other"
+        other.mkdir()
+        (other / "t.txt").write_text("x")
+        _load(window, other)
+        assert viewer.current_path == p["a.png"]
+
     def test_unchanged_selection_not_reloaded(self, window, tmp_path, monkeypatch):
         viewer, p = self._open(window, tmp_path, "a.png", "b.png")
         _select(window, "a.png", "b.png")

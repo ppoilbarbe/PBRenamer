@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - User guide: drag and drop copies are recorded on the undo stack (undoing deletes the copies);
   the guide said only moves were.
+- Changing the current directory in the directory tree no longer leaves the image viewer and the
+  file information window on a file of the previous directory: the viewer shows the first media
+  file of the new directory and the information window its first row (nothing gets selected, so
+  Rename still applies to every file).
 
 ## [2.4.0] - 2026-11-22
 

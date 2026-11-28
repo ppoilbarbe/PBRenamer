@@ -87,6 +87,8 @@ class FileListController(QObject):
     """
 
     files_reloaded = Signal()
+    # A different directory was loaded (after files_reloaded).
+    directory_loaded = Signal()
     selection_changed = Signal()
     rename_count_changed = Signal(int)
     undo_stack_changed = Signal()
@@ -400,6 +402,12 @@ class FileListController(QObject):
         self.rename_count_changed.emit(0)
         self.update_file_count()
         self.files_reloaded.emit()
+        if not same_dir:
+            # Nothing is selected: the file information window shows the
+            # first row, now current, instead of a file of the old folder.
+            if self._file_info is not None and self._file_info.isVisible():
+                self._refresh_file_info(follow_current=True)
+            self.directory_loaded.emit()
 
     # ── Selection and current row ─────────────────────────────────────────────
 
@@ -735,6 +743,21 @@ class FileListController(QObject):
         if self._sidecar_result is None:
             return paths
         return list(dict.fromkeys(self.base_of(p) for p in paths))
+
+    def shown_bases(self, follow_current: bool = False) -> list[str]:
+        """Files the information window shows: the selected bases or, with
+        *follow_current* and nothing selected, the base of the current row
+        (the first row of a folder just opened)."""
+        paths = self.selected_bases()
+        if paths or not follow_current:
+            return paths
+        item = self._ui.tblFiles.currentItem()
+        path = item.data(0, Qt.ItemDataRole.UserRole) if item is not None else None
+        return [self.base_of(path)] if path else []
+
+    def listed_bases(self) -> list[str]:
+        """Listed paths, sidecars left out in sidecar mode."""
+        return [p for p in self.listed_paths() if self.base_of(p) == p]
 
     def base_of(self, path: str) -> str:
         """Base file of *path* when it is a sidecar in sidecar mode, else
@@ -1175,10 +1198,10 @@ class FileListController(QObject):
         self._file_info.raise_()
         self._file_info.activateWindow()
 
-    def _refresh_file_info(self) -> None:
+    def _refresh_file_info(self, follow_current: bool = False) -> None:
         if self._file_info is None:
             return
-        paths = self.selected_bases()
+        paths = self.shown_bases(follow_current)
         if len(paths) > 1:
             self._file_info.show_multiple()
         elif paths and paths[0]:

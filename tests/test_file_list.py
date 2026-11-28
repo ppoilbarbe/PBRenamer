@@ -894,6 +894,21 @@ class TestSelectedBases:
         ctrl._refresh_file_info()
         assert shown[-1] == "multiple"
 
+    def test_file_info_follows_new_directory(self, files, tmp_path):
+        ctrl, ui = files
+        (tmp_path / "a" / "b").mkdir(parents=True)
+        (tmp_path / "a" / "a.txt").write_text("x")
+        (tmp_path / "c").mkdir()
+        (tmp_path / "c" / "c.txt").write_text("x")
+        ctrl.set_directory(str(tmp_path / "a"))
+        ctrl.show_file_info()
+        shown = []
+        ctrl._file_info.update_file = shown.append
+        ctrl.set_directory(str(tmp_path / "c"))
+        assert shown == [str(tmp_path / "c" / "c.txt")]
+        ctrl.reload()  # same directory: no refresh
+        assert len(shown) == 1
+
 
 class TestFileCount:
     """File counts of the status bar: "XX/YY (SS/TT)" in sidecar mode."""
