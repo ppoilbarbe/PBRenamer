@@ -93,6 +93,10 @@ def keyboard_html() -> str:
             _("Open the selected files with their default application"),
         ),
         (_key("Ctrl+Shift+O"), _("Open with…")),
+        (
+            f"{_key('Ctrl+Alt+O')} ({files})",
+            _("Open with the application last chosen for this type of file"),
+        ),
         (f"{_key('Del')} ({files})", _("Delete selected file(s) and their sidecars")),
         *rotations,
     ]
@@ -129,6 +133,10 @@ def keyboard_html() -> str:
         (_key("I"), _("Show / hide the metadata")),
         (_key("Ctrl+O"), _("Open with the default application")),
         (_key("Ctrl+Shift+O"), _("Open with…")),
+        (
+            _key("Ctrl+Alt+O"),
+            _("Open with the application last chosen for this type of file"),
+        ),
         (_key("Del"), _("Delete current image and its sidecars")),
         (_key("Ctrl+Del"), _("Ask / do not ask before deleting")),
         *rotations,

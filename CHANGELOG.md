@@ -6,6 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Schema tab: a *Resulting pattern* line under the fields shows the search and replacement
+  patterns the schema produces (e.g. `{X} → {dest}/A/B/A_B_{newnum:03}`), updated as the fields
+  and the video marker position change; empty while the schema is invalid.
+- Schema tab: a tool button next to the destination shows the destination directory in the
+  directory tree; it is disabled while that directory does not exist.
+- Tools menu with *Undo stack…*: a non-modal window listing the content of the undo stack, most
+  recent operation first, with its time and number of files (expand an operation to see its
+  files). It is updated after every operation and every undo while it is open.
+- Shortcut **Ctrl+Alt+O** for *Open with* the application last chosen for the type of the file,
+  in the file list and in the image viewer; for a file whose type has no last application, it
+  acts as *Open with…*.
+- Settings: *Button icon size* sets the size of the icons of the buttons and tool buttons of the
+  main window, with the same choices as *Toolbar icon size*: *System* (default, the style's
+  button icon size) or 16 to 128 pixels. The change applies at once.
+
+### Changed
+
+- Schema tab: the *Browse…* button for the destination becomes a tool button with an icon.
+
+### Fixed
+
+- User guide: drag and drop copies are recorded on the undo stack (undoing deletes the copies);
+  the guide said only moves were.
+
 ## [2.4.0] - 2026-11-22
 
 ### Added

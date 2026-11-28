@@ -6,7 +6,15 @@ import math
 
 from PySide6.QtCore import QPointF, QRect, QSize, Qt
 from PySide6.QtGui import QColor, QFontDatabase, QPainter, QTextLayout
-from PySide6.QtWidgets import QLineEdit, QStyle, QStyleOptionFrame, QWidget
+from PySide6.QtWidgets import (
+    QAbstractButton,
+    QCheckBox,
+    QLineEdit,
+    QRadioButton,
+    QStyle,
+    QStyleOptionFrame,
+    QWidget,
+)
 
 from pbrenamer import settings
 
@@ -21,6 +29,29 @@ def toolbar_icon_size(widget: QWidget) -> QSize:
             QStyle.PixelMetric.PM_ToolBarIconSize, None, widget
         )
     return QSize(size, size)
+
+
+def button_icon_size(widget: QWidget) -> QSize:
+    """Icon size of the buttons and tool buttons of *widget*: the one chosen
+    in the settings or, for *System*, the button icon size of the style."""
+    size = settings.get_button_icon_size()
+    if not size:
+        size = widget.style().pixelMetric(
+            QStyle.PixelMetric.PM_ButtonIconSize, None, widget
+        )
+    return QSize(size, size)
+
+
+def apply_button_icon_size(window: QWidget) -> None:
+    """Give the button icon size to the push and tool buttons of *window*
+    (check boxes, radio buttons and the buttons of its separate windows,
+    such as the image viewer toolbar, are left alone)."""
+    size = button_icon_size(window)
+    for button in window.findChildren(QAbstractButton):
+        if isinstance(button, (QCheckBox, QRadioButton)):
+            continue
+        if button.window() is window:
+            button.setIconSize(size)
 
 
 class WhitespaceLineEdit(QLineEdit):

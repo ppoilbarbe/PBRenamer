@@ -267,7 +267,11 @@ class TestOpenWithLast:
     def test_names_the_application_and_opens(self, window, tmp_path, monkeypatch):
         opened = []
         monkeypatch.setattr(file_actions._open_with, "last_app", lambda p: "A&B")
-        monkeypatch.setattr(file_actions._open_with, "open_with_last", opened.append)
+        monkeypatch.setattr(
+            file_actions._open_with,
+            "open_with_last",
+            lambda p: opened.append(p) or True,
+        )
         a = _png(tmp_path / "a.png")
         _load(window, tmp_path)
         _select(window, "a.png")
@@ -277,6 +281,33 @@ class TestOpenWithLast:
         assert action.text() == "Open with A&&B"
         action.trigger()
         assert opened == [a]
+
+    def test_shortcut(self, window):
+        action = window._ui.actionFileOpenWithLast
+        assert action.shortcut().toString() == "Ctrl+Alt+O"
+        assert action.shortcutContext() == Qt.ShortcutContext.WidgetShortcut
+        assert action in window._ui.tblFiles.actions()
+
+    def test_enabled_with_target_after_menu(self, window, tmp_path, monkeypatch):
+        """Closing a menu re-enables the action so the shortcut stays usable."""
+        monkeypatch.setattr(file_actions._open_with, "last_app", lambda p: None)
+        _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        action = window._ui.actionFileOpenWithLast
+        assert action.isEnabled()
+        window._ui.menuFile.aboutToShow.emit()
+        assert not action.isEnabled()
+        window._ui.menuFile.aboutToHide.emit()
+        assert action.isEnabled()
+
+    def test_falls_back_to_open_with(self, window, tmp_path, monkeypatch, calls):
+        monkeypatch.setattr(file_actions._open_with, "open_with_last", lambda p: False)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._ui.actionFileOpenWithLast.trigger()
+        assert calls["open_with"] == [a]
 
     def test_in_file_and_context_menus(self, window):
         ui = window._ui
@@ -1263,6 +1294,33 @@ class TestOpenSidecarMenu:
         _select(window, "a.png")
         window._ui.menuContext.aboutToShow.emit()
         assert window._ui.menuOpenSidecar.menuAction().isEnabled()
+
+    def test_shortcut(self, window):
+        action = window._ui.actionFileOpenWithLast
+        assert action.shortcut().toString() == "Ctrl+Alt+O"
+        assert action.shortcutContext() == Qt.ShortcutContext.WidgetShortcut
+        assert action in window._ui.tblFiles.actions()
+
+    def test_enabled_with_target_after_menu(self, window, tmp_path, monkeypatch):
+        """Closing a menu re-enables the action so the shortcut stays usable."""
+        monkeypatch.setattr(file_actions._open_with, "last_app", lambda p: None)
+        _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        action = window._ui.actionFileOpenWithLast
+        assert action.isEnabled()
+        window._ui.menuFile.aboutToShow.emit()
+        assert not action.isEnabled()
+        window._ui.menuFile.aboutToHide.emit()
+        assert action.isEnabled()
+
+    def test_falls_back_to_open_with(self, window, tmp_path, monkeypatch, calls):
+        monkeypatch.setattr(file_actions._open_with, "open_with_last", lambda p: False)
+        a = _png(tmp_path / "a.png")
+        _load(window, tmp_path)
+        _select(window, "a.png")
+        window._ui.actionFileOpenWithLast.trigger()
+        assert calls["open_with"] == [a]
 
     def test_in_file_and_context_menus(self, window):
         sidecar = window._ui.menuOpenSidecar.menuAction()

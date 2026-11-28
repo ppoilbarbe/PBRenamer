@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import shutil
+import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -172,13 +173,33 @@ class DeleteEntry(UndoEntry):
 
 
 class UndoManager:
-    """Stack-based undo manager; each entry is one batch."""
+    """Stack-based undo manager; each entry is one batch.
+
+    Listeners registered with add_listener() are called after every change
+    of the stack (add, undo, clear).
+    """
 
     def __init__(self) -> None:
         self._history: list[UndoEntry] = []
+        # Time each entry of _history was added (time.time()).
+        self._added: list[float] = []
+        self._listeners: list[Callable[[], None]] = []
+
+    def add_listener(self, callback: Callable[[], None]) -> None:
+        self._listeners.append(callback)
+
+    def remove_listener(self, callback: Callable[[], None]) -> None:
+        if callback in self._listeners:
+            self._listeners.remove(callback)
+
+    def _notify(self) -> None:
+        for callback in list(self._listeners):
+            callback()
 
     def add(self, entry: UndoEntry) -> None:
         self._history.append(entry)
+        self._added.append(time.time())
+        self._notify()
 
     def add_batch(self, moves: list[tuple[str, str]]) -> None:
         """Record a batch of moves [(original_path, new_path), ...]."""
@@ -195,15 +216,24 @@ class UndoManager:
         if not self._history:
             return
         entry = self._history.pop()
+        added = self._added.pop()
         _log.info("Undoing %s", type(entry).__name__)
-        if step is None or not entry.content_files():
-            entry.undo()
-            return
         try:
-            entry.undo(step)
+            if step is None or not entry.content_files():
+                entry.undo()
+                return
+            try:
+                entry.undo(step)
+            finally:
+                if entry.content_files():
+                    self._history.append(entry)
+                    self._added.append(added)
         finally:
-            if entry.content_files():
-                self._history.append(entry)
+            self._notify()
+
+    def entries(self) -> list[tuple[UndoEntry, float]]:
+        """The (entry, time added) pairs, most recent first."""
+        return list(zip(reversed(self._history), reversed(self._added), strict=True))
 
     def next_content_files(self) -> int:
         """content_files() of the entry the next undo() reverts."""
@@ -217,3 +247,5 @@ class UndoManager:
 
     def clear(self) -> None:
         self._history.clear()
+        self._added.clear()
+        self._notify()

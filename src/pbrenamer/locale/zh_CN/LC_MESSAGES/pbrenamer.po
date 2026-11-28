@@ -795,6 +795,10 @@ msgid "Open with…"
 msgstr "打开方式…"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "用上次为此类文件选择的应用程序打开"
+
+# ==AUTO== Automatically translated
 msgid "Delete selected file(s) and their sidecars"
 msgstr "删除所选文件及其 Sidecar 文件"
 
@@ -1152,6 +1156,18 @@ msgid "Exit the application"
 msgstr "关闭应用程序"
 
 # ==AUTO== Automatically translated
+msgid "Undo stack…"
+msgstr "撤销栈…"
+
+# ==AUTO== Automatically translated
+msgid "Show the content of the undo stack"
+msgstr "显示撤销栈的内容"
+
+# ==AUTO== Automatically translated
+msgid "Open a window listing the operations that can be undone"
+msgstr "打开一个窗口，列出可以撤销的操作"
+
+# ==AUTO== Automatically translated
 msgid "Histories…"
 msgstr "各项历史记录…"
 
@@ -1312,10 +1328,6 @@ msgstr "用选定的应用程序打开"
 # ==AUTO== Automatically translated
 msgid "Choose the application that opens the selected file"
 msgstr "选择用于打开所选文件的应用程序"
-
-# ==AUTO== Automatically translated
-msgid "Open with the application last chosen for this type of file"
-msgstr "用上次为此类文件选择的应用程序打开"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -1938,6 +1950,10 @@ msgstr "图像"
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "快捷方式"
+
+# ==AUTO== Automatically translated
+msgid "Tools"
+msgstr "工具"
 
 # ==AUTO== Automatically translated
 msgid "Help"
@@ -2940,6 +2956,17 @@ msgid ""
 msgstr "模式结构字段“{title}”：一级目录和名称的一部分；“###”为计数器，空字段将被跳过"
 
 # ==AUTO== Automatically translated
+msgid "Resulting pattern:"
+msgstr "生成的模式："
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr "由方案生成的搜索和替换模式；{dest} 为目标目录"
+
+# ==AUTO== Automatically translated
 msgid "Destination:"
 msgstr "目标："
 
@@ -2958,12 +2985,18 @@ msgid ""
 msgstr "文件将移至此目录下以字段命名的子目录中"
 
 # ==AUTO== Automatically translated
-msgid "Browse…"
-msgstr "浏览…"
-
-# ==AUTO== Automatically translated
 msgid "Choose the destination directory"
 msgstr "选择目标目录"
+
+# ==AUTO== Automatically translated
+msgid "Go to the destination directory"
+msgstr "转到目标目录"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr "在目录树中显示目标目录；该目录不存在时不可用"
 
 # ==AUTO== Automatically translated
 msgid "Fill gaps"
@@ -3070,6 +3103,16 @@ msgstr "工具栏按钮图标的大小；“系统”使用桌面环境设定的
 # ==AUTO== Automatically translated
 msgid "Toolbar icon size:"
 msgstr "工具栏图标大小："
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr "主窗口按钮图标的大小；“系统”使用样式设定的大小"
+
+# ==AUTO== Automatically translated
+msgid "Button icon size:"
+msgstr "按钮图标大小："
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
@@ -3245,6 +3288,52 @@ msgstr "删除所选通用附属文件后缀"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "恢复通用附属文件后缀的默认值"
+
+# ==AUTO== Automatically translated
+msgid "Move"
+msgstr "移动"
+
+# ==AUTO== Automatically translated
+msgid "Copy"
+msgstr "复制"
+
+# ==AUTO== Automatically translated
+msgid "Rotation"
+msgstr "旋转"
+
+# ==AUTO== Automatically translated
+msgid "EXIF orientation reset"
+msgstr "重置 EXIF 方向"
+
+# ==AUTO== Automatically translated
+msgid "Undo stack"
+msgstr "撤销栈"
+
+# ==AUTO== Automatically translated
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "最近的操作位于顶部：“撤销”会首先撤销它。"
+
+# ==AUTO== Automatically translated
+msgid "Operation"
+msgstr "操作"
+
+# ==AUTO== Automatically translated
+msgid "Time"
+msgstr "时间"
+
+# ==AUTO== Automatically translated
+msgid "The undo stack is empty."
+msgstr "撤销栈为空。"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label}（{n} 个文件）"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "…… 以及另外 {n} 项"
 
 # ==AUTO== Automatically translated
 msgid "Old settings"

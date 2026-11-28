@@ -42,7 +42,9 @@ from pbrenamer.ui.rule_panel_schema import SchemaRulePanel
 from pbrenamer.ui.settings_dialog import SettingsDialog
 from pbrenamer.ui.shortcuts_dialog import ShortcutsDialog
 from pbrenamer.ui.sidecar_dialog import SidecarDialog
+from pbrenamer.ui.undo_stack_dialog import UndoStackDialog
 from pbrenamer.ui.v1_cleanup import offer_v1_cleanup
+from pbrenamer.ui.widgets import apply_button_icon_size
 from pbrenamer.ui.window_state import WindowState
 
 _log = logging.getLogger(__name__)
@@ -88,6 +90,7 @@ class MainWindow(QMainWindow):
         self._presets = PatternPresets()
         self._window_state = WindowState()
         self._keyboard_help: PatternHelpDialog | None = None
+        self._undo_stack_dialog: UndoStackDialog | None = None
         self._geometry_restored = False
 
         self._schema = SchemaRulePanel(self._ui.tabSchema)
@@ -113,6 +116,7 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         self._apply_mode_state()
         self._files.apply_display()
+        apply_button_icon_size(self)
         self._update_title()
         self._ui.splitterMain.setSizes([220, 880])
         self._ui.splitterRight.setSizes([380, 200])
@@ -243,6 +247,8 @@ class MainWindow(QMainWindow):
         self._schema.edited.connect(self._actions.schedule_preview)
         self._schema.edited.connect(self._update_renumber_button)
         self._schema.changed.connect(self._actions.request_auto_preview)
+        self._schema.show_dest_requested.connect(self._startup_navigate)
+        self._files.files_reloaded.connect(self._schema.update_show_dest)
         self._ui.chkRecursive.toggled.connect(self._schema.set_recursive)
         self._schema.set_recursive(self._ui.chkRecursive.isChecked())
         self._files.files_reloaded.connect(self._on_files_reloaded)
@@ -260,6 +266,7 @@ class MainWindow(QMainWindow):
         # Menu bar
         self._ui.actionQuit.triggered.connect(self._on_quit)
         self._ui.actionHistory.triggered.connect(self._on_history)
+        self._ui.actionUndoStack.triggered.connect(self._on_undo_stack)
         self._ui.actionSidecarFiles.triggered.connect(self._on_sidecar_files)
         self._ui.actionSettings.triggered.connect(self._on_settings)
         self._ui.actionAbout.triggered.connect(self._on_about)
@@ -610,6 +617,7 @@ class MainWindow(QMainWindow):
     def _on_settings(self) -> None:
         SettingsDialog(self._window_state, self).exec()
         self._file_actions.apply_icon_size()
+        apply_button_icon_size(self)
         if self._pattern.extension_mode() == "normalize":
             self._actions.request_auto_preview()
 
@@ -637,6 +645,16 @@ class MainWindow(QMainWindow):
         self._keyboard_help.show()
         self._keyboard_help.raise_()
         self._keyboard_help.activateWindow()
+
+    def _on_undo_stack(self) -> None:
+        """Non-modal, kept between calls and updated as the stack changes."""
+        if self._undo_stack_dialog is None:
+            self._undo_stack_dialog = UndoStackDialog(
+                self._undo, self._window_state, self
+            )
+        self._undo_stack_dialog.show()
+        self._undo_stack_dialog.raise_()
+        self._undo_stack_dialog.activateWindow()
 
     # ── Profiles ──────────────────────────────────────────────────────────────
 

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 from PySide6.QtGui import QValidator
-from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QFileDialog, QToolButton
 
 from pbrenamer import profiles
 from pbrenamer.ui.file_list import PreviewEntry
@@ -151,6 +151,51 @@ class TestBrowse:
         monkeypatch.setattr(QFileDialog, "getExistingDirectory", lambda *a, **k: "")
         panel.btnBrowse.click()
         assert panel.dest() == ""
+
+    def test_tool_buttons_have_icons(self, panel):
+        assert isinstance(panel.btnBrowse, QToolButton)
+        assert not panel.btnBrowse.icon().isNull()
+        assert not panel.btnShowDest.icon().isNull()
+
+
+class TestShowDest:
+    def test_disabled_without_existing_dest(self, panel, tmp_path):
+        assert not panel.btnShowDest.isEnabled()
+        panel.edtDest.setText(str(tmp_path / "missing"))
+        assert not panel.btnShowDest.isEnabled()
+        panel.edtDest.setText(str(tmp_path))
+        assert panel.btnShowDest.isEnabled()
+
+    def test_enabled_once_created(self, panel, tmp_path):
+        dest = tmp_path / "dest"
+        panel.edtDest.setText(str(dest))
+        dest.mkdir()
+        assert not panel.btnShowDest.isEnabled()
+        panel.update_show_dest()
+        assert panel.btnShowDest.isEnabled()
+
+    def test_click_emits_dest(self, panel, tmp_path, qtbot):
+        panel.edtDest.setText(str(tmp_path))
+        with qtbot.waitSignal(panel.show_dest_requested, timeout=1000) as blocker:
+            panel.btnShowDest.click()
+        assert blocker.args == [str(tmp_path)]
+
+    def test_dest_removed_meanwhile(self, panel, tmp_path):
+        dest = tmp_path / "dest"
+        dest.mkdir()
+        panel.edtDest.setText(str(dest))
+        dest.rmdir()
+        emitted = []
+        panel.show_dest_requested.connect(emitted.append)
+        panel._on_show_dest()
+        assert emitted == []
+        assert not panel.btnShowDest.isEnabled()
+
+    def test_loaded_from_profile(self, qtbot, tmp_path):
+        profiles.set_schema(dest=str(tmp_path))
+        widget = SchemaRulePanel()
+        qtbot.addWidget(widget)
+        assert widget.btnShowDest.isEnabled()
 
 
 # ---------------------------------------------------------------------------
@@ -321,3 +366,29 @@ class TestRenumberPlan:
             planner, "compute_names", lambda *a, **k: [planner.PlanEntry()]
         )
         assert panel.renumber_plan([str(tmp_path / "b.jpg")]) == []
+
+
+# ---------------------------------------------------------------------------
+# Compiled pattern display
+# ---------------------------------------------------------------------------
+
+
+class TestCompiledPattern:
+    def test_follows_fields(self, panel):
+        _set(panel, "A", "", "B", "###")
+        assert panel.lblCompiled.text() == "{X} → {dest}/A/B/A_B_{newnum:03}"
+
+    def test_empty_when_invalid(self, panel):
+        _set(panel)
+        assert panel.lblCompiled.text() == ""
+        _set(panel, "##", "###")
+        assert panel.lblCompiled.text() == ""
+
+    def test_follows_video_marker(self, qtbot):
+        profiles.set_schema(field_count=2, video_marker="V", video_marker_pos=1)
+        widget = SchemaRulePanel()
+        qtbot.addWidget(widget)
+        _set(widget, "A", "B")
+        assert widget.lblCompiled.text() == "{X} → {dest}/A/B/A{if:video:_V}_B"
+        widget._marker_group.button(0).setChecked(True)
+        assert widget.lblCompiled.text() == "{X} → {dest}/A/B/{if:video:V_}A_B"

@@ -315,6 +315,31 @@ class TestToolbarState:
         assert profiles.load()["toolbar_state"] == {"mode": 1}
 
 
+class TestButtonIconSize:
+    def test_default_is_system(self):
+        assert settings.get_button_icon_size() == 0
+
+    def test_same_choices_as_toolbar(self):
+        assert settings.BUTTON_ICON_SIZES == settings.TOOLBAR_ICON_SIZES
+
+    @pytest.mark.parametrize("size", settings.BUTTON_ICON_SIZES)
+    def test_set_and_get(self, size):
+        settings.set_button_icon_size(size)
+        assert settings.get_button_icon_size() == size
+
+    def test_independent_of_toolbar(self):
+        settings.set_toolbar_icon_size(48)
+        assert settings.get_button_icon_size() == 0
+
+    def test_unknown_size_is_system(self):
+        settings.set_button_icon_size(20)
+        assert settings.get_button_icon_size() == 0
+
+    def test_invalid_stored_value_is_system(self):
+        settings._settings().setValue("appearance/button_icon_size", "huge")
+        assert settings.get_button_icon_size() == 0
+
+
 class TestToolbarIconSize:
     def test_default_is_system(self):
         assert settings.get_toolbar_icon_size() == 0

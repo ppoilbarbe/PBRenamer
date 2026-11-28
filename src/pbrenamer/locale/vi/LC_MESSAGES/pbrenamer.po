@@ -812,6 +812,10 @@ msgid "Open with…"
 msgstr "Mở bằng…"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "Mở bằng ứng dụng được chọn gần nhất cho loại tệp này"
+
+# ==AUTO== Automatically translated
 msgid "Delete selected file(s) and their sidecars"
 msgstr "Xóa các tệp đã chọn và sidecar của chúng"
 
@@ -1174,6 +1178,18 @@ msgid "Exit the application"
 msgstr "Đóng ứng dụng"
 
 # ==AUTO== Automatically translated
+msgid "Undo stack…"
+msgstr "Ngăn xếp hoàn tác…"
+
+# ==AUTO== Automatically translated
+msgid "Show the content of the undo stack"
+msgstr "Hiển thị nội dung ngăn xếp hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid "Open a window listing the operations that can be undone"
+msgstr "Mở cửa sổ liệt kê các thao tác có thể hoàn tác"
+
+# ==AUTO== Automatically translated
 msgid "Histories…"
 msgstr "Các lịch sử…"
 
@@ -1336,10 +1352,6 @@ msgstr "Mở bằng ứng dụng được chọn"
 # ==AUTO== Automatically translated
 msgid "Choose the application that opens the selected file"
 msgstr "Chọn ứng dụng để mở tệp đã chọn"
-
-# ==AUTO== Automatically translated
-msgid "Open with the application last chosen for this type of file"
-msgstr "Mở bằng ứng dụng được chọn gần nhất cho loại tệp này"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -2003,6 +2015,10 @@ msgstr "Ảnh"
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Phím tắt"
+
+# ==AUTO== Automatically translated
+msgid "Tools"
+msgstr "Công cụ"
 
 # ==AUTO== Automatically translated
 msgid "Help"
@@ -3052,6 +3068,17 @@ msgstr ""
 "bộ đếm, trường trống sẽ bị bỏ qua"
 
 # ==AUTO== Automatically translated
+msgid "Resulting pattern:"
+msgstr "Mẫu kết quả:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr "Mẫu tìm kiếm và thay thế do lược đồ tạo ra; {dest} là thư mục đích"
+
+# ==AUTO== Automatically translated
 msgid "Destination:"
 msgstr "Đích:"
 
@@ -3072,12 +3099,20 @@ msgstr ""
 "trường"
 
 # ==AUTO== Automatically translated
-msgid "Browse…"
-msgstr "Duyệt…"
-
-# ==AUTO== Automatically translated
 msgid "Choose the destination directory"
 msgstr "Chọn thư mục đích"
+
+# ==AUTO== Automatically translated
+msgid "Go to the destination directory"
+msgstr "Đi tới thư mục đích"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr ""
+"Hiển thị thư mục đích trong cây thư mục; bị vô hiệu hóa khi thư mục chưa "
+"tồn tại"
 
 # ==AUTO== Automatically translated
 msgid "Fill gaps"
@@ -3189,6 +3224,18 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Toolbar icon size:"
 msgstr "Kích thước biểu tượng thanh công cụ:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr ""
+"Kích thước biểu tượng của các nút trong cửa sổ chính; Hệ thống dùng kích "
+"thước do kiểu giao diện đặt"
+
+# ==AUTO== Automatically translated
+msgid "Button icon size:"
+msgstr "Kích thước biểu tượng nút:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
@@ -3378,6 +3425,52 @@ msgstr "Xóa các hậu tố sidecar chung đã chọn"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Khôi phục hậu tố sidecar chung mặc định"
+
+# ==AUTO== Automatically translated
+msgid "Move"
+msgstr "Di chuyển"
+
+# ==AUTO== Automatically translated
+msgid "Copy"
+msgstr "Sao chép"
+
+# ==AUTO== Automatically translated
+msgid "Rotation"
+msgstr "Xoay"
+
+# ==AUTO== Automatically translated
+msgid "EXIF orientation reset"
+msgstr "Đặt lại hướng EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Undo stack"
+msgstr "Ngăn xếp hoàn tác"
+
+# ==AUTO== Automatically translated
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "Thao tác gần nhất nằm ở trên cùng: Hoàn tác sẽ đảo ngược nó trước."
+
+# ==AUTO== Automatically translated
+msgid "Operation"
+msgstr "Thao tác"
+
+# ==AUTO== Automatically translated
+msgid "Time"
+msgstr "Thời gian"
+
+# ==AUTO== Automatically translated
+msgid "The undo stack is empty."
+msgstr "Ngăn xếp hoàn tác trống."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label} ({n} tệp)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "… và {n} mục khác"
 
 # ==AUTO== Automatically translated
 msgid "Old settings"

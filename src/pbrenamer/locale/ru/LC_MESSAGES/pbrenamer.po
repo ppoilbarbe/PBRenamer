@@ -815,6 +815,10 @@ msgid "Open with…"
 msgstr "Открыть с помощью…"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "Открыть приложением, выбранным последним для этого типа файлов"
+
+# ==AUTO== Automatically translated
 msgid "Delete selected file(s) and their sidecars"
 msgstr "Удалить выбранные файлы и их sidecar-файлы"
 
@@ -1179,6 +1183,18 @@ msgid "Exit the application"
 msgstr "Закрыть приложение"
 
 # ==AUTO== Automatically translated
+msgid "Undo stack…"
+msgstr "Стек отмены…"
+
+# ==AUTO== Automatically translated
+msgid "Show the content of the undo stack"
+msgstr "Показать содержимое стека отмены"
+
+# ==AUTO== Automatically translated
+msgid "Open a window listing the operations that can be undone"
+msgstr "Открыть окно со списком операций, которые можно отменить"
+
+# ==AUTO== Automatically translated
 msgid "Histories…"
 msgstr "Истории…"
 
@@ -1343,10 +1359,6 @@ msgstr "Открыть в выбранном приложении"
 # ==AUTO== Automatically translated
 msgid "Choose the application that opens the selected file"
 msgstr "Выбрать приложение, которое откроет выбранный файл"
-
-# ==AUTO== Automatically translated
-msgid "Open with the application last chosen for this type of file"
-msgstr "Открыть приложением, выбранным последним для этого типа файлов"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -2020,6 +2032,10 @@ msgstr "Изображения"
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Ярлыки"
+
+# ==AUTO== Automatically translated
+msgid "Tools"
+msgstr "Инструменты"
 
 # ==AUTO== Automatically translated
 msgid "Help"
@@ -3075,6 +3091,17 @@ msgstr ""
 "пустое поле пропускается"
 
 # ==AUTO== Automatically translated
+msgid "Resulting pattern:"
+msgstr "Итоговый шаблон:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr "Шаблоны поиска и замены, полученные из схемы; {dest} — каталог назначения"
+
+# ==AUTO== Automatically translated
 msgid "Destination:"
 msgstr "Назначение:"
 
@@ -3093,12 +3120,20 @@ msgid ""
 msgstr "Файлы перемещаются в этот каталог, в подкаталоги с именами полей"
 
 # ==AUTO== Automatically translated
-msgid "Browse…"
-msgstr "Обзор…"
-
-# ==AUTO== Automatically translated
 msgid "Choose the destination directory"
 msgstr "Выбрать каталог назначения"
+
+# ==AUTO== Automatically translated
+msgid "Go to the destination directory"
+msgstr "Перейти в каталог назначения"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr ""
+"Показать каталог назначения в дереве каталогов; недоступно, пока он не "
+"существует"
 
 # ==AUTO== Automatically translated
 msgid "Fill gaps"
@@ -3212,6 +3247,18 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Toolbar icon size:"
 msgstr "Размер значков панелей инструментов:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr ""
+"Размер значков кнопок главного окна; «Системный» использует размер, "
+"заданный стилем"
+
+# ==AUTO== Automatically translated
+msgid "Button icon size:"
+msgstr "Размер значков кнопок:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
@@ -3403,6 +3450,52 @@ msgstr "Удалить выбранные общие суффиксы"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Восстановить общие суффиксы по умолчанию"
+
+# ==AUTO== Automatically translated
+msgid "Move"
+msgstr "Перемещение"
+
+# ==AUTO== Automatically translated
+msgid "Copy"
+msgstr "Копирование"
+
+# ==AUTO== Automatically translated
+msgid "Rotation"
+msgstr "Поворот"
+
+# ==AUTO== Automatically translated
+msgid "EXIF orientation reset"
+msgstr "Сброс ориентации EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Undo stack"
+msgstr "Стек отмены"
+
+# ==AUTO== Automatically translated
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "Последняя операция находится вверху: «Отменить» отменяет её первой."
+
+# ==AUTO== Automatically translated
+msgid "Operation"
+msgstr "Операция"
+
+# ==AUTO== Automatically translated
+msgid "Time"
+msgstr "Время"
+
+# ==AUTO== Automatically translated
+msgid "The undo stack is empty."
+msgstr "Стек отмены пуст."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label} ({n} файл(ов))"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "… и ещё {n}"
 
 # ==AUTO== Automatically translated
 msgid "Old settings"

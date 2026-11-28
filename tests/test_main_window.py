@@ -1681,6 +1681,43 @@ class TestMenuHandlers:
         assert viewer._confirm_btn.iconSize() == QSize(48, 48)
         assert viewer._zoom_buttons[0].iconSize() == QSize(48, 48)
 
+    def test_on_settings_applies_button_icon_size(self, window, monkeypatch, tmp_path):
+        from PIL import Image
+        from PySide6.QtCore import QSize
+
+        from pbrenamer import settings
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        path = tmp_path / "a.png"
+        Image.new("RGB", (4, 4)).save(path)
+        window._file_actions.show_in_viewer(str(path))
+        viewer = window._file_actions._viewer
+        viewer_size = viewer._confirm_btn.iconSize()
+        default = window._ui.btnUndo.iconSize()
+
+        def exec_(_self):
+            settings.set_button_icon_size(32)
+            return 1
+
+        monkeypatch.setattr(SettingsDialog, "exec", exec_)
+        window._on_settings()
+        for button in (
+            window._ui.btnUndo,
+            window._ui.btnSearchAdd,
+            window._schema.btnBrowse,
+            window._schema.btnShowDest,
+        ):
+            assert button.iconSize() == QSize(32, 32)
+        assert viewer._confirm_btn.iconSize() == viewer_size
+
+        def exec_system(_self):
+            settings.set_button_icon_size(0)
+            return 1
+
+        monkeypatch.setattr(SettingsDialog, "exec", exec_system)
+        window._on_settings()
+        assert window._ui.btnUndo.iconSize() == default
+
     def test_on_settings_refreshes_preview_when_normalize_mode(
         self, window, monkeypatch, tmp_path
     ):

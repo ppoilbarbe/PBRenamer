@@ -38,11 +38,16 @@ class SettingsDialog(GeometryMixin, QDialog):
 
         self._init_default_profile()
 
-        combo = self._ui.cmbToolbarIconSize
-        combo.addItem(_("System"), userData=0)
-        for size in settings.TOOLBAR_ICON_SIZES:
-            combo.addItem(f"{size} × {size}", userData=size)
-        combo.setCurrentIndex(max(0, combo.findData(settings.get_toolbar_icon_size())))
+        self._init_icon_size_combo(
+            self._ui.cmbToolbarIconSize,
+            settings.TOOLBAR_ICON_SIZES,
+            settings.get_toolbar_icon_size(),
+        )
+        self._init_icon_size_combo(
+            self._ui.cmbButtonIconSize,
+            settings.BUTTON_ICON_SIZES,
+            settings.get_button_icon_size(),
+        )
 
         self._ui.chkRestoreLastDir.setChecked(settings.get_restore_last_dir())
         self._ui.chkRestoreToolbarState.setChecked(settings.get_restore_toolbar_state())
@@ -67,7 +72,15 @@ class SettingsDialog(GeometryMixin, QDialog):
         settings.set_restore_toolbar_state(self._ui.chkRestoreToolbarState.isChecked())
         settings.set_preview_delay(self._ui.spnPreviewDelay.value())
         settings.set_toolbar_icon_size(self._ui.cmbToolbarIconSize.currentData())
+        settings.set_button_icon_size(self._ui.cmbButtonIconSize.currentData())
         self.accept()
+
+    @staticmethod
+    def _init_icon_size_combo(combo, sizes, current: int) -> None:
+        combo.addItem(_("System"), userData=0)
+        for size in sizes:
+            combo.addItem(f"{size} × {size}", userData=size)
+        combo.setCurrentIndex(max(0, combo.findData(current)))
 
     def _init_default_profile(self) -> None:
         combo = self._ui.cmbDefaultProfile

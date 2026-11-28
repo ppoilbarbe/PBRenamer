@@ -153,8 +153,8 @@ confirmation dialog lists how many collide and offers **Overwrite**, **Skip**
 copied/moved). Dropping a folder into itself or one of its own
 sub-directories is rejected with an error.
 
-Only **moves** are recorded on the undo stack; copies are not undoable, since
-the original file is left in place.
+Moves and copies are both recorded on the undo stack: **Undo** moves the
+files back, or deletes the copies (the original files are left in place).
 
 Configuring the rename rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -395,6 +395,12 @@ batches (e.g. **Undo (3)**) when more than one is queued.  Moves made by drag
 and drop, :ref:`rotations and EXIF orientation resets <image-rotation>` and
 deletions to a trash (see :ref:`deletion-modes`) are recorded on the same
 stack.
+
+**Tools ‣ Undo stack…** opens a window listing the content of the undo stack,
+the most recent operation at the top: it is the one **Undo** reverts first.
+Each operation shows its time and the number of files; expand it to see the
+files.  The window can stay open while you work: it is updated after every
+operation and every undo.
 
 .. _shortcuts-menu:
 
@@ -640,9 +646,10 @@ Destination
 ~~~~~~~~~~~
 
 The **Destination** field is the root of the folder tree.  It must be an
-absolute path; **Browse…** chooses it.  Missing folders are created when
-renaming; the source folders left empty can be removed (see
-:ref:`empty-folders`).
+absolute path; the first button next to it chooses it.  The second one shows
+the destination folder in the directory tree; it is greyed out while that
+folder does not exist.  Missing folders are created when renaming; the source
+folders left empty can be removed (see :ref:`empty-folders`).
 
 Video marker
 ~~~~~~~~~~~~
@@ -756,11 +763,12 @@ In the **File** menu:
 **Open with…** (**Ctrl+Shift+O**)
     Choose the application that opens the file.
 
-**Open with** *application*
+**Open with** *application* (**Ctrl+Alt+O**)
     Open the files with the application last chosen with **Open with…** for
     their type, named in the menu.  The entry is greyed out when there is
     none, and always on Windows, whose dialog does not tell the application
-    chosen.
+    chosen.  The shortcut works in the file list and in the image viewer;
+    for a file whose type has no last application, it acts as **Open with…**.
 
 **Open or create sidecar**
     One entry per sidecar suffix of the category of the file (see
@@ -874,6 +882,12 @@ Settings
     viewer): **System** (default) uses the toolbar icon size of the desktop
     environment; the other choices go from 16 × 16 to 128 × 128 pixels.  The
     change applies at once.
+
+**Button icon size**
+    Size of the icons of the buttons of the main window (action bar, pattern
+    and schema tabs): **System** (default) uses the button icon size of the
+    style; the other choices are those of **Toolbar icon size**.  The change
+    applies at once.
 
 **Restore last opened directory** *(Behaviour group)*
     When enabled, the app reopens the directory that was active in the

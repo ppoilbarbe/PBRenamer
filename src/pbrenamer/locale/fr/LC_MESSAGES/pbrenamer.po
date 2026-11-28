@@ -642,6 +642,9 @@ msgstr "Ouvrir les fichiers sélectionnés avec leur application par défaut"
 msgid "Open with…"
 msgstr "Ouvrir avec…"
 
+msgid "Open with the application last chosen for this type of file"
+msgstr "Ouvrir avec l'application choisie en dernier pour ce type de fichier"
+
 msgid "Delete selected file(s) and their sidecars"
 msgstr "Supprimer les fichiers sélectionnés et leurs sidecars"
 
@@ -922,6 +925,15 @@ msgstr "Quitter PBRenamer"
 msgid "Exit the application"
 msgstr "Fermer l'application"
 
+msgid "Undo stack…"
+msgstr "Pile d'annulation…"
+
+msgid "Show the content of the undo stack"
+msgstr "Afficher le contenu de la pile d'annulation"
+
+msgid "Open a window listing the operations that can be undone"
+msgstr "Ouvrir une fenêtre listant les opérations qui peuvent être annulées"
+
 msgid "Histories…"
 msgstr "Historiques…"
 
@@ -1051,9 +1063,6 @@ msgstr "Ouvrir avec une application choisie"
 
 msgid "Choose the application that opens the selected file"
 msgstr "Choisir l'application qui ouvre le fichier sélectionné"
-
-msgid "Open with the application last chosen for this type of file"
-msgstr "Ouvrir avec l'application choisie en dernier pour ce type de fichier"
 
 msgid ""
 "Open the selected files with the application last chosen with “Open "
@@ -1609,6 +1618,9 @@ msgstr "Images"
 
 msgid "Shortcuts"
 msgstr "Raccourcis"
+
+msgid "Tools"
+msgstr "Outils"
 
 msgid "Help"
 msgstr "Aide"
@@ -2462,6 +2474,17 @@ msgstr ""
 "Champ du schéma « {title} » : un niveau de répertoire et une partie du "
 "nom ; « ### » est le compteur, un champ vide est ignoré"
 
+msgid "Resulting pattern:"
+msgstr "Motif obtenu :"
+
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr ""
+"Motifs de recherche et de remplacement produits par le schéma ; {dest} "
+"est le répertoire de destination"
+
 msgid "Destination:"
 msgstr "Destination :"
 
@@ -2478,11 +2501,18 @@ msgstr ""
 "Les fichiers sont déplacés sous ce répertoire, dans des sous-répertoires "
 "nommés d'après les champs"
 
-msgid "Browse…"
-msgstr "Parcourir…"
-
 msgid "Choose the destination directory"
 msgstr "Choisir le répertoire de destination"
+
+msgid "Go to the destination directory"
+msgstr "Aller au répertoire de destination"
+
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr ""
+"Afficher le répertoire de destination dans l'arborescence ; désactivé "
+"tant qu'il n'existe pas"
 
 msgid "Fill gaps"
 msgstr "Combler les trous"
@@ -2573,6 +2603,16 @@ msgstr ""
 
 msgid "Toolbar icon size:"
 msgstr "Taille des icônes des barres d'outils :"
+
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr ""
+"Taille des icônes des boutons de la fenêtre principale ; Système utilise "
+"la taille définie par le style"
+
+msgid "Button icon size:"
+msgstr "Taille des icônes des boutons :"
 
 msgid "Behaviour"
 msgstr "Comportement"
@@ -2727,6 +2767,41 @@ msgstr "Supprimer les suffixes sidecar communs sélectionnés"
 
 msgid "Restore default common sidecar suffixes"
 msgstr "Restaurer les suffixes sidecar communs par défaut"
+
+msgid "Move"
+msgstr "Déplacement"
+
+msgid "Copy"
+msgstr "Copie"
+
+msgid "Rotation"
+msgstr "Rotation"
+
+msgid "EXIF orientation reset"
+msgstr "Réinitialisation de l'orientation EXIF"
+
+msgid "Undo stack"
+msgstr "Pile d'annulation"
+
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "L'opération la plus récente est en haut : Annuler la défait en premier."
+
+msgid "Operation"
+msgstr "Opération"
+
+msgid "Time"
+msgstr "Heure"
+
+msgid "The undo stack is empty."
+msgstr "La pile d'annulation est vide."
+
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label} ({n} fichier(s))"
+
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "… et {n} de plus"
 
 msgid "Old settings"
 msgstr "Anciens réglages"

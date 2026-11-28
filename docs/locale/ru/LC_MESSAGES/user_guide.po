@@ -366,11 +366,12 @@ msgstr ""
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only **moves** are recorded on the undo stack; copies are not undoable, "
-"since the original file is left in place."
+"Moves and copies are both recorded on the undo stack: **Undo** moves the "
+"files back, or deletes the copies (the original files are left in place)."
 msgstr ""
-"В стек отмены записываются только **перемещения**; копирование отменить "
-"нельзя, так как исходный файл остаётся на месте."
+"И перемещения, и копирование записываются в стек отмены: **Отменить** "
+"возвращает файлы на место или удаляет копии (исходные файлы остаются на "
+"месте)."
 
 # ==AUTO== Automatically translated
 msgid "Configuring the rename rules"
@@ -957,6 +958,20 @@ msgstr ""
 "одного.  Перемещения перетаскиванием, :ref:`повороты и сброс ориентации "
 "EXIF <image-rotation>` и удаления в корзину (см. :ref:`deletion-modes`) "
 "записываются в тот же стек."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Tools ‣ Undo stack…** opens a window listing the content of the undo "
+"stack, the most recent operation at the top: it is the one **Undo** "
+"reverts first. Each operation shows its time and the number of files; "
+"expand it to see the files.  The window can stay open while you work: it "
+"is updated after every operation and every undo."
+msgstr ""
+"**Инструменты ‣ Стек отмены…** открывает окно с содержимым стека отмены, "
+"последняя операция вверху: именно её **Отменить** отменяет первой.  Для "
+"каждой операции показаны время и число файлов; разверните её, чтобы "
+"увидеть файлы.  Окно может оставаться открытым во время работы: оно "
+"обновляется после каждой операции и каждой отмены."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1548,14 +1563,17 @@ msgstr "Назначение"
 # ==AUTO== Automatically translated
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
-"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"absolute path; the first button next to it chooses it.  The second one "
+"shows the destination folder in the directory tree; it is greyed out "
+"while that folder does not exist.  Missing folders are created when "
 "renaming; the source folders left empty can be removed (see :ref:`empty-"
 "folders`)."
 msgstr ""
 "Поле **Назначение** — корень дерева папок.  Это должен быть абсолютный "
-"путь; кнопка **Обзор…** позволяет его выбрать.  Недостающие папки "
-"создаются при переименовании; исходные папки, оставшиеся пустыми, можно "
-"удалять (см. :ref:`empty-folders`)."
+"путь; первая кнопка рядом позволяет его выбрать.  Вторая показывает папку"
+" назначения в дереве каталогов; она неактивна, пока эта папка не "
+"существует.  Недостающие папки создаются при переименовании; исходные "
+"папки, оставшиеся пустыми, можно удалять (см. :ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -1787,20 +1805,23 @@ msgid "Choose the application that opens the file."
 msgstr "Позволяет выбрать приложение, которое откроет файл."
 
 # ==AUTO== Automatically translated
-msgid "**Open with** *application*"
-msgstr "**Открыть в** *приложение*"
+msgid "**Open with** *application* (**Ctrl+Alt+O**)"
+msgstr "**Открыть в** *приложение* (**Ctrl+Alt+O**)"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Open the files with the application last chosen with **Open with…** for "
 "their type, named in the menu.  The entry is greyed out when there is "
 "none, and always on Windows, whose dialog does not tell the application "
-"chosen."
+"chosen.  The shortcut works in the file list and in the image viewer; for"
+" a file whose type has no last application, it acts as **Open with…**."
 msgstr ""
 "Открывает файлы приложением, последним выбранным через **Открыть с "
 "помощью…** для их типа; его имя показано в меню.  Пункт неактивен, если "
 "такого приложения нет, и всегда в Windows, чей диалог не сообщает "
-"выбранное приложение."
+"выбранное приложение.  Сочетание клавиш работает в списке файлов и в "
+"просмотрщике изображений; для файла, для типа которого приложение ещё не "
+"выбрано, оно действует как **Открыть с помощью…**."
 
 # ==AUTO== Automatically translated
 msgid "**Open or create sidecar**"
@@ -2092,6 +2113,18 @@ msgstr ""
 "изображений): **Системный** (по умолчанию) использует размер значков "
 "панелей инструментов среды рабочего стола; остальные варианты — от 16 × "
 "16 до 128 × 128 пикселей. Изменение применяется сразу."
+
+# ==AUTO== Automatically translated
+msgid "**Button icon size**"
+msgstr "**Размер значков кнопок**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window (action bar, pattern "
+"and schema tabs): **System** (default) uses the button icon size of the "
+"style; the other choices are those of **Toolbar icon size**.  The change "
+"applies at once."
+msgstr "Размер значков кнопок главного окна (панель действий, вкладки «Шаблон» и «Схема»): **Системный** (по умолчанию) использует размер значков кнопок, заданный стилем; остальные варианты — те же, что у **Размер значков панелей инструментов**. Изменение применяется сразу."
 
 # ==AUTO== Automatically translated
 msgid "**Restore last opened directory** *(Behaviour group)*"

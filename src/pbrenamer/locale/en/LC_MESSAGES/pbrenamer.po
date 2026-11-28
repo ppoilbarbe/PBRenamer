@@ -637,6 +637,9 @@ msgstr "Open the selected files with their default application"
 msgid "Open with…"
 msgstr "Open with…"
 
+msgid "Open with the application last chosen for this type of file"
+msgstr "Open with the application last chosen for this type of file"
+
 msgid "Delete selected file(s) and their sidecars"
 msgstr "Delete selected file(s) and their sidecars"
 
@@ -912,6 +915,15 @@ msgstr "Quit PBRenamer"
 msgid "Exit the application"
 msgstr "Exit the application"
 
+msgid "Undo stack…"
+msgstr "Undo stack…"
+
+msgid "Show the content of the undo stack"
+msgstr "Show the content of the undo stack"
+
+msgid "Open a window listing the operations that can be undone"
+msgstr "Open a window listing the operations that can be undone"
+
 msgid "Histories…"
 msgstr "Histories…"
 
@@ -1035,9 +1047,6 @@ msgstr "Open with a chosen application"
 
 msgid "Choose the application that opens the selected file"
 msgstr "Choose the application that opens the selected file"
-
-msgid "Open with the application last chosen for this type of file"
-msgstr "Open with the application last chosen for this type of file"
 
 msgid ""
 "Open the selected files with the application last chosen with “Open "
@@ -1580,6 +1589,9 @@ msgstr "Images"
 
 msgid "Shortcuts"
 msgstr "Shortcuts"
+
+msgid "Tools"
+msgstr "Tools"
 
 msgid "Help"
 msgstr "Help"
@@ -2410,6 +2422,17 @@ msgstr ""
 "Schema field “{title}”: a directory level and a part of the name; “###” "
 "is the counter, an empty field is skipped"
 
+msgid "Resulting pattern:"
+msgstr "Resulting pattern:"
+
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+
 msgid "Destination:"
 msgstr "Destination:"
 
@@ -2426,11 +2449,18 @@ msgstr ""
 "Files are moved under this directory, in sub-directories named after the "
 "fields"
 
-msgid "Browse…"
-msgstr "Browse…"
-
 msgid "Choose the destination directory"
 msgstr "Choose the destination directory"
+
+msgid "Go to the destination directory"
+msgstr "Go to the destination directory"
+
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
 
 msgid "Fill gaps"
 msgstr "Fill gaps"
@@ -2517,6 +2547,16 @@ msgstr ""
 
 msgid "Toolbar icon size:"
 msgstr "Toolbar icon size:"
+
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+
+msgid "Button icon size:"
+msgstr "Button icon size:"
 
 msgid "Behaviour"
 msgstr "Behaviour"
@@ -2662,6 +2702,41 @@ msgstr "Remove selected common sidecar suffixes"
 
 msgid "Restore default common sidecar suffixes"
 msgstr "Restore default common sidecar suffixes"
+
+msgid "Move"
+msgstr "Move"
+
+msgid "Copy"
+msgstr "Copy"
+
+msgid "Rotation"
+msgstr "Rotation"
+
+msgid "EXIF orientation reset"
+msgstr "EXIF orientation reset"
+
+msgid "Undo stack"
+msgstr "Undo stack"
+
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "The most recent operation is at the top: Undo reverts it first."
+
+msgid "Operation"
+msgstr "Operation"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "The undo stack is empty."
+msgstr "The undo stack is empty."
+
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label} ({n} file(s))"
+
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "… and {n} more"
 
 msgid "Old settings"
 msgstr "Old settings"

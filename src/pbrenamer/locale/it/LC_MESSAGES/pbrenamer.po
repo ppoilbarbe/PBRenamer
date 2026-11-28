@@ -814,6 +814,10 @@ msgid "Open with…"
 msgstr "Apri con…"
 
 # ==AUTO== Automatically translated
+msgid "Open with the application last chosen for this type of file"
+msgstr "Apri con l'ultima applicazione scelta per questo tipo di file"
+
+# ==AUTO== Automatically translated
 msgid "Delete selected file(s) and their sidecars"
 msgstr "Elimina i file selezionati e i loro sidecar"
 
@@ -1176,6 +1180,18 @@ msgid "Exit the application"
 msgstr "Chiudi l'applicazione"
 
 # ==AUTO== Automatically translated
+msgid "Undo stack…"
+msgstr "Pila di annullamento…"
+
+# ==AUTO== Automatically translated
+msgid "Show the content of the undo stack"
+msgstr "Mostra il contenuto della pila di annullamento"
+
+# ==AUTO== Automatically translated
+msgid "Open a window listing the operations that can be undone"
+msgstr "Apri una finestra con le operazioni che possono essere annullate"
+
+# ==AUTO== Automatically translated
 msgid "Histories…"
 msgstr "Cronologie…"
 
@@ -1342,10 +1358,6 @@ msgstr "Apri con un'applicazione scelta"
 # ==AUTO== Automatically translated
 msgid "Choose the application that opens the selected file"
 msgstr "Scegli l'applicazione che apre il file selezionato"
-
-# ==AUTO== Automatically translated
-msgid "Open with the application last chosen for this type of file"
-msgstr "Apri con l'ultima applicazione scelta per questo tipo di file"
 
 # ==AUTO== Automatically translated
 msgid ""
@@ -2030,6 +2042,10 @@ msgstr "Immagini"
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
 msgstr "Scorciatoie"
+
+# ==AUTO== Automatically translated
+msgid "Tools"
+msgstr "Strumenti"
 
 # ==AUTO== Automatically translated
 msgid "Help"
@@ -3106,6 +3122,19 @@ msgstr ""
 "nome; «###» è il contatore, un campo vuoto viene saltato"
 
 # ==AUTO== Automatically translated
+msgid "Resulting pattern:"
+msgstr "Pattern risultante:"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid ""
+"Search and replacement patterns produced by the schema; {dest} is the "
+"destination directory"
+msgstr ""
+"Pattern di ricerca e sostituzione prodotti dallo schema; {dest} è la "
+"directory di destinazione"
+
+# ==AUTO== Automatically translated
 msgid "Destination:"
 msgstr "Destinazione:"
 
@@ -3126,12 +3155,20 @@ msgstr ""
 "chiamate come i campi"
 
 # ==AUTO== Automatically translated
-msgid "Browse…"
-msgstr "Sfoglia…"
-
-# ==AUTO== Automatically translated
 msgid "Choose the destination directory"
 msgstr "Scegli la directory di destinazione"
+
+# ==AUTO== Automatically translated
+msgid "Go to the destination directory"
+msgstr "Vai alla directory di destinazione"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Show the destination directory in the directory tree; disabled while it "
+"does not exist"
+msgstr ""
+"Mostra la directory di destinazione nell'albero delle directory; "
+"disattivato finché non esiste"
 
 # ==AUTO== Automatically translated
 msgid "Fill gaps"
@@ -3243,6 +3280,18 @@ msgstr ""
 # ==AUTO== Automatically translated
 msgid "Toolbar icon size:"
 msgstr "Dimensione icone delle barre degli strumenti:"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window; System uses the size"
+" set by the style"
+msgstr ""
+"Dimensione delle icone dei pulsanti della finestra principale; Sistema "
+"usa la dimensione definita dallo stile"
+
+# ==AUTO== Automatically translated
+msgid "Button icon size:"
+msgstr "Dimensione icone dei pulsanti:"
 
 # ==AUTO== Automatically translated
 msgid "Behaviour"
@@ -3433,6 +3482,52 @@ msgstr "Rimuovi i suffissi sidecar comuni selezionati"
 # ==AUTO== Automatically translated
 msgid "Restore default common sidecar suffixes"
 msgstr "Ripristina i suffissi sidecar comuni predefiniti"
+
+# ==AUTO== Automatically translated
+msgid "Move"
+msgstr "Spostamento"
+
+# ==AUTO== Automatically translated
+msgid "Copy"
+msgstr "Copia"
+
+# ==AUTO== Automatically translated
+msgid "Rotation"
+msgstr "Rotazione"
+
+# ==AUTO== Automatically translated
+msgid "EXIF orientation reset"
+msgstr "Ripristino dell'orientamento EXIF"
+
+# ==AUTO== Automatically translated
+msgid "Undo stack"
+msgstr "Pila di annullamento"
+
+# ==AUTO== Automatically translated
+msgid "The most recent operation is at the top: Undo reverts it first."
+msgstr "L'operazione più recente è in alto: Annulla la ripristina per prima."
+
+# ==AUTO== Automatically translated
+msgid "Operation"
+msgstr "Operazione"
+
+# ==AUTO== Automatically translated
+msgid "Time"
+msgstr "Ora"
+
+# ==AUTO== Automatically translated
+msgid "The undo stack is empty."
+msgstr "La pila di annullamento è vuota."
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "{label} ({n} file(s))"
+msgstr "{label} ({n} file)"
+
+# ==AUTO== Automatically translated
+#, python-brace-format
+msgid "… and {n} more"
+msgstr "… e altri {n}"
 
 # ==AUTO== Automatically translated
 msgid "Old settings"

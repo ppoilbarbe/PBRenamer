@@ -360,11 +360,12 @@ msgstr ""
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only **moves** are recorded on the undo stack; copies are not undoable, "
-"since the original file is left in place."
+"Moves and copies are both recorded on the undo stack: **Undo** moves the "
+"files back, or deletes the copies (the original files are left in place)."
 msgstr ""
-"Chỉ các thao tác **di chuyển** được ghi vào ngăn xếp hoàn tác; sao chép "
-"không thể hoàn tác, vì tệp gốc vẫn ở nguyên chỗ."
+"Cả thao tác di chuyển lẫn sao chép đều được ghi vào ngăn xếp hoàn tác: "
+"**Hoàn tác** đưa các tệp về chỗ cũ, hoặc xóa các bản sao (các tệp gốc vẫn"
+" ở nguyên chỗ)."
 
 # ==AUTO== Automatically translated
 msgid "Configuring the rename rules"
@@ -935,6 +936,20 @@ msgstr ""
 "(3)**) khi có nhiều hơn một.  Các thao tác di chuyển bằng kéo và thả, "
 ":ref:`xoay ảnh và đặt lại định hướng EXIF <image-rotation>` và việc xóa "
 "vào thùng rác (xem :ref:`deletion-modes`) được ghi vào cùng ngăn xếp."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Tools ‣ Undo stack…** opens a window listing the content of the undo "
+"stack, the most recent operation at the top: it is the one **Undo** "
+"reverts first. Each operation shows its time and the number of files; "
+"expand it to see the files.  The window can stay open while you work: it "
+"is updated after every operation and every undo."
+msgstr ""
+"**Công cụ ‣ Ngăn xếp hoàn tác…** mở một cửa sổ liệt kê nội dung của ngăn "
+"xếp hoàn tác, thao tác gần nhất ở trên cùng: đó là thao tác mà **Hoàn "
+"tác** đảo ngược trước tiên.  Mỗi thao tác hiển thị thời gian và số tệp; "
+"mở rộng để xem các tệp.  Cửa sổ có thể để mở trong khi làm việc: nó được "
+"cập nhật sau mỗi thao tác và mỗi lần hoàn tác."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1514,13 +1529,17 @@ msgstr "Đích"
 # ==AUTO== Automatically translated
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
-"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"absolute path; the first button next to it chooses it.  The second one "
+"shows the destination folder in the directory tree; it is greyed out "
+"while that folder does not exist.  Missing folders are created when "
 "renaming; the source folders left empty can be removed (see :ref:`empty-"
 "folders`)."
 msgstr ""
 "Trường **Đích** là gốc của cây thư mục.  Nó phải là đường dẫn tuyệt đối; "
-"**Duyệt…** cho phép chọn.  Các thư mục còn thiếu được tạo khi đổi tên; "
-"các thư mục nguồn bị bỏ trống có thể được xóa (xem :ref:`empty-folders`)."
+"nút thứ nhất bên cạnh cho phép chọn.  Nút thứ hai hiển thị thư mục đích "
+"trong cây thư mục; nút này bị làm mờ khi thư mục đó chưa tồn tại.  Các "
+"thư mục còn thiếu được tạo khi đổi tên; các thư mục nguồn bị bỏ trống có "
+"thể được xóa (xem :ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -1743,20 +1762,23 @@ msgid "Choose the application that opens the file."
 msgstr "Chọn ứng dụng để mở tệp."
 
 # ==AUTO== Automatically translated
-msgid "**Open with** *application*"
-msgstr "**Mở bằng** *ứng dụng*"
+msgid "**Open with** *application* (**Ctrl+Alt+O**)"
+msgstr "**Mở bằng** *ứng dụng* (**Ctrl+Alt+O**)"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Open the files with the application last chosen with **Open with…** for "
 "their type, named in the menu.  The entry is greyed out when there is "
 "none, and always on Windows, whose dialog does not tell the application "
-"chosen."
+"chosen.  The shortcut works in the file list and in the image viewer; for"
+" a file whose type has no last application, it acts as **Open with…**."
 msgstr ""
 "Mở các tệp bằng ứng dụng được chọn gần nhất qua **Mở bằng…** cho loại của"
 " chúng, tên ứng dụng hiện trong menu.  Mục này bị làm mờ khi chưa có ứng "
 "dụng nào, và luôn bị làm mờ trên Windows vì hộp thoại của Windows không "
-"cho biết ứng dụng đã chọn."
+"cho biết ứng dụng đã chọn.  Phím tắt hoạt động trong danh sách tệp và "
+"trong trình xem ảnh; với tệp mà loại của nó chưa có ứng dụng nào, phím "
+"tắt hoạt động như **Mở bằng…**."
 
 # ==AUTO== Automatically translated
 msgid "**Open or create sidecar**"
@@ -2041,6 +2063,18 @@ msgstr ""
 " trình xem ảnh): **Hệ thống** (mặc định) dùng kích thước biểu tượng thanh"
 " công cụ của môi trường máy tính để bàn; các lựa chọn khác từ 16 × 16 đến"
 " 128 × 128 điểm ảnh. Thay đổi được áp dụng ngay."
+
+# ==AUTO== Automatically translated
+msgid "**Button icon size**"
+msgstr "**Kích thước biểu tượng nút**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window (action bar, pattern "
+"and schema tabs): **System** (default) uses the button icon size of the "
+"style; the other choices are those of **Toolbar icon size**.  The change "
+"applies at once."
+msgstr "Kích thước biểu tượng của các nút trong cửa sổ chính (thanh thao tác, các thẻ Mẫu và Lược đồ): **Hệ thống** (mặc định) dùng kích thước biểu tượng nút của kiểu giao diện; các lựa chọn khác giống **Kích thước biểu tượng thanh công cụ**. Thay đổi được áp dụng ngay."
 
 # ==AUTO== Automatically translated
 msgid "**Restore last opened directory** *(Behaviour group)*"

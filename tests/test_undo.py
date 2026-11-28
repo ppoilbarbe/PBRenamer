@@ -302,3 +302,54 @@ class TestContentEntries:
         with pytest.raises(UndoError):
             manager.undo(lambda: next(budget))
         assert manager.next_content_files() == 1
+
+
+class TestListeners:
+    def test_notified_on_add_undo_clear(self, tmp_path):
+        um = UndoManager()
+        calls = []
+        um.add_listener(lambda: calls.append(len(um)))
+        um.add(CopyEntry([]))
+        um.add(CopyEntry([]))
+        um.undo()
+        um.clear()
+        assert calls == [1, 2, 1, 0]
+
+    def test_notified_when_undo_fails(self):
+        um = UndoManager()
+        um.add(MoveEntry([("/nonexistent/a", "/nonexistent/b")]))
+        calls = []
+        um.add_listener(lambda: calls.append(len(um)))
+        with pytest.raises(UndoError):
+            um.undo()
+        assert calls == [0]
+
+    def test_remove_listener(self):
+        um = UndoManager()
+        calls = []
+        um.add_listener(calls.append)
+        um.remove_listener(calls.append)
+        um.remove_listener(calls.append)  # unknown: ignored
+        um.add(CopyEntry([]))
+        assert calls == []
+
+
+class TestEntries:
+    def test_most_recent_first(self, monkeypatch):
+        um = UndoManager()
+        first, second = CopyEntry([]), MoveEntry([])
+        monkeypatch.setattr("pbrenamer.core.undo.time.time", lambda: 100.0)
+        um.add(first)
+        monkeypatch.setattr("pbrenamer.core.undo.time.time", lambda: 200.0)
+        um.add(second)
+        assert um.entries() == [(second, 200.0), (first, 100.0)]
+        um.undo()
+        assert um.entries() == [(first, 100.0)]
+
+    def test_stopped_undo_keeps_time(self, monkeypatch):
+        um = UndoManager()
+        monkeypatch.setattr("pbrenamer.core.undo.time.time", lambda: 50.0)
+        entry = ExifResetEntry([("/x", 6)])
+        um.add(entry)
+        um.undo(lambda: False)
+        assert um.entries() == [(entry, 50.0)]

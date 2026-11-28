@@ -116,6 +116,23 @@ class TestModeTabs:
 # ---------------------------------------------------------------------------
 
 
+class TestShowDest:
+    def test_navigates_to_destination(self, window, photos, tmp_path):
+        dest = tmp_path / "dest"
+        dest.mkdir()
+        _schema_window(window, photos, dest, "A")
+        window._schema.btnShowDest.click()
+        assert window._files.current_dir == str(dest)
+
+    def test_enabled_after_rename_creates_destination(self, window, photos, tmp_path):
+        dest = tmp_path / "dest"
+        _schema_window(window, photos, dest, "Paris", "###")
+        assert not window._schema.btnShowDest.isEnabled()
+        window._on_rename()
+        assert dest.is_dir()
+        assert window._schema.btnShowDest.isEnabled()
+
+
 class TestSchemaRename:
     def test_preview_relative_to_destination(self, window, photos, tmp_path):
         _schema_window(window, photos, tmp_path / "dest", "Paris", "###")

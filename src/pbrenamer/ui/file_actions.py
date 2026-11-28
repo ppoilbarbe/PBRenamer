@@ -112,6 +112,7 @@ class FileActions(QObject):
             menu.aboutToShow.connect(self._update_orphans_action)
             menu.aboutToShow.connect(self._fill_open_sidecar_menu)
             menu.aboutToShow.connect(self._update_open_with_last)
+            menu.aboutToHide.connect(self._reset_open_with_last)
         files.selection_changed.connect(self.update_enabled)
         files.selection_changed.connect(self._sync_viewer)
         files.files_reloaded.connect(self._on_files_reloaded)
@@ -152,7 +153,12 @@ class FileActions(QObject):
         """Enable the actions according to the targets."""
         ui = self._ui
         paths = self.targets()
-        for act in (ui.actionFileOpen, ui.actionFileOpenWith, ui.actionFileDelete):
+        for act in (
+            ui.actionFileOpen,
+            ui.actionFileOpenWith,
+            ui.actionFileOpenWithLast,
+            ui.actionFileDelete,
+        ):
             act.setEnabled(bool(paths))
         ui.actionImageView.setEnabled(bool(self._media(paths)))
         ui.actionFileTemplate.setEnabled(len(paths) == 1)
@@ -188,9 +194,10 @@ class FileActions(QObject):
 
     def open_with_last_selected(self) -> None:
         """Open each targeted file with the application last chosen for its
-        type; the files without one are left alone."""
+        type; for a file without one, ask for the application (Open with…)."""
         for path in self.targets():
-            _open_with.open_with_last(path)
+            if not _open_with.open_with_last(path):
+                _open_with.open_with(path, self._window)
 
     def _update_open_with_last(self) -> None:
         """Name the application last chosen for the first targeted file;
@@ -205,6 +212,11 @@ class FileActions(QObject):
         else:
             # "&" would mark a mnemonic in a menu.
             action.setText(_("Open with {app}").format(app=app.replace("&", "&&")))
+
+    def _reset_open_with_last(self) -> None:
+        """Once the menu is closed, keep the shortcut usable on any target
+        (without a last application it falls back to Open with…)."""
+        self._ui.actionFileOpenWithLast.setEnabled(bool(self.targets()))
 
     def sidecars_by_suffix(self) -> dict[str, list[str]]:
         """Sidecars the targeted files can have, existing or not, grouped by
@@ -312,6 +324,13 @@ class FileActions(QObject):
         viewer.open_requested.connect(lambda: self._on_viewer(_open_path))
         viewer.open_with_requested.connect(
             lambda: self._on_viewer(lambda p: _open_with.open_with(p, viewer))
+        )
+        viewer.open_with_last_requested.connect(
+            lambda: self._on_viewer(
+                lambda p: (
+                    _open_with.open_with_last(p) or _open_with.open_with(p, viewer)
+                )
+            )
         )
         viewer.template_requested.connect(lambda: self._on_viewer(self.template))
         viewer.deselect_requested.connect(lambda p: self._files.deselect_paths([p]))

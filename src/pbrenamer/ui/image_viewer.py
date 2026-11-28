@@ -218,6 +218,7 @@ class ImageViewer(GeometryMixin, QWidget):
     navigate_next = Signal()
     open_requested = Signal()
     open_with_requested = Signal()
+    open_with_last_requested = Signal()
     # A file removed from the selection by a Ctrl+click on its thumbnail.
     deselect_requested = Signal(str)
     template_requested = Signal()
@@ -432,6 +433,7 @@ class ImageViewer(GeometryMixin, QWidget):
         keypad = Qt.KeyboardModifier.KeypadModifier
         ctrl = Qt.KeyboardModifier.ControlModifier
         shift = Qt.KeyboardModifier.ShiftModifier
+        alt = Qt.KeyboardModifier.AltModifier
         pairs = [
             (QKeySequence(Qt.Key.Key_0), self._act_fit_window),
             (QKeySequence(Qt.Key.Key_X), self._act_fit_window),
@@ -450,6 +452,10 @@ class ImageViewer(GeometryMixin, QWidget):
             (QKeySequence(Qt.Key.Key_Right), self._act_next),
             (QKeySequence(ctrl | Qt.Key.Key_O), self.open_requested),
             (QKeySequence(ctrl | shift | Qt.Key.Key_O), self.open_with_requested),
+            (
+                QKeySequence(ctrl | alt | Qt.Key.Key_O),
+                self.open_with_last_requested,
+            ),
             (QKeySequence(Qt.Key.Key_Delete), self.delete_requested),
             (QKeySequence(ctrl | Qt.Key.Key_Delete), self._act_toggle_confirm),
             (QKeySequence(Qt.Key.Key_F6), lambda: self.rotate_requested.emit(-90)),

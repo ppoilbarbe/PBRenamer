@@ -69,6 +69,12 @@ class Ui_MainWindow:
         self.actionQuit.setToolTip(_("Quit PBRenamer"))
         self.actionQuit.setStatusTip(_("Exit the application"))
 
+        self.actionUndoStack = QAction(_("Undo stack…"), window)
+        self.actionUndoStack.setToolTip(_("Show the content of the undo stack"))
+        self.actionUndoStack.setStatusTip(
+            _("Open a window listing the operations that can be undone")
+        )
+
         self.actionHistory = QAction(
             QIcon(_resource("history.svg")), _("Histories…"), window
         )
@@ -206,7 +212,7 @@ class Ui_MainWindow:
         self.actionFileOpenWithLast = action(
             "open-with.svg",
             _("Open with the last application"),
-            "",
+            "Ctrl+Alt+O",
             _("Open with the application last chosen for this type of file"),
             _(
                 "Open the selected files with the application last chosen"
@@ -285,7 +291,12 @@ class Ui_MainWindow:
         )
         self.actionRefresh.setEnabled(True)
         # Return and Delete also edit text fields: only on the file list.
-        for act in (self.actionImageView, self.actionFileDelete, self.actionFileOpen):
+        for act in (
+            self.actionImageView,
+            self.actionFileDelete,
+            self.actionFileOpen,
+            self.actionFileOpenWithLast,
+        ):
             act.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
 
     def _setup_edit_actions(self, window):
@@ -1017,12 +1028,21 @@ class Ui_MainWindow:
             self.actionFileInfo,
             self.actionRefresh,
         )
-        for act in (self.actionImageView, self.actionFileDelete, self.actionFileOpen):
+        for act in (
+            self.actionImageView,
+            self.actionFileDelete,
+            self.actionFileOpen,
+            self.actionFileOpenWithLast,
+        ):
             self.tblFiles.addAction(act)
 
         # Shortcuts menu (populated dynamically by MainWindow._build_shortcuts_menu)
         self.menuShortcuts = menubar.addMenu(_("Shortcuts"))
         self.menuShortcuts.addAction(self.actionEditShortcuts)
+
+        # Tools menu
+        self.menuTools = menubar.addMenu(_("Tools"))
+        self.menuTools.addAction(self.actionUndoStack)
 
         # Help menu
         menu_help = menubar.addMenu(_("Help"))

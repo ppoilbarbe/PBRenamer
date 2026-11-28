@@ -370,11 +370,12 @@ msgstr ""
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only **moves** are recorded on the undo stack; copies are not undoable, "
-"since the original file is left in place."
+"Moves and copies are both recorded on the undo stack: **Undo** moves the "
+"files back, or deletes the copies (the original files are left in place)."
 msgstr ""
-"Solo los **movimientos** se registran en la pila de deshacer; las copias "
-"no se pueden deshacer, ya que el archivo original queda en su sitio."
+"Tanto los movimientos como las copias se registran en la pila de "
+"deshacer: **Deshacer** devuelve los archivos a su sitio o elimina las "
+"copias (los archivos originales quedan en su sitio)."
 
 # ==AUTO== Automatically translated
 msgid "Configuring the rename rules"
@@ -967,6 +968,21 @@ msgstr ""
 ":ref:`rotaciones y los restablecimientos de la orientación EXIF <image-"
 "rotation>` y las eliminaciones a una papelera (véase :ref:`deletion-"
 "modes`) se registran en la misma pila."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Tools ‣ Undo stack…** opens a window listing the content of the undo "
+"stack, the most recent operation at the top: it is the one **Undo** "
+"reverts first. Each operation shows its time and the number of files; "
+"expand it to see the files.  The window can stay open while you work: it "
+"is updated after every operation and every undo."
+msgstr ""
+"**Herramientas ‣ Pila de deshacer…** abre una ventana con el contenido de"
+" la pila de deshacer, la operación más reciente arriba: es la que "
+"**Deshacer** revierte primero.  Cada operación muestra su hora y el "
+"número de archivos; despliéguela para ver los archivos.  La ventana puede"
+" permanecer abierta mientras trabaja: se actualiza después de cada "
+"operación y de cada deshacer."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1564,12 +1580,16 @@ msgstr "Destino"
 # ==AUTO== Automatically translated
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
-"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"absolute path; the first button next to it chooses it.  The second one "
+"shows the destination folder in the directory tree; it is greyed out "
+"while that folder does not exist.  Missing folders are created when "
 "renaming; the source folders left empty can be removed (see :ref:`empty-"
 "folders`)."
 msgstr ""
 "El campo **Destino** es la raíz del árbol de carpetas.  Debe ser una ruta"
-" absoluta; **Examinar…** permite elegirla.  Las carpetas que faltan se "
+" absoluta; el primer botón junto a él permite elegirla.  El segundo "
+"muestra la carpeta de destino en el árbol de directorios; aparece "
+"atenuado mientras esa carpeta no exista.  Las carpetas que faltan se "
 "crean al renombrar; las carpetas de origen que quedan vacías pueden "
 "eliminarse (véase :ref:`empty-folders`)."
 
@@ -1803,20 +1823,23 @@ msgid "Choose the application that opens the file."
 msgstr "Elige la aplicación que abre el archivo."
 
 # ==AUTO== Automatically translated
-msgid "**Open with** *application*"
-msgstr "**Abrir con** *aplicación*"
+msgid "**Open with** *application* (**Ctrl+Alt+O**)"
+msgstr "**Abrir con** *aplicación* (**Ctrl+Alt+O**)"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Open the files with the application last chosen with **Open with…** for "
 "their type, named in the menu.  The entry is greyed out when there is "
 "none, and always on Windows, whose dialog does not tell the application "
-"chosen."
+"chosen.  The shortcut works in the file list and in the image viewer; for"
+" a file whose type has no last application, it acts as **Open with…**."
 msgstr ""
 "Abre los archivos con la última aplicación elegida con **Abrir con…** "
 "para su tipo, cuyo nombre aparece en el menú.  La entrada aparece "
 "atenuada si no hay ninguna, y siempre en Windows, cuyo diálogo no indica "
-"la aplicación elegida."
+"la aplicación elegida.  El atajo funciona en la lista de archivos y en el"
+" visor de imágenes; para un archivo cuyo tipo aún no tiene aplicación, "
+"actúa como **Abrir con…**."
 
 # ==AUTO== Automatically translated
 msgid "**Open or create sidecar**"
@@ -2112,6 +2135,18 @@ msgstr ""
 "tamaño de iconos de barra de herramientas del entorno de escritorio; las "
 "demás opciones van de 16 × 16 a 128 × 128 píxeles. El cambio se aplica de"
 " inmediato."
+
+# ==AUTO== Automatically translated
+msgid "**Button icon size**"
+msgstr "**Tamaño de iconos de los botones**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window (action bar, pattern "
+"and schema tabs): **System** (default) uses the button icon size of the "
+"style; the other choices are those of **Toolbar icon size**.  The change "
+"applies at once."
+msgstr "Tamaño de los iconos de los botones de la ventana principal (barra de acciones, pestañas Patrón y Esquema): **Sistema** (predeterminado) usa el tamaño de iconos de botón del estilo; las demás opciones son las de **Tamaño de iconos de las barras de herramientas**. El cambio se aplica de inmediato."
 
 # ==AUTO== Automatically translated
 msgid "**Restore last opened directory** *(Behaviour group)*"

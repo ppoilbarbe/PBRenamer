@@ -377,12 +377,12 @@ msgstr ""
 
 # ==AUTO== Automatically translated
 msgid ""
-"Only **moves** are recorded on the undo stack; copies are not undoable, "
-"since the original file is left in place."
+"Moves and copies are both recorded on the undo stack: **Undo** moves the "
+"files back, or deletes the copies (the original files are left in place)."
 msgstr ""
-"Nur **Verschiebungen** werden im Rückgängig-Stapel gespeichert; Kopien "
-"lassen sich nicht rückgängig machen, da die Originaldatei an ihrem Platz "
-"bleibt."
+"Verschiebungen und Kopien werden beide im Rückgängig-Stapel gespeichert: "
+"**Rückgängig** verschiebt die Dateien zurück oder löscht die Kopien (die "
+"Originaldateien bleiben an ihrem Platz)."
 
 # ==AUTO== Automatically translated
 msgid "Configuring the rename rules"
@@ -984,6 +984,21 @@ msgstr ""
 "Zurücksetzen der EXIF-Ausrichtung <image-rotation>` sowie Löschvorgänge "
 "in einen Papierkorb (siehe :ref:`deletion-modes`) werden im selben Stapel"
 " gespeichert."
+
+# ==AUTO== Automatically translated
+msgid ""
+"**Tools ‣ Undo stack…** opens a window listing the content of the undo "
+"stack, the most recent operation at the top: it is the one **Undo** "
+"reverts first. Each operation shows its time and the number of files; "
+"expand it to see the files.  The window can stay open while you work: it "
+"is updated after every operation and every undo."
+msgstr ""
+"**Werkzeuge ‣ Rückgängig-Stapel…** öffnet ein Fenster mit dem Inhalt des "
+"Rückgängig-Stapels, der neueste Vorgang oben: Ihn macht **Rückgängig** "
+"zuerst rückgängig.  Jeder Vorgang zeigt seine Uhrzeit und die Anzahl der "
+"Dateien; klappen Sie ihn auf, um die Dateien zu sehen.  Das Fenster kann "
+"während der Arbeit geöffnet bleiben: Es wird nach jedem Vorgang und jedem"
+" Rückgängigmachen aktualisiert."
 
 # ==AUTO== Automatically translated
 msgid "Shortcuts"
@@ -1596,14 +1611,18 @@ msgstr "Ziel"
 # ==AUTO== Automatically translated
 msgid ""
 "The **Destination** field is the root of the folder tree.  It must be an "
-"absolute path; **Browse…** chooses it.  Missing folders are created when "
+"absolute path; the first button next to it chooses it.  The second one "
+"shows the destination folder in the directory tree; it is greyed out "
+"while that folder does not exist.  Missing folders are created when "
 "renaming; the source folders left empty can be removed (see :ref:`empty-"
 "folders`)."
 msgstr ""
 "Das Feld **Ziel** ist die Wurzel des Ordnerbaums.  Es muss ein absoluter "
-"Pfad sein; **Durchsuchen…** wählt ihn aus.  Fehlende Ordner werden beim "
-"Umbenennen angelegt; leer zurückbleibende Quellordner können entfernt "
-"werden (siehe :ref:`empty-folders`)."
+"Pfad sein; die erste Schaltfläche daneben wählt ihn aus.  Die zweite "
+"zeigt den Zielordner im Verzeichnisbaum an; sie ist ausgegraut, solange "
+"dieser Ordner nicht existiert.  Fehlende Ordner werden beim Umbenennen "
+"angelegt; leer zurückbleibende Quellordner können entfernt werden (siehe "
+":ref:`empty-folders`)."
 
 # ==AUTO== Automatically translated
 msgid "Video marker"
@@ -1841,20 +1860,23 @@ msgid "Choose the application that opens the file."
 msgstr "Wählt die Anwendung, die die Datei öffnet."
 
 # ==AUTO== Automatically translated
-msgid "**Open with** *application*"
-msgstr "**Mit** *Anwendung* **öffnen**"
+msgid "**Open with** *application* (**Ctrl+Alt+O**)"
+msgstr "**Mit** *Anwendung* **öffnen** (**Ctrl+Alt+O**)"
 
 # ==AUTO== Automatically translated
 msgid ""
 "Open the files with the application last chosen with **Open with…** for "
 "their type, named in the menu.  The entry is greyed out when there is "
 "none, and always on Windows, whose dialog does not tell the application "
-"chosen."
+"chosen.  The shortcut works in the file list and in the image viewer; for"
+" a file whose type has no last application, it acts as **Open with…**."
 msgstr ""
 "Öffnet die Dateien mit der Anwendung, die zuletzt über **Öffnen mit…** "
 "für ihren Typ gewählt wurde; ihr Name steht im Menü.  Der Eintrag ist "
 "ausgegraut, wenn es keine gibt, und unter Windows immer, da dessen Dialog"
-" die gewählte Anwendung nicht mitteilt."
+" die gewählte Anwendung nicht mitteilt.  Das Tastenkürzel funktioniert in"
+" der Dateiliste und im Bildbetrachter; für eine Datei, deren Typ noch "
+"keine zuletzt gewählte Anwendung hat, wirkt es wie **Öffnen mit…**."
 
 # ==AUTO== Automatically translated
 msgid "**Open or create sidecar**"
@@ -2153,6 +2175,18 @@ msgstr ""
 "Bildbetrachters): **System** (Standard) verwendet die Symbolgröße der "
 "Werkzeugleisten der Desktop-Umgebung; die anderen Auswahlmöglichkeiten "
 "reichen von 16 × 16 bis 128 × 128 Pixel. Die Änderung gilt sofort."
+
+# ==AUTO== Automatically translated
+msgid "**Button icon size**"
+msgstr "**Symbolgröße der Schaltflächen**"
+
+# ==AUTO== Automatically translated
+msgid ""
+"Size of the icons of the buttons of the main window (action bar, pattern "
+"and schema tabs): **System** (default) uses the button icon size of the "
+"style; the other choices are those of **Toolbar icon size**.  The change "
+"applies at once."
+msgstr "Größe der Symbole der Schaltflächen des Hauptfensters (Aktionsleiste, Registerkarten Muster und Schema): **System** (Standard) verwendet die Schaltflächen-Symbolgröße des Stils; die anderen Auswahlmöglichkeiten sind die von **Symbolgröße der Werkzeugleisten**. Die Änderung gilt sofort."
 
 # ==AUTO== Automatically translated
 msgid "**Restore last opened directory** *(Behaviour group)*"

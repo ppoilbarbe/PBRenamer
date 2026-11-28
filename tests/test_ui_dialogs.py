@@ -242,6 +242,21 @@ class TestSettingsDialog:
         dlg._save_and_accept()
         assert _cfg.get_toolbar_icon_size() == 0
 
+    def test_button_icon_size_choices(self, qtbot: QtBot, window_state):
+        from pbrenamer.ui.settings_dialog import SettingsDialog
+
+        _cfg.set_button_icon_size(32)
+        dlg = SettingsDialog(window_state)
+        qtbot.addWidget(dlg)
+        combo = dlg._ui.cmbButtonIconSize
+        data = [combo.itemData(i) for i in range(combo.count())]
+        assert data == [0, 16, 24, 32, 48, 64, 96, 128]
+        assert combo.currentText() == "32 × 32"
+        combo.setCurrentIndex(combo.findData(64))
+        dlg._save_and_accept()
+        assert _cfg.get_button_icon_size() == 64
+        assert _cfg.get_toolbar_icon_size() == 0
+
     def _profile_items(self, dlg):
         combo = dlg._ui.cmbDefaultProfile
         return [(combo.itemText(i), combo.itemData(i)) for i in range(combo.count())]

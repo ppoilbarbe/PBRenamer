@@ -8,7 +8,7 @@ from collections.abc import Mapping
 from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QIcon, QValidator
+from PySide6.QtGui import QFontDatabase, QIcon, QValidator
 from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
@@ -17,9 +17,9 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
-    QPushButton,
     QRadioButton,
     QSizePolicy,
+    QToolButton,
     QVBoxLayout,
     QWidget,
 )
@@ -118,6 +118,8 @@ class SchemaRulePanel(QWidget):
 
     edited = Signal()
     changed = Signal()
+    # Show this directory (the destination root) in the directory tree.
+    show_dest_requested = Signal(str)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -131,6 +133,7 @@ class SchemaRulePanel(QWidget):
         outer.addLayout(self._make_dest_row())
         self._fields_row = QHBoxLayout()
         outer.addLayout(self._fields_row)
+        outer.addLayout(self._make_compiled_row())
         outer.addWidget(self._make_recursive_warning())
         self.lblMessage = QLabel(self)
         self.lblMessage.setStyleSheet(_MESSAGE_STYLE)
@@ -138,7 +141,52 @@ class SchemaRulePanel(QWidget):
         outer.addWidget(self.lblMessage)
         outer.addStretch()
 
+        self.edited.connect(self._update_compiled)
+        self.changed.connect(self._update_compiled)
         self.reload_profile()
+
+    def _make_compiled_row(self) -> QHBoxLayout:
+        """Read-only display of the pattern the schema compiles to."""
+        row = QHBoxLayout()
+        row.setContentsMargins(4, 0, 4, 0)
+        row.addWidget(QLabel(_("Resulting pattern:"), self))
+        self.lblCompiled = QLabel(self)
+        self.lblCompiled.setFont(
+            QFontDatabase.systemFont(QFontDatabase.SystemFont.FixedFont)
+        )
+        self.lblCompiled.setTextFormat(Qt.TextFormat.PlainText)
+        self.lblCompiled.setTextInteractionFlags(
+            Qt.TextInteractionFlag.TextSelectableByMouse
+        )
+        self.lblCompiled.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred
+        )
+        self.lblCompiled.setStatusTip(
+            _(
+                "Search and replacement patterns produced by the schema;"
+                " {dest} is the destination directory"
+            )
+        )
+        row.addWidget(self.lblCompiled, 1)
+        return row
+
+    def compiled_pattern(self) -> str:
+        """Return "search → replacement" of the current fields, or an
+        empty string when the schema is invalid."""
+        try:
+            template = schema.compile_template(
+                self.fields(),
+                video_marker=self._schema["video_marker"],
+                video_marker_pos=self.video_marker_pos(),
+            )
+        except schema.SchemaError:
+            return ""
+        return f"{{X}} → {template}"
+
+    def _update_compiled(self) -> None:
+        text = self.compiled_pattern()
+        self.lblCompiled.setText(text)
+        self.lblCompiled.setToolTip(text)
 
     def _make_dest_row(self) -> QHBoxLayout:
         row = QHBoxLayout()
@@ -154,12 +202,29 @@ class SchemaRulePanel(QWidget):
             )
         )
         self.edtDest.textChanged.connect(lambda _text: self.edited.emit())
+        self.edtDest.textChanged.connect(lambda _text: self.update_show_dest())
         row.addWidget(self.edtDest, 1)
 
-        self.btnBrowse = QPushButton(_("Browse…"), self)
+        self.btnBrowse = QToolButton(self)
+        self.btnBrowse.setIcon(QIcon(_resource("folder-open.svg")))
+        self.btnBrowse.setAutoRaise(True)
         self.btnBrowse.setToolTip(_("Choose the destination directory"))
         self.btnBrowse.clicked.connect(self._on_browse)
         row.addWidget(self.btnBrowse)
+
+        self.btnShowDest = QToolButton(self)
+        self.btnShowDest.setIcon(QIcon(_resource("view.svg")))
+        self.btnShowDest.setAutoRaise(True)
+        self.btnShowDest.setToolTip(_("Go to the destination directory"))
+        self.btnShowDest.setStatusTip(
+            _(
+                "Show the destination directory in the directory tree;"
+                " disabled while it does not exist"
+            )
+        )
+        self.btnShowDest.setEnabled(False)
+        self.btnShowDest.clicked.connect(self._on_show_dest)
+        row.addWidget(self.btnShowDest)
 
         self.chkFillGaps = QCheckBox(_("Fill gaps"), self)
         self.chkFillGaps.setToolTip(
@@ -214,6 +279,8 @@ class SchemaRulePanel(QWidget):
         self.chkFillGaps.blockSignals(False)
         self._build_fields()
         self.lblMessage.clear()
+        self._update_compiled()
+        self.update_show_dest()
 
     def _build_fields(self) -> None:
         while self._fields_row.count():
@@ -262,6 +329,19 @@ class SchemaRulePanel(QWidget):
             self.edtDest.setText(path)
             self.save_dest()
             self.changed.emit()
+
+    def update_show_dest(self) -> None:
+        """Enable the Go to destination button when the directory exists
+        (called again after file operations, which may create it)."""
+        dest = self.dest()
+        self.btnShowDest.setEnabled(bool(dest) and os.path.isdir(dest))
+
+    def _on_show_dest(self) -> None:
+        dest = self.dest()
+        if os.path.isdir(dest):
+            self.show_dest_requested.emit(os.path.abspath(dest))
+        else:
+            self.update_show_dest()
 
     def save_dest(self) -> None:
         """Store the destination in the current profile."""
