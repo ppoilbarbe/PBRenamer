@@ -87,8 +87,6 @@ def test_sidecar_mode_follows_checkbox(files):
     ctrl, ui = files
     assert not ctrl.sidecar_mode_active()
     ui.chkSidecarMode.setChecked(True)
-    ctrl.update_sidecar_checkbox_state()
-    assert ui.chkSidecarMode.isEnabled()
     assert ctrl.sidecar_mode_active()
 
 
@@ -821,23 +819,16 @@ class TestSidecarModeSelection:
         ui.chkSidecarMode.setChecked(True)
         assert self._selected(ui) == ["a.info", "a.jpg", "a.xmp", "b.jpg"]
 
-    def test_forced_mode_extends_selection(self, qtbot, tmp_path):
-        win = QMainWindow()
-        qtbot.addWidget(win)
-        ui = Ui_MainWindow()
-        ui.setupUi(win)
-        forced = {"value": False}
-        ctrl = FileListController(
-            ui,
-            UndoManager(),
-            WindowState(),
-            win,
-            sidecars_forced=lambda: forced["value"],
-        )
+    def test_mode_set_silently_extends_selection_on_reload(self, files, tmp_path):
+        # The rule tabs swap their sidecar mode with signals blocked, then
+        # reload the list.
+        ctrl, ui = files
         _photos(tmp_path)
         ctrl.set_directory(str(tmp_path))
         _item(ui, "c.xmp").setSelected(True)
-        forced["value"] = True
+        ui.chkSidecarMode.blockSignals(True)
+        ui.chkSidecarMode.setChecked(True)
+        ui.chkSidecarMode.blockSignals(False)
         ctrl.reload()
         assert self._selected(ui) == ["c.jpg", "c.xmp"]
         assert ctrl._prev_group_selection == {

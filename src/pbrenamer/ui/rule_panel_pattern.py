@@ -191,9 +191,6 @@ class PatternRulePanel(QObject):
         self.populate_pattern_combos()
         self._populate_named_saves()
 
-    def extension_mode(self) -> str | None:
-        return self._ui.cmbExtensionMode.currentData()
-
     def insert_field(self, field: str) -> None:
         self._ui.cmbPatternDest.lineEdit().insert(field)
 
@@ -546,7 +543,6 @@ class PatternRulePanel(QObject):
                 self._ui.cmbExtensionMode.setCurrentIndex(idx)
         if "sidecar_mode" in cfg:
             self._ui.chkSidecarMode.setChecked(bool(cfg["sidecar_mode"]))
-        self._files.update_sidecar_checkbox_state()
         current_filter = self._ui.edtFilter.text()
         new_filter = cfg.get("filter", "")
         self._ui.edtFilter.setText(new_filter)

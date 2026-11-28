@@ -40,6 +40,9 @@ DEFAULT = "default"
 MODES = ("pattern", "schema")
 # files.deletion_mode: permanent removal, system trash, session trash.
 DELETION_MODES = ("delete", "system", "session")
+# schema.extension_mode: the extension modes but "modify" (the schema
+# replaces the whole stem, the extension would be lost).
+SCHEMA_EXTENSION_MODES = ("keep", "lower", "upper", "normalize")
 PROFILE_FILE = "profile.json"
 HISTORY_FILE = "history.json"
 
@@ -60,6 +63,8 @@ DEFAULTS: dict = {
         "video_marker_pos": 0,
         "fill_gaps": False,
         "rename_dirs": False,
+        "extension_mode": "lower",
+        "sidecar_mode": True,
     },
     "display": {
         "thumbnail_max_width": 128,
@@ -450,6 +455,11 @@ def read_profile(directory: Path) -> dict:
     files = data["files"]
     if files["deletion_mode"] not in DELETION_MODES:
         files["deletion_mode"] = DEFAULTS["files"]["deletion_mode"]
+    schema = data["schema"]
+    if schema["extension_mode"] == "modify":
+        schema["extension_mode"] = "keep"
+    elif schema["extension_mode"] not in SCHEMA_EXTENSION_MODES:
+        schema["extension_mode"] = DEFAULTS["schema"]["extension_mode"]
     return data
 
 

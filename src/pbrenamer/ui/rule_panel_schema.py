@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 import os
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from pathlib import Path
 
 from PySide6.QtCore import Qt, Signal
@@ -125,6 +125,8 @@ class SchemaRulePanel(QWidget):
         super().__init__(parent)
         self._fields: list[_SchemaField] = []
         self._marker_group: QButtonGroup | None = None
+        # Extension mode of the toolbar (see set_extension_mode_source).
+        self._extension_mode_source: Callable[[], str | None] | None = None
         self._schema: dict = {}
         self._history_max = profiles.DEFAULTS["display"]["history_max"]
 
@@ -349,6 +351,39 @@ class SchemaRulePanel(QWidget):
 
     # ── Public interface ──────────────────────────────────────────────────────
 
+    def extension_mode(self) -> str:
+        """Extension mode of the schema stored in the profile (never
+        "modify")."""
+        return self._schema["extension_mode"]
+
+    def set_extension_mode_source(self, source: Callable[[], str | None]) -> None:
+        """Take the extension mode of the rule from *source*, the toolbar
+        combo, as the Pattern tab does: a preview requested by a change of
+        the combo then uses the new mode.  A mode the schema cannot use
+        (the combo showing the Pattern tab values) gives the stored one."""
+        self._extension_mode_source = source
+
+    def _rule_extension_mode(self) -> str:
+        mode = self._extension_mode_source() if self._extension_mode_source else None
+        if mode in profiles.SCHEMA_EXTENSION_MODES:
+            return mode
+        return self.extension_mode()
+
+    def sidecar_mode(self) -> bool:
+        """Sidecar mode of the schema."""
+        return self._schema["sidecar_mode"]
+
+    def set_toolbar_values(self, extension_mode: str, sidecar_mode: bool) -> None:
+        """Store the extension and sidecar modes chosen in the toolbar while
+        the Schema tab is active, in the current profile."""
+        if extension_mode not in profiles.SCHEMA_EXTENSION_MODES:
+            return
+        values = {"extension_mode": extension_mode, "sidecar_mode": sidecar_mode}
+        if all(self._schema[k] == v for k, v in values.items()):
+            return
+        self._schema.update(values)
+        profiles.set_schema(**values)
+
     def rename_dirs(self) -> bool:
         """True when the profile lets the schema rename directories."""
         return bool(self._schema["rename_dirs"])
@@ -395,6 +430,8 @@ class SchemaRulePanel(QWidget):
                 fill_gaps=self.chkFillGaps.isChecked(),
                 renumber=renumber,
                 sidecar_config=_cfg.get_sidecar_config(),
+                ext_mode=self._rule_extension_mode(),
+                normalization=_cfg.get_extension_normalization_map(),
             )
         except schema.SchemaError as exc:
             self.lblMessage.setText(str(exc))

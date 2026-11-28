@@ -117,13 +117,20 @@ def compile_rule(
     fill_gaps: bool = False,
     renumber: bool = False,
     sidecar_config: SidecarConfig | None = None,
+    ext_mode: str = "lower",
+    normalization: dict[str, str] | None = None,
 ) -> planner.Rule:
     """Return the planner Rule of the schema *fields*.
 
     Renaming moves the files under *dest_root*; with *renumber* they are
     renumbered from the counter start in place, and *dest_root* is unused.
     Images and videos (and other categories) have separate counters.
+    *ext_mode* and *normalization* handle the extension as in the pattern
+    mode; "modify" is refused: the schema replaces the whole name, the
+    extension would be lost.
     """
+    if ext_mode == "modify":
+        raise ValueError("the schema cannot modify the extension")
     if renumber and not any(is_numeric(f) for f in fields):
         validate(fields)
         raise SchemaError(
@@ -139,7 +146,8 @@ def compile_rule(
         search="{X}",
         replace=template,
         mode=_repl.SEARCH_PATTERN,
-        ext_mode="lower",
+        ext_mode=ext_mode,
+        normalization=normalization,
         dest_root=None if renumber else dest_root,
         fill_gaps=fill_gaps,
         per_category=True,

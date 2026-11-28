@@ -237,6 +237,37 @@ class TestReserved:
         assert [e.new_name for e in entries] == ["P_1", "P_2"]
 
 
+class TestBatchInDestination:
+    """Files already in their destination folder: the names of the other
+    batch files are free, they move away."""
+
+    @pytest.mark.parametrize("fill_gaps", [True, False])
+    def test_gaps_closed(self, tmp_path, fill_gaps):
+        dest = tmp_path / "root"
+        paths = _touch(dest / "A", "A_0002.jpg", "A_0003.jpg", "A_0004.jpg")
+        rule = _schema_rule(dest, "{dest}/A/A_{newnum:04}", fill_gaps=fill_gaps)
+        assert _names(rule, paths) == ["A/A_0001.jpg", "A/A_0002.jpg", "A/A_0003.jpg"]
+
+    def test_sidecar_follows_into_a_batch_name(self, tmp_path):
+        dest = tmp_path / "root"
+        paths = _touch(dest / "A", "A_2.jpg", "A_3.jpg", "A_3.txt")
+        rule = _schema_rule(dest, "{dest}/A/A_{newnum}")
+        followers = {paths[1]: [(paths[2], "txt")]}
+        assert _names(rule, paths, followers=followers) == [
+            "A/A_1.jpg",
+            "A/A_2.jpg",
+            None,
+        ]
+
+    def test_name_of_a_batch_file_that_stays_is_taken(self, tmp_path):
+        # photo_1.jpg does not match the search: it keeps its name, which
+        # IMG_5.jpg must not take.
+        paths = _touch(tmp_path, "IMG_5.jpg", "photo_1.jpg")
+        rule = planner.Rule(search="IMG_{#}", replace="photo_{newnum}")
+        entries = planner.compute_names(rule, paths)
+        assert [e.new_name for e in entries] == ["photo_2.jpg", None]
+
+
 class TestRenumber:
     def test_sequence_from_one_ignoring_disk_numbers(self, tmp_path):
         paths = _touch(tmp_path, "A_5.jpg", "A_9.jpg")

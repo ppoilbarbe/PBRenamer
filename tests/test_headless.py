@@ -7,6 +7,7 @@ import pytest
 
 import pbrenamer.__main__ as _main_mod
 import pbrenamer.settings as _settings
+from pbrenamer import profiles
 from pbrenamer.__main__ import (
     _apply_sidecar_grouping,
     _build_parser,
@@ -505,18 +506,8 @@ class TestResolveNs:
         _resolve_ns(ns)
         assert ns.sidecar_mode is False
 
-    def test_sidecar_mode_rejects_normalize_ext_mode(self):
-        ns = self._raw_ns(search="foo", ext_mode="normalize", sidecar_mode=True)
-        with pytest.raises(SystemExit):
-            _resolve_ns(ns)
-
-    def test_sidecar_mode_rejects_modify_ext_mode(self):
-        ns = self._raw_ns(search="foo", ext_mode="modify", sidecar_mode=True)
-        with pytest.raises(SystemExit):
-            _resolve_ns(ns)
-
-    @pytest.mark.parametrize("mode", ["keep", "lower", "upper"])
-    def test_sidecar_mode_allowed_with_compatible_ext_mode(self, mode):
+    @pytest.mark.parametrize("mode", ["keep", "lower", "upper", "normalize", "modify"])
+    def test_sidecar_mode_allowed_with_any_ext_mode(self, mode):
         ns = self._raw_ns(search="foo", ext_mode=mode, sidecar_mode=True)
         _resolve_ns(ns)
         assert ns.sidecar_mode is True
@@ -1651,12 +1642,10 @@ class TestSchemaResolveNs:
         [
             ("replace", "x", "--replace"),
             ("mode", "regex", "--mode"),
-            ("ext_mode", "keep", "--ext-mode"),
             ("sep", "none", "--sep"),
             ("case", "upper", "--case"),
             ("accent", True, "--accent"),
             ("dup", False, "--dup"),
-            ("sidecar_mode", False, "--no-sidecar-mode"),
         ],
     )
     def test_pattern_options_rejected(self, tmp_path, capsys, attr, value, flag):
@@ -1665,10 +1654,29 @@ class TestSchemaResolveNs:
             _resolve_ns(ns)
         assert f"{flag} cannot be used with --schema" in capsys.readouterr().err
 
-    def test_sidecar_mode_flag_accepted(self, tmp_path):
-        ns = self._raw(schema="A", dest=str(tmp_path), sidecar_mode=True)
+    @pytest.mark.parametrize("value", [True, False])
+    def test_sidecar_mode_flag_accepted(self, tmp_path, value):
+        ns = self._raw(schema="A", dest=str(tmp_path), sidecar_mode=value)
         _resolve_ns(ns)
-        assert ns.sidecar_mode is True
+        assert ns.sidecar_mode is value
+
+    @pytest.mark.parametrize("mode", ["keep", "upper", "normalize"])
+    def test_ext_mode_accepted(self, tmp_path, mode):
+        ns = self._raw(schema="A", dest=str(tmp_path), ext_mode=mode)
+        _resolve_ns(ns)
+        assert ns.ext_mode == mode
+
+    def test_ext_mode_modify_rejected(self, tmp_path, capsys):
+        ns = self._raw(schema="A", dest=str(tmp_path), ext_mode="modify")
+        with pytest.raises(SystemExit):
+            _resolve_ns(ns)
+        assert "--ext-mode modify cannot be used" in capsys.readouterr().err
+
+    def test_defaults_from_profile(self, tmp_path):
+        profiles.set_schema(extension_mode="upper", sidecar_mode=False)
+        ns = self._raw(schema="A", dest=str(tmp_path))
+        _resolve_ns(ns)
+        assert (ns.ext_mode, ns.sidecar_mode) == ("upper", False)
 
     def test_invalid_schema_reported(self, tmp_path, capsys):
         with pytest.raises(SystemExit):
@@ -1705,6 +1713,31 @@ class TestSchemaRun:
         target = dest / "Trip" / "Paris" / "Trip_Paris_001"
         assert f"{target}.jpg" in out and f"{target}.xmp" in out
         assert _tree(src) == ["a.JPG", "a.xmp"] and not dest.exists()
+
+    def test_dry_run_lists_only_moved_files(self, tmp_path, monkeypatch, capsys):
+        # Files already in place: those keeping their name are not listed.
+        dest = tmp_path / "out"
+        folder = dest / "A"
+        folder.mkdir(parents=True)
+        _make_files(folder, "A_2.jpg", "A_5.jpg")
+        _make_files(dest, "A_3.txt")  # unrelated
+        code = _main(
+            monkeypatch,
+            folder,
+            "--schema",
+            "A,#",
+            "--dest",
+            dest,
+            "--no-fill-gaps",
+            "--select",
+            "A_2.jpg",
+            "--dry-run",
+        )
+        assert code == 0
+        out = capsys.readouterr().out
+        assert f"{folder / 'A_2.jpg'} {folder / 'A_1.jpg'}" in out
+        assert "A_5.jpg" not in out
+        assert "1 file(s) would be renamed" in out
 
     def test_rename_with_sidecars_markers_and_counters(
         self, tmp_path, monkeypatch, capsys

@@ -95,13 +95,13 @@ class MainWindow(QMainWindow):
 
         self._schema = SchemaRulePanel(self._ui.tabSchema)
         self._ui.tabSchema.layout().addWidget(self._schema)
-        self._files = FileListController(
-            self._ui,
-            self._undo,
-            self._window_state,
-            self,
-            sidecars_forced=self._schema_mode,
-        )
+        self._files = FileListController(self._ui, self._undo, self._window_state, self)
+        # Extension and sidecar modes of the Pattern tab while the toolbar
+        # shows those of the Schema tab; None while it shows its own.
+        self._pattern_values: tuple[str, bool] | None = None
+        # Like the Pattern tab, the schema rule reads the extension mode in
+        # the toolbar, which shows the values of the active tab.
+        self._schema.set_extension_mode_source(self._ui.cmbExtensionMode.currentData)
         self._pattern = PatternRulePanel(
             self._ui, self._presets, self._window_state, self._files, self
         )
@@ -241,6 +241,10 @@ class MainWindow(QMainWindow):
         self._ui.btnRenumber.clicked.connect(self._on_renumber)
         self._ui.actionRenumber.triggered.connect(self._on_renumber)
         self._ui.tabRules.currentChanged.connect(self._on_mode_changed)
+        self._ui.cmbExtensionMode.currentIndexChanged.connect(
+            self._on_toolbar_mode_value_changed
+        )
+        self._ui.chkSidecarMode.toggled.connect(self._on_toolbar_mode_value_changed)
         self._ui.chkThumbnails.toggled.connect(self._on_thumbnails_toggled)
         self._pattern.edited.connect(self._actions.schedule_preview)
         self._pattern.changed.connect(self._actions.request_auto_preview)
@@ -323,8 +327,7 @@ class MainWindow(QMainWindow):
         data["mode"] = "schema" if index == _SCHEMA_TAB else "pattern"
         profiles.save(data)
         _log.info("Rule mode: %s", data["mode"])
-        self._apply_mode_state()
-        if self._files.current_dir:
+        if not self._apply_mode_state() and self._files.current_dir:
             self._files.reload()
 
     def _on_thumbnails_toggled(self, checked: bool) -> None:
@@ -333,11 +336,64 @@ class MainWindow(QMainWindow):
         profiles.save(data)
         self._files.apply_display()
 
-    def _apply_mode_state(self) -> None:
-        """Enable the controls of the active mode."""
-        self._ui.cmbExtensionMode.setEnabled(not self._schema_mode())
-        self._files.update_sidecar_checkbox_state()
+    def _apply_mode_state(self) -> bool:
+        """Show the extension and sidecar modes of the active rule mode, and
+        enable its controls.  Return True when the file list was reloaded
+        (the sidecar mode changed)."""
+        schema = self._schema_mode()
+        combo = self._ui.cmbExtensionMode
+        # The schema replaces the whole name: modifying the extension would
+        # lose it.
+        combo.model().item(combo.findData("modify")).setEnabled(not schema)
+        if schema:
+            if self._pattern_values is None:
+                self._pattern_values = self._toolbar_mode_values()
+            reloaded = self._show_mode_values(
+                self._schema.extension_mode(), self._schema.sidecar_mode()
+            )
+        else:
+            reloaded = self._show_pattern_values()
         self._update_renumber_button()
+        return reloaded
+
+    def _toolbar_mode_values(self) -> tuple[str, bool]:
+        return (
+            self._ui.cmbExtensionMode.currentData(),
+            self._ui.chkSidecarMode.isChecked(),
+        )
+
+    def _show_pattern_values(self) -> bool:
+        """Put the extension and sidecar modes of the Pattern tab back in
+        the toolbar; return True when the file list was reloaded."""
+        if self._pattern_values is None:
+            return False
+        values, self._pattern_values = self._pattern_values, None
+        return self._show_mode_values(*values)
+
+    def _show_mode_values(self, extension_mode: str, sidecar_mode: bool) -> bool:
+        """Show *extension_mode* and *sidecar_mode* in the toolbar, without
+        the side effects of a user change.  Reload the file list when the
+        sidecar mode changes and return True then."""
+        combo, check = self._ui.cmbExtensionMode, self._ui.chkSidecarMode
+        changed = check.isChecked() != sidecar_mode
+        for widget in (combo, check):
+            widget.blockSignals(True)
+        idx = combo.findData(extension_mode)
+        if idx >= 0:
+            combo.setCurrentIndex(idx)
+        check.setChecked(sidecar_mode)
+        for widget in (combo, check):
+            widget.blockSignals(False)
+        if changed and self._files.current_dir:
+            self._files.reload()
+            return True
+        return False
+
+    def _on_toolbar_mode_value_changed(self) -> None:
+        """A change of the extension or sidecar mode while the toolbar shows
+        those of the Schema tab is stored in its profile settings."""
+        if self._pattern_values is not None:
+            self._schema.set_toolbar_values(*self._toolbar_mode_values())
 
     def _update_renumber_button(self) -> None:
         """Renumber shows with a schema counter and, like Rename, stays
@@ -568,19 +624,25 @@ class MainWindow(QMainWindow):
         self._schema.save_dest()
 
     def _collect_toolbar_state(self) -> dict:
+        extension_mode, sidecar_mode = (
+            self._pattern_values or self._toolbar_mode_values()
+        )
         return {
             "mode": self._ui.cmbMode.currentIndex(),
             "recursive": self._ui.chkRecursive.isChecked(),
-            "extension_mode": self._pattern.extension_mode(),
-            "sidecar_mode": self._ui.chkSidecarMode.isChecked(),
+            "extension_mode": extension_mode,
+            "sidecar_mode": sidecar_mode,
             "auto_preview": self._actions.auto_preview(),
             "filter": self._ui.edtFilter.text(),
         }
 
     def _restore_toolbar_state(self) -> None:
+        """Restore the toolbar of the last session; its extension and
+        sidecar modes are those of the Pattern tab."""
         state = _cfg.get_toolbar_state()
         if not state:
             return
+        self._show_pattern_values()
         if "mode" in state:
             idx = int(state["mode"])
             if 0 <= idx < self._ui.cmbMode.count():
@@ -594,11 +656,11 @@ class MainWindow(QMainWindow):
                 self._ui.cmbExtensionMode.setCurrentIndex(idx)
         if "sidecar_mode" in state:
             self._ui.chkSidecarMode.setChecked(bool(state["sidecar_mode"]))
-        self._files.update_sidecar_checkbox_state()
         if "auto_preview" in state:
             self._actions.set_auto_preview(bool(state["auto_preview"]))
         if "filter" in state:
             self._ui.edtFilter.setText(str(state["filter"]))
+        self._apply_mode_state()
 
     # ── Menu handlers ─────────────────────────────────────────────────────────
 
@@ -618,7 +680,7 @@ class MainWindow(QMainWindow):
         SettingsDialog(self._window_state, self).exec()
         self._file_actions.apply_icon_size()
         apply_button_icon_size(self)
-        if self._pattern.extension_mode() == "normalize":
+        if self._ui.cmbExtensionMode.currentData() == "normalize":
             self._actions.request_auto_preview()
 
     def _on_sidecar_files(self) -> None:

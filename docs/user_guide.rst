@@ -214,6 +214,13 @@ of the Settings dialog (**Edit → Settings…**): add, remove, or clear
 Changes to the table apply immediately and are kept even if the dialog is
 later cancelled.
 
+The Extension mode and the **Sidecar mode** checkbox apply to both rule
+tabs, and each tab remembers its own values: switching tabs shows the values
+of the new tab.  In the Schema tab, *Modify extension* is greyed out (the
+schema replaces the whole name, so the extension would be lost); its values
+are stored in the profile, *Extension in lowercase* and sidecar mode on by
+default.
+
 .. _sidecar-files:
 
 Sidecar files
@@ -631,7 +638,8 @@ The rules are:
   end of the name;
 * empty fields are skipped;
 * a field may not contain ``_``, ``.``, ``/`` or ``\``;
-* the extension is kept, in lower case.
+* the extension is kept, as the :ref:`Extension mode <extension-mode>` of the
+  Schema tab says (in lower case by default).
 
 The counter continues after the highest number already used in the target
 folder by files of the same name, so that a new batch never overwrites
@@ -663,11 +671,16 @@ from before the first field to after the last one.
 Sidecars in schema mode
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Sidecar mode is always on in the Schema tab: each sidecar follows its base
-file and takes its new name.  A sidecar without a base file (an *orphan*) is
-neither renamed nor renumbered; its preview reads *orphan sidecar, not
-renamed*.  **File → Orphan sidecars…** lists them (see
-:ref:`file-tools`).
+The **Sidecar mode** checkbox applies to the Schema tab too (on by
+default).  When it is on, each sidecar follows its base file and takes its
+new name.  A sidecar without a base file (an *orphan*) is then neither
+renamed nor renumbered; its preview reads *orphan sidecar, not renamed*.
+**File → Orphan sidecars…** lists them (see :ref:`file-tools`).
+
+When it is off, a sidecar is an ordinary file of the *Other* category: it
+is filed and numbered on its own, with the counter of that category, so it
+usually no longer matches the number of its base file (``IMG_5.jpg`` may
+become ``A_003.jpg`` and ``IMG_5.xmp`` ``A_001.xmp``).
 
 Directories in schema mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -827,7 +840,9 @@ The image viewer
 
 **Images → View** opens the image viewer on the selected images and videos
 (a video is shown as a placeholder).  The viewer follows the selection of the
-file list.  It offers:
+file list.  When another folder is opened in the directory tree, nothing is
+selected: the viewer shows the first image or video of the new folder (and
+the file information window its first file).  It offers:
 
 * zoom modes in the toolbar: fit window (**0** or **X**), actual size
   (**1** or **Z**), fit width (**W**), fit height (**H**), and zoom in and
@@ -1545,7 +1560,8 @@ Rename source (mutually exclusive)
     ``'Trip,,Paris,###'`` — activates headless mode.  Non-empty fields form
     both the folder tree under ``--dest`` and the name (joined with ``_``);
     a field of ``#`` only is the counter, padded to the number of ``#``;
-    empty fields are skipped.  Sidecar mode is always on.
+    empty fields are skipped.  ``--ext-mode`` and ``--sidecar-mode`` default
+    to the profile's Schema tab values.
 
 Schema options
 ~~~~~~~~~~~~~~
@@ -1589,17 +1605,18 @@ Rename options
     Recurse into sub-directories (default: ``--no-recurse``).
 
 ``--ext-mode {keep,lower,upper,normalize,modify}``
-    How to handle the extension during rename (default: ``keep``).  ``lower``
+    How to handle the extension during rename (default: ``keep``; with
+    ``--schema``, the profile's Schema tab value).  ``lower``
     / ``upper`` case-fold the extension; ``normalize`` maps it through the
     extension normalization table (managed from the GUI, **Edit → Settings…
     → Extension Normalization** tab); ``modify`` includes the extension in
-    the search/replace pattern, same as *Modify extension* in the GUI.
+    the search/replace pattern, same as *Modify extension* in the GUI; it
+    cannot be used with ``--schema``.
 
 ``--sidecar-mode`` / ``--no-sidecar-mode``
     Group :ref:`sidecar files <sidecar-files>` with their base file when
-    renaming (default: ``--no-sidecar-mode``).  Requires ``--ext-mode keep``,
-    ``lower``, or ``upper``; combining it with ``normalize`` or ``modify`` is
-    an error.  Category configuration (base extensions, sidecar suffixes) is
+    renaming (default: ``--no-sidecar-mode``; with ``--schema``, the
+    profile's Schema tab value).  Category configuration (base extensions, sidecar suffixes) is
     shared with the GUI's **Profile → Sidecar Files…** dialog.
 
 ``--filter GLOB``

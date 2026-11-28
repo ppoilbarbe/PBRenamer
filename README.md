@@ -180,7 +180,7 @@ pbrenamer [DIR] --schema "F1,F2,…,FN" [--dest ROOT] [OPTIONS]  # schema mode
 | --- | --- | --- |
 | `-s`, `--search TEXT` | *(required¹)* | Search pattern — activates headless mode |
 | `--saved NAME` | *(required¹)* | Load a named preset — activates headless mode; CLI options override preset values |
-| `--schema LIST` | *(required¹)* | Comma-separated schema fields — activates headless mode in schema mode (sidecar mode always on) |
+| `--schema LIST` | *(required¹)* | Comma-separated schema fields — activates headless mode in schema mode (`--ext-mode` and `--sidecar-mode` default to the profile's schema values) |
 | `--dest DIR` | *(profile's destination)* | Destination root: required by `--schema` when the profile has none (except with `--renumber`); value of `{dest}` |
 | `--fill-gaps` / `--no-fill-gaps` | *(profile with `--schema`, else off)* | `{newnum}` takes the smallest free number |
 | `--renumber` | *(off)* | `{newnum}` restarts from its start value; with `--schema`, renumber the files in place |
@@ -190,8 +190,8 @@ pbrenamer [DIR] --schema "F1,F2,…,FN" [--dest ROOT] [OPTIONS]  # schema mode
 | `--mode {pattern,regex,plain}` | `pattern` | Search mode |
 | `--list {files,dirs,all}` | `files` | Entry types to process |
 | `--recurse` / `--no-recurse` | `--no-recurse` | Recurse into sub-directories |
-| `--ext-mode {keep,lower,upper,normalize,modify}` | `keep` | How to handle the extension during rename |
-| `--sidecar-mode` / `--no-sidecar-mode` | `--no-sidecar-mode` | Group sidecar files with their base file (requires `--ext-mode keep`, `lower`, or `upper`) |
+| `--ext-mode {keep,lower,upper,normalize,modify}` | `keep` (profile with `--schema`) | How to handle the extension during rename (`modify` not allowed with `--schema`) |
+| `--sidecar-mode` / `--no-sidecar-mode` | `--no-sidecar-mode` (profile with `--schema`) | Group sidecar files with their base file |
 | `--filter GLOB` | *(none)* | Restrict listing to matching entries |
 | `--select GLOB` | *(none — all entries)* | Restrict the rename to matching entries, as if clicked in the GUI; repeatable (accumulates, like Ctrl+click); with `--sidecar-mode`, also selects the matched entry's sidecar group |
 | `--accent` / `--no-accent` | `--no-accent` | Strip diacritics from result names |

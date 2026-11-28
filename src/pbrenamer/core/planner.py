@@ -146,6 +146,7 @@ class NewNumState:
         renumber: bool = False,
         sources: Collection[str] = (),
         config: SidecarConfig | None = None,
+        staying: Collection[str] = (),
     ) -> None:
         self.start = start
         self.fill_gaps = fill_gaps
@@ -153,6 +154,8 @@ class NewNumState:
         self.renumber = renumber
         self.reserved: set[str] = set()
         self._sources = {filetools.path_key(s) for s in sources}
+        # Path keys of the batch files known to keep their name.
+        self._staying = set(staying)
         self._config = config or SidecarConfig.defaults()
         self._next: dict[tuple, int] = {}
         self._used: dict[tuple, set[int]] = {}
@@ -215,14 +218,16 @@ class NewNumState:
 
     def is_free(self, target: str, src: str) -> bool:
         """True if *target* is neither reserved nor taken on disk by a file
-        other than *src* (with *renumber*, other batch files are moved away
-        and do not count)."""
+        other than *src*.  The other batch files are moved away and do not
+        count, except those known to keep their name (*staying*): renaming
+        files already in their destination folder closes the gaps as a
+        renumbering does (execute_renames handles the chains)."""
         key = filetools.path_key(target)
         if key in self.reserved:
             return False
         if not os.path.lexists(target) or key == filetools.path_key(src):
             return True
-        return self.renumber and key in self._sources
+        return key in self._sources and key not in self._staying
 
 
 def _series(
@@ -258,10 +263,67 @@ def compute_names(
     suffix).  Sidecars get an empty entry (their name follows the base) and
     take no {newnum} value; the value of their base is chosen so that the
     names they will take are free too.
+
+    The names of the other batch files count as free, these files moving
+    away; when some of them keep their name after all (no match, error),
+    the names are computed again with those names taken.
     """
     followers = followers or {}
-    skip = {sc for scs in followers.values() for sc, _suffix in scs}
     start = newnum_start(rule.replace)
+    staying: set[str] = set()
+    while True:
+        entries = _compute_all(rule, paths, followers, start, staying)
+        if start is None:
+            return entries
+        kept = _staying_keys(paths, entries, followers)
+        targets = {
+            filetools.path_key(t)
+            for path, entry in zip(paths, entries, strict=True)
+            if entry.target
+            for t in _moves_of(entry.target, path, followers)
+            if filetools.path_key(t) != filetools.path_key(path)
+        }
+        if not (targets & kept) - staying:
+            return entries
+        staying |= kept
+
+
+def _moves_of(
+    target: str, path: str, followers: Mapping[str, list[tuple[str, str]]]
+) -> list[str]:
+    """Target of *path* followed by those of its sidecars."""
+    return [target] + [
+        sidecar_target(target, sfx) for _sc, sfx in followers.get(path, [])
+    ]
+
+
+def _staying_keys(
+    paths: list[str],
+    entries: list[PlanEntry],
+    followers: Mapping[str, list[tuple[str, str]]],
+) -> set[str]:
+    """Path keys of the batch files that keep their name under *entries*:
+    no target or their own path; a sidecar stays with its base."""
+    stays = {
+        filetools.path_key(path)
+        for path, entry in zip(paths, entries, strict=True)
+        if not entry.target
+        or filetools.path_key(entry.target) == filetools.path_key(path)
+    }
+    for base, scs in followers.items():
+        if filetools.path_key(base) not in stays:
+            stays -= {filetools.path_key(sc) for sc, _suffix in scs}
+    return stays
+
+
+def _compute_all(
+    rule: Rule,
+    paths: list[str],
+    followers: Mapping[str, list[tuple[str, str]]],
+    start: int | None,
+    staying: set[str],
+) -> list[PlanEntry]:
+    skip = {sc for scs in followers.values() for sc, _suffix in scs}
     state = (
         NewNumState(
             start,
@@ -270,6 +332,7 @@ def compute_names(
             renumber=rule.renumber,
             sources=paths,
             config=rule.sidecar_config,
+            staying=staying,
         )
         if start is not None
         else None

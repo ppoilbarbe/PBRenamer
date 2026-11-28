@@ -6,7 +6,6 @@ import logging
 import os
 import re
 import time
-from collections.abc import Callable
 from typing import NamedTuple
 
 from PySide6.QtCore import (
@@ -80,11 +79,7 @@ def _exec_menu(menu: QMenu, pos=None) -> None:  # pragma: no cover — modal
 
 
 class FileListController(QObject):
-    """Own the file list: listing, sidecar groups, previews and conflicts.
-
-    *sidecars_forced* returns True when the active rule always groups
-    sidecars (schema mode), whatever the Sidecar mode checkbox.
-    """
+    """Own the file list: listing, sidecar groups, previews and conflicts."""
 
     files_reloaded = Signal()
     # A different directory was loaded (after files_reloaded).
@@ -103,14 +98,12 @@ class FileListController(QObject):
         undo: UndoManager,
         window_state: WindowState,
         parent: QMainWindow,
-        sidecars_forced: Callable[[], bool] = lambda: False,
     ) -> None:
         super().__init__(parent)
         self._ui = ui
         self._window = parent
         self._undo = undo
         self._window_state = window_state
-        self._sidecars_forced = sidecars_forced
 
         self.current_dir: str | None = None
         self._loaded_dir: str | None = None
@@ -673,15 +666,11 @@ class FileListController(QObject):
         return sidecar.followers(self._sidecar_result)
 
     def sidecar_mode_active(self) -> bool:
-        """True if sidecar grouping should be applied: always in schema
-        mode, otherwise when the checkbox is checked.  The extension mode
-        does not matter: a sidecar takes the new stem of its base file
-        followed by its own suffix, whatever happens to the base extension."""
-        return self._sidecars_forced() or self._ui.chkSidecarMode.isChecked()
-
-    def update_sidecar_checkbox_state(self) -> None:
-        """The checkbox is meaningless when grouping is forced (schema mode)."""
-        self._ui.chkSidecarMode.setEnabled(not self._sidecars_forced())
+        """True if sidecar grouping should be applied: when the checkbox is
+        checked, in both rule modes.  The extension mode does not matter: a
+        sidecar takes the new stem of its base file followed by its own
+        suffix, whatever happens to the base extension."""
+        return self._ui.chkSidecarMode.isChecked()
 
     def _recompute_sidecar_grouping(self, entries: list[tuple[str, str]]) -> None:
         self._prev_group_selection = set()

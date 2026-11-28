@@ -191,7 +191,11 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         choices=["keep", "lower", "upper", "normalize", "modify"],
         default=None,
         metavar="{keep,lower,upper,normalize,modify}",
-        help="How to handle the extension during rename (default: keep)",
+        help=(
+            "How to handle the extension during rename (default: keep; with"
+            " --schema, the profile's schema setting, lower by default;"
+            " modify is not available with --schema)"
+        ),
     )
     rename_group.add_argument(
         "--sidecar-mode",
@@ -200,8 +204,9 @@ def _build_parser(*, frozen: bool | None = None) -> argparse.ArgumentParser:
         help=(
             "Group sidecar files (e.g. img.xmp) with their base file when"
             " renaming: the sidecar is renamed using the base file's new"
-            " stem plus its own original suffix, unchanged. Requires"
-            " --ext-mode keep, lower, or upper (default: --no-sidecar-mode)"
+            " stem plus its own original suffix, unchanged (default:"
+            " --no-sidecar-mode; with --schema, the profile's schema setting,"
+            " --sidecar-mode by default)"
         ),
     )
     rename_group.add_argument(
@@ -477,19 +482,12 @@ def _resolve_ns(ns: argparse.Namespace) -> None:
         ns.ext_mode = "keep"
     if ns.sidecar_mode is None:
         ns.sidecar_mode = False
-    if ns.sidecar_mode and ns.ext_mode not in ("keep", "lower", "upper"):
-        print(
-            "error: --sidecar-mode requires --ext-mode keep, lower, or upper",
-            file=sys.stderr,
-        )
-        sys.exit(1)
 
 
 # Pattern-mode options that have no meaning with --schema.
 _PATTERN_ONLY = {
     "replace": "--replace",
     "mode": "--mode",
-    "ext_mode": "--ext-mode",
     "sep": "--sep",
     "case": "--case",
     "accent": "--accent",
@@ -503,9 +501,9 @@ def _resolve_schema_ns(ns: argparse.Namespace) -> None:
         if getattr(ns, attr) is not None:
             print(f"error: {flag} cannot be used with --schema", file=sys.stderr)
             sys.exit(1)
-    if ns.sidecar_mode is False:
+    if ns.ext_mode == "modify":
         print(
-            "error: --no-sidecar-mode cannot be used with --schema",
+            "error: --ext-mode modify cannot be used with --schema",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -528,8 +526,10 @@ def _resolve_schema_ns(ns: argparse.Namespace) -> None:
             )
             sys.exit(1)
         ns.dest = os.path.abspath(defaults["dest"])
-    ns.sidecar_mode = True
-    ns.ext_mode = "lower"
+    if ns.sidecar_mode is None:
+        ns.sidecar_mode = defaults["sidecar_mode"]
+    if ns.ext_mode is None:
+        ns.ext_mode = defaults["extension_mode"]
     if ns.video_marker is None:
         ns.video_marker = defaults["video_marker"]
     if ns.video_marker_pos is None:
@@ -559,6 +559,8 @@ def _rule(ns: argparse.Namespace):
                 fill_gaps=ns.fill_gaps,
                 renumber=ns.renumber,
                 sidecar_config=_settings.get_sidecar_config(),
+                ext_mode=ns.ext_mode,
+                normalization=_settings.get_extension_normalization_map(),
             )
         except schema.SchemaError as exc:
             print(f"error: invalid schema: {exc}", file=sys.stderr)
@@ -656,6 +658,18 @@ def _apply_sidecar_grouping(
     return plan
 
 
+def _target(path: str, new_name: str) -> str:
+    """Target path of *path* renamed to *new_name*: relative to its folder,
+    or absolute (schema mode, under the destination)."""
+    return os.path.normpath(os.path.join(os.path.dirname(path), new_name))
+
+
+def _renames(path: str, new_name: str | None) -> bool:
+    """True when *new_name* actually moves *path* (a schema target may be
+    the file's own path, given as an absolute path)."""
+    return new_name is not None and _target(path, new_name) != os.path.normpath(path)
+
+
 def _detect_conflicts(
     plan: list[tuple[str, str, str | None]],
 ) -> set[int]:
@@ -663,9 +677,9 @@ def _detect_conflicts(
     from pbrenamer.core import filetools
 
     pairs = {
-        idx: (path, os.path.join(os.path.dirname(path), new_name))
+        idx: (path, _target(path, new_name))
         for idx, (path, _name, new_name) in enumerate(plan)
-        if new_name is not None and new_name != os.path.basename(path)
+        if _renames(path, new_name)
     }
     conflicting = set(filetools.find_rename_conflicts(list(pairs.values())))
     return {idx for idx, pair in pairs.items() if pair in conflicting}
@@ -682,8 +696,7 @@ def _print_dry_run(
         if path in conflict_paths:
             print(f"# CONFLICT: {name}")
             continue
-        new_path = os.path.join(os.path.dirname(path), new)
-        print(f"mv -- {shlex.quote(path)} {shlex.quote(new_path)}")
+        print(f"mv -- {shlex.quote(path)} {shlex.quote(_target(path, new))}")
 
     if conflict_paths:
         print(f"# {len(conflict_paths)} conflict(s): nothing would be renamed.")
@@ -777,9 +790,7 @@ def _headless_run(ns: argparse.Namespace) -> None:
             (path, name, new if path in selection else None) for path, name, new in plan
         ]
 
-    changes = [
-        (path, name, new) for path, name, new in plan if new is not None and new != name
-    ]
+    changes = [(path, name, new) for path, name, new in plan if _renames(path, new)]
 
     if not changes:
         print("No files would be renamed.")
@@ -824,9 +835,7 @@ def _headless_run(ns: argparse.Namespace) -> None:
             print("Aborted.")
             return
 
-    pairs = [
-        (path, os.path.join(os.path.dirname(path), new)) for path, _name, new in changes
-    ]
+    pairs = [(path, _target(path, new)) for path, _name, new in changes]
     from pbrenamer import profiles
 
     options = profiles.load()["files"]

@@ -228,6 +228,35 @@ class TestRename:
         )
         assert rule.per_category and rule.fill_gaps and not rule.renumber
 
+    @pytest.mark.parametrize(
+        ("ext_mode", "expected"),
+        [("keep", "A/A_1.JpG"), ("lower", "A/A_1.jpg"), ("upper", "A/A_1.JPG")],
+    )
+    def test_extension_mode(self, tmp_path, ext_mode, expected):
+        assert _rename(
+            ["A", "#"], tmp_path / "src", ["x.JpG"], tmp_path, ext_mode=ext_mode
+        ) == [expected]
+
+    def test_extension_normalized(self, tmp_path):
+        assert _rename(
+            ["A", "#"],
+            tmp_path / "src",
+            ["x.JPEG", "y.png"],
+            tmp_path,
+            ext_mode="normalize",
+            normalization={"jpeg": "jpg"},
+        ) == ["A/A_1.jpg", "A/A_2.png"]
+
+    def test_series_ignores_extension_case(self, tmp_path):
+        _touch(tmp_path / "A", "A_1.jpg")
+        assert _rename(
+            ["A", "#"], tmp_path / "src", ["x.JPG"], tmp_path, ext_mode="keep"
+        ) == ["A/A_2.JPG"]
+
+    def test_modify_extension_refused(self, tmp_path):
+        with pytest.raises(ValueError):
+            schema.compile_rule(["A"], dest_root=str(tmp_path), ext_mode="modify")
+
 
 # ---------------------------------------------------------------------------
 # compile_rule — renumbering (PBPicat build_renumber_plan)

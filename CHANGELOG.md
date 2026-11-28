@@ -26,6 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Schema tab: the *Browse…* button for the destination becomes a tool button with an icon.
+- Schema tab: the Extension mode and the Sidecar mode checkbox apply to the schema as in the
+  Pattern tab, instead of the forced lower-case extension and sidecar mode; *Modify extension*
+  is not available there. Each tab remembers its own values, those of the Schema tab in the
+  profile (lower case and sidecar mode on by default, the former behaviour). Without sidecar
+  mode, a sidecar is filed and numbered as an ordinary file.
+- Command line: `--ext-mode` (except `modify`) and `--sidecar-mode` / `--no-sidecar-mode` are
+  accepted with `--schema`, defaulting to the profile's schema values; `--sidecar-mode` is no
+  longer refused with `--ext-mode normalize` or `modify`.
 
 ### Fixed
 
@@ -35,6 +43,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   file information window on a file of the previous directory: the viewer shows the first media
   file of the new directory and the information window its first row (nothing gets selected, so
   Rename still applies to every file).
+- Rename with a counter (`{newnum}`, schema counter) of files already in their destination
+  folder: the names of the other files of the batch are free, as they move away, so the gaps
+  are closed (`A_0002`, `A_0003`, `A_0004` become `A_0001`, `A_0002`, `A_0003`) instead of
+  leaving all but the first file unchanged. A batch file that keeps its name (no match, error)
+  still keeps it from the others.
+- Command line: `--dry-run`, `--confirm` and the rename count no longer list the files whose
+  schema target is their own path.
 
 ## [2.4.0] - 2026-11-22
 

@@ -42,6 +42,11 @@ def _schema_window(window, src, dest, *fields):
     window._on_preview()
 
 
+def _set_ext_mode(window, mode):
+    combo = window._ui.cmbExtensionMode
+    combo.setCurrentIndex(combo.findData(mode))
+
+
 def _answer(monkeypatch, button):
     monkeypatch.setattr(QMessageBox, "question", lambda *a, **k: button)
 
@@ -59,20 +64,76 @@ class TestModeTabs:
         w = MainWindow()
         qtbot.addWidget(w)
         assert w._ui.tabRules.currentIndex() == _SCHEMA_TAB
-        assert not w._ui.cmbExtensionMode.isEnabled()
+        assert w._ui.cmbExtensionMode.currentData() == "lower"
+        assert w._ui.chkSidecarMode.isChecked()
 
-    def test_switch_saves_mode_and_forces_sidecars(self, window, photos):
+    def test_switch_saves_mode_and_swaps_toolbar_values(self, window, photos):
         window._files.set_directory(str(photos))
+        _set_ext_mode(window, "modify")
         window._ui.chkSidecarMode.setChecked(False)
         window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
         assert profiles.load()["mode"] == "schema"
-        assert not window._ui.cmbExtensionMode.isEnabled()
-        assert not window._ui.chkSidecarMode.isEnabled()
+        # Schema defaults: lower-case extension, sidecar mode on.
+        assert window._ui.cmbExtensionMode.currentData() == "lower"
+        assert window._ui.cmbExtensionMode.isEnabled()
+        assert window._ui.chkSidecarMode.isEnabled()
         assert window._files.sidecar_mode_active()
         window._ui.tabRules.setCurrentIndex(0)
         assert profiles.load()["mode"] == "pattern"
-        assert window._ui.cmbExtensionMode.isEnabled()
+        assert window._ui.cmbExtensionMode.currentData() == "modify"
         assert not window._files.sidecar_mode_active()
+
+    def test_modify_unavailable_in_schema_mode(self, window):
+        combo = window._ui.cmbExtensionMode
+        item = combo.model().item(combo.findData("modify"))
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        assert not item.isEnabled()
+        window._ui.tabRules.setCurrentIndex(0)
+        assert item.isEnabled()
+
+    def test_schema_values_stored_in_profile(self, window):
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        _set_ext_mode(window, "upper")
+        window._ui.chkSidecarMode.setChecked(False)
+        assert profiles.get_schema()["extension_mode"] == "upper"
+        assert profiles.get_schema()["sidecar_mode"] is False
+        window._ui.tabRules.setCurrentIndex(0)
+        _set_ext_mode(window, "keep")
+        assert profiles.get_schema()["extension_mode"] == "upper"
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        assert window._ui.cmbExtensionMode.currentData() == "upper"
+        assert not window._ui.chkSidecarMode.isChecked()
+
+    def test_set_toolbar_values_guards(self, window, monkeypatch):
+        window._schema.set_toolbar_values("modify", True)
+        assert profiles.get_schema()["extension_mode"] == "lower"
+        saved = []
+        monkeypatch.setattr(profiles, "set_schema", lambda **kw: saved.append(kw))
+        window._schema.set_toolbar_values("lower", True)  # unchanged
+        assert saved == []
+        monkeypatch.undo()
+
+    def test_toolbar_state_keeps_pattern_values(self, window):
+        _set_ext_mode(window, "normalize")
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        state = window._collect_toolbar_state()
+        assert (state["extension_mode"], state["sidecar_mode"]) == ("normalize", False)
+
+    def test_restored_toolbar_state_in_schema_mode(self, qtbot):
+        _cfg.set_restore_toolbar_state(True)
+        _cfg.set_toolbar_state({"extension_mode": "upper", "sidecar_mode": False})
+        profiles.set_schema(extension_mode="keep")
+        data = profiles.load()
+        data["mode"] = "schema"
+        profiles.save(data)
+        w = MainWindow()
+        qtbot.addWidget(w)
+        assert w._ui.cmbExtensionMode.currentData() == "keep"
+        assert w._ui.chkSidecarMode.isChecked()
+        assert profiles.get_schema()["extension_mode"] == "keep"
+        w._ui.tabRules.setCurrentIndex(0)
+        assert w._ui.cmbExtensionMode.currentData() == "upper"
+        assert not w._ui.chkSidecarMode.isChecked()
 
     def test_switch_without_directory(self, window):
         window._files.current_dir = None
@@ -150,6 +211,42 @@ class TestSchemaRename:
         }
         assert window._ui.btnRename.text() == "Rename (4)"
         assert window._ui.btnRename.isEnabled()
+
+    def test_extension_mode_applies(self, window, photos, tmp_path):
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        _set_ext_mode(window, "upper")
+        _schema_window(window, photos, tmp_path / "dest", "Paris", "###")
+        texts = {i.text(0): i.text(1) for i in window._files.all_items()}
+        assert texts["IMG_1.JPG"] == "Paris/Paris_001.JPG"
+        assert texts["IMG_1.xmp"] == "Paris/Paris_001.xmp"  # own suffix kept
+        assert texts["IMG_2.jpg"] == "Paris/Paris_002.JPG"
+
+    def test_extension_mode_change_refreshes_auto_preview(
+        self, window, photos, tmp_path
+    ):
+        window._actions.set_auto_preview(True)
+        _schema_window(window, photos, tmp_path / "dest", "Paris", "###")
+        _set_ext_mode(window, "upper")
+        texts = {i.text(0): i.text(1) for i in window._files.all_items()}
+        assert texts["IMG_2.jpg"] == "Paris/Paris_002.JPG"
+        _set_ext_mode(window, "keep")
+        texts = {i.text(0): i.text(1) for i in window._files.all_items()}
+        assert texts["IMG_1.JPG"] == "Paris/Paris_001.JPG"
+        assert texts["IMG_2.jpg"] == "Paris/Paris_002.jpg"
+
+    def test_without_sidecar_mode_sidecar_numbered_alone(
+        self, window, photos, tmp_path
+    ):
+        (photos / "lost.xmp").write_text("x")
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        window._ui.chkSidecarMode.setChecked(False)
+        _schema_window(window, photos, tmp_path / "dest", "Paris", "###")
+        texts = {i.text(0): i.text(1) for i in window._files.all_items()}
+        # Sidecars are ordinary files of the "other" category, with their
+        # own counter; no orphan is left alone.
+        assert texts["IMG_1.xmp"] == "Paris/Paris_001.xmp"
+        assert texts["lost.xmp"] == "Paris/Paris_002.xmp"
+        assert texts["IMG_2.jpg"] == "Paris/Paris_002.jpg"
 
     def test_invalid_schema_clears_preview(self, window, photos, tmp_path):
         _schema_window(window, photos, tmp_path / "dest", "A", "###")
@@ -674,6 +771,20 @@ class TestSwitchProfile:
         profiles.use("default", remember=False)
         window._switch_profile("p")
         assert window._ui.chkRecursive.isChecked()
+
+    def test_schema_values_of_the_new_profile(self, window):
+        window._ui.tabRules.setCurrentIndex(_SCHEMA_TAB)
+        profiles.create("p")
+        profiles.use("p", remember=False)
+        data = profiles.load()
+        data["mode"] = "schema"
+        data["schema"]["extension_mode"] = "upper"
+        data["schema"]["sidecar_mode"] = False
+        profiles.save(data)
+        profiles.use("default", remember=False)
+        window._switch_profile("p")
+        assert window._ui.cmbExtensionMode.currentData() == "upper"
+        assert not window._ui.chkSidecarMode.isChecked()
 
 
 # ---------------------------------------------------------------------------

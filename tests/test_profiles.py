@@ -344,6 +344,15 @@ class TestProfileData:
         self._write({"files": {"deletion_mode": "bogus"}})
         assert profiles.load()["files"]["deletion_mode"] == "system"
 
+    def test_schema_extension_and_sidecar_defaults(self):
+        schema = profiles.load()["schema"]
+        assert (schema["extension_mode"], schema["sidecar_mode"]) == ("lower", True)
+
+    @pytest.mark.parametrize(("stored", "loaded"), [("modify", "keep"), ("x", "lower")])
+    def test_schema_extension_mode_sanitized(self, stored, loaded):
+        self._write({"schema": {"extension_mode": stored}})
+        assert profiles.load()["schema"]["extension_mode"] == loaded
+
     def test_old_trash_setting_ignored_and_dropped(self):
         self._write({"images": {"use_trash": False}})
         data = profiles.load()

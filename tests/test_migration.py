@@ -249,6 +249,9 @@ class TestImportPbpicat:
             "video_marker_pos": 0,
             "fill_gaps": False,
             "rename_dirs": False,
+            # PBPicat behaviour: lower-case extensions, sidecars grouped.
+            "extension_mode": "lower",
+            "sidecar_mode": True,
         }
         assert family["last_dir"] == "/home/user/Catalog/familly/beach"
 
