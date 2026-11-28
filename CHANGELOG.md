@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-11-28
+
 ### Added
 
 - Schema tab: a *Resulting pattern* line under the fields shows the search and replacement
